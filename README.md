@@ -28,7 +28,7 @@ Un gioco di ruolo roguelite testuale in Python, basato su un'architettura Data-D
        ├── meta.json
        ├── relics.json
        └── weapons.json
-```text
+```
 ## Avvia il gioco da terminale (o facendo doppio clic su Windows):
 python roguelike.py
 (Nota: Il file di salvataggio profile.json verrà generato in automatico al primo avvio).
