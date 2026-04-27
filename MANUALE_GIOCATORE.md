@@ -1,41 +1,27 @@
 # 📜 Manuale del Giocatore
 
-Benvenuto nel **Labirinto degli Elementi e del Caos**. Ti attendono 30 piani di mostri spietati, trappole e tesori. Preparati a morire, ma ricorda: la morte è solo un nuovo inizio.
+Benvenuto nel **Labirinto degli Elementi e del Caos**. Ti attendono 30 piani di mostri spietati, trappole, eventi misteriosi e tesori. Preparati a morire, ma ricorda: la morte è solo un nuovo inizio.
 
-## 🎮 Comandi di Gioco
-Il gioco è interamente testuale. Per compiere un'azione, digita il **numero** corrispondente all'opzione desiderata e premi **INVIO**.
-Se premi INVIO senza digitare nulla, il gioco ignorerà l'input senza fastidiosi scorrimenti di testo.
+## 🧭 L'Esplorazione a Bivi
+Ogni Piano del Labirinto è composto da **5 tappe esplorative**. Ad ogni tappa, ti troverai davanti a un bivio (due porte). Potrai vedere in anticipo cosa nasconde ogni porta (es. Combattimento, Falò, Evento). Se sbloccherai il perk "Sesto Senso", potrai persino prevedere quale mostro o quale evento esatto ti attende!
+Alla quinta tappa di ogni piano, affronterai sempre il Boss.
 
-## ⚔️ Le Regole del Combattimento
-Ogni entità nel labirinto (tu, i nemici, le armi e le armature) è legata a un **Elemento**.
+## ⚔️ Combattimento e Oggetti
 Il vantaggio elementale garantisce **+50% di Danni** e **+15% di Precisione**.
+* 🔥 **Fuoco** batte 🌪️ **Vento** | 🌪️ **Vento** batte 🪨 **Terra** | 🪨 **Terra** batte 💧 **Acqua** | 💧 **Acqua** batte 🔥 **Fuoco**.
+* ✨ **Luce** e 🌑 **Tenebra** si distruggono a vicenda.
 
-* 🔥 **Fuoco** brucia il 🌪️ **Vento**
-* 🌪️ **Vento** erode la 🪨 **Terra**
-* 🪨 **Terra** assorbe l' 💧 **Acqua**
-* 💧 **Acqua** spegne il 🔥 **Fuoco**
-* ✨ **Luce** e 🌑 **Tenebra** sono reciprocamente letali (si infliggono danni extra a vicenda).
-* ⚪ **Normale** non ha debolezze né resistenze, ma le armi/armature Normali hanno statistiche base leggermente più alte.
+**Attenzione all'Inventario:** In combattimento, cambiare un'arma, un'armatura o bere una pozione **consumerà il tuo turno**. Pianifica bene le tue mosse!
 
-**Azioni in Combattimento:**
-1. **Attacca:** Tenta di colpire. La probabilità dipende dalla tua Precisione e dalla Schivata nemica.
-2. **Difenditi:** Non attacchi, ma dimezzi TUTTI i danni subiti in quel turno. Ottimo quando affronti Boss o se hai poca vita.
-3. **Inventario:** Ti permette di usare pozioni o cambiare arma/armatura senza perdere il turno!
-4. **Fuga:** Tenti di scappare. Dipende dalla tua Schivata. Se fallisci, perdi il turno! *(Impossibile fuggire dai Boss).*
+## 🌟 Le Reliquie Passive
+Durante la tua run potresti imbatterti in artefatti incredibili, le **Reliquie**. 
+Questi oggetti (trovabili nei Forzieri, donati da Eventi o droppati dai Boss) non si equipaggiano, ma restano attivi nello zaino per tutta la durata della run. Possono curarti a ogni attacco, raddoppiare l'efficacia degli elementi o garantirti scudi invincibili.
 
-## 🏕️ Meta-Progressione (Il Campo Base)
-L'Oro è prezioso, ma se muori ne perdi gran parte. 
-Nel menu delle porte troverai l'opzione **"Scappa dal Labirinto"**. Usala quando hai poca vita! Se scappi, tutto il tuo Oro si trasforma in **Essenza Astrale (✨)**.
-Usa l'Essenza all'Hub per:
-* Potenziare statistiche permanenti (HP, Sconti, ecc.).
-* Sbloccare nuovi Oggetti che potranno poi apparire nei forzieri.
-* Reclutare Eroi segreti (come il Paladino o il Berserker).
+## 🎭 Stanze Evento ed Evoluzione
+Oltre ai combattimenti, affronterai:
+* **Eventi Narrativi:** Stanze misteriose dove dovrai prendere decisioni drastiche. Potrai scambiare HP per reliquie, sfidare la sorte lanciando monete, o risvegliare mostri d'Elite per puro guadagno.
+* **L'Altare dell'Evoluzione (Forgia):** Quando riposi al Falò, puoi scegliere di sacrificare un'arma (o armatura) in tuo possesso per fonderla con un'altra dello stesso tipo, aumentandone permanentemente le statistiche e il livello. Non gettare mai via l'equipaggiamento extra!
 
-## 🏆 Maestrie e Imprese
-Giocando con una classe otterrai Esperienza di Classe. Salendo di Livello Maestria sbloccherai bonus permanenti validi per **TUTTI** i tuoi futuri personaggi.
-Inoltre, completare imprese specifiche (come *Vincere contro un boss senza subire danni*) sbloccherà oggetti Epici nascosti.
-
-## 💡 Consigli di Sopravvivenza
-* Conserva l'Oro per il **Falò**: migliorare un'arma di +3 ATK spesso è meglio che comprare un'arma nuova dal Mercante.
-* Guarda sempre gli elementi: se sei vestito di Fuoco e affronti un mostro d'Acqua, preparati a usare l'azione "Difesa" o a cambiare corazza dall'inventario.
-* Non avere fretta di arrivare al piano 30. Fai qualche run breve per farmare Essenza e sbloccare le abilità passive del *Fuoco dell'Anima*.
+## 🏕️ Hub e Patti del Caos
+Se "Scappi" dal labirinto (Opzione 3 al bivio), porterai in salvo l'Oro convertendolo in **Essenza Astrale**. Usala nel Campo Base per sbloccare Classi, Tratti e Perk.
+*Hai già vinto il gioco?* Si sbloccheranno i **Patti del Caos**. All'inizio di ogni run potrai attivare maledizioni (come prezzi raddoppiati o nemici più forti) per ricevere massicci moltiplicatori all'Essenza finale guadagnata!
