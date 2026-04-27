@@ -1,0 +1,9 @@
+{
+  "relics":[
+    {"id": "artiglio_vampiro", "name": "Artiglio Vampirico", "desc": "Ogni tuo attacco a segno ti cura di 5 HP."},
+    {"id": "lente_prismatica", "name": "Lente Prismatica", "desc": "Vantaggi e Svantaggi Elementali sono RADDOPPIATI."},
+    {"id": "scudo_cristallo", "name": "Scudo di Cristallo", "desc": "Il primo danno che subisci in ogni combattimento è ridotto a 0."},
+    {"id": "tasca_dorata", "name": "Tasca Dorata", "desc": "Aumenta tutto l'Oro trovato nei forzieri e dai mostri del 25%."},
+    {"id": "idolo_guerra", "name": "Idolo della Guerra", "desc": "Aumenta in modo permanente il tuo Attacco Base di +5."}
+  ]
+}
