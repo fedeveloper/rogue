@@ -14,7 +14,7 @@ Un gioco di ruolo roguelite testuale in Python, basato su un'architettura Data-D
 1. Assicurati di avere **Python 3.7+** installato sul tuo sistema.
 2. Scarica la repository/cartella del gioco.
 3. La struttura delle cartelle deve essere intatta:
-
+```text
    /
    ├── roguelike.py
    └── data/
