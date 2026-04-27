@@ -29,6 +29,17 @@ def delay_print(text: str, delay: float = 0.02):
         time.sleep(delay)
     print()
 
+# --- NUOVA FUNZIONE: INPUT ANTI-GLITCH ---
+def get_choice(prompt: str) -> str:
+    """Richiede un input al giocatore. Ignora gli invii a vuoto senza spammare il terminale."""
+    while True:
+        choice = input(prompt).strip()
+        if choice:  # Se la stringa non è vuota, la restituisce normalmente
+            return choice
+        # Se l'input è vuoto, sposta il cursore in su di 1 riga (\033[1A) e cancella la riga (\033[2K)
+        sys.stdout.write("\033[1A\r\033[2K")
+        sys.stdout.flush()
+
 # --- CARICAMENTO DATI (DATA-DRIVEN DESIGN) ---
 def load_json_file(filename: str) -> Dict[str, Any]:
     base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -79,7 +90,7 @@ class Weapon(Item):
         super().__init__(name, value, "weapon")
         self.atk = atk
         self.element = element
-        self.display_name = f"{name} [{get_element_icon(element)}]"
+        self.display_name = f"{name}[{get_element_icon(element)}]"
 
 class Armor(Item):
     def __init__(self, name: str, value: int, defense: int, element: str = "Normale"):
@@ -184,7 +195,6 @@ class Player:
             clear_screen()
             print(f"\n{Colors.MAGENTA}{Colors.BOLD}--- ZAINO E INVENTARIO ---{Colors.RESET}")
             
-            # --- MODIFICA 1: Mostriamo l'equipaggiamento attuale ---
             print(f"{Colors.CYAN}[ EQUIPAGGIAMENTO ATTUALE ]{Colors.RESET}")
             print(f"⚔️ Arma: {self.weapon.display_name} (+{self.weapon.atk} ATK)")
             print(f"🛡️ Armatura: {self.armor.display_name} (+{self.armor.defense} DEF)")
@@ -218,7 +228,9 @@ class Player:
                         print(f"{disp_idx+1}. [Oggetto] {item.display_name}{count_str} - Val: {item.value}")
                         
             print("\n0. Chiudi Zaino")
-            choice = input("Scegli un oggetto da usare/equipaggiare > ")
+            # Usiamo la nuova funzione get_choice!
+            choice = get_choice("Scegli un oggetto da usare/equipaggiare > ")
+            
             if choice == '0': break
             try:
                 idx = int(choice) - 1
@@ -285,7 +297,7 @@ def combat_room(player: Player, floor: int, is_boss: bool = False):
         print("3. Apri Inventario")
         print("4. Tenta la Fuga")
         
-        choice = input("Cosa fai? > ")
+        choice = get_choice("Cosa fai? > ")
         is_defending = False
         
         if choice in ['1', '2', '3', '4']:
@@ -378,7 +390,7 @@ def vendor_room(player: Player, floor: int):
         print("1. Guarda Merce (Compra)")
         print("2. Mostra Zaino (Vendi)")
         print("0. Saluta ed esci")
-        action = input("Scegli > ")
+        action = get_choice("Scegli > ")
         
         if action == '1':
             while True:
@@ -388,7 +400,7 @@ def vendor_room(player: Player, floor: int):
                     tipo = "Arma" if item.type=="weapon" else "Armatura" if item.type=="armor" else "Pozione"
                     print(f"{i+1}. [{tipo}] {item.display_name} - Prezzo: {Colors.YELLOW}{item.value} Oro{Colors.RESET}")
                 print("0. Indietro")
-                buy_choice = input("Cosa compri? > ")
+                buy_choice = get_choice("Cosa compri? > ")
                 if buy_choice == '0': break
                 try:
                     idx = int(buy_choice) - 1
@@ -414,7 +426,7 @@ def vendor_room(player: Player, floor: int):
                     for i, item in enumerate(player.inventory):
                         print(f"{i+1}. {item.display_name} - Val di vendita: {Colors.YELLOW}{max(1, item.value // 2)} Oro{Colors.RESET}")
                 print("0. Indietro")
-                sell_choice = input("Cosa vendi? > ")
+                sell_choice = get_choice("Cosa vendi? > ")
                 if sell_choice == '0': break
                 try:
                     idx = int(sell_choice) - 1
@@ -436,7 +448,7 @@ def campfire_room(player: Player, floor: int):
         print(f"2. Migliora Arma (Paga {Colors.YELLOW}50 Oro{Colors.RESET} per +3 ATK, il falò si spegnerà)")
         print("0. Prosegui senza fare nulla")
         
-        action = input("Scegli > ")
+        action = get_choice("Scegli > ")
         if action == '1':
             heal = player.max_hp // 2
             player.hp = min(player.max_hp, player.hp + heal)
@@ -504,7 +516,7 @@ def main():
     print(f"3. {Colors.BOLD}{c3.upper()}{Colors.RESET} (Danni enormi, vulnerabile)")
     
     while True:
-        choice = input("Scelta (1-3): ")
+        choice = get_choice("Scelta (1-3): ")
         if choice in ['1', '2', '3']:
             player = Player(choice)
             break
@@ -528,7 +540,7 @@ def main():
                 print("2. Apri lo Zaino / Controlla Statistiche")
                 print("3. Scappa dal Labirinto (Fine Partita)")
                 
-                action = input("Scegli > ")
+                action = get_choice("Scegli > ")
                 if action == '1': 
                     clear_screen()
                     break 
@@ -558,7 +570,6 @@ def main():
             floor += 1
             input("\nPremi INVIO per scendere le scale...")
 
-    # --- MODIFICA 2: Messaggi di fine partita e blocco chiusura terminale ---
     if player.hp <= 0:
         print("\n" + Colors.RED + "="*50)
         delay_print("S E I   M O R T O.")
@@ -570,7 +581,6 @@ def main():
         print(f"Piano raggiunto: {floor} | Oro guadagnato: {player.gold}💰")
         print("="*50 + Colors.RESET)
         
-    # Impedisce la chiusura istantanea su Windows
     input(f"\n{Colors.CYAN}Premi INVIO per uscire dal gioco...{Colors.RESET}")
 
 if __name__ == "__main__":

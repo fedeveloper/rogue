@@ -3,18 +3,30 @@
         "role": "Guerriero", "max_hp": 120, "gold": 20, "acc": 5, "dodge": 5,
         "weapon": {"name": "Spada di Ferro", "value": 20, "atk": 5, "element": "Normale"},
         "armor": {"name": "Cotta di Maglia", "value": 30, "def": 4, "element": "Normale"},
-        "potions": 1
+        "potions": 1, "unlocked_by_default": true
     },
     "2": {
         "role": "Ladro", "max_hp": 85, "gold": 100, "acc": 10, "dodge": 20,
         "weapon": {"name": "Pugnali Gemelli", "value": 30, "atk": 7, "element": "Vento"},
         "armor": {"name": "Cuoio Leggero", "value": 10, "def": 1, "element": "Normale"},
-        "potions": 2
+        "potions": 2, "unlocked_by_default": true
     },
     "3": {
         "role": "Mago", "max_hp": 65, "gold": 40, "acc": 20, "dodge": 0,
         "weapon": {"name": "Bastone Infernale", "value": 50, "atk": 11, "element": "Fuoco"},
         "armor": {"name": "Vesti di Seta", "value": 5, "def": 0, "element": "Luce"},
-        "potions": 3
+        "potions": 3, "unlocked_by_default": true
+    },
+    "4": {
+        "role": "Paladino", "max_hp": 180, "gold": 10, "acc": 5, "dodge": -10,
+        "weapon": {"name": "Martello della Luce", "value": 40, "atk": 8, "element": "Luce"},
+        "armor": {"name": "Armatura Benedetta", "value": 80, "def": 10, "element": "Luce"},
+        "potions": 1, "unlocked_by_default": false, "unlock_id": "class_paladin", "unlock_cost": 400, "desc": "Un carro armato vivente. Lento, non schiva, ma incassa tutto."
+    },
+    "5": {
+        "role": "Berserker", "max_hp": 100, "gold": 0, "acc": 15, "dodge": 5,
+        "weapon": {"name": "Ascia Sanguinaria", "value": 60, "atk": 16, "element": "Tenebra"},
+        "armor": {"name": "Petto Nudo", "value": 0, "def": 0, "element": "Normale"},
+        "potions": 0, "unlocked_by_default": false, "unlock_id": "class_berserker", "unlock_cost": 800, "desc": "Nessuna difesa, nessuna pozione iniziale. Solo danni devastanti."
     }
 }

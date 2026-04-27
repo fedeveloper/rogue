@@ -5,6 +5,8 @@
         {"name": "Decotto alle Erbe", "base_heal": 35, "val_base": 15},
         {"name": "Pozione Curativa", "base_heal": 50, "val_base": 20},
         {"name": "Elisir Maggiore", "base_heal": 80, "val_base": 35},
-        {"name": "Lacrima di Fenice", "base_heal": 120, "val_base": 60}
+        {"name": "Lacrima di Fenice", "base_heal": 150, "val_base": 60},
+        
+        {"name": "Elisir degli Dei", "base_heal": 300, "val_base": 150, "unlock_id": "elisir_dei", "unlock_cost": 200, "desc": "Cura quasi completamente qualsiasi eroe."}
     ]
 }

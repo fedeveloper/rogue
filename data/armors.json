@@ -1,12 +1,14 @@
 {
     "armors":[
-        {"name": "Vesti di Stracci", "base_def": 0},
         {"name": "Tunica del Viaggiatore", "base_def": 1},
-        {"name": "Veste Runica", "base_def": 2},
         {"name": "Corazza di Cuoio", "base_def": 2},
-        {"name": "Giubba Borchiata", "base_def": 3},
         {"name": "Cotta di Maglia", "base_def": 4},
-        {"name": "Corazza a Piastre", "base_def": 5},
-        {"name": "Armatura Pesante Nanesca", "base_def": 6}
+        {"name": "Corazza a Piastre", "base_def": 6},
+        {"name": "Armatura Pesante Nanesca", "base_def": 8},
+        {"name": "Armatura in Mithril", "base_def": 10},
+        {"name": "Corazza di Scaglie di Drago", "base_def": 14},
+        
+        {"name": "Mantello Riflettente", "base_def": 9, "unlock_id": "mantello_riflettente", "unlock_cost": 300, "desc": "Leggera ma con una difesa base altissima."},
+        {"name": "Egida del Titano", "base_def": 20, "unlock_id": "egida_titano", "unlock_cost": 600, "desc": "Un muro impenetrabile."}
     ]
 }
