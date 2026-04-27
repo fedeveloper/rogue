@@ -1,0 +1,26 @@
+{
+  "fontana_fatata": {
+    "title": "La Fontana Fatata", "text": "Una fonte d'acqua purissima brilla nel buio. Ha un'aura mistica.",
+    "choices":[
+      {"text": "Bevi profondamente (Cura 100% HP)", "action": "heal_max"},
+      {"text": "Lancia una moneta (-20 Oro, 50% Chance di Reliquia)", "action": "coin_toss"},
+      {"text": "Ignora e prosegui", "action": "none"}
+    ]
+  },
+  "mendicante_ombra": {
+    "title": "Il Mendicante Ombra", "text": "Una figura avvolta da stracci ti tende una mano scheletrica.",
+    "choices":[
+      {"text": "Dona 50 Oro (Ottieni un'Arma Epica)", "action": "trade_weapon"},
+      {"text": "Offri il tuo sangue (-30 HP, Ottieni Reliquia)", "action": "trade_relic"},
+      {"text": "Ignora", "action": "none"}
+    ]
+  },
+  "altare_sangue": {
+    "title": "Altare del Sangue", "text": "Un altare pulsante di energia oscura attende un tributo.",
+    "choices":[
+      {"text": "Prega l'Oscurità (+100 Oro, ma Subisci 40 Danni)", "action": "blood_gold"},
+      {"text": "Distruggi l'Altare (Combatti un Nemico d'Elite)", "action": "fight_elite"},
+      {"text": "Allontanati in silenzio", "action": "none"}
+    ]
+  }
+}

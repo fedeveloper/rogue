@@ -1,18 +1,20 @@
 {
-    "mastery_xp_requirements": {
-        "2": 100,
-        "3": 250,
-        "4": 500,
-        "5": 1000
-    },
+    "mastery_xp_requirements": {"2": 100, "3": 250, "4": 500, "5": 1000},
     "traits": {
         "base": {"name": "Nessun Tratto", "desc": "Gioca con le regole standard.", "unlock_req": "none"},
         "maledetto": {"name": "Patto del Sangue", "desc": "+50 ATK, ma le cure hanno effetto ZERO.", "unlock_req": "deaths_10"},
-        "midas": {"name": "Tocco di Mida", "desc": "I mostri non danno EXP, ma l'Oro ottenuto è TRIPLICATO.", "unlock_req": "gold_5000"}
+        "midas": {"name": "Tocco di Mida", "desc": "Non ottieni EXP dai mostri, ma l'Oro è TRIPLICATO.", "unlock_req": "gold_5000"}
+    },
+    "pacts": {
+        "durezza": {"name": "Durezza", "desc": "HP di tutti i Nemici +30%", "bonus": 0.25},
+        "furia": {"name": "Furia", "desc": "Attacco di tutti i Nemici +30%", "bonus": 0.25},
+        "carestia": {"name": "Carestia", "desc": "Le pozioni curano la metà", "bonus": 0.25},
+        "inflazione": {"name": "Inflazione", "desc": "I prezzi del Mercante sono Raddoppiati", "bonus": 0.25},
+        "trappole": {"name": "Labirinto Mortale", "desc": "Le Trappole infliggono danni Doppi", "bonus": 0.25}
     },
     "feats": {
         "feat_pacifista": {"name": "L'Ombra", "desc": "Scappa da 10 combattimenti in una singola run.", "target": 10, "reward_type": "perk", "reward_id": "scarpisti"},
-        "feat_fabbro": {"name": "Fabbro Folle", "desc": "Spendi 200 Oro in potenziamenti al Falò in una run.", "target": 200, "reward_type": "unlock", "reward_id": "spadone_infranto"},
+        "feat_fabbro": {"name": "Fabbro Folle", "desc": "Fondi 3 oggetti alla Forgia in una run.", "target": 3, "reward_type": "unlock", "reward_id": "spadone_infranto"},
         "feat_vetro": {"name": "Cannone di Vetro", "desc": "Sconfiggi un Boss senza subire alcun danno.", "target": 1, "reward_type": "unlock", "reward_id": "veste_eterea"},
         "feat_suicida": {"name": "Danza con la Morte", "desc": "Sconfiggi un nemico avendo esattamente 1 HP rimanente.", "target": 1, "reward_type": "class", "reward_id": "5"}
     }
