@@ -1,0 +1,23 @@
+{
+    "list":[
+        "Fuoco", "Acqua", "Terra", "Vento", "Luce", "Tenebra", "Normale"
+    ],
+    "icons": {
+        "Fuoco": "🔥",
+        "Acqua": "💧",
+        "Terra": "🪨",
+        "Vento": "🌪️",
+        "Luce": "✨",
+        "Tenebra": "🌑",
+        "Normale": "⚪"
+    },
+    "multipliers": {
+        "Fuoco": {"Vento": 1.5, "Acqua": 0.5},
+        "Acqua": {"Fuoco": 1.5, "Terra": 0.5},
+        "Terra": {"Acqua": 1.5, "Vento": 0.5},
+        "Vento": {"Terra": 1.5, "Fuoco": 0.5},
+        "Luce": {"Tenebra": 1.5, "Luce": 0.5},
+        "Tenebra": {"Luce": 1.5, "Tenebra": 0.5},
+        "Normale": {}
+    }
+}

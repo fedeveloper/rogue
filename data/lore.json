@@ -1,0 +1,24 @@
+{
+    "combat":[
+        "Entri in una cripta in rovina, l'odore di polvere è opprimente. Dall'ombra emerge qualcosa...",
+        "Le pareti di questa caverna trasudano umidità. Un rumore di passi si fa sempre più vicino.",
+        "Colonne spezzate sorreggono un soffitto a malapena stabile. Tra le rovine, noti un movimento ostile.",
+        "L'aria qui è gelida. Il pavimento è coperto di ossa... e il predatore è ancora qui."
+    ],
+    "boss":[
+        "Le immense porte di ferro si chiudono alle tue spalle con un tonfo sordo. L'aria stessa trema.",
+        "L'arena è illuminata da bracieri spettrali. Al centro, una figura mostruosa ti attende da eoni."
+    ],
+    "vendor":[
+        "L'aria qui sa di incenso. Un mercante incappucciato ha allestito un emporio in mezzo al caos."
+    ],
+    "treasure":[
+        "Un forziere riposa solitario, illuminato da un fascio di luce. Nessun nemico in vista."
+    ],
+    "trap":[
+        "La stanza è stranamente simmetrica. Mentre cammini, scatta un meccanismo nascosto!"
+    ],
+    "campfire":[
+        "Trovi una stanza sicura con un falò scoppiettante. L'aria è calda e confortevole."
+    ]
+}

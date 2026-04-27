@@ -1,0 +1,27 @@
+{
+    "enemies": {
+        "Goblin": {"element": "Normale", "base_hp": 15, "base_atk": 4, "base_dodge": 5, "base_acc": 5},
+        "Scheletro": {"element": "Tenebra", "base_hp": 12, "base_atk": 6, "base_dodge": 5, "base_acc": 5},
+        "Orco": {"element": "Terra", "base_hp": 25, "base_atk": 5, "base_dodge": 0, "base_acc": 5},
+        "Bandito": {"element": "Normale", "base_hp": 12, "base_atk": 5, "base_dodge": 10, "base_acc": 5},
+        "Ragno Gigante": {"element": "Terra", "base_hp": 18, "base_atk": 4, "base_dodge": 5, "base_acc": 5},
+        "Lupo Mannaro": {"element": "Normale", "base_hp": 20, "base_atk": 7, "base_dodge": 15, "base_acc": 5},
+        "Spettro Urlante": {"element": "Tenebra", "base_hp": 8, "base_atk": 8, "base_dodge": 20, "base_acc": 5},
+        "Costrutto di Pietra": {"element": "Terra", "base_hp": 30, "base_atk": 3, "base_dodge": -5, "base_acc": 5},
+        "Cultista dell'Abisso": {"element": "Tenebra", "base_hp": 14, "base_atk": 6, "base_dodge": 5, "base_acc": 10},
+        "Gargoyle": {"element": "Vento", "base_hp": 20, "base_atk": 5, "base_dodge": 15, "base_acc": 5},
+        "Elementale del Fuoco": {"element": "Fuoco", "base_hp": 16, "base_atk": 6, "base_dodge": 10, "base_acc": 5},
+        "Melma Acida": {"element": "Acqua", "base_hp": 22, "base_atk": 4, "base_dodge": -5, "base_acc": 5},
+        "Cavaliere Corrotto": {"element": "Tenebra", "base_hp": 25, "base_atk": 6, "base_dodge": 5, "base_acc": 10}
+    },
+    "bosses": {
+        "Re dei Goblin": {"element": "Normale", "base_hp": 50, "base_atk": 8, "base_dodge": 15, "base_acc": 15},
+        "Cavaliere Oscuro": {"element": "Tenebra", "base_hp": 60, "base_atk": 10, "base_dodge": 10, "base_acc": 15},
+        "Drago di Zaffiro": {"element": "Acqua", "base_hp": 70, "base_atk": 9, "base_dodge": 10, "base_acc": 15},
+        "Negromante Supremo": {"element": "Tenebra", "base_hp": 45, "base_atk": 12, "base_dodge": 15, "base_acc": 15},
+        "Demone Maggiore": {"element": "Fuoco", "base_hp": 65, "base_atk": 11, "base_dodge": 10, "base_acc": 15},
+        "Goliath d'Ossa": {"element": "Terra", "base_hp": 80, "base_atk": 8, "base_dodge": 5, "base_acc": 15},
+        "Angelo Caduto": {"element": "Luce", "base_hp": 55, "base_atk": 10, "base_dodge": 20, "base_acc": 20},
+        "Il Re Senza Volto": {"element": "Vento", "base_hp": 50, "base_atk": 9, "base_dodge": 25, "base_acc": 15}
+    }
+}

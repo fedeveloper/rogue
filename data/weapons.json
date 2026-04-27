@@ -1,0 +1,13 @@
+{
+    "weapons":[
+        {"name": "Pugnale Arrugginito", "base_atk": 2},
+        {"name": "Spada Corta", "base_atk": 3},
+        {"name": "Stocco Sottile", "base_atk": 3},
+        {"name": "Ascia da Battaglia", "base_atk": 4},
+        {"name": "Mazza Chiodata", "base_atk": 4},
+        {"name": "Falce del Mietitore", "base_atk": 5},
+        {"name": "Alabarda della Guardia", "base_atk": 5},
+        {"name": "Spadone a Due Mani", "base_atk": 6},
+        {"name": "Martello da Guerra", "base_atk": 6}
+    ]
+}

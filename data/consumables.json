@@ -1,0 +1,10 @@
+{
+    "consumables":[
+        {"name": "Fiala di Sangue", "base_heal": 15, "val_base": 5},
+        {"name": "Pozione Minore", "base_heal": 25, "val_base": 10},
+        {"name": "Decotto alle Erbe", "base_heal": 35, "val_base": 15},
+        {"name": "Pozione Curativa", "base_heal": 50, "val_base": 20},
+        {"name": "Elisir Maggiore", "base_heal": 80, "val_base": 35},
+        {"name": "Lacrima di Fenice", "base_heal": 120, "val_base": 60}
+    ]
+}
