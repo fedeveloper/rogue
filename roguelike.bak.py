@@ -100,8 +100,8 @@ GAME_DATA = {
     "bosses": RAW_DATA["bosses"],
     "lore": RAW_DATA["lore"],
     "elements": RAW_DATA["elements"],
-    "weapons": [w for w in RAW_DATA["weapons"] if w.get("unlock_id") is None or w["unlock_id"] in PROFILE["unlocked_ids"]],
-    "armors": [a for a in RAW_DATA["armors"] if a.get("unlock_id") is None or a["unlock_id"] in PROFILE["unlocked_ids"]],
+    "weapons":[w for w in RAW_DATA["weapons"] if w.get("unlock_id") is None or w["unlock_id"] in PROFILE["unlocked_ids"]],
+    "armors":[a for a in RAW_DATA["armors"] if a.get("unlock_id") is None or a["unlock_id"] in PROFILE["unlocked_ids"]],
     "consumables":[c for c in RAW_DATA["consumables"] if c.get("unlock_id") is None or c["unlock_id"] in PROFILE["unlocked_ids"]]
 }
 
@@ -227,10 +227,14 @@ class Player:
         while True:
             clear_screen()
             print(f"\n{Colors.MAGENTA}{Colors.BOLD}--- ZAINO E INVENTARIO ---{Colors.RESET}")
-            print(f"{Colors.CYAN}[ EQUIPAGGIAMENTO ATTUALE ]{Colors.RESET}")
-            print(f"⚔️ Arma: {self.weapon.display_name} (+{self.weapon.atk} ATK)")
-            print(f"🛡️ Armatura: {self.armor.display_name} (+{self.armor.defense} DEF)")
-            print("-" * 35)
+            
+            # --- MODIFICA IMPORTANTE: Scheda Eroe completa nell'inventario ---
+            print(f"{Colors.CYAN}[ SCHEDA EROE & EQUIPAGGIAMENTO ]{Colors.RESET}")
+            print(f"❤️  HP: {Colors.GREEN}{self.hp}/{self.max_hp}{Colors.RESET} | 💰 Oro: {Colors.YELLOW}{self.gold}{Colors.RESET} | 🌟 Livello: {self.level} ({self.exp}/{self.max_exp} EXP)")
+            print(f"🎯 Precisione: +{self.base_acc}% | 💨 Schivata: {self.base_dodge}%")
+            print(f"⚔️  Arma: {self.weapon.display_name} (+{self.weapon.atk} ATK)")
+            print(f"🛡️  Armatura: {self.armor.display_name} (+{self.armor.defense} DEF)")
+            print("-" * 55)
             
             if not self.inventory: 
                 print("L'inventario è vuoto.")
@@ -265,8 +269,10 @@ class Player:
                 if 0 <= idx < len(display_items):
                     real_idx, item, count = display_items[idx]
                     if item.type == "consumable":
+                        old_hp = self.hp
                         self.hp = min(self.max_hp, self.hp + item.heal_amount)
-                        print(f"{Colors.GREEN}\n-> Usi il consumabile. Recuperi {item.heal_amount} HP! (HP: {self.hp}/{self.max_hp}){Colors.RESET}")
+                        healed = self.hp - old_hp
+                        print(f"{Colors.GREEN}\n-> Usi {item.name}. Recuperi {healed} HP! (HP: {self.hp}/{self.max_hp}){Colors.RESET}")
                         self.inventory.pop(real_idx)
                         input("Premi INVIO per continuare...")
                     elif item.type == "weapon":
@@ -326,7 +332,7 @@ def combat_room(player: Player, floor: int, is_boss: bool = False):
         choice = get_choice("Cosa fai? > ")
         is_defending = False
         
-        if choice in ['1', '2', '3', '4']: clear_screen()
+        if choice in['1', '2', '3', '4']: clear_screen()
             
         if choice == '1':
             multiplier = MULTIPLIERS.get(player.weapon.element, {}).get(enemy.element, 1.0)
@@ -399,7 +405,6 @@ def vendor_room(player: Player, floor: int):
     delay_print(f"\n{random.choice(GAME_DATA['lore']['vendor'])}")
     items_for_sale =[generate_weapon(floor + 1), generate_armor(floor + 1), generate_potion(floor), generate_potion(floor)]
     
-    # APPLICAZIONE PERK: MERCANTEGGIARE (10% sconto per livello)
     discount = 1.0 - (PROFILE["perks"]["discount_lvl"] * 0.10)
     for i in items_for_sale: i.value = max(1, int(i.value * discount))
 
@@ -511,7 +516,6 @@ def trap_room(player: Player, floor: int):
     input("\nPremi INVIO per continuare...")
 
 def generate_floor_deck(floor: int) -> List[str]:
-    # Aumentiamo le stanze nei piani più alti
     deck = ["combat"] * (random.randint(3, 5) + (floor // 5))
     deck.append("vendor")
     deck.append("campfire")
@@ -582,7 +586,6 @@ def base_camp():
                 clear_screen()
                 print(f"{Colors.CYAN}--- FORGIA DIMENSIONALE --- Essenza: ✨{PROFILE['essence']}{Colors.RESET}")
                 
-                # Raccogli tutti gli oggetti bloccati dai JSON
                 locked_items =[]
                 for cat in ["weapons", "armors", "consumables"]:
                     for item in RAW_DATA[cat]:
@@ -607,8 +610,7 @@ def base_camp():
                             PROFILE["unlocked_ids"].append(item["unlock_id"])
                             save_profile(PROFILE)
                             print(f"{Colors.GREEN}Hai sbloccato {item['name']}! Ora potrà apparire nel Labirinto.{Colors.RESET}")
-                            # Ricarichiamo a caldo il GAME_DATA per la sessione corrente
-                            for cat in ["weapons", "armors", "consumables"]:
+                            for cat in["weapons", "armors", "consumables"]:
                                 GAME_DATA[cat] = [x for x in RAW_DATA[cat] if x.get("unlock_id") is None or x["unlock_id"] in PROFILE["unlocked_ids"]]
                             time.sleep(2)
                 except ValueError: pass
@@ -617,7 +619,7 @@ def base_camp():
             while True:
                 clear_screen()
                 print(f"{Colors.CYAN}--- LA TAVERNA --- Essenza: ✨{PROFILE['essence']}{Colors.RESET}")
-                locked_classes = []
+                locked_classes =[]
                 for c_id, c_data in RAW_DATA["classes"].items():
                     if not c_data.get("unlocked_by_default") and c_data.get("unlock_id") not in PROFILE["unlocked_ids"]:
                         locked_classes.append((c_id, c_data))
@@ -665,14 +667,13 @@ def play_game(infinite_mode=False):
     floor = 1
     
     while player.hp > 0 and not player.escaped:
-        # VITTORIA MODALITÀ NORMALE (Piano 30 Superato)
         if not infinite_mode and floor > 30:
             clear_screen()
             print(f"{Colors.YELLOW}{Colors.BOLD}="*50)
             delay_print("H A I   V I N T O ! ! !")
             print("Hai sconfitto il Dio Antico e sei fuggito dal labirinto!")
             print("="*50 + Colors.RESET)
-            PROFILE["essence"] += 1000 # Bonus massiccio
+            PROFILE["essence"] += 1000
             PROFILE["won_normal"] = True
             save_profile(PROFILE)
             input(f"\n{Colors.CYAN}Premi INVIO per tornare al Menu...{Colors.RESET}")
@@ -689,7 +690,6 @@ def play_game(infinite_mode=False):
             while True:
                 print(f"\n{Colors.CYAN}--- Piano {floor} | Porta {room_num} di {total_rooms} ---{Colors.RESET}")
                 
-                # APPLICAZIONE PERK: SESTO SENSO
                 if PROFILE["perks"]["sesto_senso"]:
                     hint = {"combat": "Senti odore di sangue...", "boss": "Un'aura terrificante proviene da lì...", "treasure": "Scorgi un luccichio dorato...", "trap": "La stanza è fin troppo silenziosa...", "vendor": "Senti profumo di incenso...", "campfire": "Senti odore di legna bruciata..."}
                     print(f"{Colors.BLUE}[Sesto Senso] {hint.get(room_type, 'Ignoto')}{Colors.RESET}")
@@ -703,7 +703,6 @@ def play_game(infinite_mode=False):
                     clear_screen()
                     break 
                 elif action == '2':
-                    player.print_stats()
                     player.manage_inventory()
                 elif action == '3':
                     clear_screen()
@@ -730,16 +729,15 @@ def play_game(infinite_mode=False):
                 PROFILE["max_floor"] = floor
             input("\nPremi INVIO per scendere le scale...")
 
-    # RESOCONTO E CALCOLO ESSENZA ASTRALE
     print("\n" + ("="*50))
     if player.hp <= 0:
         delay_print(f"{Colors.RED}S E I   M O R T O.{Colors.RESET}")
-        player.essence_gathered += int(player.gold * 0.20) # Trattieni il 20% dell'oro se muori
+        player.essence_gathered += int(player.gold * 0.20)
     elif player.escaped:
         delay_print(f"{Colors.GREEN}S E I   F U G G I T O.{Colors.RESET}")
-        player.essence_gathered += player.gold # Converti 1:1 se scappi
+        player.essence_gathered += player.gold
         
-    player.essence_gathered += (player.bosses_killed * 50) # Bonus boss
+    player.essence_gathered += (player.bosses_killed * 50)
 
     print(f"Piano raggiunto: {floor}")
     print(f"Boss sconfitti: {player.bosses_killed}")

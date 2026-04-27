@@ -10,6 +10,7 @@
         {"name": "Meteora Chiodata", "base_atk": 11},
         
         {"name": "Spada del Carnefice", "base_atk": 15, "unlock_id": "spada_carnefice", "unlock_cost": 250, "desc": "Arma devastante ma sbilanciata."},
-        {"name": "Falce Divora-Anime", "base_atk": 18, "unlock_id": "falce_anime", "unlock_cost": 500, "desc": "Danni base spaventosi per le run più profonde."}
+        {"name": "Falce Divora-Anime", "base_atk": 18, "unlock_id": "falce_anime", "unlock_cost": 500, "desc": "Danni base spaventosi per le run più profonde."},
+		{"name": "Spadone Infranto", "base_atk": 25, "unlock_id": "spadone_infranto", "unlock_cost": 0, "desc": "Leggendario, ottenuto tramite Imprese."}
     ]
 }

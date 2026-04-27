@@ -9,6 +9,7 @@
         {"name": "Corazza di Scaglie di Drago", "base_def": 14},
         
         {"name": "Mantello Riflettente", "base_def": 9, "unlock_id": "mantello_riflettente", "unlock_cost": 300, "desc": "Leggera ma con una difesa base altissima."},
-        {"name": "Egida del Titano", "base_def": 20, "unlock_id": "egida_titano", "unlock_cost": 600, "desc": "Un muro impenetrabile."}
+        {"name": "Egida del Titano", "base_def": 20, "unlock_id": "egida_titano", "unlock_cost": 600, "desc": "Un muro impenetrabile."},
+		{"name": "Veste Eterea", "base_def": 0, "unlock_id": "veste_eterea", "unlock_cost": 0, "desc": "Difesa zero, ma incrementa passivamente le schivate (nascosto)."}
     ]
 }
