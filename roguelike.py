@@ -846,7 +846,7 @@ def base_camp():
             while True:
                 clear_screen()
                 print(f"{Colors.CYAN}--- LA TAVERNA --- Essenza: ✨{PROFILE['essence']}{Colors.RESET}")
-                lkc =[(c_id, c) for c_id, c in RAW_DATA["classes"].items() if not c.get("unlocked_by_default") and c.get("unlock_id") not in PROFILE["unlocked_ids"]]
+                lkc =[(c_id, c) for c_id, c in RAW_DATA["classes"].items() if not c.get("unlocked_by_default") and c_id not in PROFILE["unlocked_ids"] and c.get("unlock_id") not in PROFILE["unlocked_ids"]]
                 if not lkc: print("Tutti reclutati!")
                 else:
                     for i, (c_id, c) in enumerate(lkc): print(f"{i+1}. {Colors.BOLD}{c['role']}{Colors.RESET} ({c['desc']}) - Costo: ✨{c.get('unlock_cost', 0)}")
@@ -867,7 +867,7 @@ def base_camp():
                 print(f"{st} {f['name']}: {f['desc']}")
             print(f"\n{Colors.CYAN}--- MAESTRIA CLASSI ---{Colors.RESET}")
             for c_id, c in RAW_DATA["classes"].items():
-                if c.get("unlocked_by_default") or c.get("unlock_id") in PROFILE["unlocked_ids"]:
+                if c.get("unlocked_by_default") or c_id in PROFILE["unlocked_ids"] or c.get("unlock_id") in PROFILE["unlocked_ids"]:
                     print(f"{c['role']}: Lv.{PROFILE['class_lvl'].get(c_id, 1)} (XP: {PROFILE['class_xp'].get(c_id, 0)})")
             input("\nPremi INVIO per tornare indietro...")
         elif choice == '0': break
@@ -875,7 +875,7 @@ def base_camp():
 def play_game(infinite_mode=False):
     clear_screen()
     print(f"\n{Colors.CYAN}Scegli il tuo Eroe:{Colors.RESET}")
-    avail_c = {c_id: c for c_id, c in RAW_DATA["classes"].items() if c.get("unlocked_by_default") or c.get("unlock_id") in PROFILE["unlocked_ids"]}
+    avail_c = {c_id: c for c_id, c in RAW_DATA["classes"].items() if c.get("unlocked_by_default") or c_id in PROFILE["unlocked_ids"] or c.get("unlock_id") in PROFILE["unlocked_ids"]}
     
     avail_c_list = list(avail_c.items())
     for i, (c_id, c) in enumerate(avail_c_list): 
