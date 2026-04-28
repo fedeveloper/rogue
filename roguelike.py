@@ -136,7 +136,7 @@ def generate_potion(level: int) -> Consumable:
     return Consumable(f"{name} (Cura {heal})" if heal > 0 else name, val, heal)
 
 def get_random_relic(player):
-    avail =[r for r in GAME_DATA["relics"] if r["id"] not in player.relic_ids]
+    avail = [r for r in GAME_DATA["relics"] if r["id"] not in player.relic_ids]
     if not avail: return None
     return random.choice(avail)
 
@@ -187,7 +187,6 @@ class Player:
         self.relic_ids.append(relic["id"])
         print(f"\n{Colors.MAGENTA}🌟 Hai ottenuto la Reliquia: {relic['name']}!{Colors.RESET}")
         print(f"Effetto: {relic['desc']}")
-        # APPLICAZIONE STATISTICHE STATICHE DELLE NUOVE RELIQUIE
         if relic["id"] == "idolo_guerra": self.bonus_atk_relic += 5
         elif relic["id"] == "lama_sangue": self.bonus_atk_relic += 10
         elif relic["id"] == "mantello_nebbioso": self.base_dodge += 15
@@ -195,17 +194,12 @@ class Player:
 
     def get_total_atk(self): return self.weapon.atk + self.bonus_atk_relic
     
-    def get_dodge(self):
-        # La schivata scende a 0% con l'Idolo dell'Avidità
-        return 0 if "idolo_avidita" in self.relic_ids else self.base_dodge
+    def get_dodge(self): return 0 if "idolo_avidita" in self.relic_ids else self.base_dodge
 
     def gain_exp(self, amount: int):
         if self.midas: return
-        
-        # Moltiplicatore EXP con Tomo della Conoscenza
         multi = self.exp_multiplier + (0.3 if "tomo_conoscenza" in self.relic_ids else 0.0)
         amount = int(amount * multi)
-        
         self.exp += amount
         print(f"{Colors.CYAN}Ottieni {amount} EXP! ({self.exp}/{self.max_exp}){Colors.RESET}")
         while self.exp >= self.max_exp:
@@ -215,16 +209,6 @@ class Player:
             if not self.cursed: self.hp = self.max_hp
             self.base_acc += 2; self.base_dodge += 2
             print(f"\n{Colors.YELLOW}{Colors.BOLD}*** LEVEL UP! Sei salito al livello {self.level}! ***{Colors.RESET}")
-
-    def print_stats(self):
-        print(f"\n{Colors.CYAN}=== SCHEDA: {self.role.upper()} (Lv. {self.level}) ==={Colors.RESET}")
-        print(f"Tratto: {self.trait['name']} | Maledizioni (Patti): {len(self.active_pacts)}")
-        print(f"HP: {Colors.GREEN}{self.hp}/{self.max_hp}{Colors.RESET} | Oro: {Colors.YELLOW}{self.gold}💰{Colors.RESET} | EXP: {Colors.MAGENTA}{self.exp}/{self.max_exp}{Colors.RESET}")
-        print(f"Precisione: +{self.base_acc}% | Schivata: {self.get_dodge()}%")
-        print(f"Arma: {self.weapon.display_name} (+{self.get_total_atk()} ATK)")
-        print(f"Armatura: {self.armor.display_name} (+{self.armor.defense} DEF)")
-        if self.relics: print(f"Reliquie: {', '.join([r['name'] for r in self.relics])}")
-        print(f"{Colors.CYAN}============================================{Colors.RESET}")
 
     def manage_inventory(self, in_combat=False) -> str:
         while True:
@@ -254,7 +238,7 @@ class Player:
                     count_str = f" {Colors.YELLOW}[x{count}]{Colors.RESET}" if count > 1 else ""
                     if item.type == "weapon": print(f"{disp_idx+1}. [Arma] {item.display_name} (+{item.atk}) - Lv.{item.level}")
                     elif item.type == "armor": print(f"{disp_idx+1}. [Armatura] {item.display_name} (+{item.defense}) - Lv.{item.level}")
-                    elif item.type == "consumable": print(f"{disp_idx+1}.[Oggetto] {item.display_name}{count_str}")
+                    elif item.type == "consumable": print(f"{disp_idx+1}. [Oggetto] {item.display_name}{count_str}")
                         
             print("\n0. Chiudi Zaino")
             choice = get_choice("Scegli un oggetto da usare/equipaggiare > ")
@@ -285,7 +269,6 @@ class Player:
                                 self.inventory.pop(real_idx)
                             else:
                                 old_hp = self.hp
-                                # APPLICAZIONE RELIQUIA CALICE E PATTO CARESTIA
                                 base_h = item.heal_amount
                                 if "calice_alchimista" in self.relic_ids: base_h = int(base_h * 1.5)
                                 h_amt = base_h // 2 if "carestia" in self.active_pacts else base_h
@@ -312,8 +295,9 @@ class Player:
             except ValueError: pass
 
 class Enemy:
-    def __init__(self, floor: int, is_boss: bool, active_pacts: List[str]):
+    def __init__(self, floor: int, is_boss: bool, active_pacts: List[str], modifier: str = "normal"):
         self.is_boss = is_boss
+        self.modifier = modifier
         category = "bosses" if is_boss else "enemies"
         self.name = random.choice(list(GAME_DATA[category].keys()))
         data = GAME_DATA[category][self.name]
@@ -330,14 +314,24 @@ class Enemy:
             self.atk = data["base_atk"] + int(lvl_scale * 1.0) + random.randint(0, 1)
             self.gold_drop, self.exp_drop = 10 + (floor * 5), 30 + (floor * 10)
             
+        if self.modifier == "hard":
+            self.hp = int(self.hp * 1.4)
+            self.atk = int(self.atk * 1.4)
+            self.name += f"{Colors.MAGENTA} (Potenziato){Colors.RESET}"
+        elif self.modifier == "easy":
+            self.hp = int(self.hp * 0.6)
+            self.atk = int(self.atk * 0.6)
+            self.name += f"{Colors.CYAN} (Debilitato){Colors.RESET}"
+            
         if "durezza" in active_pacts: self.hp = int(self.hp * 1.3)
         if "furia" in active_pacts: self.atk = int(self.atk * 1.3)
 
 # --- STANZE E COMBATTIMENTO ---
 def combat_room(player: Player, floor: int, enemy_instance: Enemy):
-    delay_print(f"\n{random.choice(GAME_DATA['lore']['boss' if enemy_instance.is_boss else 'combat'])}")
-    boss_tag = f"{Colors.MAGENTA} [BOSS]{Colors.RESET}" if enemy_instance.is_boss else ""
-    delay_print(f"{Colors.RED}!!! Incontri un {enemy_instance.name.upper()}{boss_tag}[{get_element_icon(enemy_instance.element)}] !!!{Colors.RESET}", 0.04)
+    if enemy_instance.modifier == "normal":
+        delay_print(f"\n{random.choice(GAME_DATA['lore']['boss' if enemy_instance.is_boss else 'combat'])}")
+        boss_tag = f"{Colors.MAGENTA} [BOSS]{Colors.RESET}" if enemy_instance.is_boss else ""
+        delay_print(f"{Colors.RED}!!! Incontri un {enemy_instance.name.upper()}{boss_tag} [{get_element_icon(enemy_instance.element)}] !!!{Colors.RESET}", 0.04)
     
     boss_hit_taken = False
     shield_active = "scudo_cristallo" in player.relic_ids
@@ -356,10 +350,8 @@ def combat_room(player: Player, floor: int, enemy_instance: Enemy):
         print(f"Ottieni {Colors.YELLOW}{g_drop} oro{Colors.RESET}.")
         player.gain_exp(enemy_instance.exp_drop)
         
-        # RELIQUIA CUORE DI TROLL
         if "cuore_troll" in player.relic_ids:
-            player.max_hp += 2
-            player.hp += 2
+            player.max_hp += 2; player.hp += 2
             print(f"{Colors.GREEN}Il Cuore di Troll pulsa: +2 HP Massimi!{Colors.RESET}")
         
         if enemy_instance.is_boss:
@@ -370,6 +362,12 @@ def combat_room(player: Player, floor: int, enemy_instance: Enemy):
                 drop = generate_weapon(floor + 2, True) if random.random() > 0.5 else generate_armor(floor + 2, True)
                 print(f"\n{Colors.MAGENTA}DROP LEGGENDARIO: {drop.display_name}!{Colors.RESET}")
                 player.inventory.append(drop)
+        elif enemy_instance.modifier == "hard":
+            drop = generate_weapon(floor, False) if random.random() > 0.5 else generate_armor(floor, False)
+            print(f"\n{Colors.MAGENTA}Il nemico lascia cadere: {drop.display_name}!{Colors.RESET}")
+            player.inventory.append(drop)
+        elif enemy_instance.modifier == "easy":
+            print(f"\n{Colors.CYAN}Il nemico era troppo debole e non aveva nulla con sé.{Colors.RESET}")
         elif random.random() > 0.6:
             drop = generate_potion(floor)
             print(f"Trovi: {Colors.CYAN}{drop.display_name}{Colors.RESET}!")
@@ -398,15 +396,11 @@ def combat_room(player: Player, floor: int, enemy_instance: Enemy):
         if choice in['1', '2', '3', '4']: clear_screen()
             
         if choice == '1':
-            
-            # RELIQUIA LAMA DI SANGUE (Costo HP per attaccare)
             if "lama_sangue" in player.relic_ids:
                 player.hp -= 3
                 print(f"{Colors.RED}La Lama di Sangue si nutre di te! Subisci 3 danni.{Colors.RESET}")
                 if player.hp <= 0:
-                    print(f"\n{Colors.RED}{Colors.BOLD}Sei stato consumato dalla tua stessa arma...{Colors.RESET}")
-                    input("\nPremi INVIO per continuare...")
-                    return
+                    print(f"\n{Colors.RED}{Colors.BOLD}Sei stato consumato dalla tua stessa arma...{Colors.RESET}"); input("\nPremi INVIO per continuare..."); return
             
             multiplier = MULTIPLIERS.get(player.weapon.element, {}).get(enemy_instance.element, 1.0)
             if "lente_prismatica" in player.relic_ids:
@@ -441,17 +435,12 @@ def combat_room(player: Player, floor: int, enemy_instance: Enemy):
                 
         elif choice == '2':
             is_defending = True
-            if def_type == "counter":
-                print(f"\n{Colors.BLUE}-> Sollevi la guardia, pronto a sfruttare l'attacco nemico!{Colors.RESET}")
-            elif def_type == "focus":
-                focused_attack = True
-                print(f"\n{Colors.BLUE}-> Studi il nemico nell'ombra. Il tuo prossimo attacco sarà devastante!{Colors.RESET}")
+            if def_type == "counter": print(f"\n{Colors.BLUE}-> Sollevi la guardia, pronto a sfruttare l'attacco nemico!{Colors.RESET}")
+            elif def_type == "focus": focused_attack = True; print(f"\n{Colors.BLUE}-> Studi il nemico nell'ombra. Il tuo prossimo attacco sarà devastante!{Colors.RESET}")
             elif def_type == "recovery":
-                if player.cursed:
-                    print(f"\n{Colors.BLUE}-> Ti difendi, ma la Maledizione blocca il tuo recupero magico.{Colors.RESET}")
+                if player.cursed: print(f"\n{Colors.BLUE}-> Ti difendi, ma la Maledizione blocca il tuo recupero magico.{Colors.RESET}")
                 else:
-                    heal_amt = max(1, player.max_hp // 20)
-                    player.hp = min(player.max_hp, player.hp + heal_amt)
+                    heal_amt = max(1, player.max_hp // 20); player.hp = min(player.max_hp, player.hp + heal_amt)
                     print(f"\n{Colors.BLUE}-> Evochi una barriera vitale. {Colors.GREEN}Recuperi {heal_amt} HP!{Colors.RESET}")
                     
         elif choice == '3':
@@ -463,10 +452,8 @@ def combat_room(player: Player, floor: int, enemy_instance: Enemy):
         elif choice == '4':
             if enemy_instance.is_boss: print(f"\n{Colors.RED}-> Impossibile fuggire dai Boss!{Colors.RESET}"); continue
             
-            if "bussola_perfetta" in player.relic_ids:
-                f_chance = 100
-            else:
-                f_chance = max(10, min(90, 20 + player.get_dodge() - enemy_instance.base_dodge + (20 if PROFILE["perks"]["scarpisti"] else 0)))
+            if "bussola_perfetta" in player.relic_ids: f_chance = 100
+            else: f_chance = max(10, min(90, 20 + player.get_dodge() - enemy_instance.base_dodge + (20 if PROFILE["perks"]["scarpisti"] else 0)))
                 
             if random.randint(1, 100) <= f_chance:
                 print(f"\n{Colors.YELLOW}-> Sei riuscito a scappare!{Colors.RESET}"); player.run_tracker["escapes"] += 1; input("\nPremi INVIO..."); return
@@ -498,15 +485,6 @@ def combat_room(player: Player, floor: int, enemy_instance: Enemy):
                     dif = f"{Colors.BLUE}[DIFESA]{Colors.RESET}" if is_defending else ""
                     print(f"<- {enemy_instance.name} ti colpisce! Subisci {Colors.RED}{dmg_taken} danni{Colors.RESET}. {en_eff}{dif}")
                     
-                    # RELIQUIA SPALLACCI ROVO
-                    if "spallacci_rovo" in player.relic_ids:
-                        enemy_instance.hp -= 5
-                        print(f"{Colors.YELLOW}   🌿 Spallacci di Rovo infliggono 5 danni a {enemy_instance.name}!{Colors.RESET}")
-                        if enemy_instance.hp <= 0:
-                            on_enemy_death()
-                            return
-                    
-                    # Logica Contrattacco
                     if is_defending and def_type == "counter":
                         enemy_instance.hp -= dmg_taken
                         print(f"{Colors.YELLOW}   ⚔️ CONTRATTACCO! Restituisci {dmg_taken} danni a {enemy_instance.name}!{Colors.RESET}")
@@ -521,6 +499,28 @@ def combat_room(player: Player, floor: int, enemy_instance: Enemy):
                 elif not shield_active and dmg_taken == 0:
                     print(f"<- {enemy_instance.name} attacca, ma la corazza blocca TUTTO! {en_eff}")
             else: print(f"{Colors.CYAN}<- {enemy_instance.name} attacca... ma riesci a schivarlo!{Colors.RESET}")
+
+def mystery_room(player: Player, floor: int, active_pacts: List[str]):
+    delay_print(f"\n{Colors.MAGENTA}--- LA STANZA DEL MISTERO ---{Colors.RESET}")
+    print(f"❤️  HP: {Colors.GREEN}{player.hp}/{player.max_hp}{Colors.RESET} | 💰 Oro: {Colors.YELLOW}{player.gold}{Colors.RESET}\n")
+    delay_print("Entri in un ambiente intriso di nebbia magica. I tuoi sensi sono annebbiati...", 0.03)
+    time.sleep(1)
+
+    outcome = random.choice(["hard", "easy", "trap", "empty"])
+
+    if outcome == "hard":
+        print(f"\n{Colors.RED}Dall'oscurità emerge un mostro eccezionalmente feroce!{Colors.RESET}")
+        input("Premi INVIO per difenderti...")
+        combat_room(player, floor, Enemy(floor, False, active_pacts, modifier="hard"))
+    elif outcome == "easy":
+        print(f"\n{Colors.CYAN}Scorgi un nemico ferito e confuso che vaga nella nebbia.{Colors.RESET}")
+        input("Premi INVIO per attaccare...")
+        combat_room(player, floor, Enemy(floor, False, active_pacts, modifier="easy"))
+    elif outcome == "trap":
+        trap_room(player, floor, active_pacts)
+    elif outcome == "empty":
+        print(f"\n{Colors.GREEN}La nebbia si dirada. La stanza è vuota. Tiri un sospiro di sollievo.{Colors.RESET}")
+        input("Premi INVIO per proseguire...")
 
 def event_room(player: Player, event_id: str, floor: int):
     ev = GAME_DATA["events"][event_id]
@@ -537,6 +537,9 @@ def event_room(player: Player, event_id: str, floor: int):
             idx = int(choice) - 1
             if 0 <= idx < len(ev["choices"]):
                 action = ev["choices"][idx]["action"]
+                msg = ev["choices"][idx].get("msg", "")
+                msg_alt = ev["choices"][idx].get("msg_alt", "")
+                
                 if action == "heal_max":
                     player.max_hp += 10
                     if not player.cursed: player.hp = player.max_hp; print(f"{Colors.GREEN}Senti un potere immenso! HP Ripristinati!{Colors.RESET}")
@@ -547,18 +550,18 @@ def event_room(player: Player, event_id: str, floor: int):
                         if random.random() > 0.5:
                             r = get_random_relic(player)
                             if r: player.add_relic(r)
-                            else: player.gold += 50; print(f"{Colors.YELLOW}La moneta torna indietro moltiplicata! (+50 Oro){Colors.RESET}")
-                        else: print(f"{Colors.YELLOW}L'acqua si increspa, ma non accade nulla.{Colors.RESET}")
+                            else: player.gold += 50; print(f"{Colors.YELLOW}{msg} (+50 Oro){Colors.RESET}")
+                        else: print(f"{Colors.YELLOW}{msg_alt}{Colors.RESET}")
                     else: print(f"{Colors.RED}Oro insufficiente!{Colors.RESET}"); continue
                 elif action == "trade_weapon":
                     if player.gold >= 50:
                         player.gold -= 50
                         drop = generate_weapon(floor + 2, True)
-                        player.inventory.append(drop); print(f"{Colors.MAGENTA}Il mendicante estrae dai rottami: {drop.display_name}!{Colors.RESET}")
+                        player.inventory.append(drop); print(f"{Colors.MAGENTA}Ottieni: {drop.display_name}!{Colors.RESET}")
                     else: print(f"{Colors.RED}Non hai abbastanza Oro.{Colors.RESET}"); continue
                 elif action == "trade_relic":
                     player.hp -= 30
-                    print(f"{Colors.RED}Sanguini abbondantemente... ma l'ombra sorride.{Colors.RESET}")
+                    print(f"{Colors.RED}{msg}{Colors.RESET}")
                     if player.hp <= 0:
                         print(f"\n{Colors.RED}{Colors.BOLD}Il dissanguamento ti è stato fatale...{Colors.RESET}")
                         input("\nPremi INVIO per continuare...")
@@ -568,17 +571,17 @@ def event_room(player: Player, event_id: str, floor: int):
                 elif action == "blood_gold":
                     player.hp -= 40
                     g = 100 * 3 if player.midas else 100
-                    player.gold += g; print(f"{Colors.RED}Dolore lancinante!{Colors.RESET} Ma l'altare vomita {Colors.YELLOW}{g} Oro{Colors.RESET}.")
+                    player.gold += g; print(f"{Colors.RED}{msg} (+{g} Oro){Colors.RESET}.")
                     if player.hp <= 0:
                         print(f"\n{Colors.RED}{Colors.BOLD}Hai sacrificato troppa linfa vitale... Sei morto.{Colors.RESET}")
                         input("\nPremi INVIO per continuare...")
                         return
                 elif action == "fight_elite":
-                    print(f"{Colors.RED}L'Altare si sgretola e risveglia un custode!{Colors.RESET}")
+                    print(f"{Colors.RED}{msg}{Colors.RESET}")
                     e = Enemy(floor + 5, True, player.active_pacts) # Elite
                     input("Premi INVIO per combattere..."); combat_room(player, floor, e)
                     if player.hp <= 0: return 
-                elif action == "none": print(f"{Colors.CYAN}Ti allontani senza voltarti.{Colors.RESET}")
+                elif action == "none": print(f"{Colors.CYAN}{msg}{Colors.RESET}")
                 
                 input("\nPremi INVIO per proseguire...")
                 return
@@ -595,7 +598,7 @@ def vendor_room(player: Player, floor: int):
     while True:
         clear_screen()
         print(f"\n{Colors.YELLOW}[ 💰 MERCANTE ] | Tuo Oro: {player.gold}{Colors.RESET}")
-        if PROFILE["perks"]["discount_lvl"] > 0: print(f"{Colors.GREEN}(Hai uno sconto del {PROFILE['perks']['discount_lvl']*10}%!){Colors.RESET}")
+        if PROFILE["perks"]["discount_lvl"] > 0: print(f"{Colors.GREEN}(Sconto del {PROFILE['perks']['discount_lvl']*10}%!){Colors.RESET}")
         print("1. Guarda Merce (Compra)")
         print("2. Mostra Zaino (Vendi)")
         print("0. Saluta ed esci")
@@ -663,7 +666,7 @@ def campfire_room(player: Player, floor: int):
                 clear_screen()
                 print(f"\n{Colors.MAGENTA}--- FUSIONE EQUIPAGGIAMENTO ---{Colors.RESET}")
                 equips =[i for i in player.inventory if i.type in["weapon", "armor"]]
-                if len(equips) < 2: print("Hai bisogno di almeno 2 armi/armature nello zaino."); input("Premi INVIO..."); break
+                if len(equips) < 2: print("Hai bisogno di almeno 2 armi/armature nello zaino per usare l'Altare."); input("Premi INVIO..."); break
                 
                 for i, item in enumerate(equips):
                     stat = f"+{item.atk} ATK" if item.type == "weapon" else f"+{item.defense} DEF"
@@ -735,14 +738,6 @@ def trap_room(player: Player, floor: int, active_pacts: List[str]):
         player.inventory.append(drop)
 
     input("\nPremi INVIO per continuare...")
-
-def generate_floor_deck(floor: int) -> List[str]:
-    deck = ["combat"] * (random.randint(3, 5) + (floor // 5))
-    deck.append("vendor"); deck.append("campfire")
-    if random.random() > 0.3: deck.append("treasure")
-    if random.random() > 0.4: deck.append("trap")
-    random.shuffle(deck); deck.append("boss")
-    return deck
 
 # --- CONTROLLO META-PROGRESSIONE (FINE RUN) ---
 def evaluate_run(player: Player, floor: int, infinite: bool):
@@ -820,7 +815,7 @@ def base_camp():
                 print(f"1. Vigore Ereditario[Lv.{hl}/5] (+15 HP Max) - Costo: ✨{50 + (hl*50)}")
                 print(f"2. Tasche Profonde[Lv.{gl}/3] (+20 Oro Iniziale) - Costo: ✨{100 + (gl*100)}")
                 print(f"3. Mercanteggiare[Lv.{dl}/3] (-10% Prezzi Negozio) - Costo: ✨{150 + (dl*100)}")
-                print(f"4. Sesto Senso [{'SBLOCCATO' if ss else 'BLOCCATO'}] (Prevedi bivi) - Costo: ✨300")
+                print(f"4. Sesto Senso[{'SBLOCCATO' if ss else 'BLOCCATO'}] (Prevedi bivi) - Costo: ✨300")
                 print("0. Indietro")
                 p_c = get_choice("> ")
                 if p_c == '0': break
@@ -832,7 +827,7 @@ def base_camp():
             while True:
                 clear_screen()
                 print(f"{Colors.CYAN}--- FORGIA DIMENSIONALE --- Essenza: ✨{PROFILE['essence']}{Colors.RESET}")
-                lkd = [i for cat in["weapons", "armors", "consumables"] for i in RAW_DATA[cat] if "unlock_id" in i and i["unlock_id"] not in PROFILE["unlocked_ids"]]
+                lkd =[i for cat in["weapons", "armors", "consumables"] for i in RAW_DATA[cat] if "unlock_id" in i and i["unlock_id"] not in PROFILE["unlocked_ids"]]
                 if not lkd: print("Tutto sbloccato!")
                 else:
                     for i, it in enumerate(lkd): print(f"{i+1}. {it['name']} ({it.get('desc', '')}) - Costo: ✨{it['unlock_cost']}")
@@ -921,13 +916,18 @@ def play_game(infinite_mode=False):
     active_pacts = []
     if PROFILE["won_normal"]:
         print(f"\n{Colors.RED}I PATTI DEL CAOS{Colors.RESET}")
-        print("Attiva le maledizioni per aumentare l'Essenza ottenuta.")
-        for p_id, p in GAME_DATA["meta"]["pacts"].items():
+        print("Attiva le maledizioni per aumentare il moltiplicatore di Essenza.")
+        avail_p = GAME_DATA["meta"]["pacts"]
+        for p_id, p in avail_p.items():
             ans = get_choice(f"Attivare '{p['name']}'? ({p['desc']})[s/N]: ").lower()
             if ans == 's': active_pacts.append(p_id)
 
     player = Player(c_choice, t_choice, active_pacts)
     delay_print(f"\nLe porte si chiudono alle tue spalle, {player.role}.", 0.03); time.sleep(1)
+    
+    weights_def = GAME_DATA["meta"]["rooms"]["weights"]
+    cooldowns_def = GAME_DATA["meta"]["rooms"]["cooldowns"]
+    room_cooldowns = {k: 0 for k in weights_def.keys()}
     
     floor = 1
     while player.hp > 0 and not player.escaped:
@@ -942,22 +942,36 @@ def play_game(infinite_mode=False):
         for step in range(1, 6):
             if player.hp <= 0 or player.escaped: break
             
+            for k in room_cooldowns:
+                if room_cooldowns[k] > 0: room_cooldowns[k] -= 1
+            
             if step == 5: doors =[{"type": "boss", "enemy": Enemy(floor, True, active_pacts)}]
             else:
                 doors =[]
                 while True:
-                    room_pool =["combat", "vendor", "treasure", "trap", "campfire", "event"]
-                    weights =[40, 10, 10, 10, 10, 20]
-                    t1 = random.choices(room_pool, weights=weights)[0]
-                    t2 = random.choices(room_pool, weights=weights)[0]
+                    avail_rooms, avail_weights = [],[]
+                    
+                    for rt, w in weights_def.items():
+                        if room_cooldowns.get(rt, 0) <= 0:
+                            avail_rooms.append(rt)
+                            avail_weights.append(w)
+                    
+                    if not avail_rooms: 
+                        avail_rooms, avail_weights = ["combat"],[100]
+
+                    t1 = random.choices(avail_rooms, weights=avail_weights)[0]
+                    t2 = random.choices(avail_rooms, weights=avail_weights)[0]
                     
                     if t1 == t2: continue 
                     combo = {t1, t2}
-                    if combo == {"trap", "treasure"} or combo == {"trap", "vendor"}: 
+                    if combo == {"trap", "treasure"} or combo == {"trap", "vendor"} or combo == {"mystery", "mystery"}: 
                         continue 
                     break
 
-                for rt in [t1, t2]:
+                room_cooldowns[t1] = cooldowns_def.get(t1, 0) + 1
+                room_cooldowns[t2] = cooldowns_def.get(t2, 0) + 1
+
+                for rt in[t1, t2]:
                     d = {"type": rt}
                     if rt == "combat": d["enemy"] = Enemy(floor, False, active_pacts)
                     if rt == "event": d["event_id"] = random.choice(list(GAME_DATA["events"].keys()))
@@ -965,7 +979,6 @@ def play_game(infinite_mode=False):
             
             while True:
                 print(f"\n{Colors.CYAN}--- Piano {floor} | Esplorazione {step}/5 ---{Colors.RESET}")
-                
                 print(f"❤️  HP: {Colors.GREEN}{player.hp}/{player.max_hp}{Colors.RESET} | 💰 Oro: {Colors.YELLOW}{player.gold}{Colors.RESET}")
                 
                 for i, d in enumerate(doors):
@@ -973,6 +986,7 @@ def play_game(infinite_mode=False):
                     if PROFILE["perks"]["sesto_senso"]:
                         if d["type"] == "combat": t_str += f" ({d['enemy'].name} {get_element_icon(d['enemy'].element)})"
                         elif d["type"] == "event": t_str += f" ({GAME_DATA['events'][d['event_id']]['title']})"
+                        elif d["type"] == "mystery": t_str += f" ({Colors.MAGENTA}Aura illeggibile{Colors.RESET})"
                     print(f"{i+1}. Entra: [{t_str}]")
                 print("I. Apri Inventario")
                 print("F. Fuga dal Labirinto")
@@ -999,6 +1013,7 @@ def play_game(infinite_mode=False):
             elif rt == "trap": trap_room(player, floor, active_pacts)
             elif rt == "campfire": campfire_room(player, floor)
             elif rt == "event": event_room(player, chosen_door["event_id"], floor)
+            elif rt == "mystery": mystery_room(player, floor, active_pacts)
         
         if player.hp > 0 and not player.escaped:
             delay_print(f"\n{Colors.YELLOW}{Colors.BOLD}*** PIANO {floor} SUPERATO! ***{Colors.RESET}", 0.05)

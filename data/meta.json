@@ -17,5 +17,25 @@
         "feat_fabbro": {"name": "Fabbro Folle", "desc": "Fondi 3 oggetti alla Forgia in una run.", "target": 3, "reward_type": "unlock", "reward_id": "spadone_infranto"},
         "feat_vetro": {"name": "Cannone di Vetro", "desc": "Sconfiggi un Boss senza subire alcun danno.", "target": 1, "reward_type": "unlock", "reward_id": "veste_eterea"},
         "feat_suicida": {"name": "Danza con la Morte", "desc": "Sconfiggi un nemico avendo esattamente 1 HP rimanente.", "target": 1, "reward_type": "class", "reward_id": "5"}
+    },
+    "rooms": {
+        "weights": {
+            "combat": 60.0,
+            "mystery": 10.0,
+            "event": 10.0,
+            "trap": 10.0,
+            "treasure": 5.0,
+            "vendor": 2.5,
+            "campfire": 2.5
+        },
+        "cooldowns": {
+            "combat": 0,
+            "mystery": 0,
+            "event": 10,
+            "trap": 10,
+            "treasure": 10,
+            "vendor": 10,
+            "campfire": 10
+        }
     }
 }
