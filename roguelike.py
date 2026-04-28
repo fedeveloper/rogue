@@ -136,7 +136,7 @@ def generate_potion(level: int) -> Consumable:
     return Consumable(f"{name} (Cura {heal})" if heal > 0 else name, val, heal)
 
 def get_random_relic(player):
-    avail = [r for r in GAME_DATA["relics"] if r["id"] not in player.relic_ids]
+    avail =[r for r in GAME_DATA["relics"] if r["id"] not in player.relic_ids]
     if not avail: return None
     return random.choice(avail)
 
@@ -152,7 +152,7 @@ class Player:
         self.gold = data["gold"] + (PROFILE["perks"]["gold_lvl"] * 20)
         self.base_acc, self.base_dodge = data["acc"], data["dodge"]
         self.active_pacts = active_pacts
-        self.relic_ids =[]
+        self.relic_ids = []
         self.relics =[]
         self.bonus_atk_relic = 0
         
@@ -177,9 +177,9 @@ class Player:
         self.essence_gathered, self.bosses_killed = 0, 0
         
         w_data = data["weapon"]
-        self.weapon = Weapon(w_data["name"], w_data["value"], w_data["atk"] + (50 if self.cursed else 0), w_data["element"], 1) if start_weapon_lv == 1 else generate_weapon(2)
+        self.weapon = Weapon(w_data["name"], w_data["value"], w_data["atk"] + (50 if self.cursed else 0), w_data.get("element", "Normale"), 1) if start_weapon_lv == 1 else generate_weapon(2)
         a_data = data["armor"]
-        self.armor = Armor(a_data["name"], a_data["value"], a_data["def"], a_data["element"], 1)
+        self.armor = Armor(a_data["name"], a_data["value"], a_data["def"], a_data.get("element", "Normale"), 1)
         self.inventory =[generate_potion(1) for _ in range(data["potions"])]
 
     def add_relic(self, relic):
@@ -187,13 +187,25 @@ class Player:
         self.relic_ids.append(relic["id"])
         print(f"\n{Colors.MAGENTA}🌟 Hai ottenuto la Reliquia: {relic['name']}!{Colors.RESET}")
         print(f"Effetto: {relic['desc']}")
+        # APPLICAZIONE STATISTICHE STATICHE DELLE NUOVE RELIQUIE
         if relic["id"] == "idolo_guerra": self.bonus_atk_relic += 5
+        elif relic["id"] == "lama_sangue": self.bonus_atk_relic += 10
+        elif relic["id"] == "mantello_nebbioso": self.base_dodge += 15
+        elif relic["id"] == "occhio_cacciatore": self.base_acc += 20
 
     def get_total_atk(self): return self.weapon.atk + self.bonus_atk_relic
+    
+    def get_dodge(self):
+        # La schivata scende a 0% con l'Idolo dell'Avidità
+        return 0 if "idolo_avidita" in self.relic_ids else self.base_dodge
 
     def gain_exp(self, amount: int):
         if self.midas: return
-        amount = int(amount * self.exp_multiplier)
+        
+        # Moltiplicatore EXP con Tomo della Conoscenza
+        multi = self.exp_multiplier + (0.3 if "tomo_conoscenza" in self.relic_ids else 0.0)
+        amount = int(amount * multi)
+        
         self.exp += amount
         print(f"{Colors.CYAN}Ottieni {amount} EXP! ({self.exp}/{self.max_exp}){Colors.RESET}")
         while self.exp >= self.max_exp:
@@ -203,6 +215,16 @@ class Player:
             if not self.cursed: self.hp = self.max_hp
             self.base_acc += 2; self.base_dodge += 2
             print(f"\n{Colors.YELLOW}{Colors.BOLD}*** LEVEL UP! Sei salito al livello {self.level}! ***{Colors.RESET}")
+
+    def print_stats(self):
+        print(f"\n{Colors.CYAN}=== SCHEDA: {self.role.upper()} (Lv. {self.level}) ==={Colors.RESET}")
+        print(f"Tratto: {self.trait['name']} | Maledizioni (Patti): {len(self.active_pacts)}")
+        print(f"HP: {Colors.GREEN}{self.hp}/{self.max_hp}{Colors.RESET} | Oro: {Colors.YELLOW}{self.gold}💰{Colors.RESET} | EXP: {Colors.MAGENTA}{self.exp}/{self.max_exp}{Colors.RESET}")
+        print(f"Precisione: +{self.base_acc}% | Schivata: {self.get_dodge()}%")
+        print(f"Arma: {self.weapon.display_name} (+{self.get_total_atk()} ATK)")
+        print(f"Armatura: {self.armor.display_name} (+{self.armor.defense} DEF)")
+        if self.relics: print(f"Reliquie: {', '.join([r['name'] for r in self.relics])}")
+        print(f"{Colors.CYAN}============================================{Colors.RESET}")
 
     def manage_inventory(self, in_combat=False) -> str:
         while True:
@@ -232,7 +254,7 @@ class Player:
                     count_str = f" {Colors.YELLOW}[x{count}]{Colors.RESET}" if count > 1 else ""
                     if item.type == "weapon": print(f"{disp_idx+1}. [Arma] {item.display_name} (+{item.atk}) - Lv.{item.level}")
                     elif item.type == "armor": print(f"{disp_idx+1}. [Armatura] {item.display_name} (+{item.defense}) - Lv.{item.level}")
-                    elif item.type == "consumable": print(f"{disp_idx+1}. [Oggetto] {item.display_name}{count_str}")
+                    elif item.type == "consumable": print(f"{disp_idx+1}.[Oggetto] {item.display_name}{count_str}")
                         
             print("\n0. Chiudi Zaino")
             choice = get_choice("Scegli un oggetto da usare/equipaggiare > ")
@@ -263,7 +285,11 @@ class Player:
                                 self.inventory.pop(real_idx)
                             else:
                                 old_hp = self.hp
-                                h_amt = item.heal_amount // 2 if "carestia" in self.active_pacts else item.heal_amount
+                                # APPLICAZIONE RELIQUIA CALICE E PATTO CARESTIA
+                                base_h = item.heal_amount
+                                if "calice_alchimista" in self.relic_ids: base_h = int(base_h * 1.5)
+                                h_amt = base_h // 2 if "carestia" in self.active_pacts else base_h
+                                
                                 self.hp = min(self.max_hp, self.hp + h_amt)
                                 print(f"{Colors.GREEN}\n-> Recuperi {self.hp - old_hp} HP! (HP: {self.hp}/{self.max_hp}){Colors.RESET}")
                                 if self.thief_save and random.random() < 0.3: print(f"{Colors.CYAN}Abilità Ladro: Hai salvato la pozione!{Colors.RESET}")
@@ -324,9 +350,17 @@ def combat_room(player: Player, floor: int, enemy_instance: Enemy):
         
         g_drop = enemy_instance.gold_drop * 3 if player.midas else enemy_instance.gold_drop
         if "tasca_dorata" in player.relic_ids: g_drop = int(g_drop * 1.25)
+        if "idolo_avidita" in player.relic_ids: g_drop *= 2
+        
         player.gold += g_drop
         print(f"Ottieni {Colors.YELLOW}{g_drop} oro{Colors.RESET}.")
         player.gain_exp(enemy_instance.exp_drop)
+        
+        # RELIQUIA CUORE DI TROLL
+        if "cuore_troll" in player.relic_ids:
+            player.max_hp += 2
+            player.hp += 2
+            print(f"{Colors.GREEN}Il Cuore di Troll pulsa: +2 HP Massimi!{Colors.RESET}")
         
         if enemy_instance.is_boss:
             player.bosses_killed += 1
@@ -364,6 +398,16 @@ def combat_room(player: Player, floor: int, enemy_instance: Enemy):
         if choice in['1', '2', '3', '4']: clear_screen()
             
         if choice == '1':
+            
+            # RELIQUIA LAMA DI SANGUE (Costo HP per attaccare)
+            if "lama_sangue" in player.relic_ids:
+                player.hp -= 3
+                print(f"{Colors.RED}La Lama di Sangue si nutre di te! Subisci 3 danni.{Colors.RESET}")
+                if player.hp <= 0:
+                    print(f"\n{Colors.RED}{Colors.BOLD}Sei stato consumato dalla tua stessa arma...{Colors.RESET}")
+                    input("\nPremi INVIO per continuare...")
+                    return
+            
             multiplier = MULTIPLIERS.get(player.weapon.element, {}).get(enemy_instance.element, 1.0)
             if "lente_prismatica" in player.relic_ids:
                 if multiplier > 1.0: multiplier = 2.0
@@ -418,7 +462,12 @@ def combat_room(player: Player, floor: int, enemy_instance: Enemy):
             
         elif choice == '4':
             if enemy_instance.is_boss: print(f"\n{Colors.RED}-> Impossibile fuggire dai Boss!{Colors.RESET}"); continue
-            f_chance = max(10, min(90, 20 + player.base_dodge - enemy_instance.base_dodge + (20 if PROFILE["perks"]["scarpisti"] else 0)))
+            
+            if "bussola_perfetta" in player.relic_ids:
+                f_chance = 100
+            else:
+                f_chance = max(10, min(90, 20 + player.get_dodge() - enemy_instance.base_dodge + (20 if PROFILE["perks"]["scarpisti"] else 0)))
+                
             if random.randint(1, 100) <= f_chance:
                 print(f"\n{Colors.YELLOW}-> Sei riuscito a scappare!{Colors.RESET}"); player.run_tracker["escapes"] += 1; input("\nPremi INVIO..."); return
             else: print(f"\n{Colors.RED}-> Tentativo di fuga fallito!{Colors.RESET}")
@@ -431,7 +480,7 @@ def combat_room(player: Player, floor: int, enemy_instance: Enemy):
                 if en_multiplier > 1.0: en_multiplier = 2.0
                 elif en_multiplier < 1.0: en_multiplier = 0.5
             
-            en_hit_chance = max(10, min(100, 85 + enemy_instance.base_acc - player.base_dodge + (15 if en_multiplier > 1.0 else -20 if en_multiplier < 1.0 else 0)))
+            en_hit_chance = max(10, min(100, 85 + enemy_instance.base_acc - player.get_dodge() + (15 if en_multiplier > 1.0 else -20 if en_multiplier < 1.0 else 0)))
 
             if random.randint(1, 100) <= en_hit_chance:
                 dmg_taken = max(0, int((enemy_instance.atk + random.randint(-1, 2)) * en_multiplier) - player.armor.defense)
@@ -448,6 +497,14 @@ def combat_room(player: Player, floor: int, enemy_instance: Enemy):
                     player.hp -= dmg_taken
                     dif = f"{Colors.BLUE}[DIFESA]{Colors.RESET}" if is_defending else ""
                     print(f"<- {enemy_instance.name} ti colpisce! Subisci {Colors.RED}{dmg_taken} danni{Colors.RESET}. {en_eff}{dif}")
+                    
+                    # RELIQUIA SPALLACCI ROVO
+                    if "spallacci_rovo" in player.relic_ids:
+                        enemy_instance.hp -= 5
+                        print(f"{Colors.YELLOW}   🌿 Spallacci di Rovo infliggono 5 danni a {enemy_instance.name}!{Colors.RESET}")
+                        if enemy_instance.hp <= 0:
+                            on_enemy_death()
+                            return
                     
                     # Logica Contrattacco
                     if is_defending and def_type == "counter":
@@ -605,8 +662,8 @@ def campfire_room(player: Player, floor: int):
             while True:
                 clear_screen()
                 print(f"\n{Colors.MAGENTA}--- FUSIONE EQUIPAGGIAMENTO ---{Colors.RESET}")
-                equips = [i for i in player.inventory if i.type in["weapon", "armor"]]
-                if len(equips) < 2: print("Hai bisogno di almeno 2 armi/armature nello zaino per usare l'Altare."); input("Premi INVIO..."); break
+                equips =[i for i in player.inventory if i.type in["weapon", "armor"]]
+                if len(equips) < 2: print("Hai bisogno di almeno 2 armi/armature nello zaino."); input("Premi INVIO..."); break
                 
                 for i, item in enumerate(equips):
                     stat = f"+{item.atk} ATK" if item.type == "weapon" else f"+{item.defense} DEF"
@@ -642,6 +699,8 @@ def treasure_room(player: Player, floor: int):
     gold = random.randint(30, 60) + (floor * 10)
     g = gold * 3 if player.midas else gold
     if "tasca_dorata" in player.relic_ids: g = int(g * 1.25)
+    if "idolo_avidita" in player.relic_ids: g *= 2
+    
     player.gold += g
     print(f"{Colors.GREEN}Trovate {g} monete d'oro!{Colors.RESET}")
     
@@ -657,7 +716,7 @@ def trap_room(player: Player, floor: int, active_pacts: List[str]):
     delay_print(f"\n{random.choice(GAME_DATA['lore']['trap'])}")
     delay_print(f"{Colors.RED}È UNA TRAPPOLA!{Colors.RESET}", 0.05)
     
-    if random.randint(1, 100) <= player.base_dodge: 
+    if random.randint(1, 100) <= player.get_dodge(): 
         print(f"{Colors.GREEN}Schivi il meccanismo! Ne esci illeso!{Colors.RESET}")
     else:
         dmg = random.randint(15, 30) + (floor * 3)
@@ -676,6 +735,14 @@ def trap_room(player: Player, floor: int, active_pacts: List[str]):
         player.inventory.append(drop)
 
     input("\nPremi INVIO per continuare...")
+
+def generate_floor_deck(floor: int) -> List[str]:
+    deck = ["combat"] * (random.randint(3, 5) + (floor // 5))
+    deck.append("vendor"); deck.append("campfire")
+    if random.random() > 0.3: deck.append("treasure")
+    if random.random() > 0.4: deck.append("trap")
+    random.shuffle(deck); deck.append("boss")
+    return deck
 
 # --- CONTROLLO META-PROGRESSIONE (FINE RUN) ---
 def evaluate_run(player: Player, floor: int, infinite: bool):
@@ -854,9 +921,8 @@ def play_game(infinite_mode=False):
     active_pacts = []
     if PROFILE["won_normal"]:
         print(f"\n{Colors.RED}I PATTI DEL CAOS{Colors.RESET}")
-        print("Attiva le maledizioni per aumentare il moltiplicatore di Essenza.")
-        avail_p = GAME_DATA["meta"]["pacts"]
-        for p_id, p in avail_p.items():
+        print("Attiva le maledizioni per aumentare l'Essenza ottenuta.")
+        for p_id, p in GAME_DATA["meta"]["pacts"].items():
             ans = get_choice(f"Attivare '{p['name']}'? ({p['desc']})[s/N]: ").lower()
             if ans == 's': active_pacts.append(p_id)
 
@@ -891,7 +957,7 @@ def play_game(infinite_mode=False):
                         continue 
                     break
 
-                for rt in[t1, t2]:
+                for rt in [t1, t2]:
                     d = {"type": rt}
                     if rt == "combat": d["enemy"] = Enemy(floor, False, active_pacts)
                     if rt == "event": d["event_id"] = random.choice(list(GAME_DATA["events"].keys()))
@@ -900,7 +966,6 @@ def play_game(infinite_mode=False):
             while True:
                 print(f"\n{Colors.CYAN}--- Piano {floor} | Esplorazione {step}/5 ---{Colors.RESET}")
                 
-                # --- RIEPILOGO HP E ORO AGGIUNTO QUI ---
                 print(f"❤️  HP: {Colors.GREEN}{player.hp}/{player.max_hp}{Colors.RESET} | 💰 Oro: {Colors.YELLOW}{player.gold}{Colors.RESET}")
                 
                 for i, d in enumerate(doors):

@@ -2,25 +2,73 @@
   "fontana_fatata": {
     "title": "La Fontana Fatata", "text": "Una fonte d'acqua purissima brilla nel buio. Ha un'aura mistica.",
     "choices":[
-      {"text": "Bevi profondamente (Cura 100% HP)", "action": "heal_max"},
-      {"text": "Lancia una moneta (-20 Oro, 50% Chance di Reliquia)", "action": "coin_toss"},
-      {"text": "Ignora e prosegui", "action": "none"}
+      {"text": "Bevi profondamente (Cura 100% HP)", "action": "heal_max", "msg": "L'acqua magica rigenera le tue ferite e purifica il tuo corpo!"},
+      {"text": "Lancia una moneta (-20 Oro, 50% Chance di Reliquia)", "action": "coin_toss", "msg": "La moneta brilla sul fondo... un potere ti avvolge!", "msg_alt": "La moneta affonda e scompare nel nulla. Nessuna reazione."},
+      {"text": "Ignora e prosegui", "action": "none", "msg": "Ti allontani dalla fontana in silenzio."}
     ]
   },
   "mendicante_ombra": {
     "title": "Il Mendicante Ombra", "text": "Una figura avvolta da stracci ti tende una mano scheletrica.",
     "choices":[
-      {"text": "Dona 50 Oro (Ottieni un'Arma Epica)", "action": "trade_weapon"},
-      {"text": "Offri il tuo sangue (-30 HP, Ottieni Reliquia)", "action": "trade_relic"},
-      {"text": "Ignora", "action": "none"}
+      {"text": "Dona 50 Oro (Ottieni un'Arma Epica)", "action": "trade_weapon", "msg": "Il mendicante estrae furtivamente dai rottami:"},
+      {"text": "Offri il tuo sangue (-30 HP, Ottieni Reliquia)", "action": "trade_relic", "msg": "Sanguini abbondantemente... l'ombra sorride e ti dona un manufatto."},
+      {"text": "Ignora", "action": "none", "msg": "Lo ignori e tiri dritto."}
     ]
   },
   "altare_sangue": {
     "title": "Altare del Sangue", "text": "Un altare pulsante di energia oscura attende un tributo.",
     "choices":[
-      {"text": "Prega l'Oscurità (+100 Oro, ma Subisci 40 Danni)", "action": "blood_gold"},
-      {"text": "Distruggi l'Altare (Combatti un Nemico d'Elite)", "action": "fight_elite"},
-      {"text": "Allontanati in silenzio", "action": "none"}
+      {"text": "Prega l'Oscurità (+100 Oro, ma Subisci 40 Danni)", "action": "blood_gold", "msg": "Dolore lancinante! Ma l'altare vomita oro dalla sua base polverosa."},
+      {"text": "Distruggi l'Altare (Combatti un Nemico d'Elite)", "action": "fight_elite", "msg": "L'Altare si sgretola e risveglia un tremendo custode corrotto!"},
+      {"text": "Allontanati in silenzio", "action": "none", "msg": "Non vale la pena rischiare l'anima qui. Prosegui."}
+    ]
+  },
+  "forgia_abissale": {
+    "title": "La Forgia Abissale", "text": "Un'incudine avvolta da fiamme viola. Un martello spettrale batte senza sosta.",
+    "choices":[
+      {"text": "Lancia monete nelle fiamme (-50 Oro, Arma Epica forgiata)", "action": "trade_weapon", "msg": "Il martello spettrale forgia a tempo di record una lama portentosa:"},
+      {"text": "Immergi la mano per afferrare un tesoro (-30 HP, Ottieni Reliquia)", "action": "trade_relic", "msg": "Il calore brucia la tua carne, ma stringi tra le dita un artefatto!"},
+      {"text": "Il calore è insopportabile, scappa", "action": "none", "msg": "Il calore è insopportabile, batti in ritirata."}
+    ]
+  },
+  "bisca_goblin": {
+    "title": "La Bisca dei Goblin", "text": "Scorgi dei Goblin disarmati che lanciano dadi d'osso su un tappeto. Non ti hanno notato.",
+    "choices":[
+      {"text": "Punta sul tavolo (-20 Oro, Scommetti per Reliquie o Oro)", "action": "coin_toss", "msg": "I Goblin imprecano! Vinci la scommessa e rubi la posta dal tavolo!", "msg_alt": "I dadi rotolano contro di te. I goblin sghignazzano e intascano i soldi."},
+      {"text": "Sguaina l'arma e ruba il banco! (Combatti Elite)", "action": "fight_elite", "msg": "I goblin fuggono gridando e chiamano il loro gigantesco Boss!"},
+      {"text": "Allontanati senza fare rumore", "action": "none", "msg": "Eviti problemi e te la svigni furtivamente."}
+    ]
+  },
+  "cavaliere_caduto": {
+    "title": "Il Cavaliere Caduto", "text": "Un guerriero in armatura è accasciato al muro. Stringe una spada splendente, ma respira a fatica.",
+    "choices":[
+      {"text": "Lasciagli dell'oro per i soccorsi (-50 Oro, Ti dona la sua Arma Epica)", "action": "trade_weapon", "msg": "Il cavaliere annuisce debolmente e ti porge l'arma di famiglia:"},
+      {"text": "Aiutalo a curare le ferite (Usa la sua magia per Curarti al 100%)", "action": "heal_max", "msg": "Il cavaliere, grato, usa l'ultima pergamena sacra su di te! Ti senti invincibile."},
+      {"text": "Sacrifica il tuo sangue per guarirlo (-30 HP, Ti dona una Reliquia)", "action": "trade_relic", "msg": "Il cavaliere beve il tuo sangue, riprende colore e ti dona il suo amuleto."}
+    ]
+  },
+  "idolo_corrotto": {
+    "title": "L'Idolo Corrotto", "text": "Una statua d'oro con diamanti al posto degli occhi. Trasuda malvagità.",
+    "choices":[
+      {"text": "Stacca i diamanti a forza (+100 Oro, Subisci 40 Danni)", "action": "blood_gold", "msg": "Stacchi i gioielli, ma una maledizione tetra brucia i tuoi polmoni!"},
+      {"text": "Usa una daga per staccarne uno (-20 Oro, Rischio Reliquia)", "action": "coin_toss", "msg": "Il gioiello si stacca dalla pietra rivelando un antico potere!", "msg_alt": "La tua daga si spezza rovinosamente e l'idolo resta intatto."},
+      {"text": "Profanare le tombe è da stolti, prosegui", "action": "none", "msg": "Ti allontani. Certe cose è meglio non toccarle."}
+    ]
+  },
+  "specchio_verita": {
+    "title": "Lo Specchio della Verità", "text": "Uno specchio intatto riflette il tuo volto. L'immagine riflessa, però, estrae un'arma.",
+    "choices":[
+      {"text": "Attacca il tuo riflesso! (Combatti Elite)", "action": "fight_elite", "msg": "Il tuo riflesso frantuma il vetro e balza fuori per ucciderti!"},
+      {"text": "Tocca il vetro tagliandoti (-30 HP, Assorbi una Reliquia)", "action": "trade_relic", "msg": "Il vetro ti taglia la pelle, ma il tuo riflesso ti porge un oggetto magico."},
+      {"text": "Distogli lo sguardo ed esci", "action": "none", "msg": "Rompi il contatto visivo, e la tensione sparisce all'istante."}
+    ]
+  },
+  "oasi_sotterranea": {
+    "title": "L'Oasi Sotterranea", "text": "Tra le rocce, un raggio di luce illumina un prato fiorito. Sembra un miraggio in questo luogo di morte.",
+    "choices":[
+      {"text": "Riposa tra i fiori (Cura 100% HP)", "action": "heal_max", "msg": "I profumi dei fiori curano ogni tua ferita fisica e mentale!"},
+      {"text": "Raccogli i fiori spinosi (+100 Oro, I rovi ti infliggono 40 Danni)", "action": "blood_gold", "msg": "I rovi velenosi ti lacerano le mani, ma strappi via i preziosi petali dorati!"},
+      {"text": "Raccogli i frutti sull'albero (-50 Oro per strumenti, Trovi Arma)", "action": "trade_weapon", "msg": "Tra i rami più alti scovi i resti di un eroe antico e la sua maestosa arma:"}
     ]
   }
 }

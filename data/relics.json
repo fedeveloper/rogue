@@ -3,7 +3,16 @@
     {"id": "artiglio_vampiro", "name": "Artiglio Vampirico", "desc": "Ogni tuo attacco a segno ti cura di 5 HP."},
     {"id": "lente_prismatica", "name": "Lente Prismatica", "desc": "Vantaggi e Svantaggi Elementali sono RADDOPPIATI."},
     {"id": "scudo_cristallo", "name": "Scudo di Cristallo", "desc": "Il primo danno che subisci in ogni combattimento è ridotto a 0."},
-    {"id": "tasca_dorata", "name": "Tasca Dorata", "desc": "Aumenta tutto l'Oro trovato nei forzieri e dai mostri del 25%."},
-    {"id": "idolo_guerra", "name": "Idolo della Guerra", "desc": "Aumenta in modo permanente il tuo Attacco Base di +5."}
+    {"id": "tasca_dorata", "name": "Tasca Dorata", "desc": "Aumenta l'Oro trovato nei forzieri e dai mostri del 25%."},
+    {"id": "idolo_guerra", "name": "Idolo della Guerra", "desc": "Aumenta in modo permanente il tuo Attacco Base di +5."},
+    {"id": "calice_alchimista", "name": "Calice dell'Alchimista", "desc": "Le pozioni e i consumabili curano il 50% in più."},
+    {"id": "mantello_nebbioso", "name": "Mantello Nebbioso", "desc": "Aumenta passivamente la Schivata del 15%."},
+    {"id": "bussola_perfetta", "name": "Bussola Perfetta", "desc": "La Fuga riesce sempre al 100% (non funziona sui Boss)."},
+    {"id": "occhio_cacciatore", "name": "Occhio del Cacciatore", "desc": "Aumenta la tua Precisione del 20%."},
+    {"id": "spallacci_rovo", "name": "Spallacci di Rovo", "desc": "Se subisci danno da un attacco, il nemico subisce 5 Danni Puri."},
+    {"id": "cuore_troll", "name": "Cuore di Troll", "desc": "Ottieni +2 HP Massimi ogni volta che uccidi un nemico."},
+    {"id": "tomo_conoscenza", "name": "Tomo della Conoscenza", "desc": "L'Esperienza ottenuta aumenta del 30%."},
+    {"id": "idolo_avidita", "name": "Idolo dell'Avidità", "desc": "Tutto l'Oro è RADDOPPIATO, ma non puoi più schivare (Schivata 0%)."},
+    {"id": "lama_sangue", "name": "Lama di Sangue", "desc": "Attacco +10, ma subisci 3 Danni ogni volta che decidi di attaccare."}
   ]
 }
