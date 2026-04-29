@@ -352,8 +352,7 @@ def play_game(infinite_mode=False):
             if player.hp <= 0 or player.escaped: break
             
             rt = chosen_door["type"]
-            if rt == "combat": combat_room(player, floor, chosen_door["enemy"])
-            elif rt == "boss": combat_room(player, floor, chosen_door["enemy"])
+            if rt in ("combat", "boss"): combat_room(player, floor, chosen_door["enemy"])
             elif rt == "vendor": vendor_room(player, floor)
             elif rt == "treasure": treasure_room(player, floor)
             elif rt == "trap": trap_room(player, floor, active_pacts)

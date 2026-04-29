@@ -12,7 +12,6 @@ class CombatSession:
         self.floor = floor
         self.enemy = enemy
         self.boss_hit_taken = False
-        self.shield_active = "scudo_cristallo" in player.relic_ids
         self.focused_attack = False
         self.resonance = player._get_resonance_element()
         self.burn_dmg = 0
@@ -284,7 +283,7 @@ class CombatSession:
                     print(f"\n{Colors.RED}{Colors.BOLD}Sei caduto in battaglia contro {self.enemy.name}...{Colors.RESET}")
                     input("\nPremi INVIO per continuare...")
                     return False
-            elif not self.shield_active and dmg_taken == 0:
+            elif dmg_taken == 0:
                 print(f"<- {self.enemy.name} attacca, ma la corazza blocca TUTTO! {en_eff}")
         else:
             print(f"{Colors.CYAN}<- {self.enemy.name} attacca... ma riesci a schivarlo!{Colors.RESET}")
@@ -512,8 +511,7 @@ def treasure_room(player: Player, floor: int):
     delay_print(f"\n{Colors.YELLOW}{random.choice(GAME_DATA['lore']['treasure'])}{Colors.RESET}")
     gold = random.randint(30, 60) + (floor * 10)
     g = gold * 3 if player.midas else gold
-    if "tasca_dorata" in player.relic_ids: g = int(g * 1.25)
-    if "idolo_avidita" in player.relic_ids: g *= 2
+    for r in player.relic_effects: g = r.on_gold_gain(player, g)
     g = int(g * (1 + PROFILE["perks"].get("banca_anima_lvl", 0) * 0.05))
     
     player.gold += g

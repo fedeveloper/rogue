@@ -1,7 +1,6 @@
 import random
-import time
 from typing import List, Dict, Any
-from ui import Colors, clear_screen, delay_print, get_choice
+from ui import Colors, delay_print
 from data_manager import GAME_DATA, RAW_DATA, PROFILE, ELEMENTS, MULTIPLIERS, get_element_icon
 from relic_effects import create_relic_effect
 
