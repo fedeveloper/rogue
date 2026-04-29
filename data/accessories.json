@@ -1,0 +1,64 @@
+{
+    "accessories": [
+        {
+            "id": "a1",
+            "name": "Anello del Berserker",
+            "desc": "+15% probabilit\u00e0 di infliggere colpo critico.",
+            "bonus_type": "crit_chance",
+            "bonus_value": 15,
+            "base_val": 120,
+            "unlock_cost": 0,
+            "unlock_id": null
+        },
+        {
+            "id": "a2",
+            "name": "Amuleto del Vampiro",
+            "desc": "Assorbi 2 HP per ogni colpo a segno.",
+            "bonus_type": "lifesteal",
+            "bonus_value": 2,
+            "base_val": 150,
+            "unlock_cost": 0,
+            "unlock_id": null
+        },
+        {
+            "id": "a3",
+            "name": "Cintura di Ferro",
+            "desc": "+15 HP Massimi.",
+            "bonus_type": "max_hp",
+            "bonus_value": 15,
+            "base_val": 80,
+            "unlock_cost": 0,
+            "unlock_id": null
+        },
+        {
+            "id": "a4",
+            "name": "Collana del Vento",
+            "desc": "+10% Schivata.",
+            "bonus_type": "dodge",
+            "bonus_value": 10,
+            "base_val": 100,
+            "unlock_cost": 0,
+            "unlock_id": null
+        },
+        {
+            "id": "a5",
+            "name": "Occhio del Cacciatore",
+            "desc": "+15% Precisione.",
+            "bonus_type": "acc",
+            "bonus_value": 15,
+            "base_val": 100,
+            "unlock_cost": 0,
+            "unlock_id": null
+        },
+        {
+            "id": "a6",
+            "name": "Spallacci a Spilli",
+            "desc": "Rifletti 3 danni ogni volta che vieni colpito.",
+            "bonus_type": "reflect",
+            "bonus_value": 3,
+            "base_val": 130,
+            "unlock_cost": 0,
+            "unlock_id": null
+        }
+    ]
+}

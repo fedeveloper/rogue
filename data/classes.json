@@ -1,52 +1,255 @@
 {
     "1": {
-        "role": "Guerriero", "max_hp": 120, "gold": 20, "acc": 5, "dodge": 5,
-        "weapon": {"name": "Spada di Ferro", "value": 20, "atk": 5, "element": "Normale"},
-        "armor": {"name": "Cotta di Maglia", "value": 30, "def": 4, "element": "Normale"},
-        "potions": 1, "unlocked_by_default": true,
+        "role": "Guerriero",
+        "max_hp": 120,
+        "gold": 20,
+        "acc": 5,
+        "dodge": 5,
+        "weapon": {
+            "name": "Spada di Ferro",
+            "value": 20,
+            "atk": 5,
+            "element": "Normale"
+        },
+        "armor": {
+            "name": "Cotta di Maglia",
+            "value": 30,
+            "def": 4,
+            "element": "Normale"
+        },
+        "potions": 1,
+        "unlocked_by_default": true,
         "mastery": {
-            "2": {"desc": "Mano Pesante: Inizi con un'arma di Livello 2.", "type": "personal"},
-            "3": {"desc": "Sblocca Consumabile: Pietra per Affilare", "type": "unlock", "id": "pietra_affilare"},
-            "4": {"desc": "Eredità: +5 Difesa Base per TUTTI gli eroi.", "type": "global"},
-            "5": {"desc": "Sblocca Classe: Paladino", "type": "class", "id": "4"}
+            "2": {
+                "desc": "Mano Pesante: Inizi con un'arma di Livello 2.",
+                "type": "personal"
+            },
+            "3": {
+                "desc": "Sblocca Consumabile: Pietra per Affilare",
+                "type": "unlock",
+                "id": "pietra_affilare"
+            },
+            "4": {
+                "desc": "Eredit\u00e0: +5 Difesa Base per TUTTI gli eroi.",
+                "type": "global"
+            },
+            "5": {
+                "desc": "Sblocca Classe: Paladino",
+                "type": "class",
+                "id": "4"
+            }
         }
     },
     "2": {
-        "role": "Ladro", "max_hp": 85, "gold": 100, "acc": 10, "dodge": 20,
-        "weapon": {"name": "Pugnali Gemelli", "value": 30, "atk": 7, "element": "Vento"},
-        "armor": {"name": "Cuoio Leggero", "value": 10, "def": 1, "element": "Normale"},
-        "potions": 2, "unlocked_by_default": true,
+        "role": "Ladro",
+        "max_hp": 85,
+        "gold": 100,
+        "acc": 10,
+        "dodge": 20,
+        "weapon": {
+            "name": "Pugnali Gemelli",
+            "value": 30,
+            "atk": 7,
+            "element": "Vento"
+        },
+        "armor": {
+            "name": "Cuoio Leggero",
+            "value": 10,
+            "def": 1,
+            "element": "Normale"
+        },
+        "potions": 2,
+        "unlocked_by_default": true,
         "mastery": {
-            "2": {"desc": "Tasche Nascoste: 30% di chance di non consumare le pozioni.", "type": "personal"},
-            "3": {"desc": "Sblocca Consumabile: Bomba Fumogena", "type": "unlock", "id": "bomba_fumogena"},
-            "4": {"desc": "Eredità: +10% Schivata Base per TUTTI gli eroi.", "type": "global"},
-            "5": {"desc": "Sblocca Classe: Assassino (In Sviluppo)", "type": "class", "id": "null"}
+            "2": {
+                "desc": "Tasche Nascoste: 30% di chance di non consumare le pozioni.",
+                "type": "personal"
+            },
+            "3": {
+                "desc": "Sblocca Consumabile: Bomba Fumogena",
+                "type": "unlock",
+                "id": "bomba_fumogena"
+            },
+            "4": {
+                "desc": "Eredit\u00e0: +10% Schivata Base per TUTTI gli eroi.",
+                "type": "global"
+            },
+            "5": {
+                "desc": "Sblocca Classe: Assassino (In Sviluppo)",
+                "type": "class",
+                "id": "null"
+            }
         }
     },
     "3": {
-        "role": "Mago", "max_hp": 65, "gold": 40, "acc": 20, "dodge": 0,
-        "weapon": {"name": "Bastone Infernale", "value": 50, "atk": 11, "element": "Fuoco"},
-        "armor": {"name": "Vesti di Seta", "value": 5, "def": 0, "element": "Luce"},
-        "potions": 3, "unlocked_by_default": true,
+        "role": "Mago",
+        "max_hp": 65,
+        "gold": 40,
+        "acc": 20,
+        "dodge": 0,
+        "weapon": {
+            "name": "Bastone Infernale",
+            "value": 50,
+            "atk": 11,
+            "element": "Fuoco"
+        },
+        "armor": {
+            "name": "Vesti di Seta",
+            "value": 5,
+            "def": 0,
+            "element": "Luce"
+        },
+        "potions": 3,
+        "unlocked_by_default": true,
         "mastery": {
-            "2": {"desc": "Sintonia: Gli attacchi Super Efficaci curano il Mago.", "type": "personal"},
-            "3": {"desc": "Sblocca Consumabile: Tomo del Caos", "type": "unlock", "id": "tomo_caos"},
-            "4": {"desc": "Eredità: +15% EXP Base per TUTTI gli eroi.", "type": "global"},
-            "5": {"desc": "Sblocca Classe: Negromante (In Sviluppo)", "type": "class", "id": "null"}
+            "2": {
+                "desc": "Sintonia: Gli attacchi Super Efficaci curano il Mago.",
+                "type": "personal"
+            },
+            "3": {
+                "desc": "Sblocca Consumabile: Tomo del Caos",
+                "type": "unlock",
+                "id": "tomo_caos"
+            },
+            "4": {
+                "desc": "Eredit\u00e0: +15% EXP Base per TUTTI gli eroi.",
+                "type": "global"
+            },
+            "5": {
+                "desc": "Sblocca Classe: Negromante (In Sviluppo)",
+                "type": "class",
+                "id": "null"
+            }
         }
     },
     "4": {
-        "role": "Paladino", "max_hp": 180, "gold": 10, "acc": 5, "dodge": -10,
-        "weapon": {"name": "Martello della Luce", "value": 40, "atk": 8, "element": "Luce"},
-        "armor": {"name": "Armatura Benedetta", "value": 80, "def": 10, "element": "Luce"},
-        "potions": 1, "unlocked_by_default": false, "unlock_cost": 0, "desc": "Sbloccato portando il Guerriero al Livello Maestria 5.",
-        "mastery": {"2": {"desc": "Bonus futuri...", "type": "personal"}}
+        "role": "Paladino",
+        "max_hp": 180,
+        "gold": 10,
+        "acc": 5,
+        "dodge": -10,
+        "weapon": {
+            "name": "Martello della Luce",
+            "value": 40,
+            "atk": 8,
+            "element": "Luce"
+        },
+        "armor": {
+            "name": "Armatura Benedetta",
+            "value": 80,
+            "def": 10,
+            "element": "Luce"
+        },
+        "potions": 1,
+        "unlocked_by_default": false,
+        "unlock_cost": 0,
+        "desc": "Sbloccato portando il Guerriero al Livello Maestria 5.",
+        "mastery": {
+            "2": {
+                "desc": "Baluardo della Fede: Recuperi 3 HP usando Difesa Aggressiva.",
+                "type": "personal"
+            },
+            "3": {
+                "desc": "Sblocca Consumabile: Acqua Santa",
+                "type": "unlock",
+                "id": "acqua_santa"
+            },
+            "4": {
+                "desc": "Eredit\u00e0: +15 HP Max per TUTTI gli eroi.",
+                "type": "global"
+            },
+            "5": {
+                "desc": "Sblocca Tratto: Benedetto",
+                "type": "unlock",
+                "id": "benedetto"
+            }
+        }
     },
     "5": {
-        "role": "Berserker", "max_hp": 100, "gold": 0, "acc": 15, "dodge": 5,
-        "weapon": {"name": "Ascia Sanguinaria", "value": 60, "atk": 16, "element": "Tenebra"},
-        "armor": {"name": "Petto Nudo", "value": 0, "def": 0, "element": "Normale"},
-        "potions": 0, "unlocked_by_default": false, "unlock_cost": 0, "desc": "Sbloccato completando l'Impresa 'Danza con la Morte'.",
-        "mastery": {"2": {"desc": "Bonus futuri...", "type": "personal"}}
+        "role": "Berserker",
+        "max_hp": 100,
+        "gold": 0,
+        "acc": 15,
+        "dodge": 5,
+        "weapon": {
+            "name": "Ascia Sanguinaria",
+            "value": 60,
+            "atk": 16,
+            "element": "Tenebra"
+        },
+        "armor": {
+            "name": "Petto Nudo",
+            "value": 0,
+            "def": 0,
+            "element": "Normale"
+        },
+        "potions": 0,
+        "unlocked_by_default": false,
+        "unlock_cost": 0,
+        "desc": "Sbloccato completando l'Impresa 'Danza con la Morte'.",
+        "mastery": {
+            "2": {
+                "desc": "Furia Sanguinaria: +50% ATK quando gli HP sono sotto il 30%.",
+                "type": "personal"
+            },
+            "3": {
+                "desc": "Sblocca Arma: Ascia del Boia",
+                "type": "unlock",
+                "id": "ascia_boia"
+            },
+            "4": {
+                "desc": "Eredit\u00e0: +2 Attacco Arma per TUTTI gli eroi.",
+                "type": "global"
+            },
+            "5": {
+                "desc": "Sblocca Reliquia: Teschio di Sangue",
+                "type": "unlock",
+                "id": "teschio_sangue"
+            }
+        }
+    },
+    "6": {
+        "role": "Alchimista",
+        "max_hp": 95,
+        "gold": 30,
+        "acc": 15,
+        "dodge": 10,
+        "weapon": {
+            "name": "Lanciabombe",
+            "value": 25,
+            "atk": 6,
+            "element": "Fuoco"
+        },
+        "armor": {
+            "name": "Grembiule in Pelle",
+            "value": 15,
+            "def": 3,
+            "element": "Normale"
+        },
+        "potions": 4,
+        "unlocked_by_default": false,
+        "unlock_cost": 0,
+        "desc": "Sbloccato fondendo un'arma fino al Livello 5.",
+        "unlock_id": "6",
+        "mastery": {
+            "2": {
+                "desc": "Metabolismo Alterato: Le pozioni curano il 50% in pi\u00f9.",
+                "type": "personal"
+            },
+            "3": {
+                "desc": "Sblocca Consumabile: Fiala del Caos",
+                "type": "unlock",
+                "id": "fiala_caos"
+            },
+            "4": {
+                "desc": "Eredit\u00e0: +5% Precisione Base per TUTTI gli eroi.",
+                "type": "global"
+            },
+            "5": {
+                "desc": "Sblocca Reliquia: Pietra Filosofale",
+                "type": "unlock",
+                "id": "pietra_filosofale"
+            }
+        }
     }
 }

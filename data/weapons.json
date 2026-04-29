@@ -1,16 +1,81 @@
 {
-    "weapons":[
-        {"name": "Spada Corta", "base_atk": 3},
-        {"name": "Ascia da Battaglia", "base_atk": 4},
-        {"name": "Alabarda della Guardia", "base_atk": 5},
-        {"name": "Spadone a Due Mani", "base_atk": 6},
-        {"name": "Martello da Guerra", "base_atk": 6},
-        {"name": "Katana Affilata", "base_atk": 8},
-        {"name": "Lancia Perforante", "base_atk": 9},
-        {"name": "Meteora Chiodata", "base_atk": 11},
-        
-        {"name": "Spada del Carnefice", "base_atk": 15, "unlock_id": "spada_carnefice", "unlock_cost": 250, "desc": "Arma devastante ma sbilanciata."},
-        {"name": "Falce Divora-Anime", "base_atk": 18, "unlock_id": "falce_anime", "unlock_cost": 500, "desc": "Danni base spaventosi per le run più profonde."},
-		{"name": "Spadone Infranto", "base_atk": 25, "unlock_id": "spadone_infranto", "unlock_cost": 0, "desc": "Leggendario, ottenuto tramite Imprese."}
+    "weapons": [
+        {
+            "name": "Spada Corta",
+            "base_atk": 3
+        },
+        {
+            "name": "Ascia da Battaglia",
+            "base_atk": 4
+        },
+        {
+            "name": "Alabarda della Guardia",
+            "base_atk": 5
+        },
+        {
+            "name": "Spadone a Due Mani",
+            "base_atk": 6
+        },
+        {
+            "name": "Martello da Guerra",
+            "base_atk": 6
+        },
+        {
+            "name": "Katana Affilata",
+            "base_atk": 8
+        },
+        {
+            "name": "Lancia Perforante",
+            "base_atk": 9
+        },
+        {
+            "name": "Meteora Chiodata",
+            "base_atk": 11
+        },
+        {
+            "name": "Spada del Carnefice",
+            "base_atk": 15,
+            "unlock_id": "spada_carnefice",
+            "unlock_cost": 250,
+            "desc": "Arma devastante ma sbilanciata."
+        },
+        {
+            "name": "Falce Divora-Anime",
+            "base_atk": 18,
+            "unlock_id": "falce_anime",
+            "unlock_cost": 500,
+            "desc": "Danni base spaventosi per le run pi\u00f9 profonde."
+        },
+        {
+            "name": "Spadone Infranto",
+            "base_atk": 25,
+            "unlock_id": "spadone_infranto",
+            "unlock_cost": 0,
+            "desc": "Leggendario, ottenuto tramite Imprese."
+        },
+        {
+            "name": "Lama del Creatore",
+            "desc": "Un'arma leggendaria infusa con gli elementi primordiali.",
+            "base_atk": 30,
+            "val_base": 150,
+            "unlock_cost": 0,
+            "unlock_id": "lama_creatore"
+        },
+        {
+            "name": "Zweihander d'Oro",
+            "desc": "Arma massiccia d'oro puro. Pi\u00f9 oro hai, pi\u00f9 fa male.",
+            "base_atk": 25,
+            "val_base": 300,
+            "unlock_cost": 0,
+            "unlock_id": "zweihander_oro"
+        },
+        {
+            "name": "Ascia del Boia",
+            "desc": "Lenta ma letale, altissimo tasso di colpo critico.",
+            "base_atk": 25,
+            "val_base": 180,
+            "unlock_cost": 0,
+            "unlock_id": "ascia_boia"
+        }
     ]
 }

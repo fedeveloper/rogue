@@ -1,15 +1,90 @@
 {
-    "consumables":[
-        {"name": "Fiala di Sangue", "base_heal": 15, "val_base": 5},
-        {"name": "Pozione Minore", "base_heal": 25, "val_base": 10},
-        {"name": "Decotto alle Erbe", "base_heal": 35, "val_base": 15},
-        {"name": "Pozione Curativa", "base_heal": 50, "val_base": 20},
-        {"name": "Elisir Maggiore", "base_heal": 80, "val_base": 35},
-        {"name": "Lacrima di Fenice", "base_heal": 150, "val_base": 60},
-        
-        {"name": "Elisir degli Dei", "base_heal": 300, "val_base": 150, "unlock_id": "elisir_dei", "unlock_cost": 200, "desc": "Cura quasi completamente qualsiasi eroe."},
-		{"name": "Pietra per Affilare", "base_heal": 0, "val_base": 50, "unlock_id": "pietra_affilare", "unlock_cost": 0, "desc": "Aumenta +5 ATK all'arma attuale in modo permanente."},
-		{"name": "Bomba Fumogena", "base_heal": 0, "val_base": 80, "unlock_id": "bomba_fumogena", "unlock_cost": 0, "desc": "Ti permette di fuggire all'istante da un combattimento."},
-		{"name": "Tomo del Caos", "base_heal": 0, "val_base": 75, "unlock_id": "tomo_caos", "unlock_cost": 0, "desc": "Cambia casualmente l'elemento dell'arma che impugni."}
+    "consumables": [
+        {
+            "name": "Fiala di Sangue",
+            "base_heal": 15,
+            "val_base": 5
+        },
+        {
+            "name": "Pozione Minore",
+            "base_heal": 25,
+            "val_base": 10
+        },
+        {
+            "name": "Decotto alle Erbe",
+            "base_heal": 35,
+            "val_base": 15
+        },
+        {
+            "name": "Pozione Curativa",
+            "base_heal": 50,
+            "val_base": 20
+        },
+        {
+            "name": "Elisir Maggiore",
+            "base_heal": 80,
+            "val_base": 35
+        },
+        {
+            "name": "Lacrima di Fenice",
+            "base_heal": 150,
+            "val_base": 60
+        },
+        {
+            "name": "Elisir degli Dei",
+            "base_heal": 300,
+            "val_base": 150,
+            "unlock_id": "elisir_dei",
+            "unlock_cost": 200,
+            "desc": "Cura quasi completamente qualsiasi eroe."
+        },
+        {
+            "name": "Pietra per Affilare",
+            "base_heal": 0,
+            "val_base": 50,
+            "unlock_id": "pietra_affilare",
+            "unlock_cost": 0,
+            "desc": "Aumenta +5 ATK all'arma attuale in modo permanente."
+        },
+        {
+            "name": "Bomba Fumogena",
+            "base_heal": 0,
+            "val_base": 80,
+            "unlock_id": "bomba_fumogena",
+            "unlock_cost": 0,
+            "desc": "Ti permette di fuggire all'istante da un combattimento."
+        },
+        {
+            "name": "Tomo del Caos",
+            "base_heal": 0,
+            "val_base": 75,
+            "unlock_id": "tomo_caos",
+            "unlock_cost": 0,
+            "desc": "Cambia casualmente l'elemento dell'arma che impugni."
+        },
+        {
+            "name": "Filtro Preciso",
+            "desc": "Conferisce Precisione totale per questo combattimento.",
+            "base_heal": 0,
+            "val_base": 30,
+            "unlock_cost": 0,
+            "unlock_id": "filtro_preciso"
+        },
+        {
+            "name": "Acqua Santa",
+            "desc": "Cura 50 HP e aumenta temporaneamente Difesa e Schivata.",
+            "base_heal": 50,
+            "val_base": 80,
+            "unlock_cost": 0,
+            "unlock_id": "acqua_santa"
+        },
+        {
+            "name": "Fiala del Caos",
+            "desc": "Danno esplosivo tra 10 e 100 ignorando la difesa.",
+            "base_heal": 0,
+            "val_base": 100,
+            "unlock_cost": 0,
+            "unlock_id": "fiala_caos"
+        }
     ]
 }

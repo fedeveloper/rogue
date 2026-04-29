@@ -1,18 +1,182 @@
 {
-  "relics":[
-    {"id": "artiglio_vampiro", "name": "Artiglio Vampirico", "desc": "Ogni tuo attacco a segno ti cura di 5 HP."},
-    {"id": "lente_prismatica", "name": "Lente Prismatica", "desc": "Vantaggi e Svantaggi Elementali sono RADDOPPIATI."},
-    {"id": "scudo_cristallo", "name": "Scudo di Cristallo", "desc": "Il primo danno che subisci in ogni combattimento è ridotto a 0."},
-    {"id": "tasca_dorata", "name": "Tasca Dorata", "desc": "Aumenta l'Oro trovato nei forzieri e dai mostri del 25%."},
-    {"id": "idolo_guerra", "name": "Idolo della Guerra", "desc": "Aumenta in modo permanente il tuo Attacco Base di +5."},
-    {"id": "calice_alchimista", "name": "Calice dell'Alchimista", "desc": "Le pozioni e i consumabili curano il 50% in più."},
-    {"id": "mantello_nebbioso", "name": "Mantello Nebbioso", "desc": "Aumenta passivamente la Schivata del 15%."},
-    {"id": "bussola_perfetta", "name": "Bussola Perfetta", "desc": "La Fuga riesce sempre al 100% (non funziona sui Boss)."},
-    {"id": "occhio_cacciatore", "name": "Occhio del Cacciatore", "desc": "Aumenta la tua Precisione del 20%."},
-    {"id": "spallacci_rovo", "name": "Spallacci di Rovo", "desc": "Se subisci danno da un attacco, il nemico subisce 5 Danni Puri."},
-    {"id": "cuore_troll", "name": "Cuore di Troll", "desc": "Ottieni +2 HP Massimi ogni volta che uccidi un nemico."},
-    {"id": "tomo_conoscenza", "name": "Tomo della Conoscenza", "desc": "L'Esperienza ottenuta aumenta del 30%."},
-    {"id": "idolo_avidita", "name": "Idolo dell'Avidità", "desc": "Tutto l'Oro è RADDOPPIATO, ma non puoi più schivare (Schivata 0%)."},
-    {"id": "lama_sangue", "name": "Lama di Sangue", "desc": "Attacco +10, ma subisci 3 Danni ogni volta che decidi di attaccare."}
-  ]
+    "relics": [
+        {
+            "id": "artiglio_vampiro",
+            "name": "Artiglio Vampirico",
+            "desc": "Ogni tuo attacco a segno ti cura di 5 HP."
+        },
+        {
+            "id": "lente_prismatica",
+            "name": "Lente Prismatica",
+            "desc": "Vantaggi e Svantaggi Elementali sono RADDOPPIATI."
+        },
+        {
+            "id": "scudo_cristallo",
+            "name": "Scudo di Cristallo",
+            "desc": "Il primo danno che subisci in ogni combattimento \u00e8 ridotto a 0."
+        },
+        {
+            "id": "tasca_dorata",
+            "name": "Tasca Dorata",
+            "desc": "Aumenta l'Oro trovato nei forzieri e dai mostri del 25%."
+        },
+        {
+            "id": "idolo_guerra",
+            "name": "Idolo della Guerra",
+            "desc": "Aumenta in modo permanente il tuo Attacco Base di +5."
+        },
+        {
+            "id": "calice_alchimista",
+            "name": "Calice dell'Alchimista",
+            "desc": "Le pozioni e i consumabili curano il 50% in pi\u00f9."
+        },
+        {
+            "id": "mantello_nebbioso",
+            "name": "Mantello Nebbioso",
+            "desc": "Aumenta passivamente la Schivata del 15%."
+        },
+        {
+            "id": "bussola_perfetta",
+            "name": "Bussola Perfetta",
+            "desc": "La Fuga riesce sempre al 100% (non funziona sui Boss)."
+        },
+        {
+            "id": "occhio_cacciatore",
+            "name": "Occhio del Cacciatore",
+            "desc": "Aumenta la tua Precisione del 20%."
+        },
+        {
+            "id": "spallacci_rovo",
+            "name": "Spallacci di Rovo",
+            "desc": "Se subisci danno da un attacco, il nemico subisce 5 Danni Puri."
+        },
+        {
+            "id": "cuore_troll",
+            "name": "Cuore di Troll",
+            "desc": "Ottieni +2 HP Massimi ogni volta che uccidi un nemico."
+        },
+        {
+            "id": "tomo_conoscenza",
+            "name": "Tomo della Conoscenza",
+            "desc": "L'Esperienza ottenuta aumenta del 30%."
+        },
+        {
+            "id": "idolo_avidita",
+            "name": "Idolo dell'Avidit\u00e0",
+            "desc": "Tutto l'Oro \u00e8 RADDOPPIATO, ma non puoi pi\u00f9 schivare (Schivata 0%)."
+        },
+        {
+            "id": "lama_sangue",
+            "name": "Lama di Sangue",
+            "desc": "Attacco +10, ma subisci 3 Danni ogni volta che decidi di attaccare."
+        },
+        {
+            "id": "corona_re_folle",
+            "name": "Corona del Re Folle",
+            "desc": "I colpi Super Efficaci o Critici infliggono il 50% di danni in pi\u00f9.",
+            "unlock_cost": 1000,
+            "unlock_id": "corona_re_folle"
+        },
+        {
+            "id": "anello_vampiro_max",
+            "name": "Anello Vampirico Maggiore",
+            "desc": "Recuperi 2 HP extra ad ogni tuo attacco a segno.",
+            "unlock_cost": 1500,
+            "unlock_id": "anello_vampiro_max"
+        },
+        {
+            "id": "clessidra_destino",
+            "name": "Clessidra del Destino",
+            "desc": "Riduce del 20% la Schivata di base di tutti i nemici.",
+            "unlock_cost": 800,
+            "unlock_id": "clessidra_destino"
+        },
+        {
+            "id": "armatura_spilli",
+            "name": "Armatura a Spilli",
+            "desc": "Riflette 3 danni al nemico ogni volta che vieni colpito.",
+            "unlock_cost": 600,
+            "unlock_id": "armatura_spilli"
+        },
+        {
+            "id": "pergamena_oro",
+            "name": "Pergamena d'Oro",
+            "desc": "Ogni volta che ottieni Oro in combattimento o tesori, recuperi 2 HP.",
+            "unlock_cost": 700,
+            "unlock_id": "pergamena_oro"
+        },
+        {
+            "id": "campanella_spiriti",
+            "name": "Campanella degli Spiriti",
+            "desc": "15% di probabilit\u00e0 di negare un attacco nemico andato a segno.",
+            "unlock_cost": 1200,
+            "unlock_id": "campanella_spiriti"
+        },
+        {
+            "id": "pietra_luna",
+            "name": "Pietra di Luna",
+            "desc": "La tua Difesa aumenta del 50% se usi Difesa/Riparo.",
+            "unlock_cost": 500,
+            "unlock_id": "pietra_luna"
+        },
+        {
+            "id": "contratto_demoniaco",
+            "name": "Contratto Demoniaco",
+            "desc": "Raddoppia i tuoi danni base, ma perdi 5 HP a fine combattimento.",
+            "unlock_cost": 1000,
+            "unlock_id": "contratto_demoniaco"
+        },
+        {
+            "id": "pozione_infinita",
+            "name": "Pozione Senza Fondo",
+            "desc": "Le pozioni curative hanno il 25% di chance di non consumarsi.",
+            "unlock_cost": 900,
+            "unlock_id": "pozione_infinita"
+        },
+        {
+            "id": "bussola_dimensionale",
+            "name": "Bussola Dimensionale",
+            "desc": "Aumenta probabilit\u00e0 di trovare Tesori e Stanze del Mistero.",
+            "unlock_cost": 1000,
+            "unlock_id": "bussola_dimensionale"
+        },
+        {
+            "id": "cuore_drago",
+            "name": "Cuore di Drago",
+            "desc": "+50 HP Max fissi.",
+            "unlock_id": "cuore_drago"
+        },
+        {
+            "id": "sigillo_elementale",
+            "name": "Sigillo Elementale",
+            "desc": "Annulla la debolezza elementale in difesa.",
+            "unlock_id": "sigillo_elementale"
+        },
+        {
+            "id": "spirito_spada",
+            "name": "Spirito della Spada",
+            "desc": "+15 ATK all'arma se il suo livello \u00e8 1.",
+            "unlock_id": "spirito_spada"
+        },
+        {
+            "id": "maschera_antigas",
+            "name": "Maschera Antigas",
+            "desc": "Immunit\u00e0 totale alle Trappole e danni autoinflitti.",
+            "unlock_id": "maschera_antigas"
+        },
+        {
+            "id": "teschio_sangue",
+            "name": "Teschio di Sangue",
+            "desc": "Ogni nemico sconfitto incrementa i tuoi HP Massimi di 1.",
+            "unlock_cost": 0,
+            "unlock_id": "teschio_sangue"
+        },
+        {
+            "id": "pietra_filosofale",
+            "name": "Pietra Filosofale",
+            "desc": "A fine combattimento, 20% di chance di convertire l'XP in Oro sonante.",
+            "unlock_cost": 0,
+            "unlock_id": "pietra_filosofale"
+        }
+    ]
 }

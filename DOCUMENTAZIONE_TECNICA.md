@@ -1,53 +1,81 @@
-# ⚙️ Documentazione Tecnica (Sviluppatori)
+# Walkthrough: Accessori e Risonanza Elementale
 
-Il gioco è sviluppato in Python puro (senza librerie esterne non standard) utilizzando un'architettura **Data-Driven**. La logica di gioco è separata dai contenuti (asset).
+## Panoramica
+Sono stati implementati due nuovi sistemi di personalizzazione delle build:
 
-## 📂 Struttura dell'Architettura
-Il codice in `roguelike.py` agisce unicamente come "Motore Fisico" e "Interfaccia UI". 
-Tutti i contenuti testuali, le statistiche, i nemici e l'economia risiedono all'interno della directory `/data/` in formato `.json`.
+1. **Slot Monile (Accessori)** — Un terzo slot equipaggiamento con effetti passivi unici.
+2. **Risonanza Elementale** — Bonus potenti quando Arma e Armatura condividono lo stesso elemento.
 
-### Il Sistema di Patching del Profilo
-Il salvataggio è gestito tramite `profile.json` (generato nella root dir). 
-La funzione `load_profile()` contiene un meccanismo di retrocompatibilità ricorsivo: se uno sviluppatore aggiunge nuove chiavi (feats, perks, ecc.) ai JSON di sistema, il codice aggiornerà automaticamente il file dell'utente aggiungendo i dati mancanti, senza causare `KeyError` o resettare i progressi.
+---
 
-## 🗂️ Panoramica dei File Dati (JSON)
+## 1. Slot Monile (Accessori)
 
-* `elements.json`: Definisce le regole di Sasso-Carta-Forbice e le icone emoji.
-* `enemies.json`: Base dei mostri. `"base_hp"` e `"base_atk"` scalano linearmente col livello del piano calcolato in Python.
-* `events.json`: **[NUOVO]** Contiene i bivi narrativi. Ogni evento ha un testo e scelte multiple mappate a `"action"` specifiche.
-* `relics.json`: **[NUOVO]** Array di Reliquie passive con i relativi `"id"`. Gli effetti sono hardcodati nella classe `Player` e nel loop di combattimento, ma i testi risiedono qui.
-* `weapons.json` / `armors.json` / `consumables.json`: Dati dell'equipaggiamento. Il campo `"unlock_id"` serve per la Forgia Dimensionale.
-* `classes.json`: Definisce statistiche di base e l'albero dinamico della Maestria.
-* `meta.json`: Regole di meta-progressione (Requisiti XP, Feats, Traits) e i **Patti del Caos** per l'Endgame.
+### Come funziona
+- Il giocatore ha ora 3 slot: **Arma**, **Armatura**, **Monile**.
+- I Monili si trovano dal Mercante, negli Scrigni, e nelle Trappole.
+- Si equipaggiano dall'inventario come le armi/armature (sostituendo il vecchio).
+- Bonus stat (HP/Dodge/Acc) vengono rimossi correttamente quando si cambia monile.
 
-## 🛠️ Come Estendere il Gioco (Modding)
+### 6 Accessori disponibili
 
-### 1. Aggiungere una Reliquia Passiva
-1. Aggiungi i testi in `data/relics.json`:
-   `{"id": "anello_veloce", "name": "Anello del Vento", "desc": "Aggiunge +20% di schivata base."}`
-2. Implementa la logica in `roguelike.py`. Ad esempio, nella classe `Player`, aggiungi la condizione: 
-   `if "anello_veloce" in self.relic_ids: self.base_dodge += 20`
+| Nome | Effetto | Tipo |
+|---|---|---|
+| Anello del Berserker | +15% probabilità critico | `crit_chance` |
+| Amuleto del Vampiro | +2 HP per colpo a segno | `lifesteal` |
+| Cintura di Ferro | +15 HP Massimi | `max_hp` |
+| Collana del Vento | +10% Schivata | `dodge` |
+| Occhio del Cacciatore | +15% Precisione | `acc` |
+| Spallacci a Spilli | Rifletti 3 danni quando colpito | `reflect` |
 
-### 2. Aggiungere una Stanza Evento
-Apri `data/events.json`. Crea un nuovo oggetto radice:
+### Integrazione nel combattimento
+- **Critico**: Roll aggiuntivo prima del calcolo hit, raddoppia i danni.
+- **Lifesteal**: Cura applicata dopo ogni colpo a segno (si somma a reliquie vampiriche).
+- **Riflesso**: Unificato con la reliquia `armatura_spilli` in un unico `reflect_total`.
+- **Stat passivi** (`max_hp`, `dodge`, `acc`): Applicati all'equipaggiamento, rimossi allo scambio.
 
-"statua_guerriero": {
-  "title": "Statua Antica", 
-  "text": "Una statua che richiede un tributo di sangue.",
-  "choices":[
-    {"text": "Dona 20 HP per un potenziamento Arma", "action": "upgrade_weapon"},
-    {"text": "Ignora", "action": "none"}
-  ]
-}
+---
 
-Dovrai poi intercettare l'azione "upgrade_weapon" all'interno della funzione event_room() in Python.
+## 2. Risonanza Elementale
 
-### 3 Aggiungere Patti del Caos (Maledizioni)
-In `meta.json`, sotto "pacts", aggiungi:
-"niente_cure": {"name": "Morte Certa", "desc": "I nemici tolgono cura", "bonus": 0.50}
-Poi nel codice di combattimento, se "niente_cure" in active_pacts, azzera gli HP recuperati.
+### Come funziona
+Se l'**Arma** e l'**Armatura** equipaggiate hanno lo **stesso elemento** (escluso Normale), si attiva una **Risonanza** con effetti passivi per tutta la durata del combattimento.
 
-## 🧠 Funzionamento del "Mazzo" e Mappa a Bivi
-La funzione di gioco scorre su un loop di 5 step (tappe) per ogni Piano.
-Dallo Step 1 al 4, genera 2 stanze casuali basate su Pesi Statistici (es. 40% Combattimento, 20% Evento, 10% Forziere).
-Lo Step 5 forza obbligatoriamente un "type": "boss".
+### Tabella Risonanze
+
+| Elemento | Effetto | Quando si applica |
+|---|---|---|
+| 🔥 Fuoco | Ustione: +5 danni per turno (cumulativi) | Fine turno nemico |
+| 💧 Acqua | Riduce ATK nemico del 15% | Inizio combattimento |
+| 🪨 Terra | +5 Difesa fissa | Calcolo danni subiti |
+| 💨 Vento | +15% Schivata | Calcolo hit nemico |
+| ✨ Luce | +3 HP per ogni colpo a segno | Dopo danno inflitto |
+| 🌑 Tenebra | +5 danni puri (ignora difesa) | Calcolo danno inflitto |
+
+### Dilemma strategico
+La Risonanza crea una scelta tattica: un'arma con +5 ATK e un elemento diverso, o un'arma leggermente più debole che mantiene attiva la Risonanza di Fuoco?
+
+### Indicatore visivo
+L'inventario mostra `✨ RISONANZA ATTIVA: [elemento]!` quando la sinergia è attiva.
+
+---
+
+## File Modificati
+
+| File | Modifica |
+|---|---|
+| `data/accessories.json` | **NUOVO** — Database 6 accessori |
+| `data_manager.py` | Caricamento `accessories` in `RAW_DATA`/`GAME_DATA` |
+| `entities.py` | Classe `Accessory`, `generate_accessory()`, slot player, inventario, `_get_resonance_element()` |
+| `rooms.py` | Drop accessori (mercante/tesori/trappole), bonus combat (crit/lifesteal/reflect), risonanza (6 elementi) |
+| `fuzzer.py` | **NUOVO** — Stress test con accessori e risonanza forzata |
+
+---
+
+## Test
+
+Fuzzer eseguito con successo:
+- **50 run** simulate
+- **178 combattimenti** completati
+- **50 accessori** equipaggiati automaticamente
+- **17 run con risonanza forzata**
+- **0 crash** rilevati

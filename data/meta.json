@@ -1,22 +1,173 @@
 {
-    "mastery_xp_requirements": {"2": 100, "3": 250, "4": 500, "5": 1000},
+    "mastery_xp_requirements": {
+        "2": 100,
+        "3": 250,
+        "4": 500,
+        "5": 1000
+    },
     "traits": {
-        "base": {"name": "Nessun Tratto", "desc": "Gioca con le regole standard.", "unlock_req": "none"},
-        "maledetto": {"name": "Patto del Sangue", "desc": "+50 ATK, ma le cure hanno effetto ZERO.", "unlock_req": "deaths_10"},
-        "midas": {"name": "Tocco di Mida", "desc": "Non ottieni EXP dai mostri, ma l'Oro è TRIPLICATO.", "unlock_req": "gold_5000"}
+        "base": {
+            "name": "Nessun Tratto",
+            "desc": "Gioca con le regole standard.",
+            "unlock_req": "none"
+        },
+        "maledetto": {
+            "name": "Patto del Sangue",
+            "desc": "+50 ATK, ma le cure hanno effetto ZERO.",
+            "unlock_req": "deaths_10"
+        },
+        "midas": {
+            "name": "Tocco di Mida",
+            "desc": "Non ottieni EXP dai mostri, ma l'Oro \u00e8 TRIPLICATO.",
+            "unlock_req": "gold_5000"
+        },
+        "aristocratico": {
+            "name": "Aristocratico",
+            "desc": "Inizi con 500 Oro, ma i nemici non droppano pi\u00f9 Oro.",
+            "unlock_req": "feat_avaro"
+        },
+        "cacciatore_etereo": {
+            "name": "Cacciatore Etereo",
+            "desc": "Primo colpo nemico manca sempre al 100%. -20% Schivata totale.",
+            "unlock_req": "feat_epuratore"
+        },
+        "titano": {
+            "name": "Titano",
+            "desc": "+100 HP Max. Precisione e Schivata dimezzate.",
+            "unlock_req": "feat_furia_cieca"
+        },
+        "benedetto": {
+            "name": "Benedetto",
+            "desc": "Inizi con una Reliquia difensiva e resisti al primo colpo letale.",
+            "unlock_req": "benedetto"
+        }
     },
     "pacts": {
-        "durezza": {"name": "Durezza", "desc": "HP di tutti i Nemici +30%", "bonus": 0.25},
-        "furia": {"name": "Furia", "desc": "Attacco di tutti i Nemici +30%", "bonus": 0.25},
-        "carestia": {"name": "Carestia", "desc": "Le pozioni curano la metà", "bonus": 0.25},
-        "inflazione": {"name": "Inflazione", "desc": "I prezzi del Mercante sono Raddoppiati", "bonus": 0.25},
-        "trappole": {"name": "Labirinto Mortale", "desc": "Le Trappole infliggono danni Doppi", "bonus": 0.25}
+        "durezza": {
+            "name": "Durezza",
+            "desc": "HP di tutti i Nemici +30%",
+            "bonus": 0.25
+        },
+        "furia": {
+            "name": "Furia",
+            "desc": "Attacco di tutti i Nemici +30%",
+            "bonus": 0.25
+        },
+        "carestia": {
+            "name": "Carestia",
+            "desc": "Le pozioni curano la met\u00e0",
+            "bonus": 0.25
+        },
+        "inflazione": {
+            "name": "Inflazione",
+            "desc": "I prezzi del Mercante sono Raddoppiati",
+            "bonus": 0.25
+        },
+        "trappole": {
+            "name": "Labirinto Mortale",
+            "desc": "Le Trappole infliggono danni Doppi",
+            "bonus": 0.25
+        }
     },
     "feats": {
-        "feat_pacifista": {"name": "L'Ombra", "desc": "Scappa da 10 combattimenti in una singola run.", "target": 10, "reward_type": "perk", "reward_id": "scarpisti"},
-        "feat_fabbro": {"name": "Fabbro Folle", "desc": "Fondi 3 oggetti alla Forgia in una run.", "target": 3, "reward_type": "unlock", "reward_id": "spadone_infranto"},
-        "feat_vetro": {"name": "Cannone di Vetro", "desc": "Sconfiggi un Boss senza subire alcun danno.", "target": 1, "reward_type": "unlock", "reward_id": "veste_eterea"},
-        "feat_suicida": {"name": "Danza con la Morte", "desc": "Sconfiggi un nemico avendo esattamente 1 HP rimanente.", "target": 1, "reward_type": "class", "reward_id": "5"}
+        "feat_pacifista": {
+            "name": "L'Ombra",
+            "desc": "Scappa da 10 combattimenti in una singola run.",
+            "target": 10,
+            "reward_type": "perk",
+            "reward_id": "scarpisti"
+        },
+        "feat_fabbro": {
+            "name": "Fabbro Folle",
+            "desc": "Fondi 3 oggetti alla Forgia in una run.",
+            "target": 3,
+            "reward_type": "unlock",
+            "reward_id": "spadone_infranto"
+        },
+        "feat_vetro": {
+            "name": "Cannone di Vetro",
+            "desc": "Sconfiggi un Boss senza subire alcun danno.",
+            "target": 1,
+            "reward_type": "unlock",
+            "reward_id": "veste_eterea"
+        },
+        "feat_suicida": {
+            "name": "Danza con la Morte",
+            "desc": "Sconfiggi un nemico avendo esattamente 1 HP rimanente.",
+            "target": 1,
+            "reward_type": "class",
+            "reward_id": "5"
+        },
+        "feat_avaro": {
+            "name": "L'Avaro",
+            "desc": "Esci dal labirinto con pi\u00f9 di 2000 Oro non speso.",
+            "target": 2000,
+            "reward_type": "trait",
+            "reward_id": "aristocratico"
+        },
+        "feat_genio_elementale": {
+            "name": "Genio Elementale",
+            "desc": "Fondi un'arma fino al Livello 5.",
+            "target": 1,
+            "reward_type": "class",
+            "reward_id": "6"
+        },
+        "feat_sopravvissuto": {
+            "name": "Il Sopravvissuto",
+            "desc": "Supera il Piano 10 senza MAI usare il riposo al Fal\u00f2.",
+            "target": 1,
+            "reward_type": "unlock",
+            "reward_id": "cuore_drago"
+        },
+        "feat_epuratore": {
+            "name": "Epuratore di Demoni",
+            "desc": "Sconfiggi 10 Boss in totale.",
+            "target": 10,
+            "reward_type": "trait",
+            "reward_id": "cacciatore_etereo"
+        },
+        "feat_mani_bucate": {
+            "name": "Mani Bucate",
+            "desc": "Spendi pi\u00f9 di 2000 Oro dal Mercante in una singola run.",
+            "target": 2000,
+            "reward_type": "unlock",
+            "reward_id": "zweihander_oro"
+        },
+        "feat_equilibrista": {
+            "name": "Equilibrista",
+            "desc": "Finisci una run con Arma e Armatura di elementi diversi.",
+            "target": 1,
+            "reward_type": "unlock",
+            "reward_id": "sigillo_elementale"
+        },
+        "feat_lama_cristallo": {
+            "name": "Lama di Cristallo",
+            "desc": "Arriva al piano 15 senza mai cambiare l'arma iniziale.",
+            "target": 1,
+            "reward_type": "unlock",
+            "reward_id": "spirito_spada"
+        },
+        "feat_furia_cieca": {
+            "name": "Furia Cieca",
+            "desc": "Finisci un piano con Precisione inferiore a 50%.",
+            "target": 1,
+            "reward_type": "trait",
+            "reward_id": "titano"
+        },
+        "feat_tiratore_scelto": {
+            "name": "Tiratore Scelto",
+            "desc": "Infliggi 5 colpi Super Efficaci a un Boss.",
+            "target": 5,
+            "reward_type": "unlock",
+            "reward_id": "filtro_preciso"
+        },
+        "feat_assaggiatore": {
+            "name": "Assaggiatore di Veleni",
+            "desc": "Sopravvivi a un danno letale rimanendo esattamente a 1 HP.",
+            "target": 1,
+            "reward_type": "unlock",
+            "reward_id": "maschera_antigas"
+        }
     },
     "rooms": {
         "weights": {
