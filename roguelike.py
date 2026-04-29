@@ -222,9 +222,9 @@ class Player:
                 for r in self.relics: print(f"   - {Colors.YELLOW}{r['name']}{Colors.RESET}: {r['desc']}")
             print("-" * 55)
             
+            display_items = []
             if not self.inventory: print("L'inventario è vuoto.")
             else:
-                display_items =[]
                 consumables_map = {}
                 for i, item in enumerate(self.inventory):
                     if item.type == "consumable":
@@ -772,10 +772,10 @@ def evaluate_run(player: Player, floor: int, infinite: bool):
     while curr_lvl < 5 and curr_xp >= reqs[str(curr_lvl + 1)]:
         curr_lvl += 1; PROFILE["class_lvl"][c_id] = curr_lvl
         print(f"{Colors.YELLOW}*** MAESTRIA SALITA AL LIVELLO {curr_lvl}! ***{Colors.RESET}")
-        reward = GAME_DATA["classes"][c_id]["mastery"][str(curr_lvl)]
+        reward = GAME_DATA["classes"][c_id]["mastery"].get(str(curr_lvl), {"desc": "Nessun bonus disponibile (In Sviluppo).", "type": "null", "id": "null"})
         print(f"Sbloccato: {reward['desc']}")
-        if reward["type"] in ["unlock", "class"] and reward["id"] != "null" and reward["id"] not in PROFILE["unlocked_ids"]:
-            PROFILE["unlocked_ids"].append(reward["id"])
+        if reward.get("type") in ["unlock", "class"] and reward.get("id", "null") != "null" and reward.get("id") not in PROFILE["unlocked_ids"]:
+            PROFILE["unlocked_ids"].append(reward.get("id"))
             
     print(f"\n{Colors.CYAN}[ Imprese ]{Colors.RESET}")
     for f_id, f_data in GAME_DATA["meta"]["feats"].items():
