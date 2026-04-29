@@ -235,7 +235,6 @@ rogue/
 ├── rooms.py              # Logica stanze (combattimento, mercante, falò, ecc.)
 ├── data_manager.py       # Caricamento JSON, gestione profilo
 ├── ui.py                 # Utilità di interfaccia (colori, input, clear)
-├── fuzzer.py             # Stress tester automatizzato (500+ run)
 ├── profile.json          # Salvataggio giocatore (generato automaticamente)
 └── data/
     ├── accessories.json  # Database accessori
