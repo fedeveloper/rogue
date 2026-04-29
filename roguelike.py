@@ -5,6 +5,7 @@ from ui import Colors, clear_screen, delay_print, get_choice
 from data_manager import PROFILE, GAME_DATA, RAW_DATA, save_profile, get_element_icon
 from entities import Player, Enemy
 from rooms import combat_room, mystery_room, event_room, vendor_room, campfire_room, treasure_room, trap_room
+from inventory_menu import show_inventory_menu
 
 def evaluate_run(player: Player, floor: int, infinite: bool):
     print("\n" + ("="*50))
@@ -337,7 +338,7 @@ def play_game(infinite_mode=False):
                 print("F. Fuga dal Labirinto")
                 
                 action = get_choice("Scelta > ").upper()
-                if action == 'I': player.manage_inventory()
+                if action == 'I': show_inventory_menu(player)
                 elif action == 'F':
                     clear_screen(); print(f"{Colors.YELLOW}Fuggi portando in salvo le ricchezze.{Colors.RESET}")
                     player.escaped = True; break

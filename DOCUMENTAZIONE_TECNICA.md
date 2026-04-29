@@ -97,3 +97,26 @@ La funzione originale `base_camp()` è stata drasticamente semplificata ed ora s
 ## Risultati dei Test
 - Ho verificato tramite compilatore Python locale che non ci fossero errori di sintassi.
 - Il codice ora è molto più leggibile e aderisce al principio di singola responsabilità (SRP), almeno a livello strutturale del menu. Questo renderà molto più facile in futuro aggiungere nuove funzionalità al campo base (ad esempio, una Stanza dei Trofei o un Mercante Esotico).
+
+# Sistema a Hook/Eventi Implementato
+
+Ho completato la creazione del sistema ad eventi per le reliquie, rimuovendo le dipendenze hardcoded dal resto del motore di gioco.
+
+## Modifiche Effettuate
+
+1. **Creazione di `relic_effects.py`**
+   - Ho creato il nuovo file `relic_effects.py` contenente la classe base `RelicEffect` che definisce i metodi vuoti (hook) per vari momenti di gioco come l'inizio del combattimento (`on_combat_start`), prima e dopo un attacco, quando si riceve un colpo e all'uccisione di un nemico.
+   - Sono state create circa 20 sottoclassi (es. `LamaSangue`, `CaliceAlchimista`, `PietraLuna`) ognuna delle quali estende solo l'hook di cui ha bisogno.
+   - Un dizionario `RELIC_REGISTRY` mappa l'ID testuale della reliquia (dal JSON) alla classe corrispondente.
+
+2. **Aggiornamento di `entities.py` (`Player`)**
+   - Quando il giocatore ottiene una reliquia (`add_relic`), viene ora istanziato il `RelicEffect` corretto e aggiunto a una nuova lista `self.relic_effects`.
+   - L'effetto viene innescato una sola volta con il metodo `on_equip()`.
+   - I calcoli passivi di schivata (`get_dodge`) ed exp (`gain_exp`) scorrono la lista degli effetti per raccogliere i modificatori anziché cercare le stringhe. Lo stesso avviene per le cure e l'uso degli oggetti in `manage_inventory`.
+
+3. **Pulizia in `rooms.py` e `roguelike.py`**
+   - Dalla classe `CombatSession` in `rooms.py` sono stati eliminati più di 20 `if "id_reliquia" in player.relic_ids:`. Adesso, quando il nemico muore, la stanza chiama semplicemente `r.on_enemy_death(self)` per tutte le reliquie del giocatore, e l'effetto della Pietra Filosofale, Teschio di Sangue e così via viene gestito internamente in `relic_effects.py`.
+   - Anche il check passivo della `Bussola Dimensionale` in `roguelike.py` ora avviene tramite l'hook `modify_room_weights`.
+
+## Risultato Finale
+Questo pattern ha trasformato un potenziale "spaghetti code" in un sistema elegante e scalabile. Per creare una nuova reliquia in futuro, non servirà toccare **mai più** `rooms.py` o `entities.py`: basterà definire una classe per il nuovo oggetto in `relic_effects.py` e aggiungerla al file JSON dei dati.

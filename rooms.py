@@ -4,6 +4,7 @@ from typing import List
 from ui import Colors, clear_screen, delay_print, get_choice
 from data_manager import GAME_DATA, PROFILE, MULTIPLIERS, get_element_icon
 from entities import Player, Enemy, generate_weapon, generate_armor, generate_accessory, generate_potion, get_random_relic
+from inventory_menu import show_inventory_menu
 
 class CombatSession:
     def __init__(self, player: Player, floor: int, enemy: Enemy):
@@ -199,7 +200,7 @@ class CombatSession:
             return True
                     
         elif choice == '3':
-            action = self.player.manage_inventory(in_combat=True)
+            action = show_inventory_menu(self.player, in_combat=True)
             if action == "smoke_bomb":
                 self.player.run_tracker["escapes"] += 1
                 return False
