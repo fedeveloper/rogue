@@ -235,7 +235,6 @@ rogue/
 ├── rooms.py              # Logica stanze (combattimento, mercante, falò, ecc.)
 ├── data_manager.py       # Caricamento JSON, gestione profilo
 ├── ui.py                 # Utilità di interfaccia (colori, input, clear)
-├── fuzzer.py             # Stress tester automatizzato (500+ run)
 ├── profile.json          # Salvataggio giocatore (generato automaticamente)
 └── data/
     ├── accessories.json  # Database accessori
@@ -260,23 +259,6 @@ Il gioco segue un'architettura **Data-Driven**:
 - **Logica** (`entities.py`, `rooms.py`) — Entità e stanze leggono i dati a runtime e applicano le regole.
 - **Orchestrazione** (`roguelike.py`) — Menu, selezione classi/tratti/patti, loop di esplorazione e valutazione finale della run.
 - **Persistenza** (`data_manager.py`) — Caricamento dati, gestione del profilo e salvataggio automatico.
-
----
-
-## 🧪 Testing
-
-Il progetto include un **fuzzer automatizzato** (`fuzzer.py`) che simula 500+ sessioni di gioco testando:
-- Tutti i tipi di stanza (combattimento, mercante, tesori, trappole, falò, misteri, eventi)
-- Apertura e gestione inventario in e fuori combattimento
-- Equipaggiamento e scambio di accessori
-- Risonanza Elementale forzata per tutti i 6 elementi
-- Valutazione fine run (`evaluate_run`) con tutti i possibili percorsi di imprese
-- Menu del Campo Base (Fuoco dell'Anima, Forgia, Taverna, Grimorio)
-- Loop completo `play_game` con selezione classe, tratti e patti
-
-```bash
-python fuzzer.py
-```
 
 ---
 
