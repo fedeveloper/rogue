@@ -263,23 +263,6 @@ Il gioco segue un'architettura **Data-Driven**:
 
 ---
 
-## 🧪 Testing
-
-Il progetto include un **fuzzer automatizzato** (`fuzzer.py`) che simula 500+ sessioni di gioco testando:
-- Tutti i tipi di stanza (combattimento, mercante, tesori, trappole, falò, misteri, eventi)
-- Apertura e gestione inventario in e fuori combattimento
-- Equipaggiamento e scambio di accessori
-- Risonanza Elementale forzata per tutti i 6 elementi
-- Valutazione fine run (`evaluate_run`) con tutti i possibili percorsi di imprese
-- Menu del Campo Base (Fuoco dell'Anima, Forgia, Taverna, Grimorio)
-- Loop completo `play_game` con selezione classe, tratti e patti
-
-```bash
-python fuzzer.py
-```
-
----
-
 ## 📝 Roadmap
 
 - [ ] Nuova classe: **Assassino** (sblocco Maestria Ladro Lv.5)
