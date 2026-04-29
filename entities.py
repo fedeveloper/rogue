@@ -3,6 +3,7 @@ import time
 from typing import List, Dict, Any
 from ui import Colors, clear_screen, delay_print, get_choice
 from data_manager import GAME_DATA, RAW_DATA, PROFILE, ELEMENTS, MULTIPLIERS, get_element_icon
+from relic_effects import create_relic_effect
 
 class Item:
     def __init__(self, name: str, value: int, item_type: str, level: int = 1):
@@ -81,7 +82,8 @@ class Player:
         self.base_acc, self.base_dodge = data["acc"], data["dodge"]
         self.active_pacts = active_pacts
         self.relic_ids = []
-        self.relics =[]
+        self.relics = []
+        self.relic_effects = []
         self.bonus_atk_relic = 0
         
         self.exp_multiplier = 1.0
@@ -140,22 +142,19 @@ class Player:
     def add_relic(self, relic):
         self.relics.append(relic)
         self.relic_ids.append(relic["id"])
+        effect = create_relic_effect(relic["id"])
+        self.relic_effects.append(effect)
+        effect.on_equip(self)
         print(f"\n{Colors.MAGENTA}🌟 Hai ottenuto la Reliquia: {relic['name']}!{Colors.RESET}")
         print(f"Effetto: {relic['desc']}")
-        if relic["id"] == "idolo_guerra": self.bonus_atk_relic += 5
-        elif relic["id"] == "lama_sangue": self.bonus_atk_relic += 10
-        elif relic["id"] == "mantello_nebbioso": self.base_dodge += 15
-        elif relic["id"] == "occhio_cacciatore": self.base_acc += 20
-        elif relic["id"] == "cuore_drago": self.max_hp += 50; self.hp += 50
-        elif relic["id"] == "spirito_spada":
-            if self.weapon.level == 1: self.bonus_atk_relic += 15
 
     def get_total_atk(self): return self.weapon.atk + self.bonus_atk_relic
     
     def get_dodge(self): 
-        if "idolo_avidita" in self.relic_ids: return 0
+        dodge = self.base_dodge + self.temp_dodge
+        for effect in self.relic_effects: dodge += effect.get_dodge_modifier()
         if self.class_id == "5" and PROFILE["class_lvl"].get("5", 1) >= 2 and self.hp < self.max_hp * 0.3: return 0
-        return self.base_dodge + self.temp_dodge
+        return max(0, dodge)
 
     def _get_resonance_element(self):
         if self.weapon.element != "Normale" and self.weapon.element == self.armor.element:
@@ -164,7 +163,8 @@ class Player:
 
     def gain_exp(self, amount: int):
         if self.midas: return
-        multi = self.exp_multiplier + (0.3 if "tomo_conoscenza" in self.relic_ids else 0.0)
+        multi = self.exp_multiplier
+        for effect in self.relic_effects: multi += effect.get_exp_modifier()
         amount = int(amount * multi)
         self.exp += amount
         print(f"{Colors.CYAN}Ottieni {amount} EXP! ({self.exp}/{self.max_exp}){Colors.RESET}")
@@ -252,15 +252,18 @@ class Player:
                             else:
                                 old_hp = self.hp
                                 base_h = item.heal_amount
-                                if "calice_alchimista" in self.relic_ids: base_h = int(base_h * 1.5)
+                                for effect in self.relic_effects: base_h = effect.on_heal(self, base_h)
                                 if self.class_id == "6" and PROFILE["class_lvl"].get("6", 1) >= 2: base_h = int(base_h * 1.5)
                                 h_amt = base_h // 2 if "carestia" in self.active_pacts else base_h
                                 
                                 self.hp = min(self.max_hp, self.hp + h_amt)
                                 print(f"{Colors.GREEN}\n-> Recuperi {self.hp - old_hp} HP! (HP: {self.hp}/{self.max_hp}){Colors.RESET}")
                                 if self.thief_save and random.random() < 0.3: print(f"{Colors.CYAN}Abilità Ladro: Hai salvato la pozione!{Colors.RESET}")
-                                elif "pozione_infinita" in self.relic_ids and random.random() < 0.25: print(f"{Colors.CYAN}Pozione Senza Fondo: La fiala si riempie di nuovo!{Colors.RESET}")
-                                else: self.inventory.pop(real_idx)
+                                else:
+                                    consume = True
+                                    for effect in self.relic_effects:
+                                        if not effect.on_item_use(self, item.name): consume = False
+                                    if consume: self.inventory.pop(real_idx)
                             input("Premi INVIO..."); return "turn_used" if in_combat else "used"
                             
                     elif item.type == "weapon":

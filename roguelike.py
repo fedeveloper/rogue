@@ -262,9 +262,7 @@ def play_game(infinite_mode=False):
     delay_print(f"\nLe porte si chiudono alle tue spalle, {player.role}.", 0.03); time.sleep(1)
     
     weights_def = GAME_DATA["meta"]["rooms"]["weights"].copy()
-    if "bussola_dimensionale" in player.relic_ids:
-        weights_def["treasure"] += 15.0
-        weights_def["mystery"] += 15.0
+    for r in player.relic_effects: r.modify_room_weights(weights_def)
         
     cooldowns_def = GAME_DATA["meta"]["rooms"]["cooldowns"]
     room_cooldowns = {k: 0 for k in weights_def.keys()}
