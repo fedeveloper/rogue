@@ -77,6 +77,113 @@ def evaluate_run(player: Player, floor: int, infinite: bool):
     input(f"\n{Colors.CYAN}Premi INVIO per tornare al Menu Principale...{Colors.RESET}")
 
 # --- HUB E LOOP DI GIOCO ---
+def base_camp_fire():
+    while True:
+        clear_screen()
+        print(f"{Colors.CYAN}--- IL FUOCO DELL'ANIMA --- Essenza: ✨{PROFILE['essence']}{Colors.RESET}")
+        
+        perk_defs = [
+            ("hp_lvl", "Vigore Ereditario", "+15 HP Max", 5, lambda l: 50 + (l*50), False),
+            ("gold_lvl", "Tasche Profonde", "+20 Oro Iniziale", 3, lambda l: 100 + (l*100), False),
+            ("discount_lvl", "Mercanteggiare", "-10% Prezzi Negozio", 3, lambda l: 150 + (l*100), False),
+            ("sesto_senso", "Sesto Senso", "Prevedi bivi", 1, lambda l: 300, True),
+            ("dodge_lvl", "Schivata Istintiva", "+2% Schivata Base", 5, lambda l: 100 + (l*50), False),
+            ("acc_lvl", "Mira Perfetta", "+3% Precisione Base", 5, lambda l: 100 + (l*50), False),
+            ("exp_lvl", "Studioso del Caos", "+5% EXP dai nemici", 3, lambda l: 300 + (l*300), False),
+            ("farmacista", "Farmacista", "+1 Pozione iniziale", 1, lambda l: 1500, True),
+            ("altare_benedizione", "Benedizione dell'Altare", "Inizi con 1 Reliquia casuale", 1, lambda l: 2000, True),
+            ("riciclatore_lvl", "Riciclatore", "+10% ricavo vendite", 3, lambda l: 200 + (l*150), False),
+            ("banca_anima_lvl", "Banca dell'Anima", "+5% Oro raccolto in totale", 3, lambda l: 250 + (l*250), False),
+            ("artigiano_lvl", "Artigiano", "+1 ATK arma iniziale", 3, lambda l: 400 + (l*300), False),
+            ("pelle_dura_lvl", "Pelle Dura", "+1 DEF armatura iniziale", 3, lambda l: 400 + (l*300), False),
+            ("speranza_luce_lvl", "Speranza di Luce", "Recuperi HP ad ogni piano", 3, lambda l: 500 + (l*400), False)
+        ]
+        
+        for i, (p_key, p_name, p_desc, p_max, p_cost_func, p_bool) in enumerate(perk_defs):
+            lvl = PROFILE["perks"].get(p_key, 0)
+            if p_bool:
+                status = "SBLOCCATO" if lvl else "BLOCCATO"
+                cost = "MAX" if lvl else f"✨{p_cost_func(0)}"
+                print(f"{i+1:2}. {p_name}[{status}] ({p_desc}) - Costo: {cost}")
+            else:
+                cost = "MAX" if lvl >= p_max else f"✨{p_cost_func(lvl)}"
+                print(f"{i+1:2}. {p_name}[Lv.{lvl}/{p_max}] ({p_desc}) - Costo: {cost}")
+                
+        print(" 0. Indietro")
+        p_c = get_choice("> ")
+        if p_c == '0': break
+        
+        try:
+            idx = int(p_c) - 1
+            if 0 <= idx < len(perk_defs):
+                p_key, p_name, p_desc, p_max, p_cost_func, p_bool = perk_defs[idx]
+                lvl = PROFILE["perks"].get(p_key, 0)
+                cost = p_cost_func(0) if p_bool else p_cost_func(lvl)
+                
+                can_buy = (p_bool and not lvl) or (not p_bool and lvl < p_max)
+                if can_buy and PROFILE['essence'] >= cost:
+                    PROFILE['essence'] -= cost
+                    if p_bool: PROFILE["perks"][p_key] = True
+                    else: PROFILE["perks"][p_key] = lvl + 1
+                    save_profile(PROFILE)
+        except ValueError:
+            pass
+
+def base_camp_forge():
+    while True:
+        clear_screen()
+        print(f"{Colors.CYAN}--- FORGIA DIMENSIONALE --- Essenza: ✨{PROFILE['essence']}{Colors.RESET}")
+        lkd =[i for cat in["weapons", "armors", "consumables", "relics"] for i in RAW_DATA[cat] if "unlock_id" in i and i["unlock_id"] not in PROFILE["unlocked_ids"]]
+        if not lkd: print("Tutto sbloccato!")
+        else:
+            for i, it in enumerate(lkd):
+                cost = it.get('unlock_cost', 0)
+                cost_str = f"✨{cost}" if cost > 0 else "Sbloccabile tramite Imprese"
+                print(f"{i+1}. {it['name']} ({it.get('desc', '')}) - Costo: {cost_str}")
+        print("0. Indietro")
+        fc = get_choice("> ")
+        if fc == '0': break
+        try:
+            idx = int(fc)-1
+            if 0<=idx<len(lkd):
+                cost = lkd[idx].get("unlock_cost", 0)
+                if PROFILE['essence']>=cost and cost>0:
+                    PROFILE['essence']-=cost; PROFILE["unlocked_ids"].append(lkd[idx]["unlock_id"]); save_profile(PROFILE)
+                    print(f"{Colors.GREEN}Sbloccato: {lkd[idx]['name']}!{Colors.RESET}")
+                    for cat in["weapons", "armors", "consumables", "relics"]: GAME_DATA[cat] =[x for x in RAW_DATA[cat] if x.get("unlock_id") is None or x["unlock_id"] in PROFILE["unlocked_ids"]]
+                    time.sleep(1)
+        except ValueError: pass
+
+def base_camp_tavern():
+    while True:
+        clear_screen()
+        print(f"{Colors.CYAN}--- LA TAVERNA --- Essenza: ✨{PROFILE['essence']}{Colors.RESET}")
+        lkc =[(c_id, c) for c_id, c in RAW_DATA["classes"].items() if not c.get("unlocked_by_default") and c_id not in PROFILE["unlocked_ids"] and c.get("unlock_id") not in PROFILE["unlocked_ids"]]
+        if not lkc: print("Tutti reclutati!")
+        else:
+            for i, (c_id, c) in enumerate(lkc): print(f"{i+1}. {Colors.BOLD}{c['role']}{Colors.RESET} ({c['desc']}) - Costo: ✨{c.get('unlock_cost', 0)}")
+        print("0. Indietro")
+        cc = get_choice("> ")
+        if cc == '0': break
+        try:
+            idx = int(cc)-1
+            if 0<=idx<len(lkc) and PROFILE['essence']>=lkc[idx][1].get("unlock_cost", 0) and lkc[idx][1].get("unlock_cost", 0)>0:
+                PROFILE['essence']-=lkc[idx][1]["unlock_cost"]; PROFILE["unlocked_ids"].append(lkc[idx][1]["unlock_id"]); save_profile(PROFILE)
+                print(f"{Colors.GREEN}Reclutato: {lkc[idx][1]['role']}!{Colors.RESET}"); time.sleep(1)
+        except ValueError: pass
+
+def base_camp_grimoire():
+    clear_screen()
+    print(f"{Colors.CYAN}--- GRIMORIO ---{Colors.RESET}")
+    for f_id, f in GAME_DATA["meta"]["feats"].items():
+        st = f"{Colors.GREEN}[V]{Colors.RESET}" if f_id in PROFILE["completed_feats"] else f"{Colors.RED}[X]{Colors.RESET}"
+        print(f"{st} {f['name']}: {f['desc']}")
+    print(f"\n{Colors.CYAN}--- MAESTRIA CLASSI ---{Colors.RESET}")
+    for c_id, c in RAW_DATA["classes"].items():
+        if c.get("unlocked_by_default") or c_id in PROFILE["unlocked_ids"] or c.get("unlock_id") in PROFILE["unlocked_ids"]:
+            print(f"{c['role']}: Lv.{PROFILE['class_lvl'].get(c_id, 1)} (XP: {PROFILE['class_xp'].get(c_id, 0)})")
+    input("\nPremi INVIO per tornare indietro...")
+
 def base_camp():
     while True:
         clear_screen()
@@ -90,109 +197,15 @@ def base_camp():
         
         choice = get_choice("\nScegli > ")
         if choice == '1':
-            while True:
-                clear_screen()
-                print(f"{Colors.CYAN}--- IL FUOCO DELL'ANIMA --- Essenza: ✨{PROFILE['essence']}{Colors.RESET}")
-                
-                perk_defs = [
-                    ("hp_lvl", "Vigore Ereditario", "+15 HP Max", 5, lambda l: 50 + (l*50), False),
-                    ("gold_lvl", "Tasche Profonde", "+20 Oro Iniziale", 3, lambda l: 100 + (l*100), False),
-                    ("discount_lvl", "Mercanteggiare", "-10% Prezzi Negozio", 3, lambda l: 150 + (l*100), False),
-                    ("sesto_senso", "Sesto Senso", "Prevedi bivi", 1, lambda l: 300, True),
-                    ("dodge_lvl", "Schivata Istintiva", "+2% Schivata Base", 5, lambda l: 100 + (l*50), False),
-                    ("acc_lvl", "Mira Perfetta", "+3% Precisione Base", 5, lambda l: 100 + (l*50), False),
-                    ("exp_lvl", "Studioso del Caos", "+5% EXP dai nemici", 3, lambda l: 300 + (l*300), False),
-                    ("farmacista", "Farmacista", "+1 Pozione iniziale", 1, lambda l: 1500, True),
-                    ("altare_benedizione", "Benedizione dell'Altare", "Inizi con 1 Reliquia casuale", 1, lambda l: 2000, True),
-                    ("riciclatore_lvl", "Riciclatore", "+10% ricavo vendite", 3, lambda l: 200 + (l*150), False),
-                    ("banca_anima_lvl", "Banca dell'Anima", "+5% Oro raccolto in totale", 3, lambda l: 250 + (l*250), False),
-                    ("artigiano_lvl", "Artigiano", "+1 ATK arma iniziale", 3, lambda l: 400 + (l*300), False),
-                    ("pelle_dura_lvl", "Pelle Dura", "+1 DEF armatura iniziale", 3, lambda l: 400 + (l*300), False),
-                    ("speranza_luce_lvl", "Speranza di Luce", "Recuperi HP ad ogni piano", 3, lambda l: 500 + (l*400), False)
-                ]
-                
-                for i, (p_key, p_name, p_desc, p_max, p_cost_func, p_bool) in enumerate(perk_defs):
-                    lvl = PROFILE["perks"].get(p_key, 0)
-                    if p_bool:
-                        status = "SBLOCCATO" if lvl else "BLOCCATO"
-                        cost = "MAX" if lvl else f"✨{p_cost_func(0)}"
-                        print(f"{i+1:2}. {p_name}[{status}] ({p_desc}) - Costo: {cost}")
-                    else:
-                        cost = "MAX" if lvl >= p_max else f"✨{p_cost_func(lvl)}"
-                        print(f"{i+1:2}. {p_name}[Lv.{lvl}/{p_max}] ({p_desc}) - Costo: {cost}")
-                        
-                print(" 0. Indietro")
-                p_c = get_choice("> ")
-                if p_c == '0': break
-                
-                try:
-                    idx = int(p_c) - 1
-                    if 0 <= idx < len(perk_defs):
-                        p_key, p_name, p_desc, p_max, p_cost_func, p_bool = perk_defs[idx]
-                        lvl = PROFILE["perks"].get(p_key, 0)
-                        cost = p_cost_func(0) if p_bool else p_cost_func(lvl)
-                        
-                        can_buy = (p_bool and not lvl) or (not p_bool and lvl < p_max)
-                        if can_buy and PROFILE['essence'] >= cost:
-                            PROFILE['essence'] -= cost
-                            if p_bool: PROFILE["perks"][p_key] = True
-                            else: PROFILE["perks"][p_key] = lvl + 1
-                            save_profile(PROFILE)
-                except ValueError:
-                    pass
+            base_camp_fire()
         elif choice == '2':
-            while True:
-                clear_screen()
-                print(f"{Colors.CYAN}--- FORGIA DIMENSIONALE --- Essenza: ✨{PROFILE['essence']}{Colors.RESET}")
-                lkd =[i for cat in["weapons", "armors", "consumables", "relics"] for i in RAW_DATA[cat] if "unlock_id" in i and i["unlock_id"] not in PROFILE["unlocked_ids"]]
-                if not lkd: print("Tutto sbloccato!")
-                else:
-                    for i, it in enumerate(lkd):
-                        cost = it.get('unlock_cost', 0)
-                        cost_str = f"✨{cost}" if cost > 0 else "Sbloccabile tramite Imprese"
-                        print(f"{i+1}. {it['name']} ({it.get('desc', '')}) - Costo: {cost_str}")
-                print("0. Indietro")
-                fc = get_choice("> ")
-                if fc == '0': break
-                try:
-                    idx = int(fc)-1
-                    if 0<=idx<len(lkd):
-                        cost = lkd[idx].get("unlock_cost", 0)
-                        if PROFILE['essence']>=cost and cost>0:
-                            PROFILE['essence']-=cost; PROFILE["unlocked_ids"].append(lkd[idx]["unlock_id"]); save_profile(PROFILE)
-                            print(f"{Colors.GREEN}Sbloccato: {lkd[idx]['name']}!{Colors.RESET}")
-                            for cat in["weapons", "armors", "consumables", "relics"]: GAME_DATA[cat] =[x for x in RAW_DATA[cat] if x.get("unlock_id") is None or x["unlock_id"] in PROFILE["unlocked_ids"]]
-                            time.sleep(1)
-                except ValueError: pass
+            base_camp_forge()
         elif choice == '3':
-            while True:
-                clear_screen()
-                print(f"{Colors.CYAN}--- LA TAVERNA --- Essenza: ✨{PROFILE['essence']}{Colors.RESET}")
-                lkc =[(c_id, c) for c_id, c in RAW_DATA["classes"].items() if not c.get("unlocked_by_default") and c_id not in PROFILE["unlocked_ids"] and c.get("unlock_id") not in PROFILE["unlocked_ids"]]
-                if not lkc: print("Tutti reclutati!")
-                else:
-                    for i, (c_id, c) in enumerate(lkc): print(f"{i+1}. {Colors.BOLD}{c['role']}{Colors.RESET} ({c['desc']}) - Costo: ✨{c.get('unlock_cost', 0)}")
-                print("0. Indietro")
-                cc = get_choice("> ")
-                if cc == '0': break
-                try:
-                    idx = int(cc)-1
-                    if 0<=idx<len(lkc) and PROFILE['essence']>=lkc[idx][1].get("unlock_cost", 0) and lkc[idx][1].get("unlock_cost", 0)>0:
-                        PROFILE['essence']-=lkc[idx][1]["unlock_cost"]; PROFILE["unlocked_ids"].append(lkc[idx][1]["unlock_id"]); save_profile(PROFILE)
-                        print(f"{Colors.GREEN}Reclutato: {lkc[idx][1]['role']}!{Colors.RESET}"); time.sleep(1)
-                except ValueError: pass
+            base_camp_tavern()
         elif choice == '4':
-            clear_screen()
-            print(f"{Colors.CYAN}--- GRIMORIO ---{Colors.RESET}")
-            for f_id, f in GAME_DATA["meta"]["feats"].items():
-                st = f"{Colors.GREEN}[V]{Colors.RESET}" if f_id in PROFILE["completed_feats"] else f"{Colors.RED}[X]{Colors.RESET}"
-                print(f"{st} {f['name']}: {f['desc']}")
-            print(f"\n{Colors.CYAN}--- MAESTRIA CLASSI ---{Colors.RESET}")
-            for c_id, c in RAW_DATA["classes"].items():
-                if c.get("unlocked_by_default") or c_id in PROFILE["unlocked_ids"] or c.get("unlock_id") in PROFILE["unlocked_ids"]:
-                    print(f"{c['role']}: Lv.{PROFILE['class_lvl'].get(c_id, 1)} (XP: {PROFILE['class_xp'].get(c_id, 0)})")
-            input("\nPremi INVIO per tornare indietro...")
-        elif choice == '0': break
+            base_camp_grimoire()
+        elif choice == '0':
+            break
 
 def play_game(infinite_mode=False):
     clear_screen()

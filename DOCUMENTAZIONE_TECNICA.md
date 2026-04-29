@@ -79,3 +79,21 @@ Fuzzer eseguito con successo:
 - **50 accessori** equipaggiati automaticamente
 - **17 run con risonanza forzata**
 - **0 crash** rilevati
+
+# Refactoring di `base_camp` Completato!
+
+Ho completato con successo l'estrazione delle logiche dei sottomenu del campo base.
+
+## Modifiche Effettuate
+
+Nel file `roguelike.py` sono state create quattro nuove funzioni dedicate:
+- `base_camp_fire()`: Gestisce gli acquisti dei Perk con l'Essenza Astrale.
+- `base_camp_forge()`: Gestisce lo sblocco di nuovi oggetti nel database.
+- `base_camp_tavern()`: Gestisce lo sblocco di nuove classi giocabili.
+- `base_camp_grimoire()`: Mostra le Imprese completate e l'esperienza delle classi.
+
+La funzione originale `base_camp()` è stata drasticamente semplificata ed ora si occupa unicamente di mostrare il menu principale e reindirizzare la logica alle nuove funzioni in base all'input del giocatore.
+
+## Risultati dei Test
+- Ho verificato tramite compilatore Python locale che non ci fossero errori di sintassi.
+- Il codice ora è molto più leggibile e aderisce al principio di singola responsabilità (SRP), almeno a livello strutturale del menu. Questo renderà molto più facile in futuro aggiungere nuove funzionalità al campo base (ad esempio, una Stanza dei Trofei o un Mercante Esotico).
