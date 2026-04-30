@@ -1,24 +1,34 @@
 {
     "combat":[
-        "Entri in una cripta in rovina, l'odore di polvere è opprimente. Dall'ombra emerge qualcosa...",
-        "Le pareti di questa caverna trasudano umidità. Un rumore di passi si fa sempre più vicino.",
-        "Colonne spezzate sorreggono un soffitto a malapena stabile. Tra le rovine, noti un movimento ostile.",
-        "L'aria qui è gelida. Il pavimento è coperto di ossa... e il predatore è ancora qui."
+        "Le pareti trasudano un calore innaturale. Senti il crepitio di un fuoco che non ha legna da ardere, ma si nutre dell'aria stessa. Qualcosa si muove nella cenere.",
+        "Il pavimento è coperto da una brina azzurrina che non si scioglie. Ogni tuo respiro diventa una nuvola di cristalli di ghiaccio. Nell'oscurità, occhi vitrei ti osservano.",
+        "L'odore di ozono è pungente. Scariche elettriche percorrono le catene che pendono dal soffitto. Non sei solo in questa tempesta silenziosa.",
+        "Radici nere come la pece hanno frantumato le lastre di marmo. La vegetazione qui non cerca luce, ma sangue. Senti il battito di un cuore pesante sotto i tuoi piedi.",
+        "L'aria qui è satura di una nebbia che sa di piombo. Le ombre sembrano staccarsi dai muri e danzare ai limiti della tua visione.",
+        "Senti il lamento di mille anime che non hanno mai visto il sole. Il vento qui soffia verso il basso, trascinandoti verso abissi senza nome."
     ],
     "boss":[
-        "Le immense porte di ferro si chiudono alle tue spalle con un tonfo sordo. L'aria stessa trema.",
-        "L'arena è illuminata da bracieri spettrali. Al centro, una figura mostruosa ti attende da eoni."
+        "Le porte di ossidiana si chiudono con un rombo che scuote le tue fondamenta. Sei al cospetto di una memoria che si rifiuta di morire.",
+        "L'aria si fa densa come melassa. Una figura antica, avvolta nei resti di un'autorità dimenticata, si erge dal suo trono di polvere.",
+        "Un silenzio assoluto scende sull'arena. Qui, dove gli elementi si scontrano nel Caos, la tua fine è stata scritta eoni fa."
     ],
     "vendor":[
-        "L'aria qui sa di incenso. Un mercante incappucciato ha allestito un emporio in mezzo al caos."
+        "Un uomo senza volto siede tra pile di manufatti impossibili. 'L'oro è solo polvere che brilla,' sussurra, 'ma l'Essenza... l'Essenza è tutto ciò che rimane'.",
+        "L'emporio profuma di incenso e spezie di terre che non esistono più. Il mercante sorride, ma i suoi occhi riflettono la fine del mondo."
     ],
     "treasure":[
-        "Un forziere riposa solitario, illuminato da un fascio di luce. Nessun nemico in vista."
+        "Un piedistallo d'oro zecchino sorregge un oggetto che sembra vibrare di una luce propria. Le pareti sono coperte di iscrizioni che lodano l'avidità come virtù suprema.",
+        "Tra le rovine di un antico altare, giace un forziere avvolto in catene di ferro freddo. Non c'è polvere su di esso, come se il tempo avesse paura di toccarlo.",
+        "Un raggio di luce astrale attraversa il soffitto crollato, illuminando una reliquia dimenticata. Qui il silenzio è così profondo da sembrare solido."
     ],
     "trap":[
-        "La stanza è stranamente simmetrica. Mentre cammini, scatta un meccanismo nascosto!"
+        "La perfezione geometrica di questa stanza è sospetta. Le ombre sulle pareti sembrano muoversi indipendentemente dalla luce. Un passo falso, e la realtà si chiuderà su di te.",
+        "Senti il ticchettio di un meccanismo antico, un cuore d'orologio che batte per la tua fine. L'aria è satura di vapori paralizzanti.",
+        "Il pavimento vibra leggermente, come se la stanza stessa stesse trattenendo il respiro in attesa del tuo prossimo movimento."
     ],
     "campfire":[
-        "Trovi una stanza sicura con un falò scoppiettante. L'aria è calda e confortevole."
+        "Il fuoco qui emana un profumo di pini di Aethelgard, un odore che pensavi di aver dimenticato. Per un istante, il Labirinto sembra solo un brutto sogno.",
+        "Le braci scoppiettano parlando una lingua antica. Ti siedi e senti la stanchezza delle tue vite precedenti scivolare via dalle tue ossa.",
+        "Questo luogo è protetto da un sigillo di Luce che il Caos non può infrangere. Riposa, avventuriero, poiché la discesa sarà ancora lunga."
     ]
 }
