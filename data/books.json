@@ -1,0 +1,32 @@
+{
+    "books": {
+        "diario_silas": {
+            "title": "Il Diario di Silas il Cercatore",
+            "unlock_condition": "Raggiungi il Piano 5",
+            "chapters": [
+                {"title": "Giorno 1: L'Ingresso", "text": "Ho varcato la Soglia. L'aria sa di ferro e polvere. Non c'è ritorno, solo discesa."},
+                {"title": "Giorno 12: I Chiostri", "text": "Le voci dei morti sussurrano tra i marmi. Dicono che il tempo qui è un cerchio che si stringe."},
+                {"title": "Giorno 45: Il Ventre", "text": "Le pareti battono come un cuore. Il Labirinto è vivo, e io sono solo un parassita."},
+                {"title": "Giorno 75: La Porta Finale", "text": "Vedo lo specchio. Il Dio Antico non mi odia. Mi compatisce."}
+            ]
+        },
+        "bestiario": {
+            "title": "Bestiario dell'Abisso",
+            "unlock_condition": "Sconfiggi 5 Boss",
+            "chapters": [
+                {"title": "I Goblin", "text": "Non sono creature della terra, ma gli avari di Aethelgard che hanno perso la loro forma umana."},
+                {"title": "Il Drago di Zaffiro", "text": "Un'entità di pura memoria liquida. Colpirlo è come cercare di ferire l'oceano."},
+                {"title": "L'Angelo Caduto", "text": "Un tempo era la voce degli Architetti. Ora è solo un urlo di perfezione infranta."}
+            ]
+        },
+        "cronache_ere": {
+            "title": "Cronache delle Ere",
+            "unlock_condition": "Completa una Run",
+            "chapters": [
+                {"title": "L'Era della Luce Calma", "text": "Mille anni di pace in cui gli elementi danzavano in armonia."},
+                {"title": "La Grande Discordia", "text": "L'ambizione di Re Galdor ha lacerato il velo. Il Caos è entrato dalla ferita."},
+                {"title": "Il Futuro", "text": "Il Labirinto è il guscio di un mondo che aspetta di nascere o di essere perdonato."}
+            ]
+        }
+    }
+}

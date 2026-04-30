@@ -5,24 +5,24 @@ from data_manager import GAME_DATA, RAW_DATA, PROFILE, ELEMENTS, MULTIPLIERS, ge
 from relic_effects import create_relic_effect
 
 class Item:
-    def __init__(self, name: str, value: int, item_type: str, level: int = 1):
-        self.name, self.value, self.type, self.level = name, value, item_type, level
+    def __init__(self, name: str, value: int, item_type: str, level: int = 1, flavor: str = ""):
+        self.name, self.value, self.type, self.level, self.flavor = name, value, item_type, level, flavor
 
 class Weapon(Item):
-    def __init__(self, name: str, value: int, atk: int, element: str, level: int):
-        super().__init__(name, value, "weapon", level)
+    def __init__(self, name: str, value: int, atk: int, element: str, level: int, flavor: str = ""):
+        super().__init__(name, value, "weapon", level, flavor)
         self.atk, self.element = atk, element
         self.display_name = f"{name}[{get_element_icon(element)}]"
 
 class Armor(Item):
-    def __init__(self, name: str, value: int, defense: int, element: str, level: int):
-        super().__init__(name, value, "armor", level)
+    def __init__(self, name: str, value: int, defense: int, element: str, level: int, flavor: str = ""):
+        super().__init__(name, value, "armor", level, flavor)
         self.defense, self.element = defense, element
         self.display_name = f"{name}[{get_element_icon(element)}]"
 
 class Accessory(Item):
-    def __init__(self, name: str, value: int, element: str, bonus_type: str, bonus_value: int, desc: str):
-        super().__init__(name, value, "accessory", 1)
+    def __init__(self, name: str, value: int, element: str, bonus_type: str, bonus_value: int, desc: str, flavor: str = ""):
+        super().__init__(name, value, "accessory", 1, flavor)
         self.element, self.bonus_type, self.bonus_value, self.desc = element, bonus_type, bonus_value, desc
         self.display_name = f"{name} [{get_element_icon(element)}]"
 
@@ -38,25 +38,25 @@ def generate_random_element() -> str:
 
 def generate_weapon(level: int, is_epic: bool = False) -> Weapon:
     w_data = random.choice(GAME_DATA["weapons"])
-    name = w_data["name"]
+    name, flavor = w_data["name"], w_data.get("flavor", "")
     atk = w_data["base_atk"] + int(level * 1.5) + random.randint(0, 3)
     element = generate_random_element()
     if element == "Normale": atk = int(atk * 1.2) + 1
     if is_epic: atk = int(atk * 1.5) + 2; name = f"EPICO {name}"
-    return Weapon(f"{name} (lv.{level})", atk * 5, atk, element, level)
+    return Weapon(f"{name} (lv.{level})", atk * 5, atk, element, level, flavor)
 
 def generate_armor(level: int, is_epic: bool = False) -> Armor:
     a_data = random.choice(GAME_DATA["armors"])
-    name = a_data["name"]
+    name, flavor = a_data["name"], a_data.get("flavor", "")
     defense = a_data["base_def"] + int(level * 1.2) + random.randint(0, 2)
     element = generate_random_element()
     if element == "Normale": defense = int(defense * 1.2) + 1
     if is_epic: defense = int(defense * 1.5) + 2; name = f"EPICO {name}"
-    return Armor(f"{name} (lv.{level})", defense * 8, defense, element, level)
+    return Armor(f"{name} (lv.{level})", defense * 8, defense, element, level, flavor)
 
 def generate_accessory(level: int) -> Accessory:
     a_data = random.choice(GAME_DATA["accessories"])
-    return Accessory(a_data["name"], a_data["base_val"] + (level*10), a_data.get("element", "Normale"), a_data["bonus_type"], a_data["bonus_value"], a_data["desc"])
+    return Accessory(a_data["name"], a_data["base_val"] + (level*10), a_data.get("element", "Normale"), a_data["bonus_type"], a_data["bonus_value"], a_data["desc"], a_data.get("lore", ""))
 
 def generate_potion(level: int) -> Consumable:
     c_data = random.choice(GAME_DATA["consumables"])
@@ -146,6 +146,7 @@ class Player:
         effect.on_equip(self)
         print(f"\n{Colors.MAGENTA}🌟 Hai ottenuto la Reliquia: {relic['name']}!{Colors.RESET}")
         print(f"Effetto: {relic['desc']}")
+        if "lore" in relic: print(f"{Colors.YELLOW}Lore: {relic['lore']}{Colors.RESET}")
 
     def get_total_atk(self): return self.weapon.atk + self.bonus_atk_relic
     
@@ -186,6 +187,8 @@ class Enemy:
         data = GAME_DATA[category][self.name]
         
         self.element, self.base_acc, self.base_dodge = data["element"], data["base_acc"], data["base_dodge"]
+        self.title = data.get("title", "")
+        self.lore = data.get("lore", "")
         
         lvl_scale = floor - 1
         if is_boss:

@@ -51,11 +51,13 @@
             "base_atk": 25,
             "unlock_id": "spadone_infranto",
             "unlock_cost": 0,
-            "desc": "Leggendario, ottenuto tramite Imprese."
+            "desc": "Leggendario, ottenuto tramite Imprese.",
+            "flavor": "Un'arma che ha smesso di tagliare la carne per tagliare la realtà."
         },
         {
             "name": "Lama del Creatore",
             "desc": "Un'arma leggendaria infusa con gli elementi primordiali.",
+            "flavor": "L'unico oggetto che il Dio Antico non ha mai rinnegato.",
             "base_atk": 30,
             "val_base": 150,
             "unlock_cost": 0,
@@ -64,6 +66,7 @@
         {
             "name": "Zweihander d'Oro",
             "desc": "Arma massiccia d'oro puro. Pi\u00f9 oro hai, pi\u00f9 fa male.",
+            "flavor": "Forgiata con le monete che Re Galdor ha cercato di portare nella tomba.",
             "base_atk": 25,
             "val_base": 300,
             "unlock_cost": 0,
@@ -72,6 +75,7 @@
         {
             "name": "Ascia del Boia",
             "desc": "Lenta ma letale, altissimo tasso di colpo critico.",
+            "flavor": "Un tempo usata per giustiziare chiunque mettesse in dubbio l'Equilibrio.",
             "base_atk": 25,
             "val_base": 180,
             "unlock_cost": 0,

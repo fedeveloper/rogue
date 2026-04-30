@@ -6,6 +6,7 @@ from data_manager import PROFILE, GAME_DATA, RAW_DATA, save_profile, get_element
 from entities import Player, Enemy
 from rooms import combat_room, mystery_room, event_room, vendor_room, campfire_room, treasure_room, trap_room
 from inventory_menu import show_inventory_menu
+from archive import show_archive
 
 def evaluate_run(player: Player, floor: int, infinite: bool):
     print("\n" + ("="*50))
@@ -194,6 +195,7 @@ def base_camp():
         print("2. La Forgia Dimensionale (Sblocca Oggetti)")
         print("3. La Taverna (Recluta Eroi)")
         print("4. Grimorio e Imprese")
+        print("5. L'Archivio di Aethelgard (Lore)")
         print("0. Torna al Menu Principale")
         
         choice = get_choice("\nScegli > ")
@@ -205,6 +207,8 @@ def base_camp():
             base_camp_tavern()
         elif choice == '4':
             base_camp_grimoire()
+        elif choice == '5':
+            show_archive(PROFILE)
         elif choice == '0':
             break
 

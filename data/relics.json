@@ -3,180 +3,210 @@
         {
             "id": "artiglio_vampiro",
             "name": "Artiglio Vampirico",
-            "desc": "Ogni tuo attacco a segno ti cura di 5 HP."
+            "desc": "Ogni tuo attacco a segno ti cura di 5 HP.",
+            "lore": "Il resto della mano destra di Malphas, il primo a nutrire la sua Essenza con quella altrui."
         },
         {
             "id": "lente_prismatica",
             "name": "Lente Prismatica",
-            "desc": "Vantaggi e Svantaggi Elementali sono RADDOPPIATI."
+            "desc": "Vantaggi e Svantaggi Elementali sono RADDOPPIATI.",
+            "lore": "Uno strumento degli Architetti per osservare il flusso elementale senza esserne consumati."
         },
         {
             "id": "scudo_cristallo",
             "name": "Scudo di Cristallo",
-            "desc": "Il primo danno che subisci in ogni combattimento \u00e8 ridotto a 0."
+            "desc": "Il primo danno che subisci in ogni combattimento è ridotto a 0.",
+            "lore": "Un frammento della cupola celeste di Aethelgard, caduto durante la Grande Discordia."
         },
         {
             "id": "tasca_dorata",
             "name": "Tasca Dorata",
-            "desc": "Aumenta l'Oro trovato nei forzieri e dai mostri del 25%."
+            "desc": "Aumenta l'Oro trovato nei forzieri e dai mostri del 25%.",
+            "lore": "Appartenuta a un mercante di Valeriana che cercò di corrompere la Fauce con l'oro."
         },
         {
             "id": "idolo_guerra",
             "name": "Idolo della Guerra",
-            "desc": "Aumenta in modo permanente il tuo Attacco Base di +5."
+            "desc": "Aumenta in modo permanente il tuo Attacco Base di +5.",
+            "lore": "Una statuetta raffigurante Sir Alaric prima che diventasse il Cavaliere Oscuro."
         },
         {
             "id": "calice_alchimista",
             "name": "Calice dell'Alchimista",
-            "desc": "Le pozioni e i consumabili curano il 50% in pi\u00f9."
+            "desc": "Le pozioni e i consumabili curano il 50% in più.",
+            "lore": "L'unico recipiente capace di contenere la linfa vitale pura senza contaminarla."
         },
         {
             "id": "mantello_nebbioso",
             "name": "Mantello Nebbioso",
-            "desc": "Aumenta passivamente la Schivata del 15%."
+            "desc": "Aumenta passivamente la Schivata del 15%.",
+            "lore": "Tessuto con i vapori del Piano 11, dove il vento sussurra segreti che rendono intangibili."
         },
         {
             "id": "bussola_perfetta",
             "name": "Bussola Perfetta",
-            "desc": "La Fuga riesce sempre al 100% (non funziona sui Boss)."
+            "desc": "La Fuga riesce sempre al 100% (non funziona sui Boss).",
+            "lore": "Una bussola che non punta al Nord, ma verso le crepe nella realtà del Labirinto."
         },
         {
             "id": "occhio_cacciatore",
             "name": "Occhio del Cacciatore",
-            "desc": "Aumenta la tua Precisione del 20%."
+            "desc": "Aumenta la tua Precisione del 20%.",
+            "lore": "L'occhio rimosso da un Cercatore che scambiò la sua vista per la capacità di vedere l'Essenza."
         },
         {
             "id": "spallacci_rovo",
             "name": "Spallacci di Rovo",
-            "desc": "Se subisci danno da un attacco, il nemico subisce 5 Danni Puri."
+            "desc": "Se subisci danno da un attacco, il nemico subisce 5 Danni Puri.",
+            "lore": "Radici del Giardino Pensile di Valeriana, ora assetate di sangue invece che di rugiada."
         },
         {
             "id": "cuore_troll",
             "name": "Cuore di Troll",
-            "desc": "Ottieni +2 HP Massimi ogni volta che uccidi un nemico."
+            "desc": "Ottieni +2 HP Massimi ogni volta che uccidi un nemico.",
+            "lore": "Un organo pulsante che continua a rigenerarsi nutrendosi della morte circostante."
         },
         {
             "id": "tomo_conoscenza",
             "name": "Tomo della Conoscenza",
-            "desc": "L'Esperienza ottenuta aumenta del 30%."
+            "desc": "L'Esperienza ottenuta aumenta del 30%.",
+            "lore": "Contiene le cronache dell'Era della Luce Calma, prima che il tempo si spezzasse."
         },
         {
             "id": "idolo_avidita",
-            "name": "Idolo dell'Avidit\u00e0",
-            "desc": "Tutto l'Oro \u00e8 RADDOPPIATO, ma non puoi pi\u00f9 schivare (Schivata 0%)."
+            "name": "Idolo dell'Avidità",
+            "desc": "Tutto l'Oro è RADDOPPIATO, ma non puoi più schivare (Schivata 0%).",
+            "lore": "L'incarnazione del desiderio di Re Galdor: possedere tutto, non potersi muovere."
         },
         {
             "id": "lama_sangue",
             "name": "Lama di Sangue",
-            "desc": "Attacco +10, ma subisci 3 Danni ogni volta che decidi di attaccare."
+            "desc": "Attacco +10, ma subisci 3 Danni ogni volta che decidi di attaccare.",
+            "lore": "Forgiata da Kaelen con ferro intriso del suo stesso sangue mentre le mani diventavano pietra."
         },
         {
             "id": "corona_re_folle",
             "name": "Corona del Re Folle",
-            "desc": "I colpi Super Efficaci o Critici infliggono il 50% di danni in pi\u00f9.",
+            "desc": "I colpi Super Efficaci o Critici infliggono il 50% di danni in più.",
             "unlock_cost": 1000,
-            "unlock_id": "corona_re_folle"
+            "unlock_id": "corona_re_folle",
+            "lore": "Il peso di un regno di polvere che preme costantemente sulle tempie."
         },
         {
             "id": "anello_vampiro_max",
             "name": "Anello Vampirico Maggiore",
             "desc": "Recuperi 2 HP extra ad ogni tuo attacco a segno.",
             "unlock_cost": 1500,
-            "unlock_id": "anello_vampiro_max"
+            "unlock_id": "anello_vampiro_max",
+            "lore": "Un potenziamento dell'Artiglio di Malphas, per chi ha accettato la propria sete."
         },
         {
             "id": "clessidra_destino",
             "name": "Clessidra del Destino",
             "desc": "Riduce del 20% la Schivata di base di tutti i nemici.",
             "unlock_cost": 800,
-            "unlock_id": "clessidra_destino"
+            "unlock_id": "clessidra_destino",
+            "lore": "Rallenta il tempo atomico del Labirinto, rendendo ogni movimento nemico prevedibile."
         },
         {
             "id": "armatura_spilli",
             "name": "Armatura a Spilli",
             "desc": "Riflette 3 danni al nemico ogni volta che vieni colpito.",
             "unlock_cost": 600,
-            "unlock_id": "armatura_spilli"
+            "unlock_id": "armatura_spilli",
+            "lore": "Uno strumento di tortura riadattato come difesa disperata."
         },
         {
             "id": "pergamena_oro",
             "name": "Pergamena d'Oro",
             "desc": "Ogni volta che ottieni Oro in combattimento o tesori, recuperi 2 HP.",
             "unlock_cost": 700,
-            "unlock_id": "pergamena_oro"
+            "unlock_id": "pergamena_oro",
+            "lore": "Il contratto originale tra Re Galdor e la Fauce. L'oro è letteralmente vita."
         },
         {
             "id": "campanella_spiriti",
             "name": "Campanella degli Spiriti",
-            "desc": "15% di probabilit\u00e0 di negare un attacco nemico andato a segno.",
+            "desc": "15% di probabilità di negare un attacco nemico andato a segno.",
             "unlock_cost": 1200,
-            "unlock_id": "campanella_spiriti"
+            "unlock_id": "campanella_spiriti",
+            "lore": "Il regalo del mercante a Silas. Il suo rintocco allontana temporaneamente il Caos."
         },
         {
             "id": "pietra_luna",
             "name": "Pietra di Luna",
             "desc": "La tua Difesa aumenta del 50% se usi Difesa/Riparo.",
             "unlock_cost": 500,
-            "unlock_id": "pietra_luna"
+            "unlock_id": "pietra_luna",
+            "lore": "Un frammento di Aetheria che risuona con la luce argentata del passato."
         },
         {
             "id": "contratto_demoniaco",
             "name": "Contratto Demoniaco",
             "desc": "Raddoppia i tuoi danni base, ma perdi 5 HP a fine combattimento.",
             "unlock_cost": 1000,
-            "unlock_id": "contratto_demoniaco"
+            "unlock_id": "contratto_demoniaco",
+            "lore": "Un patto scritto con l'inchiostro del Vuoto. Il potere ha sempre un prezzo finale."
         },
         {
             "id": "pozione_infinita",
             "name": "Pozione Senza Fondo",
             "desc": "Le pozioni curative hanno il 25% di chance di non consumarsi.",
             "unlock_cost": 900,
-            "unlock_id": "pozione_infinita"
+            "unlock_id": "pozione_infinita",
+            "lore": "Il segreto degli Alchimisti della Terza Cerchia per sopravvivere alla carestia elementale."
         },
         {
             "id": "bussola_dimensionale",
             "name": "Bussola Dimensionale",
-            "desc": "Aumenta probabilit\u00e0 di trovare Tesori e Stanze del Mistero.",
+            "desc": "Aumenta probabilità di trovare Tesori e Stanze del Mistero.",
             "unlock_cost": 1000,
-            "unlock_id": "bussola_dimensionale"
+            "unlock_id": "bussola_dimensionale",
+            "lore": "Permette di vedere le 'correnti di desiderio' che fluiscono tra i Piani."
         },
         {
             "id": "cuore_drago",
             "name": "Cuore di Drago",
             "desc": "+50 HP Max fissi.",
-            "unlock_id": "cuore_drago"
+            "unlock_id": "cuore_drago",
+            "lore": "Il cuore cristallizzato di un guardiano dell'Oceano di Memoria."
         },
         {
             "id": "sigillo_elementale",
             "name": "Sigillo Elementale",
             "desc": "Annulla la debolezza elementale in difesa.",
-            "unlock_id": "sigillo_elementale"
+            "unlock_id": "sigillo_elementale",
+            "lore": "Un concetto di equilibrio puro che scherma l'anima dalle discordie del Caos."
         },
         {
             "id": "spirito_spada",
             "name": "Spirito della Spada",
-            "desc": "+15 ATK all'arma se il suo livello \u00e8 1.",
-            "unlock_id": "spirito_spada"
+            "desc": "+15 ATK all'arma se il suo livello è 1.",
+            "unlock_id": "spirito_spada",
+            "lore": "Il fantasma di Sir Alaric che guida la mano di chi è ancora giovane nel viaggio."
         },
         {
             "id": "maschera_antigas",
             "name": "Maschera Antigas",
-            "desc": "Immunit\u00e0 totale alle Trappole e danni autoinflitti.",
-            "unlock_id": "maschera_antigas"
+            "desc": "Immunità totale alle Trappole e danni autoinflitti.",
+            "unlock_id": "maschera_antigas",
+            "lore": "Creata per gli operai delle Miniere della Testardaggine per resistere all'aria corrotta."
         },
         {
             "id": "teschio_sangue",
             "name": "Teschio di Sangue",
             "desc": "Ogni nemico sconfitto incrementa i tuoi HP Massimi di 1.",
             "unlock_cost": 0,
-            "unlock_id": "teschio_sangue"
+            "unlock_id": "teschio_sangue",
+            "lore": "L'ultimo stadio della follia del Berserker. Diventare l'abisso stesso."
         },
         {
             "id": "pietra_filosofale",
             "name": "Pietra Filosofale",
             "desc": "A fine combattimento, 20% di chance di convertire l'XP in Oro sonante.",
             "unlock_cost": 0,
-            "unlock_id": "pietra_filosofale"
+            "unlock_id": "pietra_filosofale",
+            "lore": "La prova finale che in questo mondo la conoscenza vale meno del metallo."
         }
     ]
 }

@@ -25,8 +25,19 @@ class CombatSession:
     def start(self):
         if self.enemy.modifier == "normal":
             delay_print(f"\n{random.choice(GAME_DATA['lore']['boss' if self.enemy.is_boss else 'combat'])}")
+            if self.enemy.is_boss:
+                delay_print(f"{Colors.MAGENTA}{Colors.BOLD}--- {self.enemy.title.upper()} ---{Colors.RESET}")
+                if self.enemy.lore: delay_print(f"{Colors.YELLOW}\"{self.enemy.lore}\"{Colors.RESET}\n")
+            
             boss_tag = f"{Colors.MAGENTA} [BOSS]{Colors.RESET}" if self.enemy.is_boss else ""
             delay_print(f"{Colors.RED}!!! Incontri un {self.enemy.name.upper()}{boss_tag} [{get_element_icon(self.enemy.element)}] !!!{Colors.RESET}", 0.04)
+        
+        # Chance to find a Bloody Letter before combat
+        if not self.enemy.is_boss and random.random() < 0.15:
+            letter = random.choice(GAME_DATA['lore']['letters'])
+            print(f"\n{Colors.YELLOW}📜 Noti un messaggio inciso sulla parete:{Colors.RESET}")
+            delay_print(f"\"{letter}\"\n", 0.05)
+            self.player.gain_exp(10)
 
         if self.resonance == "Acqua":
             self.enemy.atk = max(1, int(self.enemy.atk * 0.85))
@@ -67,10 +78,12 @@ class CombatSession:
             else:
                 drop = generate_weapon(self.floor + 2, True) if random.random() > 0.5 else generate_armor(self.floor + 2, True)
                 print(f"\n{Colors.MAGENTA}DROP LEGGENDARIO: {drop.display_name}!{Colors.RESET}")
+                if drop.flavor: print(f"{Colors.YELLOW}Flavor: {drop.flavor}{Colors.RESET}")
                 self.player.inventory.append(drop)
         elif self.enemy.modifier == "hard":
             drop = generate_weapon(self.floor, False) if random.random() > 0.5 else generate_armor(self.floor, False)
             print(f"\n{Colors.MAGENTA}Il nemico lascia cadere: {drop.display_name}!{Colors.RESET}")
+            if drop.flavor: print(f"{Colors.YELLOW}Flavor: {drop.flavor}{Colors.RESET}")
             self.player.inventory.append(drop)
         elif self.enemy.modifier == "easy":
             print(f"\n{Colors.CYAN}Il nemico era troppo debole e non aveva nulla con sé.{Colors.RESET}")
