@@ -57,7 +57,7 @@ def show_inventory_menu(player, in_combat=False) -> str:
                         if not in_combat:
                             print(f"{Colors.RED}Puoi usarla solo in combattimento!{Colors.RESET}")
                             time.sleep(1)
-                            return "used"
+                            continue
                         player.inventory.pop(real_idx)
                         print(f"{Colors.MAGENTA}Lanci la Fiala del Caos!{Colors.RESET}")
                         time.sleep(1)
@@ -67,14 +67,14 @@ def show_inventory_menu(player, in_combat=False) -> str:
                         player.inventory.pop(real_idx)
                         print(f"{Colors.GREEN}Arma affilata! Ora {player.weapon.name} ha {player.weapon.atk} ATK.{Colors.RESET}")
                         input("Premi INVIO...")
-                        return "turn_used" if in_combat else "used"
+                        if in_combat: return "turn_used"
                     elif "Tomo del Caos" in item.name:
                         player.weapon.element = generate_random_element()
                         player.weapon.display_name = f"{player.weapon.name.split('[')[0]}[{get_element_icon(player.weapon.element)}]"
                         player.inventory.pop(real_idx)
                         print(f"{Colors.MAGENTA}Il caos avvolge l'arma! Nuovo elemento: {player.weapon.element}.{Colors.RESET}")
                         input("Premi INVIO...")
-                        return "turn_used" if in_combat else "used"
+                        if in_combat: return "turn_used"
                     elif "Acqua Santa" in item.name:
                         player.inventory.pop(real_idx)
                         player.hp = min(player.max_hp, player.hp + 50)
@@ -83,7 +83,7 @@ def show_inventory_menu(player, in_combat=False) -> str:
                             player.temp_dodge += 5
                         print(f"{Colors.GREEN}Bevi l'Acqua Santa: +50 HP e bonus difensivi temporanei! (HP: {player.hp}/{player.max_hp}){Colors.RESET}")
                         input("Premi INVIO...")
-                        return "turn_used" if in_combat else "used"
+                        if in_combat: return "turn_used"
                     else:
                         if player.cursed:
                             print(f"{Colors.RED}La tua Maledizione rende inutile la pozione.{Colors.RESET}")
@@ -105,7 +105,7 @@ def show_inventory_menu(player, in_combat=False) -> str:
                                     if not effect.on_item_use(player, item.name): consume = False
                                 if consume: player.inventory.pop(real_idx)
                         input("Premi INVIO...")
-                        return "turn_used" if in_combat else "used"
+                        if in_combat: return "turn_used"
                         
                 elif item.type == "weapon":
                     player.run_tracker["weapon_changed"] = True
@@ -113,13 +113,13 @@ def show_inventory_menu(player, in_combat=False) -> str:
                     player.inventory[real_idx] = old_w
                     print(f"{Colors.GREEN}\n-> Equipaggiato: {player.weapon.display_name}!{Colors.RESET}")
                     input("Premi INVIO...")
-                    return "turn_used" if in_combat else "used"
+                    if in_combat: return "turn_used"
                 elif item.type == "armor":
                     old_a, player.armor = player.armor, item
                     player.inventory[real_idx] = old_a
                     print(f"{Colors.GREEN}\n-> Equipaggiato: {player.armor.display_name}!{Colors.RESET}")
                     input("Premi INVIO...")
-                    return "turn_used" if in_combat else "used"
+                    if in_combat: return "turn_used"
                 elif item.type == "accessory":
                     old_acc = player.accessory
                     if old_acc:
@@ -140,7 +140,7 @@ def show_inventory_menu(player, in_combat=False) -> str:
                     else: player.inventory.pop(real_idx)
                     print(f"{Colors.GREEN}\n-> Equipaggiato: {player.accessory.display_name}!{Colors.RESET}")
                     input("Premi INVIO...")
-                    return "turn_used" if in_combat else "used"
+                    if in_combat: return "turn_used"
             else: 
                 print(f"{Colors.RED}Scelta non valida.{Colors.RESET}")
                 time.sleep(1)

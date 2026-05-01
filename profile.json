@@ -1,22 +1,22 @@
 {
-    "essence": 30,
+    "essence": 130,
     "max_floor": 0,
     "won_normal": false,
     "unlocked_ids": [],
     "class_xp": {
-        "1": 10
+        "1": 50
     },
     "class_lvl": {},
     "stats": {
         "total_deaths": 1,
-        "total_gold": 150,
+        "total_gold": 300,
         "total_bosses": 0
     },
     "completed_feats": [
         "feat_furia_cieca"
     ],
     "perks": {
-        "hp_lvl": 0,
+        "hp_lvl": 1,
         "gold_lvl": 0,
         "discount_lvl": 0,
         "sesto_senso": false,

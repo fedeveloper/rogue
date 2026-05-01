@@ -316,7 +316,7 @@ def combat_room(player: Player, floor: int, enemy_instance: Enemy):
 def mystery_room(player: Player, floor: int, active_pacts: List[str]):
     delay_print(f"\n{Colors.MAGENTA}--- LA STANZA DEL MISTERO ---{Colors.RESET}")
     print(f"❤️  HP: {Colors.GREEN}{player.hp}/{player.max_hp}{Colors.RESET} | 💰 Oro: {Colors.YELLOW}{player.gold}{Colors.RESET}\n")
-    delay_print("Entri in un ambiente intriso di nebbia magica. I tuoi sensi sono annebbiati...", 0.03)
+    delay_print(f"{random.choice(GAME_DATA['lore']['mystery'])}", 0.03)
     time.sleep(1)
 
     outcome = random.choice(["hard", "easy", "trap", "empty"])

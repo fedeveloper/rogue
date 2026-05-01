@@ -19,16 +19,15 @@ def show_archive(profile):
         
         available_books = []
         # Logic to check unlock conditions based on profile/stats
-        # For now, let's assume they are unlocked by floors_reached or bosses_killed
-        max_floor = profile.get("stats", {}).get("max_floor", 0)
-        bosses_killed = profile.get("stats", {}).get("bosses_killed", 0)
-        runs_completed = profile.get("stats", {}).get("runs_completed", 0)
+        max_floor = profile.get("max_floor", 0)
+        bosses_killed = profile.get("stats", {}).get("total_bosses", 0)
+        has_won = profile.get("won_normal", False)
 
         for b_id, b_data in books.items():
             unlocked = False
             if b_id == "diario_silas" and max_floor >= 5: unlocked = True
-            elif b_id == "bestiario" and bosses_killed >= 3: unlocked = True
-            elif b_id == "cronache_ere" and runs_completed >= 1: unlocked = True
+            elif b_id == "bestiario" and bosses_killed >= 5: unlocked = True
+            elif b_id == "cronache_ere" and has_won: unlocked = True
             
             if unlocked:
                 available_books.append((b_id, b_data))
