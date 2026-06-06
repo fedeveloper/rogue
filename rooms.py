@@ -22,6 +22,45 @@ class CombatSession:
         for r in self.player.relic_effects:
             r.on_combat_start(self)
 
+    def process_statuses_and_curses(self, is_player_turn: bool):
+        if is_player_turn:
+            if self.player.has_curse("hp_drain"):
+                self.player.hp -= 2
+                print(f"{Colors.MAGENTA}La Maledizione dell'equipaggiamento drena 2 HP! ({self.player.hp}/{self.player.max_hp}){Colors.RESET}")
+            if self.player.has_curse("gold_drain") and self.player.gold > 0:
+                self.player.gold = max(0, self.player.gold - 5)
+                print(f"{Colors.MAGENTA}La Maledizione divora 5 Oro! (Oro: {self.player.gold}){Colors.RESET}")
+                
+            expired = []
+            for status, duration in self.player.statuses.items():
+                if status == "poison":
+                    self.player.hp -= 5
+                    print(f"{Colors.GREEN}Il veleno ti infligge 5 danni! ({self.player.hp}/{self.player.max_hp}){Colors.RESET}")
+                elif status == "bleed":
+                    self.player.hp -= 8
+                    print(f"{Colors.RED}Il sanguinamento ti infligge 8 danni! ({self.player.hp}/{self.player.max_hp}){Colors.RESET}")
+                
+                self.player.statuses[status] -= 1
+                if self.player.statuses[status] <= 0: expired.append(status)
+            for e in expired:
+                del self.player.statuses[e]
+                print(f"{Colors.CYAN}L'effetto di {e} è svanito dal tuo corpo.{Colors.RESET}")
+        else:
+            expired = []
+            for status, duration in self.enemy.statuses.items():
+                if status == "poison":
+                    self.enemy.hp -= 5
+                    print(f"{Colors.GREEN}Il veleno infligge 5 danni a {self.enemy.name}! ({self.enemy.hp}){Colors.RESET}")
+                elif status == "bleed":
+                    self.enemy.hp -= 8
+                    print(f"{Colors.RED}Il sanguinamento infligge 8 danni a {self.enemy.name}! ({self.enemy.hp}){Colors.RESET}")
+                
+                self.enemy.statuses[status] -= 1
+                if self.enemy.statuses[status] <= 0: expired.append(status)
+            for e in expired:
+                del self.enemy.statuses[e]
+                print(f"{Colors.CYAN}L'effetto di {e} su {self.enemy.name} è svanito.{Colors.RESET}")
+
     def start(self):
         if self.enemy.modifier == "normal":
             delay_print(f"\n{random.choice(GAME_DATA['lore']['boss' if self.enemy.is_boss else 'combat'])}")
@@ -49,10 +88,21 @@ class CombatSession:
             self.player.temp_def = 5
             print(f"{Colors.CYAN}✨ Risonanza di Terra! +5 Difesa fissa!{Colors.RESET}")
 
-        while self.enemy.hp > 0 and self.player.hp > 0:
+        while self.player.hp > 0 and self.enemy.hp > 0:
+            self.process_statuses_and_curses(is_player_turn=True)
+            if self.player.hp <= 0:
+                print(f"\n{Colors.RED}{Colors.BOLD}Sei caduto a causa delle tue ferite...{Colors.RESET}")
+                input("\nPremi INVIO per continuare...")
+                break
+                
             if not self.player_turn():
-                return
+                break
+                
             if self.enemy.hp > 0:
+                self.process_statuses_and_curses(is_player_turn=False)
+                if self.enemy.hp <= 0:
+                    self.on_enemy_death()
+                    break
                 if not self.enemy_turn():
                     return
 
@@ -271,6 +321,13 @@ class CombatSession:
                 dif = f"{Colors.BLUE}[DIFESA]{Colors.RESET}" if self.is_defending else ""
                 print(f"<- {self.enemy.name} ti colpisce! Subisci {Colors.RED}{dmg_taken} danni{Colors.RESET}. {en_eff}{dif}")
                 
+                if getattr(self.enemy, 'status_inflict', None):
+                    s_data = self.enemy.status_inflict
+                    if random.randint(1, 100) <= s_data.get("chance", 100):
+                        s_type = s_data["type"]
+                        self.player.statuses[s_type] = max(self.player.statuses.get(s_type, 0), s_data["duration"])
+                        print(f"{Colors.MAGENTA}Sei stato afflitto da {s_type.upper()}!{Colors.RESET}")
+                
                 reflect_total = 0
                 if self.player.accessory and self.player.accessory.bonus_type == "reflect": reflect_total += self.player.accessory.bonus_value
                 if reflect_total > 0:
@@ -344,11 +401,19 @@ def event_room(player: Player, event_id: str, floor: int):
     
     while True:
         print("\nScegli:")
-        for i, c in enumerate(ev["choices"]): print(f"{i+1}. {c['text']}")
+        valid_choices = []
+        for i, c in enumerate(ev["choices"]):
+            req_item = c.get("requires_item", "")
+            if req_item and req_item not in player.quest_items:
+                print(f"{Colors.RED}{i+1}. {c['text']} (Non possiedi l'oggetto richiesto){Colors.RESET}")
+            else:
+                valid_choices.append(i)
+                print(f"{i+1}. {c['text']}")
+                
         choice = get_choice("> ")
         try:
             idx = int(choice) - 1
-            if 0 <= idx < len(ev["choices"]):
+            if idx in valid_choices:
                 action = ev["choices"][idx]["action"]
                 msg = ev["choices"][idx].get("msg", "")
                 msg_alt = ev["choices"][idx].get("msg_alt", "")
@@ -400,10 +465,28 @@ def event_room(player: Player, event_id: str, floor: int):
                     e = Enemy(floor + 5, True, player.active_pacts) # Elite
                     input("Premi INVIO per combattere..."); combat_room(player, floor, e)
                     if player.hp <= 0: return 
+                elif action == "give_quest_item":
+                    q_item = ev["choices"][idx].get("item_id", "")
+                    if q_item and q_item not in player.quest_items:
+                        player.quest_items.append(q_item)
+                        print(f"{Colors.YELLOW}{msg}{Colors.RESET}")
+                elif action == "use_quest_item":
+                    q_item = ev["choices"][idx].get("item_id", "")
+                    # Already checked for possession via valid_choices
+                    print(f"{Colors.YELLOW}{msg}{Colors.RESET}")
+                    if ev["choices"][idx].get("reward_weapon", False):
+                        drop = generate_weapon(floor + 3, True)
+                        player.inventory.append(drop); print(f"{Colors.MAGENTA}Trovi Arma Epica: {drop.display_name}!{Colors.RESET}")
+                    rg = ev["choices"][idx].get("reward_gold", 0)
+                    if rg > 0:
+                        player.gold += rg
+                        print(f"{Colors.YELLOW}Ottieni {rg} Oro!{Colors.RESET}")
                 elif action == "none": print(f"{Colors.CYAN}{msg}{Colors.RESET}")
                 
                 input("\nPremi INVIO per proseguire...")
                 return
+            else:
+                print(f"{Colors.RED}Selezione non valida o bloccata.{Colors.RESET}"); continue
         except ValueError: pass
 
 def vendor_room(player: Player, floor: int):
@@ -472,6 +555,8 @@ def campfire_room(player: Player, floor: int):
         print("1. Riposa (Recupera 50% HP, il falò si spegnerà)")
         print(f"2. Affila Arma Base (Paga {Colors.YELLOW}50 Oro{Colors.RESET} per +3 ATK, il falò si spegnerà)")
         print(f"3. {Colors.MAGENTA}Altare dell'Evoluzione{Colors.RESET} (Fondi due armi/armature per potenziarle)")
+        if any(getattr(item, 'is_cursed', False) for item in [player.weapon, player.armor, player.accessory] if item):
+            print(f"4. {Colors.CYAN}Purifica Maledizione{Colors.RESET} (Paga {Colors.YELLOW}100 Oro{Colors.RESET} per rimuovere il malus da un pezzo equipaggiato)")
         print("0. Prosegui")
         
         action = get_choice("Scegli > ")
@@ -518,6 +603,36 @@ def campfire_room(player: Player, floor: int):
                         else: print(f"{Colors.RED}Puoi fondere solo oggetti dello stesso tipo!{Colors.RESET}"); time.sleep(1.5)
                     else: print(f"{Colors.RED}Selezione non valida.{Colors.RESET}"); time.sleep(1.5)
                 except ValueError: pass
+        elif action == '4':
+            cursed_items = [item for item in [player.weapon, player.armor, player.accessory] if item and getattr(item, 'is_cursed', False)]
+            if not cursed_items:
+                print(f"{Colors.YELLOW}Non hai equipaggiamenti maledetti addosso.{Colors.RESET}")
+                time.sleep(1.5)
+            elif player.gold < 100:
+                print(f"{Colors.RED}Oro insufficiente per il rituale di purificazione (Richiede 100 Oro).{Colors.RESET}")
+                time.sleep(1.5)
+            else:
+                while True:
+                    clear_screen()
+                    print(f"\n{Colors.CYAN}--- PURIFICAZIONE ---{Colors.RESET} Tuo Oro: {player.gold}")
+                    for i, item in enumerate(cursed_items):
+                        print(f"{i+1}. {item.display_name} (Malus: {item.curse_effect})")
+                    print("0. Annulla")
+                    c = get_choice("Quale oggetto purificare? > ")
+                    if c == '0': break
+                    try:
+                        idx = int(c) - 1
+                        if 0 <= idx < len(cursed_items):
+                            player.gold -= 100
+                            target_item = cursed_items[idx]
+                            target_item.is_cursed = False
+                            target_item.curse_effect = ""
+                            target_item.display_name = target_item.display_name.replace(f"{Colors.MAGENTA}[MALEDETTO]{Colors.RESET} ", "")
+                            print(f"{Colors.GREEN}Il rituale ha successo! La maledizione è spezzata.{Colors.RESET}")
+                            input("\nPremi INVIO...")
+                            return
+                        else: print(f"{Colors.RED}Selezione non valida.{Colors.RESET}"); time.sleep(1.5)
+                    except ValueError: pass
         elif action == '0': break
 
 def treasure_room(player: Player, floor: int):

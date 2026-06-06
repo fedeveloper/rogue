@@ -70,5 +70,21 @@
       {"text": "Raccogli i fiori spinosi (+100 Oro, I rovi ti infliggono 40 Danni)", "action": "blood_gold", "msg": "I rovi velenosi ti lacerano le mani, ma strappi via i preziosi petali dorati!"},
       {"text": "Raccogli i frutti sull'albero (-50 Oro per strumenti, Trovi Arma)", "action": "trade_weapon", "msg": "Tra i rami più alti scovi i resti di un eroe antico e la sua maestosa arma:"}
     ]
+  },
+  "cadavere_saggio": {
+    "title": "Il Cadavere del Saggio", "text": "Trovi i resti di un vecchio erudito. Stringe ancora qualcosa tra le dita scheletriche.",
+    "choices":[
+      {"text": "Ispeziona le mani (Ottieni Oggetto Chiave)", "action": "give_quest_item", "item_id": "chiave_arrugginita", "msg": "Hai ottenuto 'Chiave Arrugginita'!"},
+      {"text": "Fruga nello zaino (-30 HP, Ottieni Reliquia)", "action": "trade_relic", "msg": "Una vipera nascosta ti morde brutalmente, ma scovi una reliquia!"},
+      {"text": "Lascialo riposare", "action": "none", "msg": "Prosegui senza disturbare i morti."}
+    ]
+  },
+  "porta_sigillata": {
+    "title": "La Porta Sigillata", "text": "Un'imponente porta di ferro blocca una via. Al centro c'è una serratura incrostata.",
+    "choices":[
+      {"text": "[RICHIEDE CHIAVE ARRUGGINITA] Apri la porta (Arma Epica + 200 Oro)", "action": "use_quest_item", "requires_item": "chiave_arrugginita", "msg": "La chiave gira a fatica. La porta si apre su un'antica armeria!"},
+      {"text": "Cerca di sfondarla (Subisci 40 Danni, niente tesoro)", "action": "blood_gold", "msg": "Ti lussi una spalla contro il metallo senza alcun risultato... la frustrazione è palpabile."},
+      {"text": "Ignora la porta", "action": "none", "msg": "Non hai tempo da perdere. Tiri dritto."}
+    ]
   }
 }

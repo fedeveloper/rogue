@@ -9,22 +9,28 @@ class Item:
         self.name, self.value, self.type, self.level, self.flavor = name, value, item_type, level, flavor
 
 class Weapon(Item):
-    def __init__(self, name: str, value: int, atk: int, element: str, level: int, flavor: str = ""):
+    def __init__(self, name: str, value: int, atk: int, element: str, level: int, flavor: str = "", is_cursed: bool = False, curse_effect: str = ""):
         super().__init__(name, value, "weapon", level, flavor)
         self.atk, self.element = atk, element
-        self.display_name = f"{name}[{get_element_icon(element)}]"
+        self.is_cursed, self.curse_effect = is_cursed, curse_effect
+        cursed_tag = f"{Colors.MAGENTA}[MALEDETTO]{Colors.RESET} " if is_cursed else ""
+        self.display_name = f"{cursed_tag}{name}[{get_element_icon(element)}]"
 
 class Armor(Item):
-    def __init__(self, name: str, value: int, defense: int, element: str, level: int, flavor: str = ""):
+    def __init__(self, name: str, value: int, defense: int, element: str, level: int, flavor: str = "", is_cursed: bool = False, curse_effect: str = ""):
         super().__init__(name, value, "armor", level, flavor)
         self.defense, self.element = defense, element
-        self.display_name = f"{name}[{get_element_icon(element)}]"
+        self.is_cursed, self.curse_effect = is_cursed, curse_effect
+        cursed_tag = f"{Colors.MAGENTA}[MALEDETTO]{Colors.RESET} " if is_cursed else ""
+        self.display_name = f"{cursed_tag}{name}[{get_element_icon(element)}]"
 
 class Accessory(Item):
-    def __init__(self, name: str, value: int, element: str, bonus_type: str, bonus_value: int, desc: str, flavor: str = ""):
+    def __init__(self, name: str, value: int, element: str, bonus_type: str, bonus_value: int, desc: str, flavor: str = "", is_cursed: bool = False, curse_effect: str = ""):
         super().__init__(name, value, "accessory", 1, flavor)
         self.element, self.bonus_type, self.bonus_value, self.desc = element, bonus_type, bonus_value, desc
-        self.display_name = f"{name} [{get_element_icon(element)}]"
+        self.is_cursed, self.curse_effect = is_cursed, curse_effect
+        cursed_tag = f"{Colors.MAGENTA}[MALEDETTO]{Colors.RESET} " if is_cursed else ""
+        self.display_name = f"{cursed_tag}{name} [{get_element_icon(element)}]"
 
 class Consumable(Item):
     def __init__(self, name: str, value: int, heal_amount: int):
@@ -41,22 +47,42 @@ def generate_weapon(level: int, is_epic: bool = False) -> Weapon:
     name, flavor = w_data["name"], w_data.get("flavor", "")
     atk = w_data["base_atk"] + int(level * 1.5) + random.randint(0, 3)
     element = generate_random_element()
+    
+    is_cursed, curse_effect = False, ""
+    if not is_epic and random.random() < 0.15:
+        is_cursed = True
+        curse_effect = random.choice(["hp_drain", "gold_drain"])
+        atk += 10 + (level * 3)
+        
     if element == "Normale": atk = int(atk * 1.2) + 1
     if is_epic: atk = int(atk * 1.5) + 2; name = f"EPICO {name}"
-    return Weapon(f"{name} (lv.{level})", atk * 5, atk, element, level, flavor)
+    return Weapon(f"{name} (lv.{level})", atk * 5, atk, element, level, flavor, is_cursed, curse_effect)
 
 def generate_armor(level: int, is_epic: bool = False) -> Armor:
     a_data = random.choice(GAME_DATA["armors"])
     name, flavor = a_data["name"], a_data.get("flavor", "")
     defense = a_data["base_def"] + int(level * 1.2) + random.randint(0, 2)
     element = generate_random_element()
+    
+    is_cursed, curse_effect = False, ""
+    if not is_epic and random.random() < 0.15:
+        is_cursed = True
+        curse_effect = random.choice(["hp_drain", "gold_drain", "heavy"])
+        defense += 8 + (level * 2)
+
     if element == "Normale": defense = int(defense * 1.2) + 1
     if is_epic: defense = int(defense * 1.5) + 2; name = f"EPICO {name}"
-    return Armor(f"{name} (lv.{level})", defense * 8, defense, element, level, flavor)
+    return Armor(f"{name} (lv.{level})", defense * 8, defense, element, level, flavor, is_cursed, curse_effect)
 
 def generate_accessory(level: int) -> Accessory:
     a_data = random.choice(GAME_DATA["accessories"])
-    return Accessory(a_data["name"], a_data["base_val"] + (level*10), a_data.get("element", "Normale"), a_data["bonus_type"], a_data["bonus_value"], a_data["desc"], a_data.get("lore", ""))
+    is_cursed, curse_effect = False, ""
+    bonus_val = a_data["bonus_value"]
+    if random.random() < 0.10:
+        is_cursed = True
+        curse_effect = random.choice(["hp_drain", "gold_drain"])
+        bonus_val = int(bonus_val * 2)
+    return Accessory(a_data["name"], a_data["base_val"] + (level*10), a_data.get("element", "Normale"), a_data["bonus_type"], bonus_val, a_data["desc"], a_data.get("lore", ""), is_cursed, curse_effect)
 
 def generate_potion(level: int) -> Consumable:
     c_data = random.choice(GAME_DATA["consumables"])
@@ -84,6 +110,8 @@ class Player:
         self.relics = []
         self.relic_effects = []
         self.bonus_atk_relic = 0
+        self.statuses: Dict[str, int] = {}
+        self.quest_items: List[str] = []
         
         self.exp_multiplier = 1.0
         if PROFILE["class_lvl"].get("1", 1) >= 4: self.base_dodge += 5 
@@ -154,12 +182,19 @@ class Player:
         dodge = self.base_dodge + self.temp_dodge
         for effect in self.relic_effects: dodge += effect.get_dodge_modifier()
         if self.class_id == "5" and PROFILE["class_lvl"].get("5", 1) >= 2 and self.hp < self.max_hp * 0.3: return 0
+        if self.has_curse("heavy"): dodge -= 15
         return max(0, dodge)
 
     def _get_resonance_element(self):
         if self.weapon.element != "Normale" and self.weapon.element == self.armor.element:
             return self.weapon.element
         return None
+
+    def has_curse(self, curse_type: str) -> bool:
+        for item in [self.weapon, self.armor, self.accessory]:
+            if item and getattr(item, 'is_cursed', False) and getattr(item, 'curse_effect', "") == curse_type:
+                return True
+        return False
 
     def gain_exp(self, amount: int):
         if self.midas: return
@@ -189,6 +224,8 @@ class Enemy:
         self.element, self.base_acc, self.base_dodge = data["element"], data["base_acc"], data["base_dodge"]
         self.title = data.get("title", "")
         self.lore = data.get("lore", "")
+        self.status_inflict = data.get("status_inflict", None)
+        self.statuses: Dict[str, int] = {}
         
         lvl_scale = floor - 1
         if is_boss:

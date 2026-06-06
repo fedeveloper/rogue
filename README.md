@@ -67,6 +67,12 @@ Se equipaggi un'**Arma** e un'**Armatura** dello **stesso elemento** (escluso No
 
 Questo crea dilemmi strategici profondi: *tieni l'arma più forte, o quella più debole che mantiene attiva la Risonanza?*
 
+### ☣️ Meccaniche Avanzate: Status, Maledizioni e Quest
+Il Labirinto offre sfide dinamiche per metterti alla prova:
+- **Status Alterati**: Alcuni nemici infliggono *Veleno* o *Sanguinamento*, che ti danneggeranno ogni turno. Trova o compra l'*Antidoto Universale* per curarti!
+- **Oggetti Maledetti**: Troverai equipaggiamenti con la dicitura `[MALEDETTO]`. Hanno statistiche altissime ma applicano malus pesanti (drenano HP, rubano Oro, riducono la schivata). Puoi purificarli spendendo 100 Oro al Falò.
+- **Eventi a Catena e Oggetti Chiave**: Alcuni Eventi Narrativi ti daranno *Oggetti Chiave* (es. Chiave Arrugginita) che sbloccheranno scelte segrete in eventi successivi.
+
 ### 🌟 30 Reliquie
 Artefatti passivi che stravolgono le regole del gioco. Alcune sono trovabili sconfiggendo boss, altre vanno sbloccate tramite Essenza o completando Imprese.
 

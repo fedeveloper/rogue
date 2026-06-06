@@ -120,3 +120,27 @@ Ho completato la creazione del sistema ad eventi per le reliquie, rimuovendo le 
 
 ## Risultato Finale
 Questo pattern ha trasformato un potenziale "spaghetti code" in un sistema elegante e scalabile. Per creare una nuova reliquia in futuro, non servirà toccare **mai più** `rooms.py` o `entities.py`: basterà definire una classe per il nuovo oggetto in `relic_effects.py` e aggiungerla al file JSON dei dati.
+
+# Implementazione Meccaniche Avanzate: Status, Maledizioni e Quest
+
+Abbiamo aggiunto tre nuovi livelli di profondità al gameplay core, modificando le fondamenta delle classi Entity e del loop di combattimento.
+
+## 1. Effetti di Stato Dinamici (`statuses`)
+- **Dati**: La classe `Player` e `Enemy` in `entities.py` ora includono un dizionario `self.statuses: Dict[str, int] = {}`.
+- **Applicazione**: In `enemies.json`, i nemici possono avere un campo `"status_inflict": {"type": "poison", "chance": 30, "duration": 3}`. In `rooms.py` (`CombatSession.enemy_turn`), questo viene parsato e applicato al giocatore su hit.
+- **Risoluzione**: Un nuovo metodo `process_statuses_and_curses(is_player_turn)` è stato aggiunto in `CombatSession`. Viene chiamato all'inizio di ogni mezzo-turno (giocatore/nemico) e applica danni puri per `poison` (5 danni) e `bleed` (8 danni), decrementando i timer.
+- **Cura**: Aggiunto l'oggetto `"Antidoto Universale"` in `consumables.json`. Usarlo in `inventory_menu.py` chiama `player.statuses.clear()`.
+
+## 2. Oggetti Maledetti (`is_cursed`)
+- **Dati**: Le classi `Weapon`, `Armor` e `Accessory` sono state estese con i flag `is_cursed: bool` e `curse_effect: str`.
+- **Generazione**: Le funzioni `generate_weapon`, `generate_armor`, `generate_accessory` in `entities.py` hanno ora un ~15% di chance di generare oggetti maledetti con stats base molto più alte.
+- **Effetti Malus**:
+  - `hp_drain`: Sottrae 2 HP in `process_statuses_and_curses`.
+  - `gold_drain`: Sottrae 5 Oro in `process_statuses_and_curses`.
+  - `heavy`: Sottratto staticamente in `Player.get_dodge()`.
+- **Purificazione**: In `rooms.py` (`campfire_room`), è stata aggiunta l'opzione "Purifica Maledizione". Tramite il pagamento di 100 Oro, il flag `is_cursed` viene rimosso definitivamente dal pezzo.
+
+## 3. Quest a Catena (`quest_items`)
+- **Dati**: Il `Player` ha ora l'attributo `self.quest_items: List[str]`.
+- **Eventi in JSON**: In `events.json` sono state introdotte le proprietà `requires_item` e le azioni `give_quest_item` e `use_quest_item`.
+- **Risoluzione**: In `rooms.py` (`event_room`), prima di stampare le scelte, viene controllato `requires_item`. Se il giocatore non possiede l'oggetto, la scelta viene stampata in rosso e disabilitata. L'uso di `use_quest_item` genera ricompense hardcodate in base ai flag `reward_weapon` o `reward_gold` nel JSON.

@@ -84,6 +84,14 @@ def show_inventory_menu(player, in_combat=False) -> str:
                         print(f"{Colors.GREEN}Bevi l'Acqua Santa: +50 HP e bonus difensivi temporanei! (HP: {player.hp}/{player.max_hp}){Colors.RESET}")
                         input("Premi INVIO...")
                         if in_combat: return "turn_used"
+                    elif "Antidoto" in item.name:
+                        player.inventory.pop(real_idx)
+                        cured = len(player.statuses)
+                        player.statuses.clear()
+                        player.hp = min(player.max_hp, player.hp + item.heal_amount)
+                        print(f"{Colors.GREEN}Bevi l'Antidoto: Curati {cured} stati alterati e recuperati {item.heal_amount} HP!{Colors.RESET}")
+                        input("Premi INVIO...")
+                        if in_combat: return "turn_used"
                     else:
                         if player.cursed:
                             print(f"{Colors.RED}La tua Maledizione rende inutile la pozione.{Colors.RESET}")

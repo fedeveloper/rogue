@@ -85,6 +85,12 @@
             "val_base": 100,
             "unlock_cost": 0,
             "unlock_id": "fiala_caos"
+        },
+        {
+            "name": "Antidoto Universale",
+            "desc": "Cura tutti gli stati alterati (Veleno, Sanguinamento).",
+            "base_heal": 10,
+            "val_base": 40
         }
     ]
 }

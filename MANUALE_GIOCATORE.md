@@ -22,6 +22,12 @@ Oltre ai combattimenti, affronterai:
 * **Eventi Narrativi:** Stanze misteriose dove dovrai prendere decisioni drastiche. Potrai scambiare HP per reliquie, sfidare la sorte lanciando monete, o risvegliare mostri d'Elite per puro guadagno.
 * **L'Altare dell'Evoluzione (Forgia):** Quando riposi al Falò, puoi scegliere di sacrificare un'arma (o armatura) in tuo possesso per fonderla con un'altra dello stesso tipo, aumentandone permanentemente le statistiche e il livello. Non gettare mai via l'equipaggiamento extra!
 
+## ☣️ Sopravvivenza Avanzata
+Il Labirinto punisce chi non si prepara. Attento a queste minacce mortali:
+- **Status Alterati**: Mostri come Melme Acide e Vampiri possono infliggerti **Veleno** o **Sanguinamento**, che ridurranno i tuoi HP a ogni turno. Compra sempre un **Antidoto Universale** dal Mercante per salvarti la vita in casi estremi!
+- **Equipaggiamenti Maledetti**: Potresti trovare armi e armature `[MALEDETTO]`. Sono infinitamente più potenti delle varianti base, ma ti dreneranno HP, ti ruberanno Oro, o ti appesantiranno riducendo la tua Schivata. Se sei ricco, puoi farli purificare visitando un Falò e pagando 100 Oro.
+- **Quest a Catena**: Alcuni eventi ti ricompenseranno con oggetti chiave, come la *Chiave Arrugginita*. Questi non occupano spazio nello zaino ma sbloccheranno finali segreti ed epici tesori in altri eventi che incontrerai più avanti!
+
 ## 🏕️ Hub e Patti del Caos
 Se "Scappi" dal labirinto (Opzione 3 al bivio), porterai in salvo l'Oro convertendolo in **Essenza Astrale**. Usala nel Campo Base per sbloccare Classi, Tratti e Perk.
 *Hai già vinto il gioco?* Si sbloccheranno i **Patti del Caos**. All'inizio di ogni run potrai attivare maledizioni (come prezzi raddoppiati o nemici più forti) per ricevere massicci moltiplicatori all'Essenza finale guadagnata!
