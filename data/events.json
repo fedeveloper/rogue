@@ -86,5 +86,13 @@
       {"text": "Cerca di sfondarla (Subisci 40 Danni, niente tesoro)", "action": "blood_gold", "msg": "Ti lussi una spalla contro il metallo senza alcun risultato... la frustrazione è palpabile."},
       {"text": "Ignora la porta", "action": "none", "msg": "Non hai tempo da perdere. Tiri dritto."}
     ]
+  },
+  "speziale_prigioniero": {
+    "title": "Lo Speziale Prigioniero", "text": "Trovi un anziano incatenato al muro. Le sue vesti sono sporche di pozioni esplose. 'Ti prego, le catene sono intrise di magia del sangue... serve un sacrificio per spezzarle!'",
+    "choices":[
+      {"text": "Dona il tuo sangue (-40 HP) per liberarlo", "action": "unlock_npc_speziale", "msg": "Il tuo sangue dissolve il lucchetto! L'anziano ti ringrazia: 'Ci rivedremo al Campo Base, te lo prometto!'"},
+      {"text": "Cerca le chiavi (Combatti un Elite)", "action": "unlock_npc_fight", "msg": "Una mostruosità attirata dal rumore ti assale!"},
+      {"text": "Ignoralo", "action": "none", "msg": "Le sue urla si affievoliscono mentre prosegui nel buio."}
+    ]
   }
 }

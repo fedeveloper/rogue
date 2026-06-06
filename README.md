@@ -130,6 +130,8 @@ Tra una run e l'altra, spendi l'**Essenza Astrale** al Campo Base:
 - **⚒️ La Forgia Dimensionale** — Sblocca nuove reliquie, armi e consumabili leggendari.
 - **🍺 La Taverna** — Recluta nuove classi di eroi.
 - **📜 Grimorio e Imprese** — Monitora le tue sfide e i progressi di Maestria.
+- **📚 L'Archivio di Aethelgard** — Consulta i tomi di Lore trovati nel gioco. Sbloccare e completare questi tomi ti conferisce delle **Sinergie dell'Archivio**, veri e propri buff passivi permanenti (es. +10% Danni contro i Boss).
+- **🧪 La Tenda dello Speziale** — (Si sblocca salvando l'NPC nel labirinto). Ti permette di spendere piccole somme di Essenza per iniziare la run successiva con utili consumabili, come l'Antidoto Universale.
 
 ### 📜 12 Imprese (Achievement)
 Sfide trasversali che sbloccano contenuti nascosti. Alcune si completano in una singola run, altre richiedono progressione cumulativa.

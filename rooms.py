@@ -3,6 +3,7 @@ import time
 from typing import List
 from ui import Colors, clear_screen, delay_print, get_choice
 from data_manager import GAME_DATA, PROFILE, MULTIPLIERS, get_element_icon
+from archive import is_book_unlocked
 from entities import Player, Enemy, generate_weapon, generate_armor, generate_accessory, generate_potion, get_random_relic
 from inventory_menu import show_inventory_menu
 
@@ -114,6 +115,7 @@ class CombatSession:
         g_drop = self.enemy.gold_drop * 3 if self.player.midas else self.enemy.gold_drop
         for r in self.player.relic_effects: g_drop = r.on_gold_gain(self.player, g_drop)
         g_drop = int(g_drop * (1 + PROFILE["perks"].get("banca_anima_lvl", 0) * 0.05))
+        if is_book_unlocked("diario_silas", PROFILE): g_drop = int(g_drop * 1.05)
         
         self.player.gold += g_drop
         print(f"Ottieni {Colors.YELLOW}{g_drop} oro{Colors.RESET}.")
@@ -165,6 +167,9 @@ class CombatSession:
             if "Ascia del Boia" in self.player.weapon.name and random.random() < 0.35:
                 dmg_dealt *= 2
                 eff += f" {Colors.MAGENTA}[CRITICO DELL'ASCIA!]{Colors.RESET}"
+        
+        if self.enemy.is_boss and is_book_unlocked("bestiario", PROFILE):
+            dmg_dealt = int(dmg_dealt * 1.1)
 
         if self.player.accessory and self.player.accessory.bonus_type == "crit_chance" and not self.focused_attack:
             if random.randint(1, 100) <= self.player.accessory.bonus_value:
@@ -285,6 +290,7 @@ class CombatSession:
                 return self.player_turn()
             
             f_chance = max(10, min(90, 20 + self.player.get_dodge() - self.enemy.base_dodge + (20 if PROFILE["perks"].get("scarpisti", False) else 0)))
+            if is_book_unlocked("diario_silas", PROFILE): f_chance += 5
             for r in self.player.relic_effects:
                 mod = r.get_escape_modifier()
                 if mod > 0: f_chance = mod
@@ -307,7 +313,9 @@ class CombatSession:
         en_hit_chance = max(10, min(100, 85 + self.enemy.base_acc - self.player.get_dodge() + (15 if en_multiplier > 1.0 else -20 if en_multiplier < 1.0 else 0)))
 
         if random.randint(1, 100) <= en_hit_chance:
-            dmg_taken = max(0, int((self.enemy.atk + random.randint(-1, 2)) * en_multiplier) - self.player.armor.defense - self.player.temp_def)
+            defense = self.player.armor.defense + self.player.temp_def
+            if is_book_unlocked("cronache_ere", PROFILE): defense += 5
+            dmg_taken = max(0, int((self.enemy.atk + random.randint(-1, 2)) * en_multiplier) - defense)
             if self.is_defending:
                 dmg_taken //= 2
             
@@ -460,11 +468,31 @@ def event_room(player: Player, event_id: str, floor: int):
                         print(f"\n{Colors.RED}{Colors.BOLD}Hai sacrificato troppa linfa vitale... Sei morto.{Colors.RESET}")
                         input("\nPremi INVIO per continuare...")
                         return
-                elif action == "fight_elite":
+                elif action in ["fight_elite", "unlock_npc_fight"]:
                     print(f"{Colors.RED}{msg}{Colors.RESET}")
                     e = Enemy(floor + 5, True, player.active_pacts) # Elite
                     input("Premi INVIO per combattere..."); combat_room(player, floor, e)
                     if player.hp <= 0: return 
+                    if action == "unlock_npc_fight" and player.hp > 0:
+                        if "npc_unlocked" not in PROFILE: PROFILE["npc_unlocked"] = {}
+                        PROFILE["npc_unlocked"]["speziale"] = True
+                        from data_manager import save_profile
+                        save_profile(PROFILE)
+                        print(f"\n{Colors.GREEN}Il mostro è sconfitto! Raccogli le chiavi e liberi lo Speziale. Ti ringrazia e scappa verso il Campo Base.{Colors.RESET}")
+                elif action == "unlock_npc_speziale":
+                    player.hp -= 40
+                    if player.hp <= 0 and player.benedetto_save:
+                        player.hp = 1; player.benedetto_save = False
+                        print(f"{Colors.YELLOW}La Benedizione ti salva dal colpo letale!{Colors.RESET}")
+                    if player.hp <= 0:
+                        print(f"\n{Colors.RED}{Colors.BOLD}Il dissanguamento ti è stato fatale...{Colors.RESET}")
+                        input("\nPremi INVIO per continuare...")
+                        return
+                    print(f"{Colors.GREEN}{msg}{Colors.RESET}")
+                    if "npc_unlocked" not in PROFILE: PROFILE["npc_unlocked"] = {}
+                    PROFILE["npc_unlocked"]["speziale"] = True
+                    from data_manager import save_profile
+                    save_profile(PROFILE)
                 elif action == "give_quest_item":
                     q_item = ev["choices"][idx].get("item_id", "")
                     if q_item and q_item not in player.quest_items:

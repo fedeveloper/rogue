@@ -3,6 +3,7 @@ import random
 from ui import Colors, clear_screen, get_choice
 from data_manager import PROFILE, get_element_icon
 from entities import generate_random_element
+from archive import is_book_unlocked
 
 def show_inventory_menu(player, in_combat=False) -> str:
     while True:
@@ -18,6 +19,16 @@ def show_inventory_menu(player, in_combat=False) -> str:
         if player.relics:
             print(f"🌟 Reliquie attive:")
             for r in player.relics: print(f"   - {Colors.YELLOW}{r['name']}{Colors.RESET}: {r['desc']}")
+            
+        archive_buffs = []
+        if is_book_unlocked("bestiario", PROFILE): archive_buffs.append("Conoscenza (Bestiario): +10% Danni vs Boss")
+        if is_book_unlocked("diario_silas", PROFILE): archive_buffs.append("Conoscenza (Silas): +5% Oro, +5% Fuga")
+        if is_book_unlocked("cronache_ere", PROFILE): archive_buffs.append("Conoscenza (Ere Antiche): +5 Difesa")
+        
+        if archive_buffs:
+            print(f"📚 {Colors.CYAN}Sinergie dell'Archivio:{Colors.RESET}")
+            for b in archive_buffs: print(f"   - {Colors.CYAN}{b}{Colors.RESET}")
+        
         print("-" * 55)
         
         display_items = []

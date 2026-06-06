@@ -186,6 +186,42 @@ def base_camp_grimoire():
             print(f"{c['role']}: Lv.{PROFILE['class_lvl'].get(c_id, 1)} (XP: {PROFILE['class_xp'].get(c_id, 0)})")
     input("\nPremi INVIO per tornare indietro...")
 
+def base_camp_apothecary():
+    while True:
+        clear_screen()
+        print(f"{Colors.GREEN}--- LA TENDA DELLO SPEZIALE ---{Colors.RESET}")
+        print(f"Essenza: ✨{PROFILE['essence']}\n")
+        print("L'anziano che hai salvato mescola intrugli gorgoglianti.")
+        print("'Un piccolo aiuto per la tua prossima discesa? Per te, un prezzo di favore!'\n")
+        print("1. Compra Pozione Curativa Base (✨20) - Inizi la run con una pozione")
+        print("2. Compra Antidoto Universale (✨30) - Inizi la run con un antidoto")
+        print("0. Indietro")
+        
+        c = get_choice("> ")
+        if c == '0': break
+        
+        potion_name = ""
+        cost = 0
+        if c == '1':
+            potion_name = "Pozione Curativa Base"
+            cost = 20
+        elif c == '2':
+            potion_name = "Antidoto Universale"
+            cost = 30
+            
+        if cost > 0:
+            if PROFILE['essence'] >= cost:
+                if "starting_consumables" not in PROFILE: PROFILE["starting_consumables"] = []
+                PROFILE["starting_consumables"].append(potion_name)
+                PROFILE['essence'] -= cost
+                from data_manager import save_profile
+                save_profile(PROFILE)
+                print(f"\n{Colors.CYAN}'Ottima scelta!' {Colors.RESET}Hai aggiunto {potion_name} al tuo equipaggiamento iniziale.")
+                time.sleep(1.5)
+            else:
+                print(f"\n{Colors.RED}Essenza insufficiente.{Colors.RESET}")
+                time.sleep(1.5)
+
 def base_camp():
     while True:
         clear_screen()
@@ -196,6 +232,9 @@ def base_camp():
         print("3. La Taverna (Recluta Eroi)")
         print("4. Grimorio e Imprese")
         print("5. L'Archivio di Aethelgard (Lore)")
+        has_speziale = PROFILE.get("npc_unlocked", {}).get("speziale", False)
+        if has_speziale:
+            print(f"6. La Tenda dello Speziale {Colors.GREEN}[SBLOCCATO]{Colors.RESET}")
         print("0. Torna al Menu Principale")
         
         choice = get_choice("\nScegli > ")
@@ -209,6 +248,8 @@ def base_camp():
             base_camp_grimoire()
         elif choice == '5':
             show_archive(PROFILE)
+        elif choice == '6' and has_speziale:
+            base_camp_apothecary()
         elif choice == '0':
             break
 

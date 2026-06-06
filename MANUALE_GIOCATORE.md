@@ -19,7 +19,7 @@ Questi oggetti (trovabili nei Forzieri, donati da Eventi o droppati dai Boss) no
 
 ## 🎭 Stanze Evento ed Evoluzione
 Oltre ai combattimenti, affronterai:
-* **Eventi Narrativi:** Stanze misteriose dove dovrai prendere decisioni drastiche. Potrai scambiare HP per reliquie, sfidare la sorte lanciando monete, o risvegliare mostri d'Elite per puro guadagno.
+* **Eventi Narrativi:** Stanze misteriose dove dovrai prendere decisioni drastiche. Potrai scambiare HP per reliquie, sfidare la sorte lanciando monete, o risvegliare mostri d'Elite per puro guadagno. In rare occasioni, potresti incontrare **NPC prigionieri** (come l'anziano Speziale): se sacrifichi te stesso per salvarli, questi apriranno nuove botteghe utilissime al Campo Base!
 * **L'Altare dell'Evoluzione (Forgia):** Quando riposi al Falò, puoi scegliere di sacrificare un'arma (o armatura) in tuo possesso per fonderla con un'altra dello stesso tipo, aumentandone permanentemente le statistiche e il livello. Non gettare mai via l'equipaggiamento extra!
 
 ## ☣️ Sopravvivenza Avanzata
@@ -30,4 +30,5 @@ Il Labirinto punisce chi non si prepara. Attento a queste minacce mortali:
 
 ## 🏕️ Hub e Patti del Caos
 Se "Scappi" dal labirinto (Opzione 3 al bivio), porterai in salvo l'Oro convertendolo in **Essenza Astrale**. Usala nel Campo Base per sbloccare Classi, Tratti e Perk.
+*Non dimenticare l'Archivio!* Durante le tue esplorazioni sbloccherai passaggi storici nel Campo Base. Raccogliere questi tomi ti garantirà le **Sinergie dell'Archivio**, bonus passivi permanenti per tutte le run future (come +10% Danni ai Boss). Puoi sempre controllare i tuoi bonus attivi aprendo l'Inventario in partita.
 *Hai già vinto il gioco?* Si sbloccheranno i **Patti del Caos**. All'inizio di ogni run potrai attivare maledizioni (come prezzi raddoppiati o nemici più forti) per ricevere massicci moltiplicatori all'Essenza finale guadagnata!

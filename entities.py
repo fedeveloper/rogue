@@ -139,6 +139,13 @@ class Player:
         self.base_acc += PROFILE["perks"].get("acc_lvl", 0) * 3
         self.exp_multiplier += PROFILE["perks"].get("exp_lvl", 0) * 0.05
         
+        if "starting_consumables" in PROFILE:
+            for cons_name in PROFILE["starting_consumables"]:
+                c_data = next((x for x in GAME_DATA["consumables"] if x["name"] == cons_name), None)
+                if c_data:
+                    self.inventory.append(Consumable(c_data["name"], c_data["val_base"], c_data["base_heal"]))
+            PROFILE["starting_consumables"] = []
+        
         start_weapon_lv = 2 if class_id == "1" and PROFILE["class_lvl"].get("1", 1) >= 2 else 1
         self.thief_save = True if class_id == "2" and PROFILE["class_lvl"].get("2", 1) >= 2 else False
         self.mage_lifesteal = True if class_id == "3" and PROFILE["class_lvl"].get("3", 1) >= 2 else False
