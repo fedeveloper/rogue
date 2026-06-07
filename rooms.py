@@ -35,11 +35,13 @@ class CombatSession:
             expired = []
             for status, duration in self.player.statuses.items():
                 if status == "poison":
-                    self.player.hp -= 5
-                    print(f"{Colors.GREEN}Il veleno ti infligge 5 danni! ({self.player.hp}/{self.player.max_hp}){Colors.RESET}")
+                    dmg = 3 + self.floor
+                    self.player.hp -= dmg
+                    print(f"{Colors.GREEN}Il veleno ti infligge {dmg} danni! ({self.player.hp}/{self.player.max_hp}){Colors.RESET}")
                 elif status == "bleed":
-                    self.player.hp -= 8
-                    print(f"{Colors.RED}Il sanguinamento ti infligge 8 danni! ({self.player.hp}/{self.player.max_hp}){Colors.RESET}")
+                    dmg = max(1, int(self.player.max_hp * 0.05))
+                    self.player.hp -= dmg
+                    print(f"{Colors.RED}Il sanguinamento ti infligge {dmg} danni! ({self.player.hp}/{self.player.max_hp}){Colors.RESET}")
                 
                 self.player.statuses[status] -= 1
                 if self.player.statuses[status] <= 0: expired.append(status)
@@ -50,11 +52,13 @@ class CombatSession:
             expired = []
             for status, duration in self.enemy.statuses.items():
                 if status == "poison":
-                    self.enemy.hp -= 5
-                    print(f"{Colors.GREEN}Il veleno infligge 5 danni a {self.enemy.name}! ({self.enemy.hp}){Colors.RESET}")
+                    dmg = 3 + self.floor
+                    self.enemy.hp -= dmg
+                    print(f"{Colors.GREEN}Il veleno infligge {dmg} danni a {self.enemy.name}! ({self.enemy.hp}){Colors.RESET}")
                 elif status == "bleed":
-                    self.enemy.hp -= 8
-                    print(f"{Colors.RED}Il sanguinamento infligge 8 danni a {self.enemy.name}! ({self.enemy.hp}){Colors.RESET}")
+                    dmg = max(5, int(self.enemy.hp * 0.05))
+                    self.enemy.hp -= dmg
+                    print(f"{Colors.RED}Il sanguinamento infligge {dmg} danni a {self.enemy.name}! ({self.enemy.hp}){Colors.RESET}")
                 
                 self.enemy.statuses[status] -= 1
                 if self.enemy.statuses[status] <= 0: expired.append(status)
@@ -553,6 +557,8 @@ def vendor_room(player: Player, floor: int):
                             if "gold_spent" not in player.run_tracker: player.run_tracker["gold_spent"] = 0
                             player.run_tracker["gold_spent"] += item.value
                             print(f"{Colors.GREEN}Hai comprato {item.name}!{Colors.RESET}"); items_for_sale.pop(idx); time.sleep(1)
+                            for i_idx, remaining_item in enumerate(items_for_sale):
+                                items_for_sale[i_idx].value = int(remaining_item.value * 1.1)
                         else: print(f"{Colors.RED}Oro insufficiente!{Colors.RESET}"); time.sleep(1)
                 except ValueError: pass
         elif action == '2':

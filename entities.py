@@ -1,6 +1,6 @@
 import random
 from typing import List, Dict, Any
-from ui import Colors, delay_print
+from ui import Colors, delay_print, get_choice, clear_screen
 from data_manager import GAME_DATA, RAW_DATA, PROFILE, ELEMENTS, MULTIPLIERS, get_element_icon
 from relic_effects import create_relic_effect
 
@@ -52,7 +52,7 @@ def generate_weapon(level: int, is_epic: bool = False) -> Weapon:
     if not is_epic and random.random() < 0.15:
         is_cursed = True
         curse_effect = random.choice(["hp_drain", "gold_drain"])
-        atk += 10 + (level * 3)
+        atk = int(atk * 1.4)
         
     if element == "Normale": atk = int(atk * 1.2) + 1
     if is_epic: atk = int(atk * 1.5) + 2; name = f"EPICO {name}"
@@ -68,7 +68,7 @@ def generate_armor(level: int, is_epic: bool = False) -> Armor:
     if not is_epic and random.random() < 0.15:
         is_cursed = True
         curse_effect = random.choice(["hp_drain", "gold_drain", "heavy"])
-        defense += 8 + (level * 2)
+        defense = int(defense * 1.4)
 
     if element == "Normale": defense = int(defense * 1.2) + 1
     if is_epic: defense = int(defense * 1.5) + 2; name = f"EPICO {name}"
@@ -86,7 +86,8 @@ def generate_accessory(level: int) -> Accessory:
 
 def generate_potion(level: int) -> Consumable:
     c_data = random.choice(GAME_DATA["consumables"])
-    name, heal, val = c_data["name"], c_data["base_heal"] + (level * 5), c_data["val_base"] + (level * 5)
+    name, heal, val = c_data["name"], c_data["base_heal"] + (level * 5), c_data["val_base"] + (level * 15)
+    val = int(val * 1.5) # Rende le pozioni molto più costose
     return Consumable(f"{name} (Cura {heal})" if heal > 0 else name, val, heal)
 
 def get_random_relic(player):
@@ -109,6 +110,7 @@ class Player:
         self.relic_ids = []
         self.relics = []
         self.relic_effects = []
+        self.max_relics = 4
         self.bonus_atk_relic = 0
         self.statuses: Dict[str, int] = {}
         self.quest_items: List[str] = []
@@ -174,6 +176,33 @@ class Player:
             if r: self.add_relic(r)
 
     def add_relic(self, relic):
+        if len(self.relic_ids) >= self.max_relics:
+            print(f"\n{Colors.YELLOW}Non puoi trasportare più di {self.max_relics} Reliquie. Devi sostituirne una!{Colors.RESET}")
+            for i, r_id in enumerate(self.relic_ids):
+                r_name = next((x["name"] for x in GAME_DATA["relics"] if x["id"] == r_id), r_id)
+                print(f"{i+1}. {r_name}")
+            print(f"0. Rinuncia alla nuova reliquia ({relic['name']})")
+            
+            while True:
+                choice = get_choice("Quale reliquia vuoi scartare? > ")
+                if choice == '0':
+                    print(f"{Colors.CYAN}Hai rinunciato a {relic['name']}.{Colors.RESET}")
+                    return
+                try:
+                    idx = int(choice) - 1
+                    if 0 <= idx < len(self.relic_ids):
+                        old_id = self.relic_ids[idx]
+                        old_name = next((x["name"] for x in GAME_DATA["relics"] if x["id"] == old_id), old_id)
+                        print(f"{Colors.RED}Hai distrutto {old_name} per fare spazio!{Colors.RESET}")
+                        # Remove old
+                        self.relic_ids.pop(idx)
+                        self.relics.pop(idx)
+                        # We cannot easily undo on_equip stats, but we can assume passive bonuses are recalculated dynamically.
+                        self.relic_effects.pop(idx)
+                        break
+                    else: print(f"{Colors.RED}Scelta non valida.{Colors.RESET}")
+                except ValueError: pass
+                
         self.relics.append(relic)
         self.relic_ids.append(relic["id"])
         effect = create_relic_effect(relic["id"])
@@ -237,12 +266,19 @@ class Enemy:
         lvl_scale = floor - 1
         if is_boss:
             self.hp = data["base_hp"] + int(lvl_scale * 8) + random.randint(0, 10)
-            self.atk = data["base_atk"] + int(lvl_scale * 1.5) + random.randint(0, 2)
+            self.atk = data["base_atk"] + int(lvl_scale * 2.5) + random.randint(0, 2)
             self.gold_drop, self.exp_drop = 50 + (floor * 15), 150 + (floor * 20)
         else:
             self.hp = data["base_hp"] + int(lvl_scale * 5) + random.randint(-5, 5)
             self.atk = data["base_atk"] + int(lvl_scale * 1.0) + random.randint(0, 1)
-            self.gold_drop, self.exp_drop = 10 + (floor * 5), 30 + (floor * 10)
+            self.gold_drop, self.exp_drop = max(5, 5 + int(floor * 3.5)), 30 + (floor * 10)
+            
+        if floor >= 10:
+            self.hp = int(self.hp * 1.2)
+            self.atk = int(self.atk * 1.2)
+        if floor >= 20:
+            self.hp = int(self.hp * 1.25)
+            self.atk = int(self.atk * 1.25)
             
         if self.modifier == "hard":
             self.hp = int(self.hp * 1.4)
