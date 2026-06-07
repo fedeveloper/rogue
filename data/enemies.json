@@ -14,7 +14,18 @@
         "Paladino Corrotto": {"element": "Luce", "base_hp": 45, "base_atk": 8, "base_dodge": 5, "base_acc": 15, "lore": "Guerrieri che credono che il dolore sia purificazione."},
         "Costrutto Magico": {"element": "Luce", "base_hp": 35, "base_atk": 10, "base_dodge": 0, "base_acc": 20},
         "Idra di Lava": {"element": "Fuoco", "base_hp": 50, "base_atk": 11, "base_dodge": 5, "base_acc": 10},
-        "Leviatano Abissale": {"element": "Acqua", "base_hp": 60, "base_atk": 10, "base_dodge": 0, "base_acc": 15, "lore": "La personificazione della paura dell'ignoto."}
+        "Leviatano Abissale": {"element": "Acqua", "base_hp": 60, "base_atk": 10, "base_dodge": 0, "base_acc": 15, "lore": "La personificazione della paura dell'ignoto."},
+        
+        "Golem di Sale": {"element": "Terra", "base_hp": 50, "base_atk": 5, "base_dodge": -10, "base_acc": 5, "lore": "Un costrutto creato per assorbire l'umidità, ora assorbe la vita."},
+        "Sirena Abissale": {"element": "Acqua", "base_hp": 25, "base_atk": 6, "base_dodge": 25, "base_acc": 5, "lore": "I suoi canti spingono i viaggiatori a gettarsi nell'oscurità."},
+        "Cultista Cieco": {"element": "Tenebra", "base_hp": 18, "base_atk": 12, "base_dodge": 5, "base_acc": 30, "lore": "Non hanno occhi, ma vedono i tuoi peccati."},
+        "Cacciatore di Streghe": {"element": "Luce", "base_hp": 40, "base_atk": 9, "base_dodge": 10, "base_acc": 10, "lore": "Armato della sua fede cieca."},
+        "Manticora Infetta": {"element": "Fuoco", "base_hp": 35, "base_atk": 8, "base_dodge": 15, "base_acc": 10, "status_inflict": {"type": "poison", "chance": 25, "duration": 3}, "lore": "I suoi aculei bruciano di tossine letali."},
+        "Spirito della Forgia": {"element": "Fuoco", "base_hp": 20, "base_atk": 10, "base_dodge": 10, "base_acc": 10, "lore": "Scorie ardenti che hanno preso vita dopo l'abbandono dei fabbri."},
+        "Arpia del Labirinto": {"element": "Vento", "base_hp": 22, "base_atk": 7, "base_dodge": 30, "base_acc": 5, "lore": "Scende in picchiata dai soffitti invisibili del dedalo."},
+        "Gargoyle di Ossidiana": {"element": "Terra", "base_hp": 45, "base_atk": 6, "base_dodge": 5, "base_acc": 5, "lore": "Pietra nera e tagliente che non si scalfisce facilmente."},
+        "Chierico Corrotto": {"element": "Luce", "base_hp": 30, "base_atk": 10, "base_dodge": 5, "base_acc": 15, "lore": "I suoi miracoli di guarigione sono diventati anatemi."},
+        "Vampiro Purosangue": {"element": "Tenebra", "base_hp": 40, "base_atk": 11, "base_dodge": 20, "base_acc": 15, "status_inflict": {"type": "bleed", "chance": 30, "duration": 3}, "lore": "Aristocratico decaduto che beve solo sangue puro."}
     },
     "bosses": {
         "Re dei Goblin": {
@@ -63,10 +74,63 @@
             "title": "Il Lamento Eterno",
             "lore": "Un turbine di segreti degli Architetti che hanno perso ogni voce."
         },
-        "DIO ANTICO (Piano 30)": {
+        "DIO ANTICO": {
             "element": "Normale", "base_hp": 300, "base_atk": 25, "base_dodge": 20, "base_acc": 30,
             "title": "L'Architetto Rinnegato",
             "lore": "La manifestazione della colpa collettiva di un mondo che voleva riposare."
+        },
+
+        "Il Re Dimenticato": {
+            "element": "Normale", "base_hp": 90, "base_atk": 14, "base_dodge": 5, "base_acc": 15,
+            "title": "L'Esiliato Senza Nome",
+            "lore": "Sovrano di un regno cancellato persino dalla memoria della polvere."
+        },
+        "Golem dell'Eternità": {
+            "element": "Terra", "base_hp": 180, "base_atk": 12, "base_dodge": -10, "base_acc": 10,
+            "title": "Il Guardiano del Tempo",
+            "lore": "Costruito per resistere alla fine dell'universo stesso."
+        },
+        "Leviatano dei Sotterranei": {
+            "element": "Acqua", "base_hp": 110, "base_atk": 13, "base_dodge": 20, "base_acc": 15,
+            "title": "Il Terrore Fluido",
+            "lore": "Il predatore apicale delle falde acquifere di Aethelgard."
+        },
+        "Drago d'Ossidiana": {
+            "element": "Fuoco", "base_hp": 160, "base_atk": 16, "base_dodge": 0, "base_acc": 15,
+            "title": "L'Incubo Vulcanico",
+            "lore": "La sua corazza è spessa e il suo cuore è un nucleo fuso."
+        },
+        "Lich Signore del Gelo": {
+            "element": "Acqua", "base_hp": 140, "base_atk": 17, "base_dodge": 10, "base_acc": 20,
+            "title": "Il Trono di Brina",
+            "lore": "Il suo tocco congela l'anima prima del corpo."
+        },
+        "Araldo Radioso": {
+            "element": "Luce", "base_hp": 125, "base_atk": 15, "base_dodge": 25, "base_acc": 25,
+            "title": "Il Portatore dell'Estasi",
+            "lore": "La sua luce accecante nasconde una crudeltà infinita."
+        },
+        "Sovrano delle Tempeste": {
+            "element": "Vento", "base_hp": 100, "base_atk": 18, "base_dodge": 35, "base_acc": 15,
+            "title": "L'Occhio del Ciclone",
+            "lore": "Governa i venti urlanti che spazzano le stanze superiori."
+        },
+        "Cavaliere dell'Apocalisse": {
+            "element": "Tenebra", "base_hp": 150, "base_atk": 19, "base_dodge": 5, "base_acc": 20,
+            "title": "Il Portatore di Peste",
+            "status_inflict": {"type": "bleed", "chance": 50, "duration": 4},
+            "lore": "Sul suo destriero pallido porta la fine di ogni cosa."
+        },
+        "Madre delle Melme": {
+            "element": "Acqua", "base_hp": 220, "base_atk": 11, "base_dodge": -20, "base_acc": 15,
+            "title": "L'Abominio Tossico",
+            "status_inflict": {"type": "poison", "chance": 60, "duration": 5},
+            "lore": "Da lei nascono tutte le creature infette del labirinto."
+        },
+        "Il Tristo Mietitore": {
+            "element": "Tenebra", "base_hp": 250, "base_atk": 22, "base_dodge": 15, "base_acc": 25,
+            "title": "La Fine Ineluttabile",
+            "lore": "Attendeva qui da molto tempo. Il tuo nome era già scritto."
         }
     }
 }

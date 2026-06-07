@@ -5,31 +5,91 @@
         "L'odore di ozono è pungente. Scariche elettriche percorrono le catene che pendono dal soffitto. Non sei solo in questa tempesta silenziosa.",
         "Radici nere come la pece hanno frantumato le lastre di marmo. La vegetazione qui non cerca luce, ma sangue. Senti il battito di un cuore pesante sotto i tuoi piedi.",
         "L'aria qui è satura di una nebbia che sa di piombo. Le ombre sembrano staccarsi dai muri e danzare ai limiti della tua visione.",
-        "Senti il lamento di mille anime che non hanno mai visto il sole. Il vento qui soffia verso il basso, trascinandoti verso abissi senza nome."
+        "Senti il lamento di mille anime che non hanno mai visto il sole. Il vento qui soffia verso il basso, trascinandoti verso abissi senza nome.",
+        "Il rumore dei tuoi passi è sovrastato dallo stridore di armi arrugginite. La polvere si solleva, rivelando sagome ostili nell'ombra.",
+        "In questa stanza l'aria ha un sapore ferroso. Pozze di sangue annerito macchiano il pavimento, presagio di un imminente massacro.",
+        "Le fiaccole lungo le pareti si accendono di una fiamma violacea non appena varchi la soglia. Sei stato aspettato.",
+        "Ogni angolo di questa sala sembra contorcersi come un essere vivente. Qualcosa ringhia nell'oscurità più profonda.",
+        "Il pavimento è disseminato di teschi sbriciolati. Tra le rovine, una creatura scruta ogni tuo movimento.",
+        "Senti il rumore di passi pesanti che riecheggia in un loop infinito. Qui, la morte è solo l'inizio di una nuova battaglia.",
+        "Una brezza gelida spegne l'unica candela accesa. Senti il respiro roco di un nemico a pochi passi da te.",
+        "La stanza è perfettamente circolare e senza nascondigli. Una trappola mortale dove solo il più forte sopravviverà.",
+        "Ragnatele spesse come funi pendono dal soffitto. Qualcosa si agita in mezzo alla seta appiccicosa.",
+        "Un odore nauseabondo di decomposizione e zolfo ti colpisce. È il dominio di creature che disprezzano la luce."
     ],
     "boss":[
         "Le porte di ossidiana si chiudono con un rombo che scuote le tue fondamenta. Sei al cospetto di una memoria che si rifiuta di morire.",
         "L'aria si fa densa come melassa. Una figura antica, avvolta nei resti di un'autorità dimenticata, si erge dal suo trono di polvere.",
-        "Un silenzio assoluto scende sull'arena. Qui, dove gli elementi si scontrano nel Caos, la tua fine è stata scritta eoni fa."
+        "Un silenzio assoluto scende sull'arena. Qui, dove gli elementi si scontrano nel Caos, la tua fine è stata scritta eoni fa.",
+        "L'architettura stessa di questa sala grida la maestosità di un antico padrone. Un'ombra colossale oscura la tua via.",
+        "Le porte si fondono dietro di te. Non c'è ritirata. Davanti a te si erge una leggenda dimenticata, armata fino ai denti.",
+        "Il silenzio è interrotto da un respiro che fa tremare il terreno. Una divinità caduta rivendica questo abisso come suo.",
+        "Trovi un campo di battaglia disseminato di mille armi spezzate. Il campione imbattuto di Aethelgard ti fissa.",
+        "L'aria è talmente densa di magia oscura che riesci a malapena a muoverti. Un signore degli inferi ti dà il benvenuto.",
+        "Le pareti sono affrescate con le innumerevoli vittorie del colosso che hai di fronte. È tempo di scrivere un finale diverso.",
+        "Un bagliore accecante precede l'apparizione di un'entità perfetta e spietata. Preparati a sfidare l'impossibile.",
+        "Senti il pianto disperato di un mondo morente canalizzato nel corpo della creatura che ti sbarra la strada.",
+        "Corde di energia legano l'essere mostruoso al centro della stanza, ma al tuo arrivo, i legami si spezzano uno ad uno.",
+        "Sali su una piattaforma circondata da un abisso nero. Non è una battaglia, è un'esecuzione. Devi solo decidere di chi."
     ],
     "vendor":[
         "Un uomo senza volto siede tra pile di manufatti impossibili. 'L'oro è solo polvere che brilla,' sussurra, 'ma l'Essenza... l'Essenza è tutto ciò che rimane'.",
-        "L'emporio profuma di incenso e spezie di terre che non esistono più. Il mercante sorride, ma i suoi occhi riflettono la fine del mondo."
+        "L'emporio profuma di incenso e spezie di terre che non esistono più. Il mercante sorride, ma i suoi occhi riflettono la fine del mondo.",
+        "Tra scatoloni di ciarpame e artefatti inestimabili, una figura incappucciata lucida una moneta d'oro con ossessiva lentezza.",
+        "Un mercante con un mantello rattoppato ti saluta calorosamente. 'I tesori dei morti sono ottimi affari per i vivi,' ride a denti stretti.",
+        "La bottega itinerante è illuminata da lanterne fluttuanti. Il mercante non ha occhi, ma sembra valutare la tua anima prima del tuo oro.",
+        "'Vieni, avvicinati. Tutto ha un prezzo nel labirinto, persino la salvezza,' sussurra l'anziano seduto su una cassa d'armi.",
+        "Scaffali improvvisati crollano sotto il peso di reliquie sconosciute. Il padrone della baracca fuma una pipa che sa di polvere da sparo.",
+        "Un figuro ossuto e coperto di gioielli tintinnanti ti fa cenno. 'Ho rubato questo al Diavolo in persona. Che ne dici di comprarlo?'",
+        "L'odore di spezie rare e sudore permea l'aria. Il mercante conta monete di regni che non esistono più.",
+        "'Non mi interessa come sei sopravvissuto fin qui, mi interessa solo quanto sei disposto a spendere per andare avanti,' sentenzia il negoziante.",
+        "In un angolo sicuro, un nano mercante affila coltelli senza sosta. 'Comprali ora o sarai tu a farti tagliare dopo.'",
+        "L'esattore delle ombre sorride sotto un cappello logoro. 'Ho proprio l'elisir che ti salverà la vita. Per ora.'"
     ],
     "treasure":[
         "Un piedistallo d'oro zecchino sorregge un oggetto che sembra vibrare di una luce propria. Le pareti sono coperte di iscrizioni che lodano l'avidità come virtù suprema.",
         "Tra le rovine di un antico altare, giace un forziere avvolto in catene di ferro freddo. Non c'è polvere su di esso, come se il tempo avesse paura di toccarlo.",
-        "Un raggio di luce astrale attraversa il soffitto crollato, illuminando una reliquia dimenticata. Qui il silenzio è così profondo da sembrare solido."
+        "Un raggio di luce astrale attraversa il soffitto crollato, illuminando una reliquia dimenticata. Qui il silenzio è così profondo da sembrare solido.",
+        "La luce riflette su superfici preziose, rivelando un bottino abbandonato da un re senza nome. La tentazione è accecante.",
+        "Un baule massiccio è incastonato in radici secolari. Nessuno è arrivato fin qui prima di te per reclamarne il contenuto.",
+        "Trovi un forziere solitario, illuminato da un raggio di luce divina. Non ci sono guardie, ma senti comunque di rubare.",
+        "Armi e gioielli sono sparpagliati a terra, come se qualcuno avesse dovuto scappare in fretta. Un tesoro facile, a patto di non fare la stessa fine.",
+        "Una reliquia pulsante riposa su un cuscino di velluto tarlato. Ha atteso eoni per un padrone degno.",
+        "Il rumore metallico dei forzieri aperti è l'unica melodia dolce in questo inferno. Le ricchezze abbondano.",
+        "Una statua d'oro massiccio stringe tra le mani un premio prezioso. Devi solo avere il coraggio di prenderlo.",
+        "Scopri una stanza segreta intonsa. Scrigni traboccanti di rarità giacciono coperti da uno strato di polvere millenaria.",
+        "Tra scudi spezzati e corazze arrugginite, l'unico bagliore proviene da un baule perfettamente lucido.",
+        "Un piccolo forziere in legno di mogano emana un'aura calmante. I veri tesori non sono sempre i più sfarzosi."
     ],
     "trap":[
         "La perfezione geometrica di questa stanza è sospetta. Le ombre sulle pareti sembrano muoversi indipendentemente dalla luce. Un passo falso, e la realtà si chiuderà su di te.",
         "Senti il ticchettio di un meccanismo antico, un cuore d'orologio che batte per la tua fine. L'aria è satura di vapori paralizzanti.",
-        "Il pavimento vibra leggermente, come se la stanza stessa stesse trattenendo il respiro in attesa del tuo prossimo movimento."
+        "Il pavimento vibra leggermente, come se la stanza stessa stesse trattenendo il respiro in attesa del tuo prossimo movimento.",
+        "Il rumore sordo di meccanismi che si ricaricano fa scattare i tuoi sensi. Ogni piastrella del pavimento è un potenziale grilletto.",
+        "Dardi avvelenati sbucano dalle pareti come spine. Hai solo una frazione di secondo per trovare un riparo.",
+        "Senti il terreno cedere leggermente sotto il tuo stivale. La stanza inizia a restringersi con un fragore di pietra su pietra.",
+        "Filamenti invisibili tagliano l'aria. Una stanza progettata per fare a pezzi chiunque cammini con leggerezza.",
+        "Soffi di vapore tossico sibilano da fessure nascoste. Devi correre se non vuoi che i tuoi polmoni si sciolgano.",
+        "Una voragine si apre all'improvviso, rivelando lame rotanti nel buio. Questo corridoio è una vera e propria trappola mortale.",
+        "Pendoli affilati calano dal soffitto in un ritmo ipnotico. Sbagliare il tempo significa perdere un arto.",
+        "Lastre di fuoco divampano in modo irregolare, bruciando ogni via di fuga. L'aria calda ti toglie il respiro.",
+        "Un click meccanico fa raggelare il tuo sangue. Gas accecante invade rapidamente l'ambiente.",
+        "Sensori magici scrutano l'area. Attraversare questa sala richiede riflessi sovrumani e molta fortuna."
     ],
     "campfire":[
         "Il fuoco qui emana un profumo di pini di Aethelgard, un odore che pensavi di aver dimenticato. Per un istante, il Labirinto sembra solo un brutto sogno.",
         "Le braci scoppiettano parlando una lingua antica. Ti siedi e senti la stanchezza delle tue vite precedenti scivolare via dalle tue ossa.",
-        "Questo luogo è protetto da un sigillo di Luce che il Caos non può infrangere. Riposa, avventuriero, poiché la discesa sarà ancora lunga."
+        "Questo luogo è protetto da un sigillo di Luce che il Caos non può infrangere. Riposa, avventuriero, poiché la discesa sarà ancora lunga.",
+        "Il crepitio confortante delle braci riporta alla mente ricordi felici. Un raro istante di pace in questo inferno oscuro.",
+        "Trovi un bivacco abbandonato. La legna arde ancora dolcemente, invitandoti a curare le tue ferite e riposare.",
+        "Intorno al fuoco, le ombre non fanno paura, ma sembrano danzare per allietare il tuo spirito.",
+        "L'aria vicino al focolare è stranamente tiepida e rinvigorente. Ogni respiro guarisce una piccola parte del tuo corpo.",
+        "Una piccola forgia portatile giace incustodita vicino al falò. Puoi quasi sentire l'odore del metallo fuso.",
+        "Questo è un santuario inviolabile. Mostri e corruzione non possono avvicinarsi alle fiamme sacre di questo luogo.",
+        "Ti siedi vicino alle ceneri ardenti e chiudi gli occhi. Per qualche minuto, il peso dell'armatura scompare.",
+        "Una tazza di brodo freddo e un ciocco scoppiettante. A volte, le cose più semplici salvano la vita di un eroe.",
+        "Le fiamme bluastre di questo fuoco non bruciano la carne, ma scaldano l'anima e purificano la mente.",
+        "Riposando qui, la tua mente si schiarisce e le strategie per le battaglie future diventano evidenti. La speranza si riaccende."
     ],
     "letters":[
         "Non fidarti della Luce. Qui non illumina, ti segna per i predatori.",
@@ -46,13 +106,33 @@
         "La morte è l'unico modo per tornare all'Essenza. Non averne paura.",
         "Ho visto la fine del tempo. È una stanza vuota con una sedia.",
         "Il Dio Antico sta sognando noi. Se si sveglia, svaniremo.",
-        "Ho finalmente capito. Il Labirinto è uno specchio infranto."
+        "Ho finalmente capito. Il Labirinto è uno specchio infranto.",
+        "Se trovi questo biglietto, non fidarti del mercante con la veste blu. Le sue pozioni sanno di cenere.",
+        "Ho contato 1431 gradini in discesa. Il mio cuore ne ha contati il doppio. Non c'è fondo.",
+        "La spada che ho trovato mi parla. Dice che vuole bere. Ho paura di addormentarmi.",
+        "C'è una luce dorata nella stanza successiva. Non andateci. La luce ha denti affilati.",
+        "Il Dio Antico mi ha sussurrato nel sonno. Chiede perdono.",
+        "Non ascoltare le voci dietro le porte chiuse. Imitano tua madre per farti entrare.",
+        "Ho ucciso il mio compagno per una mela. Non c'era nessuna mela. Sto impazzendo.",
+        "Silas era qui. Ha lasciato un segno rosso sul muro, ma il rosso era troppo brillante per essere sangue.",
+        "Il freddo di Aethelgard non è atmosferico. È l'assenza di speranza. Copriti bene.",
+        "Per chiunque legga: ho nascosto i miei risparmi al piano 15. Che vi siano utili più di quanto lo siano stati a me."
     ],
     "mystery":[
         "Un velo di nebbia cangiante avvolge ogni cosa. I colori sembrano mutare a ogni tuo battito di ciglia, e sussurri senza voce echeggiano tra le pareti invisibili.",
         "L'aria è elettrica e carica di una magia instabile. Qui la realtà sembra sottile come pergamena, pronta a strapparsi per rivelare ciò che si cela oltre.",
         "Entri in un ambiente dove il tempo sembra scorrere a ritroso. Gocce d'acqua risalgono verso il soffitto e le ombre puntano verso fonti di luce inesistenti.",
         "Un silenzio innaturale regna in questa sala. La nebbia magica si avvolge alle tue caviglie come dita gelide, trasmettendoti visioni di futuri possibili e passati dimenticati.",
-        "Le pareti di questa stanza non hanno una forma definita, dissolvendosi in un vuoto stellato che ti fa dubitare della tua stessa consistenza fisica."
+        "Le pareti di questa stanza non hanno una forma definita, dissolvendosi in un vuoto stellato che ti fa dubitare della tua stessa consistenza fisica.",
+        "Lo spazio si distorce, rendendo difficile distinguere il soffitto dal pavimento. Sei entrato in un'anomalia del labirinto.",
+        "Un enigma fluttua nell'aria, composto da lettere incandescenti che mutano lingua ogni istante.",
+        "Specchi fluttuanti mostrano versioni di te che non sono mai esistite. Una di loro ti indica una via segreta.",
+        "Senti la gravità alterarsi. Oggetti fluttuano senza meta e una strana euforia ti pervade.",
+        "Entri in una stanza che è un perfetto duplicato del tuo soggiorno infantile. L'illusione è dolorosamente realistica.",
+        "Una voce eterea risuona nella tua mente, offrendoti scelte che cambieranno il tessuto stesso della tua missione.",
+        "Le ombre qui si muovono all'indietro e il tempo sembra frammentarsi. L'Architetto ha commesso un errore in questo codice.",
+        "Una porta conduce al vuoto stellato. Entrando, cadi verso l'alto prima di atterrare su un pavimento invisibile.",
+        "Un altare senza divinità aspetta di essere pregato o profanato. L'energia potenziale è spaventosa.",
+        "Neve nera cade dolcemente in una stanza senza cielo. Ogni fiocco che tocca il suolo emette una nota musicale."
     ]
 }

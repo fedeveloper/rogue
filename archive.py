@@ -2,7 +2,8 @@ import json
 import os
 from ui import Colors, clear_screen, delay_print, get_choice
 
-BOOKS_FILE = "data/books.json"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BOOKS_FILE = os.path.join(BASE_DIR, "data", "books.json")
 
 def load_books():
     if not os.path.exists(BOOKS_FILE): return {}

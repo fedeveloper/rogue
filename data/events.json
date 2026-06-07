@@ -82,7 +82,7 @@
   "porta_sigillata": {
     "title": "La Porta Sigillata", "text": "Un'imponente porta di ferro blocca una via. Al centro c'è una serratura incrostata.",
     "choices":[
-      {"text": "[RICHIEDE CHIAVE ARRUGGINITA] Apri la porta (Arma Epica + 200 Oro)", "action": "use_quest_item", "requires_item": "chiave_arrugginita", "msg": "La chiave gira a fatica. La porta si apre su un'antica armeria!"},
+      {"text": "[RICHIEDE CHIAVE ARRUGGINITA] Apri la porta (Arma Epica + 200 Oro)", "action": "use_quest_item", "requires_item": "chiave_arrugginita", "msg": "La chiave gira a fatica. La porta si apre su un'antica armeria!", "reward_weapon": true, "reward_gold": 200},
       {"text": "Cerca di sfondarla (Subisci 40 Danni, niente tesoro)", "action": "blood_gold", "msg": "Ti lussi una spalla contro il metallo senza alcun risultato... la frustrazione è palpabile."},
       {"text": "Ignora la porta", "action": "none", "msg": "Non hai tempo da perdere. Tiri dritto."}
     ]
