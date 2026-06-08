@@ -7,44 +7,26 @@ from entities import Player, Enemy
 from rooms import combat_room, mystery_room, event_room, vendor_room, campfire_room, treasure_room, trap_room
 from inventory_menu import show_inventory_menu, show_player_stats
 from archive import show_archive
+from constants import RATIO_GOLD_TO_ESSENCE_ON_DEATH, BOSS_ESSENCE_BONUS, XP_PER_FLOOR, XP_PER_BOSS, INFINITE_MODE_THRESHOLD, INFINITE_MODE_ESSENCE_MULTIPLIER
 
-def evaluate_run(player: Player, floor: int, infinite: bool):
-    print("\n" + ("="*50))
-    if player.hp <= 0:
-        delay_print(f"{Colors.RED}S E I   M O R T O.{Colors.RESET}")
-        player.essence_gathered += int(player.gold * 0.20); PROFILE_MANAGER.stats["total_deaths"] += 1
-    elif player.escaped:
-        delay_print(f"{Colors.GREEN}S E I   F U G G I T O.{Colors.RESET}"); player.essence_gathered += player.gold
-        
-    player.essence_gathered += (player.bosses_killed * 50)
-    
-    pact_multi = 1.0 + sum([GAME_DATA["meta"]["pacts"][p]["bonus"] for p in player.active_pacts])
-    final_essence = int(player.essence_gathered * pact_multi)
-    if infinite and floor > 30: final_essence = int(final_essence * 1.5)
-    
-    PROFILE_MANAGER.essence += final_essence
-    PROFILE_MANAGER.stats["total_gold"] += player.gold
-
-    print(f"Piano raggiunto: {floor} | Boss: {player.bosses_killed}")
-    print(f"Moltiplicatore Maledizioni: {pact_multi}x")
-    print(f"Essenza Astrale ottenuta: {Colors.CYAN}✨ {final_essence}{Colors.RESET}")
-    
+def _update_class_mastery(player: Player, floor: int):
     c_id = player.class_id
-    xp_gained = (floor * 10) + (player.bosses_killed * 50)
-    curr_xp = PROFILE_MANAGER._data["class_xp"].get(c_id, 0) + xp_gained
-    curr_lvl = PROFILE_MANAGER._data["class_lvl"].get(c_id, 1)
-    PROFILE_MANAGER._data["class_xp"][c_id] = curr_xp
+    xp_gained = (floor * XP_PER_FLOOR) + (player.bosses_killed * XP_PER_BOSS)
+    curr_xp = PROFILE_MANAGER.get_class_xp(c_id, 0) + xp_gained
+    curr_lvl = PROFILE_MANAGER.get_class_lvl(c_id, 1)
+    PROFILE_MANAGER.set_class_xp(c_id, curr_xp)
     
     print(f"\n{Colors.MAGENTA}[ Maestria {player.role} ] +{xp_gained} XP (Totale: {curr_xp}){Colors.RESET}")
     reqs = GAME_DATA["meta"]["mastery_xp_requirements"]
     while curr_lvl < 5 and curr_xp >= reqs[str(curr_lvl + 1)]:
-        curr_lvl += 1; PROFILE_MANAGER._data["class_lvl"][c_id] = curr_lvl
+        curr_lvl += 1; PROFILE_MANAGER.set_class_lvl(c_id, curr_lvl)
         print(f"{Colors.YELLOW}*** MAESTRIA SALITA AL LIVELLO {curr_lvl}! ***{Colors.RESET}")
         reward = GAME_DATA["classes"][c_id]["mastery"].get(str(curr_lvl), {"desc": "Nessun bonus disponibile (In Sviluppo).", "type": "null", "id": "null"})
         print(f"Sbloccato: {reward['desc']}")
         if reward.get("type") in ["unlock", "class"] and reward.get("id", "null") != "null" and reward.get("id") not in PROFILE_MANAGER.unlocked_ids:
             PROFILE_MANAGER.unlocked_ids.append(reward.get("id"))
-            
+
+def _check_feats(player: Player, floor: int, infinite: bool):
     print(f"\n{Colors.CYAN}[ Imprese ]{Colors.RESET}")
     max_w_lvl = max([i.level for i in player.inventory if i.type == 'weapon'] + [player.weapon.level])
     if "total_bosses" not in PROFILE_MANAGER.stats: PROFILE_MANAGER.stats["total_bosses"] = 0
@@ -55,12 +37,12 @@ def evaluate_run(player: Player, floor: int, infinite: bool):
         "feat_fabbro": player.run_tracker.get("fusions", 0),
         "feat_vetro": 1 if player.run_tracker.get("no_hit_boss_done") else 0,
         "feat_suicida": 1 if player.run_tracker.get("kill_1_hp_done") else 0,
-        "feat_avaro": player.gold if (player.escaped or (not infinite and floor > 30)) else 0,
+        "feat_avaro": player.gold if (player.escaped or (not infinite and floor > INFINITE_MODE_THRESHOLD)) else 0,
         "feat_genio_elementale": 1 if max_w_lvl >= 5 else 0,
         "feat_sopravvissuto": 1 if floor >= 10 and not player.run_tracker.get("rested") else 0,
         "feat_epuratore": PROFILE_MANAGER.stats["total_bosses"],
         "feat_mani_bucate": player.run_tracker.get("gold_spent", 0),
-        "feat_equilibrista": 1 if player.weapon.element != player.armor.element and player.weapon.element != "Normale" and player.armor.element != "Normale" and (player.escaped or (not infinite and floor > 30)) else 0,
+        "feat_equilibrista": 1 if player.weapon.element != player.armor.element and player.weapon.element != "Normale" and player.armor.element != "Normale" and (player.escaped or (not infinite and floor > INFINITE_MODE_THRESHOLD)) else 0,
         "feat_lama_cristallo": 1 if floor >= 15 and not player.run_tracker.get("weapon_changed") else 0,
         "feat_furia_cieca": 1 if player.run_tracker.get("blind_fury_done") else 0,
         "feat_tiratore_scelto": player.run_tracker.get("super_effective_hits", 0),
@@ -72,8 +54,32 @@ def evaluate_run(player: Player, floor: int, infinite: bool):
         if feats_check.get(f_id, 0) >= f_data["target"]:
             print(f"{Colors.GREEN}Impresa Completata: {f_data['name']}!{Colors.RESET}"); PROFILE_MANAGER.completed_feats.append(f_id)
             if f_data["reward_type"] in ["unlock", "class"] and f_data["reward_id"] not in PROFILE_MANAGER.unlocked_ids: PROFILE_MANAGER.unlocked_ids.append(f_data["reward_id"])
-            elif f_data["reward_type"] == "perk": PROFILE_MANAGER._data["perks"][f_data["reward_id"]] = True
+            elif f_data["reward_type"] == "perk": PROFILE_MANAGER.set_perk(f_data["reward_id"], True)
             elif f_data["reward_type"] == "trait": print(f"Nuovo Tratto Sbloccato: {f_data['name']}")
+
+def evaluate_run(player: Player, floor: int, infinite: bool):
+    print("\n" + ("="*50))
+    if player.hp <= 0:
+        delay_print(f"{Colors.RED}S E I   M O R T O.{Colors.RESET}")
+        player.essence_gathered += int(player.gold * RATIO_GOLD_TO_ESSENCE_ON_DEATH); PROFILE_MANAGER.stats["total_deaths"] += 1
+    elif player.escaped:
+        delay_print(f"{Colors.GREEN}S E I   F U G G I T O.{Colors.RESET}"); player.essence_gathered += player.gold
+        
+    player.essence_gathered += (player.bosses_killed * BOSS_ESSENCE_BONUS)
+    
+    pact_multi = 1.0 + sum([GAME_DATA["meta"]["pacts"][p]["bonus"] for p in player.active_pacts])
+    final_essence = int(player.essence_gathered * pact_multi)
+    if infinite and floor > INFINITE_MODE_THRESHOLD: final_essence = int(final_essence * INFINITE_MODE_ESSENCE_MULTIPLIER)
+    
+    PROFILE_MANAGER.essence += final_essence
+    PROFILE_MANAGER.stats["total_gold"] += player.gold
+
+    print(f"Piano raggiunto: {floor} | Boss: {player.bosses_killed}")
+    print(f"Moltiplicatore Maledizioni: {pact_multi}x")
+    print(f"Essenza Astrale ottenuta: {Colors.CYAN}✨ {final_essence}{Colors.RESET}")
+    
+    _update_class_mastery(player, floor)
+    _check_feats(player, floor, infinite)
 
     print("="*50); PROFILE_MANAGER.save()
     input(f"\n{Colors.CYAN}Premi INVIO per tornare al Menu Principale...{Colors.RESET}")
@@ -101,7 +107,7 @@ def base_camp_fire():
         
         options = []
         for i, (p_key, p_name, p_desc, p_max, p_cost_func, p_bool) in enumerate(perk_defs):
-            lvl = PROFILE_MANAGER._data["perks"].get(p_key, 0)
+            lvl = PROFILE_MANAGER.get_perk(p_key, 0)
             if p_bool:
                 status = "SBLOCCATO" if lvl else "BLOCCATO"
                 cost = "MAX" if lvl else f"✨{p_cost_func(0)}"
@@ -110,31 +116,29 @@ def base_camp_fire():
                 cost = "MAX" if lvl >= p_max else f"✨{p_cost_func(lvl)}"
                 options.append(f"{p_name}[Lv.{lvl}/{p_max}] ({p_desc}) - Costo: {cost}")
                 
-        options.append("Indietro")
-        
         prompt = f"{Colors.CYAN}--- IL FUOCO DELL'ANIMA --- Essenza: ✨{PROFILE_MANAGER.essence}{Colors.RESET}"
-        idx = interactive_menu(options, prompt)
+        idx = interactive_menu(options, prompt, cancellable=True)
         
-        if idx == len(options) - 1: break
+        if idx == -1: break
         
         p_key, p_name, p_desc, p_max, p_cost_func, p_bool = perk_defs[idx]
-        lvl = PROFILE_MANAGER._data["perks"].get(p_key, 0)
+        lvl = PROFILE_MANAGER.get_perk(p_key, 0)
         cost = p_cost_func(0) if p_bool else p_cost_func(lvl)
         
         can_buy = (p_bool and not lvl) or (not p_bool and lvl < p_max)
         if can_buy and PROFILE_MANAGER.essence >= cost:
             PROFILE_MANAGER.essence -= cost
-            if p_bool: PROFILE_MANAGER._data["perks"][p_key] = True
-            else: PROFILE_MANAGER._data["perks"][p_key] = lvl + 1
+            if p_bool: PROFILE_MANAGER.set_perk(p_key, True)
+            else: PROFILE_MANAGER.set_perk(p_key, lvl + 1)
             PROFILE_MANAGER.save()
 
 def base_camp_forge():
     while True:
         clear_screen()
-        has_speziale = PROFILE_MANAGER._data.get("npc_unlocked", {}).get("speziale", False)
-        has_borek = PROFILE_MANAGER._data.get("npc_unlocked", {}).get("borek", False)
-        has_elara = PROFILE_MANAGER._data.get("npc_unlocked", {}).get("elara", False)
-        has_valerius = PROFILE_MANAGER._data.get("npc_unlocked", {}).get("valerius", False)
+        has_speziale = PROFILE_MANAGER.get_npc_unlocked("speziale")
+        has_borek = PROFILE_MANAGER.get_npc_unlocked("borek")
+        has_elara = PROFILE_MANAGER.get_npc_unlocked("elara")
+        has_valerius = PROFILE_MANAGER.get_npc_unlocked("valerius")
         
         options = ["Reliquie"]
         valid_cats = ["relics"]
@@ -152,19 +156,16 @@ def base_camp_forge():
             options.append("Monili")
             valid_cats.append("accessories")
             
-        options.append("Indietro")
-        
         prompt = f"{Colors.CYAN}--- FORGIA DIMENSIONALE --- Essenza: ✨{PROFILE_MANAGER.essence}{Colors.RESET}\nCosa desideri forgiare?"
-        idx = interactive_menu(options, prompt)
+        idx = interactive_menu(options, prompt, cancellable=True)
         
-        if idx == len(options) - 1: break
+        if idx == -1: break
         
         cat = valid_cats[idx]
         cat_name = options[idx]
         base_camp_forge_category(cat, cat_name)
 
 def base_camp_forge_category(cat, cat_name):
-    import time
     while True:
         clear_screen()
         lkd = [i for i in RAW_DATA[cat] if "unlock_id" in i and i["unlock_id"] not in PROFILE_MANAGER.unlocked_ids]
@@ -176,12 +177,10 @@ def base_camp_forge_category(cat, cat_name):
                 cost_str = f"✨{cost}" if cost > 0 else "Sbloccabile tramite Imprese"
                 desc_str = f" ({it.get('desc', '')})" if it.get('desc') else ""
                 options.append(f"{it['name']}{desc_str} - Costo: {cost_str}")
-        options.append("Indietro")
-        
         prompt = f"{Colors.CYAN}--- FORGIA DIMENSIONALE ({cat_name.upper()}) --- Essenza: ✨{PROFILE_MANAGER.essence}{Colors.RESET}"
-        idx = interactive_menu(options, prompt)
+        idx = interactive_menu(options, prompt, cancellable=True)
         
-        if idx == len(options) - 1: break
+        if idx == -1: break
         
         if lkd and 0 <= idx < len(lkd):
             cost = lkd[idx].get("unlock_cost", 0)
@@ -209,12 +208,10 @@ def base_camp_tavern():
         if not lkc: options.append("Tutti reclutati!")
         else:
             for c_id, c in lkc: options.append(f"{c['role']} ({c['desc']}) - Costo: ✨{c.get('unlock_cost', 0)}")
-        options.append("Indietro")
-        
         prompt = f"{Colors.CYAN}--- LA TAVERNA --- Essenza: ✨{PROFILE_MANAGER.essence}{Colors.RESET}"
-        idx = interactive_menu(options, prompt)
+        idx = interactive_menu(options, prompt, cancellable=True)
         
-        if idx == len(options) - 1: break
+        if idx == -1: break
         
         if lkc and 0 <= idx < len(lkc) and PROFILE_MANAGER.essence>=lkc[idx][1].get("unlock_cost", 0) and lkc[idx][1].get("unlock_cost", 0)>0:
             PROFILE_MANAGER.essence-=lkc[idx][1]["unlock_cost"]; PROFILE_MANAGER.unlocked_ids.append(lkc[idx][1]["unlock_id"]); PROFILE_MANAGER.save()
@@ -229,12 +226,11 @@ def base_camp_grimoire():
     print(f"\n{Colors.CYAN}--- MAESTRIA CLASSI ---{Colors.RESET}")
     for c_id, c in RAW_DATA["classes"].items():
         if c.get("unlocked_by_default") or c_id in PROFILE_MANAGER.unlocked_ids or c.get("unlock_id") in PROFILE_MANAGER.unlocked_ids:
-            print(f"{c['role']}: Lv.{PROFILE_MANAGER._data['class_lvl'].get(c_id, 1)} (XP: {PROFILE_MANAGER._data['class_xp'].get(c_id, 0)})")
+            print(f"{c['role']}: Lv.{PROFILE_MANAGER.get_class_lvl(c_id, 1)} (XP: {PROFILE_MANAGER.get_class_xp(c_id, 0)})")
     input("\nPremi INVIO per tornare indietro...")
 
 
 def generate_npc_shop(npc_name, title, desc, item_cat, default_items, essence_key):
-    import time
     while True:
         clear_screen()
         
@@ -248,12 +244,10 @@ def generate_npc_shop(npc_name, title, desc, item_cat, default_items, essence_ke
         options = []
         for it in shop_items:
             options.append(f"Compra {it[0]} (✨{it[1]})")
-        options.append("Indietro")
-        
         prompt = f"{Colors.GREEN}--- {title} ---{Colors.RESET}\nEssenza: ✨{PROFILE_MANAGER.essence}\n\n{desc}"
         
-        idx = interactive_menu(options, prompt)
-        if idx == len(options) - 1: break
+        idx = interactive_menu(options, prompt, cancellable=True)
+        if idx == -1: break
         
         it_name = shop_items[idx][0]
         cost = shop_items[idx][1]
@@ -287,10 +281,10 @@ def base_camp_valerius():
 def base_camp():
     while True:
         clear_screen()
-        has_speziale = PROFILE_MANAGER._data.get("npc_unlocked", {}).get("speziale", False)
-        has_borek = PROFILE_MANAGER._data.get("npc_unlocked", {}).get("borek", False)
-        has_elara = PROFILE_MANAGER._data.get("npc_unlocked", {}).get("elara", False)
-        has_valerius = PROFILE_MANAGER._data.get("npc_unlocked", {}).get("valerius", False)
+        has_speziale = PROFILE_MANAGER.get_npc_unlocked("speziale")
+        has_borek = PROFILE_MANAGER.get_npc_unlocked("borek")
+        has_elara = PROFILE_MANAGER.get_npc_unlocked("elara")
+        has_valerius = PROFILE_MANAGER.get_npc_unlocked("valerius")
         
         options = [
             "Il Fuoco dell'Anima (Potenziamenti Base)",
@@ -333,10 +327,10 @@ def base_camp():
             elif "Fucina di Elara" in opt: base_camp_elara()
             elif "Laboratorio di Valerius" in opt: base_camp_valerius()
 
-def play_game(infinite_mode=False):
-    avail_c = {c_id: c for c_id, c in GAME_DATA["classes"].items() if c.get("unlocked_by_default", False) or c_id in PROFILE_MANAGER._data.get("unlocked_ids", [])}
+def _hero_selection() -> tuple[str, str, list[str]]:
+    avail_c = {c_id: c for c_id, c in GAME_DATA["classes"].items() if c.get("unlocked_by_default", False) or c_id in PROFILE_MANAGER.unlocked_ids}
     avail_c_list = list(avail_c.items())
-    options = [f"{Colors.BOLD}{c['role'].upper()}{Colors.RESET} (Lv. Maestria: {PROFILE_MANAGER._data['class_lvl'].get(c_id, 1)})" for c_id, c in avail_c_list]
+    options = [f"{Colors.BOLD}{c['role'].upper()}{Colors.RESET} (Lv. Maestria: {PROFILE_MANAGER.get_class_lvl(c_id, 1)})" for c_id, c in avail_c_list]
     
     idx = interactive_menu(options, f"\n{Colors.CYAN}Scegli il tuo Eroe:{Colors.RESET}")
     c_choice = avail_c_list[idx][0]
@@ -346,7 +340,7 @@ def play_game(infinite_mode=False):
         ul = True
         if t["unlock_req"] == "deaths_10" and PROFILE_MANAGER.stats["total_deaths"] < 10: ul = False
         elif t["unlock_req"] == "gold_5000" and PROFILE_MANAGER.stats["total_gold"] < 5000: ul = False
-        elif t["unlock_req"] not in ["none", "deaths_10", "gold_5000"] and t["unlock_req"] not in PROFILE_MANAGER._data.get("completed_feats", []) and t["unlock_req"] not in PROFILE_MANAGER._data.get("unlocked_ids", []): ul = False
+        elif t["unlock_req"] not in ["none", "deaths_10", "gold_5000"] and t["unlock_req"] not in PROFILE_MANAGER.completed_feats and t["unlock_req"] not in PROFILE_MANAGER.unlocked_ids: ul = False
         if ul: avail_t_list.append((t_id, t))
         
     if len(avail_t_list) == 1:
@@ -364,6 +358,58 @@ def play_game(infinite_mode=False):
             ans_idx = interactive_menu(["No", "Sì"], prompt)
             if ans_idx == 1: active_pacts.append(p_id)
 
+    return c_choice, t_choice, active_pacts
+
+def _generate_doors(floor: int, step: int, weights_def: dict, cooldowns_def: dict, room_cooldowns: dict, active_pacts: list) -> list[dict]:
+    for k in room_cooldowns:
+        if room_cooldowns[k] > 0: room_cooldowns[k] -= 1
+    
+    if step == 5:
+        return [{"type": "boss", "enemy": Enemy(floor, True, active_pacts)}]
+    
+    doors = []
+    while True:
+        avail_rooms, avail_weights = [], []
+        
+        for rt, w in weights_def.items():
+            if room_cooldowns.get(rt, 0) <= 0:
+                avail_rooms.append(rt)
+                avail_weights.append(w)
+        
+        if not avail_rooms: 
+            avail_rooms, avail_weights = ["combat"], [100]
+
+        t1 = random.choices(avail_rooms, weights=avail_weights)[0]
+        t2 = random.choices(avail_rooms, weights=avail_weights)[0]
+        
+        if t1 == t2: continue 
+        combo = {t1, t2}
+        if combo == {"trap", "treasure"} or combo == {"trap", "vendor"} or combo == {"mystery", "mystery"}: 
+            continue 
+        break
+
+    room_cooldowns[t1] = cooldowns_def.get(t1, 0) + 1
+    room_cooldowns[t2] = cooldowns_def.get(t2, 0) + 1
+
+    for rt in [t1, t2]:
+        d = {"type": rt}
+        if rt == "combat": d["enemy"] = Enemy(floor, False, active_pacts)
+        if rt == "event":
+            avail_events = [k for k in GAME_DATA["events"].keys() if not (
+                (k == "speziale_prigioniero" and PROFILE_MANAGER.get_npc_unlocked("speziale")) or
+                (k == "borek_prigioniero" and PROFILE_MANAGER.get_npc_unlocked("borek")) or
+                (k == "elara_prigioniera" and PROFILE_MANAGER.get_npc_unlocked("elara")) or
+                (k == "valerius_prigioniero" and PROFILE_MANAGER.get_npc_unlocked("valerius"))
+            )]
+            if not avail_events: avail_events = list(GAME_DATA["events"].keys())
+            d["event_id"] = random.choice(avail_events)
+        doors.append(d)
+        
+    return doors
+
+def play_game(infinite_mode=False):
+    c_choice, t_choice, active_pacts = _hero_selection()
+
     player = Player(c_choice, t_choice, active_pacts)
     delay_print(f"\nLe porte si chiudono alle tue spalle, {player.role}.", 0.03); time.sleep(1)
     
@@ -375,7 +421,7 @@ def play_game(infinite_mode=False):
     
     floor = 1
     while player.hp > 0 and not player.escaped:
-        if not infinite_mode and floor > 30:
+        if not infinite_mode and floor > INFINITE_MODE_THRESHOLD:
             clear_screen()
             print(f"{Colors.YELLOW}{Colors.BOLD}="*50); delay_print("H A I   V I N T O ! ! !"); print("="*50 + Colors.RESET)
             PROFILE_MANAGER.won_normal = True; player.essence_gathered += 1000; break
@@ -383,7 +429,7 @@ def play_game(infinite_mode=False):
         clear_screen()
         delay_print(f"\n{Colors.MAGENTA}{Colors.BOLD}==== PIANO {floor} ===={Colors.RESET}", 0.05)
         
-        sp_lvl = PROFILE_MANAGER._data["perks"].get("speranza_luce_lvl", 0)
+        sp_lvl = PROFILE_MANAGER.get_perk("speranza_luce_lvl", 0)
         if sp_lvl > 0 and player.hp < player.max_hp:
             player.heal(sp_lvl)
             print(f"{Colors.GREEN}La Speranza di Luce ti rigenera {sp_lvl} HP. ({player.hp}/{player.max_hp}){Colors.RESET}")
@@ -393,48 +439,7 @@ def play_game(infinite_mode=False):
         for step in range(1, 6):
             if player.hp <= 0 or player.escaped: break
             
-            for k in room_cooldowns:
-                if room_cooldowns[k] > 0: room_cooldowns[k] -= 1
-            
-            if step == 5: doors =[{"type": "boss", "enemy": Enemy(floor, True, active_pacts)}]
-            else:
-                doors =[]
-                while True:
-                    avail_rooms, avail_weights = [],[]
-                    
-                    for rt, w in weights_def.items():
-                        if room_cooldowns.get(rt, 0) <= 0:
-                            avail_rooms.append(rt)
-                            avail_weights.append(w)
-                    
-                    if not avail_rooms: 
-                        avail_rooms, avail_weights = ["combat"],[100]
-
-                    t1 = random.choices(avail_rooms, weights=avail_weights)[0]
-                    t2 = random.choices(avail_rooms, weights=avail_weights)[0]
-                    
-                    if t1 == t2: continue 
-                    combo = {t1, t2}
-                    if combo == {"trap", "treasure"} or combo == {"trap", "vendor"} or combo == {"mystery", "mystery"}: 
-                        continue 
-                    break
-
-                room_cooldowns[t1] = cooldowns_def.get(t1, 0) + 1
-                room_cooldowns[t2] = cooldowns_def.get(t2, 0) + 1
-
-                for rt in[t1, t2]:
-                    d = {"type": rt}
-                    if rt == "combat": d["enemy"] = Enemy(floor, False, active_pacts)
-                    if rt == "event":
-                        avail_events = [k for k in GAME_DATA["events"].keys() if not (
-                            (k == "speziale_prigioniero" and PROFILE_MANAGER._data.get("npc_unlocked", {}).get("speziale", False)) or
-                            (k == "borek_prigioniero" and PROFILE_MANAGER._data.get("npc_unlocked", {}).get("borek", False)) or
-                            (k == "elara_prigioniera" and PROFILE_MANAGER._data.get("npc_unlocked", {}).get("elara", False)) or
-                            (k == "valerius_prigioniero" and PROFILE_MANAGER._data.get("npc_unlocked", {}).get("valerius", False))
-                        )]
-                        if not avail_events: avail_events = list(GAME_DATA["events"].keys()) # Fallback
-                        d["event_id"] = random.choice(avail_events)
-                    doors.append(d)
+            doors = _generate_doors(floor, step, weights_def, cooldowns_def, room_cooldowns, active_pacts)
             
             while True:
                 clear_screen()
@@ -443,7 +448,7 @@ def play_game(infinite_mode=False):
                 options = []
                 for i, d in enumerate(doors):
                     t_str = d["type"].upper()
-                    if PROFILE_MANAGER._data["perks"]["sesto_senso"]:
+                    if PROFILE_MANAGER.get_perk("sesto_senso", False):
                         if d["type"] == "combat": t_str += f" ({d['enemy'].name} {get_element_icon(d['enemy'].element)})"
                         elif d["type"] == "event": t_str += f" ({GAME_DATA['events'][d['event_id']]['title']})"
                         elif d["type"] == "mystery": t_str += f" ({Colors.MAGENTA}Aura illeggibile{Colors.RESET})"
@@ -490,8 +495,8 @@ def main():
         while True:
             clear_screen()
             delay_print(f"{Colors.MAGENTA}{Colors.BOLD}=== IL LABIRINTO DEGLI ELEMENTI E DEL CAOS ==={Colors.RESET}", 0.01)
-            options = ["Inizia Run (Standard - 30 Piani)", "Campo Base (Potenziamenti, Forgia, Taverna)"]
-            if PROFILE_MANAGER.won_normal: options.append(f"{Colors.RED}Inizia Run Infinita (Oltre i 30 Piani){Colors.RESET}")
+            options = [f"Inizia Run (Standard - {INFINITE_MODE_THRESHOLD} Piani)", "Campo Base (Potenziamenti, Forgia, Taverna)"]
+            if PROFILE_MANAGER.won_normal: options.append(f"{Colors.RED}Inizia Run Infinita (Oltre i {INFINITE_MODE_THRESHOLD} Piani){Colors.RESET}")
             options.append("Esci dal gioco")
             
             idx = interactive_menu(options, f"\n{Colors.CYAN}[ MENU PRINCIPALE ]{Colors.RESET}")

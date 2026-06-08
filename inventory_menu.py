@@ -1,9 +1,95 @@
-import time
 import random
 from ui import Colors, clear_screen, get_choice, interactive_menu
 from data_manager import PROFILE_MANAGER, get_element_icon
 from entities import generate_random_element
 from archive import is_book_unlocked
+
+def _use_consumable(player, item, real_idx, in_combat) -> str:
+    cat = item.category
+    res = ""
+    if cat == "heal":
+        heal_amt = item.heal_amount
+        actual_heal = player.heal(heal_amt)
+        print(f"{Colors.GREEN}\nHai usato {item.display_name}! Recuperati {actual_heal} HP.{Colors.RESET}")
+        res = "turn_used" if in_combat else ""
+    elif cat == "smoke_bomb":
+        if not in_combat:
+            print(f"{Colors.YELLOW}\nPuoi usare questo oggetto solo in combattimento!{Colors.RESET}")
+            input("Premi INVIO...")
+            return ""
+        print(f"{Colors.YELLOW}\nHai lanciato una Bomba Fumogena! Scappi dal combattimento!{Colors.RESET}")
+        res = "smoke_bomb"
+    elif cat == "chaos_tome":
+        if not in_combat:
+            print(f"{Colors.YELLOW}\nPuoi usare questo oggetto solo in combattimento!{Colors.RESET}")
+            input("Premi INVIO...")
+            return ""
+        print(f"{Colors.MAGENTA}\nLeggi le antiche rune... Il Caos distrugge i nemici!{Colors.RESET}")
+        res = "turn_used"
+    elif cat == "holy_water":
+        print(f"{Colors.YELLOW}\nBevi l'Acqua Santa...{Colors.RESET}")
+        purified = False
+        for eq in [player.weapon, player.armor, player.accessory]:
+            if eq and getattr(eq, 'is_cursed', False):
+                eq.is_cursed = False
+                eq.curse_effect = ""
+                eq.name = eq.name.replace("Maledetto", "Purificato")
+                eq.display_name = f"{Colors.YELLOW}{eq.name}{Colors.RESET}"
+                purified = True
+        if purified:
+            print(f"{Colors.GREEN}Tutte le Maledizioni sul tuo equipaggiamento sono state purificate!{Colors.RESET}")
+        else:
+            print("Non avevi equipaggiamento maledetto.")
+        res = "turn_used" if in_combat else ""
+    elif cat == "chaos_vial":
+        print(f"{Colors.MAGENTA}\nBevi la Fiala del Caos...{Colors.RESET}")
+        eff = random.choice(["heal_full", "dmg", "gold", "max_hp", "element"])
+        if eff == "heal_full":
+            player.hp = player.max_hp
+            print(f"{Colors.GREEN}Sei completamente curato!{Colors.RESET}")
+        elif eff == "dmg":
+            dmg = int(player.max_hp * 0.3)
+            alive = player.take_damage(dmg)
+            print(f"{Colors.RED}Il liquido ti brucia dall'interno! Subisci {dmg} danni.{Colors.RESET}")
+            if not alive: player.hp = 1
+        elif eff == "gold":
+            g = random.randint(50, 150)
+            player.gold += g
+            print(f"{Colors.YELLOW}La fiala si trasforma in {g} monete d'oro!{Colors.RESET}")
+        elif eff == "max_hp":
+            player.max_hp += 10
+            player.hp += 10
+            print(f"{Colors.GREEN}Il tuo corpo si fortifica! +10 HP Max.{Colors.RESET}")
+        elif eff == "element":
+            new_el = generate_random_element()
+            player.weapon.element = new_el
+            print(f"{Colors.CYAN}La tua arma si impregna dell'elemento {new_el}!{Colors.RESET}")
+        res = "fiala_caos" if in_combat else ""
+    elif cat == "antidote":
+        print(f"{Colors.GREEN}\nBevi l'Antidoto Universale! Tutti gli status alterati svaniscono.{Colors.RESET}")
+        if hasattr(player, 'statuses'): player.statuses.clear()
+        actual_heal = player.heal(10)
+        if actual_heal > 0: print(f"{Colors.GREEN}Recuperati {actual_heal} HP.{Colors.RESET}")
+        res = "turn_used" if in_combat else ""
+    elif cat == "whetstone":
+        print(f"{Colors.CYAN}\nAffili l'arma: {player.weapon.display_name} ottiene +5 ATK permanente!{Colors.RESET}")
+        player.weapon.atk += 5
+        res = "turn_used" if in_combat else ""
+    elif cat == "accuracy_potion":
+        if not in_combat:
+            print(f"{Colors.YELLOW}\nPuoi usare questo oggetto solo in combattimento!{Colors.RESET}")
+            input("Premi INVIO...")
+            return ""
+        print(f"{Colors.CYAN}\nBevi il Filtro Preciso! I tuoi colpi non mancheranno più!{Colors.RESET}")
+        player.base_acc += 999  # Temporary boost for the fight
+        res = "turn_used"
+
+    consume_item = True
+    for r in player.relic_effects:
+        if not r.on_item_use(player, item.name): consume_item = False
+    if consume_item: player.inventory.pop(real_idx)
+    input("Premi INVIO...")
+    return res
 
 def show_inventory_menu(player, in_combat=False) -> str:
     while True:
@@ -51,89 +137,8 @@ def show_inventory_menu(player, in_combat=False) -> str:
             real_idx, item, _ = display_items[idx]
             
             if item.type == "consumable":
-                if item.category == "heal":
-                    heal_amt = item.heal_amount
-                    if PROFILE_MANAGER._data["perks"].get("metabolismo"): heal_amt = int(heal_amt * 1.5)
-                    actual_heal = player.heal(heal_amt)
-                    print(f"{Colors.GREEN}\nHai usato {item.display_name}! Recuperati {actual_heal} HP.{Colors.RESET}")
-                    player.inventory.pop(real_idx)
-                    input("Premi INVIO...")
-                    if in_combat: return "turn_used"
-                elif item.category == "smoke_bomb":
-                    if not in_combat:
-                        print(f"{Colors.YELLOW}\nPuoi usare questo oggetto solo in combattimento!{Colors.RESET}")
-                        input("Premi INVIO...")
-                    else:
-                        print(f"{Colors.YELLOW}\nHai lanciato una Bomba Fumogena! Scappi dal combattimento!{Colors.RESET}")
-                        player.inventory.pop(real_idx)
-                        input("Premi INVIO...")
-                        return "fled"
-                elif item.category == "chaos_tome":
-                    if not in_combat:
-                        print(f"{Colors.YELLOW}\nPuoi usare questo oggetto solo in combattimento!{Colors.RESET}")
-                        input("Premi INVIO...")
-                    else:
-                        print(f"{Colors.MAGENTA}\nLeggi le antiche rune... Il Caos distrugge i nemici!{Colors.RESET}")
-                        player.inventory.pop(real_idx)
-                        input("Premi INVIO...")
-                        return "chaos_tome"
-                elif item.category == "holy_water":
-                    print(f"{Colors.YELLOW}\nBevi l'Acqua Santa...{Colors.RESET}")
-                    purified = False
-                    for eq in [player.weapon, player.armor, player.accessory]:
-                        if eq and getattr(eq, 'is_cursed', False):
-                            eq.is_cursed = False
-                            eq.curse_effect = ""
-                            eq.name = eq.name.replace("Maledetto", "Purificato")
-                            eq.display_name = f"{Colors.YELLOW}{eq.name}{Colors.RESET}"
-                            purified = True
-                    if purified:
-                        print(f"{Colors.GREEN}Tutte le Maledizioni sul tuo equipaggiamento sono state purificate!{Colors.RESET}")
-                    else:
-                        print("Non avevi equipaggiamento maledetto.")
-                    player.inventory.pop(real_idx)
-                    input("Premi INVIO...")
-                    if in_combat: return "turn_used"
-                elif item.category == "chaos_vial":
-                    print(f"{Colors.MAGENTA}\nBevi la Fiala del Caos...{Colors.RESET}")
-                    eff = random.choice(["heal_full", "dmg", "gold", "max_hp", "element"])
-                    if eff == "heal_full":
-                        player.hp = player.max_hp
-                        print(f"{Colors.GREEN}Sei completamente curato!{Colors.RESET}")
-                    elif eff == "dmg":
-                        dmg = int(player.max_hp * 0.3)
-                        player.hp -= dmg
-                        print(f"{Colors.RED}Il liquido ti brucia dall'interno! Subisci {dmg} danni.{Colors.RESET}")
-                        if player.hp <= 0: player.hp = 1
-                    elif eff == "gold":
-                        g = random.randint(50, 150)
-                        player.gold += g
-                        print(f"{Colors.YELLOW}La fiala si trasforma in {g} monete d'oro!{Colors.RESET}")
-                    elif eff == "max_hp":
-                        player.max_hp += 10
-                        player.hp += 10
-                        print(f"{Colors.GREEN}Il tuo corpo si fortifica! +10 HP Max.{Colors.RESET}")
-                    elif eff == "element":
-                        new_el = generate_random_element()
-                        player.weapon.element = new_el
-                        print(f"{Colors.CYAN}La tua arma si impregna dell'elemento {new_el}!{Colors.RESET}")
-                    player.inventory.pop(real_idx)
-                    input("Premi INVIO...")
-                    if in_combat: return "turn_used"
-                elif item.category == "antidote":
-                    print(f"{Colors.GREEN}\nBevi l'Antidoto Universale! Tutti gli status alterati svaniscono.{Colors.RESET}")
-                    if hasattr(player, 'statuses'): player.statuses.clear()
-                    actual_heal = player.heal(10)
-                    if actual_heal > 0: print(f"{Colors.GREEN}Recuperati {actual_heal} HP.{Colors.RESET}")
-                    player.inventory.pop(real_idx)
-                    input("Premi INVIO...")
-                    if in_combat: return "turn_used"
-                elif item.category == "whetstone":
-                    print(f"{Colors.CYAN}\nAffili l'arma: {player.weapon.display_name} ottiene +5 ATK permanente!{Colors.RESET}")
-                    player.weapon.atk += 5
-                    player.inventory.pop(real_idx)
-                    input("Premi INVIO...")
-                    if in_combat: return "turn_used"
+                res = _use_consumable(player, item, real_idx, in_combat)
+                if res: return res
             
             elif item.type == "weapon":
                 old_w = player.weapon

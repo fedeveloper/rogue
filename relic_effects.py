@@ -1,5 +1,5 @@
 import random
-from ui import Colors
+from ui import Colors, display_msg
 
 class RelicEffect:
     def __init__(self, relic_id=""):
@@ -52,8 +52,11 @@ class RelicEffect:
     def get_escape_modifier(self) -> int:
         return 0
 
-    def modify_multiplier(self, multiplier: float) -> float:
+    def modify_multiplier(self, multiplier: float, is_defense: bool = False) -> float:
         return multiplier
+
+    def modify_trap_damage(self, amount: int) -> int:
+        return amount
 
     def modify_room_weights(self, weights: dict):
         pass
@@ -62,11 +65,11 @@ class RelicEffect:
 
 class ArtiglioVampiro(RelicEffect):
     def on_attack_landed(self, session, multiplier):
-        session.player.hp = min(session.player.max_hp, session.player.hp + 5)
-        print(f"{Colors.RED}Artiglio Vampirico ti cura 5 HP!{Colors.RESET}")
+        session.player.heal(5)
+        display_msg(f"{Colors.RED}Artiglio Vampirico ti cura 5 HP!{Colors.RESET}")
 
 class LentePrismatica(RelicEffect):
-    def modify_multiplier(self, multiplier: float) -> float:
+    def modify_multiplier(self, multiplier: float, is_defense: bool = False) -> float:
         if multiplier > 1.0: return 2.0
         elif multiplier < 1.0: return 0.5
         return multiplier
@@ -79,7 +82,7 @@ class ScudoCristallo(RelicEffect):
         self.active = True
     def on_take_damage(self, session, dmg_taken, en_multiplier):
         if self.active and dmg_taken > 0:
-            print(f"{Colors.CYAN}<- {session.enemy.name} ti colpisce... Ma lo Scudo di Cristallo assorbe il danno!{Colors.RESET}")
+            display_msg(f"{Colors.CYAN}<- {session.enemy.name} ti colpisce... Ma lo Scudo di Cristallo assorbe il danno!{Colors.RESET}")
             self.active = False
             return 0
         return dmg_taken
@@ -110,8 +113,8 @@ class OcchioCacciatore(RelicEffect):
 class CuoreTroll(RelicEffect):
     def on_enemy_death(self, session):
         session.player.max_hp += 2
-        session.player.hp += 2
-        print(f"{Colors.GREEN}Il Cuore di Troll pulsa: +2 HP Massimi!{Colors.RESET}")
+        session.player.heal(2)
+        display_msg(f"{Colors.GREEN}Il Cuore di Troll pulsa: +2 HP Massimi!{Colors.RESET}")
 
 class TomoConoscenza(RelicEffect):
     def get_exp_modifier(self): return 0.3
@@ -128,11 +131,10 @@ class LamaSangue(RelicEffect):
     def on_unequip(self, player):
         player.bonus_atk_relic -= 10
     def on_before_attack(self, session):
-        session.player.hp -= 3
-        print(f"{Colors.RED}La Lama di Sangue si nutre di te! Subisci 3 danni.{Colors.RESET}")
-        if session.player.hp <= 0:
-            print(f"\n{Colors.RED}{Colors.BOLD}Sei stato consumato dalla tua stessa arma...{Colors.RESET}")
-            input("\nPremi INVIO per continuare...")
+        display_msg(f"{Colors.RED}La Lama di Sangue si nutre di te! Subisci 3 danni.{Colors.RESET}")
+        if not session.player.take_damage(3):
+            display_msg(f"\n{Colors.RED}{Colors.BOLD}Sei stato consumato dalla tua stessa arma...{Colors.RESET}")
+            # Rimuoviamo input, la gestione morte è nel main loop
             return False
         return True
 
@@ -145,8 +147,8 @@ class CoronaReFolle(RelicEffect):
 
 class AnelloVampiroMax(RelicEffect):
     def on_attack_landed(self, session, multiplier):
-        session.player.hp = min(session.player.max_hp, session.player.hp + 2)
-        print(f"{Colors.RED}L'Anello Vampirico assorbe 2 HP!{Colors.RESET}")
+        session.player.heal(2)
+        display_msg(f"{Colors.RED}L'Anello Vampirico assorbe 2 HP!{Colors.RESET}")
 
 class ClessidraDestino(RelicEffect):
     def on_combat_start(self, session):
@@ -156,19 +158,19 @@ class ArmaturaSpilli(RelicEffect):
     def on_take_damage(self, session, dmg_taken, en_multiplier):
         if dmg_taken > 0:
             session.enemy.hp -= 3
-            print(f"{Colors.YELLOW}Riflessi 3 danni a {session.enemy.name}!{Colors.RESET}")
+            display_msg(f"{Colors.YELLOW}Riflessi 3 danni a {session.enemy.name}!{Colors.RESET}")
         return dmg_taken
 
 class PergamenaOro(RelicEffect):
     def on_gold_gain(self, player, amount):
-        player.hp = min(player.max_hp, player.hp + 2)
-        print(f"{Colors.GREEN}La Pergamena d'Oro ti guarisce di 2 HP!{Colors.RESET}")
+        player.heal(2)
+        display_msg(f"{Colors.GREEN}La Pergamena d'Oro ti guarisce di 2 HP!{Colors.RESET}")
         return amount
 
 class CampanellaSpiriti(RelicEffect):
     def on_take_damage(self, session, dmg_taken, en_multiplier):
         if random.random() < 0.15:
-            print(f"{Colors.CYAN}La Campanella degli Spiriti rintocca... L'attacco ti passa attraverso!{Colors.RESET}")
+            display_msg(f"{Colors.CYAN}La Campanella degli Spiriti rintocca... L'attacco ti passa attraverso!{Colors.RESET}")
             return 0
         return dmg_taken
 
@@ -183,21 +185,21 @@ class ContrattoDemoniaco(RelicEffect):
     def on_attack(self, session, dmg_dealt, multiplier, eff_text):
         return dmg_dealt * 2, eff_text
     def on_enemy_death(self, session):
-        session.player.hp -= 5
-        print(f"{Colors.RED}Il Contratto Demoniaco esige un tributo di sangue (5 HP)...{Colors.RESET}")
+        session.player.take_damage(5)
+        display_msg(f"{Colors.RED}Il Contratto Demoniaco esige un tributo di sangue (5 HP)...{Colors.RESET}")
 
 class PozioneInfinita(RelicEffect):
     def on_item_use(self, player, item_name):
         if "Pozione" in item_name or "Fiala" in item_name:
             if random.random() < 0.25:
-                print(f"{Colors.CYAN}Pozione Senza Fondo: La fiala si riempie di nuovo!{Colors.RESET}")
+                display_msg(f"{Colors.CYAN}Pozione Senza Fondo: La fiala si riempie di nuovo!{Colors.RESET}")
                 return False
         return True
 
 class CuoreDrago(RelicEffect):
     def on_equip(self, player):
         player.max_hp += 50
-        player.hp += 50
+        player.heal(50)
     def on_unequip(self, player):
         player.max_hp -= 50
         player.hp = min(player.hp, player.max_hp)
@@ -213,20 +215,38 @@ class SpiritoSpada(RelicEffect):
 class TeschioSangue(RelicEffect):
     def on_enemy_death(self, session):
         session.player.max_hp += 1
-        session.player.hp += 1
-        print(f"{Colors.RED}Il Teschio di Sangue si nutre della morte: +1 HP Massimo!{Colors.RESET}")
+        session.player.heal(1)
+        display_msg(f"{Colors.RED}Il Teschio di Sangue si nutre della morte: +1 HP Massimo!{Colors.RESET}")
 
 class PietraFilosofale(RelicEffect):
     def on_enemy_death(self, session):
         if random.random() < 0.20:
             session.player.gold += session.enemy.exp_drop
-            print(f"{Colors.YELLOW}La Pietra Filosofale trasforma l'XP in {session.enemy.exp_drop} Oro!{Colors.RESET}")
+            display_msg(f"{Colors.YELLOW}La Pietra Filosofale trasforma l'XP in {session.enemy.exp_drop} Oro!{Colors.RESET}")
             session.enemy.exp_drop = 0
 
 class BussolaDimensionale(RelicEffect):
     def modify_room_weights(self, weights: dict):
         if "treasure" in weights: weights["treasure"] += 15.0
         if "mystery" in weights: weights["mystery"] += 15.0
+
+class SpallacciRovo(RelicEffect):
+    def on_take_damage(self, session, dmg_taken, en_multiplier):
+        if dmg_taken > 0:
+            session.enemy.hp -= 5
+            display_msg(f"{Colors.YELLOW}Gli Spallacci di Rovo trafiggono {session.enemy.name} per 5 Danni Puri!{Colors.RESET}")
+        return dmg_taken
+
+class SigilloElementale(RelicEffect):
+    def modify_multiplier(self, multiplier: float, is_defense: bool = False) -> float:
+        if is_defense and multiplier > 1.0:
+            return 1.0
+        return multiplier
+
+class MascheraAntigas(RelicEffect):
+    def modify_trap_damage(self, amount: int) -> int:
+        display_msg(f"{Colors.CYAN}La Maschera Antigas filtra le tossine e disinnesca il pericolo! Danno annullato.{Colors.RESET}")
+        return 0
 
 
 RELIC_REGISTRY = {
@@ -256,7 +276,10 @@ RELIC_REGISTRY = {
     "spirito_spada": SpiritoSpada,
     "teschio_sangue": TeschioSangue,
     "pietra_filosofale": PietraFilosofale,
-    "bussola_dimensionale": BussolaDimensionale
+    "bussola_dimensionale": BussolaDimensionale,
+    "spallacci_rovo": SpallacciRovo,
+    "sigillo_elementale": SigilloElementale,
+    "maschera_antigas": MascheraAntigas
 }
 
 def create_relic_effect(relic_id: str) -> RelicEffect:

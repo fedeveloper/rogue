@@ -1,6 +1,6 @@
 import json
 import os
-from ui import Colors, clear_screen, delay_print, get_choice, interactive_menu
+from ui import Colors, clear_screen, delay_print, interactive_menu
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 BOOKS_FILE = os.path.join(BASE_DIR, "data", "books.json")

@@ -111,8 +111,6 @@ class ProfileManager:
         return book_id in self._data.get("unlocked_books", [])
 
 PROFILE_MANAGER = ProfileManager()
-PROFILE = PROFILE_MANAGER._data  # For backward compatibility during refactoring
-
 RAW_DATA = {
     "enemies": load_json_file("enemies.json")["enemies"], "bosses": load_json_file("enemies.json")["bosses"],
     "weapons": load_json_file("weapons.json")["weapons"], "armors": load_json_file("armors.json")["armors"],
@@ -128,10 +126,10 @@ def update_game_data():
     GAME_DATA.update({
         "enemies": RAW_DATA["enemies"], "bosses": RAW_DATA["bosses"], "lore": RAW_DATA["lore"], "elements": RAW_DATA["elements"],
         "meta": RAW_DATA["meta"], "events": RAW_DATA["events"], "relics": RAW_DATA["relics"], "classes": RAW_DATA["classes"],
-        "weapons":[w for w in RAW_DATA["weapons"] if w.get("unlock_id") is None or w["unlock_id"] in PROFILE["unlocked_ids"]],
-        "armors":[a for a in RAW_DATA["armors"] if a.get("unlock_id") is None or a["unlock_id"] in PROFILE["unlocked_ids"]],
-        "accessories":[ac for ac in RAW_DATA["accessories"] if ac.get("unlock_id") is None or ac["unlock_id"] in PROFILE["unlocked_ids"]],
-        "consumables":[c for c in RAW_DATA["consumables"] if c.get("unlock_id") is None or c["unlock_id"] in PROFILE["unlocked_ids"]]
+        "weapons":[w for w in RAW_DATA["weapons"] if w.get("unlock_id") is None or w["unlock_id"] in PROFILE_MANAGER.unlocked_ids],
+        "armors":[a for a in RAW_DATA["armors"] if a.get("unlock_id") is None or a["unlock_id"] in PROFILE_MANAGER.unlocked_ids],
+        "accessories":[ac for ac in RAW_DATA["accessories"] if ac.get("unlock_id") is None or ac["unlock_id"] in PROFILE_MANAGER.unlocked_ids],
+        "consumables":[c for c in RAW_DATA["consumables"] if c.get("unlock_id") is None or c["unlock_id"] in PROFILE_MANAGER.unlocked_ids]
     })
     
     ELEMENTS.clear()
