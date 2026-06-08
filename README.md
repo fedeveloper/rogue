@@ -217,7 +217,7 @@ Attivandoli tutti si raggiunge un moltiplicatore di **2.25x** sull'Essenza guada
 ## 🚀 Installazione e Avvio
 
 ### Requisiti
-- **Python 3.7+** installato sul sistema
+- **Python 3.7+** installato sul sistema (Compatibilità nativa garantita su **Windows, macOS e Linux** senza dipendenze esterne come `colorama` o `msvcrt` in via esclusiva)
 - Un terminale con supporto UTF-8 (per le icone emoji)
 
 ### Avvio
@@ -239,10 +239,14 @@ Il file di salvataggio `profile.json` viene generato automaticamente al primo av
 ```text
 rogue/
 ├── roguelike.py          # Menu principale, loop di gioco, evaluate_run
-├── entities.py           # Classi Player/Enemy, generatori item, inventario
-├── rooms.py              # Logica stanze (combattimento, mercante, falò, ecc.)
-├── data_manager.py       # Caricamento JSON, gestione profilo
-├── ui.py                 # Utilità di interfaccia (colori, input, clear)
+├── entities.py           # Classi Player/Enemy, generatori item, applicazione attributi
+├── rooms.py              # Logica stanze, CombatSession (combattimento, falò, eventi)
+├── inventory_menu.py     # Gestione dell'inventario, uso consumabili e stats
+├── relic_effects.py      # Hook ed effetti ad attivazione per le Reliquie
+├── archive.py            # Logica dei tomi e Sinergie dell'Archivio
+├── data_manager.py       # Caricamento JSON, gestione salvataggio profilo
+├── ui.py                 # Utilità cross-platform I/O (colori ANSI nativi, get_key)
+├── constants.py          # Costanti di bilanciamento globale (es. chance drop)
 ├── profile.json          # Salvataggio giocatore (generato automaticamente)
 └── data/
     ├── accessories.json  # Database accessori
@@ -251,9 +255,9 @@ rogue/
     ├── consumables.json  # Pozioni e consumabili
     ├── elements.json     # Sistema elementale e moltiplicatori
     ├── enemies.json      # Nemici comuni e boss
-    ├── events.json       # Eventi narrativi
-    ├── lore.json         # Testi narrativi ambientali
-    ├── meta.json         # Tratti, patti, imprese, config stanze
+    ├── events.json       # Eventi narrativi a scelte multiple
+    ├── lore.json         # Testi narrativi ambientali e di atmosfera
+    ├── meta.json         # Tratti, patti, imprese, config stanze e pesi
     ├── relics.json       # Database reliquie
     └── weapons.json      # Database armi
 ```

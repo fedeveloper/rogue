@@ -38,3 +38,8 @@ Oltre ad esplorare e sbloccare talenti, gli NPC salvati amplieranno l'economia d
 - **La Forgia Dimensionale** sblocca le sue categorie specifiche solo se hai salvato l'NPC corrispondente (Borek per le armi, Elara per le armature, ecc.).
 - Ogni volta che sblocchi un nuovo oggetto dalla Forgia (armature, consumabili, monili o armi), questo diventerà pre-acquistabile dal rispettivo NPC, permettendoti di iniziare la discesa già equipaggiato con i tuoi oggetti preferiti!
 - Le statistiche del tuo eroe e i dettagli sulle potenti "Risonanze Elementali" sono sempre consultabili in modo gratuito in qualsiasi momento, persino nel bel mezzo di un combattimento, tramite il menu **Statistiche Eroe** dell'inventario!
+
+## 🎮 Controlli e Accessibilità
+- **Nessun mouse necessario**: Il gioco è controllabile interamente da tastiera (Usa i numeri o i tasti corrispondenti per selezionare le opzioni a schermo).
+- **Menu Intelligenti**: Quando navighi nei sottomenu (Zaino, Negozi, ecc.), l'opzione "Indietro" ti permette di tornare alla schermata precedente senza perdere i progressi del turno.
+- **Supporto Globale**: L'architettura è ottimizzata per girare fluidamente sia su Windows che su sistemi macOS e Linux. Se incontri problemi di visualizzazione con i colori o le emoji, assicurati che il tuo terminale supporti la codifica `UTF-8`.
