@@ -300,3 +300,26 @@ Il meta-game narrativo è stato integrato profondamente con le meccaniche roguel
 - **Modifiche al Profilo**: In `event_room` (`rooms.py`), il successo di queste azioni istanzia e salva `PROFILE["npc_unlocked"]["speziale"] = True`.
 - **Nuovo Hub**: In `roguelike.py` è stata aggiunta la funzione `base_camp_apothecary()`, accessibile tramite una nuova voce di menu di `base_camp()` se il check sull'NPC nel profilo è positivo.
 - **Preparazione Run**: `base_camp_apothecary` permette di aggiungere stringhe (es. "Antidoto Universale") in `PROFILE["starting_consumables"]`. In `entities.py`, durante il `__init__` della classe `Player`, queste stringhe vengono consumate e trasformate in oggetti `Consumable` reali aggiunti all'inventario di partenza, svuotando poi l'array nel profilo.
+
+
+---
+
+## 3. Negozi NPC, Forgia e Refactoring UI (Recente)
+
+### Lo Sblocco Dinamico NPC
+Sono state introdotte le botteghe di 4 NPC al Campo Base, salvabili negli eventi:
+- **Speziale** (Consumabili)
+- **Borek** (Armi)
+- **Elara** (Armature)
+- **Valerius** (Monili)
+
+### Sinergia con la Forgia Dimensionale
+La `base_camp_forge` è stata rifattorizzata:
+- Utilizza un sistema a sottomenu per la paginazione, con categorie condizionate agli NPC sbloccati.
+- Quando un pezzo di equipaggiamento viene sbloccato, si inietta immediatamente nell'inventario del corrispondente negozio NPC.
+- Il prezzo pre-run dell'NPC viene calcolato parametricamente come `max(20, unlock_cost // 10)`, garantendo uno scaling progressivo dell'Essenza richiesta in base alla rarità.
+
+### UI ed Esperienza in Combattimento
+- Sottomenu **Statistiche Eroe** ora accessibile e consultabile in combattimento a costo zero (non consuma il turno).
+- Risolto il bug di "sdoppiamento" (screen tearing/duplicazione) post-uso oggetti, forzando `clear_screen()`.
+- Le descrizioni delle Risonanze Elementali (es. +15% Schivata) sono chiaramente indicate nella schermata Statistiche.

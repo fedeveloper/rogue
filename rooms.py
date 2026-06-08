@@ -1,7 +1,7 @@
 import random
 import time
 from typing import List
-from ui import Colors, clear_screen, delay_print, get_choice
+from ui import Colors, delay_print, clear_screen, get_choice, interactive_menu
 from data_manager import GAME_DATA, PROFILE_MANAGER, MULTIPLIERS, get_element_icon
 from archive import is_book_unlocked
 from entities import Player, Enemy, generate_weapon, generate_armor, generate_accessory, generate_potion, get_random_relic
@@ -238,25 +238,26 @@ class CombatSession:
 
         self.def_type, self.def_txt = self.player.get_defense_action()
 
-        print(f"\n{Colors.BOLD}--- ⚔️ IN COMBATTIMENTO ⚔️ ---{Colors.RESET}")
-        print(f"Tu: {Colors.GREEN}{self.player.hp}/{self.player.max_hp} HP{Colors.RESET} | {self.enemy.name}: {Colors.RED}{self.enemy.hp} HP{Colors.RESET}")
-        print("1. Attacca")
-        print(f"2. {self.def_txt}")
-        print("3. Apri Inventario (Usa oggetto = Costa Turno)")
-        print("4. Tenta la Fuga")
+        prompt = f"\n{Colors.BOLD}--- ⚔️ IN COMBATTIMENTO ⚔️ ---{Colors.RESET}\nTu: {Colors.GREEN}{self.player.hp}/{self.player.max_hp} HP{Colors.RESET} | {self.enemy.name}: {Colors.RED}{self.enemy.hp} HP{Colors.RESET}"
+        options = [
+            "Attacca",
+            self.def_txt,
+            "Apri Inventario (Usa oggetto = Costa Turno)",
+            "Statistiche Eroe",
+            "Tenta la Fuga"
+        ]
         
-        choice = get_choice("Cosa fai? > ")
-        
-        if choice in ['1', '2', '3', '4']: clear_screen()
+        idx = interactive_menu(options, prompt)
+        clear_screen()
             
-        if choice == '1':
+        if idx == 0:
             return self.execute_player_attack()
                 
-        elif choice == '2':
+        elif idx == 1:
             self.execute_player_defense()
             return True
                     
-        elif choice == '3':
+        elif idx == 2:
             action = show_inventory_menu(self.player, in_combat=True)
             if action == "smoke_bomb":
                 self.player.run_tracker["escapes"] += 1
@@ -269,12 +270,18 @@ class CombatSession:
                     self.on_enemy_death()
                     return False
                 return True
-            elif action == "turn_used":
+            elif action == "turn_used" or action == "antidote":
+                clear_screen()
                 return True
             else:
                 return self.player_turn()
+                
+        elif idx == 3:
+            from inventory_menu import show_player_stats
+            show_player_stats(self.player)
+            return self.player_turn()
             
-        elif choice == '4':
+        elif idx == 4:
             if self.enemy.is_boss:
                 print(f"\n{Colors.RED}-> Impossibile fuggire dai Boss!{Colors.RESET}")
                 return self.player_turn()
@@ -388,108 +395,117 @@ def mystery_room(player: Player, floor: int, active_pacts: List[str]):
 def event_room(player: Player, event_id: str, floor: int):
     ev = GAME_DATA["events"][event_id]
     clear_screen()
-    print(f"\n{Colors.MAGENTA}{Colors.BOLD}--- {ev['title']} ---{Colors.RESET}")
-    print(f"❤️  HP: {Colors.GREEN}{player.hp}/{player.max_hp}{Colors.RESET} | 💰 Oro: {Colors.YELLOW}{player.gold}{Colors.RESET}\n")
-    delay_print(ev["text"], 0.03)
+    
+    first_time = True
     
     while True:
-        print("\nScegli:")
+        if first_time:
+            print(f"\n{Colors.MAGENTA}{Colors.BOLD}--- {ev['title']} ---{Colors.RESET}")
+            print(f"❤️  HP: {Colors.GREEN}{player.hp}/{player.max_hp}{Colors.RESET} | 💰 Oro: {Colors.YELLOW}{player.gold}{Colors.RESET}\n")
+            delay_print(ev["text"], 0.03)
+            prompt = "\nScegli:"
+            first_time = False
+        else:
+            clear_screen()
+            prompt = f"\n{Colors.MAGENTA}{Colors.BOLD}--- {ev['title']} ---{Colors.RESET}\n❤️  HP: {Colors.GREEN}{player.hp}/{player.max_hp}{Colors.RESET} | 💰 Oro: {Colors.YELLOW}{player.gold}{Colors.RESET}\n\n{ev['text']}\nScegli:"
+            
         valid_choices = []
+        options = []
+        
         for i, c in enumerate(ev["choices"]):
             req_item = c.get("requires_item", "")
             if req_item and req_item not in player.quest_items:
-                print(f"{Colors.RED}{i+1}. {c['text']} (Non possiedi l'oggetto richiesto){Colors.RESET}")
+                options.append(f"{Colors.RED}{c['text']} (Non possiedi l'oggetto richiesto){Colors.RESET}")
             else:
                 valid_choices.append(i)
-                print(f"{i+1}. {c['text']}")
+                options.append(c['text'])
                 
-        choice = get_choice("> ")
-        try:
-            idx = int(choice) - 1
-            if idx in valid_choices:
-                action = ev["choices"][idx]["action"]
-                msg = ev["choices"][idx].get("msg", "")
-                msg_alt = ev["choices"][idx].get("msg_alt", "")
-                
-                if action == "heal_max":
-                    player.max_hp += 10
-                    if not player.cursed: player.heal(player.max_hp); print(f"{Colors.GREEN}Senti un potere immenso! HP Ripristinati!{Colors.RESET}")
-                    else: print(f"{Colors.RED}L'acqua scivola via... la maledizione blocca la cura.{Colors.RESET}")
-                elif action == "coin_toss":
-                    if player.gold >= 20:
-                        player.gold -= 20
-                        if random.random() > 0.5:
-                            r = get_random_relic(player)
-                            if r: player.add_relic(r)
-                            else: player.gold += 50; print(f"{Colors.YELLOW}{msg} (+50 Oro){Colors.RESET}")
-                        else: print(f"{Colors.YELLOW}{msg_alt}{Colors.RESET}")
-                    else: print(f"{Colors.RED}Oro insufficiente!{Colors.RESET}"); continue
-                elif action == "trade_weapon":
-                    if player.gold >= 50:
-                        player.gold -= 50
-                        drop = generate_weapon(floor + 2, True)
-                        player.inventory.append(drop); print(f"{Colors.MAGENTA}Ottieni: {drop.display_name}!{Colors.RESET}")
-                    else: print(f"{Colors.RED}Non hai abbastanza Oro.{Colors.RESET}"); continue
-                elif action == "trade_relic":
-                    print(f"{Colors.RED}{msg}{Colors.RESET}")
-                    alive = player.take_damage(30)
-                    if not alive:
-                        print(f"\n{Colors.RED}{Colors.BOLD}Il dissanguamento ti è stato fatale...{Colors.RESET}")
-                        input("\nPremi INVIO per continuare...")
-                        return
-                    r = get_random_relic(player)
-                    if r: player.add_relic(r)
-                elif action == "blood_gold":
-                    g = 100 * 3 if player.midas else 100
-                    player.gold += g; print(f"{Colors.RED}{msg} (+{g} Oro){Colors.RESET}.")
-                    alive = player.take_damage(40)
-                    if not alive:
-                        print(f"\n{Colors.RED}{Colors.BOLD}Hai sacrificato troppa linfa vitale... Sei morto.{Colors.RESET}")
-                        input("\nPremi INVIO per continuare...")
-                        return
-                elif action in ["fight_elite", "unlock_npc_fight"]:
-                    print(f"{Colors.RED}{msg}{Colors.RESET}")
-                    e = Enemy(floor + 5, True, player.active_pacts) # Elite
-                    input("Premi INVIO per combattere..."); combat_room(player, floor, e)
-                    if player.hp <= 0: return 
-                    if action == "unlock_npc_fight" and player.hp > 0:
-                        if "npc_unlocked" not in PROFILE_MANAGER._data: PROFILE_MANAGER._data["npc_unlocked"] = {}
-                        PROFILE_MANAGER._data["npc_unlocked"]["speziale"] = True
-                        PROFILE_MANAGER.save()
-                        print(f"\n{Colors.GREEN}Il mostro è sconfitto! Raccogli le chiavi e liberi lo Speziale. Ti ringrazia e scappa verso il Campo Base.{Colors.RESET}")
-                elif action == "unlock_npc_speziale":
-                    alive = player.take_damage(40)
-                    if not alive:
-                        print(f"\n{Colors.RED}{Colors.BOLD}Il dissanguamento ti è stato fatale...{Colors.RESET}")
-                        input("\nPremi INVIO per continuare...")
-                        return
-                    print(f"{Colors.GREEN}{msg}{Colors.RESET}")
+        idx = interactive_menu(options, prompt)
+        
+        if idx in valid_choices:
+            action = ev["choices"][idx]["action"]
+            msg = ev["choices"][idx].get("msg", "")
+            msg_alt = ev["choices"][idx].get("msg_alt", "")
+            
+            if action == "heal_max":
+                player.max_hp += 10
+                if not player.cursed: player.heal(player.max_hp); print(f"{Colors.GREEN}Senti un potere immenso! HP Ripristinati!{Colors.RESET}")
+                else: print(f"{Colors.RED}L'acqua scivola via... la maledizione blocca la cura.{Colors.RESET}")
+            elif action == "coin_toss":
+                if player.gold >= 20:
+                    player.gold -= 20
+                    if random.random() > 0.5:
+                        r = get_random_relic(player)
+                        if r: player.add_relic(r)
+                        else: player.gold += 50; print(f"{Colors.YELLOW}{msg} (+50 Oro){Colors.RESET}")
+                    else: print(f"{Colors.YELLOW}{msg_alt}{Colors.RESET}")
+                else: print(f"{Colors.RED}Oro insufficiente!{Colors.RESET}")
+            elif action == "trade_weapon":
+                if player.gold >= 50:
+                    player.gold -= 50
+                    drop = generate_weapon(floor + 2, True)
+                    player.inventory.append(drop); print(f"{Colors.MAGENTA}Ottieni: {drop.display_name}!{Colors.RESET}")
+                else: print(f"{Colors.RED}Non hai abbastanza Oro.{Colors.RESET}")
+            elif action == "trade_relic":
+                print(f"{Colors.RED}{msg}{Colors.RESET}")
+                alive = player.take_damage(30)
+                if not alive:
+                    print(f"\n{Colors.RED}{Colors.BOLD}Il dissanguamento ti è stato fatale...{Colors.RESET}")
+                    input("\nPremi INVIO per continuare...")
+                    return
+                r = get_random_relic(player)
+                if r: player.add_relic(r)
+            elif action == "blood_gold":
+                g = 100 * 3 if player.midas else 100
+                player.gold += g; print(f"{Colors.RED}{msg} (+{g} Oro){Colors.RESET}.")
+                alive = player.take_damage(40)
+                if not alive:
+                    print(f"\n{Colors.RED}{Colors.BOLD}Hai sacrificato troppa linfa vitale... Sei morto.{Colors.RESET}")
+                    input("\nPremi INVIO per continuare...")
+                    return
+            elif action == "fight_elite" or action.startswith("unlock_npc_fight"):
+                print(f"{Colors.RED}{msg}{Colors.RESET}")
+                e = Enemy(floor + 5, True, player.active_pacts) # Elite
+                input("Premi INVIO per combattere..."); combat_room(player, floor, e)
+                if player.hp <= 0: return 
+                if action.startswith("unlock_npc_fight_") and player.hp > 0:
+                    npc_name = action.replace("unlock_npc_fight_", "")
                     if "npc_unlocked" not in PROFILE_MANAGER._data: PROFILE_MANAGER._data["npc_unlocked"] = {}
-                    PROFILE_MANAGER._data["npc_unlocked"]["speziale"] = True
+                    PROFILE_MANAGER._data["npc_unlocked"][npc_name] = True
                     PROFILE_MANAGER.save()
-                elif action == "give_quest_item":
-                    q_item = ev["choices"][idx].get("item_id", "")
-                    if q_item and q_item not in player.quest_items:
-                        player.quest_items.append(q_item)
-                        print(f"{Colors.YELLOW}{msg}{Colors.RESET}")
-                elif action == "use_quest_item":
-                    q_item = ev["choices"][idx].get("item_id", "")
-                    # Already checked for possession via valid_choices
+                    print(f"\n{Colors.GREEN}Il mostro è sconfitto! Raccogli le chiavi e liberi il prigioniero. Ti ringrazia e scappa verso il Campo Base.{Colors.RESET}")
+            elif action.startswith("unlock_npc_"):
+                # Handle non-fight unlock (e.g. blood sacrifice)
+                if action.startswith("unlock_npc_fight"): continue # Safety skip if it's fight
+                npc_name = action.replace("unlock_npc_", "")
+                alive = player.take_damage(40)
+                if not alive:
+                    print(f"\n{Colors.RED}{Colors.BOLD}Il dissanguamento ti è stato fatale...{Colors.RESET}")
+                    input("\nPremi INVIO per continuare...")
+                    return
+                print(f"{Colors.GREEN}{msg}{Colors.RESET}")
+                if "npc_unlocked" not in PROFILE_MANAGER._data: PROFILE_MANAGER._data["npc_unlocked"] = {}
+                PROFILE_MANAGER._data["npc_unlocked"][npc_name] = True
+                PROFILE_MANAGER.save()
+            elif action == "give_quest_item":
+                q_item = ev["choices"][idx].get("item_id", "")
+                if q_item and q_item not in player.quest_items:
+                    player.quest_items.append(q_item)
                     print(f"{Colors.YELLOW}{msg}{Colors.RESET}")
-                    if ev["choices"][idx].get("reward_weapon", False):
-                        drop = generate_weapon(floor + 3, True)
-                        player.inventory.append(drop); print(f"{Colors.MAGENTA}Trovi Arma Epica: {drop.display_name}!{Colors.RESET}")
-                    rg = ev["choices"][idx].get("reward_gold", 0)
-                    if rg > 0:
-                        player.gold += rg
-                        print(f"{Colors.YELLOW}Ottieni {rg} Oro!{Colors.RESET}")
-                elif action == "none": print(f"{Colors.CYAN}{msg}{Colors.RESET}")
-                
-                input("\nPremi INVIO per proseguire...")
-                return
-            else:
-                print(f"{Colors.RED}Selezione non valida o bloccata.{Colors.RESET}"); continue
-        except ValueError: pass
+            elif action == "use_quest_item":
+                q_item = ev["choices"][idx].get("item_id", "")
+                print(f"{Colors.YELLOW}{msg}{Colors.RESET}")
+                if ev["choices"][idx].get("reward_weapon", False):
+                    drop = generate_weapon(floor + 3, True)
+                    player.inventory.append(drop); print(f"{Colors.MAGENTA}Trovi Arma Epica: {drop.display_name}!{Colors.RESET}")
+                rg = ev["choices"][idx].get("reward_gold", 0)
+                if rg > 0:
+                    player.gold += rg
+                    print(f"{Colors.YELLOW}Ottieni {rg} Oro!{Colors.RESET}")
+            elif action == "none": print(f"{Colors.CYAN}{msg}{Colors.RESET}")
+            
+            input("\nPremi INVIO per proseguire...")
+            return
 
 def vendor_room(player: Player, floor: int):
     delay_print(f"\n{random.choice(GAME_DATA['lore']['vendor'])}")
@@ -501,143 +517,144 @@ def vendor_room(player: Player, floor: int):
 
     while True:
         clear_screen()
-        print(f"\n{Colors.YELLOW}[ 💰 MERCANTE ] | Tuo Oro: {player.gold}{Colors.RESET}")
-        if PROFILE_MANAGER._data["perks"]["discount_lvl"] > 0: print(f"{Colors.GREEN}(Sconto del {PROFILE_MANAGER._data['perks']['discount_lvl']*10}%!){Colors.RESET}")
-        print("1. Guarda Merce (Compra)")
-        print("2. Mostra Zaino (Vendi)")
-        print("0. Saluta ed esci")
-        action = get_choice("Scegli > ")
+        prompt = f"\n{Colors.YELLOW}[ 💰 MERCANTE ] | Tuo Oro: {player.gold}{Colors.RESET}\n"
+        if PROFILE_MANAGER._data["perks"]["discount_lvl"] > 0: prompt += f"{Colors.GREEN}(Sconto del {PROFILE_MANAGER._data['perks']['discount_lvl']*10}%!){Colors.RESET}\n"
         
-        if action == '1':
+        options = ["Guarda Merce (Compra)", "Mostra Zaino (Vendi)", "Saluta ed esci"]
+        idx = interactive_menu(options, prompt)
+        
+        if idx == 0:
             while True:
                 clear_screen()
-                print(f"\n{Colors.CYAN}--- NEGOZIO (COMPRA) --- Tuo Oro: {player.gold}{Colors.RESET}")
+                prompt_compra = f"\n{Colors.CYAN}--- NEGOZIO (COMPRA) --- Tuo Oro: {player.gold}{Colors.RESET}\nScegli cosa comprare:"
+                options_compra = []
                 for i, item in enumerate(items_for_sale):
                     tipo = "Arma" if item.type=="weapon" else "Armatura" if item.type=="armor" else "Monile" if item.type=="accessory" else "Pozione"
-                    print(f"{i+1}. [{tipo}] {item.display_name} - Prezzo: {Colors.YELLOW}{item.value} Oro{Colors.RESET}")
-                print("0. Indietro")
-                buy_choice = get_choice("Cosa compri? > ")
-                if buy_choice == '0': break
-                try:
-                    idx = int(buy_choice) - 1
-                    if 0 <= idx < len(items_for_sale):
-                        item = items_for_sale[idx]
-                        if player.gold >= item.value:
-                            player.gold -= item.value; player.inventory.append(item)
-                            if "gold_spent" not in player.run_tracker: player.run_tracker["gold_spent"] = 0
-                            player.run_tracker["gold_spent"] += item.value
-                            print(f"{Colors.GREEN}Hai comprato {item.name}!{Colors.RESET}"); items_for_sale.pop(idx); time.sleep(1)
-                            for i_idx, remaining_item in enumerate(items_for_sale):
-                                items_for_sale[i_idx].value = int(remaining_item.value * 1.1)
-                        else: print(f"{Colors.RED}Oro insufficiente!{Colors.RESET}"); time.sleep(1)
-                except ValueError: pass
-        elif action == '2':
+                    options_compra.append(f"[{tipo}] {item.display_name} - Prezzo: {Colors.YELLOW}{item.value} Oro{Colors.RESET}")
+                options_compra.append("Indietro")
+                
+                idx_compra = interactive_menu(options_compra, prompt_compra)
+                if idx_compra == len(options_compra) - 1: break
+                
+                if 0 <= idx_compra < len(items_for_sale):
+                    item = items_for_sale[idx_compra]
+                    if player.gold >= item.value:
+                        player.gold -= item.value; player.inventory.append(item)
+                        if "gold_spent" not in player.run_tracker: player.run_tracker["gold_spent"] = 0
+                        player.run_tracker["gold_spent"] += item.value
+                        print(f"{Colors.GREEN}Hai comprato {item.name}!{Colors.RESET}"); items_for_sale.pop(idx_compra); time.sleep(1)
+                        for i_idx, remaining_item in enumerate(items_for_sale):
+                            items_for_sale[i_idx].value = int(remaining_item.value * 1.1)
+                    else: print(f"{Colors.RED}Oro insufficiente!{Colors.RESET}"); time.sleep(1)
+        elif idx == 1:
             while True:
                 clear_screen()
-                print(f"\n{Colors.CYAN}--- NEGOZIO (VENDI) ---{Colors.RESET}")
-                if not player.inventory: print("Non hai nulla nello zaino da vendere.")
+                prompt_vendi = f"\n{Colors.CYAN}--- NEGOZIO (VENDI) ---{Colors.RESET}\nScegli cosa vendere:"
+                options_vendi = []
+                if not player.inventory: prompt_vendi += "\nNon hai nulla nello zaino da vendere.\n"
                 else:
                     for i, item in enumerate(player.inventory):
-                        print(f"{i+1}. {item.display_name} - Val di vendita: {Colors.YELLOW}{max(1, item.value // 2)} Oro{Colors.RESET}")
-                print("0. Indietro")
-                sell_choice = get_choice("Cosa vendi? > ")
-                if sell_choice == '0': break
-                try:
-                    idx = int(sell_choice) - 1
-                    if 0 <= idx < len(player.inventory):
-                        item = player.inventory.pop(idx); gain = max(1, item.value // 2)
-                        gain = int(gain * (1 + (PROFILE_MANAGER._data["perks"].get("riciclatore_lvl", 0) * 0.10)))
-                        player.gold += gain; print(f"{Colors.GREEN}Hai venduto {item.name} per {gain} oro!{Colors.RESET}"); time.sleep(1)
-                except ValueError: pass
-        elif action == '0': break
+                        options_vendi.append(f"{item.display_name} - Val di vendita: {Colors.YELLOW}{max(1, item.value // 2)} Oro{Colors.RESET}")
+                options_vendi.append("Indietro")
+                
+                idx_vendi = interactive_menu(options_vendi, prompt_vendi)
+                if idx_vendi == len(options_vendi) - 1: break
+                
+                if player.inventory and 0 <= idx_vendi < len(player.inventory):
+                    item = player.inventory.pop(idx_vendi); gain = max(1, item.value // 2)
+                    gain = int(gain * (1 + (PROFILE_MANAGER._data["perks"].get("riciclatore_lvl", 0) * 0.10)))
+                    player.gold += gain; print(f"{Colors.GREEN}Hai venduto {item.name} per {gain} oro!{Colors.RESET}"); time.sleep(1)
+        elif idx == 2: break
 
 def campfire_room(player: Player, floor: int):
     delay_print(f"\n{Colors.YELLOW}{random.choice(GAME_DATA['lore']['campfire'])}{Colors.RESET}")
     while True:
         clear_screen()
-        print(f"\n{Colors.YELLOW}[ 🔥 FALÒ E FORGIA ] | Tuo Oro: {player.gold} | HP: {player.hp}/{player.max_hp}{Colors.RESET}")
-        print("1. Riposa (Recupera 50% HP, il falò si spegnerà)")
-        print(f"2. Affila Arma Base (Paga {Colors.YELLOW}50 Oro{Colors.RESET} per +3 ATK, il falò si spegnerà)")
-        print(f"3. {Colors.MAGENTA}Altare dell'Evoluzione{Colors.RESET} (Fondi due armi/armature per potenziarle)")
-        if any(getattr(item, 'is_cursed', False) for item in [player.weapon, player.armor, player.accessory] if item):
-            print(f"4. {Colors.CYAN}Purifica Maledizione{Colors.RESET} (Paga {Colors.YELLOW}100 Oro{Colors.RESET} per rimuovere il malus da un pezzo equipaggiato)")
-        print("0. Prosegui")
+        prompt = f"\n{Colors.YELLOW}[ 🔥 FALÒ E FORGIA ] | Tuo Oro: {player.gold} | HP: {player.hp}/{player.max_hp}{Colors.RESET}\n"
+        options = [
+            "Riposa (Recupera 50% HP, il falò si spegnerà)",
+            f"Affila Arma Base (Paga {Colors.YELLOW}50 Oro{Colors.RESET} per +3 ATK, il falò si spegnerà)",
+            f"{Colors.MAGENTA}Altare dell'Evoluzione{Colors.RESET} (Fondi due armi/armature per potenziarle)"
+        ]
         
-        action = get_choice("Scegli > ")
-        if action == '1':
+        has_cursed = any(getattr(item, 'is_cursed', False) for item in [player.weapon, player.armor, player.accessory] if item)
+        if has_cursed:
+            options.append(f"{Colors.CYAN}Purifica Maledizione{Colors.RESET} (Paga {Colors.YELLOW}100 Oro{Colors.RESET} per rimuovere il malus da un pezzo equipaggiato)")
+            
+        options.append("Prosegui")
+        
+        idx = interactive_menu(options, prompt)
+        
+        if options[idx] == "Prosegui": break
+        elif idx == 0:
             player.run_tracker["rested"] = True
             player.heal(player.max_hp // 2)
             print(f"{Colors.GREEN}Ti riposi profondamente!{Colors.RESET}"); input("\nPremi INVIO..."); break
-        elif action == '2':
+        elif idx == 1:
             if player.gold >= 50:
                 player.gold -= 50; player.weapon.atk += 3
                 print(f"{Colors.GREEN}Arma migliorata: {player.weapon.atk} ATK!{Colors.RESET}"); input("\nPremi INVIO..."); break
             else: print(f"{Colors.RED}Oro insufficiente.{Colors.RESET}"); time.sleep(1.5)
-        elif action == '3':
+        elif idx == 2:
             while True:
                 clear_screen()
-                print(f"\n{Colors.MAGENTA}--- FUSIONE EQUIPAGGIAMENTO ---{Colors.RESET}")
+                prompt_forge = f"\n{Colors.MAGENTA}--- FUSIONE EQUIPAGGIAMENTO ---{Colors.RESET}\n"
                 equips =[i for i in player.inventory if i.type in["weapon", "armor"]]
-                if len(equips) < 2: print("Hai bisogno di almeno 2 armi/armature nello zaino per usare l'Altare."); input("Premi INVIO..."); break
+                if len(equips) < 2: 
+                    print(prompt_forge + "Hai bisogno di almeno 2 armi/armature nello zaino per usare l'Altare."); input("Premi INVIO..."); break
                 
+                options_forge = []
                 for i, item in enumerate(equips):
                     stat = f"+{item.atk} ATK" if item.type == "weapon" else f"+{item.defense} DEF"
-                    print(f"{i+1}.[{item.type.upper()}] {item.display_name} {stat} (Lv.{item.level})")
-                print("0. Indietro")
+                    options_forge.append(f"[{item.type.upper()}] {item.display_name} {stat} (Lv.{item.level})")
+                options_forge.append("Indietro")
                 
-                c1 = get_choice("Seleziona il PRIMO oggetto (Base) > ")
-                if c1 == '0': break
-                c2 = get_choice("Seleziona il SECONDO oggetto (Sacrificio) > ")
-                if c2 == '0': break
+                i1 = interactive_menu(options_forge, prompt_forge + "Seleziona il PRIMO oggetto (Base):")
+                if i1 == len(options_forge) - 1: break
                 
-                try:
-                    i1, i2 = int(c1)-1, int(c2)-1
-                    if i1 != i2 and 0 <= i1 < len(equips) and 0 <= i2 < len(equips):
-                        it1, it2 = equips[i1], equips[i2]
-                        if it1.type == it2.type:
-                            player.inventory.remove(it2)
-                            if it1.type == "weapon": it1.atk += max(1, it2.atk // 2)
-                            else: it1.defense += max(1, it2.defense // 2)
-                            it1.level += 1
-                            it1.display_name = f"Perfetto {it1.name.split('[')[0].strip()}[{get_element_icon(it1.element)}]"
-                            player.run_tracker["fusions"] += 1
-                            print(f"{Colors.GREEN}FUSIONE RIUSCITA! Il primo oggetto ha assorbito il secondo.{Colors.RESET}")
-                            input("Premi INVIO per continuare...")
-                            return 
-                        else: print(f"{Colors.RED}Puoi fondere solo oggetti dello stesso tipo!{Colors.RESET}"); time.sleep(1.5)
-                    else: print(f"{Colors.RED}Selezione non valida.{Colors.RESET}"); time.sleep(1.5)
-                except ValueError: pass
-        elif action == '4':
+                i2 = interactive_menu(options_forge, prompt_forge + "Seleziona il SECONDO oggetto (Sacrificio):")
+                if i2 == len(options_forge) - 1: break
+                
+                if i1 != i2 and 0 <= i1 < len(equips) and 0 <= i2 < len(equips):
+                    it1, it2 = equips[i1], equips[i2]
+                    if it1.type == it2.type:
+                        player.inventory.remove(it2)
+                        if it1.type == "weapon": it1.atk += max(1, it2.atk // 2)
+                        else: it1.defense += max(1, it2.defense // 2)
+                        it1.level += 1
+                        it1.display_name = f"Perfetto {it1.name.split('[')[0].strip()}[{get_element_icon(it1.element)}]"
+                        player.run_tracker["fusions"] += 1
+                        print(f"{Colors.GREEN}FUSIONE RIUSCITA! Il primo oggetto ha assorbito il secondo.{Colors.RESET}")
+                        input("Premi INVIO per continuare...")
+                        return 
+                    else: print(f"{Colors.RED}Puoi fondere solo oggetti dello stesso tipo!{Colors.RESET}"); time.sleep(1.5)
+                else: print(f"{Colors.RED}Selezione non valida o oggetto uguale.{Colors.RESET}"); time.sleep(1.5)
+        elif options[idx].startswith(f"{Colors.CYAN}Purifica"):
             cursed_items = [item for item in [player.weapon, player.armor, player.accessory] if item and getattr(item, 'is_cursed', False)]
-            if not cursed_items:
-                print(f"{Colors.YELLOW}Non hai equipaggiamenti maledetti addosso.{Colors.RESET}")
-                time.sleep(1.5)
-            elif player.gold < 100:
+            if player.gold < 100:
                 print(f"{Colors.RED}Oro insufficiente per il rituale di purificazione (Richiede 100 Oro).{Colors.RESET}")
                 time.sleep(1.5)
             else:
                 while True:
                     clear_screen()
-                    print(f"\n{Colors.CYAN}--- PURIFICAZIONE ---{Colors.RESET} Tuo Oro: {player.gold}")
+                    prompt_purify = f"\n{Colors.CYAN}--- PURIFICAZIONE ---{Colors.RESET} Tuo Oro: {player.gold}\nQuale oggetto purificare?"
+                    options_purify = []
                     for i, item in enumerate(cursed_items):
-                        print(f"{i+1}. {item.display_name} (Malus: {item.curse_effect})")
-                    print("0. Annulla")
-                    c = get_choice("Quale oggetto purificare? > ")
-                    if c == '0': break
-                    try:
-                        idx = int(c) - 1
-                        if 0 <= idx < len(cursed_items):
-                            player.gold -= 100
-                            target_item = cursed_items[idx]
-                            target_item.is_cursed = False
-                            target_item.curse_effect = ""
-                            target_item.display_name = target_item.display_name.replace(f"{Colors.MAGENTA}[MALEDETTO]{Colors.RESET} ", "")
-                            print(f"{Colors.GREEN}Il rituale ha successo! La maledizione è spezzata.{Colors.RESET}")
-                            input("\nPremi INVIO...")
-                            return
-                        else: print(f"{Colors.RED}Selezione non valida.{Colors.RESET}"); time.sleep(1.5)
-                    except ValueError: pass
-        elif action == '0': break
+                        options_purify.append(f"{item.display_name} (Malus: {item.curse_effect})")
+                    options_purify.append("Annulla")
+                    
+                    p_idx = interactive_menu(options_purify, prompt_purify)
+                    if p_idx == len(options_purify) - 1: break
+                    
+                    if 0 <= p_idx < len(cursed_items):
+                        player.gold -= 100
+                        target_item = cursed_items[p_idx]
+                        target_item.is_cursed = False
+                        target_item.curse_effect = ""
+                        target_item.display_name = target_item.display_name.replace(f"{Colors.MAGENTA}[MALEDETTO]{Colors.RESET} ", "")
+                        print(f"{Colors.GREEN}Il rituale ha successo! La maledizione è spezzata.{Colors.RESET}")
+                        input("\nPremi INVIO...")
+                        return
 
 def treasure_room(player: Player, floor: int):
     delay_print(f"\n{Colors.YELLOW}{random.choice(GAME_DATA['lore']['treasure'])}{Colors.RESET}")

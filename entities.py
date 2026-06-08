@@ -43,9 +43,10 @@ class Accessory(Item):
         self.display_name = f"{cursed_tag}{name} [{get_element_icon(element)}]"
 
 class Consumable(Item):
-    def __init__(self, name: str, value: int, heal_amount: int):
+    def __init__(self, name: str, value: int, heal_amount: int, category: str = "heal"):
         super().__init__(name, value, "consumable", 1)
         self.heal_amount = heal_amount
+        self.category = category
         self.display_name = name
 
 def generate_random_element() -> str:
@@ -97,8 +98,9 @@ def generate_accessory(level: int) -> Accessory:
 def generate_potion(level: int) -> Consumable:
     c_data = random.choice(GAME_DATA["consumables"])
     name, heal, val = c_data["name"], c_data["base_heal"] + (level * 5), c_data["val_base"] + (level * 15)
+    cat = c_data.get("category", "heal")
     val = int(val * 1.5) # Rende le pozioni molto più costose
-    return Consumable(f"{name} (Cura {heal})" if heal > 0 else name, val, heal)
+    return Consumable(f"{name} (Cura {heal})" if heal > 0 else name, val, heal, cat)
 
 def get_random_relic(player):
     avail = [r for r in GAME_DATA["relics"] if r["id"] not in player.relic_ids]
@@ -151,12 +153,37 @@ class Player:
         self.base_acc += PROFILE_MANAGER._data["perks"].get("acc_lvl", 0) * 3
         self.exp_multiplier += PROFILE_MANAGER._data["perks"].get("exp_lvl", 0) * 0.05
         
+        self.inventory = []
         if "starting_consumables" in PROFILE_MANAGER._data:
             for cons_name in PROFILE_MANAGER._data["starting_consumables"]:
                 c_data = next((x for x in GAME_DATA["consumables"] if x["name"] == cons_name), None)
                 if c_data:
-                    self.inventory.append(Consumable(c_data["name"], c_data["val_base"], c_data["base_heal"]))
+                    name = c_data["name"]
+                    heal = c_data["base_heal"]
+                    cat = c_data.get("category", "heal")
+                    self.inventory.append(Consumable(f"{name} (Cura {heal})" if heal > 0 else name, c_data["val_base"], heal, cat))
             PROFILE_MANAGER._data["starting_consumables"] = []
+            
+        if "starting_weapons" in PROFILE_MANAGER._data:
+            for w_name in PROFILE_MANAGER._data["starting_weapons"]:
+                w_data = next((x for x in GAME_DATA["weapons"] if x["name"] == w_name), None)
+                if w_data:
+                    self.inventory.append(Weapon(w_data["name"], w_data["val_base"], w_data["base_atk"]))
+            PROFILE_MANAGER._data["starting_weapons"] = []
+            
+        if "starting_armors" in PROFILE_MANAGER._data:
+            for a_name in PROFILE_MANAGER._data["starting_armors"]:
+                a_data = next((x for x in GAME_DATA["armors"] if x["name"] == a_name), None)
+                if a_data:
+                    self.inventory.append(Armor(a_data["name"], a_data["val_base"], a_data["base_def"]))
+            PROFILE_MANAGER._data["starting_armors"] = []
+            
+        if "starting_accessories" in PROFILE_MANAGER._data:
+            for acc_name in PROFILE_MANAGER._data["starting_accessories"]:
+                acc_data = next((x for x in GAME_DATA["accessories"] if x["name"] == acc_name), None)
+                if acc_data:
+                    self.inventory.append(Accessory(acc_data["name"], acc_data["val_base"], acc_data["desc"], acc_data["bonus_type"], acc_data["bonus_value"]))
+            PROFILE_MANAGER._data["starting_accessories"] = []
         
         start_weapon_lv = 2 if class_id == "1" and PROFILE_MANAGER._data["class_lvl"].get("1", 1) >= 2 else 1
         self.thief_save = True if class_id == "2" and PROFILE_MANAGER._data["class_lvl"].get("2", 1) >= 2 else False
@@ -179,7 +206,7 @@ class Player:
         self.accessory = None
         
         potions_count = data["potions"] + (1 if PROFILE_MANAGER._data["perks"].get("farmacista", False) else 0)
-        self.inventory =[generate_potion(1) for _ in range(potions_count)]
+        self.inventory.extend([generate_potion(1) for _ in range(potions_count)])
         
         if PROFILE_MANAGER._data["perks"].get("altare_benedizione", False):
             r = get_random_relic(self)

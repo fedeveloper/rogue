@@ -1,98 +1,324 @@
 {
   "fontana_fatata": {
-    "title": "La Fontana Fatata", "text": "Una fonte d'acqua purissima brilla nel buio. Ha un'aura mistica.",
-    "choices":[
-      {"text": "Bevi profondamente (Cura 100% HP)", "action": "heal_max", "msg": "L'acqua magica rigenera le tue ferite e purifica il tuo corpo!"},
-      {"text": "Lancia una moneta (-20 Oro, 50% Chance di Reliquia)", "action": "coin_toss", "msg": "La moneta brilla sul fondo... un potere ti avvolge!", "msg_alt": "La moneta affonda e scompare nel nulla. Nessuna reazione."},
-      {"text": "Ignora e prosegui", "action": "none", "msg": "Ti allontani dalla fontana in silenzio."}
+    "title": "La Fontana Fatata",
+    "text": "Una fonte d'acqua purissima brilla nel buio. Ha un'aura mistica.",
+    "choices": [
+      {
+        "text": "Bevi profondamente (Cura 100% HP)",
+        "action": "heal_max",
+        "msg": "L'acqua magica rigenera le tue ferite e purifica il tuo corpo!"
+      },
+      {
+        "text": "Lancia una moneta (-20 Oro, 50% Chance di Reliquia)",
+        "action": "coin_toss",
+        "msg": "La moneta brilla sul fondo... un potere ti avvolge!",
+        "msg_alt": "La moneta affonda e scompare nel nulla. Nessuna reazione."
+      },
+      {
+        "text": "Ignora e prosegui",
+        "action": "none",
+        "msg": "Ti allontani dalla fontana in silenzio."
+      }
     ]
   },
   "mendicante_ombra": {
-    "title": "Il Mendicante Ombra", "text": "Una figura avvolta da stracci ti tende una mano scheletrica.",
-    "choices":[
-      {"text": "Dona 50 Oro (Ottieni un'Arma Epica)", "action": "trade_weapon", "msg": "Il mendicante estrae furtivamente dai rottami:"},
-      {"text": "Offri il tuo sangue (-30 HP, Ottieni Reliquia)", "action": "trade_relic", "msg": "Sanguini abbondantemente... l'ombra sorride e ti dona un manufatto."},
-      {"text": "Ignora", "action": "none", "msg": "Lo ignori e tiri dritto."}
+    "title": "Il Mendicante Ombra",
+    "text": "Una figura avvolta da stracci ti tende una mano scheletrica.",
+    "choices": [
+      {
+        "text": "Dona 50 Oro (Ottieni un'Arma Epica)",
+        "action": "trade_weapon",
+        "msg": "Il mendicante estrae furtivamente dai rottami:"
+      },
+      {
+        "text": "Offri il tuo sangue (-30 HP, Ottieni Reliquia)",
+        "action": "trade_relic",
+        "msg": "Sanguini abbondantemente... l'ombra sorride e ti dona un manufatto."
+      },
+      {
+        "text": "Ignora",
+        "action": "none",
+        "msg": "Lo ignori e tiri dritto."
+      }
     ]
   },
   "altare_sangue": {
-    "title": "Altare del Sangue", "text": "Un altare pulsante di energia oscura attende un tributo.",
-    "choices":[
-      {"text": "Prega l'Oscurità (+100 Oro, ma Subisci 40 Danni)", "action": "blood_gold", "msg": "Dolore lancinante! Ma l'altare vomita oro dalla sua base polverosa."},
-      {"text": "Distruggi l'Altare (Combatti un Nemico d'Elite)", "action": "fight_elite", "msg": "L'Altare si sgretola e risveglia un tremendo custode corrotto!"},
-      {"text": "Allontanati in silenzio", "action": "none", "msg": "Non vale la pena rischiare l'anima qui. Prosegui."}
+    "title": "Altare del Sangue",
+    "text": "Un altare pulsante di energia oscura attende un tributo.",
+    "choices": [
+      {
+        "text": "Prega l'Oscurità (+100 Oro, ma Subisci 40 Danni)",
+        "action": "blood_gold",
+        "msg": "Dolore lancinante! Ma l'altare vomita oro dalla sua base polverosa."
+      },
+      {
+        "text": "Distruggi l'Altare (Combatti un Nemico d'Elite)",
+        "action": "fight_elite",
+        "msg": "L'Altare si sgretola e risveglia un tremendo custode corrotto!"
+      },
+      {
+        "text": "Allontanati in silenzio",
+        "action": "none",
+        "msg": "Non vale la pena rischiare l'anima qui. Prosegui."
+      }
     ]
   },
   "forgia_abissale": {
-    "title": "La Forgia Abissale", "text": "Un'incudine avvolta da fiamme viola. Un martello spettrale batte senza sosta.",
-    "choices":[
-      {"text": "Lancia monete nelle fiamme (-50 Oro, Arma Epica forgiata)", "action": "trade_weapon", "msg": "Il martello spettrale forgia a tempo di record una lama portentosa:"},
-      {"text": "Immergi la mano per afferrare un tesoro (-30 HP, Ottieni Reliquia)", "action": "trade_relic", "msg": "Il calore brucia la tua carne, ma stringi tra le dita un artefatto!"},
-      {"text": "Il calore è insopportabile, scappa", "action": "none", "msg": "Il calore è insopportabile, batti in ritirata."}
+    "title": "La Forgia Abissale",
+    "text": "Un'incudine avvolta da fiamme viola. Un martello spettrale batte senza sosta.",
+    "choices": [
+      {
+        "text": "Lancia monete nelle fiamme (-50 Oro, Arma Epica forgiata)",
+        "action": "trade_weapon",
+        "msg": "Il martello spettrale forgia a tempo di record una lama portentosa:"
+      },
+      {
+        "text": "Immergi la mano per afferrare un tesoro (-30 HP, Ottieni Reliquia)",
+        "action": "trade_relic",
+        "msg": "Il calore brucia la tua carne, ma stringi tra le dita un artefatto!"
+      },
+      {
+        "text": "Il calore è insopportabile, scappa",
+        "action": "none",
+        "msg": "Il calore è insopportabile, batti in ritirata."
+      }
     ]
   },
   "bisca_goblin": {
-    "title": "La Bisca dei Goblin", "text": "Scorgi dei Goblin disarmati che lanciano dadi d'osso su un tappeto. Non ti hanno notato.",
-    "choices":[
-      {"text": "Punta sul tavolo (-20 Oro, Scommetti per Reliquie o Oro)", "action": "coin_toss", "msg": "I Goblin imprecano! Vinci la scommessa e rubi la posta dal tavolo!", "msg_alt": "I dadi rotolano contro di te. I goblin sghignazzano e intascano i soldi."},
-      {"text": "Sguaina l'arma e ruba il banco! (Combatti Elite)", "action": "fight_elite", "msg": "I goblin fuggono gridando e chiamano il loro gigantesco Boss!"},
-      {"text": "Allontanati senza fare rumore", "action": "none", "msg": "Eviti problemi e te la svigni furtivamente."}
+    "title": "La Bisca dei Goblin",
+    "text": "Scorgi dei Goblin disarmati che lanciano dadi d'osso su un tappeto. Non ti hanno notato.",
+    "choices": [
+      {
+        "text": "Punta sul tavolo (-20 Oro, Scommetti per Reliquie o Oro)",
+        "action": "coin_toss",
+        "msg": "I Goblin imprecano! Vinci la scommessa e rubi la posta dal tavolo!",
+        "msg_alt": "I dadi rotolano contro di te. I goblin sghignazzano e intascano i soldi."
+      },
+      {
+        "text": "Sguaina l'arma e ruba il banco! (Combatti Elite)",
+        "action": "fight_elite",
+        "msg": "I goblin fuggono gridando e chiamano il loro gigantesco Boss!"
+      },
+      {
+        "text": "Allontanati senza fare rumore",
+        "action": "none",
+        "msg": "Eviti problemi e te la svigni furtivamente."
+      }
     ]
   },
   "cavaliere_caduto": {
-    "title": "Il Cavaliere Caduto", "text": "Un guerriero in armatura è accasciato al muro. Stringe una spada splendente, ma respira a fatica.",
-    "choices":[
-      {"text": "Lasciagli dell'oro per i soccorsi (-50 Oro, Ti dona la sua Arma Epica)", "action": "trade_weapon", "msg": "Il cavaliere annuisce debolmente e ti porge l'arma di famiglia:"},
-      {"text": "Aiutalo a curare le ferite (Usa la sua magia per Curarti al 100%)", "action": "heal_max", "msg": "Il cavaliere, grato, usa l'ultima pergamena sacra su di te! Ti senti invincibile."},
-      {"text": "Sacrifica il tuo sangue per guarirlo (-30 HP, Ti dona una Reliquia)", "action": "trade_relic", "msg": "Il cavaliere beve il tuo sangue, riprende colore e ti dona il suo amuleto."}
+    "title": "Il Cavaliere Caduto",
+    "text": "Un guerriero in armatura è accasciato al muro. Stringe una spada splendente, ma respira a fatica.",
+    "choices": [
+      {
+        "text": "Lasciagli dell'oro per i soccorsi (-50 Oro, Ti dona la sua Arma Epica)",
+        "action": "trade_weapon",
+        "msg": "Il cavaliere annuisce debolmente e ti porge l'arma di famiglia:"
+      },
+      {
+        "text": "Aiutalo a curare le ferite (Usa la sua magia per Curarti al 100%)",
+        "action": "heal_max",
+        "msg": "Il cavaliere, grato, usa l'ultima pergamena sacra su di te! Ti senti invincibile."
+      },
+      {
+        "text": "Sacrifica il tuo sangue per guarirlo (-30 HP, Ti dona una Reliquia)",
+        "action": "trade_relic",
+        "msg": "Il cavaliere beve il tuo sangue, riprende colore e ti dona il suo amuleto."
+      }
     ]
   },
   "idolo_corrotto": {
-    "title": "L'Idolo Corrotto", "text": "Una statua d'oro con diamanti al posto degli occhi. Trasuda malvagità.",
-    "choices":[
-      {"text": "Stacca i diamanti a forza (+100 Oro, Subisci 40 Danni)", "action": "blood_gold", "msg": "Stacchi i gioielli, ma una maledizione tetra brucia i tuoi polmoni!"},
-      {"text": "Usa una daga per staccarne uno (-20 Oro, Rischio Reliquia)", "action": "coin_toss", "msg": "Il gioiello si stacca dalla pietra rivelando un antico potere!", "msg_alt": "La tua daga si spezza rovinosamente e l'idolo resta intatto."},
-      {"text": "Profanare le tombe è da stolti, prosegui", "action": "none", "msg": "Ti allontani. Certe cose è meglio non toccarle."}
+    "title": "L'Idolo Corrotto",
+    "text": "Una statua d'oro con diamanti al posto degli occhi. Trasuda malvagità.",
+    "choices": [
+      {
+        "text": "Stacca i diamanti a forza (+100 Oro, Subisci 40 Danni)",
+        "action": "blood_gold",
+        "msg": "Stacchi i gioielli, ma una maledizione tetra brucia i tuoi polmoni!"
+      },
+      {
+        "text": "Usa una daga per staccarne uno (-20 Oro, Rischio Reliquia)",
+        "action": "coin_toss",
+        "msg": "Il gioiello si stacca dalla pietra rivelando un antico potere!",
+        "msg_alt": "La tua daga si spezza rovinosamente e l'idolo resta intatto."
+      },
+      {
+        "text": "Profanare le tombe è da stolti, prosegui",
+        "action": "none",
+        "msg": "Ti allontani. Certe cose è meglio non toccarle."
+      }
     ]
   },
   "specchio_verita": {
-    "title": "Lo Specchio della Verità", "text": "Uno specchio intatto riflette il tuo volto. L'immagine riflessa, però, estrae un'arma.",
-    "choices":[
-      {"text": "Attacca il tuo riflesso! (Combatti Elite)", "action": "fight_elite", "msg": "Il tuo riflesso frantuma il vetro e balza fuori per ucciderti!"},
-      {"text": "Tocca il vetro tagliandoti (-30 HP, Assorbi una Reliquia)", "action": "trade_relic", "msg": "Il vetro ti taglia la pelle, ma il tuo riflesso ti porge un oggetto magico."},
-      {"text": "Distogli lo sguardo ed esci", "action": "none", "msg": "Rompi il contatto visivo, e la tensione sparisce all'istante."}
+    "title": "Lo Specchio della Verità",
+    "text": "Uno specchio intatto riflette il tuo volto. L'immagine riflessa, però, estrae un'arma.",
+    "choices": [
+      {
+        "text": "Attacca il tuo riflesso! (Combatti Elite)",
+        "action": "fight_elite",
+        "msg": "Il tuo riflesso frantuma il vetro e balza fuori per ucciderti!"
+      },
+      {
+        "text": "Tocca il vetro tagliandoti (-30 HP, Assorbi una Reliquia)",
+        "action": "trade_relic",
+        "msg": "Il vetro ti taglia la pelle, ma il tuo riflesso ti porge un oggetto magico."
+      },
+      {
+        "text": "Distogli lo sguardo ed esci",
+        "action": "none",
+        "msg": "Rompi il contatto visivo, e la tensione sparisce all'istante."
+      }
     ]
   },
   "oasi_sotterranea": {
-    "title": "L'Oasi Sotterranea", "text": "Tra le rocce, un raggio di luce illumina un prato fiorito. Sembra un miraggio in questo luogo di morte.",
-    "choices":[
-      {"text": "Riposa tra i fiori (Cura 100% HP)", "action": "heal_max", "msg": "I profumi dei fiori curano ogni tua ferita fisica e mentale!"},
-      {"text": "Raccogli i fiori spinosi (+100 Oro, I rovi ti infliggono 40 Danni)", "action": "blood_gold", "msg": "I rovi velenosi ti lacerano le mani, ma strappi via i preziosi petali dorati!"},
-      {"text": "Raccogli i frutti sull'albero (-50 Oro per strumenti, Trovi Arma)", "action": "trade_weapon", "msg": "Tra i rami più alti scovi i resti di un eroe antico e la sua maestosa arma:"}
+    "title": "L'Oasi Sotterranea",
+    "text": "Tra le rocce, un raggio di luce illumina un prato fiorito. Sembra un miraggio in questo luogo di morte.",
+    "choices": [
+      {
+        "text": "Riposa tra i fiori (Cura 100% HP)",
+        "action": "heal_max",
+        "msg": "I profumi dei fiori curano ogni tua ferita fisica e mentale!"
+      },
+      {
+        "text": "Raccogli i fiori spinosi (+100 Oro, I rovi ti infliggono 40 Danni)",
+        "action": "blood_gold",
+        "msg": "I rovi velenosi ti lacerano le mani, ma strappi via i preziosi petali dorati!"
+      },
+      {
+        "text": "Raccogli i frutti sull'albero (-50 Oro per strumenti, Trovi Arma)",
+        "action": "trade_weapon",
+        "msg": "Tra i rami più alti scovi i resti di un eroe antico e la sua maestosa arma:"
+      }
     ]
   },
   "cadavere_saggio": {
-    "title": "Il Cadavere del Saggio", "text": "Trovi i resti di un vecchio erudito. Stringe ancora qualcosa tra le dita scheletriche.",
-    "choices":[
-      {"text": "Ispeziona le mani (Ottieni Oggetto Chiave)", "action": "give_quest_item", "item_id": "chiave_arrugginita", "msg": "Hai ottenuto 'Chiave Arrugginita'!"},
-      {"text": "Fruga nello zaino (-30 HP, Ottieni Reliquia)", "action": "trade_relic", "msg": "Una vipera nascosta ti morde brutalmente, ma scovi una reliquia!"},
-      {"text": "Lascialo riposare", "action": "none", "msg": "Prosegui senza disturbare i morti."}
+    "title": "Il Cadavere del Saggio",
+    "text": "Trovi i resti di un vecchio erudito. Stringe ancora qualcosa tra le dita scheletriche.",
+    "choices": [
+      {
+        "text": "Ispeziona le mani (Ottieni Oggetto Chiave)",
+        "action": "give_quest_item",
+        "item_id": "chiave_arrugginita",
+        "msg": "Hai ottenuto 'Chiave Arrugginita'!"
+      },
+      {
+        "text": "Fruga nello zaino (-30 HP, Ottieni Reliquia)",
+        "action": "trade_relic",
+        "msg": "Una vipera nascosta ti morde brutalmente, ma scovi una reliquia!"
+      },
+      {
+        "text": "Lascialo riposare",
+        "action": "none",
+        "msg": "Prosegui senza disturbare i morti."
+      }
     ]
   },
   "porta_sigillata": {
-    "title": "La Porta Sigillata", "text": "Un'imponente porta di ferro blocca una via. Al centro c'è una serratura incrostata.",
-    "choices":[
-      {"text": "[RICHIEDE CHIAVE ARRUGGINITA] Apri la porta (Arma Epica + 200 Oro)", "action": "use_quest_item", "requires_item": "chiave_arrugginita", "msg": "La chiave gira a fatica. La porta si apre su un'antica armeria!", "reward_weapon": true, "reward_gold": 200},
-      {"text": "Cerca di sfondarla (Subisci 40 Danni, niente tesoro)", "action": "blood_gold", "msg": "Ti lussi una spalla contro il metallo senza alcun risultato... la frustrazione è palpabile."},
-      {"text": "Ignora la porta", "action": "none", "msg": "Non hai tempo da perdere. Tiri dritto."}
+    "title": "La Porta Sigillata",
+    "text": "Un'imponente porta di ferro blocca una via. Al centro c'è una serratura incrostata.",
+    "choices": [
+      {
+        "text": "[RICHIEDE CHIAVE ARRUGGINITA] Apri la porta (Arma Epica + 200 Oro)",
+        "action": "use_quest_item",
+        "requires_item": "chiave_arrugginita",
+        "msg": "La chiave gira a fatica. La porta si apre su un'antica armeria!",
+        "reward_weapon": true,
+        "reward_gold": 200
+      },
+      {
+        "text": "Cerca di sfondarla (Subisci 40 Danni, niente tesoro)",
+        "action": "blood_gold",
+        "msg": "Ti lussi una spalla contro il metallo senza alcun risultato... la frustrazione è palpabile."
+      },
+      {
+        "text": "Ignora la porta",
+        "action": "none",
+        "msg": "Non hai tempo da perdere. Tiri dritto."
+      }
     ]
   },
   "speziale_prigioniero": {
-    "title": "Lo Speziale Prigioniero", "text": "Trovi un anziano incatenato al muro. Le sue vesti sono sporche di pozioni esplose. 'Ti prego, le catene sono intrise di magia del sangue... serve un sacrificio per spezzarle!'",
-    "choices":[
-      {"text": "Dona il tuo sangue (-40 HP) per liberarlo", "action": "unlock_npc_speziale", "msg": "Il tuo sangue dissolve il lucchetto! L'anziano ti ringrazia: 'Ci rivedremo al Campo Base, te lo prometto!'"},
-      {"text": "Cerca le chiavi (Combatti un Elite)", "action": "unlock_npc_fight", "msg": "Una mostruosità attirata dal rumore ti assale!"},
-      {"text": "Ignoralo", "action": "none", "msg": "Le sue urla si affievoliscono mentre prosegui nel buio."}
+    "title": "Lo Speziale Prigioniero",
+    "text": "Trovi un anziano incatenato al muro. Le sue vesti sono sporche di pozioni esplose. 'Ti prego, le catene sono intrise di magia del sangue... serve un sacrificio per spezzarle!'",
+    "choices": [
+      {
+        "text": "Dona il tuo sangue (-40 HP) per liberarlo",
+        "action": "unlock_npc_speziale",
+        "msg": "Il tuo sangue dissolve il lucchetto! L'anziano ti ringrazia: 'Ci rivedremo al Campo Base, te lo prometto!'"
+      },
+      {
+        "text": "Cerca le chiavi (Combatti un Elite)",
+        "action": "unlock_npc_fight_speziale",
+        "msg": "Una mostruosità attirata dal rumore ti assale!"
+      },
+      {
+        "text": "Ignoralo",
+        "action": "none",
+        "msg": "Le sue urla si affievoliscono mentre prosegui nel buio."
+      }
+    ]
+  },
+  "borek_prigioniero": {
+    "title": "Il Maestro d'Armi Prigioniero",
+    "text": "Tra le macerie vedi un nano dalla lunga barba bruciacchiata, bloccato da una grata magica. 'Questi mostri non sanno distinguere un buon acciaio dalla latta! Aiutami ad uscire e forgerò per te armi degne di questo nome!'",
+    "choices": [
+      {
+        "text": "Dona il tuo sangue (-40 HP) per spezzare il sigillo",
+        "action": "unlock_npc_borek",
+        "msg": "La grata si dissolve. Borek si sgranchisce le braccia: 'Hai fegato, ragazzo. Ti aspetto al Campo Base!'"
+      },
+      {
+        "text": "Cerca le chiavi (Combatti un Elite)",
+        "action": "unlock_npc_fight_borek",
+        "msg": "Il trambusto attira un nemico formidabile!"
+      },
+      {
+        "text": "Ignoralo",
+        "action": "none",
+        "msg": "Le lamentele del nano svaniscono dietro di te."
+      }
+    ]
+  },
+  "elara_prigioniera": {
+    "title": "L'Armaiola Imprigionata",
+    "text": "Una donna dall'armatura parzialmente fusa è legata a un pilastro di pietra. 'Sono stata sopraffatta... Se mi liberi da questi vincoli magici, metterò la mia forgia al tuo servizio!'",
+    "choices": [
+      {
+        "text": "Dona il tuo sangue (-40 HP) per liberarla",
+        "action": "unlock_npc_elara",
+        "msg": "Elara si alza a fatica ma con gli occhi colmi di determinazione. 'Non dimenticherò questo debito. Ci vediamo al Campo Base.'"
+      },
+      {
+        "text": "Cerca le chiavi (Combatti un Elite)",
+        "action": "unlock_npc_fight_elara",
+        "msg": "Un Elite ti sbarra la strada per le chiavi!"
+      },
+      {
+        "text": "Ignorala",
+        "action": "none",
+        "msg": "Decidi che non vale la pena rischiare per un'estranea."
+      }
+    ]
+  },
+  "valerius_prigioniero": {
+    "title": "L'Incantatore Intrappolato",
+    "text": "Trovi un uomo avvolto in vesti eleganti ma logore, chiuso in una gabbia di cristallo. 'L'energia di questo luogo è caotica. Libera il mio potere e ti ricompenserò con monili di rara fattura!'",
+    "choices": [
+      {
+        "text": "Dona il tuo sangue (-40 HP) per infrangere il cristallo",
+        "action": "unlock_npc_valerius",
+        "msg": "Il cristallo va in mille pezzi. Valerius fa un inchino: 'La tua vitalità è notevole. Mi troverai al Campo Base.'"
+      },
+      {
+        "text": "Cerca le chiavi (Combatti un Elite)",
+        "action": "unlock_npc_fight_valerius",
+        "msg": "Il guardiano della gabbia fa la sua comparsa!"
+      },
+      {
+        "text": "Ignoralo",
+        "action": "none",
+        "msg": "Prosegui, lasciando Valerius alla sua prigione di cristallo."
+      }
     ]
   }
 }

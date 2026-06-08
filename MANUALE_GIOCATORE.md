@@ -19,7 +19,7 @@ Questi oggetti (trovabili nei Forzieri, donati da Eventi o droppati dai Boss) no
 
 ## 🎭 Stanze Evento ed Evoluzione
 Oltre ai combattimenti, affronterai:
-* **Eventi Narrativi:** Stanze misteriose dove dovrai prendere decisioni drastiche. Potrai scambiare HP per reliquie, sfidare la sorte lanciando monete, o risvegliare mostri d'Elite per puro guadagno. In rare occasioni, potresti incontrare **NPC prigionieri** (come l'anziano Speziale): se sacrifichi te stesso per salvarli, questi apriranno nuove botteghe utilissime al Campo Base!
+* **Eventi Narrativi:** Stanze misteriose dove dovrai prendere decisioni drastiche. Potrai scambiare HP per reliquie, sfidare la sorte lanciando monete, o risvegliare mostri d'Elite per puro guadagno. In rare occasioni, potresti incontrare **NPC prigionieri** (come lo Speziale, Borek, Elara e Valerius). Se li salverai, apriranno nuove botteghe al Campo Base.
 * **L'Altare dell'Evoluzione (Forgia):** Quando riposi al Falò, puoi scegliere di sacrificare un'arma (o armatura) in tuo possesso per fonderla con un'altra dello stesso tipo, aumentandone permanentemente le statistiche e il livello. Non gettare mai via l'equipaggiamento extra!
 
 ## ☣️ Sopravvivenza Avanzata
@@ -32,3 +32,9 @@ Il Labirinto punisce chi non si prepara. Attento a queste minacce mortali:
 Se "Scappi" dal labirinto (Opzione 3 al bivio), porterai in salvo l'Oro convertendolo in **Essenza Astrale**. Usala nel Campo Base per sbloccare Classi, Tratti e Perk.
 *Non dimenticare l'Archivio!* Durante le tue esplorazioni sbloccherai passaggi storici nel Campo Base. Raccogliere questi tomi ti garantirà le **Sinergie dell'Archivio**, bonus passivi permanenti per tutte le run future (come +10% Danni ai Boss). Puoi sempre controllare i tuoi bonus attivi aprendo l'Inventario in partita.
 *Hai già vinto il gioco?* Si sbloccheranno i **Patti del Caos**. All'inizio di ogni run potrai attivare maledizioni (come prezzi raddoppiati o nemici più forti) per ricevere massicci moltiplicatori all'Essenza finale guadagnata!
+
+## ⛺ Il Campo Base e gli Artigiani
+Oltre ad esplorare e sbloccare talenti, gli NPC salvati amplieranno l'economia del gioco:
+- **La Forgia Dimensionale** sblocca le sue categorie specifiche solo se hai salvato l'NPC corrispondente (Borek per le armi, Elara per le armature, ecc.).
+- Ogni volta che sblocchi un nuovo oggetto dalla Forgia (armature, consumabili, monili o armi), questo diventerà pre-acquistabile dal rispettivo NPC, permettendoti di iniziare la discesa già equipaggiato con i tuoi oggetti preferiti!
+- Le statistiche del tuo eroe e i dettagli sulle potenti "Risonanze Elementali" sono sempre consultabili in modo gratuito in qualsiasi momento, persino nel bel mezzo di un combattimento, tramite il menu **Statistiche Eroe** dell'inventario!

@@ -3,32 +3,38 @@
         {
             "name": "Fiala di Sangue",
             "base_heal": 15,
-            "val_base": 5
+            "val_base": 5,
+            "category": "heal"
         },
         {
             "name": "Pozione Minore",
             "base_heal": 25,
-            "val_base": 10
+            "val_base": 10,
+            "category": "heal"
         },
         {
             "name": "Decotto alle Erbe",
             "base_heal": 35,
-            "val_base": 15
+            "val_base": 15,
+            "category": "heal"
         },
         {
             "name": "Pozione Curativa",
             "base_heal": 50,
-            "val_base": 20
+            "val_base": 20,
+            "category": "heal"
         },
         {
             "name": "Elisir Maggiore",
             "base_heal": 80,
-            "val_base": 35
+            "val_base": 35,
+            "category": "heal"
         },
         {
             "name": "Lacrima di Fenice",
             "base_heal": 150,
-            "val_base": 60
+            "val_base": 60,
+            "category": "heal"
         },
         {
             "name": "Elisir degli Dei",
@@ -36,7 +42,8 @@
             "val_base": 150,
             "unlock_id": "elisir_dei",
             "unlock_cost": 200,
-            "desc": "Cura quasi completamente qualsiasi eroe."
+            "desc": "Cura quasi completamente qualsiasi eroe.",
+            "category": "heal"
         },
         {
             "name": "Pietra per Affilare",
@@ -44,7 +51,8 @@
             "val_base": 50,
             "unlock_id": "pietra_affilare",
             "unlock_cost": 0,
-            "desc": "Aumenta +5 ATK all'arma attuale in modo permanente."
+            "desc": "Aumenta +5 ATK all'arma attuale in modo permanente.",
+            "category": "whetstone"
         },
         {
             "name": "Bomba Fumogena",
@@ -52,7 +60,8 @@
             "val_base": 80,
             "unlock_id": "bomba_fumogena",
             "unlock_cost": 0,
-            "desc": "Ti permette di fuggire all'istante da un combattimento."
+            "desc": "Ti permette di fuggire all'istante da un combattimento.",
+            "category": "smoke_bomb"
         },
         {
             "name": "Tomo del Caos",
@@ -60,7 +69,8 @@
             "val_base": 75,
             "unlock_id": "tomo_caos",
             "unlock_cost": 0,
-            "desc": "Cambia casualmente l'elemento dell'arma che impugni."
+            "desc": "Cambia casualmente l'elemento dell'arma che impugni.",
+            "category": "chaos_tome"
         },
         {
             "name": "Filtro Preciso",
@@ -68,7 +78,8 @@
             "base_heal": 0,
             "val_base": 30,
             "unlock_cost": 0,
-            "unlock_id": "filtro_preciso"
+            "unlock_id": "filtro_preciso",
+            "category": "accuracy_potion"
         },
         {
             "name": "Acqua Santa",
@@ -76,7 +87,8 @@
             "base_heal": 50,
             "val_base": 80,
             "unlock_cost": 0,
-            "unlock_id": "acqua_santa"
+            "unlock_id": "acqua_santa",
+            "category": "holy_water"
         },
         {
             "name": "Fiala del Caos",
@@ -84,13 +96,15 @@
             "base_heal": 0,
             "val_base": 100,
             "unlock_cost": 0,
-            "unlock_id": "fiala_caos"
+            "unlock_id": "fiala_caos",
+            "category": "chaos_vial"
         },
         {
             "name": "Antidoto Universale",
             "desc": "Cura tutti gli stati alterati (Veleno, Sanguinamento).",
             "base_heal": 10,
-            "val_base": 40
+            "val_base": 40,
+            "category": "antidote"
         }
     ]
 }
