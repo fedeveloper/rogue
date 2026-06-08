@@ -1,7 +1,7 @@
 import random
 from typing import List, Dict, Any
 from ui import Colors, delay_print, get_choice, clear_screen
-from data_manager import GAME_DATA, RAW_DATA, PROFILE, ELEMENTS, MULTIPLIERS, get_element_icon
+from data_manager import GAME_DATA, RAW_DATA, PROFILE_MANAGER, ELEMENTS, MULTIPLIERS, get_element_icon
 from relic_effects import create_relic_effect
 
 class Item:
@@ -15,6 +15,16 @@ class Weapon(Item):
         self.is_cursed, self.curse_effect = is_cursed, curse_effect
         cursed_tag = f"{Colors.MAGENTA}[MALEDETTO]{Colors.RESET} " if is_cursed else ""
         self.display_name = f"{cursed_tag}{name}[{get_element_icon(element)}]"
+
+    def get_hit_chance_modifier(self) -> int:
+        if "Ascia del Boia" in self.name:
+            return -15
+        return 0
+        
+    def on_attack(self, dmg_dealt: int, eff: str) -> tuple[int, str]:
+        if "Ascia del Boia" in self.name and random.random() < 0.35:
+            return dmg_dealt * 2, eff + f" {Colors.MAGENTA}[CRITICO DELL'ASCIA!]{Colors.RESET}"
+        return dmg_dealt, eff
 
 class Armor(Item):
     def __init__(self, name: str, value: int, defense: int, element: str, level: int, flavor: str = "", is_cursed: bool = False, curse_effect: str = ""):
@@ -102,9 +112,9 @@ class Player:
         data = RAW_DATA["classes"][class_id]
         
         self.role = data["role"]
-        self.max_hp = data["max_hp"] + (PROFILE["perks"]["hp_lvl"] * 15)
+        self.max_hp = data["max_hp"] + (PROFILE_MANAGER._data["perks"]["hp_lvl"] * 15)
         self.hp = self.max_hp
-        self.gold = data["gold"] + (PROFILE["perks"]["gold_lvl"] * 20)
+        self.gold = data["gold"] + (PROFILE_MANAGER._data["perks"]["gold_lvl"] * 20)
         self.base_acc, self.base_dodge = data["acc"], data["dodge"]
         self.active_pacts = active_pacts
         self.relic_ids = []
@@ -116,11 +126,11 @@ class Player:
         self.quest_items: List[str] = []
         
         self.exp_multiplier = 1.0
-        if PROFILE["class_lvl"].get("1", 1) >= 4: self.base_dodge += 5 
-        if PROFILE["class_lvl"].get("2", 1) >= 4: self.base_dodge += 10 
-        if PROFILE["class_lvl"].get("3", 1) >= 4: self.exp_multiplier = 1.15 
-        if PROFILE["class_lvl"].get("4", 1) >= 4: self.max_hp += 15 
-        if PROFILE["class_lvl"].get("6", 1) >= 4: self.base_acc += 5 
+        if PROFILE_MANAGER._data["class_lvl"].get("1", 1) >= 4: self.base_dodge += 5 
+        if PROFILE_MANAGER._data["class_lvl"].get("2", 1) >= 4: self.base_dodge += 10 
+        if PROFILE_MANAGER._data["class_lvl"].get("3", 1) >= 4: self.exp_multiplier = 1.15 
+        if PROFILE_MANAGER._data["class_lvl"].get("4", 1) >= 4: self.max_hp += 15 
+        if PROFILE_MANAGER._data["class_lvl"].get("6", 1) >= 4: self.base_acc += 5 
         
         self.trait = GAME_DATA["meta"]["traits"][trait_id]
         self.cursed, self.midas, self.ethereal_hunter = False, False, False
@@ -137,20 +147,20 @@ class Player:
             r = next((x for x in GAME_DATA["relics"] if x["id"] == "scudo_cristallo"), None)
             if r: self.add_relic(r)
         
-        self.base_dodge += PROFILE["perks"].get("dodge_lvl", 0) * 2
-        self.base_acc += PROFILE["perks"].get("acc_lvl", 0) * 3
-        self.exp_multiplier += PROFILE["perks"].get("exp_lvl", 0) * 0.05
+        self.base_dodge += PROFILE_MANAGER._data["perks"].get("dodge_lvl", 0) * 2
+        self.base_acc += PROFILE_MANAGER._data["perks"].get("acc_lvl", 0) * 3
+        self.exp_multiplier += PROFILE_MANAGER._data["perks"].get("exp_lvl", 0) * 0.05
         
-        if "starting_consumables" in PROFILE:
-            for cons_name in PROFILE["starting_consumables"]:
+        if "starting_consumables" in PROFILE_MANAGER._data:
+            for cons_name in PROFILE_MANAGER._data["starting_consumables"]:
                 c_data = next((x for x in GAME_DATA["consumables"] if x["name"] == cons_name), None)
                 if c_data:
                     self.inventory.append(Consumable(c_data["name"], c_data["val_base"], c_data["base_heal"]))
-            PROFILE["starting_consumables"] = []
+            PROFILE_MANAGER._data["starting_consumables"] = []
         
-        start_weapon_lv = 2 if class_id == "1" and PROFILE["class_lvl"].get("1", 1) >= 2 else 1
-        self.thief_save = True if class_id == "2" and PROFILE["class_lvl"].get("2", 1) >= 2 else False
-        self.mage_lifesteal = True if class_id == "3" and PROFILE["class_lvl"].get("3", 1) >= 2 else False
+        start_weapon_lv = 2 if class_id == "1" and PROFILE_MANAGER._data["class_lvl"].get("1", 1) >= 2 else 1
+        self.thief_save = True if class_id == "2" and PROFILE_MANAGER._data["class_lvl"].get("2", 1) >= 2 else False
+        self.mage_lifesteal = True if class_id == "3" and PROFILE_MANAGER._data["class_lvl"].get("3", 1) >= 2 else False
 
         self.level, self.exp, self.max_exp = 1, 0, 100
         self.escaped = False
@@ -158,20 +168,20 @@ class Player:
         self.essence_gathered, self.bosses_killed = 0, 0
         
         w_data = data["weapon"]
-        self.weapon = Weapon(w_data["name"], w_data["value"], w_data["atk"] + (50 if self.cursed else 0) + PROFILE["perks"].get("artigiano_lvl", 0), w_data.get("element", "Normale"), 1) if start_weapon_lv == 1 else generate_weapon(2)
-        if PROFILE["perks"].get("artigiano_lvl", 0) > 0 and start_weapon_lv != 1: self.weapon.atk += PROFILE["perks"].get("artigiano_lvl", 0)
-        if PROFILE["class_lvl"].get("5", 1) >= 4: self.weapon.atk += 2
+        self.weapon = Weapon(w_data["name"], w_data["value"], w_data["atk"] + (50 if self.cursed else 0) + PROFILE_MANAGER._data["perks"].get("artigiano_lvl", 0), w_data.get("element", "Normale"), 1) if start_weapon_lv == 1 else generate_weapon(2)
+        if PROFILE_MANAGER._data["perks"].get("artigiano_lvl", 0) > 0 and start_weapon_lv != 1: self.weapon.atk += PROFILE_MANAGER._data["perks"].get("artigiano_lvl", 0)
+        if PROFILE_MANAGER._data["class_lvl"].get("5", 1) >= 4: self.weapon.atk += 2
         self.temp_dodge = 0
         self.temp_def = 0
         
         a_data = data["armor"]
-        self.armor = Armor(a_data["name"], a_data["value"], a_data["def"] + PROFILE["perks"].get("pelle_dura_lvl", 0), a_data.get("element", "Normale"), 1)
+        self.armor = Armor(a_data["name"], a_data["value"], a_data["def"] + PROFILE_MANAGER._data["perks"].get("pelle_dura_lvl", 0), a_data.get("element", "Normale"), 1)
         self.accessory = None
         
-        potions_count = data["potions"] + (1 if PROFILE["perks"].get("farmacista", False) else 0)
+        potions_count = data["potions"] + (1 if PROFILE_MANAGER._data["perks"].get("farmacista", False) else 0)
         self.inventory =[generate_potion(1) for _ in range(potions_count)]
         
-        if PROFILE["perks"].get("altare_benedizione", False):
+        if PROFILE_MANAGER._data["perks"].get("altare_benedizione", False):
             r = get_random_relic(self)
             if r: self.add_relic(r)
 
@@ -217,7 +227,7 @@ class Player:
     def get_dodge(self): 
         dodge = self.base_dodge + self.temp_dodge
         for effect in self.relic_effects: dodge += effect.get_dodge_modifier()
-        if self.class_id == "5" and PROFILE["class_lvl"].get("5", 1) >= 2 and self.hp < self.max_hp * 0.3: return 0
+        if self.class_id == "5" and PROFILE_MANAGER._data["class_lvl"].get("5", 1) >= 2 and self.hp < self.max_hp * 0.3: return 0
         if self.has_curse("heavy"): dodge -= 15
         return max(0, dodge)
 
@@ -243,11 +253,54 @@ class Player:
             self.exp -= self.max_exp
             self.level += 1; self.max_exp = int(self.max_exp * 1.5)
             self.max_hp += 15
-            if not self.cursed: self.hp = self.max_hp
+            self.heal(self.max_hp)
             self.base_acc += 2; self.base_dodge += 2
             print(f"\n{Colors.YELLOW}{Colors.BOLD}*** LEVEL UP! Sei salito al livello {self.level}! ***{Colors.RESET}")
 
+    def heal(self, amount: int) -> int:
+        if self.cursed:
+            return 0
+        actual_heal = min(amount, self.max_hp - self.hp)
+        self.hp += actual_heal
+        return actual_heal
 
+    def take_damage(self, amount: int) -> bool:
+        self.hp -= amount
+        if self.hp <= 0 and self.benedetto_save:
+            self.hp = 1
+            self.benedetto_save = False
+            print(f"{Colors.YELLOW}La Benedizione ti salva dal colpo letale!{Colors.RESET}")
+        
+        if self.hp == 1:
+            self.run_tracker["1_hp_survive"] = True
+            
+        return self.hp > 0
+
+    def get_class_damage_multiplier(self) -> float:
+        if self.class_id == "5" and PROFILE_MANAGER._data["class_lvl"].get("5", 1) >= 2 and self.hp < self.max_hp * 0.3:
+            return 1.5
+        return 1.0
+
+    def on_defense_started(self):
+        if self.class_id == "4" and PROFILE_MANAGER._data["class_lvl"].get("4", 1) >= 2:
+            self.heal(3)
+            from ui import Colors
+            print(f"{Colors.GREEN}Baluardo della Fede: Recuperi 3 HP!{Colors.RESET}")
+
+    def on_attack_landed(self, dmg_dealt: int, multiplier: float):
+        if self.class_id == "3" and PROFILE_MANAGER._data["class_lvl"].get("3", 1) >= 2 and multiplier > 1.0:
+            h = max(1, dmg_dealt // 10)
+            self.heal(h)
+            from ui import Colors
+            print(f"{Colors.MAGENTA}Sintonia: Assorbi {h} HP!{Colors.RESET}")
+            
+    def get_defense_action(self) -> tuple[str, str]:
+        if self.role in ["Guerriero", "Berserker"]:
+            return "counter", "Difesa Aggressiva (Dimezza danni e Contrattacca)"
+        elif self.role == "Ladro":
+            return "focus", "Concentrazione (Dimezza danni, prossimo colpo Critico 100%)"
+        else:
+            return "recovery", "Riparo Magico (Dimezza danni e Cura 5% HP)"
 
 class Enemy:
     def __init__(self, floor: int, is_boss: bool, active_pacts: List[str], modifier: str = "normal"):

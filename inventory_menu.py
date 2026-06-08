@@ -1,7 +1,7 @@
 import time
 import random
 from ui import Colors, clear_screen, get_choice
-from data_manager import PROFILE, get_element_icon
+from data_manager import PROFILE_MANAGER, get_element_icon
 from entities import generate_random_element
 from archive import is_book_unlocked
 
@@ -21,9 +21,9 @@ def show_inventory_menu(player, in_combat=False) -> str:
             for r in player.relics: print(f"   - {Colors.YELLOW}{r['name']}{Colors.RESET}: {r['desc']}")
             
         archive_buffs = []
-        if is_book_unlocked("bestiario", PROFILE): archive_buffs.append("Conoscenza (Bestiario): +10% Danni vs Boss")
-        if is_book_unlocked("diario_silas", PROFILE): archive_buffs.append("Conoscenza (Silas): +5% Oro, +5% Fuga")
-        if is_book_unlocked("cronache_ere", PROFILE): archive_buffs.append("Conoscenza (Ere Antiche): +5 Difesa")
+        if is_book_unlocked("bestiario", PROFILE_MANAGER._data): archive_buffs.append("Conoscenza (Bestiario): +10% Danni vs Boss")
+        if is_book_unlocked("diario_silas", PROFILE_MANAGER._data): archive_buffs.append("Conoscenza (Silas): +5% Oro, +5% Fuga")
+        if is_book_unlocked("cronache_ere", PROFILE_MANAGER._data): archive_buffs.append("Conoscenza (Ere Antiche): +5 Difesa")
         
         if archive_buffs:
             print(f"📚 {Colors.CYAN}Sinergie dell'Archivio:{Colors.RESET}")
@@ -111,7 +111,7 @@ def show_inventory_menu(player, in_combat=False) -> str:
                             old_hp = player.hp
                             base_h = item.heal_amount
                             for effect in player.relic_effects: base_h = effect.on_heal(player, base_h)
-                            if player.class_id == "6" and PROFILE["class_lvl"].get("6", 1) >= 2: base_h = int(base_h * 1.5)
+                            if player.class_id == "6" and PROFILE_MANAGER._data["class_lvl"].get("6", 1) >= 2: base_h = int(base_h * 1.5)
                             h_amt = base_h // 2 if "carestia" in player.active_pacts else base_h
                             
                             player.hp = min(player.max_hp, player.hp + h_amt)

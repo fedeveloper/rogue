@@ -14,35 +14,104 @@ def load_json_file(filename: str) -> Dict[str, Any]:
         print(f"{Colors.RED}ERRORE FATALE:{Colors.RESET} File 'data/{filename}' mancante o corrotto. ({e})")
         sys.exit(1)
 
-def load_profile() -> Dict[str, Any]:
-    filepath = os.path.join(BASE_DIR, "profile.json")
-    default_profile = {
-        "essence": 0, "max_floor": 0, "won_normal": False,
-        "unlocked_ids":[], "class_xp": {}, "class_lvl": {},
-        "stats": {"total_deaths": 0, "total_gold": 0}, "completed_feats":[],
-        "perks": {
-            "hp_lvl": 0, "gold_lvl": 0, "discount_lvl": 0, "sesto_senso": False, "scarpisti": False,
-            "dodge_lvl": 0, "acc_lvl": 0, "exp_lvl": 0, "farmacista": False, "altare_benedizione": False,
-            "riciclatore_lvl": 0, "banca_anima_lvl": 0, "artigiano_lvl": 0, "pelle_dura_lvl": 0, "speranza_luce_lvl": 0
+class ProfileManager:
+    def __init__(self):
+        self.filepath = os.path.join(BASE_DIR, "profile.json")
+        self._data = self._load()
+
+    def _load(self) -> Dict[str, Any]:
+        default_profile = {
+            "essence": 0, "max_floor": 0, "won_normal": False,
+            "unlocked_ids":[], "class_xp": {}, "class_lvl": {},
+            "stats": {"total_deaths": 0, "total_gold": 0, "total_bosses": 0}, "completed_feats":[],
+            "perks": {
+                "hp_lvl": 0, "gold_lvl": 0, "discount_lvl": 0, "sesto_senso": False, "scarpisti": False,
+                "dodge_lvl": 0, "acc_lvl": 0, "exp_lvl": 0, "farmacista": False, "altare_benedizione": False,
+                "riciclatore_lvl": 0, "banca_anima_lvl": 0, "artigiano_lvl": 0, "pelle_dura_lvl": 0, "speranza_luce_lvl": 0
+            }
         }
-    }
-    if not os.path.exists(filepath):
-        with open(filepath, 'w', encoding='utf-8') as f: json.dump(default_profile, f, indent=4)
-        return default_profile
-    with open(filepath, 'r', encoding='utf-8') as f: loaded = json.load(f)
-    for key, val in default_profile.items():
-        if key not in loaded: loaded[key] = val
-        elif isinstance(val, dict):
-            for sub_k, sub_v in val.items():
-                if sub_k not in loaded[key]: loaded[key][sub_k] = sub_v
-    with open(filepath, 'w', encoding='utf-8') as f: json.dump(loaded, f, indent=4)
-    return loaded
+        if not os.path.exists(self.filepath):
+            with open(self.filepath, 'w', encoding='utf-8') as f: json.dump(default_profile, f, indent=4)
+            return default_profile
+        with open(self.filepath, 'r', encoding='utf-8') as f: loaded = json.load(f)
+        for key, val in default_profile.items():
+            if key not in loaded: loaded[key] = val
+            elif isinstance(val, dict):
+                for sub_k, sub_v in val.items():
+                    if sub_k not in loaded[key]: loaded[key][sub_k] = sub_v
+        with open(self.filepath, 'w', encoding='utf-8') as f: json.dump(loaded, f, indent=4)
+        return loaded
 
-def save_profile(profile: Dict[str, Any]):
-    filepath = os.path.join(BASE_DIR, "profile.json")
-    with open(filepath, 'w', encoding='utf-8') as f: json.dump(profile, f, indent=4)
+    def save(self):
+        with open(self.filepath, 'w', encoding='utf-8') as f: json.dump(self._data, f, indent=4)
 
-PROFILE = load_profile()
+    @property
+    def essence(self) -> int: return self._data["essence"]
+    
+    @essence.setter
+    def essence(self, value: int): self._data["essence"] = value
+
+    @property
+    def max_floor(self) -> int: return self._data["max_floor"]
+    
+    @max_floor.setter
+    def max_floor(self, value: int): self._data["max_floor"] = value
+
+    @property
+    def won_normal(self) -> bool: return self._data["won_normal"]
+    
+    @won_normal.setter
+    def won_normal(self, value: bool): self._data["won_normal"] = value
+
+    @property
+    def stats(self): return self._data["stats"]
+
+    @property
+    def unlocked_ids(self) -> list: return self._data["unlocked_ids"]
+
+    @property
+    def completed_feats(self) -> list: return self._data["completed_feats"]
+
+    def get_perk(self, perk_name: str, default=0):
+        return self._data["perks"].get(perk_name, default)
+        
+    def set_perk(self, perk_name: str, value):
+        self._data["perks"][perk_name] = value
+
+    def get_class_lvl(self, class_id: str, default=1):
+        return self._data["class_lvl"].get(class_id, default)
+
+    def set_class_lvl(self, class_id: str, value):
+        self._data["class_lvl"][class_id] = value
+
+    def get_class_xp(self, class_id: str, default=0):
+        return self._data["class_xp"].get(class_id, default)
+
+    def set_class_xp(self, class_id: str, value):
+        self._data["class_xp"][class_id] = value
+
+    def get_npc_unlocked(self, npc_name: str) -> bool:
+        return self._data.get("npc_unlocked", {}).get(npc_name, False)
+        
+    def unlock_npc(self, npc_name: str):
+        if "npc_unlocked" not in self._data: self._data["npc_unlocked"] = {}
+        self._data["npc_unlocked"][npc_name] = True
+
+    def get_starting_consumables(self) -> list:
+        return self._data.get("starting_consumables", [])
+
+    def add_starting_consumable(self, name: str):
+        if "starting_consumables" not in self._data: self._data["starting_consumables"] = []
+        self._data["starting_consumables"].append(name)
+        
+    def clear_starting_consumables(self):
+        self._data["starting_consumables"] = []
+        
+    def is_book_unlocked(self, book_id: str) -> bool:
+        return book_id in self._data.get("unlocked_books", [])
+
+PROFILE_MANAGER = ProfileManager()
+PROFILE = PROFILE_MANAGER._data  # For backward compatibility during refactoring
 
 RAW_DATA = {
     "enemies": load_json_file("enemies.json")["enemies"], "bosses": load_json_file("enemies.json")["bosses"],
