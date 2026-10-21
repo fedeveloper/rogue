@@ -75,9 +75,9 @@
                 "type": "global"
             },
             "5": {
-                "desc": "Sblocca Classe: Assassino (In Sviluppo)",
+                "desc": "Sblocca Classe: Assassino",
                 "type": "class",
-                "id": "null"
+                "id": "7"
             }
         }
     },
@@ -116,9 +116,9 @@
                 "type": "global"
             },
             "5": {
-                "desc": "Sblocca Classe: Negromante (In Sviluppo)",
+                "desc": "Sblocca Classe: Negromante",
                 "type": "class",
-                "id": "null"
+                "id": "8"
             }
         }
     },
@@ -249,6 +249,93 @@
                 "desc": "Sblocca Reliquia: Pietra Filosofale",
                 "type": "unlock",
                 "id": "pietra_filosofale"
+            }
+        }
+    },
+    "7": {
+        "role": "Assassino",
+        "max_hp": 75,
+        "gold": 30,
+        "acc": 20,
+        "dodge": 30,
+        "crit": 20,
+        "weapon": {
+            "name": "Pugnale Ricurvo",
+            "value": 50,
+            "atk": 12,
+            "element": "Vento"
+        },
+        "armor": {
+            "name": "Mantello d'Ombra",
+            "value": 20,
+            "def": 1,
+            "element": "Normale"
+        },
+        "potions": 1,
+        "unlocked_by_default": false,
+        "unlock_cost": 0,
+        "desc": "Sbloccato raggiungendo la Maestria Ladro Lv.5.",
+        "mastery": {
+            "2": {
+                "desc": "Imboscata: il primo attacco di ogni scontro infligge danni doppi.",
+                "type": "personal"
+            },
+            "3": {
+                "desc": "Sblocca Arma: Pugnali del Vento Tagliente",
+                "type": "unlock",
+                "id": "pugnali_vento"
+            },
+            "4": {
+                "desc": "Eredit\u00e0: +5% probabilit\u00e0 di Critico per TUTTI gli eroi.",
+                "type": "global"
+            },
+            "5": {
+                "desc": "Sblocca Reliquia: Clessidra del Destino",
+                "type": "unlock",
+                "id": "clessidra_destino"
+            }
+        }
+    },
+    "8": {
+        "role": "Negromante",
+        "max_hp": 70,
+        "gold": 20,
+        "acc": 10,
+        "dodge": 5,
+        "weapon": {
+            "name": "Bastone d'Ossa",
+            "value": 50,
+            "atk": 13,
+            "element": "Tenebra"
+        },
+        "armor": {
+            "name": "Sudario Funebre",
+            "value": 30,
+            "def": 2,
+            "element": "Tenebra"
+        },
+        "potions": 1,
+        "unlocked_by_default": false,
+        "unlock_cost": 0,
+        "desc": "Sbloccato raggiungendo la Maestria Mago Lv.5.",
+        "mastery": {
+            "2": {
+                "desc": "Raccolto d'Anime: ogni nemico sconfitto ti cura del 10% degli HP Max.",
+                "type": "personal"
+            },
+            "3": {
+                "desc": "Sblocca Arma: Falce del Mietitore",
+                "type": "unlock",
+                "id": "falce_mietitore"
+            },
+            "4": {
+                "desc": "Eredit\u00e0: +1 HP rubato a ogni colpo a segno per TUTTI gli eroi.",
+                "type": "global"
+            },
+            "5": {
+                "desc": "Sblocca Reliquia: Contratto Demoniaco",
+                "type": "unlock",
+                "id": "contratto_demoniaco"
             }
         }
     }

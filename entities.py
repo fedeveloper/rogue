@@ -3,7 +3,7 @@ from typing import List, Dict
 from ui import Colors, delay_print, get_choice, clear_screen, display_msg
 from data_manager import GAME_DATA, RAW_DATA, PROFILE_MANAGER, ELEMENTS, MULTIPLIERS, get_element_icon
 from relic_effects import create_relic_effect
-from constants import WEAPON_LEVEL_SCALING, ARMOR_LEVEL_SCALING, CURSE_CHANCE, CURSE_STAT_MULTIPLIER
+from constants import BASE_HIT_CHANCE, WEAPON_LEVEL_SCALING, ARMOR_LEVEL_SCALING, CURSE_CHANCE, CURSE_STAT_MULTIPLIER
 
 class Item:
     def __init__(self, name: str, value: int, item_type: str, level: int = 1, flavor: str = "", is_cursed: bool = False, curse_effect: str = "", element: str = "Normale"):
@@ -132,11 +132,15 @@ class Player:
         
         self.exp_multiplier = 1.0
         self.bonus_def = 0
+        self.base_crit = data.get("crit", 0)
+        self.base_lifesteal = 0
         if PROFILE_MANAGER.get_class_lvl("1", 1) >= 4: self.bonus_def += 5 
         if PROFILE_MANAGER.get_class_lvl("2", 1) >= 4: self.base_dodge += 10 
         if PROFILE_MANAGER.get_class_lvl("3", 1) >= 4: self.exp_multiplier = 1.15 
         if PROFILE_MANAGER.get_class_lvl("4", 1) >= 4: self.max_hp += 15 
         if PROFILE_MANAGER.get_class_lvl("6", 1) >= 4: self.base_acc += 5 
+        if PROFILE_MANAGER.get_class_lvl("7", 1) >= 4: self.base_crit += 5
+        if PROFILE_MANAGER.get_class_lvl("8", 1) >= 4: self.base_lifesteal += 1
         self.hp = self.max_hp
         
         self.trait = GAME_DATA["meta"]["traits"][trait_id]
@@ -154,6 +158,8 @@ class Player:
         start_weapon_lv = 2 if class_id == "1" and PROFILE_MANAGER.get_class_lvl("1", 1) >= 2 else 1
         self.thief_save = True if class_id == "2" and PROFILE_MANAGER.get_class_lvl("2", 1) >= 2 else False
         self.alchemist_potions = True if class_id == "6" and PROFILE_MANAGER.get_class_lvl("6", 1) >= 2 else False
+        self.assassin_ambush = class_id == "7" and PROFILE_MANAGER.get_class_lvl("7", 1) >= 2
+        self.necro_harvest = class_id == "8" and PROFILE_MANAGER.get_class_lvl("8", 1) >= 2
 
         self.level, self.exp, self.max_exp = 1, 0, 100
         self.escaped = False
@@ -249,6 +255,23 @@ class Player:
 
     def get_total_atk(self): return self.weapon.atk + self.bonus_atk_relic
 
+    def get_crit_chance(self) -> int:
+        crit = self.base_crit
+        if self.accessory and self.accessory.bonus_type == "crit_chance": crit += self.accessory.bonus_value
+        return min(100, crit)
+
+    def get_lifesteal(self) -> int:
+        ls = self.base_lifesteal
+        if self.accessory and self.accessory.bonus_type == "lifesteal": ls += self.accessory.bonus_value
+        return ls
+
+    def get_hit_chance(self, enemy_dodge: int = 0, multiplier: float = 1.0) -> int:
+        """Probabilità reale di colpire (in %), la stessa usata in combattimento."""
+        hit = BASE_HIT_CHANCE + self.base_acc + self.temp_acc - enemy_dodge + (15 if multiplier > 1.0 else -20 if multiplier < 1.0 else 0)
+        hit += self.weapon.get_hit_chance_modifier()
+        for r in self.relic_effects: hit += r.get_acc_modifier()
+        return max(10, min(100, hit))
+
     def get_total_def(self) -> int:
         from archive import is_book_unlocked
         defense = self.armor.defense + self.temp_def + self.bonus_def
@@ -331,7 +354,7 @@ class Player:
     def get_defense_action(self) -> tuple[str, str]:
         if self.role in ["Guerriero", "Berserker"]:
             return "counter", "Difesa Aggressiva (Dimezza danni e Contrattacca)"
-        elif self.role == "Ladro":
+        elif self.role in ["Ladro", "Assassino"]:
             return "focus", "Concentrazione (Dimezza danni, prossimo colpo Critico 100%)"
         else:
             return "recovery", "Riparo Magico (Dimezza danni e Cura 5% HP)"

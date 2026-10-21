@@ -10,7 +10,17 @@ class Colors:
 def clear_screen(): 
     os.system('cls' if os.name == 'nt' else 'clear')
 
+TEXT_SPEED_MULTIPLIER = 1.0
+
+def set_text_speed(multiplier: float):
+    global TEXT_SPEED_MULTIPLIER
+    TEXT_SPEED_MULTIPLIER = max(0.0, multiplier)
+
 def delay_print(text: str, delay: float = 0.02):
+    delay *= TEXT_SPEED_MULTIPLIER
+    if delay <= 0:
+        print(text)
+        return
     for char in text:
         sys.stdout.write(char)
         sys.stdout.flush()

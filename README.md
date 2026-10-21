@@ -26,7 +26,7 @@ Un sistema a **7 elementi** (Fuoco, Acqua, Terra, Vento, Luce, Tenebra, Normale)
 ### 🗺️ Mappa a Bivi Strategica
 Ogni piano è composto da 5 stanze. Prima di ogni stanza scegli tra **2 porte** diverse: combattimento, mercante, falò, forziere, trappola, evento narrativo o la temibile *Stanza del Mistero*. La quinta stanza è sempre un **Boss**.
 
-### 🧬 6 Classi Giocabili
+### 🧬 8 Classi Giocabili
 
 | Classe | HP | Stile | Sblocco |
 |---|---|---|---|
@@ -36,6 +36,8 @@ Ogni piano è composto da 5 stanze. Prima di ogni stanza scegli tra **2 porte** 
 | 🛡️ **Paladino** | 180 | Ultra-tank, Cura in difesa | Maestria Guerriero Lv.5 |
 | 🪓 **Berserker** | 100 | Glass cannon, +50% ATK sotto il 30% HP | Impresa "Danza con la Morte" |
 | 🧪 **Alchimista** | 95 | Pozioni potenziate, danni caotici | Impresa "Genio Elementale" |
+| 🥷 **Assassino** | 75 | Schivata e Critico altissimi, Imboscata al primo colpo | Maestria Ladro Lv.5 |
+| 💀 **Negromante** | 70 | Risonanza di Tenebra iniziale, si cura uccidendo | Maestria Mago Lv.5 |
 
 Ogni classe ha un **albero di Maestria** a 5 livelli che sblocca bonus personali, consumabili unici, bonus globali (per tutti gli eroi) e perfino nuove classi o reliquie.
 
@@ -132,6 +134,7 @@ Tra una run e l'altra, spendi l'**Essenza Astrale** al Campo Base:
 - **⚒️ La Forgia Dimensionale** — Sblocca nuove reliquie, armi e consumabili leggendari.
 - **🍺 La Taverna** — Recluta nuove classi di eroi.
 - **📜 Grimorio e Imprese** — Monitora le tue sfide e i progressi di Maestria.
+- **🔥 Speranza di Luce** (nel Fuoco dell'Anima) — Recuperi il 5% degli HP Max a ogni piano per livello (fino al 15%).
 - **📚 L'Archivio di Aethelgard** — Consulta i tomi di Lore trovati nel gioco. Sbloccare e completare questi tomi ti conferisce delle **Sinergie dell'Archivio**, veri e propri buff passivi permanenti (es. +10% Danni contro i Boss).
 - **🧪 La Tenda dello Speziale** — (Si sblocca salvando l'NPC nel labirinto). Ti permette di spendere piccole somme di Essenza per iniziare la run successiva con utili consumabili, come l'Antidoto Universale.
 
@@ -278,8 +281,8 @@ Il gioco segue un'architettura **Data-Driven**:
 
 ## 📝 Roadmap
 
-- [ ] Nuova classe: **Assassino** (sblocco Maestria Ladro Lv.5)
-- [ ] Nuova classe: **Negromante** (sblocco Maestria Mago Lv.5)
+- [x] Nuova classe: **Assassino** (sblocco Maestria Ladro Lv.5)
+- [x] Nuova classe: **Negromante** (sblocco Maestria Mago Lv.5)
 - [ ] Nuovi accessori sbloccabili tramite Imprese e Maestria
 - [ ] Sistema di Rune/Incastoni per la personalizzazione di Armi e Armature
 - [ ] Boss con meccaniche speciali (fasi, immunità, pattern)

@@ -2,7 +2,8 @@ import os
 import sys
 import json
 from typing import Dict, Any
-from ui import Colors
+from ui import Colors, set_text_speed
+from constants import TEXT_SPEEDS, DEFAULT_TEXT_SPEED
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -24,6 +25,7 @@ class ProfileManager:
             "essence": 0, "max_floor": 0, "won_normal": False,
             "unlocked_ids":[], "class_xp": {}, "class_lvl": {},
             "stats": {"total_deaths": 0, "total_gold": 0, "total_bosses": 0}, "completed_feats":[],
+            "settings": {"text_speed": DEFAULT_TEXT_SPEED},
             "perks": {
                 "hp_lvl": 0, "gold_lvl": 0, "discount_lvl": 0, "sesto_senso": False, "scarpisti": False,
                 "dodge_lvl": 0, "acc_lvl": 0, "exp_lvl": 0, "farmacista": False, "altare_benedizione": False,
@@ -104,6 +106,16 @@ class ProfileManager:
     def set_class_xp(self, class_id: str, value):
         self._data["class_xp"][class_id] = value
 
+    @property
+    def text_speed(self) -> str:
+        speed = self._data["settings"].get("text_speed", DEFAULT_TEXT_SPEED)
+        return speed if speed in TEXT_SPEEDS else DEFAULT_TEXT_SPEED
+
+    @text_speed.setter
+    def text_speed(self, value: str):
+        self._data["settings"]["text_speed"] = value
+        set_text_speed(TEXT_SPEEDS[value])
+
     def get_npc_unlocked(self, npc_name: str) -> bool:
         return self._data.get("npc_unlocked", {}).get(npc_name, False)
         
@@ -113,6 +125,7 @@ class ProfileManager:
 
 
 PROFILE_MANAGER = ProfileManager()
+set_text_speed(TEXT_SPEEDS[PROFILE_MANAGER.text_speed])
 _ENEMIES_FILE = load_json_file("enemies.json")
 RAW_DATA = {
     "enemies": _ENEMIES_FILE["enemies"], "bosses": _ENEMIES_FILE["bosses"],
