@@ -9,9 +9,12 @@ class Item:
     def __init__(self, name: str, value: int, item_type: str, level: int = 1, flavor: str = "", is_cursed: bool = False, curse_effect: str = "", element: str = "Normale"):
         self.name, self.value, self.type, self.level, self.flavor = name, value, item_type, level, flavor
         self.is_cursed, self.curse_effect, self.element = is_cursed, curse_effect, element
-        cursed_tag = f"{Colors.MAGENTA}[MALEDETTO]{Colors.RESET} " if is_cursed else ""
-        el_tag = f" [{get_element_icon(element)}]" if element != "Normale" and element != "" else ""
-        self.display_name = f"{cursed_tag}{name}{el_tag}"
+        self.refresh_display_name()
+
+    def refresh_display_name(self):
+        cursed_tag = f"{Colors.MAGENTA}[MALEDETTO]{Colors.RESET} " if self.is_cursed else ""
+        el_tag = f" [{get_element_icon(self.element)}]" if self.element != "Normale" and self.element != "" else ""
+        self.display_name = f"{cursed_tag}{self.name}{el_tag}"
 
 class Weapon(Item):
     def __init__(self, name: str, value: int, atk: int, element: str, level: int, flavor: str = "", is_cursed: bool = False, curse_effect: str = ""):
@@ -156,6 +159,7 @@ class Player:
         if PROFILE_MANAGER.get_class_lvl("5", 1) >= 4: self.weapon.atk += 2
         self.temp_dodge = 0
         self.temp_def = 0
+        self.temp_acc = 0
         
         a_data = data["armor"]
         self.armor = Armor(a_data["name"], a_data["value"], a_data["def"] + PROFILE_MANAGER.get_perk("pelle_dura_lvl", 0), a_data.get("element", "Normale"), 1)
@@ -221,8 +225,7 @@ class Player:
                         # Remove old
                         self.relic_ids.pop(idx)
                         self.relics.pop(idx)
-                        # We cannot easily undo on_equip stats, but we can assume passive bonuses are recalculated dynamically.
-                        self.relic_effects.pop(idx)
+                        self.relic_effects.pop(idx).on_unequip(self)
                         break
                     else: display_msg(f"{Colors.RED}Scelta non valida.{Colors.RESET}")
                 except ValueError: pass

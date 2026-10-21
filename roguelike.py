@@ -1,8 +1,9 @@
 import random
+import sys
 import time
 import traceback
 from ui import Colors, clear_screen, delay_print, get_choice, interactive_menu
-from data_manager import PROFILE_MANAGER, GAME_DATA, RAW_DATA, get_element_icon
+from data_manager import PROFILE_MANAGER, GAME_DATA, RAW_DATA, get_element_icon, update_game_data
 from entities import Player, Enemy
 from rooms import combat_room, mystery_room, event_room, vendor_room, campfire_room, treasure_room, trap_room
 from inventory_menu import show_inventory_menu, show_player_stats
@@ -189,9 +190,7 @@ def base_camp_forge_category(cat, cat_name):
                 PROFILE_MANAGER.unlocked_ids.append(lkd[idx]["unlock_id"])
                 PROFILE_MANAGER.save()
                 print(f"\n{Colors.GREEN}Sbloccato: {lkd[idx]['name']}!{Colors.RESET}")
-                for c in ["weapons", "armors", "consumables", "accessories", "relics"]: 
-                    if c in GAME_DATA:
-                        GAME_DATA[c] = [x for x in RAW_DATA[c] if x.get("unlock_id") is None or x["unlock_id"] in PROFILE_MANAGER.unlocked_ids]
+                update_game_data()
                 time.sleep(1)
             elif cost == 0:
                 print(f"\n{Colors.RED}Questo oggetto può essere sbloccato solo completando un'Impresa specifica!{Colors.RESET}")
@@ -423,7 +422,7 @@ def play_game(infinite_mode=False):
     while player.hp > 0 and not player.escaped:
         if not infinite_mode and floor > INFINITE_MODE_THRESHOLD:
             clear_screen()
-            print(f"{Colors.YELLOW}{Colors.BOLD}="*50); delay_print("H A I   V I N T O ! ! !"); print("="*50 + Colors.RESET)
+            print(f"{Colors.YELLOW}{Colors.BOLD}" + "="*50); delay_print("H A I   V I N T O ! ! !"); print("="*50 + Colors.RESET)
             PROFILE_MANAGER.won_normal = True; player.essence_gathered += 1000; break
 
         clear_screen()
@@ -505,6 +504,9 @@ def main():
             elif idx == 1: base_camp()
             elif idx == 2 and PROFILE_MANAGER.won_normal: play_game(infinite_mode=True)
             else: clear_screen(); print("Arrivederci!"); break
+    except KeyboardInterrupt:
+        sys.stdout.write('\033[?25h')
+        print("\nArrivederci!")
     except Exception as e:
         print(f"\n{Colors.RED}{Colors.BOLD}ERRORE IMPREVISTO! Il gioco è andato in crash:{Colors.RESET}")
         traceback.print_exc()

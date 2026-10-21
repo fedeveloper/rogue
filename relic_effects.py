@@ -205,12 +205,17 @@ class CuoreDrago(RelicEffect):
         player.hp = min(player.hp, player.max_hp)
 
 class SpiritoSpada(RelicEffect):
+    def __init__(self):
+        super().__init__("spirito_spada")
+        self.applied = False
     def on_equip(self, player):
         if player.weapon.level == 1:
             player.bonus_atk_relic += 15
+            self.applied = True
     def on_unequip(self, player):
-        if player.weapon.level == 1:
+        if self.applied:
             player.bonus_atk_relic -= 15
+            self.applied = False
 
 class TeschioSangue(RelicEffect):
     def on_enemy_death(self, session):

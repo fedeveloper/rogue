@@ -94,6 +94,12 @@ class CombatSession:
             self.player.temp_def = 5
             print(f"{Colors.CYAN}✨ Risonanza di Terra! +5 Difesa fissa!{Colors.RESET}")
 
+        try:
+            self._combat_loop()
+        finally:
+            self.player.temp_dodge = self.player.temp_def = self.player.temp_acc = 0
+
+    def _combat_loop(self):
         while self.player.hp > 0 and self.enemy.hp > 0:
             self.process_statuses_and_curses(is_player_turn=True)
             if self.player.hp <= 0:
@@ -121,9 +127,9 @@ class CombatSession:
         
         self.player.gold += g_drop
         print(f"Ottieni {Colors.YELLOW}{g_drop} oro{Colors.RESET}.")
-        self.player.gain_exp(self.enemy.exp_drop)
-        
+        # Le reliquie agiscono prima dell'EXP (es. la Pietra Filosofale converte l'EXP in Oro)
         for r in self.player.relic_effects: r.on_enemy_death(self)
+        if self.enemy.exp_drop > 0: self.player.gain_exp(self.enemy.exp_drop)
         
         if self.enemy.is_boss:
             self.player.bosses_killed += 1
@@ -148,10 +154,10 @@ class CombatSession:
         input("\nPremi INVIO per continuare...")
 
     def _calc_hit_chance(self, multiplier: float) -> int:
-        hit_chance = max(10, min(100, BASE_HIT_CHANCE + self.player.base_acc - self.enemy.base_dodge + (15 if multiplier > 1.0 else -20 if multiplier < 1.0 else 0)))
+        hit_chance = BASE_HIT_CHANCE + self.player.base_acc + self.player.temp_acc - self.enemy.base_dodge + (15 if multiplier > 1.0 else -20 if multiplier < 1.0 else 0)
         hit_chance += self.player.weapon.get_hit_chance_modifier()
         for r in self.player.relic_effects: hit_chance += r.get_acc_modifier()
-        return hit_chance
+        return max(10, min(100, hit_chance))
 
     def _calc_base_damage(self, multiplier: float) -> tuple[int, str]:
         dmg_dealt = int(max(1, self.player.get_total_atk() + random.randint(-1, 2)) * multiplier)
@@ -167,6 +173,7 @@ class CombatSession:
         multiplier = MULTIPLIERS.get(self.player.weapon.element, {}).get(self.enemy.element, 1.0)
         for r in self.player.relic_effects: multiplier = r.modify_multiplier(multiplier)
         
+        was_focused = self.focused_attack
         if self.focused_attack:
             hit_chance = 100
             dmg_dealt = int(max(1, self.player.get_total_atk() + random.randint(-1, 2)) * multiplier * 2)
@@ -179,7 +186,7 @@ class CombatSession:
         if self.enemy.is_boss and is_book_unlocked("bestiario", PROFILE_MANAGER._data):
             dmg_dealt = int(dmg_dealt * 1.1)
 
-        if self.player.accessory and self.player.accessory.bonus_type == "crit_chance" and not self.focused_attack:
+        if self.player.accessory and self.player.accessory.bonus_type == "crit_chance" and not was_focused:
             if random.randint(1, 100) <= self.player.accessory.bonus_value:
                 dmg_dealt *= 2
                 eff += f" {Colors.MAGENTA}[CRITICO!]{Colors.RESET}"
@@ -238,8 +245,9 @@ class CombatSession:
                 print(f"\n{Colors.BLUE}-> Evochi una barriera vitale. {Colors.GREEN}Recuperi {heal_amt} HP!{Colors.RESET}")
 
     def player_turn(self) -> bool:
-        self.player.temp_def = 0
-        self.player.temp_dodge = 0
+        # I bonus di Risonanza devono restare attivi per tutto il combattimento
+        self.player.temp_def = 5 if self.resonance == "Terra" else 0
+        self.player.temp_dodge = 15 if self.resonance == "Vento" else 0
         self.is_defending = False
 
         self.def_type, self.def_txt = self.player.get_defense_action()
@@ -266,6 +274,9 @@ class CombatSession:
         elif idx == 2:
             action = show_inventory_menu(self.player, in_combat=True)
             if action == "smoke_bomb":
+                if self.enemy.is_boss:
+                    print(f"\n{Colors.RED}-> Il fumo si dirada all'istante: impossibile fuggire dai Boss!{Colors.RESET}")
+                    return True
                 self.player.run_tracker["escapes"] += 1
                 return False
             elif action == "fiala_caos":
@@ -402,6 +413,7 @@ def mystery_room(player: Player, floor: int, active_pacts: List[str]):
         combat_room(player, floor, Enemy(floor, False, active_pacts, modifier="easy"))
     elif outcome == "trap":
         trap_room(player, floor, active_pacts)
+    else:
         print(f"\n{Colors.GREEN}La nebbia si dirada. La stanza è vuota. Tiri un sospiro di sollievo.{Colors.RESET}")
         input("Premi INVIO per proseguire...")
 
@@ -628,7 +640,8 @@ def campfire_room(player: Player, floor: int):
                         if it1.type == "weapon": it1.atk += max(1, it2.atk // 2)
                         else: it1.defense += max(1, it2.defense // 2)
                         it1.level += 1
-                        it1.display_name = f"Perfetto {it1.name.split('[')[0].strip()}[{get_element_icon(it1.element)}]"
+                        if not it1.name.startswith("Perfetto "): it1.name = f"Perfetto {it1.name}"
+                        it1.refresh_display_name()
                         player.run_tracker["fusions"] += 1
                         print(f"{Colors.GREEN}FUSIONE RIUSCITA! Il primo oggetto ha assorbito il secondo.{Colors.RESET}")
                         input("Premi INVIO per continuare...")
@@ -655,7 +668,7 @@ def campfire_room(player: Player, floor: int):
                         target_item = cursed_items[p_idx]
                         target_item.is_cursed = False
                         target_item.curse_effect = ""
-                        target_item.display_name = target_item.display_name.replace(f"{Colors.MAGENTA}[MALEDETTO]{Colors.RESET} ", "")
+                        target_item.refresh_display_name()
                         print(f"{Colors.GREEN}Il rituale ha successo! La maledizione è spezzata.{Colors.RESET}")
                         input("\nPremi INVIO...")
                         return

@@ -24,7 +24,10 @@ def _use_consumable(player, item, real_idx, in_combat) -> str:
             print(f"{Colors.YELLOW}\nPuoi usare questo oggetto solo in combattimento!{Colors.RESET}")
             input("Premi INVIO...")
             return ""
-        print(f"{Colors.MAGENTA}\nLeggi le antiche rune... Il Caos distrugge i nemici!{Colors.RESET}")
+        new_el = generate_random_element()
+        player.weapon.element = new_el
+        player.weapon.refresh_display_name()
+        print(f"{Colors.MAGENTA}\nLeggi le antiche rune... La tua arma si impregna dell'elemento {get_element_icon(new_el)}!{Colors.RESET}")
         res = "turn_used"
     elif cat == "holy_water":
         print(f"{Colors.YELLOW}\nBevi l'Acqua Santa...{Colors.RESET}")
@@ -33,8 +36,7 @@ def _use_consumable(player, item, real_idx, in_combat) -> str:
             if eq and getattr(eq, 'is_cursed', False):
                 eq.is_cursed = False
                 eq.curse_effect = ""
-                eq.name = eq.name.replace("Maledetto", "Purificato")
-                eq.display_name = f"{Colors.YELLOW}{eq.name}{Colors.RESET}"
+                eq.refresh_display_name()
                 purified = True
         if purified:
             print(f"{Colors.GREEN}Tutte le Maledizioni sul tuo equipaggiamento sono state purificate!{Colors.RESET}")
@@ -63,6 +65,7 @@ def _use_consumable(player, item, real_idx, in_combat) -> str:
         elif eff == "element":
             new_el = generate_random_element()
             player.weapon.element = new_el
+            player.weapon.refresh_display_name()
             print(f"{Colors.CYAN}La tua arma si impregna dell'elemento {new_el}!{Colors.RESET}")
         res = "fiala_caos" if in_combat else ""
     elif cat == "antidote":
@@ -81,7 +84,7 @@ def _use_consumable(player, item, real_idx, in_combat) -> str:
             input("Premi INVIO...")
             return ""
         print(f"{Colors.CYAN}\nBevi il Filtro Preciso! I tuoi colpi non mancheranno più!{Colors.RESET}")
-        player.base_acc += 999  # Temporary boost for the fight
+        player.temp_acc = 999  # Azzerato a fine combattimento
         res = "turn_used"
 
     consume_item = True
@@ -144,6 +147,7 @@ def show_inventory_menu(player, in_combat=False) -> str:
                 old_w = player.weapon
                 player.weapon = item
                 player.inventory[real_idx] = old_w
+                player.run_tracker["weapon_changed"] = True
                 print(f"{Colors.GREEN}\n-> Equipaggiato: {player.weapon.display_name}!{Colors.RESET}")
                 input("Premi INVIO...")
                 if in_combat: return "turn_used"
