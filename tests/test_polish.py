@@ -64,7 +64,8 @@ class CombatMessageTest(Sandbox):
     def test_escape_chance_stays_within_cap(self):
         self.player.base_dodge = 500
         session = CombatSession(self.player, 1, Enemy(1, False, []))
-        with mock.patch("rooms.is_book_unlocked", return_value=True):
+        # Diario di Silas sbloccato: +5% di fuga, che non deve superare il limite del 90%
+        with mock.patch("rooms.get_archive_bonus", side_effect=lambda stat, profile: 5 if stat == "escape" else 0):
             self.assertEqual(session._calc_escape_chance(), 90)
 
     def test_compass_relic_still_guarantees_escape(self):

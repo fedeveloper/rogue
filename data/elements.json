@@ -19,5 +19,13 @@
         "Luce": {"Tenebra": 1.5, "Luce": 0.5},
         "Tenebra": {"Luce": 1.5, "Tenebra": 0.5},
         "Normale": {}
+    },
+    "resonance": {
+        "Acqua": {"value": 0.15, "desc": "Attacco nemico ridotto del 15%", "announce": "✨ Risonanza d'Acqua! L'attacco del nemico è ridotto del 15%!"},
+        "Vento": {"value": 15, "desc": "+15% Schivata in combattimento", "announce": "✨ Risonanza di Vento! +15% Schivata!"},
+        "Terra": {"value": 5, "desc": "+5 Difesa fissa", "announce": "✨ Risonanza di Terra! +5 Difesa fissa!"},
+        "Tenebra": {"value": 5, "desc": "+5 Danni fissi ad ogni colpo", "announce": "✨ Risonanza di Tenebra! +5 Danni a ogni colpo!"},
+        "Luce": {"value": 3, "desc": "Cura 3 HP a ogni tuo attacco", "announce": "✨ Risonanza di Luce! Ogni colpo a segno ti cura 3 HP!"},
+        "Fuoco": {"value": 5, "desc": "Infliggi 5 danni da Ustione cumulabili per colpo", "announce": "✨ Risonanza di Fuoco! I tuoi colpi accumulano Ustione!"}
     }
 }

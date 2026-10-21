@@ -3,6 +3,7 @@ from typing import List, Dict
 from ui import Colors, delay_print, get_choice, clear_screen, display_msg
 from data_manager import GAME_DATA, RAW_DATA, PROFILE_MANAGER, ELEMENTS, MULTIPLIERS, get_element_icon
 from relic_effects import create_relic_effect
+from archive import get_archive_bonus
 from constants import BASE_HIT_CHANCE, ENEMY_DEPTH_WINDOW, BOSS_DEPTH_WINDOW, INFINITE_MODE_THRESHOLD, WEAPON_LEVEL_SCALING, ARMOR_LEVEL_SCALING, CURSE_CHANCE, CURSE_STAT_MULTIPLIER
 
 class Item:
@@ -98,12 +99,19 @@ def generate_accessory(level: int) -> Accessory:
         bonus_val = int(bonus_val * 2)
     return Accessory(a_data["name"], a_data["base_val"] + (level*10), a_data.get("element", "Normale"), a_data["bonus_type"], bonus_val, a_data["desc"], a_data.get("lore", ""), is_cursed, curse_effect)
 
+# Solo questi consumabili curano davvero: gli altri non mostrano "(Cura N)" nel nome
+HEALING_CATEGORIES = ("heal", "antidote")
+
+def consumable_name(name: str, heal: int, category: str) -> str:
+    return f"{name} (Cura {heal})" if heal > 0 and category in HEALING_CATEGORIES else name
+
 def generate_potion(level: int) -> Consumable:
     c_data = random.choice(GAME_DATA["consumables"])
-    name, heal, val = c_data["name"], c_data["base_heal"] + (level * 5), c_data["val_base"] + (level * 15)
     cat = c_data.get("category", "heal")
+    heal = c_data["base_heal"] + (level * 5) if cat in HEALING_CATEGORIES else 0
+    val = c_data["val_base"] + (level * 15)
     val = int(val * 1.5) # Rende le pozioni molto più costose
-    return Consumable(f"{name} (Cura {heal})" if heal > 0 else name, val, heal, cat)
+    return Consumable(consumable_name(c_data["name"], heal, cat), val, heal, cat)
 
 def get_random_relic(player):
     avail = [r for r in GAME_DATA["relics"] if r["id"] not in player.relic_ids]
@@ -134,13 +142,16 @@ class Player:
         self.bonus_def = 0
         self.base_crit = data.get("crit", 0)
         self.base_lifesteal = 0
-        if PROFILE_MANAGER.get_class_lvl("1", 1) >= 4: self.bonus_def += 5 
-        if PROFILE_MANAGER.get_class_lvl("2", 1) >= 4: self.base_dodge += 10 
-        if PROFILE_MANAGER.get_class_lvl("3", 1) >= 4: self.exp_multiplier = 1.15 
-        if PROFILE_MANAGER.get_class_lvl("4", 1) >= 4: self.max_hp += 15 
-        if PROFILE_MANAGER.get_class_lvl("6", 1) >= 4: self.base_acc += 5 
-        if PROFILE_MANAGER.get_class_lvl("7", 1) >= 4: self.base_crit += 5
-        if PROFILE_MANAGER.get_class_lvl("8", 1) >= 4: self.base_lifesteal += 1
+        # Effetti personali (Maestria della propria classe) e bonus globali (Maestrie di tutte le classi), definiti in classes.json
+        self.mastery_effects = self._own_mastery_effects(class_id)
+        global_bonus = self._global_mastery_bonuses()
+        self.bonus_def += global_bonus.get("def", 0)
+        self.base_dodge += global_bonus.get("dodge", 0)
+        self.exp_multiplier += global_bonus.get("exp", 0)
+        self.max_hp += global_bonus.get("max_hp", 0)
+        self.base_acc += global_bonus.get("acc", 0)
+        self.base_crit += global_bonus.get("crit", 0)
+        self.base_lifesteal += global_bonus.get("lifesteal", 0)
         self.hp = self.max_hp
         
         self.trait = GAME_DATA["meta"]["traits"][trait_id]
@@ -156,11 +167,11 @@ class Player:
         self.inventory = []
         self._load_starting_items()
         
-        start_weapon_lv = 2 if class_id == "1" and PROFILE_MANAGER.get_class_lvl("1", 1) >= 2 else 1
-        self.thief_save = True if class_id == "2" and PROFILE_MANAGER.get_class_lvl("2", 1) >= 2 else False
-        self.alchemist_potions = True if class_id == "6" and PROFILE_MANAGER.get_class_lvl("6", 1) >= 2 else False
-        self.assassin_ambush = class_id == "7" and PROFILE_MANAGER.get_class_lvl("7", 1) >= 2
-        self.necro_harvest = class_id == "8" and PROFILE_MANAGER.get_class_lvl("8", 1) >= 2
+        start_weapon_lv = 2 if self.has_mastery_effect("heavy_hand") else 1
+        self.thief_save = self.has_mastery_effect("thief_potion_save")
+        self.alchemist_potions = self.has_mastery_effect("alchemist_potions")
+        self.assassin_ambush = self.has_mastery_effect("assassin_ambush")
+        self.necro_harvest = self.has_mastery_effect("necro_harvest")
 
         self.level, self.exp, self.max_exp = 1, 0, 100
         self.escaped = False
@@ -171,7 +182,7 @@ class Player:
         w_data = data["weapon"]
         self.weapon = Weapon(w_data["name"], w_data["value"], w_data["atk"], w_data.get("element", "Normale"), 1) if start_weapon_lv == 1 else generate_weapon(2)
         self.weapon.atk += PROFILE_MANAGER.get_perk("artigiano_lvl", 0) + (50 if self.cursed else 0)
-        if PROFILE_MANAGER.get_class_lvl("5", 1) >= 4: self.weapon.atk += 2
+        self.weapon.atk += global_bonus.get("weapon_atk", 0)
         self.temp_dodge = 0
         self.temp_def = 0
         self.temp_acc = 0
@@ -186,6 +197,26 @@ class Player:
         if PROFILE_MANAGER.get_perk("altare_benedizione", False):
             r = get_random_relic(self)
             if r: self.add_relic(r)
+
+    @staticmethod
+    def _own_mastery_effects(class_id: str) -> set:
+        lvl = PROFILE_MANAGER.get_class_lvl(class_id, 1)
+        mastery = RAW_DATA["classes"][class_id].get("mastery", {})
+        return {m["effect"] for m_lvl, m in mastery.items() if m.get("effect") and lvl >= int(m_lvl)}
+
+    @staticmethod
+    def _global_mastery_bonuses() -> dict:
+        totals = {}
+        for c_id, c in RAW_DATA["classes"].items():
+            lvl = PROFILE_MANAGER.get_class_lvl(c_id, 1)
+            for m_lvl, m in c.get("mastery", {}).items():
+                bonus = m.get("bonus")
+                if m.get("type") == "global" and bonus and lvl >= int(m_lvl):
+                    totals[bonus["stat"]] = totals.get(bonus["stat"], 0) + bonus["value"]
+        return totals
+
+    def has_mastery_effect(self, effect: str) -> bool:
+        return effect in self.mastery_effects
 
     def _apply_trait(self, trait_id: str):
         def _maledetto(): self.max_hp //= 2; self.hp = self.max_hp; self.cursed = True
@@ -206,7 +237,7 @@ class Player:
 
     def _load_starting_items(self):
         mapping = [
-            ("starting_consumables", "consumables", lambda d: Consumable(f"{d['name']} (Cura {d['base_heal']})" if d['base_heal'] > 0 else d['name'], d["val_base"], d["base_heal"], d.get("category", "heal"))),
+            ("starting_consumables", "consumables", lambda d: Consumable(consumable_name(d["name"], d["base_heal"], d.get("category", "heal")), d["val_base"], d["base_heal"], d.get("category", "heal"))),
             ("starting_weapons", "weapons", lambda d: Weapon(d["name"], d["val_base"], d["base_atk"], "Normale", 1, status_inflict=d.get("status_inflict"))),
             ("starting_armors", "armors", lambda d: Armor(d["name"], d["val_base"], d["base_def"], "Normale", 1)),
             ("starting_accessories", "accessories", lambda d: Accessory(d["name"], d["val_base"], "Normale", d["bonus_type"], d["bonus_value"], d["desc"]))
@@ -274,15 +305,12 @@ class Player:
         return max(10, min(100, hit))
 
     def get_total_def(self) -> int:
-        from archive import is_book_unlocked
-        defense = self.armor.defense + self.temp_def + self.bonus_def
-        if is_book_unlocked("cronache_ere", PROFILE_MANAGER._data): defense += 5
-        return defense
+        return self.armor.defense + self.temp_def + self.bonus_def + get_archive_bonus("def", PROFILE_MANAGER._data)
     
     def get_dodge(self): 
         dodge = self.base_dodge + self.temp_dodge
         for effect in self.relic_effects: dodge += effect.get_dodge_modifier()
-        if self.class_id == "5" and PROFILE_MANAGER.get_class_lvl("5", 1) >= 2 and self.hp < self.max_hp * 0.3: return 0
+        if self._berserker_fury_active(): return 0
         if self.has_curse("heavy"): dodge -= 15
         return max(0, dodge)
 
@@ -321,11 +349,10 @@ class Player:
         return actual_heal
 
     def calculate_gold_gain(self, base_gold: int) -> int:
-        from archive import is_book_unlocked
         g = base_gold * 3 if self.midas else base_gold
         for r in self.relic_effects: g = r.on_gold_gain(self, g)
         g = int(g * (1 + PROFILE_MANAGER.get_perk("banca_anima_lvl", 0) * 0.05))
-        if is_book_unlocked("diario_silas", PROFILE_MANAGER._data): g = int(g * 1.05)
+        g = int(g * (1 + get_archive_bonus("gold_pct", PROFILE_MANAGER._data) / 100))
         return g
 
     def take_damage(self, amount: int) -> bool:
@@ -338,16 +365,17 @@ class Player:
         return self.hp > 0
 
     def get_class_damage_multiplier(self) -> float:
-        if self.class_id == "5" and PROFILE_MANAGER.get_class_lvl("5", 1) >= 2 and self.hp < self.max_hp * 0.3:
-            return 1.5
-        return 1.0
+        return 1.5 if self._berserker_fury_active() else 1.0
+
+    def _berserker_fury_active(self) -> bool:
+        return self.has_mastery_effect("berserker_fury") and self.hp < self.max_hp * 0.3
 
     def on_defense_started(self):
-        if self.class_id == "4" and PROFILE_MANAGER.get_class_lvl("4", 1) >= 2:
+        if self.has_mastery_effect("paladin_bulwark"):
             if self.heal(3) > 0: display_msg(f"{Colors.GREEN}Baluardo della Fede: Recuperi 3 HP!{Colors.RESET}")
 
     def on_attack_landed(self, dmg_dealt: int, multiplier: float):
-        if self.class_id == "3" and PROFILE_MANAGER.get_class_lvl("3", 1) >= 2 and multiplier > 1.0:
+        if self.has_mastery_effect("mage_attunement") and multiplier > 1.0:
             h = max(1, dmg_dealt // 10)
             self.heal(h)
             display_msg(f"{Colors.MAGENTA}Sintonia: Assorbi {h} HP!{Colors.RESET}")

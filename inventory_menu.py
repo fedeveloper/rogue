@@ -1,8 +1,8 @@
 import random
-from ui import Colors, clear_screen, get_choice, interactive_menu
-from data_manager import PROFILE_MANAGER, get_element_icon
+from ui import Colors, clear_screen, get_choice, interactive_menu, display_msg, wait_enter
+from data_manager import GAME_DATA, PROFILE_MANAGER, get_element_icon
 from entities import generate_random_element
-from archive import is_book_unlocked
+from archive import unlocked_archive_bonuses
 
 def _use_consumable(player, item, real_idx, in_combat) -> str:
     cat = item.category
@@ -12,27 +12,27 @@ def _use_consumable(player, item, real_idx, in_combat) -> str:
         if player.alchemist_potions: heal_amt = int(heal_amt * 1.5)
         if "carestia" in player.active_pacts: heal_amt //= 2
         actual_heal = player.heal(heal_amt)
-        print(f"{Colors.GREEN}\nHai usato {item.display_name}! Recuperati {actual_heal} HP.{Colors.RESET}")
+        display_msg(f"{Colors.GREEN}\nHai usato {item.display_name}! Recuperati {actual_heal} HP.{Colors.RESET}")
         res = "turn_used" if in_combat else ""
     elif cat == "smoke_bomb":
         if not in_combat:
-            print(f"{Colors.YELLOW}\nPuoi usare questo oggetto solo in combattimento!{Colors.RESET}")
-            input("Premi INVIO...")
+            display_msg(f"{Colors.YELLOW}\nPuoi usare questo oggetto solo in combattimento!{Colors.RESET}")
+            wait_enter("Premi INVIO...")
             return ""
-        print(f"{Colors.YELLOW}\nHai lanciato una Bomba Fumogena! Scappi dal combattimento!{Colors.RESET}")
+        display_msg(f"{Colors.YELLOW}\nHai lanciato una Bomba Fumogena! Scappi dal combattimento!{Colors.RESET}")
         res = "smoke_bomb"
     elif cat == "chaos_tome":
         if not in_combat:
-            print(f"{Colors.YELLOW}\nPuoi usare questo oggetto solo in combattimento!{Colors.RESET}")
-            input("Premi INVIO...")
+            display_msg(f"{Colors.YELLOW}\nPuoi usare questo oggetto solo in combattimento!{Colors.RESET}")
+            wait_enter("Premi INVIO...")
             return ""
         new_el = generate_random_element()
         player.weapon.element = new_el
         player.weapon.refresh_display_name()
-        print(f"{Colors.MAGENTA}\nLeggi le antiche rune... La tua arma si impregna dell'elemento {get_element_icon(new_el)}!{Colors.RESET}")
+        display_msg(f"{Colors.MAGENTA}\nLeggi le antiche rune... La tua arma si impregna dell'elemento {get_element_icon(new_el)}!{Colors.RESET}")
         res = "turn_used"
     elif cat == "holy_water":
-        print(f"{Colors.YELLOW}\nBevi l'Acqua Santa...{Colors.RESET}")
+        display_msg(f"{Colors.YELLOW}\nBevi l'Acqua Santa...{Colors.RESET}")
         purified = False
         for eq in [player.weapon, player.armor, player.accessory]:
             if eq and getattr(eq, 'is_cursed', False):
@@ -41,64 +41,64 @@ def _use_consumable(player, item, real_idx, in_combat) -> str:
                 eq.refresh_display_name()
                 purified = True
         if purified:
-            print(f"{Colors.GREEN}Tutte le Maledizioni sul tuo equipaggiamento sono state purificate!{Colors.RESET}")
+            display_msg(f"{Colors.GREEN}Tutte le Maledizioni sul tuo equipaggiamento sono state purificate!{Colors.RESET}")
         else:
-            print("Non avevi equipaggiamento maledetto.")
+            display_msg("Non avevi equipaggiamento maledetto.")
         res = "turn_used" if in_combat else ""
     elif cat == "chaos_vial":
-        print(f"{Colors.MAGENTA}\nBevi la Fiala del Caos...{Colors.RESET}")
+        display_msg(f"{Colors.MAGENTA}\nBevi la Fiala del Caos...{Colors.RESET}")
         eff = random.choice(["heal_full", "dmg", "gold", "max_hp", "element"])
         if eff == "heal_full":
-            if player.heal(player.max_hp) > 0 or player.hp == player.max_hp: print(f"{Colors.GREEN}Sei completamente curato!{Colors.RESET}")
-            else: print(f"{Colors.RED}La fiala ribolle, ma la maledizione blocca la cura.{Colors.RESET}")
+            if player.heal(player.max_hp) > 0 or player.hp == player.max_hp: display_msg(f"{Colors.GREEN}Sei completamente curato!{Colors.RESET}")
+            else: display_msg(f"{Colors.RED}La fiala ribolle, ma la maledizione blocca la cura.{Colors.RESET}")
         elif eff == "dmg":
             dmg = int(player.max_hp * 0.3)
             alive = player.take_damage(dmg)
-            print(f"{Colors.RED}Il liquido ti brucia dall'interno! Subisci {dmg} danni.{Colors.RESET}")
+            display_msg(f"{Colors.RED}Il liquido ti brucia dall'interno! Subisci {dmg} danni.{Colors.RESET}")
             if not alive:
                 player.hp = 1
                 player.run_tracker["1_hp_survive"] = True
         elif eff == "gold":
             g = random.randint(50, 150)
             player.gold += g
-            print(f"{Colors.YELLOW}La fiala si trasforma in {g} monete d'oro!{Colors.RESET}")
+            display_msg(f"{Colors.YELLOW}La fiala si trasforma in {g} monete d'oro!{Colors.RESET}")
         elif eff == "max_hp":
             player.max_hp += 10
             player.hp += 10
-            print(f"{Colors.GREEN}Il tuo corpo si fortifica! +10 HP Max.{Colors.RESET}")
+            display_msg(f"{Colors.GREEN}Il tuo corpo si fortifica! +10 HP Max.{Colors.RESET}")
         elif eff == "element":
             new_el = generate_random_element()
             player.weapon.element = new_el
             player.weapon.refresh_display_name()
-            print(f"{Colors.CYAN}La tua arma si impregna dell'elemento {new_el}!{Colors.RESET}")
+            display_msg(f"{Colors.CYAN}La tua arma si impregna dell'elemento {new_el}!{Colors.RESET}")
         res = "fiala_caos" if in_combat else ""
     elif cat == "antidote":
-        print(f"{Colors.GREEN}\nBevi l'Antidoto Universale! Tutti gli status alterati svaniscono.{Colors.RESET}")
+        display_msg(f"{Colors.GREEN}\nBevi l'Antidoto Universale! Tutti gli status alterati svaniscono.{Colors.RESET}")
         if hasattr(player, 'statuses'): player.statuses.clear()
         actual_heal = player.heal(item.heal_amount)
-        if actual_heal > 0: print(f"{Colors.GREEN}Recuperati {actual_heal} HP.{Colors.RESET}")
+        if actual_heal > 0: display_msg(f"{Colors.GREEN}Recuperati {actual_heal} HP.{Colors.RESET}")
         res = "turn_used" if in_combat else ""
     elif cat == "whetstone":
-        print(f"{Colors.CYAN}\nAffili l'arma: {player.weapon.display_name} ottiene +5 ATK permanente!{Colors.RESET}")
+        display_msg(f"{Colors.CYAN}\nAffili l'arma: {player.weapon.display_name} ottiene +5 ATK permanente!{Colors.RESET}")
         player.weapon.atk += 5
         res = "turn_used" if in_combat else ""
     elif cat == "accuracy_potion":
         if not in_combat:
-            print(f"{Colors.YELLOW}\nPuoi usare questo oggetto solo in combattimento!{Colors.RESET}")
-            input("Premi INVIO...")
+            display_msg(f"{Colors.YELLOW}\nPuoi usare questo oggetto solo in combattimento!{Colors.RESET}")
+            wait_enter("Premi INVIO...")
             return ""
-        print(f"{Colors.CYAN}\nBevi il Filtro Preciso! I tuoi colpi non mancheranno più!{Colors.RESET}")
+        display_msg(f"{Colors.CYAN}\nBevi il Filtro Preciso! I tuoi colpi non mancheranno più!{Colors.RESET}")
         player.temp_acc = 999  # Azzerato a fine combattimento
         res = "turn_used"
 
     consume_item = True
     if cat == "heal" and player.thief_save and random.random() < 0.30:
-        print(f"{Colors.CYAN}Tasche Nascoste: la pozione non è stata consumata!{Colors.RESET}")
+        display_msg(f"{Colors.CYAN}Tasche Nascoste: la pozione non è stata consumata!{Colors.RESET}")
         consume_item = False
     for r in player.relic_effects:
         if not r.on_item_use(player, item.name): consume_item = False
     if consume_item: player.inventory.pop(real_idx)
-    input("Premi INVIO...")
+    wait_enter("Premi INVIO...")
     return res
 
 def show_inventory_menu(player, in_combat=False) -> str:
@@ -155,16 +155,16 @@ def show_inventory_menu(player, in_combat=False) -> str:
                 player.weapon = item
                 player.inventory[real_idx] = old_w
                 player.run_tracker["weapon_changed"] = True
-                print(f"{Colors.GREEN}\n-> Equipaggiato: {player.weapon.display_name}!{Colors.RESET}")
-                input("Premi INVIO...")
+                display_msg(f"{Colors.GREEN}\n-> Equipaggiato: {player.weapon.display_name}!{Colors.RESET}")
+                wait_enter("Premi INVIO...")
                 if in_combat: return "turn_used"
                 
             elif item.type == "armor":
                 old_a = player.armor
                 player.armor = item
                 player.inventory[real_idx] = old_a
-                print(f"{Colors.GREEN}\n-> Equipaggiato: {player.armor.display_name}!{Colors.RESET}")
-                input("Premi INVIO...")
+                display_msg(f"{Colors.GREEN}\n-> Equipaggiato: {player.armor.display_name}!{Colors.RESET}")
+                wait_enter("Premi INVIO...")
                 if in_combat: return "turn_used"
                 
             elif item.type == "accessory":
@@ -185,63 +185,54 @@ def show_inventory_menu(player, in_combat=False) -> str:
                     
                 if old_acc: player.inventory[real_idx] = old_acc
                 else: player.inventory.pop(real_idx)
-                print(f"{Colors.GREEN}\n-> Equipaggiato: {player.accessory.display_name}!{Colors.RESET}")
-                input("Premi INVIO...")
+                display_msg(f"{Colors.GREEN}\n-> Equipaggiato: {player.accessory.display_name}!{Colors.RESET}")
+                wait_enter("Premi INVIO...")
                 if in_combat: return "turn_used"
 
 
 def show_player_stats(player, session=None):
     clear_screen()
-    print(f"\n{Colors.CYAN}{Colors.BOLD}--- STATISTICHE DELL'EROE ---{Colors.RESET}")
-    print(f"Classe: {Colors.YELLOW}{player.role}{Colors.RESET} | Tratto: {Colors.MAGENTA}{player.trait_name}{Colors.RESET}")
-    print(f"❤️  HP: {Colors.GREEN}{player.hp}/{player.max_hp}{Colors.RESET} | 💰 Oro: {Colors.YELLOW}{player.gold}{Colors.RESET}")
-    print(f"✨ EXP: {Colors.CYAN}{player.exp}/{player.max_exp}{Colors.RESET} (Livello {player.level})\n")
+    display_msg(f"\n{Colors.CYAN}{Colors.BOLD}--- STATISTICHE DELL'EROE ---{Colors.RESET}")
+    display_msg(f"Classe: {Colors.YELLOW}{player.role}{Colors.RESET} | Tratto: {Colors.MAGENTA}{player.trait_name}{Colors.RESET}")
+    display_msg(f"❤️  HP: {Colors.GREEN}{player.hp}/{player.max_hp}{Colors.RESET} | 💰 Oro: {Colors.YELLOW}{player.gold}{Colors.RESET}")
+    display_msg(f"✨ EXP: {Colors.CYAN}{player.exp}/{player.max_exp}{Colors.RESET} (Livello {player.level})\n")
     
-    print(f"{Colors.BOLD}--- ATTRIBUTI ---{Colors.RESET}")
-    print(f"🗡️  Attacco Totale: {player.get_total_atk()} (Base arma: {player.weapon.atk})")
-    print(f"🛡️  Difesa Totale: {player.get_total_def()} (Base armatura: {player.armor.defense})")
+    display_msg(f"{Colors.BOLD}--- ATTRIBUTI ---{Colors.RESET}")
+    display_msg(f"🗡️  Attacco Totale: {player.get_total_atk()} (Base arma: {player.weapon.atk})")
+    display_msg(f"🛡️  Difesa Totale: {player.get_total_def()} (Base armatura: {player.armor.defense})")
     if session:
         hit = session._calc_hit_chance(session.attack_multiplier())
-        print(f"🎯 Probabilità di colpire: {hit}% (contro {session.enemy.name})")
+        display_msg(f"🎯 Probabilità di colpire: {hit}% (contro {session.enemy.name})")
     else:
-        print(f"🎯 Probabilità di colpire: {player.get_hit_chance()}% (nemico neutro senza schivata)")
-    if player.get_crit_chance() > 0: print(f"💥 Probabilità di critico: {player.get_crit_chance()}%")
-    if player.get_lifesteal() > 0: print(f"🩸 Rubavita: {player.get_lifesteal()} HP per colpo")
-    print(f"💨 Schivata: {player.get_dodge()}%")
+        display_msg(f"🎯 Probabilità di colpire: {player.get_hit_chance()}% (nemico neutro senza schivata)")
+    if player.get_crit_chance() > 0: display_msg(f"💥 Probabilità di critico: {player.get_crit_chance()}%")
+    if player.get_lifesteal() > 0: display_msg(f"🩸 Rubavita: {player.get_lifesteal()} HP per colpo")
+    display_msg(f"💨 Schivata: {player.get_dodge()}%")
     
     res_el = player._get_resonance_element()
     if res_el:
-        res_desc = ""
-        if res_el == "Acqua": res_desc = "Attacco nemico ridotto del 15%"
-        elif res_el == "Vento": res_desc = "+15% Schivata in combattimento"
-        elif res_el == "Terra": res_desc = "+5 Difesa fissa"
-        elif res_el == "Tenebra": res_desc = "+5 Danni fissi ad ogni colpo"
-        elif res_el == "Luce": res_desc = "Cura 3 HP a ogni tuo attacco"
-        elif res_el == "Fuoco": res_desc = "Infliggi 5 danni da Ustione cumulabili per colpo"
-        print(f"🔮 Risonanza Elementale: {Colors.CYAN}Attiva ({get_element_icon(res_el)} {res_el}) - {res_desc}{Colors.RESET}")
+        res_desc = GAME_DATA["elements"].get("resonance", {}).get(res_el, {}).get("desc", "")
+        display_msg(f"🔮 Risonanza Elementale: {Colors.CYAN}Attiva ({get_element_icon(res_el)} {res_el}) - {res_desc}{Colors.RESET}")
         
-    print(f"\n{Colors.BOLD}--- EQUIPAGGIAMENTO ---{Colors.RESET}")
-    print(f"Arma: {player.weapon.display_name}")
-    print(f"Armatura: {player.armor.display_name}")
-    print(f"Monile: {player.accessory.display_name if player.accessory else 'Nessuno'}")
+    display_msg(f"\n{Colors.BOLD}--- EQUIPAGGIAMENTO ---{Colors.RESET}")
+    display_msg(f"Arma: {player.weapon.display_name}")
+    display_msg(f"Armatura: {player.armor.display_name}")
+    display_msg(f"Monile: {player.accessory.display_name if player.accessory else 'Nessuno'}")
     
     if player.active_pacts:
-        print(f"\n{Colors.RED}{Colors.BOLD}--- PATTI DEL CAOS ---{Colors.RESET}")
+        display_msg(f"\n{Colors.RED}{Colors.BOLD}--- PATTI DEL CAOS ---{Colors.RESET}")
         for p in player.active_pacts:
-            print(f" - {p.upper()}")
+            display_msg(f" - {p.upper()}")
             
     if player.relics:
-        print(f"\n{Colors.YELLOW}{Colors.BOLD}--- RELIQUIE ATTIVE ---{Colors.RESET}")
+        display_msg(f"\n{Colors.YELLOW}{Colors.BOLD}--- RELIQUIE ATTIVE ---{Colors.RESET}")
         for r in player.relics:
-            print(f" - {r['name']}: {r['desc']}")
+            display_msg(f" - {r['name']}: {r['desc']}")
             
-    archive_buffs = []
-    if is_book_unlocked("bestiario", PROFILE_MANAGER._data): archive_buffs.append("Conoscenza (Bestiario): +10% Danni vs Boss")
-    if is_book_unlocked("diario_silas", PROFILE_MANAGER._data): archive_buffs.append("Conoscenza (Silas): +5% Oro, +5% Fuga")
-    if is_book_unlocked("cronache_ere", PROFILE_MANAGER._data): archive_buffs.append("Conoscenza (Ere Antiche): +5 Difesa")
+    archive_buffs = [f"Conoscenza ({title}): {desc}" for title, desc in unlocked_archive_bonuses(PROFILE_MANAGER._data)]
     if archive_buffs:
-        print(f"\n{Colors.CYAN}{Colors.BOLD}--- SINERGIE DELL'ARCHIVIO ---{Colors.RESET}")
-        for b in archive_buffs: print(f" - {b}")
+        display_msg(f"\n{Colors.CYAN}{Colors.BOLD}--- SINERGIE DELL'ARCHIVIO ---{Colors.RESET}")
+        for b in archive_buffs: display_msg(f" - {b}")
         
-    print("\n")
-    input("Premi INVIO per tornare all'esplorazione...")
+    display_msg("\n")
+    wait_enter("Premi INVIO per tornare all'esplorazione...")

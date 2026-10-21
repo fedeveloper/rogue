@@ -1,6 +1,6 @@
 import json
 import os
-from ui import Colors, clear_screen, delay_print, interactive_menu
+from ui import Colors, clear_screen, delay_print, interactive_menu, display_msg, wait_enter
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 BOOKS_FILE = os.path.join(BASE_DIR, "data", "books.json")
@@ -10,18 +10,28 @@ def load_books():
     with open(BOOKS_FILE, "r", encoding="utf-8") as f:
         return json.load(f).get("books", {})
 
+# Letto una volta: i bonus dell'Archivio si consultano a ogni colpo
+BOOKS = load_books()
+
 def is_book_unlocked(b_id: str, profile: dict) -> bool:
-    max_floor = profile.get("max_floor", 0)
-    bosses_killed = profile.get("stats", {}).get("total_bosses", 0)
-    has_won = profile.get("won_normal", False)
-    
-    if b_id == "diario_silas" and max_floor >= 5: return True
-    elif b_id == "bestiario" and bosses_killed >= 5: return True
-    elif b_id == "cronache_ere" and has_won: return True
-    return False
+    unlock = BOOKS.get(b_id, {}).get("unlock")
+    if not unlock: return False
+    progress = {
+        "max_floor": profile.get("max_floor", 0),
+        "total_bosses": profile.get("stats", {}).get("total_bosses", 0),
+        "won_normal": 1 if profile.get("won_normal", False) else 0,
+    }
+    return progress.get(unlock["type"], 0) >= unlock["value"]
+
+def get_archive_bonus(stat: str, profile: dict) -> float:
+    """Somma un bonus (es. "def", "gold_pct", "escape", "boss_dmg_pct") su tutti i tomi sbloccati."""
+    return sum(b.get("bonus", {}).get(stat, 0) for b_id, b in BOOKS.items() if is_book_unlocked(b_id, profile))
+
+def unlocked_archive_bonuses(profile: dict) -> list:
+    return [(b["title"], b.get("bonus_desc", "")) for b_id, b in BOOKS.items() if is_book_unlocked(b_id, profile)]
 
 def show_archive(profile):
-    books = load_books()
+    books = BOOKS
     
     while True:
         clear_screen()
@@ -30,15 +40,9 @@ def show_archive(profile):
         available_books = []
         options = []
 
-        buff_desc = {
-            "diario_silas": "+5% Probabilità di Fuga e +5% Oro trovato",
-            "bestiario": "+10% Danni inflitti contro i Boss",
-            "cronache_ere": "+5 Difesa fissa globale"
-        }
-
         for b_id, b_data in books.items():
             unlocked = is_book_unlocked(b_id, profile)
-            buff = buff_desc.get(b_id, "")
+            buff = b_data.get("bonus_desc", "")
             
             if unlocked:
                 available_books.append((b_id, b_data))
@@ -67,6 +71,6 @@ def read_book(book):
         if 0 <= idx < len(book['chapters']):
             clear_screen()
             ch = book['chapters'][idx]
-            print(f"{Colors.YELLOW}{Colors.BOLD}--- {ch['title']} ---{Colors.RESET}\n")
+            display_msg(f"{Colors.YELLOW}{Colors.BOLD}--- {ch['title']} ---{Colors.RESET}\n")
             delay_print(ch['text'], 0.03)
-            input("\n\nPremi INVIO per tornare all'indice...")
+            wait_enter("\n\nPremi INVIO per tornare all'indice...")

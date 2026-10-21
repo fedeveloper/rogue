@@ -3,6 +3,9 @@
         "diario_silas": {
             "title": "Il Diario di Silas il Cercatore",
             "unlock_condition": "Raggiungi il Piano 5",
+            "unlock": {"type": "max_floor", "value": 5},
+            "bonus": {"gold_pct": 5, "escape": 5},
+            "bonus_desc": "+5% Probabilità di Fuga e +5% Oro trovato",
             "chapters": [
                 {"title": "Giorno 1: L'Ingresso", "text": "Ho varcato la Soglia. L'aria sa di ferro e polvere. Non c'è ritorno, solo discesa."},
                 {"title": "Giorno 12: I Chiostri", "text": "Le voci dei morti sussurrano tra i marmi. Dicono che il tempo qui è un cerchio che si stringe."},
@@ -13,6 +16,9 @@
         "bestiario": {
             "title": "Bestiario dell'Abisso",
             "unlock_condition": "Sconfiggi 5 Boss",
+            "unlock": {"type": "total_bosses", "value": 5},
+            "bonus": {"boss_dmg_pct": 10},
+            "bonus_desc": "+10% Danni inflitti contro i Boss",
             "chapters": [
                 {"title": "I Goblin", "text": "Non sono creature della terra, ma gli avari di Aethelgard che hanno perso la loro forma umana."},
                 {"title": "Il Drago di Zaffiro", "text": "Un'entità di pura memoria liquida. Colpirlo è come cercare di ferire l'oceano."},
@@ -22,6 +28,9 @@
         "cronache_ere": {
             "title": "Cronache delle Ere",
             "unlock_condition": "Completa una Run",
+            "unlock": {"type": "won_normal", "value": 1},
+            "bonus": {"def": 5},
+            "bonus_desc": "+5 Difesa fissa globale",
             "chapters": [
                 {"title": "L'Era della Luce Calma", "text": "Mille anni di pace in cui gli elementi danzavano in armonia."},
                 {"title": "La Grande Discordia", "text": "L'ambizione di Re Galdor ha lacerato il velo. Il Caos è entrato dalla ferita."},

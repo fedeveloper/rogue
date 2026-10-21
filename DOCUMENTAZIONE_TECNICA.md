@@ -190,3 +190,16 @@ Il codice è stato alleggerito estraendo logiche complesse in funzioni di helper
 - **`inventory_menu.py`**: La funzione `show_inventory_menu` è stata alleggerita delegando l'uso specifico dei consumabili al nuovo helper `_use_consumable`.
 - **`rooms.py`**: I calcoli di combattimento (precisione e danni per eroe e nemico) in `CombatSession` sono ora isolati in helper dedicati (`_calc_hit_chance`, `_calc_base_damage`, ecc.). Inoltre, le numerose scelte dell'evento narrativo in `event_room` sono state disaccoppiate nella funzione `_handle_event_action`.
 - **`roguelike.py`**: I lunghi blocchi del loop di fine run e inizio partita sono stati estratti in funzioni semanticamente chiare come `_update_class_mastery`, `_check_feats`, `_hero_selection` e `_generate_doors`.
+
+# Bonus definiti nei dati e output centralizzato
+
+I bonus che prima erano scritti a mano nel codice ora si leggono dai file in `data/`, quindi si bilanciano senza toccare Python:
+
+| Dove | Campo | Esempio |
+|---|---|---|
+| `classes.json` → `mastery["2"]` | `effect`: effetto personale della Maestria, controllato con `Player.has_mastery_effect()` | `"effect": "thief_potion_save"` |
+| `classes.json` → `mastery["4"]` | `bonus`: bonus globale per tutti gli eroi (`def`, `dodge`, `exp`, `max_hp`, `weapon_atk`, `acc`, `crit`, `lifesteal`) | `"bonus": {"stat": "def", "value": 5}` |
+| `elements.json` → `resonance` | `value`, `desc`, `announce` di ogni Risonanza | `"Vento": {"value": 15, ...}` |
+| `books.json` → ogni tomo | `unlock` (condizione), `bonus` (`gold_pct`, `escape`, `boss_dmg_pct`, `def`), `bonus_desc` | `"unlock": {"type": "max_floor", "value": 5}` |
+
+L'output del gioco passa da `ui.display_msg()` e le conferme "Premi INVIO" da `ui.wait_enter()`: i moduli di gioco non chiamano più `print`/`input` direttamente (un test lo verifica). I menu a frecce di `ui.interactive_menu()` contano le righe che vanno a capo, così il ridisegno resta pulito anche in terminali stretti.
