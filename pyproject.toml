@@ -1,0 +1,9 @@
+# The game runs on the Python standard library only. This file declares that,
+# so tools such as rsp can report a third-party import added without declaring it.
+[project]
+name = "rogue"
+version = "0.1.0"
+description = "Il Labirinto degli Elementi e del Caos, roguelite testuale"
+# Annotations such as tuple[int, str] in function signatures need Python 3.9.
+requires-python = ">=3.9"
+dependencies = []
