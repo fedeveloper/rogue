@@ -29,7 +29,6 @@ def _update_class_mastery(player: Player, floor: int):
 
 def _check_feats(player: Player, floor: int, infinite: bool):
     print(f"\n{Colors.CYAN}[ Imprese ]{Colors.RESET}")
-    max_w_lvl = max([i.level for i in player.inventory if i.type == 'weapon'] + [player.weapon.level])
     if "total_bosses" not in PROFILE_MANAGER.stats: PROFILE_MANAGER.stats["total_bosses"] = 0
     PROFILE_MANAGER.stats["total_bosses"] += player.bosses_killed
     
@@ -39,7 +38,7 @@ def _check_feats(player: Player, floor: int, infinite: bool):
         "feat_vetro": 1 if player.run_tracker.get("no_hit_boss_done") else 0,
         "feat_suicida": 1 if player.run_tracker.get("kill_1_hp_done") else 0,
         "feat_avaro": player.gold if (player.escaped or (not infinite and floor > INFINITE_MODE_THRESHOLD)) else 0,
-        "feat_genio_elementale": 1 if max_w_lvl >= 5 else 0,
+        "feat_genio_elementale": 1 if player.run_tracker.get("max_fused_weapon_lvl", 0) >= 5 else 0,
         "feat_sopravvissuto": 1 if floor >= 10 and not player.run_tracker.get("rested") else 0,
         "feat_epuratore": PROFILE_MANAGER.stats["total_bosses"],
         "feat_mani_bucate": player.run_tracker.get("gold_spent", 0),
@@ -65,6 +64,9 @@ def evaluate_run(player: Player, floor: int, infinite: bool):
         player.essence_gathered += int(player.gold * RATIO_GOLD_TO_ESSENCE_ON_DEATH); PROFILE_MANAGER.stats["total_deaths"] += 1
     elif player.escaped:
         delay_print(f"{Colors.GREEN}S E I   F U G G I T O.{Colors.RESET}"); player.essence_gathered += player.gold
+    elif player.won:
+        # La vittoria deve rendere almeno quanto la fuga: tutto l'oro diventa Essenza, più il bonus
+        player.essence_gathered += player.gold
         
     player.essence_gathered += (player.bosses_killed * BOSS_ESSENCE_BONUS)
     
@@ -206,7 +208,10 @@ def base_camp_tavern():
         options = []
         if not lkc: options.append("Tutti reclutati!")
         else:
-            for c_id, c in lkc: options.append(f"{c['role']} ({c['desc']}) - Costo: ✨{c.get('unlock_cost', 0)}")
+            for c_id, c in lkc:
+                cost = c.get('unlock_cost', 0)
+                cost_str = f"✨{cost}" if cost > 0 else "Sbloccabile tramite Maestria o Imprese"
+                options.append(f"{c['role']} ({c['desc']}) - Costo: {cost_str}")
         prompt = f"{Colors.CYAN}--- LA TAVERNA --- Essenza: ✨{PROFILE_MANAGER.essence}{Colors.RESET}"
         idx = interactive_menu(options, prompt, cancellable=True)
         
@@ -412,18 +417,16 @@ def play_game(infinite_mode=False):
     player = Player(c_choice, t_choice, active_pacts)
     delay_print(f"\nLe porte si chiudono alle tue spalle, {player.role}.", 0.03); time.sleep(1)
     
-    weights_def = GAME_DATA["meta"]["rooms"]["weights"].copy()
-    for r in player.relic_effects: r.modify_room_weights(weights_def)
-        
+    base_weights = GAME_DATA["meta"]["rooms"]["weights"]
     cooldowns_def = GAME_DATA["meta"]["rooms"]["cooldowns"]
-    room_cooldowns = {k: 0 for k in weights_def.keys()}
+    room_cooldowns = {k: 0 for k in base_weights.keys()}
     
     floor = 1
     while player.hp > 0 and not player.escaped:
         if not infinite_mode and floor > INFINITE_MODE_THRESHOLD:
             clear_screen()
             print(f"{Colors.YELLOW}{Colors.BOLD}" + "="*50); delay_print("H A I   V I N T O ! ! !"); print("="*50 + Colors.RESET)
-            PROFILE_MANAGER.won_normal = True; player.essence_gathered += 1000; break
+            PROFILE_MANAGER.won_normal = True; player.won = True; player.essence_gathered += 1000; break
 
         clear_screen()
         delay_print(f"\n{Colors.MAGENTA}{Colors.BOLD}==== PIANO {floor} ===={Colors.RESET}", 0.05)
@@ -438,6 +441,9 @@ def play_game(infinite_mode=False):
         for step in range(1, 6):
             if player.hp <= 0 or player.escaped: break
             
+            # Ricalcolati a ogni bivio: le reliquie trovate durante la run contano subito
+            weights_def = base_weights.copy()
+            for r in player.relic_effects: r.modify_room_weights(weights_def)
             doors = _generate_doors(floor, step, weights_def, cooldowns_def, room_cooldowns, active_pacts)
             
             while True:

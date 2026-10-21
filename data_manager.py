@@ -31,19 +31,33 @@ class ProfileManager:
             }
         }
         if not os.path.exists(self.filepath):
-            with open(self.filepath, 'w', encoding='utf-8') as f: json.dump(default_profile, f, indent=4)
+            self._write(default_profile)
             return default_profile
-        with open(self.filepath, 'r', encoding='utf-8') as f: loaded = json.load(f)
+        try:
+            with open(self.filepath, 'r', encoding='utf-8') as f: loaded = json.load(f)
+            if not isinstance(loaded, dict): raise ValueError("il profilo non è un oggetto JSON")
+        except (ValueError, OSError) as e:
+            backup = self.filepath + ".corrotto"
+            os.replace(self.filepath, backup)
+            print(f"{Colors.RED}ATTENZIONE:{Colors.RESET} profile.json illeggibile ({e}). Copia salvata in '{os.path.basename(backup)}', si riparte da un profilo nuovo.")
+            self._write(default_profile)
+            return default_profile
         for key, val in default_profile.items():
             if key not in loaded: loaded[key] = val
             elif isinstance(val, dict):
                 for sub_k, sub_v in val.items():
                     if sub_k not in loaded[key]: loaded[key][sub_k] = sub_v
-        with open(self.filepath, 'w', encoding='utf-8') as f: json.dump(loaded, f, indent=4)
+        self._write(loaded)
         return loaded
 
+    def _write(self, data: Dict[str, Any]):
+        # Scrittura atomica: un crash a metà non lascia un salvataggio troncato
+        tmp_path = self.filepath + ".tmp"
+        with open(tmp_path, 'w', encoding='utf-8') as f: json.dump(data, f, indent=4)
+        os.replace(tmp_path, self.filepath)
+
     def save(self):
-        with open(self.filepath, 'w', encoding='utf-8') as f: json.dump(self._data, f, indent=4)
+        self._write(self._data)
 
     @property
     def essence(self) -> int: return self._data["essence"]

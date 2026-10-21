@@ -127,14 +127,17 @@ class Player:
         self.quest_items: List[str] = []
         
         self.exp_multiplier = 1.0
-        if PROFILE_MANAGER.get_class_lvl("1", 1) >= 4: self.base_dodge += 5 
+        self.bonus_def = 0
+        if PROFILE_MANAGER.get_class_lvl("1", 1) >= 4: self.bonus_def += 5 
         if PROFILE_MANAGER.get_class_lvl("2", 1) >= 4: self.base_dodge += 10 
         if PROFILE_MANAGER.get_class_lvl("3", 1) >= 4: self.exp_multiplier = 1.15 
         if PROFILE_MANAGER.get_class_lvl("4", 1) >= 4: self.max_hp += 15 
         if PROFILE_MANAGER.get_class_lvl("6", 1) >= 4: self.base_acc += 5 
+        self.hp = self.max_hp
         
         self.trait = GAME_DATA["meta"]["traits"][trait_id]
         self.cursed, self.midas, self.ethereal_hunter, self.benedetto_save = False, False, False, False
+        self.aristocrat = False
         self._apply_trait(trait_id)
         
         self.base_dodge += PROFILE_MANAGER.get_perk("dodge_lvl", 0) * 2
@@ -146,16 +149,17 @@ class Player:
         
         start_weapon_lv = 2 if class_id == "1" and PROFILE_MANAGER.get_class_lvl("1", 1) >= 2 else 1
         self.thief_save = True if class_id == "2" and PROFILE_MANAGER.get_class_lvl("2", 1) >= 2 else False
-        self.mage_lifesteal = True if class_id == "3" and PROFILE_MANAGER.get_class_lvl("3", 1) >= 2 else False
+        self.alchemist_potions = True if class_id == "6" and PROFILE_MANAGER.get_class_lvl("6", 1) >= 2 else False
 
         self.level, self.exp, self.max_exp = 1, 0, 100
         self.escaped = False
+        self.won = False
         self.run_tracker = {"escapes": 0, "fusions": 0, "no_hit_boss_done": False, "kill_1_hp_done": False, "floor_attacks": 0, "floor_hits": 0}
         self.essence_gathered, self.bosses_killed = 0, 0
         
         w_data = data["weapon"]
-        self.weapon = Weapon(w_data["name"], w_data["value"], w_data["atk"] + (50 if self.cursed else 0) + PROFILE_MANAGER.get_perk("artigiano_lvl", 0), w_data.get("element", "Normale"), 1) if start_weapon_lv == 1 else generate_weapon(2)
-        if PROFILE_MANAGER.get_perk("artigiano_lvl", 0) > 0 and start_weapon_lv != 1: self.weapon.atk += PROFILE_MANAGER.get_perk("artigiano_lvl", 0)
+        self.weapon = Weapon(w_data["name"], w_data["value"], w_data["atk"], w_data.get("element", "Normale"), 1) if start_weapon_lv == 1 else generate_weapon(2)
+        self.weapon.atk += PROFILE_MANAGER.get_perk("artigiano_lvl", 0) + (50 if self.cursed else 0)
         if PROFILE_MANAGER.get_class_lvl("5", 1) >= 4: self.weapon.atk += 2
         self.temp_dodge = 0
         self.temp_def = 0
@@ -175,7 +179,7 @@ class Player:
     def _apply_trait(self, trait_id: str):
         def _maledetto(): self.max_hp //= 2; self.hp = self.max_hp; self.cursed = True
         def _midas(): self.midas = True
-        def _aristocratico(): self.gold += 500
+        def _aristocratico(): self.gold += 500; self.aristocrat = True
         def _cacciatore(): self.base_dodge -= 20; self.ethereal_hunter = True
         def _titano(): self.max_hp += 100; self.hp += 100; self.base_acc //= 2; self.base_dodge //= 2
         def _benedetto():
@@ -240,6 +244,12 @@ class Player:
         if "lore" in relic: display_msg(f"{Colors.YELLOW}Lore: {relic['lore']}{Colors.RESET}")
 
     def get_total_atk(self): return self.weapon.atk + self.bonus_atk_relic
+
+    def get_total_def(self) -> int:
+        from archive import is_book_unlocked
+        defense = self.armor.defense + self.temp_def + self.bonus_def
+        if is_book_unlocked("cronache_ere", PROFILE_MANAGER._data): defense += 5
+        return defense
     
     def get_dodge(self): 
         dodge = self.base_dodge + self.temp_dodge
@@ -306,8 +316,7 @@ class Player:
 
     def on_defense_started(self):
         if self.class_id == "4" and PROFILE_MANAGER.get_class_lvl("4", 1) >= 2:
-            self.heal(3)
-            display_msg(f"{Colors.GREEN}Baluardo della Fede: Recuperi 3 HP!{Colors.RESET}")
+            if self.heal(3) > 0: display_msg(f"{Colors.GREEN}Baluardo della Fede: Recuperi 3 HP!{Colors.RESET}")
 
     def on_attack_landed(self, dmg_dealt: int, multiplier: float):
         if self.class_id == "3" and PROFILE_MANAGER.get_class_lvl("3", 1) >= 2 and multiplier > 1.0:

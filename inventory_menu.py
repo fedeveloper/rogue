@@ -9,6 +9,8 @@ def _use_consumable(player, item, real_idx, in_combat) -> str:
     res = ""
     if cat == "heal":
         heal_amt = item.heal_amount
+        if player.alchemist_potions: heal_amt = int(heal_amt * 1.5)
+        if "carestia" in player.active_pacts: heal_amt //= 2
         actual_heal = player.heal(heal_amt)
         print(f"{Colors.GREEN}\nHai usato {item.display_name}! Recuperati {actual_heal} HP.{Colors.RESET}")
         res = "turn_used" if in_combat else ""
@@ -47,8 +49,8 @@ def _use_consumable(player, item, real_idx, in_combat) -> str:
         print(f"{Colors.MAGENTA}\nBevi la Fiala del Caos...{Colors.RESET}")
         eff = random.choice(["heal_full", "dmg", "gold", "max_hp", "element"])
         if eff == "heal_full":
-            player.hp = player.max_hp
-            print(f"{Colors.GREEN}Sei completamente curato!{Colors.RESET}")
+            if player.heal(player.max_hp) > 0 or player.hp == player.max_hp: print(f"{Colors.GREEN}Sei completamente curato!{Colors.RESET}")
+            else: print(f"{Colors.RED}La fiala ribolle, ma la maledizione blocca la cura.{Colors.RESET}")
         elif eff == "dmg":
             dmg = int(player.max_hp * 0.3)
             alive = player.take_damage(dmg)
@@ -90,6 +92,9 @@ def _use_consumable(player, item, real_idx, in_combat) -> str:
         res = "turn_used"
 
     consume_item = True
+    if cat == "heal" and player.thief_save and random.random() < 0.30:
+        print(f"{Colors.CYAN}Tasche Nascoste: la pozione non è stata consumata!{Colors.RESET}")
+        consume_item = False
     for r in player.relic_effects:
         if not r.on_item_use(player, item.name): consume_item = False
     if consume_item: player.inventory.pop(real_idx)
@@ -194,7 +199,7 @@ def show_player_stats(player):
     
     print(f"{Colors.BOLD}--- ATTRIBUTI ---{Colors.RESET}")
     print(f"🗡️  Attacco Totale: {player.get_total_atk()} (Base arma: {player.weapon.atk})")
-    print(f"🛡️  Difesa Totale: {player.armor.defense + player.temp_def} (Base armatura: {player.armor.defense})")
+    print(f"🛡️  Difesa Totale: {player.get_total_def()} (Base armatura: {player.armor.defense})")
     print(f"🎯 Precisione: {player.base_acc}%")
     print(f"💨 Schivata: {player.get_dodge()}%")
     

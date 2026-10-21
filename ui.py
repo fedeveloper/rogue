@@ -40,6 +40,7 @@ def get_key() -> str:
             if key2 == b'H': return "UP"
             elif key2 == b'P': return "DOWN"
         elif key == b'\r': return "ENTER"
+        elif key == b'\x03': raise KeyboardInterrupt
     else:
         import sys, tty, termios
         fd = sys.stdin.fileno()
