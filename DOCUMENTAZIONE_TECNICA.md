@@ -32,21 +32,27 @@ Dipendenze fra i moduli: `ui` ← `data_manager` ← `archive`/`relic_effects` �
 
 ## 3. I dati (`data/*.json`)
 
-Un campo `"unlock_id"` assente o `null` significa **disponibile da subito**. Un valore indica che l'oggetto va sbloccato: alla Forgia se ha `unlock_cost > 0`, altrimenti tramite un'impresa o una Maestria.
+Un campo `"unlock_id"` assente o `null` significa **disponibile da subito**. Un valore indica che l'oggetto va sbloccato:
+- alla Forgia, se ha `unlock_cost > 0`;
+- altrimenti tramite un'impresa, una Maestria o la vittoria (`VICTORY_UNLOCKS` in `roguelike.py`, oggi la Lama del Creatore).
+
+Un test controlla che ogni oggetto sbloccabile abbia davvero una di queste strade.
+
+**Le descrizioni sono un contratto.** Ogni numero o effetto scritto in `desc`/`text` deve corrispondere a ciò che il gioco fa, e `tests/test_contracts.py` lo verifica. Le proprietà speciali di armi e armature (`hit_modifier`, `crit_chance`, `gold_atk_*`, `dodge_bonus`, `element`) si dichiarano nei dati; la descrizione le racconta con gli stessi numeri.
 
 | File | Contenuto | Campi principali |
 |---|---|---|
 | `classes.json` | Le classi, per id (`"1"`…`"8"`) | `role`, `max_hp`, `gold`, `acc`, `dodge`, `crit` (opz.), `weapon`/`armor` iniziali (`name`, `value`, `atk`/`def`, `element`), `potions`, `unlocked_by_default`, `mastery` |
 | `enemies.json` | `enemies` e `bosses`, per nome | `element`, `base_hp`, `base_atk`, `base_dodge`, `base_acc`, `title`/`lore` (boss), `status_inflict` (opz.), `final_boss` (solo DIO ANTICO) |
-| `weapons.json` | Armi | `name`, `base_atk`, `val_base` (opz.), `status_inflict` (opz.), `unlock_id`, `unlock_cost`, `desc`, `flavor` |
-| `armors.json` | Armature | `name`, `base_def`, `unlock_id`, `unlock_cost`, `desc`, `flavor` |
+| `weapons.json` | Armi | `name`, `base_atk`, `val_base` (opz.), `element` (opz., altrimenti casuale), `status_inflict` (opz.), `hit_modifier`, `crit_chance`, `gold_atk_per`/`gold_atk_max` (opz.), `unlock_id`, `unlock_cost`, `desc`, `flavor` |
+| `armors.json` | Armature | `name`, `base_def`, `element` (opz.), `dodge_bonus` (opz.), `unlock_id`, `unlock_cost`, `desc`, `flavor` |
 | `accessories.json` | Monili | `name`, `bonus_type` (`crit_chance`, `lifesteal`, `max_hp`, `dodge`, `acc`, `reflect`), `bonus_value`, `base_val`, `desc`, `lore`, `unlock_id`, `unlock_cost` |
 | `consumables.json` | Consumabili | `name`, `category` (`heal`, `antidote`, `smoke_bomb`, `chaos_tome`, `chaos_vial`, `holy_water`, `whetstone`, `accuracy_potion`), `base_heal`, `val_base`, `desc`, `unlock_id` |
 | `relics.json` | Reliquie | `id`, `name`, `desc`, `lore`, `unlock_id`, `unlock_cost` |
 | `elements.json` | Sistema elementale | `list`, `icons`, `multipliers[attaccante][difensore]`, `resonance[elemento] = {value, desc, announce}` |
 | `books.json` | Tomi dell'Archivio | `title`, `unlock_condition` (testo), `unlock = {type: max_floor\|total_bosses\|won_normal, value}`, `bonus = {gold_pct, escape, boss_dmg_pct, def}`, `bonus_desc`, `chapters` |
 | `meta.json` | Regole di contorno | `traits`, `pacts` (`bonus` di Essenza), `feats` (`target`, `reward_type`, `reward_id`), `mastery_xp_requirements`, `rooms.weights`/`rooms.cooldowns` |
-| `events.json` | Eventi narrativi | `title`, `text`, `choices[]` con `text`, `action`, `msg`, `msg_alt`, `requires_item`, `item_id`, `reward_*` |
+| `events.json` | Eventi narrativi | `title`, `text`, `choices[]` con `text`, `action`, `msg`, `msg_alt`, `requires_item`, `item_id`, `reward_*`, `gold` (oro di `blood_gold`, predefinito 100) |
 | `lore.json` | Frasi d'atmosfera | `combat`, `boss`, `vendor`, `treasure`, `trap`, `campfire`, `letters`, `mystery` |
 
 ### Maestrie
@@ -141,8 +147,10 @@ Ogni reliquia è una sottoclasse di `RelicEffect` che ridefinisce solo gli hook 
 | `on_attack_landed` | Dopo un colpo a segno |
 | `on_take_damage(session, dmg, mult)` | Prima di subire danni, restituisce i danni |
 | `on_enemy_death` | Alla morte del nemico, prima dell'EXP |
-| `on_gold_gain` / `on_heal` | Modificano oro e cure |
-| `on_item_use` | Restituire `False` evita di consumare l'oggetto |
+| `on_gold_gain` / `on_heal` | Modificano oro e qualsiasi cura |
+| `on_item_heal` | Modifica solo le cure di pozioni e consumabili |
+| `get_atk_modifier(player)` / `get_def_modifier(session)` | ATK e Difesa aggiuntivi, calcolati sul momento (es. Spirito della Spada, Pietra di Luna) |
+| `on_item_use(player, item)` | Restituire `False` evita di consumare l'oggetto |
 | `get_dodge_modifier` / `get_acc_modifier` / `get_exp_modifier` / `get_escape_modifier` | Modificatori passivi |
 | `modify_multiplier(mult, is_defense)` / `modify_trap_damage` / `modify_room_weights` | Elementi, trappole e generazione delle stanze |
 
@@ -169,13 +177,13 @@ Il salvataggio si crea al primo avvio e **non va committato** (è in `.gitignore
 ## 8. Aggiungere contenuti
 
 - **Un'arma, un'armatura, un monile o un consumabile.** Aggiungi l'oggetto al JSON. Per renderlo sbloccabile alla Forgia dagli un `unlock_id` e un `unlock_cost`; con `unlock_cost: 0` lo si ottiene solo da un'impresa o da una Maestria che ne citi l'`unlock_id`. Una volta sbloccato compare anche nella bottega dell'artigiano.
-- **Una reliquia.** Aggiungila a `relics.json`, scrivi la sua classe in `relic_effects.py` e registrala in `RELIC_REGISTRY`: un test controlla che dati e registro coincidano.
+- **Una reliquia.** Aggiungila a `relics.json`, scrivi la sua classe in `relic_effects.py`, registrala in `RELIC_REGISTRY` e aggiungi il suo contratto in `RelicContractTest`: un test fallisce se ne manca uno.
 - **Un nemico o un boss.** Basta `enemies.json`: la sua forza (`base_hp × base_atk`) decide a che profondità compare.
 - **Una classe.** Aggiungila a `classes.json` con le sue Maestrie e rendila sbloccabile da un'impresa o da una Maestria di tipo `class`. Gli effetti personali nuovi vanno controllati nel codice con `has_mastery_effect`.
 - **Un evento.** Aggiungilo a `events.json`. Le azioni esistenti sono in `_handle_event_action` (`rooms.py`); un'azione nuova va aggiunta lì.
 - **Una Risonanza o un tomo dell'Archivio.** Modifica `elements.json → resonance` o `books.json`.
 
-Dopo ogni modifica alla logica o ai dati aggiungi o aggiorna i test (vedi `AGENTS.md`).
+Dopo ogni modifica alla logica o ai dati aggiungi o aggiorna i test (vedi `AGENTS.md`). Per i contenuti nuovi vuol dire anche: descrizione con i numeri reali e, se servono, i contratti in `tests/test_contracts.py`.
 
 ---
 
@@ -198,6 +206,7 @@ La CI (`.github/workflows/tests.yml`) li esegue su Python 3.9 e sull'ultima 3.x;
 | `test_depth.py` | Nemici e boss per profondità, boss finale, tratto e antidoto mostrati |
 | `test_refactor.py` | Ciclo del turno, ridisegno dei menu, bonus nei dati, output tramite `ui`, etichette dei consumabili |
 | `test_shops.py` | Botteghe degli artigiani, elenco della Forgia, Cuore di Drago |
+| `test_contracts.py` | **Contratti descrizione ↔ effetto** per reliquie, armi, armature, monili (anche maledetti), consumabili, scelte degli eventi, tratti, patti, potenziamenti, Maestrie e imprese; ogni sbloccabile è ottenibile |
 
 Oltre ai test automatici il gioco è stato provato al terminale vero, avviandolo in un pty e inviandogli tasti, con un profilo che sblocca tutto:
 - tutte le combinazioni del menu pre-partita, provate nel banco di prova automatico;

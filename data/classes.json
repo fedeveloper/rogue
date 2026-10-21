@@ -209,7 +209,7 @@
         "desc": "Sbloccato completando l'Impresa 'Danza con la Morte'.",
         "mastery": {
             "2": {
-                "desc": "Furia Sanguinaria: +50% ATK quando gli HP sono sotto il 30%.",
+                "desc": "Furia Sanguinaria: +50% ATK quando gli HP sono sotto il 30%, ma in quello stato la Schivata scende a 0.",
                 "type": "personal",
                 "effect": "berserker_fury"
             },

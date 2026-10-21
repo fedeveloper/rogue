@@ -1,5 +1,5 @@
 import random
-from ui import Colors, clear_screen, get_choice, interactive_menu, display_msg, wait_enter
+from ui import Colors, clear_screen, interactive_menu, display_msg, wait_enter
 from data_manager import GAME_DATA, PROFILE_MANAGER, get_element_icon
 from entities import generate_random_element
 from archive import unlocked_archive_bonuses
@@ -11,6 +11,7 @@ def _use_consumable(player, item, real_idx, in_combat) -> str:
         heal_amt = item.heal_amount
         if player.alchemist_potions: heal_amt = int(heal_amt * 1.5)
         if "carestia" in player.active_pacts: heal_amt //= 2
+        for r in player.relic_effects: heal_amt = r.on_item_heal(player, heal_amt)
         actual_heal = player.heal(heal_amt)
         display_msg(f"{Colors.GREEN}\nHai usato {item.display_name}! Recuperati {actual_heal} HP.{Colors.RESET}")
         res = "turn_used" if in_combat else ""
@@ -75,7 +76,9 @@ def _use_consumable(player, item, real_idx, in_combat) -> str:
     elif cat == "antidote":
         display_msg(f"{Colors.GREEN}\nBevi l'Antidoto Universale! Tutti gli status alterati svaniscono.{Colors.RESET}")
         if hasattr(player, 'statuses'): player.statuses.clear()
-        actual_heal = player.heal(item.heal_amount)
+        antidote_heal = item.heal_amount
+        for r in player.relic_effects: antidote_heal = r.on_item_heal(player, antidote_heal)
+        actual_heal = player.heal(antidote_heal)
         if actual_heal > 0: display_msg(f"{Colors.GREEN}Recuperati {actual_heal} HP.{Colors.RESET}")
         res = "turn_used" if in_combat else ""
     elif cat == "whetstone":
@@ -96,7 +99,7 @@ def _use_consumable(player, item, real_idx, in_combat) -> str:
         display_msg(f"{Colors.CYAN}Tasche Nascoste: la pozione non è stata consumata!{Colors.RESET}")
         consume_item = False
     for r in player.relic_effects:
-        if not r.on_item_use(player, item.name): consume_item = False
+        if not r.on_item_use(player, item): consume_item = False
     if consume_item: player.inventory.pop(real_idx)
     wait_enter("Premi INVIO...")
     return res

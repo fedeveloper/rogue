@@ -41,13 +41,6 @@ def wait_enter(prompt: str = "Premi INVIO..."):
     """Attende che il giocatore prema INVIO. Punto unico per l'input di conferma (GUI, test, automazione)."""
     input(prompt)
 
-def get_choice(prompt: str) -> str:
-    while True:
-        choice = input(prompt).strip()
-        if choice: return choice
-        sys.stdout.write("\033[1A\r\033[2K")
-        sys.stdout.flush()
-
 def get_key() -> str:
     if os.name == 'nt':
         import msvcrt

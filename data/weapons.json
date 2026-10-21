@@ -37,7 +37,8 @@
             "base_atk": 15,
             "unlock_id": "spada_carnefice",
             "unlock_cost": 250,
-            "desc": "Arma devastante ma sbilanciata."
+            "desc": "Arma devastante ma sbilanciata: -10% Precisione.",
+            "hit_modifier": -10
         },
         {
             "name": "Falce Divora-Anime",
@@ -56,7 +57,7 @@
         },
         {
             "name": "Lama del Creatore",
-            "desc": "Un'arma leggendaria infusa con gli elementi primordiali.",
+            "desc": "Un'arma leggendaria infusa con gli elementi primordiali. Si ottiene sconfiggendo il DIO ANTICO, il boss finale.",
             "flavor": "L'unico oggetto che il Dio Antico non ha mai rinnegato.",
             "base_atk": 30,
             "val_base": 150,
@@ -65,25 +66,29 @@
         },
         {
             "name": "Zweihander d'Oro",
-            "desc": "Arma massiccia d'oro puro. Più oro hai, più fa male.",
+            "desc": "Arma massiccia d'oro puro. Più oro hai, più fa male: +1 ATK ogni 100 Oro posseduto (fino a +30).",
             "flavor": "Forgiata con le monete che Re Galdor ha cercato di portare nella tomba.",
             "base_atk": 25,
             "val_base": 300,
             "unlock_cost": 0,
-            "unlock_id": "zweihander_oro"
+            "unlock_id": "zweihander_oro",
+            "gold_atk_per": 100,
+            "gold_atk_max": 30
         },
         {
             "name": "Ascia del Boia",
-            "desc": "Lenta ma letale, altissimo tasso di colpo critico.",
+            "desc": "Lenta ma letale: -15% Precisione, ma 35% di probabilità di colpo critico (danni doppi).",
             "flavor": "Un tempo usata per giustiziare chiunque mettesse in dubbio l'Equilibrio.",
             "base_atk": 25,
             "val_base": 180,
             "unlock_cost": 0,
-            "unlock_id": "ascia_boia"
+            "unlock_id": "ascia_boia",
+            "hit_modifier": -15,
+            "crit_chance": 35
         },
         {
             "name": "Falce del Mietitore",
-            "desc": "Estremamente letale. La lama è intrisa di buio. 20% di infliggere Sanguinamento.",
+            "desc": "Estremamente letale. La lama è intrisa di buio. 20% di infliggere Sanguinamento. Sempre di elemento Tenebra.",
             "flavor": "Drena l'essenza stessa di chi le sta vicino. Si dice che abbia una mente propria.",
             "base_atk": 22,
             "unlock_id": "falce_mietitore",
@@ -92,7 +97,8 @@
                 "type": "bleed",
                 "chance": 20,
                 "duration": 3
-            }
+            },
+            "element": "Tenebra"
         },
         {
             "name": "Spadone del Re Caduto",
@@ -104,11 +110,12 @@
         },
         {
             "name": "Lancia di Ghiaccio Eterno",
-            "desc": "Arma lunga con un nucleo gelido.",
+            "desc": "Arma lunga con un nucleo gelido. Sempre di elemento Acqua.",
             "flavor": "Così fredda che congela il sangue sulle mani di chi la impugna.",
             "base_atk": 16,
             "unlock_id": "lancia_ghiaccio",
-            "unlock_cost": 300
+            "unlock_cost": 300,
+            "element": "Acqua"
         },
         {
             "name": "Frusta di Spine Corrotte",
@@ -125,15 +132,16 @@
         },
         {
             "name": "Martello Meteoritico",
-            "desc": "Massa enorme incandescente.",
+            "desc": "Massa enorme incandescente. Sempre di elemento Fuoco.",
             "flavor": "Custodisce il calore di una stella cadente. Il manico brucia dolcemente.",
             "base_atk": 24,
             "unlock_id": "martello_meteora",
-            "unlock_cost": 700
+            "unlock_cost": 700,
+            "element": "Fuoco"
         },
         {
             "name": "Pugnali del Vento Tagliente",
-            "desc": "Due lame invisibili e rapidissime. 25% di infliggere Sanguinamento.",
+            "desc": "Due lame invisibili e rapidissime. 25% di infliggere Sanguinamento. Sempre di elemento Vento.",
             "flavor": "Talmente leggeri da sembrare invisibili. Fischiano nell'aria.",
             "base_atk": 12,
             "unlock_id": "pugnali_vento",
@@ -142,15 +150,17 @@
                 "type": "bleed",
                 "chance": 25,
                 "duration": 2
-            }
+            },
+            "element": "Vento"
         },
         {
             "name": "Bastone dell'Alba",
-            "desc": "Canalizza la luce divina.",
+            "desc": "Canalizza la luce divina. Sempre di elemento Luce.",
             "flavor": "Scaccia le ombre con un bagliore accecante. Dono dell'alto clero.",
             "base_atk": 17,
             "unlock_id": "bastone_alba",
-            "unlock_cost": 450
+            "unlock_cost": 450,
+            "element": "Luce"
         },
         {
             "name": "Ascia del Minotauro",
@@ -175,7 +185,7 @@
         },
         {
             "name": "Tridente Oceanico",
-            "desc": "Arma letale associata alle maree. 20% di infliggere Veleno.",
+            "desc": "Arma letale associata alle maree. 20% di infliggere Veleno. Sempre di elemento Acqua.",
             "flavor": "Forgiato nelle profondità più oscure del regno sommerso.",
             "base_atk": 21,
             "unlock_id": "tridente_oceanico",
@@ -184,7 +194,8 @@
                 "type": "poison",
                 "chance": 20,
                 "duration": 3
-            }
+            },
+            "element": "Acqua"
         }
     ]
 }

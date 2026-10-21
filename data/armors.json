@@ -8,8 +8,8 @@
         {"name": "Armatura in Mithril", "base_def": 10},
         {"name": "Corazza di Scaglie di Drago", "base_def": 14},
         
-        {"name": "Mantello Riflettente", "base_def": 9, "unlock_id": "mantello_riflettente", "unlock_cost": 300, "desc": "Leggera ma con una difesa base altissima.", "flavor": "Composto da specchi che riflettono la luce di un sole che non esiste più."},
+        {"name": "Mantello Riflettente", "base_def": 9, "unlock_id": "mantello_riflettente", "unlock_cost": 300, "desc": "Leggera ma resistente: difesa vicina a quella del Mithril.", "flavor": "Composto da specchi che riflettono la luce di un sole che non esiste più."},
         {"name": "Egida del Titano", "base_def": 20, "unlock_id": "egida_titano", "unlock_cost": 600, "desc": "Un muro impenetrabile.", "flavor": "Scolpita dal petto di un colosso di Terra caduto durante la Prima Era."},
-		{"name": "Veste Eterea", "base_def": 0, "unlock_id": "veste_eterea", "unlock_cost": 0, "desc": "Difesa zero, ma incrementa passivamente le schivate (nascosto).", "flavor": "Tessuta con i fili della memoria di chi ha dimenticato il proprio nome."}
+		{"name": "Veste Eterea", "base_def": 0, "dodge_bonus": 20, "unlock_id": "veste_eterea", "unlock_cost": 0, "desc": "Difesa zero, ma +20% Schivata finché la indossi.", "flavor": "Tessuta con i fili della memoria di chi ha dimenticato il proprio nome."}
     ]
 }

@@ -9,7 +9,7 @@
         {
             "id": "lente_prismatica",
             "name": "Lente Prismatica",
-            "desc": "Vantaggi e Svantaggi Elementali sono RADDOPPIATI.",
+            "desc": "Vantaggi e Svantaggi Elementali sono RADDOPPIATI: Super Efficace x2 invece di x1,5, Poco efficace x0,25 invece di x0,5.",
             "lore": "Uno strumento degli Architetti per osservare il flusso elementale senza esserne consumati."
         },
         {
@@ -33,7 +33,7 @@
         {
             "id": "calice_alchimista",
             "name": "Calice dell'Alchimista",
-            "desc": "Le pozioni e i consumabili curano il 50% in più.",
+            "desc": "Le cure di pozioni e consumabili sono più forti del 50%.",
             "lore": "L'unico recipiente capace di contenere la linfa vitale pura senza contaminarla."
         },
         {
@@ -181,7 +181,7 @@
         {
             "id": "spirito_spada",
             "name": "Spirito della Spada",
-            "desc": "+15 ATK all'arma se il suo livello è 1.",
+            "desc": "+15 ATK finché impugni un'arma di livello 1.",
             "unlock_id": "spirito_spada",
             "lore": "Il fantasma di Sir Alaric che guida la mano di chi è ancora giovane nel viaggio."
         },

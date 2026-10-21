@@ -76,7 +76,7 @@ All'inizio di ogni discesa scegli un **tratto**, che cambia le regole per tutta 
 | Tratto | Effetto | Sblocco |
 |---|---|---|
 | **Nessun Tratto** | Gioca con le regole standard. | Iniziale |
-| **Patto del Sangue** | +50 ATK, ma le cure hanno effetto ZERO. | 10 morti |
+| **Patto del Sangue** | +50 ATK, ma HP Massimi dimezzati e le cure hanno effetto ZERO. | 10 morti |
 | **Tocco di Mida** | Non ottieni EXP dai mostri, ma l'Oro è TRIPLICATO. | 5.000 Oro raccolti in totale |
 | **Aristocratico** | Inizi con 500 Oro, ma i nemici non droppano più Oro. | Impresa «L'Avaro» |
 | **Cacciatore Etereo** | Primo colpo nemico manca sempre al 100%. -20% Schivata totale. | Impresa «Epuratore di Demoni» |
@@ -150,11 +150,11 @@ Si tengono al massimo 4 reliquie alla volta: trovandone un'altra scegli quale sa
 | Reliquia | Effetto | Come ottenerla |
 |---|---|---|
 | **Artiglio Vampirico** | Ogni tuo attacco a segno ti cura di 5 HP. | Boss, forzieri, eventi |
-| **Lente Prismatica** | Vantaggi e Svantaggi Elementali sono RADDOPPIATI. | Boss, forzieri, eventi |
+| **Lente Prismatica** | Vantaggi e Svantaggi Elementali sono RADDOPPIATI: Super Efficace x2 invece di x1,5, Poco efficace x0,25 invece di x0,5. | Boss, forzieri, eventi |
 | **Scudo di Cristallo** | Il primo danno che subisci in ogni combattimento è ridotto a 0. | Boss, forzieri, eventi |
 | **Tasca Dorata** | Aumenta l'Oro trovato nei forzieri e dai mostri del 25%. | Boss, forzieri, eventi |
 | **Idolo della Guerra** | Aumenta in modo permanente il tuo Attacco Base di +5. | Boss, forzieri, eventi |
-| **Calice dell'Alchimista** | Le pozioni e i consumabili curano il 50% in più. | Boss, forzieri, eventi |
+| **Calice dell'Alchimista** | Le cure di pozioni e consumabili sono più forti del 50%. | Boss, forzieri, eventi |
 | **Mantello Nebbioso** | Aumenta passivamente la Schivata del 15%. | Boss, forzieri, eventi |
 | **Bussola Perfetta** | La Fuga riesce sempre al 100% (non funziona sui Boss). | Boss, forzieri, eventi |
 | **Occhio del Cacciatore** | Aumenta la tua Precisione del 20%. | Boss, forzieri, eventi |
@@ -175,10 +175,62 @@ Si tengono al massimo 4 reliquie alla volta: trovandone un'altra scegli quale sa
 | **Bussola Dimensionale** | Aumenta probabilità di trovare Tesori e Stanze del Mistero. | Forgia (✨1000) |
 | **Cuore di Drago** | +50 HP Max fissi, con i relativi HP subito disponibili. | Impresa «Il Sopravvissuto» |
 | **Sigillo Elementale** | Annulla la debolezza elementale in difesa. | Impresa «Equilibrista» |
-| **Spirito della Spada** | +15 ATK all'arma se il suo livello è 1. | Impresa «Lama di Cristallo» |
+| **Spirito della Spada** | +15 ATK finché impugni un'arma di livello 1. | Impresa «Lama di Cristallo» |
 | **Maschera Antigas** | Immunità totale ai danni delle Trappole. | Impresa «Assaggiatore di Veleni» |
 | **Teschio di Sangue** | Ogni nemico sconfitto incrementa i tuoi HP Massimi di 1. | Maestria Berserker Lv.5 |
 | **Pietra Filosofale** | A fine combattimento, 20% di chance di convertire l'XP in Oro sonante. | Maestria Alchimista Lv.5 |
+
+</details>
+
+<details>
+<summary>⚔️ Le 24 armi</summary>
+
+L'ATK reale cresce con il piano in cui l'arma viene trovata; le armi di elemento *Normale* ricevono un bonus di ATK.
+
+| Arma | ATK base | Elemento | Caratteristiche | Come ottenerla |
+|---|---|---|---|---|
+| **Spada Corta** | 3 | Casuale | — | Disponibile da subito |
+| **Ascia da Battaglia** | 4 | Casuale | — | Disponibile da subito |
+| **Alabarda della Guardia** | 5 | Casuale | — | Disponibile da subito |
+| **Spadone a Due Mani** | 6 | Casuale | — | Disponibile da subito |
+| **Martello da Guerra** | 6 | Casuale | — | Disponibile da subito |
+| **Katana Affilata** | 8 | Casuale | — | Disponibile da subito |
+| **Lancia Perforante** | 9 | Casuale | — | Disponibile da subito |
+| **Meteora Chiodata** | 11 | Casuale | — | Disponibile da subito |
+| **Spada del Carnefice** | 15 | Casuale | Arma devastante ma sbilanciata: -10% Precisione. | Forgia (✨250) |
+| **Falce Divora-Anime** | 18 | Casuale | Danni base spaventosi per le run più profonde. | Forgia (✨500) |
+| **Spadone Infranto** | 25 | Casuale | Leggendario, ottenuto tramite Imprese. | Impresa «Fabbro Folle» |
+| **Lama del Creatore** | 30 | Casuale | Un'arma leggendaria infusa con gli elementi primordiali. Si ottiene sconfiggendo il DIO ANTICO, il boss finale. | Vittoria al piano 30 |
+| **Zweihander d'Oro** | 25 | Casuale | Arma massiccia d'oro puro. Più oro hai, più fa male: +1 ATK ogni 100 Oro posseduto (fino a +30). | Impresa «Mani Bucate» |
+| **Ascia del Boia** | 25 | Casuale | Lenta ma letale: -15% Precisione, ma 35% di probabilità di colpo critico (danni doppi). | Maestria Berserker Lv.3 |
+| **Falce del Mietitore** | 22 | 🌑 Tenebra | Estremamente letale. La lama è intrisa di buio. 20% di infliggere Sanguinamento. Sempre di elemento Tenebra. | Forgia (✨650) |
+| **Spadone del Re Caduto** | 20 | Casuale | Un'arma colossale e inarrestabile. | Forgia (✨400) |
+| **Lancia di Ghiaccio Eterno** | 16 | 💧 Acqua | Arma lunga con un nucleo gelido. Sempre di elemento Acqua. | Forgia (✨300) |
+| **Frusta di Spine Corrotte** | 14 | Casuale | Attacchi veloci e crudeli. 30% di infliggere Sanguinamento. | Forgia (✨250) |
+| **Martello Meteoritico** | 24 | 🔥 Fuoco | Massa enorme incandescente. Sempre di elemento Fuoco. | Forgia (✨700) |
+| **Pugnali del Vento Tagliente** | 12 | 🌪️ Vento | Due lame invisibili e rapidissime. 25% di infliggere Sanguinamento. Sempre di elemento Vento. | Forgia (✨200) |
+| **Bastone dell'Alba** | 17 | ✨ Luce | Canalizza la luce divina. Sempre di elemento Luce. | Forgia (✨450) |
+| **Ascia del Minotauro** | 26 | Casuale | Un'arma mostruosa a doppia lama. | Forgia (✨800) |
+| **Balestra Gnomica a Ripetizione** | 19 | Casuale | Ingegneria avanzata, scocca raffiche di dardi. Dardi avvelenati: 30% di infliggere Veleno. | Forgia (✨550) |
+| **Tridente Oceanico** | 21 | 💧 Acqua | Arma letale associata alle maree. 20% di infliggere Veleno. Sempre di elemento Acqua. | Forgia (✨600) |
+
+</details>
+
+<details>
+<summary>🛡️ Le 10 armature</summary>
+
+| Armatura | DEF base | Caratteristiche | Come ottenerla |
+|---|---|---|---|
+| **Tunica del Viaggiatore** | 1 | — | Disponibile da subito |
+| **Corazza di Cuoio** | 2 | — | Disponibile da subito |
+| **Cotta di Maglia** | 4 | — | Disponibile da subito |
+| **Corazza a Piastre** | 6 | — | Disponibile da subito |
+| **Armatura Pesante Nanesca** | 8 | — | Disponibile da subito |
+| **Armatura in Mithril** | 10 | — | Disponibile da subito |
+| **Corazza di Scaglie di Drago** | 14 | — | Disponibile da subito |
+| **Mantello Riflettente** | 9 | Leggera ma resistente: difesa vicina a quella del Mithril. | Forgia (✨300) |
+| **Egida del Titano** | 20 | Un muro impenetrabile. | Forgia (✨600) |
+| **Veste Eterea** | 0 | Difesa zero, ma +20% Schivata finché la indossi. | Impresa «Cannone di Vetro» |
 
 </details>
 
@@ -219,7 +271,7 @@ Si tengono al massimo 4 reliquie alla volta: trovandone un'altra scegli quale sa
 | **Lacrima di Fenice** | Cura 150 HP (di più ai piani profondi) | Disponibile da subito |
 | **Elisir degli Dei** | Cura quasi completamente qualsiasi eroe. | Forgia (✨200) |
 | **Pietra per Affilare** | Aumenta +5 ATK all'arma attuale in modo permanente. | Maestria Guerriero Lv.3 |
-| **Bomba Fumogena** | Ti permette di fuggire all'istante da un combattimento. | Maestria Ladro Lv.3 |
+| **Bomba Fumogena** | Ti permette di fuggire all'istante da un combattimento (non funziona contro i Boss). | Maestria Ladro Lv.3 |
 | **Tomo del Caos** | Cambia casualmente l'elemento dell'arma che impugni. | Maestria Mago Lv.3 |
 | **Filtro Preciso** | Conferisce Precisione totale per questo combattimento. | Impresa «Tiratore Scelto» |
 | **Acqua Santa** | Purifica tutte le Maledizioni sull'equipaggiamento indossato. | Maestria Paladino Lv.3 |
@@ -234,18 +286,18 @@ Si tengono al massimo 4 reliquie alla volta: trovandone un'altra scegli quale sa
 | Impresa | Obiettivo | Ricompensa |
 |---|---|---|
 | **L'Ombra** | Scappa da 10 combattimenti in una singola run. | Potenziamento: Scarpisti (+20% Fuga) |
-| **Fabbro Folle** | Fondi 3 oggetti alla Forgia in una run. | Sblocco: Spadone Infranto |
+| **Fabbro Folle** | Fondi 3 oggetti all'Altare dell'Evoluzione in una run. | Sblocco: Spadone Infranto |
 | **Cannone di Vetro** | Sconfiggi un Boss senza subire alcun danno. | Sblocco: Veste Eterea |
 | **Danza con la Morte** | Sconfiggi un nemico avendo esattamente 1 HP rimanente. | Classe: Berserker |
-| **L'Avaro** | Esci dal labirinto con più di 2000 Oro non speso. | Tratto: Aristocratico |
+| **L'Avaro** | Esci dal labirinto con almeno 2000 Oro non speso. | Tratto: Aristocratico |
 | **Genio Elementale** | Fondi un'arma fino al Livello 5. | Classe: Alchimista |
 | **Il Sopravvissuto** | Supera il Piano 10 senza MAI usare il riposo al Falò. | Sblocco: Cuore di Drago |
 | **Epuratore di Demoni** | Sconfiggi 10 Boss in totale. | Tratto: Cacciatore Etereo |
-| **Mani Bucate** | Spendi più di 2000 Oro dal Mercante in una singola run. | Sblocco: Zweihander d'Oro |
+| **Mani Bucate** | Spendi almeno 2000 Oro dal Mercante in una singola run. | Sblocco: Zweihander d'Oro |
 | **Equilibrista** | Finisci una run con Arma e Armatura di elementi diversi. | Sblocco: Sigillo Elementale |
 | **Lama di Cristallo** | Arriva al piano 15 senza mai cambiare l'arma iniziale. | Sblocco: Spirito della Spada |
 | **Furia Cieca** | Supera un piano mancando più della metà dei tuoi attacchi (almeno 6 attacchi). | Tratto: Titano |
-| **Tiratore Scelto** | Infliggi 5 colpi Super Efficaci a un Boss. | Sblocco: Filtro Preciso |
+| **Tiratore Scelto** | Infliggi 5 colpi Super Efficaci ai Boss in una singola run. | Sblocco: Filtro Preciso |
 | **Assaggiatore di Veleni** | Sopravvivi a un danno letale rimanendo a 1 HP (es. Benedizione o Fiala del Caos). | Sblocco: Maschera Antigas |
 
 </details>
@@ -300,6 +352,8 @@ rogue/
 ```bash
 python -m unittest discover -s tests   # esegue i test, gli stessi della CI
 ```
+
+I **test di contratto** (`tests/test_contracts.py`) verificano che ogni reliquia, monile, arma, armatura, consumabile, evento, tratto, patto, potenziamento, Maestria e impresa faccia esattamente ciò che dice la sua descrizione: un contenuto nuovo senza il suo contratto fa fallire i test.
 
 - 📖 [**Manuale del Giocatore**](MANUALE_GIOCATORE.md) — strategie e regole in dettaglio.
 - 🔧 [**Documentazione Tecnica**](DOCUMENTAZIONE_TECNICA.md) — architettura, formato dei dati, formule e come aggiungere contenuti.

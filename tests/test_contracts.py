@@ -1,0 +1,633 @@
+"""Contratti fra descrizioni ed effetti: ogni asset del gioco deve fare ciò che la sua descrizione promette.
+
+Ogni famiglia di asset ha un controllo di completezza: aggiungere una reliquia, una categoria di consumabile,
+un tratto, un patto o un'impresa senza il relativo contratto fa fallire i test.
+Il profilo viene modificato solo in memoria e ripristinato; non viene mai salvato.
+"""
+import copy
+import io
+import random
+import re
+import unittest
+from contextlib import redirect_stdout
+from unittest import mock
+
+import inventory_menu
+import roguelike
+import rooms
+from data_manager import GAME_DATA, PROFILE_MANAGER, RAW_DATA, update_game_data
+from entities import Accessory, Armor, Consumable, Enemy, Player, Weapon, generate_accessory, generate_weapon
+from rooms import CombatSession
+
+ALL_UNLOCKS = sorted({i["unlock_id"] for cat in ("weapons", "armors", "accessories", "consumables", "relics")
+                      for i in RAW_DATA[cat] if i.get("unlock_id")})
+NUM = re.compile(r"\d+")
+
+
+def quiet():
+    return redirect_stdout(io.StringIO())
+
+
+class Sandbox(unittest.TestCase):
+    """Profilo pulito: tutto sbloccato, nessun potenziamento, nessuna Maestria, nessun bonus dell'Archivio."""
+
+    def setUp(self):
+        self._saved = copy.deepcopy(PROFILE_MANAGER._data)
+        data = PROFILE_MANAGER._data
+        data.update(unlocked_ids=list(ALL_UNLOCKS), class_lvl={}, completed_feats=[], max_floor=0, won_normal=False)
+        data["stats"] = {"total_deaths": 0, "total_gold": 0, "total_bosses": 0}
+        data["perks"] = {k: (False if isinstance(v, bool) else 0) for k, v in data["perks"].items()}
+        for k in ("starting_consumables", "starting_weapons", "starting_armors", "starting_accessories"): data[k] = []
+        update_game_data()
+        random.seed(1234)
+
+    def tearDown(self):
+        PROFILE_MANAGER._data.clear()
+        PROFILE_MANAGER._data.update(self._saved)
+        update_game_data()
+
+    def hero(self, cls="1", trait="base", pacts=()):
+        with quiet():
+            p = Player(cls, trait, list(pacts))
+        p.weapon = Weapon("Spada di prova", 10, 10, "Normale", 1)
+        p.armor = Armor("Armatura di prova", 10, 0, "Normale", 1)
+        return p
+
+    def session(self, p, floor=1, boss=False):
+        with quiet():
+            return CombatSession(p, floor, Enemy(floor, boss, []))
+
+    def relic(self, p, rid):
+        data = next(r for r in RAW_DATA["relics"] if r["id"] == rid)
+        with quiet():
+            p.add_relic(data)
+        return p.relic_effects[-1]
+
+    def drink(self, p, item, in_combat=False):
+        p.inventory = [item]
+        with quiet(), mock.patch("builtins.input", return_value=""), mock.patch("inventory_menu.random.random", return_value=0.99):
+            return inventory_menu._use_consumable(p, item, 0, in_combat)
+
+
+# ---------------------------------------------------------------- reliquie
+class RelicContractTest(Sandbox):
+    def contracts(self):
+        return {
+            "artiglio_vampiro": self.c_artiglio, "lente_prismatica": self.c_lente, "scudo_cristallo": self.c_scudo,
+            "tasca_dorata": self.c_tasca, "idolo_guerra": self.c_idolo_guerra, "calice_alchimista": self.c_calice,
+            "mantello_nebbioso": self.c_mantello, "bussola_perfetta": self.c_bussola, "occhio_cacciatore": self.c_occhio,
+            "spallacci_rovo": self.c_rovo, "cuore_troll": self.c_troll, "tomo_conoscenza": self.c_tomo,
+            "idolo_avidita": self.c_avidita, "lama_sangue": self.c_lama, "corona_re_folle": self.c_corona,
+            "anello_vampiro_max": self.c_anello, "clessidra_destino": self.c_clessidra, "armatura_spilli": self.c_spilli,
+            "pergamena_oro": self.c_pergamena, "campanella_spiriti": self.c_campanella, "pietra_luna": self.c_luna,
+            "contratto_demoniaco": self.c_contratto, "pozione_infinita": self.c_pozione, "bussola_dimensionale": self.c_dimensionale,
+            "cuore_drago": self.c_drago, "sigillo_elementale": self.c_sigillo, "spirito_spada": self.c_spirito,
+            "maschera_antigas": self.c_maschera, "teschio_sangue": self.c_teschio, "pietra_filosofale": self.c_filosofale,
+        }
+
+    def test_every_relic_has_a_contract(self):
+        self.assertEqual(set(self.contracts()), {r["id"] for r in RAW_DATA["relics"]})
+
+    def test_every_relic_does_what_it_says(self):
+        for rid, check in self.contracts().items():
+            with self.subTest(relic=rid), quiet():
+                self.setUp()
+                check()
+
+    def c_artiglio(self):
+        p = self.hero(); p.hp = 10; e = self.relic(p, "artiglio_vampiro")
+        e.on_attack_landed(self.session(p), 1.0); self.assertEqual(p.hp, 15)
+
+    def c_lente(self):
+        e = self.relic(self.hero(), "lente_prismatica")
+        self.assertEqual([e.modify_multiplier(m) for m in (1.5, 1.0, 0.5)], [2.0, 1.0, 0.25])
+
+    def c_scudo(self):
+        p = self.hero(); s = self.session(p); e = self.relic(p, "scudo_cristallo"); e.on_combat_start(s)
+        self.assertEqual([e.on_take_damage(s, 10, 1) for _ in range(2)], [0, 10])
+        e.on_combat_start(s); self.assertEqual(e.on_take_damage(s, 10, 1), 0)
+
+    def c_tasca(self):
+        p = self.hero(); self.relic(p, "tasca_dorata"); self.assertEqual(p.calculate_gold_gain(100), 125)
+
+    def c_idolo_guerra(self):
+        p = self.hero(); before = p.get_total_atk(); self.relic(p, "idolo_guerra"); self.assertEqual(p.get_total_atk(), before + 5)
+
+    def c_calice(self):
+        p = self.hero(); self.relic(p, "calice_alchimista"); p.hp = 1
+        self.drink(p, Consumable("Pozione", 10, 40, "heal")); self.assertEqual(p.hp, 61)
+        p.hp = 1; p.heal(10); self.assertEqual(p.hp, 11, "le cure che non vengono da consumabili non cambiano")
+
+    def c_mantello(self):
+        p = self.hero(); before = p.get_dodge(); self.relic(p, "mantello_nebbioso"); self.assertEqual(p.get_dodge(), before + 15)
+
+    def c_bussola(self):
+        p = self.hero(); s = self.session(p); self.relic(p, "bussola_perfetta"); self.assertEqual(s._calc_escape_chance(), 100)
+
+    def c_occhio(self):
+        p = self.hero(); p.base_acc = -60; before = p.get_hit_chance(); self.relic(p, "occhio_cacciatore")
+        self.assertEqual(p.get_hit_chance(), before + 20)
+
+    def c_rovo(self):
+        p = self.hero(); s = self.session(p); s.enemy.hp = 100; e = self.relic(p, "spallacci_rovo")
+        with quiet(): self.assertEqual(e.on_take_damage(s, 10, 1), 10)
+        self.assertEqual(s.enemy.hp, 95)
+
+    def c_troll(self):
+        p = self.hero(); before = p.max_hp; e = self.relic(p, "cuore_troll")
+        with quiet(): e.on_enemy_death(self.session(p))
+        self.assertEqual(p.max_hp, before + 2)
+
+    def c_tomo(self):
+        p = self.hero(); self.relic(p, "tomo_conoscenza"); p.exp = 0
+        with quiet(): p.gain_exp(50)
+        self.assertEqual(p.exp, 65)
+
+    def c_avidita(self):
+        p = self.hero(); p.base_dodge = 50; self.relic(p, "idolo_avidita")
+        self.assertEqual(p.calculate_gold_gain(100), 200); self.assertEqual(p.get_dodge(), 0)
+
+    def c_lama(self):
+        p = self.hero(); before = p.get_total_atk(); e = self.relic(p, "lama_sangue"); hp = p.hp
+        self.assertEqual(p.get_total_atk(), before + 10)
+        with quiet(): self.assertTrue(e.on_before_attack(self.session(p)))
+        self.assertEqual(p.hp, hp - 3)
+
+    def c_corona(self):
+        p = self.hero(); s = self.session(p); e = self.relic(p, "corona_re_folle")
+        self.assertEqual(e.on_attack(s, 10, 1.5, "")[0], 15)
+        self.assertEqual(e.on_attack(s, 10, 1.0, "[CRITICO!]")[0], 15)
+        self.assertEqual(e.on_attack(s, 10, 1.0, "")[0], 10)
+        _, weapon_crit = Weapon("Ascia", 1, 10, "Normale", 1, traits={"crit_chance": 100}).on_attack(10, "")
+        self.assertIn("[CRITICO!]", weapon_crit, "i critici delle armi devono attivare la Corona")
+
+    def c_anello(self):
+        p = self.hero(); p.hp = 10; e = self.relic(p, "anello_vampiro_max")
+        with quiet(): e.on_attack_landed(self.session(p), 1.0)
+        self.assertEqual(p.hp, 12)
+
+    def c_clessidra(self):
+        p = self.hero(); s = self.session(p); s.enemy.base_dodge = 30; self.relic(p, "clessidra_destino").on_combat_start(s)
+        self.assertEqual(s.enemy.base_dodge, 10)
+
+    def c_spilli(self):
+        p = self.hero(); s = self.session(p); s.enemy.hp = 100; e = self.relic(p, "armatura_spilli")
+        with quiet(): e.on_take_damage(s, 10, 1)
+        self.assertEqual(s.enemy.hp, 97)
+
+    def c_pergamena(self):
+        p = self.hero(); p.hp = 10; self.relic(p, "pergamena_oro")
+        with quiet(): self.assertEqual(p.calculate_gold_gain(10), 10)
+        self.assertEqual(p.hp, 12)
+
+    def c_campanella(self):
+        p = self.hero(); s = self.session(p); e = self.relic(p, "campanella_spiriti")
+        with quiet(), mock.patch("relic_effects.random.random", return_value=0.10): self.assertEqual(e.on_take_damage(s, 10, 1), 0)
+        with quiet(), mock.patch("relic_effects.random.random", return_value=0.20): self.assertEqual(e.on_take_damage(s, 10, 1), 10)
+
+    def c_luna(self):
+        p = self.hero(); p.armor.defense = 10; s = self.session(p); s.enemy.atk = 40; s.is_defending = True
+        with mock.patch("rooms.random.randint", return_value=0):
+            plain = s._calc_enemy_damage(1.0)
+            self.relic(p, "pietra_luna"); boosted = s._calc_enemy_damage(1.0)
+        self.assertEqual((plain, boosted), ((40 - 10) // 2, (40 - 15) // 2))
+
+    def c_contratto(self):
+        p = self.hero(); s = self.session(p); e = self.relic(p, "contratto_demoniaco")
+        self.assertEqual(e.on_attack(s, 10, 1.0, "")[0], 20)
+        p.hp = 20
+        with quiet(): e.on_enemy_death(s)
+        self.assertEqual(p.hp, 15)
+        p.hp = 3
+        with quiet(): e.on_enemy_death(s)
+        self.assertEqual(p.hp, 1, "il tributo non può uccidere")
+
+    def c_pozione(self):
+        p = self.hero(); e = self.relic(p, "pozione_infinita")
+        with quiet(), mock.patch("relic_effects.random.random", return_value=0.0):
+            self.assertFalse(e.on_item_use(p, Consumable("Elisir degli Dei", 1, 300, "heal")))
+            self.assertTrue(e.on_item_use(p, Consumable("Fiala del Caos", 1, 0, "chaos_vial")), "solo le pozioni curative")
+
+    def c_dimensionale(self):
+        w = {"combat": 60.0, "treasure": 5.0, "mystery": 10.0}
+        self.relic(self.hero(), "bussola_dimensionale").modify_room_weights(w)
+        self.assertEqual(w, {"combat": 60.0, "treasure": 20.0, "mystery": 25.0})
+
+    def c_drago(self):
+        p = self.hero("1", "maledetto"); hp, mx = p.hp, p.max_hp; self.relic(p, "cuore_drago")
+        self.assertEqual((p.hp, p.max_hp), (hp + 50, mx + 50))
+
+    def c_sigillo(self):
+        e = self.relic(self.hero(), "sigillo_elementale")
+        self.assertEqual([e.modify_multiplier(1.5, True), e.modify_multiplier(1.5, False), e.modify_multiplier(0.5, True)], [1.0, 1.5, 0.5])
+
+    def c_spirito(self):
+        p = self.hero(); p.weapon.level = 2; base = p.get_total_atk(); self.relic(p, "spirito_spada")
+        self.assertEqual(p.get_total_atk(), base)
+        p.weapon.level = 1; self.assertEqual(p.get_total_atk(), base + 15, "il bonus segue l'arma impugnata")
+
+    def c_maschera(self):
+        with quiet(): self.assertEqual(self.relic(self.hero(), "maschera_antigas").modify_trap_damage(30), 0)
+
+    def c_teschio(self):
+        p = self.hero(); before = p.max_hp; e = self.relic(p, "teschio_sangue")
+        with quiet(): e.on_enemy_death(self.session(p))
+        self.assertEqual(p.max_hp, before + 1)
+
+    def c_filosofale(self):
+        p = self.hero(); s = self.session(p); s.enemy.exp_drop = 50; gold = p.gold; e = self.relic(p, "pietra_filosofale")
+        with quiet(), mock.patch("relic_effects.random.random", return_value=0.10): e.on_enemy_death(s)
+        self.assertEqual((p.gold, s.enemy.exp_drop), (gold + 50, 0))
+
+
+# ---------------------------------------------------------------- armi, armature, monili
+class EquipmentContractTest(Sandbox):
+    def test_numbers_in_weapon_descriptions_come_from_the_data(self):
+        for w in RAW_DATA["weapons"]:
+            st = w.get("status_inflict") or {}
+            allowed = {st.get("chance"), -w.get("hit_modifier", 0), w.get("crit_chance"), w.get("gold_atk_per"), w.get("gold_atk_max")}
+            if w.get("gold_atk_per"): allowed.add(1)  # "+1 ATK ogni ... Oro"
+            with self.subTest(weapon=w["name"]):
+                for n in NUM.findall(w.get("desc", "")):
+                    self.assertIn(int(n), allowed, f"numero {n} nella descrizione senza un effetto corrispondente")
+                if w.get("element"): self.assertIn(w["element"], w["desc"])
+
+    def test_weapon_traits_behave_as_described(self):
+        p = self.hero()
+        p.base_acc = -60
+        base_hit = p.get_hit_chance()
+        for w in RAW_DATA["weapons"]:
+            with self.subTest(weapon=w["name"]), mock.patch("entities.random.choice", side_effect=lambda seq: w if isinstance(seq, list) and w in seq else seq[0]):
+                weapon = generate_weapon(1, True)
+                if w.get("element"): self.assertEqual(weapon.element, w["element"])
+                p.weapon = weapon
+                self.assertEqual(p.get_hit_chance(), base_hit + w.get("hit_modifier", 0))
+                if w.get("crit_chance"):
+                    with mock.patch("entities.random.randint", return_value=w["crit_chance"]):
+                        self.assertEqual(weapon.on_attack(10, "")[0], 20)
+                    with mock.patch("entities.random.randint", return_value=w["crit_chance"] + 1):
+                        self.assertEqual(weapon.on_attack(10, "")[0], 10)
+                if w.get("gold_atk_per"):
+                    p.gold = 0; plain = p.get_total_atk()
+                    p.gold = w["gold_atk_per"] * 3; self.assertEqual(p.get_total_atk(), plain + 3)
+                    p.gold = 10 ** 9; self.assertEqual(p.get_total_atk(), plain + w["gold_atk_max"])
+                    p.gold = 0
+
+    def test_numbers_in_armor_descriptions_come_from_the_data(self):
+        for a in RAW_DATA["armors"]:
+            with self.subTest(armor=a["name"]):
+                for n in NUM.findall(a.get("desc", "")):
+                    self.assertIn(int(n), {a.get("dodge_bonus"), a["base_def"]})
+
+    def test_armor_dodge_bonus(self):
+        veste = next(a for a in RAW_DATA["armors"] if a["name"] == "Veste Eterea")
+        p = self.hero(); before = p.get_dodge()
+        p.armor = Armor(veste["name"], 1, veste["base_def"], "Normale", 1, dodge_bonus=veste["dodge_bonus"])
+        self.assertEqual(p.get_dodge(), before + veste["dodge_bonus"])
+        self.assertIn(f"+{veste['dodge_bonus']}% Schivata", veste["desc"])
+
+    def equip(self, p, acc):
+        p.inventory = [acc]
+        with quiet(), mock.patch("inventory_menu.interactive_menu", side_effect=[0, 0]), mock.patch("inventory_menu.clear_screen"), \
+             mock.patch("builtins.input", return_value=""):
+            inventory_menu.show_inventory_menu(p)
+        self.assertIs(p.accessory, acc)
+
+    def test_every_accessory_gives_the_bonus_in_its_description(self):
+        for a in RAW_DATA["accessories"]:
+            with self.subTest(accessory=a["name"]):
+                self.assertEqual([int(n) for n in NUM.findall(a["desc"])], [a["bonus_value"]])
+                p = self.hero(); p.base_acc = -60
+                before = {"max_hp": p.max_hp, "dodge": p.get_dodge(), "acc": p.get_hit_chance(), "crit_chance": p.get_crit_chance(), "lifesteal": p.get_lifesteal()}
+                acc = Accessory(a["name"], 1, "Normale", a["bonus_type"], a["bonus_value"], a["desc"])
+                self.equip(p, acc)
+                after = {"max_hp": p.max_hp, "dodge": p.get_dodge(), "acc": p.get_hit_chance(), "crit_chance": p.get_crit_chance(), "lifesteal": p.get_lifesteal()}
+                if a["bonus_type"] == "reflect":
+                    s = self.session(p); s.enemy.hp, s.enemy.base_acc, s.enemy.atk = 1000, 1000, 50
+                    with quiet(), mock.patch("rooms.random.randint", side_effect=lambda lo, hi: 0 if lo == -1 else 1):
+                        s.enemy_turn()
+                    self.assertEqual(s.enemy.hp, 1000 - a["bonus_value"])
+                else:
+                    self.assertEqual(after[a["bonus_type"]] - before[a["bonus_type"]], a["bonus_value"])
+
+    def test_cursed_accessories_show_their_real_bonus(self):
+        seen = 0
+        for seed in range(400):
+            random.seed(seed)
+            acc = generate_accessory(1)
+            if acc.is_cursed:
+                seen += 1
+                with self.subTest(accessory=acc.name, seed=seed):
+                    self.assertEqual([int(n) for n in NUM.findall(acc.desc)], [acc.bonus_value])
+        self.assertGreater(seen, 0)
+
+
+# ---------------------------------------------------------------- consumabili
+class ConsumableContractTest(Sandbox):
+    def contracts(self):
+        return {"heal": self.c_heal, "antidote": self.c_antidote, "whetstone": self.c_whetstone, "smoke_bomb": self.c_smoke,
+                "chaos_tome": self.c_tome, "accuracy_potion": self.c_accuracy, "holy_water": self.c_holy, "chaos_vial": self.c_vial}
+
+    def item(self, category):
+        d = next(c for c in RAW_DATA["consumables"] if c.get("category", "heal") == category)
+        return d, Consumable(d["name"], 1, d["base_heal"] if category in ("heal", "antidote") else 0, category)
+
+    def test_every_category_has_a_contract(self):
+        self.assertEqual(set(self.contracts()), {c.get("category", "heal") for c in RAW_DATA["consumables"]})
+
+    def test_every_consumable_does_what_it_says(self):
+        for cat, check in self.contracts().items():
+            with self.subTest(category=cat), quiet():
+                self.setUp()
+                check(*self.item(cat))
+
+    def c_heal(self, d, item):
+        p = self.hero(); p.max_hp, p.hp = 1000, 1; self.drink(p, item); self.assertEqual(p.hp, 1 + item.heal_amount)
+
+    def c_antidote(self, d, item):
+        p = self.hero(); p.max_hp, p.hp = 1000, 1; p.statuses = {"poison": 3, "bleed": 2}
+        self.drink(p, item); self.assertEqual((p.statuses, p.hp), ({}, 1 + item.heal_amount))
+
+    def c_whetstone(self, d, item):
+        p = self.hero(); before = p.weapon.atk; self.drink(p, item)
+        self.assertEqual(p.weapon.atk - before, int(NUM.findall(d["desc"])[0]))
+
+    def c_smoke(self, d, item):
+        p = self.hero(); self.assertEqual(self.drink(p, item, in_combat=True), "smoke_bomb")
+        self.assertIn("Boss", d["desc"])
+        s = self.session(p, boss=True)
+        with quiet(), mock.patch("rooms.interactive_menu", return_value=2), mock.patch("rooms.clear_screen"), \
+             mock.patch("rooms.show_inventory_menu", return_value="smoke_bomb"):
+            self.assertTrue(s.player_turn(), "contro i Boss la fuga non riesce")
+
+    def c_tome(self, d, item):
+        p = self.hero()
+        with mock.patch("inventory_menu.generate_random_element", return_value="Vento"): self.drink(p, item, in_combat=True)
+        self.assertEqual(p.weapon.element, "Vento")
+
+    def c_accuracy(self, d, item):
+        p = self.hero(); p.base_acc = -500; s = self.session(p); self.drink(p, item, in_combat=True)
+        self.assertEqual(p.get_hit_chance(s.enemy.base_dodge), 100)
+        with quiet(): s._end_combat()
+        self.assertLess(p.get_hit_chance(), 100, "vale solo per questo combattimento")
+
+    def c_holy(self, d, item):
+        p = self.hero(); p.weapon.is_cursed, p.weapon.curse_effect = True, "hp_drain"; self.drink(p, item)
+        self.assertFalse(p.weapon.is_cursed); self.assertEqual(d["base_heal"], 0, "non cura: la descrizione non lo promette")
+
+    def c_vial(self, d, item):
+        for effect, check in {
+            "heal_full": lambda p: self.assertEqual(p.hp, p.max_hp),
+            "dmg": lambda p: self.assertEqual(p.hp, 1, "l'ustione non è letale"),
+            "gold": lambda p: self.assertTrue(50 <= p.gold - 1000 <= 150),
+            "max_hp": lambda p: self.assertEqual(p.max_hp, 210),
+            "element": lambda p: self.assertEqual(p.weapon.element, "Luce"),
+        }.items():
+            with self.subTest(effetto=effect):
+                p = self.hero(); p.max_hp, p.hp, p.gold = 200, (1 if effect in ("heal_full", "dmg") else 200), 1000
+                with mock.patch("inventory_menu.random.choice", return_value=effect), mock.patch("inventory_menu.generate_random_element", return_value="Luce"):
+                    self.assertEqual(self.drink(p, item, in_combat=True), "fiala_caos")
+                check(p)
+        p = self.hero(); s = self.session(p); s.enemy.hp = 1000
+        with quiet(), mock.patch("rooms.interactive_menu", return_value=2), mock.patch("rooms.clear_screen"), \
+             mock.patch("rooms.show_inventory_menu", return_value="fiala_caos"), mock.patch("rooms.random.randint", return_value=37):
+            s.player_turn()
+        self.assertEqual(s.enemy.hp, 963)
+        self.assertIn("10-100", d["desc"])
+
+
+# ---------------------------------------------------------------- eventi
+class EventContractTest(Sandbox):
+    PATTERNS = (r"-(\d+) Oro", r"Dona (\d+) Oro", r"\+ ?(\d+) Oro", r"-(\d+) HP", r"(\d+) Danni", r"\+(\d+) HP Max", r"\d+%")
+
+    def run_choice(self, ev, idx):
+        p = self.hero(); p.max_hp = p.hp = 500; p.gold = 500
+        choice = ev["choices"][idx]
+        if choice.get("requires_item"): p.quest_items.append(choice["requires_item"])
+        before = {"gold": p.gold, "hp": p.hp, "max_hp": p.max_hp, "relics": len(p.relic_ids), "items": len(p.inventory), "quest": len(p.quest_items)}
+        with quiet(), mock.patch("rooms.random.random", return_value=0.0), mock.patch("builtins.input", return_value=""), \
+             mock.patch("entities.interactive_menu", side_effect=lambda options, prompt="": len(options) - 1), mock.patch.object(PROFILE_MANAGER, "save"), \
+             mock.patch("rooms.get_random_relic", return_value=next(r for r in RAW_DATA["relics"] if r["id"] == "tasca_dorata")):
+            rooms._handle_event_action(p, 1, choice["action"], choice.get("msg", ""), choice.get("msg_alt", ""), ev, idx)
+        return p, before
+
+    def test_every_choice_does_what_its_text_says(self):
+        for ev_id, ev in GAME_DATA["events"].items():
+            for idx, choice in enumerate(ev["choices"]):
+                if choice["action"] in ("none", "fight_elite") or choice["action"].startswith("unlock_npc_fight"):
+                    continue
+                text = choice["text"]
+                with self.subTest(event=ev_id, choice=text):
+                    p, b = self.run_choice(ev, idx)
+                    gold = p.gold - b["gold"]
+                    if m := re.search(r"-(\d+) Oro|Dona (\d+) Oro", text): self.assertEqual(gold, -int(m.group(1) or m.group(2)))
+                    if m := re.search(r"\+ ?(\d+) Oro", text): self.assertEqual(gold, int(m.group(1)))
+                    if "niente tesoro" in text: self.assertEqual(gold, 0)
+                    if m := re.search(r"-(\d+) HP|(\d+) Danni", text):
+                        self.assertEqual(b["hp"] - p.hp, int(m.group(1) or m.group(2)))
+                    if m := re.search(r"\+(\d+) HP Max", text): self.assertEqual(p.max_hp - b["max_hp"], int(m.group(1)))
+                    if re.search(r"[Cc]ura(rti)? (al )?100%|ti cura al 100%", text): self.assertEqual(p.hp, p.max_hp)
+                    if "Reliquia" in text and choice["action"] == "trade_relic": self.assertEqual(len(p.relic_ids), b["relics"] + 1)
+                    if "Arma" in text and "Epica" in text: self.assertTrue(any(i.name.startswith("EPICO") for i in p.inventory))
+                    if "Oggetto Chiave" in text: self.assertEqual(len(p.quest_items), b["quest"] + 1)
+
+    def test_every_number_in_a_choice_is_checked(self):
+        for ev in GAME_DATA["events"].values():
+            for choice in ev["choices"]:
+                text = choice["text"]
+                rest = text
+                for pat in self.PATTERNS: rest = re.sub(pat, "", rest)
+                with self.subTest(choice=text):
+                    self.assertFalse(NUM.search(rest), f"numero non verificato in: {text}")
+
+
+# ---------------------------------------------------------------- tratti, patti, potenziamenti, Maestrie, imprese
+class ObtainableTest(Sandbox):
+    def test_every_unlockable_can_actually_be_obtained(self):
+        granted = {f["reward_id"] for f in GAME_DATA["meta"]["feats"].values()}
+        granted |= {m.get("id") for c in GAME_DATA["classes"].values() for m in c["mastery"].values()}
+        granted |= set(roguelike.VICTORY_UNLOCKS)
+        for cat in ("weapons", "armors", "accessories", "consumables", "relics"):
+            for item in RAW_DATA[cat]:
+                if item.get("unlock_id") and not item.get("unlock_cost"):
+                    with self.subTest(item=item["name"]):
+                        self.assertIn(item["unlock_id"], granted, "né in vendita alla Forgia né premio di imprese, Maestrie o vittoria")
+
+    def test_a_fifth_relic_is_chosen_with_the_arrow_menu(self):
+        p = self.hero()
+        relics = [r for r in RAW_DATA["relics"] if r["id"] in ("tasca_dorata", "mantello_nebbioso", "tomo_conoscenza", "idolo_guerra", "occhio_cacciatore")]
+        for r in relics[:4]: self.relic(p, r["id"])
+        atk = p.get_total_atk()
+        with quiet(), mock.patch("entities.interactive_menu", return_value=[r["id"] for r in p.relics].index("idolo_guerra")) as menu:
+            p.add_relic(relics[4])
+        self.assertEqual(len(menu.call_args.args[0]), 5, "4 reliquie da scartare + rinuncia")
+        self.assertNotIn("idolo_guerra", p.relic_ids)
+        self.assertIn(relics[4]["id"], p.relic_ids)
+        self.assertEqual(p.get_total_atk(), atk - 5, "la reliquia scartata perde il suo effetto")
+        with quiet(), mock.patch("entities.interactive_menu", side_effect=lambda options, prompt="": len(options) - 1):
+            p.add_relic(next(r for r in RAW_DATA["relics"] if r["id"] == "lama_sangue"))
+        self.assertNotIn("lama_sangue", p.relic_ids)
+
+    def test_victory_unlocks_the_legendary_blade(self):
+        PROFILE_MANAGER._data["unlocked_ids"] = []
+        with quiet(): roguelike._grant_victory_rewards()
+        self.assertIn("lama_creatore", PROFILE_MANAGER.unlocked_ids)
+        self.assertIn("Lama del Creatore", [w["name"] for w in GAME_DATA["weapons"]])
+
+
+class RulesContractTest(Sandbox):
+    def test_every_trait_does_what_it_says(self):
+        base = self.hero("1", "base")
+        checks = {
+            "base": lambda p: self.assertEqual((p.max_hp, p.gold), (base.max_hp, base.gold)),
+            "maledetto": lambda p: (self.assertEqual(p.max_hp, base.max_hp // 2), self.assertEqual(p.heal(10), 0)),
+            "midas": lambda p: (self.assertEqual(p.calculate_gold_gain(100), 300), self.assertEqual(self.exp_after(p, 50), 0)),
+            "aristocratico": lambda p: self.assertEqual(p.gold, base.gold + 500),
+            "cacciatore_etereo": lambda p: self.assertEqual(p.base_dodge, base.base_dodge - 20),
+            "titano": lambda p: self.assertEqual((p.max_hp, p.base_acc, p.base_dodge), (base.max_hp + 100, base.base_acc // 2, base.base_dodge // 2)),
+            "benedetto": lambda p: (self.assertIn("scudo_cristallo", p.relic_ids), self.assertTrue(p.take_damage(10 ** 6)), self.assertEqual(p.hp, 1)),
+        }
+        self.assertEqual(set(checks), set(GAME_DATA["meta"]["traits"]))
+        for tid, check in checks.items():
+            with self.subTest(trait=tid):
+                with quiet(): p = Player("1", tid, [])
+                check(p)
+        self.assertIn("dimezzati", GAME_DATA["meta"]["traits"]["maledetto"]["desc"])
+
+    def exp_after(self, p, amount):
+        p.exp = 0
+        with quiet(): p.gain_exp(amount)
+        return p.exp
+
+    def test_every_pact_does_what_it_says(self):
+        def enemy(pacts):
+            random.seed(7); return Enemy(10, False, pacts)
+        def trap(pacts):
+            p = self.hero(pacts=pacts); p.base_dodge = -100; p.max_hp = p.hp = 1000
+            with quiet(), mock.patch("rooms.delay_print"), mock.patch("builtins.input", return_value=""), \
+                 mock.patch("rooms.random.randint", side_effect=lambda lo, hi: 100 if (lo, hi) == (1, 100) else 20):
+                rooms.trap_room(p, 1, pacts)
+            return 1000 - p.hp
+        def potion(pacts):
+            p = self.hero(pacts=pacts); p.max_hp, p.hp = 1000, 1
+            self.drink(p, Consumable("Pozione", 1, 40, "heal")); return p.hp - 1
+        checks = {
+            "durezza": lambda: self.assertEqual(enemy(["durezza"]).hp, int(enemy([]).hp * 1.3)),
+            "furia": lambda: self.assertEqual(enemy(["furia"]).atk, int(enemy([]).atk * 1.3)),
+            "carestia": lambda: self.assertEqual(potion(["carestia"]), potion([]) // 2),
+            "inflazione": lambda: self.assertEqual(self.vendor_prices(["inflazione"]), [v * 2 for v in self.vendor_prices([])]),
+            "trappole": lambda: self.assertEqual(trap(["trappole"]), trap([]) * 2),
+        }
+        self.assertEqual(set(checks), set(GAME_DATA["meta"]["pacts"]))
+        for pid, check in checks.items():
+            with self.subTest(pact=pid): check()
+
+    def vendor_prices(self, pacts):
+        captured = []
+        def menu(options, prompt="", cancellable=False, initial=0):
+            if "COMPRA" in prompt: captured.extend(int(re.search(r"Prezzo: (?:\x1b\[[0-9;]*m)?(\d+) Oro", o).group(1)) for o in options); return -1
+            return 0 if not captured else 2
+        p = self.hero(pacts=pacts)
+        random.seed(99)
+        with quiet(), mock.patch("rooms.interactive_menu", side_effect=menu), mock.patch("rooms.clear_screen"), mock.patch("rooms.delay_print"):
+            rooms.vendor_room(p, 3)
+        return captured
+
+    def test_every_numeric_perk_does_what_it_says(self):
+        def gain(key, measure):
+            PROFILE_MANAGER.set_perk(key, 0); before = measure()
+            PROFILE_MANAGER.set_perk(key, 1); after = measure()
+            PROFILE_MANAGER.set_perk(key, 0); return after - before
+        new = lambda: Player("1", "base", [])
+        def built(attr):
+            def m():
+                with quiet(): p = new()
+                return attr(p)
+            return m
+        def regen():
+            with quiet(): p = new()
+            p.max_hp, p.hp = 200, 1
+            with quiet(): return roguelike._apply_floor_regen(p)
+        measured = {
+            "hp_lvl": built(lambda p: p.max_hp), "gold_lvl": built(lambda p: p.gold),
+            "dodge_lvl": built(lambda p: p.base_dodge), "acc_lvl": built(lambda p: p.base_acc),
+            "exp_lvl": built(lambda p: round(p.exp_multiplier * 100)), "banca_anima_lvl": built(lambda p: p.calculate_gold_gain(100)),
+            "artigiano_lvl": built(lambda p: p.weapon.atk), "pelle_dura_lvl": built(lambda p: p.armor.defense),
+            "farmacista": built(lambda p: sum(1 for i in p.inventory if i.type == "consumable")),
+            "speranza_luce_lvl": lambda: round(regen() * 100 / 200),
+            "discount_lvl": lambda: -round(100 - self.vendor_prices([])[0] * 100 / self.base_price),
+        }
+        not_numeric = {"sesto_senso", "altare_benedizione", "riciclatore_lvl"}
+        PROFILE_MANAGER.set_perk("discount_lvl", 0); self.base_price = self.vendor_prices([])[0]
+        for key, name, desc, *_ in roguelike.PERK_DEFS:
+            if key in not_numeric: continue
+            with self.subTest(perk=name):
+                number = int(NUM.findall(desc)[0]) * (-1 if desc.startswith("-") else 1)
+                self.assertEqual(gain(key, measured[key]), number)
+        self.assertEqual(set(measured) | not_numeric, {k for k, *_ in roguelike.PERK_DEFS})
+
+    def test_altar_and_recycler(self):
+        PROFILE_MANAGER.set_perk("altare_benedizione", True)
+        with quiet(): self.assertEqual(len(Player("1", "base", []).relic_ids), 1)
+        PROFILE_MANAGER.set_perk("altare_benedizione", False)
+        sold = {}
+        for lvl in (0, 1):
+            PROFILE_MANAGER.set_perk("riciclatore_lvl", lvl)
+            p = self.hero(); p.inventory = [Weapon("Spada", 100, 1, "Normale", 1)]; gold = p.gold
+            with quiet(), mock.patch("rooms.interactive_menu", side_effect=[1, 0, -1, 2]), mock.patch("rooms.clear_screen"), \
+                 mock.patch("rooms.delay_print"), mock.patch("rooms.time.sleep"):
+                rooms.vendor_room(p, 1)
+            sold[lvl] = p.gold - gold
+        self.assertEqual(sold[1], int(sold[0] * 1.10))
+
+    def test_mastery_descriptions_match_their_bonuses(self):
+        for cid, c in GAME_DATA["classes"].items():
+            bonus = c["mastery"]["4"]["bonus"]
+            value = round(bonus["value"] * 100) if bonus["value"] < 1 else bonus["value"]
+            with self.subTest(class_id=cid):
+                self.assertIn(str(value), c["mastery"]["4"]["desc"])
+        PROFILE_MANAGER.set_class_lvl("5", 2)
+        with quiet(): berserker = Player("5", "base", [])
+        berserker.base_dodge = 50; berserker.hp = 1
+        self.assertEqual((berserker.get_dodge(), berserker.get_class_damage_multiplier()), (0, 1.5))
+        self.assertIn("Schivata scende a 0", GAME_DATA["classes"]["5"]["mastery"]["2"]["desc"])
+
+    def test_every_feat_has_the_threshold_its_text_says(self):
+        def run(setup, floor=5):
+            PROFILE_MANAGER._data["completed_feats"] = []
+            PROFILE_MANAGER._data["stats"]["total_bosses"] = 0
+            p = self.hero(); p.run_tracker = {"escapes": 0, "fusions": 0}; p.escaped = False
+            setup(p)
+            with quiet(): roguelike._check_feats(p, getattr(p, "_floor", floor), False)
+            return PROFILE_MANAGER._data["completed_feats"]
+        def tr(**kv): return lambda p: p.run_tracker.update(kv)
+        def at_floor(n, **kv): return lambda p: (setattr(p, "_floor", n), p.run_tracker.update(kv))
+        def escaped_with(gold): return lambda p: (setattr(p, "escaped", True), setattr(p, "gold", gold))
+        def bosses(n): return lambda p: (PROFILE_MANAGER._data["stats"].update(total_bosses=n - 1), setattr(p, "bosses_killed", 1))
+        def elements(w, a): return lambda p: (setattr(p, "escaped", True), setattr(p.weapon, "element", w), setattr(p.armor, "element", a))
+        table = {   # impresa: (numero nel testo o None, setup che la completa, setup appena sotto la soglia)
+            "feat_pacifista": (10, tr(escapes=10), tr(escapes=9)),
+            "feat_fabbro": (3, tr(fusions=3), tr(fusions=2)),
+            "feat_vetro": (None, tr(no_hit_boss_done=True), tr()),
+            "feat_suicida": (1, tr(kill_1_hp_done=True), tr()),
+            "feat_avaro": (2000, escaped_with(2000), escaped_with(1999)),
+            "feat_genio_elementale": (5, tr(max_fused_weapon_lvl=5), tr(max_fused_weapon_lvl=4)),
+            "feat_sopravvissuto": (10, at_floor(11), at_floor(10)),
+            "feat_epuratore": (10, bosses(10), bosses(9)),
+            "feat_mani_bucate": (2000, tr(gold_spent=2000), tr(gold_spent=1999)),
+            "feat_equilibrista": (None, elements("Fuoco", "Acqua"), elements("Fuoco", "Fuoco")),
+            "feat_lama_cristallo": (15, at_floor(15), at_floor(14)),
+            "feat_furia_cieca": (None, tr(blind_fury_done=True), tr()),
+            "feat_tiratore_scelto": (5, tr(super_effective_hits=5), tr(super_effective_hits=4)),
+            "feat_assaggiatore": (1, tr(**{"1_hp_survive": True}), tr()),
+        }
+        self.assertEqual(set(table), set(GAME_DATA["meta"]["feats"]))
+        for fid, (number, done, below) in table.items():
+            with self.subTest(feat=fid):
+                if number is not None: self.assertIn(str(number), GAME_DATA["meta"]["feats"][fid]["desc"])
+                self.assertIn(fid, run(done))
+                self.assertNotIn(fid, run(below))
+
+
+if __name__ == "__main__":
+    unittest.main()

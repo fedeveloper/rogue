@@ -2,7 +2,7 @@ import random
 import sys
 import time
 import traceback
-from ui import Colors, clear_screen, delay_print, get_choice, interactive_menu, display_msg, wait_enter
+from ui import Colors, clear_screen, delay_print, interactive_menu, display_msg, wait_enter
 from data_manager import PROFILE_MANAGER, GAME_DATA, RAW_DATA, get_element_icon, update_game_data
 from entities import Player, Enemy
 from rooms import combat_room, mystery_room, event_room, vendor_room, campfire_room, treasure_room, trap_room
@@ -39,7 +39,7 @@ def _check_feats(player: Player, floor: int, infinite: bool):
         "feat_suicida": 1 if player.run_tracker.get("kill_1_hp_done") else 0,
         "feat_avaro": player.gold if (player.escaped or (not infinite and floor > INFINITE_MODE_THRESHOLD)) else 0,
         "feat_genio_elementale": 1 if player.run_tracker.get("max_fused_weapon_lvl", 0) >= 5 else 0,
-        "feat_sopravvissuto": 1 if floor >= 10 and not player.run_tracker.get("rested") else 0,
+        "feat_sopravvissuto": 1 if floor > 10 and not player.run_tracker.get("rested") else 0,
         "feat_epuratore": PROFILE_MANAGER.stats["total_bosses"],
         "feat_mani_bucate": player.run_tracker.get("gold_spent", 0),
         "feat_equilibrista": 1 if player.weapon.element != player.armor.element and player.weapon.element != "Normale" and player.armor.element != "Normale" and (player.escaped or (not infinite and floor > INFINITE_MODE_THRESHOLD)) else 0,
@@ -88,25 +88,28 @@ def evaluate_run(player: Player, floor: int, infinite: bool):
     wait_enter(f"\n{Colors.CYAN}Premi INVIO per tornare al Menu Principale...{Colors.RESET}")
 
 # --- HUB E LOOP DI GIOCO ---
+# Potenziamenti del Fuoco dell'Anima: (chiave, nome, descrizione, livello massimo, costo per livello, sì/no)
+PERK_DEFS = [
+    ("hp_lvl", "Vigore Ereditario", "+15 HP Max", 5, lambda l: 50 + (l*50), False),
+    ("gold_lvl", "Tasche Profonde", "+20 Oro Iniziale", 3, lambda l: 100 + (l*100), False),
+    ("discount_lvl", "Mercanteggiare", "-10% Prezzi Negozio", 3, lambda l: 150 + (l*100), False),
+    ("sesto_senso", "Sesto Senso", "Prevedi bivi", 1, lambda l: 300, True),
+    ("dodge_lvl", "Schivata Istintiva", "+2% Schivata Base", 5, lambda l: 100 + (l*50), False),
+    ("acc_lvl", "Mira Perfetta", "+3% Precisione Base", 5, lambda l: 100 + (l*50), False),
+    ("exp_lvl", "Studioso del Caos", "+5% EXP dai nemici", 3, lambda l: 300 + (l*300), False),
+    ("farmacista", "Farmacista", "+1 Pozione iniziale", 1, lambda l: 1500, True),
+    ("altare_benedizione", "Benedizione dell'Altare", "Inizi con 1 Reliquia casuale", 1, lambda l: 2000, True),
+    ("riciclatore_lvl", "Riciclatore", "+10% ricavo vendite", 3, lambda l: 200 + (l*150), False),
+    ("banca_anima_lvl", "Banca dell'Anima", "+5% Oro raccolto in totale", 3, lambda l: 250 + (l*250), False),
+    ("artigiano_lvl", "Artigiano", "+1 ATK arma iniziale", 3, lambda l: 400 + (l*300), False),
+    ("pelle_dura_lvl", "Pelle Dura", "+1 DEF armatura iniziale", 3, lambda l: 400 + (l*300), False),
+    ("speranza_luce_lvl", "Speranza di Luce", f"+{int(SPERANZA_LUCE_PCT_PER_LVL*100)}% HP Max recuperati a ogni piano", 3, lambda l: 500 + (l*400), False)
+]
+
 def base_camp_fire():
     while True:
         clear_screen()
-        perk_defs = [
-            ("hp_lvl", "Vigore Ereditario", "+15 HP Max", 5, lambda l: 50 + (l*50), False),
-            ("gold_lvl", "Tasche Profonde", "+20 Oro Iniziale", 3, lambda l: 100 + (l*100), False),
-            ("discount_lvl", "Mercanteggiare", "-10% Prezzi Negozio", 3, lambda l: 150 + (l*100), False),
-            ("sesto_senso", "Sesto Senso", "Prevedi bivi", 1, lambda l: 300, True),
-            ("dodge_lvl", "Schivata Istintiva", "+2% Schivata Base", 5, lambda l: 100 + (l*50), False),
-            ("acc_lvl", "Mira Perfetta", "+3% Precisione Base", 5, lambda l: 100 + (l*50), False),
-            ("exp_lvl", "Studioso del Caos", "+5% EXP dai nemici", 3, lambda l: 300 + (l*300), False),
-            ("farmacista", "Farmacista", "+1 Pozione iniziale", 1, lambda l: 1500, True),
-            ("altare_benedizione", "Benedizione dell'Altare", "Inizi con 1 Reliquia casuale", 1, lambda l: 2000, True),
-            ("riciclatore_lvl", "Riciclatore", "+10% ricavo vendite", 3, lambda l: 200 + (l*150), False),
-            ("banca_anima_lvl", "Banca dell'Anima", "+5% Oro raccolto in totale", 3, lambda l: 250 + (l*250), False),
-            ("artigiano_lvl", "Artigiano", "+1 ATK arma iniziale", 3, lambda l: 400 + (l*300), False),
-            ("pelle_dura_lvl", "Pelle Dura", "+1 DEF armatura iniziale", 3, lambda l: 400 + (l*300), False),
-            ("speranza_luce_lvl", "Speranza di Luce", f"+{int(SPERANZA_LUCE_PCT_PER_LVL*100)}% HP Max recuperati a ogni piano", 3, lambda l: 500 + (l*400), False)
-        ]
+        perk_defs = PERK_DEFS
         
         options = []
         for i, (p_key, p_name, p_desc, p_max, p_cost_func, p_bool) in enumerate(perk_defs):
@@ -453,7 +456,9 @@ def play_game(infinite_mode=False):
         if not infinite_mode and floor > INFINITE_MODE_THRESHOLD:
             clear_screen()
             display_msg(f"{Colors.YELLOW}{Colors.BOLD}" + "="*50); delay_print("H A I   V I N T O ! ! !"); display_msg("="*50 + Colors.RESET)
-            PROFILE_MANAGER.won_normal = True; player.won = True; player.essence_gathered += 1000; break
+            PROFILE_MANAGER.won_normal = True; player.won = True; player.essence_gathered += 1000
+            _grant_victory_rewards()
+            break
 
         clear_screen()
         delay_print(f"\n{Colors.MAGENTA}{Colors.BOLD}==== PIANO {floor} ===={Colors.RESET}", 0.05)
@@ -533,6 +538,17 @@ def settings_menu():
         PROFILE_MANAGER.text_speed = speeds[idx]
         PROFILE_MANAGER.save()
 
+# Sblocchi che si ottengono solo vincendo la discesa standard
+VICTORY_UNLOCKS = ["lama_creatore"]
+
+def _grant_victory_rewards():
+    for unlock_id in VICTORY_UNLOCKS:
+        if unlock_id not in PROFILE_MANAGER.unlocked_ids:
+            PROFILE_MANAGER.unlocked_ids.append(unlock_id)
+            name = next((i["name"] for cat in ("weapons", "armors", "accessories", "consumables", "relics") for i in RAW_DATA[cat] if i.get("unlock_id") == unlock_id), unlock_id)
+            display_msg(f"{Colors.MAGENTA}{Colors.BOLD}Ricompensa leggendaria sbloccata: {name}!{Colors.RESET}")
+    update_game_data()
+
 def _grant_retroactive_mastery_unlocks():
     """Concede gli sblocchi di Maestria già raggiunti (es. classi aggiunte dopo che il livello era stato ottenuto)."""
     changed = False
@@ -548,6 +564,8 @@ def _grant_retroactive_mastery_unlocks():
 
 def main():
     _grant_retroactive_mastery_unlocks()
+    if PROFILE_MANAGER.won_normal and any(u not in PROFILE_MANAGER.unlocked_ids for u in VICTORY_UNLOCKS):
+        _grant_victory_rewards(); PROFILE_MANAGER.save()
     try:
         while True:
             clear_screen()

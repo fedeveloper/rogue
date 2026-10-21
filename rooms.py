@@ -1,7 +1,7 @@
 import random
 import time
 from typing import List
-from ui import Colors, delay_print, clear_screen, get_choice, interactive_menu, display_msg, wait_enter
+from ui import Colors, delay_print, clear_screen, interactive_menu, display_msg, wait_enter
 from data_manager import GAME_DATA, PROFILE_MANAGER, MULTIPLIERS, get_element_icon
 from archive import get_archive_bonus
 from constants import BASE_HIT_CHANCE, BLOOD_LETTER_CHANCE
@@ -370,7 +370,7 @@ class CombatSession:
         return max(10, min(100, BASE_HIT_CHANCE + self.enemy.base_acc - self.player.get_dodge() + (15 if en_multiplier > 1.0 else -20 if en_multiplier < 1.0 else 0)))
 
     def _calc_enemy_damage(self, en_multiplier: float) -> int:
-        defense = self.player.get_total_def()
+        defense = self.player.get_total_def() + sum(r.get_def_modifier(self) for r in self.player.relic_effects)
         en_atk = max(1, int(self.enemy.atk * (1 - self._resonance_value("Acqua")))) if self.resonance == "Acqua" else self.enemy.atk
         dmg_taken = max(0, int((en_atk + random.randint(-1, 2)) * en_multiplier) - defense)
         if self.is_defending: dmg_taken //= 2
@@ -498,8 +498,10 @@ def _handle_event_action(player: Player, floor: int, action: str, msg: str, msg_
         r = get_random_relic(player)
         if r: player.add_relic(r)
     elif action == "blood_gold":
-        g = 100 * 3 if player.midas else 100
-        player.gold += g; display_msg(f"{Colors.RED}{msg} (+{g} Oro){Colors.RESET}.")
+        base = ev["choices"][idx].get("gold", 100)
+        g = base * 3 if player.midas else base
+        player.gold += g
+        display_msg(f"{Colors.RED}{msg}" + (f" (+{g} Oro)" if g else "") + f"{Colors.RESET}.")
         alive = player.take_damage(40)
         if not alive:
             display_msg(f"\n{Colors.RED}{Colors.BOLD}Hai sacrificato troppa linfa vitale... Sei morto.{Colors.RESET}")
