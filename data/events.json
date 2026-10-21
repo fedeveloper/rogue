@@ -4,7 +4,7 @@
     "text": "Una fonte d'acqua purissima brilla nel buio. Ha un'aura mistica.",
     "choices": [
       {
-        "text": "Bevi profondamente (Cura 100% HP)",
+        "text": "Bevi profondamente (+10 HP Max, Cura 100% HP)",
         "action": "heal_max",
         "msg": "L'acqua magica rigenera le tue ferite e purifica il tuo corpo!"
       },
@@ -116,7 +116,7 @@
         "msg": "Il cavaliere annuisce debolmente e ti porge l'arma di famiglia:"
       },
       {
-        "text": "Aiutalo a curare le ferite (Usa la sua magia per Curarti al 100%)",
+        "text": "Aiutalo a curare le ferite (La sua magia ti dà +10 HP Max e ti cura al 100%)",
         "action": "heal_max",
         "msg": "Il cavaliere, grato, usa l'ultima pergamena sacra su di te! Ti senti invincibile."
       },
@@ -175,7 +175,7 @@
     "text": "Tra le rocce, un raggio di luce illumina un prato fiorito. Sembra un miraggio in questo luogo di morte.",
     "choices": [
       {
-        "text": "Riposa tra i fiori (Cura 100% HP)",
+        "text": "Riposa tra i fiori (+10 HP Max, Cura 100% HP)",
         "action": "heal_max",
         "msg": "I profumi dei fiori curano ogni tua ferita fisica e mentale!"
       },
@@ -227,6 +227,7 @@
       },
       {
         "text": "Cerca di sfondarla (Subisci 40 Danni, niente tesoro)",
+        "gold": 0,
         "action": "blood_gold",
         "msg": "Ti lussi una spalla contro il metallo senza alcun risultato... la frustrazione è palpabile."
       },

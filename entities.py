@@ -1,6 +1,6 @@
 import random
 from typing import List, Dict
-from ui import Colors, delay_print, get_choice, clear_screen, display_msg
+from ui import Colors, delay_print, clear_screen, display_msg, interactive_menu
 from data_manager import GAME_DATA, RAW_DATA, PROFILE_MANAGER, ELEMENTS, MULTIPLIERS, get_element_icon
 from relic_effects import create_relic_effect
 from archive import get_archive_bonus
@@ -19,27 +19,37 @@ class Item:
 
 STATUS_NAMES = {"poison": "Veleno", "bleed": "Sanguinamento"}
 
+# Proprietà speciali di un'arma che weapons.json può definire
+WEAPON_TRAIT_KEYS = ("hit_modifier", "crit_chance", "gold_atk_per", "gold_atk_max")
+
 class Weapon(Item):
-    def __init__(self, name: str, value: int, atk: int, element: str, level: int, flavor: str = "", is_cursed: bool = False, curse_effect: str = "", status_inflict: dict = None):
+    def __init__(self, name: str, value: int, atk: int, element: str, level: int, flavor: str = "", is_cursed: bool = False, curse_effect: str = "", status_inflict: dict = None, traits: dict = None):
         super().__init__(name, value, "weapon", level, flavor, is_cursed, curse_effect, element)
         self.atk = atk
         # Stesso formato di status_inflict dei nemici: {"type", "chance", "duration"}
         self.status_inflict = status_inflict
+        self.traits = {k: v for k, v in (traits or {}).items() if k in WEAPON_TRAIT_KEYS}
 
     def get_hit_chance_modifier(self) -> int:
-        if "Ascia del Boia" in self.name:
-            return -15
-        return 0
-        
+        return self.traits.get("hit_modifier", 0)
+
+    def get_gold_atk_bonus(self, gold: int) -> int:
+        """Armi come lo Zweihander d'Oro: +1 ATK ogni gold_atk_per Oro posseduto, fino a gold_atk_max."""
+        per = self.traits.get("gold_atk_per")
+        if not per: return 0
+        return min(self.traits.get("gold_atk_max", 999), max(0, gold) // per)
+
     def on_attack(self, dmg_dealt: int, eff: str) -> tuple[int, str]:
-        if "Ascia del Boia" in self.name and random.random() < 0.35:
-            return dmg_dealt * 2, eff + f" {Colors.MAGENTA}[CRITICO DELL'ASCIA!]{Colors.RESET}"
+        crit = self.traits.get("crit_chance", 0)
+        if crit and random.randint(1, 100) <= crit:
+            return dmg_dealt * 2, eff + f" {Colors.MAGENTA}[CRITICO!]{Colors.RESET}"
         return dmg_dealt, eff
 
 class Armor(Item):
-    def __init__(self, name: str, value: int, defense: int, element: str, level: int, flavor: str = "", is_cursed: bool = False, curse_effect: str = ""):
+    def __init__(self, name: str, value: int, defense: int, element: str, level: int, flavor: str = "", is_cursed: bool = False, curse_effect: str = "", dodge_bonus: int = 0):
         super().__init__(name, value, "armor", level, flavor, is_cursed, curse_effect, element)
         self.defense = defense
+        self.dodge_bonus = dodge_bonus
 
 class Accessory(Item):
     def __init__(self, name: str, value: int, element: str, bonus_type: str, bonus_value: int, desc: str, flavor: str = "", is_cursed: bool = False, curse_effect: str = ""):
@@ -61,7 +71,8 @@ def generate_weapon(level: int, is_epic: bool = False) -> Weapon:
     w_data = random.choice(GAME_DATA["weapons"])
     name, flavor = w_data["name"], w_data.get("flavor", "")
     atk = w_data["base_atk"] + int(level * WEAPON_LEVEL_SCALING) + random.randint(0, 3)
-    element = generate_random_element()
+    # Le armi a tema (es. il Bastone dell'Alba) hanno sempre il loro elemento
+    element = w_data.get("element") or generate_random_element()
     
     is_cursed, curse_effect = False, ""
     if not is_epic and random.random() < CURSE_CHANCE:
@@ -71,13 +82,13 @@ def generate_weapon(level: int, is_epic: bool = False) -> Weapon:
         
     if element == "Normale": atk = int(atk * 1.2) + 1
     if is_epic: atk = int(atk * 1.5) + 2; name = f"EPICO {name}"
-    return Weapon(f"{name} (lv.{level})", atk * 5, atk, element, level, flavor, is_cursed, curse_effect, w_data.get("status_inflict"))
+    return Weapon(f"{name} (lv.{level})", atk * 5, atk, element, level, flavor, is_cursed, curse_effect, w_data.get("status_inflict"), w_data)
 
 def generate_armor(level: int, is_epic: bool = False) -> Armor:
     a_data = random.choice(GAME_DATA["armors"])
     name, flavor = a_data["name"], a_data.get("flavor", "")
     defense = a_data["base_def"] + int(level * ARMOR_LEVEL_SCALING) + random.randint(0, 2)
-    element = generate_random_element()
+    element = a_data.get("element") or generate_random_element()
     
     is_cursed, curse_effect = False, ""
     if not is_epic and random.random() < CURSE_CHANCE:
@@ -87,17 +98,20 @@ def generate_armor(level: int, is_epic: bool = False) -> Armor:
 
     if element == "Normale": defense = int(defense * 1.2) + 1
     if is_epic: defense = int(defense * 1.5) + 2; name = f"EPICO {name}"
-    return Armor(f"{name} (lv.{level})", defense * 8, defense, element, level, flavor, is_cursed, curse_effect)
+    return Armor(f"{name} (lv.{level})", defense * 8, defense, element, level, flavor, is_cursed, curse_effect, a_data.get("dodge_bonus", 0))
 
 def generate_accessory(level: int) -> Accessory:
     a_data = random.choice(GAME_DATA["accessories"])
     is_cursed, curse_effect = False, ""
     bonus_val = a_data["bonus_value"]
+    desc = a_data["desc"]
     if random.random() < CURSE_CHANCE:
         is_cursed = True
         curse_effect = random.choice(["hp_drain", "gold_drain"])
         bonus_val = int(bonus_val * 2)
-    return Accessory(a_data["name"], a_data["base_val"] + (level*10), a_data.get("element", "Normale"), a_data["bonus_type"], bonus_val, a_data["desc"], a_data.get("lore", ""), is_cursed, curse_effect)
+        # La maledizione raddoppia il bonus: la descrizione deve mostrare il valore reale
+        desc = desc.replace(str(a_data["bonus_value"]), str(bonus_val), 1)
+    return Accessory(a_data["name"], a_data["base_val"] + (level*10), a_data.get("element", "Normale"), a_data["bonus_type"], bonus_val, desc, a_data.get("lore", ""), is_cursed, curse_effect)
 
 # Solo questi consumabili curano davvero: gli altri non mostrano "(Cura N)" nel nome
 HEALING_CATEGORIES = ("heal", "antidote")
@@ -239,8 +253,8 @@ class Player:
         # Il valore di vendita usa la stessa scala degli oggetti generati quando i dati non lo indicano
         mapping = [
             ("starting_consumables", "consumables", lambda d: Consumable(consumable_name(d["name"], d["base_heal"], d.get("category", "heal")), d["val_base"], d["base_heal"], d.get("category", "heal"))),
-            ("starting_weapons", "weapons", lambda d: Weapon(d["name"], d.get("val_base", d["base_atk"] * 5), d["base_atk"], "Normale", 1, status_inflict=d.get("status_inflict"))),
-            ("starting_armors", "armors", lambda d: Armor(d["name"], d.get("val_base", d["base_def"] * 8), d["base_def"], "Normale", 1)),
+            ("starting_weapons", "weapons", lambda d: Weapon(d["name"], d.get("val_base", d["base_atk"] * 5), d["base_atk"], d.get("element", "Normale"), 1, status_inflict=d.get("status_inflict"), traits=d)),
+            ("starting_armors", "armors", lambda d: Armor(d["name"], d.get("val_base", d["base_def"] * 8), d["base_def"], d.get("element", "Normale"), 1, dodge_bonus=d.get("dodge_bonus", 0))),
             ("starting_accessories", "accessories", lambda d: Accessory(d["name"], d.get("base_val", d.get("val_base", 0)), d.get("element", "Normale"), d["bonus_type"], d["bonus_value"], d["desc"], d.get("lore", "")))
         ]
         for key, game_data_key, builder in mapping:
@@ -255,31 +269,21 @@ class Player:
 
     def add_relic(self, relic):
         if len(self.relic_ids) >= self.max_relics:
-            display_msg(f"\n{Colors.YELLOW}Non puoi trasportare più di {self.max_relics} Reliquie. Devi sostituirne una!{Colors.RESET}")
-            for i, r_id in enumerate(self.relic_ids):
-                r_name = next((x["name"] for x in GAME_DATA["relics"] if x["id"] == r_id), r_id)
-                display_msg(f"{i+1}. {r_name}")
-            display_msg(f"0. Rinuncia alla nuova reliquia ({relic['name']})")
-            
-            while True:
-                choice = get_choice("Quale reliquia vuoi scartare? > ")
-                if choice == '0':
-                    display_msg(f"{Colors.CYAN}Hai rinunciato a {relic['name']}.{Colors.RESET}")
-                    return
-                try:
-                    idx = int(choice) - 1
-                    if 0 <= idx < len(self.relic_ids):
-                        old_id = self.relic_ids[idx]
-                        old_name = next((x["name"] for x in GAME_DATA["relics"] if x["id"] == old_id), old_id)
-                        display_msg(f"{Colors.RED}Hai distrutto {old_name} per fare spazio!{Colors.RESET}")
-                        # Remove old
-                        self.relic_ids.pop(idx)
-                        self.relics.pop(idx)
-                        self.relic_effects.pop(idx).on_unequip(self)
-                        break
-                    else: display_msg(f"{Colors.RED}Scelta non valida.{Colors.RESET}")
-                except ValueError: pass
-                
+            # Stessi comandi del resto del gioco: frecce e Invio, nessun numero da digitare
+            prompt = (f"\n{Colors.YELLOW}Non puoi trasportare più di {self.max_relics} Reliquie. Devi sostituirne una!{Colors.RESET}\n"
+                      f"Nuova reliquia: {Colors.MAGENTA}{relic['name']}{Colors.RESET} — {relic['desc']}\nQuale reliquia vuoi scartare?")
+            options = [f"Scarta {r['name']} ({r['desc']})" for r in self.relics]
+            options.append(f"Rinuncia alla nuova reliquia ({relic['name']})")
+            idx = interactive_menu(options, prompt)
+            if idx == len(options) - 1:
+                display_msg(f"{Colors.CYAN}Hai rinunciato a {relic['name']}.{Colors.RESET}")
+                return
+            display_msg(f"{Colors.RED}Hai distrutto {self.relics[idx]['name']} per fare spazio!{Colors.RESET}")
+            self.relic_ids.pop(idx)
+            self.relics.pop(idx)
+            self.relic_effects.pop(idx).on_unequip(self)
+
+
         self.relics.append(relic)
         self.relic_ids.append(relic["id"])
         effect = create_relic_effect(relic["id"])
@@ -289,7 +293,10 @@ class Player:
         display_msg(f"Effetto: {relic['desc']}")
         if "lore" in relic: display_msg(f"{Colors.YELLOW}Lore: {relic['lore']}{Colors.RESET}")
 
-    def get_total_atk(self): return self.weapon.atk + self.bonus_atk_relic
+    def get_total_atk(self):
+        atk = self.weapon.atk + self.bonus_atk_relic + self.weapon.get_gold_atk_bonus(self.gold)
+        for r in self.relic_effects: atk += r.get_atk_modifier(self)
+        return atk
 
     def get_crit_chance(self) -> int:
         crit = self.base_crit
@@ -312,7 +319,7 @@ class Player:
         return self.armor.defense + self.temp_def + self.bonus_def + get_archive_bonus("def", PROFILE_MANAGER._data)
     
     def get_dodge(self): 
-        dodge = self.base_dodge + self.temp_dodge
+        dodge = self.base_dodge + self.temp_dodge + getattr(self.armor, "dodge_bonus", 0)
         for effect in self.relic_effects: dodge += effect.get_dodge_modifier()
         if self._berserker_fury_active(): return 0
         if self.has_curse("heavy"): dodge -= 15

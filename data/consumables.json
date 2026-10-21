@@ -60,7 +60,7 @@
             "val_base": 80,
             "unlock_id": "bomba_fumogena",
             "unlock_cost": 0,
-            "desc": "Ti permette di fuggire all'istante da un combattimento.",
+            "desc": "Ti permette di fuggire all'istante da un combattimento (non funziona contro i Boss).",
             "category": "smoke_bomb"
         },
         {
@@ -84,7 +84,7 @@
         {
             "name": "Acqua Santa",
             "desc": "Purifica tutte le Maledizioni sull'equipaggiamento indossato.",
-            "base_heal": 50,
+            "base_heal": 0,
             "val_base": 80,
             "unlock_cost": 0,
             "unlock_id": "acqua_santa",

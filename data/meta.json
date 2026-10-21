@@ -13,7 +13,7 @@
         },
         "maledetto": {
             "name": "Patto del Sangue",
-            "desc": "+50 ATK, ma le cure hanno effetto ZERO.",
+            "desc": "+50 ATK, ma HP Massimi dimezzati e le cure hanno effetto ZERO.",
             "unlock_req": "deaths_10"
         },
         "midas": {
@@ -79,7 +79,7 @@
         },
         "feat_fabbro": {
             "name": "Fabbro Folle",
-            "desc": "Fondi 3 oggetti alla Forgia in una run.",
+            "desc": "Fondi 3 oggetti all'Altare dell'Evoluzione in una run.",
             "target": 3,
             "reward_type": "unlock",
             "reward_id": "spadone_infranto"
@@ -100,7 +100,7 @@
         },
         "feat_avaro": {
             "name": "L'Avaro",
-            "desc": "Esci dal labirinto con pi\u00f9 di 2000 Oro non speso.",
+            "desc": "Esci dal labirinto con almeno 2000 Oro non speso.",
             "target": 2000,
             "reward_type": "trait",
             "reward_id": "aristocratico"
@@ -128,7 +128,7 @@
         },
         "feat_mani_bucate": {
             "name": "Mani Bucate",
-            "desc": "Spendi pi\u00f9 di 2000 Oro dal Mercante in una singola run.",
+            "desc": "Spendi almeno 2000 Oro dal Mercante in una singola run.",
             "target": 2000,
             "reward_type": "unlock",
             "reward_id": "zweihander_oro"
@@ -156,7 +156,7 @@
         },
         "feat_tiratore_scelto": {
             "name": "Tiratore Scelto",
-            "desc": "Infliggi 5 colpi Super Efficaci a un Boss.",
+            "desc": "Infliggi 5 colpi Super Efficaci ai Boss in una singola run.",
             "target": 5,
             "reward_type": "unlock",
             "reward_id": "filtro_preciso"

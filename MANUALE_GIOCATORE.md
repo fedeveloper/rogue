@@ -87,6 +87,15 @@ La Risonanza si ricalcola subito se cambi equipaggiamento durante lo scontro. Il
 - **Veleno e Sanguinamento.** Alcuni nemici li infliggono e fanno danni a ogni turno fino alla fine dello scontro. L'*Antidoto Universale* li toglie subito. Alcune armi speciali (Frusta di Spine, Pugnali del Vento, Falce del Mietitore, Balestra Gnomica, Tridente Oceanico) li infliggono ai nemici.
 - **Equipaggiamento `[MALEDETTO]`.** Ha statistiche molto più alte del normale, ma drena HP, ruba Oro o (le armature) riduce la schivata. Si purifica al Falò per 100 Oro, oppure con l'*Acqua Santa*.
 
+### Armi e armature speciali
+
+Molte armi hanno un elemento casuale, ma quelle a tema hanno sempre il loro: il *Bastone dell'Alba* è di Luce, il *Tridente Oceanico* d'Acqua, e così via. Alcune hanno proprietà proprie, scritte nella loro descrizione:
+- l'*Ascia del Boia*: −15% di precisione, ma 35% di critico;
+- lo *Zweihander d'Oro*: più ATK quanto più oro porti;
+- la *Veste Eterea*: +20% di schivata.
+
+L'enciclopedia nel [README](README.md) le elenca tutte.
+
 ### Reliquie, livelli e fusioni
 
 - **Reliquie.** Artefatti passivi trovati sconfiggendo i boss, nei forzieri o negli eventi. Ne porti al massimo **4**: trovandone una quinta, scegli quale sacrificare.
@@ -126,7 +135,7 @@ Ogni eroe ha un albero di **Maestria** a 5 livelli, che sale con l'esperienza ac
 | Tratto | Effetto |
 |---|---|
 | Nessun Tratto | Regole standard |
-| Patto del Sangue | +50 ATK, ma nessuna cura ha effetto |
+| Patto del Sangue | +50 ATK, ma HP massimi dimezzati e nessuna cura ha effetto |
 | Tocco di Mida | Oro ×3, ma niente EXP dai mostri |
 | Aristocratico | +500 Oro iniziali, ma i nemici non lasciano Oro |
 | Cacciatore Etereo | Il primo attacco nemico di ogni scontro manca sempre, ma −20% Schivata |
@@ -171,7 +180,7 @@ Tra una discesa e l'altra spendi l'**Essenza Astrale**:
 |---|---|
 | ☠️ Morte | 20% dell'Oro posseduto |
 | 🏃 Fuga dal labirinto | 100% dell'Oro |
-| 🏆 Vittoria al piano 30 | 100% dell'Oro + 1.000 |
+| 🏆 Vittoria al piano 30 | 100% dell'Oro + 1.000 (e la leggendaria *Lama del Creatore*) |
 
 Si aggiungono **50 Essenza per ogni boss** sconfitto, il moltiplicatore dei Patti e, oltre il piano 30 in **Modalità Infinita**, un ulteriore ×1,5.
 

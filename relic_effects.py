@@ -36,7 +36,17 @@ class RelicEffect:
     def on_heal(self, player, amount) -> int:
         return amount
 
-    def on_item_use(self, player, item_name) -> bool:
+    def on_item_heal(self, player, amount) -> int:
+        """Cure dei consumabili (pozioni, antidoto): solo queste, non rubavita, livelli o falò."""
+        return amount
+
+    def get_atk_modifier(self, player) -> int:
+        return 0
+
+    def get_def_modifier(self, session) -> int:
+        return 0
+
+    def on_item_use(self, player, item) -> bool:
         # Return True to consume item, False to not consume it
         return True
 
@@ -69,9 +79,10 @@ class ArtiglioVampiro(RelicEffect):
         display_msg(f"{Colors.RED}Artiglio Vampirico ti cura 5 HP!{Colors.RESET}")
 
 class LentePrismatica(RelicEffect):
+    # Vantaggi e svantaggi raddoppiati: Super Efficace x2 invece di x1,5, Poco efficace x0,25 invece di x0,5
     def modify_multiplier(self, multiplier: float, is_defense: bool = False) -> float:
         if multiplier > 1.0: return 2.0
-        elif multiplier < 1.0: return 0.5
+        elif multiplier < 1.0: return 0.25
         return multiplier
 
 class ScudoCristallo(RelicEffect):
@@ -98,7 +109,7 @@ class IdoloGuerra(RelicEffect):
         player.bonus_atk_relic -= 5
 
 class CaliceAlchimista(RelicEffect):
-    def on_heal(self, player, amount):
+    def on_item_heal(self, player, amount):
         return int(amount * 1.5)
 
 class MantelloNebbioso(RelicEffect):
@@ -175,11 +186,9 @@ class CampanellaSpiriti(RelicEffect):
         return dmg_taken
 
 class PietraLuna(RelicEffect):
-    def on_take_damage(self, session, dmg_taken, en_multiplier):
-        if session.is_defending:
-            bonus_def = int(session.player.armor.defense * 0.5)
-            dmg_taken = max(0, dmg_taken - (bonus_def // 2))
-        return dmg_taken
+    def get_def_modifier(self, session) -> int:
+        # +50% della Difesa dell'armatura mentre ti difendi
+        return int(session.player.armor.defense * 0.5) if session.is_defending else 0
 
 class ContrattoDemoniaco(RelicEffect):
     def on_attack(self, session, dmg_dealt, multiplier, eff_text):
@@ -192,8 +201,8 @@ class ContrattoDemoniaco(RelicEffect):
             display_msg(f"{Colors.RED}Il Contratto Demoniaco esige un tributo di sangue ({tribute} HP)...{Colors.RESET}")
 
 class PozioneInfinita(RelicEffect):
-    def on_item_use(self, player, item_name):
-        if "Pozione" in item_name or "Fiala" in item_name:
+    def on_item_use(self, player, item):
+        if getattr(item, "category", "") == "heal":
             if random.random() < 0.25:
                 display_msg(f"{Colors.CYAN}Pozione Senza Fondo: La fiala si riempie di nuovo!{Colors.RESET}")
                 return False
@@ -209,17 +218,9 @@ class CuoreDrago(RelicEffect):
         player.hp = min(player.hp, player.max_hp)
 
 class SpiritoSpada(RelicEffect):
-    def __init__(self):
-        super().__init__("spirito_spada")
-        self.applied = False
-    def on_equip(self, player):
-        if player.weapon.level == 1:
-            player.bonus_atk_relic += 15
-            self.applied = True
-    def on_unequip(self, player):
-        if self.applied:
-            player.bonus_atk_relic -= 15
-            self.applied = False
+    # Segue l'arma impugnata: vale finché è di livello 1
+    def get_atk_modifier(self, player):
+        return 15 if player.weapon.level == 1 else 0
 
 class TeschioSangue(RelicEffect):
     def on_enemy_death(self, session):
