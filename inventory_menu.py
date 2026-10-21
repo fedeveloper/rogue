@@ -190,7 +190,7 @@ def show_inventory_menu(player, in_combat=False) -> str:
                 if in_combat: return "turn_used"
 
 
-def show_player_stats(player):
+def show_player_stats(player, session=None):
     clear_screen()
     print(f"\n{Colors.CYAN}{Colors.BOLD}--- STATISTICHE DELL'EROE ---{Colors.RESET}")
     print(f"Classe: {Colors.YELLOW}{player.role}{Colors.RESET} | Tratto: {Colors.MAGENTA}{getattr(player, 'trait_name', 'Nessuno')}{Colors.RESET}")
@@ -200,7 +200,13 @@ def show_player_stats(player):
     print(f"{Colors.BOLD}--- ATTRIBUTI ---{Colors.RESET}")
     print(f"🗡️  Attacco Totale: {player.get_total_atk()} (Base arma: {player.weapon.atk})")
     print(f"🛡️  Difesa Totale: {player.get_total_def()} (Base armatura: {player.armor.defense})")
-    print(f"🎯 Precisione: {player.base_acc}%")
+    if session:
+        hit = session._calc_hit_chance(session.attack_multiplier())
+        print(f"🎯 Probabilità di colpire: {hit}% (contro {session.enemy.name})")
+    else:
+        print(f"🎯 Probabilità di colpire: {player.get_hit_chance()}% (nemico neutro senza schivata)")
+    if player.get_crit_chance() > 0: print(f"💥 Probabilità di critico: {player.get_crit_chance()}%")
+    if player.get_lifesteal() > 0: print(f"🩸 Rubavita: {player.get_lifesteal()} HP per colpo")
     print(f"💨 Schivata: {player.get_dodge()}%")
     
     res_el = player._get_resonance_element()

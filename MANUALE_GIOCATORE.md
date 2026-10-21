@@ -42,4 +42,6 @@ Oltre ad esplorare e sbloccare talenti, gli NPC salvati amplieranno l'economia d
 ## 🎮 Controlli e Accessibilità
 - **Nessun mouse necessario**: Il gioco è controllabile interamente da tastiera (Usa i numeri o i tasti corrispondenti per selezionare le opzioni a schermo).
 - **Menu Intelligenti**: Quando navighi nei sottomenu (Zaino, Negozi, ecc.), l'opzione "Indietro" ti permette di tornare alla schermata precedente senza perdere i progressi del turno.
+- **Velocità del testo**: Dal menu principale, la voce **Impostazioni** permette di scegliere la velocità del testo narrativo (Lenta, Normale, Veloce, Istantanea). La scelta viene salvata nel profilo.
+- **Statistiche reali**: La schermata **Statistiche Eroe** mostra la tua **probabilità reale di colpire** (già comprensiva di arma, reliquie e bonus). In combattimento è calcolata contro il nemico che hai davanti, elemento incluso; fuori dal combattimento contro un nemico neutro senza schivata.
 - **Supporto Globale**: L'architettura è ottimizzata per girare fluidamente sia su Windows che su sistemi macOS e Linux. Se incontri problemi di visualizzazione con i colori o le emoji, assicurati che il tuo terminale supporti la codifica `UTF-8`.

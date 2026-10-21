@@ -22,6 +22,7 @@ class CombatSession:
         self.def_txt = ""
         self.first_enemy_attack = True
         self.hit_negated_by_relic = False
+        self.first_player_attack = True
 
         for r in self.player.relic_effects:
             r.on_combat_start(self)
@@ -154,6 +155,9 @@ class CombatSession:
         print(f"Ottieni {Colors.YELLOW}{g_drop} oro{Colors.RESET}.")
         # Le reliquie agiscono prima dell'EXP (es. la Pietra Filosofale converte l'EXP in Oro)
         for r in self.player.relic_effects: r.on_enemy_death(self)
+        if self.player.necro_harvest:
+            healed = self.player.heal(max(1, self.player.max_hp // 10))
+            if healed > 0: print(f"{Colors.MAGENTA}Raccolto d'Anime: assorbi {healed} HP dal nemico caduto!{Colors.RESET}")
         if self.enemy.exp_drop > 0: self.player.gain_exp(self.enemy.exp_drop)
         
         if self.enemy.is_boss:
@@ -179,10 +183,12 @@ class CombatSession:
         input("\nPremi INVIO per continuare...")
 
     def _calc_hit_chance(self, multiplier: float) -> int:
-        hit_chance = BASE_HIT_CHANCE + self.player.base_acc + self.player.temp_acc - self.enemy.base_dodge + (15 if multiplier > 1.0 else -20 if multiplier < 1.0 else 0)
-        hit_chance += self.player.weapon.get_hit_chance_modifier()
-        for r in self.player.relic_effects: hit_chance += r.get_acc_modifier()
-        return max(10, min(100, hit_chance))
+        return self.player.get_hit_chance(self.enemy.base_dodge, multiplier)
+
+    def attack_multiplier(self) -> float:
+        multiplier = MULTIPLIERS.get(self.player.weapon.element, {}).get(self.enemy.element, 1.0)
+        for r in self.player.relic_effects: multiplier = r.modify_multiplier(multiplier)
+        return multiplier
 
     def _calc_base_damage(self, multiplier: float) -> tuple[int, str]:
         dmg_dealt = int(max(1, self.player.get_total_atk() + random.randint(-1, 2)) * multiplier)
@@ -195,8 +201,7 @@ class CombatSession:
             if not r.on_before_attack(self): cancel_attack = True
         if cancel_attack: return False
 
-        multiplier = MULTIPLIERS.get(self.player.weapon.element, {}).get(self.enemy.element, 1.0)
-        for r in self.player.relic_effects: multiplier = r.modify_multiplier(multiplier)
+        multiplier = self.attack_multiplier()
         
         was_focused = self.focused_attack
         if self.focused_attack:
@@ -211,10 +216,18 @@ class CombatSession:
         if self.enemy.is_boss and is_book_unlocked("bestiario", PROFILE_MANAGER._data):
             dmg_dealt = int(dmg_dealt * 1.1)
 
-        if self.player.accessory and self.player.accessory.bonus_type == "crit_chance" and not was_focused:
-            if random.randint(1, 100) <= self.player.accessory.bonus_value:
-                dmg_dealt *= 2
-                eff += f" {Colors.MAGENTA}[CRITICO!]{Colors.RESET}"
+        crit = self.player.get_crit_chance()
+        if crit > 0 and not was_focused and random.randint(1, 100) <= crit:
+            dmg_dealt *= 2
+            eff += f" {Colors.MAGENTA}[CRITICO!]{Colors.RESET}"
+
+        # Imboscata (Assassino): il primo attacco di ogni scontro, anche se manca, consuma il bonus.
+        # Non si somma all'attacco concentrato, che è già un critico garantito.
+        ambush = self.player.assassin_ambush and self.first_player_attack and not was_focused
+        self.first_player_attack = False
+        if ambush:
+            dmg_dealt *= 2
+            eff += f" {Colors.MAGENTA}[IMBOSCATA!]{Colors.RESET}"
 
         self.player.run_tracker["floor_attacks"] += 1
         if random.randint(1, 100) <= hit_chance:
@@ -236,10 +249,9 @@ class CombatSession:
             
             for r in self.player.relic_effects: r.on_attack_landed(self, multiplier)
 
-            if self.player.accessory and self.player.accessory.bonus_type == "lifesteal":
-                ls = self.player.accessory.bonus_value
-                self.player.heal(ls)
-                print(f"{Colors.RED}Il monile assorbe {ls} HP!{Colors.RESET}")
+            ls = self.player.get_lifesteal()
+            stolen = self.player.heal(ls) if ls > 0 else 0
+            if stolen > 0: print(f"{Colors.RED}Rubavita: assorbi {stolen} HP!{Colors.RESET}")
             if self.resonance == "Luce":
                 self.player.heal(3)
                 print(f"{Colors.YELLOW}✨ Risonanza di Luce: +3 HP!{Colors.RESET}")
@@ -328,7 +340,7 @@ class CombatSession:
                 
         elif idx == 3:
             from inventory_menu import show_player_stats
-            show_player_stats(self.player)
+            show_player_stats(self.player, self)
             return self.player_turn()
             
         elif idx == 4:

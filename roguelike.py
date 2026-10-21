@@ -8,7 +8,7 @@ from entities import Player, Enemy
 from rooms import combat_room, mystery_room, event_room, vendor_room, campfire_room, treasure_room, trap_room
 from inventory_menu import show_inventory_menu, show_player_stats
 from archive import show_archive
-from constants import RATIO_GOLD_TO_ESSENCE_ON_DEATH, BOSS_ESSENCE_BONUS, XP_PER_FLOOR, XP_PER_BOSS, INFINITE_MODE_THRESHOLD, INFINITE_MODE_ESSENCE_MULTIPLIER, BLIND_FURY_MIN_ATTACKS
+from constants import TEXT_SPEEDS, SPERANZA_LUCE_PCT_PER_LVL, RATIO_GOLD_TO_ESSENCE_ON_DEATH, BOSS_ESSENCE_BONUS, XP_PER_FLOOR, XP_PER_BOSS, INFINITE_MODE_THRESHOLD, INFINITE_MODE_ESSENCE_MULTIPLIER, BLIND_FURY_MIN_ATTACKS
 
 def _update_class_mastery(player: Player, floor: int):
     c_id = player.class_id
@@ -105,7 +105,7 @@ def base_camp_fire():
             ("banca_anima_lvl", "Banca dell'Anima", "+5% Oro raccolto in totale", 3, lambda l: 250 + (l*250), False),
             ("artigiano_lvl", "Artigiano", "+1 ATK arma iniziale", 3, lambda l: 400 + (l*300), False),
             ("pelle_dura_lvl", "Pelle Dura", "+1 DEF armatura iniziale", 3, lambda l: 400 + (l*300), False),
-            ("speranza_luce_lvl", "Speranza di Luce", "Recuperi HP ad ogni piano", 3, lambda l: 500 + (l*400), False)
+            ("speranza_luce_lvl", "Speranza di Luce", f"+{int(SPERANZA_LUCE_PCT_PER_LVL*100)}% HP Max recuperati a ogni piano", 3, lambda l: 500 + (l*400), False)
         ]
         
         options = []
@@ -415,6 +415,13 @@ def _generate_doors(floor: int, step: int, weights_def: dict, cooldowns_def: dic
         
     return doors
 
+def _apply_floor_regen(player: Player) -> int:
+    sp_lvl = PROFILE_MANAGER.get_perk("speranza_luce_lvl", 0)
+    if sp_lvl <= 0 or player.hp >= player.max_hp: return 0
+    healed = player.heal(max(1, int(player.max_hp * SPERANZA_LUCE_PCT_PER_LVL * sp_lvl)))
+    if healed > 0: print(f"{Colors.GREEN}La Speranza di Luce ti rigenera {healed} HP. ({player.hp}/{player.max_hp}){Colors.RESET}")
+    return healed
+
 def play_game(infinite_mode=False):
     c_choice, t_choice, active_pacts = _hero_selection()
 
@@ -435,10 +442,7 @@ def play_game(infinite_mode=False):
         clear_screen()
         delay_print(f"\n{Colors.MAGENTA}{Colors.BOLD}==== PIANO {floor} ===={Colors.RESET}", 0.05)
         
-        sp_lvl = PROFILE_MANAGER.get_perk("speranza_luce_lvl", 0)
-        if sp_lvl > 0 and player.hp < player.max_hp:
-            player.heal(sp_lvl)
-            print(f"{Colors.GREEN}La Speranza di Luce ti rigenera {sp_lvl} HP. ({player.hp}/{player.max_hp}){Colors.RESET}")
+        _apply_floor_regen(player)
             
         player.run_tracker["floor_attacks"] = player.run_tracker["floor_hits"] = 0
         
@@ -501,21 +505,48 @@ def play_game(infinite_mode=False):
 
     evaluate_run(player, floor, infinite_mode)
 
+def settings_menu():
+    labels = {"lenta": "Lenta", "normale": "Normale", "veloce": "Veloce", "istantanea": "Istantanea"}
+    speeds = list(TEXT_SPEEDS)
+    while True:
+        clear_screen()
+        options = [f"{labels.get(s, s)}{' [ATTUALE]' if s == PROFILE_MANAGER.text_speed else ''}" for s in speeds]
+        prompt = f"{Colors.CYAN}--- IMPOSTAZIONI ---{Colors.RESET}\nVelocità del testo narrativo:"
+        idx = interactive_menu(options, prompt, cancellable=True)
+        if idx == -1: break
+        PROFILE_MANAGER.text_speed = speeds[idx]
+        PROFILE_MANAGER.save()
+
+def _grant_retroactive_mastery_unlocks():
+    """Concede gli sblocchi di Maestria già raggiunti (es. classi aggiunte dopo che il livello era stato ottenuto)."""
+    changed = False
+    for c_id, c in GAME_DATA["classes"].items():
+        lvl = PROFILE_MANAGER.get_class_lvl(c_id, 1)
+        for m_lvl, reward in c.get("mastery", {}).items():
+            r_id = reward.get("id")
+            if int(m_lvl) <= lvl and reward.get("type") in ["unlock", "class"] and r_id not in (None, "null") and r_id not in PROFILE_MANAGER.unlocked_ids:
+                PROFILE_MANAGER.unlocked_ids.append(r_id); changed = True
+    if changed:
+        update_game_data()
+        PROFILE_MANAGER.save()
+
 def main():
+    _grant_retroactive_mastery_unlocks()
     try:
         while True:
             clear_screen()
             delay_print(f"{Colors.MAGENTA}{Colors.BOLD}=== IL LABIRINTO DEGLI ELEMENTI E DEL CAOS ==={Colors.RESET}", 0.01)
-            options = [f"Inizia Run (Standard - {INFINITE_MODE_THRESHOLD} Piani)", "Campo Base (Potenziamenti, Forgia, Taverna)"]
-            if PROFILE_MANAGER.won_normal: options.append(f"{Colors.RED}Inizia Run Infinita (Oltre i {INFINITE_MODE_THRESHOLD} Piani){Colors.RESET}")
-            options.append("Esci dal gioco")
+            actions = [(f"Inizia Run (Standard - {INFINITE_MODE_THRESHOLD} Piani)", lambda: play_game(infinite_mode=False)),
+                       ("Campo Base (Potenziamenti, Forgia, Taverna)", base_camp)]
+            if PROFILE_MANAGER.won_normal:
+                actions.append((f"{Colors.RED}Inizia Run Infinita (Oltre i {INFINITE_MODE_THRESHOLD} Piani){Colors.RESET}", lambda: play_game(infinite_mode=True)))
+            actions.append(("Impostazioni", settings_menu))
+            actions.append(("Esci dal gioco", None))
             
-            idx = interactive_menu(options, f"\n{Colors.CYAN}[ MENU PRINCIPALE ]{Colors.RESET}")
-            
-            if idx == 0: play_game(infinite_mode=False)
-            elif idx == 1: base_camp()
-            elif idx == 2 and PROFILE_MANAGER.won_normal: play_game(infinite_mode=True)
-            else: clear_screen(); print("Arrivederci!"); break
+            idx = interactive_menu([label for label, _ in actions], f"\n{Colors.CYAN}[ MENU PRINCIPALE ]{Colors.RESET}")
+            action = actions[idx][1]
+            if action is None: clear_screen(); print("Arrivederci!"); break
+            action()
     except KeyboardInterrupt:
         sys.stdout.write('\033[?25h')
         print("\nArrivederci!")
