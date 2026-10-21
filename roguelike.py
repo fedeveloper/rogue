@@ -2,7 +2,7 @@ import random
 import sys
 import time
 import traceback
-from ui import Colors, clear_screen, delay_print, get_choice, interactive_menu
+from ui import Colors, clear_screen, delay_print, get_choice, interactive_menu, display_msg, wait_enter
 from data_manager import PROFILE_MANAGER, GAME_DATA, RAW_DATA, get_element_icon, update_game_data
 from entities import Player, Enemy
 from rooms import combat_room, mystery_room, event_room, vendor_room, campfire_room, treasure_room, trap_room
@@ -17,18 +17,18 @@ def _update_class_mastery(player: Player, floor: int):
     curr_lvl = PROFILE_MANAGER.get_class_lvl(c_id, 1)
     PROFILE_MANAGER.set_class_xp(c_id, curr_xp)
     
-    print(f"\n{Colors.MAGENTA}[ Maestria {player.role} ] +{xp_gained} XP (Totale: {curr_xp}){Colors.RESET}")
+    display_msg(f"\n{Colors.MAGENTA}[ Maestria {player.role} ] +{xp_gained} XP (Totale: {curr_xp}){Colors.RESET}")
     reqs = GAME_DATA["meta"]["mastery_xp_requirements"]
     while curr_lvl < 5 and curr_xp >= reqs[str(curr_lvl + 1)]:
         curr_lvl += 1; PROFILE_MANAGER.set_class_lvl(c_id, curr_lvl)
-        print(f"{Colors.YELLOW}*** MAESTRIA SALITA AL LIVELLO {curr_lvl}! ***{Colors.RESET}")
+        display_msg(f"{Colors.YELLOW}*** MAESTRIA SALITA AL LIVELLO {curr_lvl}! ***{Colors.RESET}")
         reward = GAME_DATA["classes"][c_id]["mastery"].get(str(curr_lvl), {"desc": "Nessun bonus disponibile (In Sviluppo).", "type": "null", "id": "null"})
-        print(f"Sbloccato: {reward['desc']}")
+        display_msg(f"Sbloccato: {reward['desc']}")
         if reward.get("type") in ["unlock", "class"] and reward.get("id", "null") != "null" and reward.get("id") not in PROFILE_MANAGER.unlocked_ids:
             PROFILE_MANAGER.unlocked_ids.append(reward.get("id"))
 
 def _check_feats(player: Player, floor: int, infinite: bool):
-    print(f"\n{Colors.CYAN}[ Imprese ]{Colors.RESET}")
+    display_msg(f"\n{Colors.CYAN}[ Imprese ]{Colors.RESET}")
     if "total_bosses" not in PROFILE_MANAGER.stats: PROFILE_MANAGER.stats["total_bosses"] = 0
     PROFILE_MANAGER.stats["total_bosses"] += player.bosses_killed
     
@@ -52,13 +52,13 @@ def _check_feats(player: Player, floor: int, infinite: bool):
     for f_id, f_data in GAME_DATA["meta"]["feats"].items():
         if f_id in PROFILE_MANAGER.completed_feats: continue
         if feats_check.get(f_id, 0) >= f_data["target"]:
-            print(f"{Colors.GREEN}Impresa Completata: {f_data['name']}!{Colors.RESET}"); PROFILE_MANAGER.completed_feats.append(f_id)
+            display_msg(f"{Colors.GREEN}Impresa Completata: {f_data['name']}!{Colors.RESET}"); PROFILE_MANAGER.completed_feats.append(f_id)
             if f_data["reward_type"] in ["unlock", "class"] and f_data["reward_id"] not in PROFILE_MANAGER.unlocked_ids: PROFILE_MANAGER.unlocked_ids.append(f_data["reward_id"])
             elif f_data["reward_type"] == "perk": PROFILE_MANAGER.set_perk(f_data["reward_id"], True)
-            elif f_data["reward_type"] == "trait": print(f"Nuovo Tratto Sbloccato: {f_data['name']}")
+            elif f_data["reward_type"] == "trait": display_msg(f"Nuovo Tratto Sbloccato: {f_data['name']}")
 
 def evaluate_run(player: Player, floor: int, infinite: bool):
-    print("\n" + ("="*50))
+    display_msg("\n" + ("="*50))
     if player.hp <= 0:
         delay_print(f"{Colors.RED}S E I   M O R T O.{Colors.RESET}")
         player.essence_gathered += int(player.gold * RATIO_GOLD_TO_ESSENCE_ON_DEATH); PROFILE_MANAGER.stats["total_deaths"] += 1
@@ -77,15 +77,15 @@ def evaluate_run(player: Player, floor: int, infinite: bool):
     PROFILE_MANAGER.essence += final_essence
     PROFILE_MANAGER.stats["total_gold"] += player.gold
 
-    print(f"Piano raggiunto: {floor} | Boss: {player.bosses_killed}")
-    print(f"Moltiplicatore Maledizioni: {pact_multi}x")
-    print(f"Essenza Astrale ottenuta: {Colors.CYAN}✨ {final_essence}{Colors.RESET}")
+    display_msg(f"Piano raggiunto: {floor} | Boss: {player.bosses_killed}")
+    display_msg(f"Moltiplicatore Maledizioni: {pact_multi}x")
+    display_msg(f"Essenza Astrale ottenuta: {Colors.CYAN}✨ {final_essence}{Colors.RESET}")
     
     _update_class_mastery(player, floor)
     _check_feats(player, floor, infinite)
 
-    print("="*50); PROFILE_MANAGER.save()
-    input(f"\n{Colors.CYAN}Premi INVIO per tornare al Menu Principale...{Colors.RESET}")
+    display_msg("="*50); PROFILE_MANAGER.save()
+    wait_enter(f"\n{Colors.CYAN}Premi INVIO per tornare al Menu Principale...{Colors.RESET}")
 
 # --- HUB E LOOP DI GIOCO ---
 def base_camp_fire():
@@ -130,14 +130,14 @@ def base_camp_fire():
         
         can_buy = (p_bool and not lvl) or (not p_bool and lvl < p_max)
         if not can_buy:
-            print(f"\n{Colors.YELLOW}{p_name} è già al livello massimo.{Colors.RESET}"); time.sleep(1.5)
+            display_msg(f"\n{Colors.YELLOW}{p_name} è già al livello massimo.{Colors.RESET}"); time.sleep(1.5)
         elif PROFILE_MANAGER.essence >= cost:
             PROFILE_MANAGER.essence -= cost
             if p_bool: PROFILE_MANAGER.set_perk(p_key, True)
             else: PROFILE_MANAGER.set_perk(p_key, lvl + 1)
             PROFILE_MANAGER.save()
         else:
-            print(f"\n{Colors.RED}Essenza insufficiente.{Colors.RESET}"); time.sleep(1.5)
+            display_msg(f"\n{Colors.RED}Essenza insufficiente.{Colors.RESET}"); time.sleep(1.5)
 
 def base_camp_forge():
     while True:
@@ -195,14 +195,14 @@ def base_camp_forge_category(cat, cat_name):
                 PROFILE_MANAGER.essence -= cost
                 PROFILE_MANAGER.unlocked_ids.append(lkd[idx]["unlock_id"])
                 PROFILE_MANAGER.save()
-                print(f"\n{Colors.GREEN}Sbloccato: {lkd[idx]['name']}!{Colors.RESET}")
+                display_msg(f"\n{Colors.GREEN}Sbloccato: {lkd[idx]['name']}!{Colors.RESET}")
                 update_game_data()
                 time.sleep(1)
             elif cost == 0:
-                print(f"\n{Colors.RED}Questo oggetto può essere sbloccato solo completando un'Impresa specifica!{Colors.RESET}")
+                display_msg(f"\n{Colors.RED}Questo oggetto può essere sbloccato solo completando un'Impresa specifica!{Colors.RESET}")
                 time.sleep(2)
             else:
-                print(f"\n{Colors.RED}Essenza insufficiente.{Colors.RESET}")
+                display_msg(f"\n{Colors.RED}Essenza insufficiente.{Colors.RESET}")
                 time.sleep(1.5)
 
 def base_camp_tavern():
@@ -223,19 +223,19 @@ def base_camp_tavern():
         
         if lkc and 0 <= idx < len(lkc) and PROFILE_MANAGER.essence>=lkc[idx][1].get("unlock_cost", 0) and lkc[idx][1].get("unlock_cost", 0)>0:
             PROFILE_MANAGER.essence-=lkc[idx][1]["unlock_cost"]; PROFILE_MANAGER.unlocked_ids.append(lkc[idx][1]["unlock_id"]); PROFILE_MANAGER.save()
-            print(f"{Colors.GREEN}Reclutato: {lkc[idx][1]['role']}!{Colors.RESET}"); time.sleep(1)
+            display_msg(f"{Colors.GREEN}Reclutato: {lkc[idx][1]['role']}!{Colors.RESET}"); time.sleep(1)
 
 def base_camp_grimoire():
     clear_screen()
-    print(f"{Colors.CYAN}--- GRIMORIO ---{Colors.RESET}")
+    display_msg(f"{Colors.CYAN}--- GRIMORIO ---{Colors.RESET}")
     for f_id, f in GAME_DATA["meta"]["feats"].items():
         st = f"{Colors.GREEN}[V]{Colors.RESET}" if f_id in PROFILE_MANAGER.completed_feats else f"{Colors.RED}[X]{Colors.RESET}"
-        print(f"{st} {f['name']}: {f['desc']}")
-    print(f"\n{Colors.CYAN}--- MAESTRIA CLASSI ---{Colors.RESET}")
+        display_msg(f"{st} {f['name']}: {f['desc']}")
+    display_msg(f"\n{Colors.CYAN}--- MAESTRIA CLASSI ---{Colors.RESET}")
     for c_id, c in RAW_DATA["classes"].items():
         if c.get("unlocked_by_default") or c_id in PROFILE_MANAGER.unlocked_ids or c.get("unlock_id") in PROFILE_MANAGER.unlocked_ids:
-            print(f"{c['role']}: Lv.{PROFILE_MANAGER.get_class_lvl(c_id, 1)} (XP: {PROFILE_MANAGER.get_class_xp(c_id, 0)})")
-    input("\nPremi INVIO per tornare indietro...")
+            display_msg(f"{c['role']}: Lv.{PROFILE_MANAGER.get_class_lvl(c_id, 1)} (XP: {PROFILE_MANAGER.get_class_xp(c_id, 0)})")
+    wait_enter("\nPremi INVIO per tornare indietro...")
 
 
 def generate_npc_shop(npc_name, title, desc, item_cat, default_items, essence_key):
@@ -263,16 +263,16 @@ def generate_npc_shop(npc_name, title, desc, item_cat, default_items, essence_ke
         if PROFILE_MANAGER.essence >= cost:
             if essence_key not in PROFILE_MANAGER._data: PROFILE_MANAGER._data[essence_key] = []
             if len(PROFILE_MANAGER._data[essence_key]) >= 1:
-                print(f"\n{Colors.YELLOW}'Hai già un oggetto preparato per questa spedizione. Non esagerare!'{Colors.RESET}")
+                display_msg(f"\n{Colors.YELLOW}'Hai già un oggetto preparato per questa spedizione. Non esagerare!'{Colors.RESET}")
                 time.sleep(2.5)
                 continue
             PROFILE_MANAGER._data[essence_key].append(it_name)
             PROFILE_MANAGER.essence -= cost
             PROFILE_MANAGER.save()
-            print(f"\n{Colors.CYAN}'Ottima scelta.' {Colors.RESET}Hai aggiunto {it_name} all'inventario iniziale.")
+            display_msg(f"\n{Colors.CYAN}'Ottima scelta.' {Colors.RESET}Hai aggiunto {it_name} all'inventario iniziale.")
             time.sleep(1.5)
         else:
-            print(f"\n{Colors.RED}Essenza insufficiente.{Colors.RESET}")
+            display_msg(f"\n{Colors.RED}Essenza insufficiente.{Colors.RESET}")
             time.sleep(1.5)
 
 def base_camp_apothecary():
@@ -420,7 +420,7 @@ def _apply_floor_regen(player: Player) -> int:
     sp_lvl = PROFILE_MANAGER.get_perk("speranza_luce_lvl", 0)
     if sp_lvl <= 0 or player.hp >= player.max_hp: return 0
     healed = player.heal(max(1, int(player.max_hp * SPERANZA_LUCE_PCT_PER_LVL * sp_lvl)))
-    if healed > 0: print(f"{Colors.GREEN}La Speranza di Luce ti rigenera {healed} HP. ({player.hp}/{player.max_hp}){Colors.RESET}")
+    if healed > 0: display_msg(f"{Colors.GREEN}La Speranza di Luce ti rigenera {healed} HP. ({player.hp}/{player.max_hp}){Colors.RESET}")
     return healed
 
 def play_game(infinite_mode=False):
@@ -437,7 +437,7 @@ def play_game(infinite_mode=False):
     while player.hp > 0 and not player.escaped:
         if not infinite_mode and floor > INFINITE_MODE_THRESHOLD:
             clear_screen()
-            print(f"{Colors.YELLOW}{Colors.BOLD}" + "="*50); delay_print("H A I   V I N T O ! ! !"); print("="*50 + Colors.RESET)
+            display_msg(f"{Colors.YELLOW}{Colors.BOLD}" + "="*50); delay_print("H A I   V I N T O ! ! !"); display_msg("="*50 + Colors.RESET)
             PROFILE_MANAGER.won_normal = True; player.won = True; player.essence_gathered += 1000; break
 
         clear_screen()
@@ -477,7 +477,7 @@ def play_game(infinite_mode=False):
                 elif idx == len(options) - 2:
                     show_player_stats(player)
                 elif idx == len(options) - 1:
-                    clear_screen(); print(f"{Colors.YELLOW}Fuggi portando in salvo le ricchezze.{Colors.RESET}")
+                    clear_screen(); display_msg(f"{Colors.YELLOW}Fuggi portando in salvo le ricchezze.{Colors.RESET}")
                     player.escaped = True; break
                 else:
                     chosen_door = doors[idx]; clear_screen(); break
@@ -499,10 +499,10 @@ def play_game(infinite_mode=False):
             if attacks >= BLIND_FURY_MIN_ATTACKS and hits * 2 < attacks: player.run_tracker["blind_fury_done"] = True
             heal = 20 + (floor * 5)
             player.heal(heal)
-            print(f"Ti riposi prima delle scale. (HP: {player.hp}/{player.max_hp})")
+            display_msg(f"Ti riposi prima delle scale. (HP: {player.hp}/{player.max_hp})")
             floor += 1
             if floor > PROFILE_MANAGER.max_floor: PROFILE_MANAGER.max_floor = floor
-            input("\nPremi INVIO per scendere...")
+            wait_enter("\nPremi INVIO per scendere...")
 
     evaluate_run(player, floor, infinite_mode)
 
@@ -546,15 +546,15 @@ def main():
             
             idx = interactive_menu([label for label, _ in actions], f"\n{Colors.CYAN}[ MENU PRINCIPALE ]{Colors.RESET}")
             action = actions[idx][1]
-            if action is None: clear_screen(); print("Arrivederci!"); break
+            if action is None: clear_screen(); display_msg("Arrivederci!"); break
             action()
     except KeyboardInterrupt:
         sys.stdout.write('\033[?25h')
-        print("\nArrivederci!")
+        display_msg("\nArrivederci!")
     except Exception as e:
-        print(f"\n{Colors.RED}{Colors.BOLD}ERRORE IMPREVISTO! Il gioco è andato in crash:{Colors.RESET}")
+        display_msg(f"\n{Colors.RED}{Colors.BOLD}ERRORE IMPREVISTO! Il gioco è andato in crash:{Colors.RESET}")
         traceback.print_exc()
-        input(f"\n{Colors.CYAN}Premi INVIO per uscire...{Colors.RESET}")
+        wait_enter(f"\n{Colors.CYAN}Premi INVIO per uscire...{Colors.RESET}")
 
 if __name__ == "__main__":
     main()

@@ -22,7 +22,8 @@
         "mastery": {
             "2": {
                 "desc": "Mano Pesante: Inizi con un'arma di Livello 2.",
-                "type": "personal"
+                "type": "personal",
+                "effect": "heavy_hand"
             },
             "3": {
                 "desc": "Sblocca Consumabile: Pietra per Affilare",
@@ -31,7 +32,11 @@
             },
             "4": {
                 "desc": "Eredit\u00e0: +5 Difesa Base per TUTTI gli eroi.",
-                "type": "global"
+                "type": "global",
+                "bonus": {
+                    "stat": "def",
+                    "value": 5
+                }
             },
             "5": {
                 "desc": "Sblocca Classe: Paladino",
@@ -63,7 +68,8 @@
         "mastery": {
             "2": {
                 "desc": "Tasche Nascoste: 30% di chance di non consumare le pozioni.",
-                "type": "personal"
+                "type": "personal",
+                "effect": "thief_potion_save"
             },
             "3": {
                 "desc": "Sblocca Consumabile: Bomba Fumogena",
@@ -72,7 +78,11 @@
             },
             "4": {
                 "desc": "Eredit\u00e0: +10% Schivata Base per TUTTI gli eroi.",
-                "type": "global"
+                "type": "global",
+                "bonus": {
+                    "stat": "dodge",
+                    "value": 10
+                }
             },
             "5": {
                 "desc": "Sblocca Classe: Assassino",
@@ -104,7 +114,8 @@
         "mastery": {
             "2": {
                 "desc": "Sintonia: Gli attacchi Super Efficaci curano il Mago.",
-                "type": "personal"
+                "type": "personal",
+                "effect": "mage_attunement"
             },
             "3": {
                 "desc": "Sblocca Consumabile: Tomo del Caos",
@@ -113,7 +124,11 @@
             },
             "4": {
                 "desc": "Eredit\u00e0: +15% EXP Base per TUTTI gli eroi.",
-                "type": "global"
+                "type": "global",
+                "bonus": {
+                    "stat": "exp",
+                    "value": 0.15
+                }
             },
             "5": {
                 "desc": "Sblocca Classe: Negromante",
@@ -147,7 +162,8 @@
         "mastery": {
             "2": {
                 "desc": "Baluardo della Fede: Recuperi 3 HP extra ogni volta che ti difendi.",
-                "type": "personal"
+                "type": "personal",
+                "effect": "paladin_bulwark"
             },
             "3": {
                 "desc": "Sblocca Consumabile: Acqua Santa",
@@ -156,7 +172,11 @@
             },
             "4": {
                 "desc": "Eredit\u00e0: +15 HP Max per TUTTI gli eroi.",
-                "type": "global"
+                "type": "global",
+                "bonus": {
+                    "stat": "max_hp",
+                    "value": 15
+                }
             },
             "5": {
                 "desc": "Sblocca Tratto: Benedetto",
@@ -190,7 +210,8 @@
         "mastery": {
             "2": {
                 "desc": "Furia Sanguinaria: +50% ATK quando gli HP sono sotto il 30%.",
-                "type": "personal"
+                "type": "personal",
+                "effect": "berserker_fury"
             },
             "3": {
                 "desc": "Sblocca Arma: Ascia del Boia",
@@ -199,7 +220,11 @@
             },
             "4": {
                 "desc": "Eredit\u00e0: +2 Attacco Arma per TUTTI gli eroi.",
-                "type": "global"
+                "type": "global",
+                "bonus": {
+                    "stat": "weapon_atk",
+                    "value": 2
+                }
             },
             "5": {
                 "desc": "Sblocca Reliquia: Teschio di Sangue",
@@ -234,7 +259,8 @@
         "mastery": {
             "2": {
                 "desc": "Metabolismo Alterato: Le pozioni curano il 50% in pi\u00f9.",
-                "type": "personal"
+                "type": "personal",
+                "effect": "alchemist_potions"
             },
             "3": {
                 "desc": "Sblocca Consumabile: Fiala del Caos",
@@ -243,7 +269,11 @@
             },
             "4": {
                 "desc": "Eredit\u00e0: +5% Precisione Base per TUTTI gli eroi.",
-                "type": "global"
+                "type": "global",
+                "bonus": {
+                    "stat": "acc",
+                    "value": 5
+                }
             },
             "5": {
                 "desc": "Sblocca Reliquia: Pietra Filosofale",
@@ -278,7 +308,8 @@
         "mastery": {
             "2": {
                 "desc": "Imboscata: il primo attacco di ogni scontro infligge danni doppi.",
-                "type": "personal"
+                "type": "personal",
+                "effect": "assassin_ambush"
             },
             "3": {
                 "desc": "Sblocca Arma: Pugnali del Vento Tagliente",
@@ -287,7 +318,11 @@
             },
             "4": {
                 "desc": "Eredit\u00e0: +5% probabilit\u00e0 di Critico per TUTTI gli eroi.",
-                "type": "global"
+                "type": "global",
+                "bonus": {
+                    "stat": "crit",
+                    "value": 5
+                }
             },
             "5": {
                 "desc": "Sblocca Reliquia: Clessidra del Destino",
@@ -321,7 +356,8 @@
         "mastery": {
             "2": {
                 "desc": "Raccolto d'Anime: ogni nemico sconfitto ti cura del 10% degli HP Max.",
-                "type": "personal"
+                "type": "personal",
+                "effect": "necro_harvest"
             },
             "3": {
                 "desc": "Sblocca Arma: Falce del Mietitore",
@@ -330,7 +366,11 @@
             },
             "4": {
                 "desc": "Eredit\u00e0: +1 HP rubato a ogni colpo a segno per TUTTI gli eroi.",
-                "type": "global"
+                "type": "global",
+                "bonus": {
+                    "stat": "lifesteal",
+                    "value": 1
+                }
             },
             "5": {
                 "desc": "Sblocca Reliquia: Contratto Demoniaco",

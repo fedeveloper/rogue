@@ -1,6 +1,9 @@
 import sys
 import os
+import re
+import shutil
 import time
+import unicodedata
 
 if os.name == 'nt': os.system('')
 
@@ -27,12 +30,16 @@ def delay_print(text: str, delay: float = 0.02):
         time.sleep(delay)
     print()
 
-def display_msg(text: str):
+def display_msg(text: str = ""):
     """
     Funzione centralizzata per l'output dei messaggi del gioco.
     Attualmente mappa su print(), ma potrà essere estesa per una GUI.
     """
     print(text)
+
+def wait_enter(prompt: str = "Premi INVIO..."):
+    """Attende che il giocatore prema INVIO. Punto unico per l'input di conferma (GUI, test, automazione)."""
+    input(prompt)
 
 def get_choice(prompt: str) -> str:
     while True:
@@ -68,14 +75,29 @@ def get_key() -> str:
             termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
     return ""
 
+_ANSI_RE = re.compile(r"\x1b\[[0-9;?]*[A-Za-z]")
+
+def visible_width(text: str) -> int:
+    """Colonne occupate a terminale: senza codici ANSI, con emoji e caratteri larghi contati doppi."""
+    plain = _ANSI_RE.sub("", text)
+    width = 0
+    for i, ch in enumerate(plain):
+        if unicodedata.combining(ch) or ch in "\ufe0f\u200d": continue
+        # Un simbolo seguito dal selettore di variante emoji (es. ❤️) viene disegnato largo
+        emoji = i + 1 < len(plain) and plain[i + 1] == "\ufe0f"
+        width += 2 if emoji or unicodedata.east_asian_width(ch) in ("W", "F") else 1
+    return width
+
+def screen_rows(text: str, columns: int) -> int:
+    """Righe di terminale occupate da una riga di testo che può andare a capo."""
+    return max(1, -(-visible_width(text) // max(1, columns)))
+
 def interactive_menu(options: list, prompt: str = "", cancellable: bool = False, initial: int = 0) -> int:
     """
     Stampa un menu navigabile con le frecce, con supporto allo scrolling per liste lunghe.
     Restituisce l'indice (0-based) dell'opzione selezionata. 
     Se cancellable è True, aggiunge "Indietro" alla fine e se selezionato restituisce -1.
     """
-    import sys
-    
     _options = list(options)
     if cancellable:
         _options.append("Indietro")
@@ -84,15 +106,21 @@ def interactive_menu(options: list, prompt: str = "", cancellable: bool = False,
         print(prompt)
         
     selected_idx = initial if 0 <= initial < len(_options) else 0
-    num_options = len(_options)
-    MAX_VISIBLE = 15
-    window_start = 0
-    
+
     # Nasconde il cursore
     sys.stdout.write('\033[?25l')
-    
+    try:
+        return _menu_loop(_options, cancellable, selected_idx)
+    finally:
+        sys.stdout.write('\033[?25h')  # Mostra di nuovo il cursore, anche se si esce con Ctrl+C
+        sys.stdout.flush()
+
+MAX_VISIBLE = 15
+
+def _menu_loop(_options: list, cancellable: bool, selected_idx: int) -> int:
+    num_options = len(_options)
+    window_start = 0
     lines_printed = 0
-    
     while True:
         if selected_idx < window_start:
             window_start = selected_idx
@@ -101,25 +129,29 @@ def interactive_menu(options: list, prompt: str = "", cancellable: bool = False,
             
         visible_options = _options[window_start:window_start + MAX_VISIBLE]
         
+        # Torna all'inizio del menu e cancella fino a fine schermo: funziona anche
+        # quando un'opzione lunga va a capo e occupa più righe del terminale
         if lines_printed > 0:
-            sys.stdout.write(f"\033[{lines_printed}A\r")
-            
+            sys.stdout.write(f"\033[{lines_printed}A\r\033[J")
+
+        columns = shutil.get_terminal_size((80, 24)).columns
         lines_printed = 0
         for i, opt in enumerate(visible_options):
-            sys.stdout.write("\033[2K")
+            line = f"  > {opt}" if window_start + i == selected_idx else f"    {opt}"
             if window_start + i == selected_idx:
-                sys.stdout.write(f"{Colors.CYAN}{Colors.BOLD}  > {opt}{Colors.RESET}\n")
+                sys.stdout.write(f"{Colors.CYAN}{Colors.BOLD}{line}{Colors.RESET}\n")
             else:
-                sys.stdout.write(f"    {opt}\n")
-            lines_printed += 1
-            
-        sys.stdout.write("\033[2K")
+                sys.stdout.write(f"{line}\n")
+            lines_printed += screen_rows(line, columns)
+
         if num_options > MAX_VISIBLE:
-            sys.stdout.write(f"{Colors.YELLOW}  -- Mostrando {window_start+1}-{window_start+len(visible_options)} di {num_options} --{Colors.RESET}\n")
+            footer = f"  -- Mostrando {window_start+1}-{window_start+len(visible_options)} di {num_options} --"
+            sys.stdout.write(f"{Colors.YELLOW}{footer}{Colors.RESET}\n")
+            lines_printed += screen_rows(footer, columns)
         else:
             sys.stdout.write("\n")
-        lines_printed += 1
-        
+            lines_printed += 1
+
         sys.stdout.flush()
         
         key = get_key()
@@ -129,7 +161,6 @@ def interactive_menu(options: list, prompt: str = "", cancellable: bool = False,
         elif key == "DOWN":
             selected_idx = (selected_idx + 1) % num_options
         elif key == "ENTER":
-            sys.stdout.write('\033[?25h') # Mostra di nuovo il cursore
             if cancellable and selected_idx == num_options - 1:
                 return -1
             return selected_idx
