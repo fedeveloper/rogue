@@ -172,10 +172,14 @@ def base_camp_forge():
         cat_name = options[idx]
         base_camp_forge_category(cat, cat_name)
 
+def locked_forge_items(cat) -> list:
+    """Oggetti ancora da sbloccare: "unlock_id": null indica un oggetto disponibile fin dall'inizio."""
+    return [i for i in RAW_DATA[cat] if i.get("unlock_id") and i["unlock_id"] not in PROFILE_MANAGER.unlocked_ids]
+
 def base_camp_forge_category(cat, cat_name):
     while True:
         clear_screen()
-        lkd = [i for i in RAW_DATA[cat] if "unlock_id" in i and i["unlock_id"] not in PROFILE_MANAGER.unlocked_ids]
+        lkd = locked_forge_items(cat)
         options = []
         if not lkd: options.append("Tutto sbloccato in questa categoria!")
         else:
@@ -238,17 +242,28 @@ def base_camp_grimoire():
     wait_enter("\nPremi INVIO per tornare indietro...")
 
 
+# Bottega di ogni artigiano: categoria, oggetti sempre in vendita (nome, costo) e chiave del profilo
+NPC_SHOPS = {
+    "speziale": ("consumables", [("Pozione Curativa", 20), ("Antidoto Universale", 30)], "starting_consumables"),
+    "borek": ("weapons", [("Spada Corta", 30), ("Ascia da Battaglia", 30)], "starting_weapons"),
+    "elara": ("armors", [("Tunica del Viaggiatore", 30), ("Corazza di Cuoio", 40)], "starting_armors"),
+    "valerius": ("accessories", [("Occhio del Cacciatore", 50), ("Anello del Berserker", 50)], "starting_accessories"),
+}
+
+def npc_shop_items(item_cat, default_items) -> list:
+    """Oggetti in vendita: quelli di base più ogni oggetto della categoria già sbloccato alla Forgia."""
+    shop_items = list(default_items)
+    for i in RAW_DATA[item_cat]:
+        if i.get("unlock_id") and i["unlock_id"] in PROFILE_MANAGER.unlocked_ids:
+            cost = max(20, i.get("unlock_cost", 300) // 10)
+            shop_items.append((i["name"], cost))
+    return shop_items
+
 def generate_npc_shop(npc_name, title, desc, item_cat, default_items, essence_key):
     while True:
         clear_screen()
-        
-        # Build items list
-        shop_items = list(default_items)
-        for i in RAW_DATA[item_cat]:
-            if "unlock_id" in i and i["unlock_id"] in PROFILE_MANAGER.unlocked_ids:
-                cost = max(20, i.get("unlock_cost", 300) // 10)
-                shop_items.append((i["name"], cost))
-                
+        shop_items = npc_shop_items(item_cat, default_items)
+
         options = []
         for it in shop_items:
             options.append(f"Compra {it[0]} (✨{it[1]})")
@@ -276,16 +291,16 @@ def generate_npc_shop(npc_name, title, desc, item_cat, default_items, essence_ke
             time.sleep(1.5)
 
 def base_camp_apothecary():
-    generate_npc_shop("speziale", "LA TENDA DELLO SPEZIALE", "L'anziano che hai salvato mescola intrugli gorgoglianti.\n'Un piccolo aiuto per la tua prossima discesa? Per te, un prezzo di favore!'", "consumables", [("Pozione Curativa", 20), ("Antidoto Universale", 30)], "starting_consumables")
+    generate_npc_shop("speziale", "LA TENDA DELLO SPEZIALE", "L'anziano che hai salvato mescola intrugli gorgoglianti.\n'Un piccolo aiuto per la tua prossima discesa? Per te, un prezzo di favore!'", *NPC_SHOPS["speziale"])
 
 def base_camp_borek():
-    generate_npc_shop("borek", "L'ARMERIA DI BOREK", "Il vecchio nano sta lucidando un'ascia. 'Vuoi partire ben equipaggiato? Posso farti un prezzo speciale.'", "weapons", [("Spada Corta", 30), ("Ascia da Battaglia", 30)], "starting_weapons")
+    generate_npc_shop("borek", "L'ARMERIA DI BOREK", "Il vecchio nano sta lucidando un'ascia. 'Vuoi partire ben equipaggiato? Posso farti un prezzo speciale.'", *NPC_SHOPS["borek"])
 
 def base_camp_elara():
-    generate_npc_shop("elara", "LA FUCINA DI ELARA", "Elara sta martellando una lastra di metallo rovente. 'Senza una buona armatura sei morto. Che pezzo ti serve?'", "armors", [("Tunica del Viaggiatore", 30), ("Corazza di Cuoio", 40)], "starting_armors")
+    generate_npc_shop("elara", "LA FUCINA DI ELARA", "Elara sta martellando una lastra di metallo rovente. 'Senza una buona armatura sei morto. Che pezzo ti serve?'", *NPC_SHOPS["elara"])
 
 def base_camp_valerius():
-    generate_npc_shop("valerius", "IL LABORATORIO DI VALERIUS", "Valerius lucida una gemma opalescente. 'La magia nei gioielli può fare la differenza tra la vita e la morte...'", "accessories", [("Occhio del Cacciatore", 50), ("Anello del Berserker", 50)], "starting_accessories")
+    generate_npc_shop("valerius", "IL LABORATORIO DI VALERIUS", "Valerius lucida una gemma opalescente. 'La magia nei gioielli può fare la differenza tra la vita e la morte...'", *NPC_SHOPS["valerius"])
 def base_camp():
     while True:
         clear_screen()

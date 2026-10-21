@@ -236,18 +236,22 @@ class Player:
         if trait_id in traits_map: traits_map[trait_id]()
 
     def _load_starting_items(self):
+        # Il valore di vendita usa la stessa scala degli oggetti generati quando i dati non lo indicano
         mapping = [
             ("starting_consumables", "consumables", lambda d: Consumable(consumable_name(d["name"], d["base_heal"], d.get("category", "heal")), d["val_base"], d["base_heal"], d.get("category", "heal"))),
-            ("starting_weapons", "weapons", lambda d: Weapon(d["name"], d["val_base"], d["base_atk"], "Normale", 1, status_inflict=d.get("status_inflict"))),
-            ("starting_armors", "armors", lambda d: Armor(d["name"], d["val_base"], d["base_def"], "Normale", 1)),
-            ("starting_accessories", "accessories", lambda d: Accessory(d["name"], d["val_base"], "Normale", d["bonus_type"], d["bonus_value"], d["desc"]))
+            ("starting_weapons", "weapons", lambda d: Weapon(d["name"], d.get("val_base", d["base_atk"] * 5), d["base_atk"], "Normale", 1, status_inflict=d.get("status_inflict"))),
+            ("starting_armors", "armors", lambda d: Armor(d["name"], d.get("val_base", d["base_def"] * 8), d["base_def"], "Normale", 1)),
+            ("starting_accessories", "accessories", lambda d: Accessory(d["name"], d.get("base_val", d.get("val_base", 0)), d.get("element", "Normale"), d["bonus_type"], d["bonus_value"], d["desc"], d.get("lore", "")))
         ]
         for key, game_data_key, builder in mapping:
-            if key in PROFILE_MANAGER._data:
-                for item_name in PROFILE_MANAGER._data[key]:
-                    item_data = next((x for x in GAME_DATA[game_data_key] if x["name"] == item_name), None)
+            # Svuota subito la lista acquistata: un oggetto difettoso non deve bloccare tutte le partite successive
+            for item_name in PROFILE_MANAGER._data.pop(key, []) or []:
+                item_data = next((x for x in GAME_DATA[game_data_key] if x["name"] == item_name), None)
+                try:
                     if item_data: self.inventory.append(builder(item_data))
-                PROFILE_MANAGER._data[key] = []
+                except (KeyError, TypeError, ValueError) as e:
+                    display_msg(f"{Colors.RED}Impossibile preparare {item_name} ({e}): l'oggetto viene saltato.{Colors.RESET}")
+            PROFILE_MANAGER._data[key] = []
 
     def add_relic(self, relic):
         if len(self.relic_ids) >= self.max_relics:

@@ -201,8 +201,9 @@ class PozioneInfinita(RelicEffect):
 
 class CuoreDrago(RelicEffect):
     def on_equip(self, player):
+        # Gli HP arrivano insieme al massimo: non è una cura, quindi vale anche con il Patto del Sangue
         player.max_hp += 50
-        player.heal(50)
+        player.hp = min(player.max_hp, player.hp + 50)
     def on_unequip(self, player):
         player.max_hp -= 50
         player.hp = min(player.hp, player.max_hp)

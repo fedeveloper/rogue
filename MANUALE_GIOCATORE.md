@@ -1,47 +1,187 @@
 # 📜 Manuale del Giocatore
 
-Benvenuto nel **Labirinto degli Elementi e del Caos**. Ti attendono 30 piani di mostri spietati, trappole, eventi misteriosi e tesori. Preparati a morire, ma ricorda: la morte è solo un nuovo inizio.
+Benvenuto nel **Labirinto degli Elementi e del Caos**. Ti attendono 30 piani di mostri, trappole, eventi e tesori, e in fondo il **DIO ANTICO**. Morirai, e più di una volta: ogni discesa però ti lascia qualcosa, e quella dopo andrai più a fondo.
 
-## 🧭 L'Esplorazione a Bivi
-Ogni Piano del Labirinto è composto da **5 tappe esplorative**. Ad ogni tappa, ti troverai davanti a un bivio (due porte). Potrai vedere in anticipo cosa nasconde ogni porta (es. Combattimento, Falò, Evento). Se sbloccherai il perk "Sesto Senso", potrai persino prevedere quale mostro o quale evento esatto ti attende!
-Alla quinta tappa di ogni piano, affronterai sempre il Boss.
+---
 
-## ⚔️ Combattimento e Oggetti
-Il vantaggio elementale garantisce **+50% di Danni** e **+15% di Precisione**.
-* 🔥 **Fuoco** batte 🌪️ **Vento** | 🌪️ **Vento** batte 🪨 **Terra** | 🪨 **Terra** batte 💧 **Acqua** | 💧 **Acqua** batte 🔥 **Fuoco**.
-* ✨ **Luce** e 🌑 **Tenebra** si distruggono a vicenda.
+## 🎮 Comandi
 
-**Attenzione all'Inventario:** In combattimento, cambiare un'arma, un'armatura o bere una pozione **consumerà il tuo turno**. Pianifica bene le tue mosse!
+- **Frecce ⬆️⬇️** per spostarti nei menu, **Invio** per confermare.
+- **Indietro**, in fondo ai sottomenu, torna alla schermata precedente senza consumare il turno.
+- **Ctrl+C** chiude il gioco in qualsiasi momento.
+- In **Impostazioni** (menu principale) scegli la velocità del testo narrativo: *Lenta*, *Normale*, *Veloce* o *Istantanea*.
 
-## 🌟 Le Reliquie Passive
-Durante la tua run potresti imbatterti in artefatti incredibili, le **Reliquie**. 
-Questi oggetti (trovabili nei Forzieri, donati da Eventi o droppati dai Boss) non si equipaggiano, ma restano attivi nello zaino per tutta la durata della run. Possono curarti a ogni attacco, raddoppiare l'efficacia degli elementi o garantirti scudi invincibili.
+Se colori o emoji non si vedono bene, usa un terminale con codifica UTF-8 (su Windows: *Windows Terminal*, oppure `chcp 65001`).
 
-## 🎭 Stanze Evento ed Evoluzione
-Oltre ai combattimenti, affronterai:
-* **Eventi Narrativi:** Stanze misteriose dove dovrai prendere decisioni drastiche. Potrai scambiare HP per reliquie, sfidare la sorte lanciando monete, o risvegliare mostri d'Elite per puro guadagno. In rare occasioni, potresti incontrare **NPC prigionieri** (come lo Speziale, Borek, Elara e Valerius). Se li salverai, apriranno nuove botteghe al Campo Base.
-* **L'Altare dell'Evoluzione (Forgia):** Quando riposi al Falò, puoi scegliere di sacrificare un'arma (o armatura) in tuo possesso per fonderla con un'altra dello stesso tipo, aumentandone permanentemente le statistiche e il livello. Non gettare mai via l'equipaggiamento extra!
+---
 
-## ☣️ Sopravvivenza Avanzata
-Il Labirinto punisce chi non si prepara. Attento a queste minacce mortali:
-- **Status Alterati**: Mostri come Melme Acide e Vampiri possono infliggerti **Veleno** o **Sanguinamento**, che ridurranno i tuoi HP a ogni turno finché dura lo scontro (a fine combattimento svaniscono). Compra sempre un **Antidoto Universale** dal Mercante per salvarti la vita in casi estremi! Puoi ripagarli con la stessa moneta: alcune armi speciali infliggono Veleno o Sanguinamento ai nemici.
-- **Equipaggiamenti Maledetti**: Potresti trovare armi e armature `[MALEDETTO]`. Sono infinitamente più potenti delle varianti base, ma ti dreneranno HP, ti ruberanno Oro, o ti appesantiranno riducendo la tua Schivata. Se sei ricco, puoi farli purificare visitando un Falò e pagando 100 Oro.
-- **Quest a Catena**: Alcuni eventi ti ricompenseranno con oggetti chiave, come la *Chiave Arrugginita*. Questi non occupano spazio nello zaino ma sbloccheranno finali segreti ed epici tesori in altri eventi che incontrerai più avanti!
+## 🧭 La discesa
 
-## 🏕️ Hub e Patti del Caos
-Se "Scappi" dal labirinto (Opzione 3 al bivio), porterai in salvo l'Oro convertendolo in **Essenza Astrale**. Usala nel Campo Base per sbloccare Classi, Tratti e Perk.
-*Non dimenticare l'Archivio!* Durante le tue esplorazioni sbloccherai passaggi storici nel Campo Base. Raccogliere questi tomi ti garantirà le **Sinergie dell'Archivio**, bonus passivi permanenti per tutte le run future (come +10% Danni ai Boss). Puoi sempre controllare i tuoi bonus attivi aprendo l'Inventario in partita.
-*Hai già vinto il gioco?* Si sbloccheranno i **Patti del Caos**. All'inizio di ogni run potrai attivare maledizioni (come prezzi raddoppiati o nemici più forti) per ricevere massicci moltiplicatori all'Essenza finale guadagnata!
+1. **Scegli l'eroe e il tratto.** Dopo la prima vittoria puoi attivare anche i **Patti del Caos** (vedi sotto).
+2. **Ogni piano ha 5 tappe.** A ogni tappa scegli fra **due porte**. Il tipo di stanza è sempre visibile; con il potenziamento *Sesto Senso* vedi anche quale nemico o evento ti aspetta.
+3. **La quinta tappa è sempre un boss.**
+4. **Superato il piano** recuperi un po' di HP (20 + 5 per piano) e scendi.
+5. In qualsiasi bivio puoi scegliere **Fuga dal Labirinto**: porti a casa tutto l'Oro, convertito in Essenza.
 
-## ⛺ Il Campo Base e gli Artigiani
-Oltre ad esplorare e sbloccare talenti, gli NPC salvati amplieranno l'economia del gioco:
-- **La Forgia Dimensionale** sblocca le sue categorie specifiche solo se hai salvato l'NPC corrispondente (Borek per le armi, Elara per le armature, ecc.).
-- Ogni volta che sblocchi un nuovo oggetto dalla Forgia (armature, consumabili, monili o armi), questo diventerà pre-acquistabile dal rispettivo NPC, permettendoti di iniziare la discesa già equipaggiato con i tuoi oggetti preferiti!
-- Le statistiche del tuo eroe e i dettagli sulle potenti "Risonanze Elementali" sono sempre consultabili in modo gratuito in qualsiasi momento, persino nel bel mezzo di un combattimento, tramite il menu **Statistiche Eroe** dell'inventario!
+Più scendi, più i nemici sono forti: ai primi piani incontri banditi, goblin e scheletri, verso il fondo idre di lava e leviatani. Anche i boss crescono con la profondità, e il DIO ANTICO compare **solo al piano 30**.
 
-## 🎮 Controlli e Accessibilità
-- **Nessun mouse necessario**: Il gioco è controllabile interamente da tastiera (Usa i numeri o i tasti corrispondenti per selezionare le opzioni a schermo).
-- **Menu Intelligenti**: Quando navighi nei sottomenu (Zaino, Negozi, ecc.), l'opzione "Indietro" ti permette di tornare alla schermata precedente senza perdere i progressi del turno.
-- **Velocità del testo**: Dal menu principale, la voce **Impostazioni** permette di scegliere la velocità del testo narrativo (Lenta, Normale, Veloce, Istantanea). La scelta viene salvata nel profilo.
-- **Statistiche reali**: La schermata **Statistiche Eroe** mostra la tua **probabilità reale di colpire** (già comprensiva di arma, reliquie e bonus). In combattimento è calcolata contro il nemico che hai davanti, elemento incluso; fuori dal combattimento contro un nemico neutro senza schivata.
-- **Supporto Globale**: L'architettura è ottimizzata per girare fluidamente sia su Windows che su sistemi macOS e Linux. Se incontri problemi di visualizzazione con i colori o le emoji, assicurati che il tuo terminale supporti la codifica `UTF-8`.
+### Le stanze
+
+| Stanza | Cosa succede |
+|---|---|
+| ⚔️ **Combattimento** | Un nemico adatto al piano. Vincendo ottieni Oro, EXP e a volte un oggetto. |
+| 💰 **Mercante** | Compra armi, armature, monili e pozioni; vendi ciò che non ti serve. Dopo ogni acquisto il resto della merce rincara del 10%. |
+| 🔥 **Falò** | *Riposa* (50% degli HP) **oppure** *affila l'arma* (+3 ATK per 50 Oro): una delle due, poi il falò si spegne. Prima puoi usare l'**Altare dell'Evoluzione** e la **purificazione** quante volte vuoi. |
+| 💎 **Forziere** | Oro, a volte un monile, una pozione o una reliquia. |
+| ⚠️ **Trappola** | Danni (evitabili con la schivata), a volte un oggetto fra gli ingranaggi. |
+| 🎭 **Evento** | Una scelta narrativa: rischi e ricompense. Alcuni eventi nascondono un artigiano prigioniero da liberare. |
+| ❓ **Mistero** | Un nemico potenziato (che lascia un oggetto), uno debilitato, una trappola… o niente. |
+
+---
+
+## ⚔️ Il combattimento
+
+A ogni turno scegli una di queste azioni:
+
+- **Attacca.** La probabilità di colpire dipende dalla tua precisione, dalla schivata del nemico e dagli elementi.
+- **Difenditi.** Dimezza i danni del prossimo colpo, e ogni classe aggiunge un effetto:
+  - **Difesa Aggressiva** (Guerriero, Berserker): restituisci al nemico i danni subiti;
+  - **Concentrazione** (Ladro, Assassino): il colpo successivo è un critico garantito;
+  - **Riparo Magico** (le altre classi): recuperi il 5% degli HP.
+- **Apri l'inventario.** Usare un oggetto o cambiare equipaggiamento **costa il turno**; chiudere lo zaino senza fare nulla no.
+- **Statistiche Eroe.** Gratis, in qualsiasi momento. Mostrano la tua **probabilità reale di colpire** contro il nemico che hai davanti.
+- **Tenta la fuga.** Riesce più spesso se sei agile. Contro i boss è impossibile.
+
+### Gli elementi
+
+| | Più forte contro | Più debole contro |
+|---|---|---|
+| 🔥 Fuoco | 🌪️ Vento | 💧 Acqua |
+| 💧 Acqua | 🔥 Fuoco | 🪨 Terra |
+| 🪨 Terra | 💧 Acqua | 🌪️ Vento |
+| 🌪️ Vento | 🪨 Terra | 🔥 Fuoco |
+| ✨ Luce | 🌑 Tenebra | ✨ Luce |
+| 🌑 Tenebra | ✨ Luce | 🌑 Tenebra |
+
+- Un colpo **Super Efficace** fa il 50% di danni in più e ha +15% di precisione.
+- Un colpo **Poco efficace** fa la metà dei danni e ha −20% di precisione.
+- In difesa conta l'elemento della tua **armatura**: un nemico forte contro di lei ti colpisce più spesso e più forte.
+
+### Le Risonanze
+
+Se **arma e armatura hanno lo stesso elemento** (non Normale), si attiva una Risonanza per tutto lo scontro:
+
+| Risonanza | Effetto |
+|---|---|
+| 🔥 Fuoco | Ogni colpo a segno accumula 5 danni di Ustione, inflitti al nemico a ogni suo turno |
+| 💧 Acqua | L'attacco del nemico è ridotto del 15% |
+| 🪨 Terra | +5 Difesa |
+| 🌪️ Vento | +15% Schivata |
+| ✨ Luce | Ogni colpo a segno ti cura di 3 HP |
+| 🌑 Tenebra | +5 danni a ogni colpo |
+
+La Risonanza si ricalcola subito se cambi equipaggiamento durante lo scontro. Il dilemma di sempre: *meglio l'arma più forte o quella più debole che tiene accesa la Risonanza?*
+
+### Status e maledizioni
+
+- **Veleno e Sanguinamento.** Alcuni nemici li infliggono e fanno danni a ogni turno fino alla fine dello scontro. L'*Antidoto Universale* li toglie subito. Alcune armi speciali (Frusta di Spine, Pugnali del Vento, Falce del Mietitore, Balestra Gnomica, Tridente Oceanico) li infliggono ai nemici.
+- **Equipaggiamento `[MALEDETTO]`.** Ha statistiche molto più alte del normale, ma drena HP, ruba Oro o (le armature) riduce la schivata. Si purifica al Falò per 100 Oro, oppure con l'*Acqua Santa*.
+
+### Reliquie, livelli e fusioni
+
+- **Reliquie.** Artefatti passivi trovati sconfiggendo i boss, nei forzieri o negli eventi. Ne porti al massimo **4**: trovandone una quinta, scegli quale sacrificare.
+- **Livelli.** Con l'EXP sali di livello: +15 HP massimi, cura completa, +2% di precisione e di schivata.
+- **Altare dell'Evoluzione.** Al Falò, fondi due armi (o due armature) dello zaino: la prima assorbe metà delle statistiche della seconda e sale di livello.
+
+---
+
+## 🧬 Gli eroi
+
+| Eroe | Punti di forza | Come si sblocca |
+|---|---|---|
+| ⚔️ **Guerriero** | 120 HP, solido, contrattacca in difesa | Subito |
+| 🗡️ **Ladro** | Schivata alta, 100 Oro iniziali, critico garantito dopo la Concentrazione | Subito |
+| 🔮 **Mago** | Bastone di Fuoco potente e mira eccellente, ma solo 65 HP | Subito |
+| 🛡️ **Paladino** | 180 HP e Risonanza di Luce fin dall'inizio | Maestria Guerriero Lv.5 |
+| 🪓 **Berserker** | L'ascia più forte, nessuna armatura | Impresa *Danza con la Morte* |
+| 🧪 **Alchimista** | 4 pozioni iniziali e bombe di Fuoco | Impresa *Genio Elementale* |
+| 🥷 **Assassino** | 20% di critico innato e 30% di schivata, ma solo 75 HP | Maestria Ladro Lv.5 |
+| 💀 **Negromante** | Risonanza di Tenebra fin dall'inizio | Maestria Mago Lv.5 |
+
+### La Maestria
+
+Ogni eroe ha un albero di **Maestria** a 5 livelli, che sale con l'esperienza accumulata nelle sue discese:
+
+- **Lv.2** — un bonus personale (es. *Imboscata* dell'Assassino: il primo attacco di ogni scontro fa danni doppi).
+- **Lv.3** — sblocca un oggetto (es. la *Bomba Fumogena* per il Ladro).
+- **Lv.4** — un'**Eredità**: un bonus permanente per **tutti** gli eroi.
+- **Lv.5** — sblocca una nuova classe, un tratto o una reliquia.
+
+---
+
+## 🎭 Tratti e Patti del Caos
+
+**Tratti.** Si sceglie un tratto a ogni partenza:
+
+| Tratto | Effetto |
+|---|---|
+| Nessun Tratto | Regole standard |
+| Patto del Sangue | +50 ATK, ma nessuna cura ha effetto |
+| Tocco di Mida | Oro ×3, ma niente EXP dai mostri |
+| Aristocratico | +500 Oro iniziali, ma i nemici non lasciano Oro |
+| Cacciatore Etereo | Il primo attacco nemico di ogni scontro manca sempre, ma −20% Schivata |
+| Titano | +100 HP, ma precisione e schivata dimezzate |
+| Benedetto | Inizi con lo Scudo di Cristallo e resisti al primo colpo letale |
+
+**Patti del Caos.** Dopo la prima vittoria puoi attivare all'inizio di ogni discesa fino a 5 maledizioni. Ognuna aggiunge +25% all'Essenza finale, fino a **×2,25** con tutte e cinque:
+
+| Patto | Effetto |
+|---|---|
+| Durezza | HP dei nemici +30% |
+| Furia | Attacco dei nemici +30% |
+| Carestia | Le pozioni curano la metà |
+| Inflazione | Prezzi del mercante raddoppiati |
+| Labirinto Mortale | Le trappole fanno danni doppi |
+
+---
+
+## 🏕️ Il Campo Base
+
+Tra una discesa e l'altra spendi l'**Essenza Astrale**:
+
+- **🔥 Fuoco dell'Anima** — 14 potenziamenti permanenti. Tra questi:
+  - *Speranza di Luce*: recuperi fino al 15% degli HP massimi a ogni piano;
+  - *Benedizione dell'Altare*: inizi con una reliquia casuale;
+  - *Sesto Senso*: vedi cosa c'è dietro le porte.
+- **⚒️ Forgia Dimensionale** — sblocca armi, armature, monili, consumabili e reliquie, che da quel momento possono comparire nel labirinto. Le categorie diverse dalle reliquie si aprono liberando l'artigiano corrispondente.
+- **🍺 Taverna** — mostra le classi ancora da conquistare.
+- **📜 Grimorio** — imprese completate e livelli di Maestria.
+- **📚 Archivio di Aethelgard** — tre tomi da sbloccare scendendo nel labirinto. Ognuno dà un bonus permanente: più Oro e fuga, danni contro i boss, difesa.
+- **🧑‍🔧 Gli artigiani** — liberali dagli eventi del labirinto:
+  - lo *Speziale* (consumabili);
+  - *Borek* (armi);
+  - *Elara* (armature);
+  - *Valerius* (monili).
+
+  Ognuno vende per poca Essenza un oggetto con cui iniziare la discesa successiva: uno per bottega a ogni partenza.
+
+### Come si guadagna l'Essenza
+
+| Fine della discesa | Essenza |
+|---|---|
+| ☠️ Morte | 20% dell'Oro posseduto |
+| 🏃 Fuga dal labirinto | 100% dell'Oro |
+| 🏆 Vittoria al piano 30 | 100% dell'Oro + 1.000 |
+
+Si aggiungono **50 Essenza per ogni boss** sconfitto, il moltiplicatore dei Patti e, oltre il piano 30 in **Modalità Infinita**, un ulteriore ×1,5.
+
+---
+
+## 💡 Consigli per sopravvivere
+
+- **Guarda gli elementi prima di attaccare.** Un'arma Super Efficace colpisce più spesso e più forte: a volte conviene cambiarla, anche se costa un turno.
+- **Difenditi contro i colpi forti.** Dimezzare un attacco del boss vale spesso più di un tuo colpo.
+- **Non sottovalutare la fuga.** Uscire al momento giusto con tanto Oro rende più Essenza di una morte gloriosa.
+- **Usa l'Altare dell'Evoluzione.** Le armi doppie nello zaino valgono più come materiale da fusione che come merce da vendere.
+- **Libera gli artigiani.** Partire con un'arma o un monile scelto da te cambia l'inizio di ogni discesa.
+- **Prova tutti gli eroi.** Le Eredità di Maestria (Lv.4) rafforzano tutti gli altri.
