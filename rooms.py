@@ -20,6 +20,7 @@ class CombatSession:
         self.is_defending = False
         self.def_type = ""
         self.def_txt = ""
+        self.first_enemy_attack = True
 
         for r in self.player.relic_effects:
             r.on_combat_start(self)
@@ -123,7 +124,7 @@ class CombatSession:
         if self.player.hp == 1: self.player.run_tracker["kill_1_hp_done"] = True
         if self.enemy.is_boss and not self.boss_hit_taken: self.player.run_tracker["no_hit_boss_done"] = True
         
-        g_drop = self.player.calculate_gold_gain(self.enemy.gold_drop)
+        g_drop = 0 if self.player.aristocrat else self.player.calculate_gold_gain(self.enemy.gold_drop)
         
         self.player.gold += g_drop
         print(f"Ottieni {Colors.YELLOW}{g_drop} oro{Colors.RESET}.")
@@ -232,9 +233,9 @@ class CombatSession:
 
     def execute_player_defense(self):
         self.is_defending = True
+        self.player.on_defense_started()
         if self.def_type == "counter":
             print(f"\n{Colors.BLUE}-> Sollevi la guardia, pronto a sfruttare l'attacco nemico!{Colors.RESET}")
-            self.player.on_defense_started()
         elif self.def_type == "focus":
             self.focused_attack = True
             print(f"\n{Colors.BLUE}-> Studi il nemico nell'ombra. Il tuo prossimo attacco sarà devastante!{Colors.RESET}")
@@ -326,8 +327,7 @@ class CombatSession:
         return max(10, min(100, BASE_HIT_CHANCE + self.enemy.base_acc - self.player.get_dodge() + (15 if en_multiplier > 1.0 else -20 if en_multiplier < 1.0 else 0)))
 
     def _calc_enemy_damage(self, en_multiplier: float) -> int:
-        defense = self.player.armor.defense + self.player.temp_def
-        if is_book_unlocked("cronache_ere", PROFILE_MANAGER._data): defense += 5
+        defense = self.player.get_total_def()
         dmg_taken = max(0, int((self.enemy.atk + random.randint(-1, 2)) * en_multiplier) - defense)
         if self.is_defending: dmg_taken //= 2
         for r in self.player.relic_effects: dmg_taken = r.on_take_damage(self, dmg_taken, en_multiplier)
@@ -338,6 +338,9 @@ class CombatSession:
         for r in self.player.relic_effects: en_multiplier = r.modify_multiplier(en_multiplier, is_defense=True)
         
         en_hit_chance = self._calc_enemy_hit_chance(en_multiplier)
+        # Cacciatore Etereo: il primo attacco nemico di ogni scontro manca sempre
+        if self.first_enemy_attack and self.player.ethereal_hunter: en_hit_chance = 0
+        self.first_enemy_attack = False
 
         if random.randint(1, 100) <= en_hit_chance:
             dmg_taken = self._calc_enemy_damage(en_multiplier)
@@ -642,6 +645,7 @@ def campfire_room(player: Player, floor: int):
                         if it1.type == "weapon": it1.atk += max(1, it2.atk // 2)
                         else: it1.defense += max(1, it2.defense // 2)
                         it1.level += 1
+                        if it1.type == "weapon": player.run_tracker["max_fused_weapon_lvl"] = max(player.run_tracker.get("max_fused_weapon_lvl", 0), it1.level)
                         if not it1.name.startswith("Perfetto "): it1.name = f"Perfetto {it1.name}"
                         it1.refresh_display_name()
                         player.run_tracker["fusions"] += 1

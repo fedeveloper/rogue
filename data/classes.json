@@ -146,7 +146,7 @@
         "desc": "Sbloccato portando il Guerriero al Livello Maestria 5.",
         "mastery": {
             "2": {
-                "desc": "Baluardo della Fede: Recuperi 3 HP usando Difesa Aggressiva.",
+                "desc": "Baluardo della Fede: Recuperi 3 HP extra ogni volta che ti difendi.",
                 "type": "personal"
             },
             "3": {
