@@ -65,11 +65,13 @@ Se equipaggi un'**Arma** e un'**Armatura** dello **stesso elemento** (escluso No
 | ✨ Luce | Benedizione | +3 HP curati per ogni colpo a segno |
 | 🌑 Tenebra | Perforazione | +5 danni puri (ignora la difesa nemica) |
 
+La Risonanza viene ricalcolata subito se cambi Arma o Armatura dall'inventario durante uno scontro: puoi attivarla (o perderla) a metà combattimento.
+
 Questo crea dilemmi strategici profondi: *tieni l'arma più forte, o quella più debole che mantiene attiva la Risonanza?*
 
 ### ☣️ Meccaniche Avanzate: Status, Maledizioni e Quest
 Il Labirinto offre sfide dinamiche per metterti alla prova:
-- **Status Alterati**: Alcuni nemici infliggono *Veleno* o *Sanguinamento*, che ti danneggeranno ogni turno. Trova o compra l'*Antidoto Universale* per curarti!
+- **Status Alterati**: Alcuni nemici infliggono *Veleno* o *Sanguinamento*, che ti danneggeranno ogni turno fino alla fine dello scontro. Usa l'*Antidoto Universale* per liberartene subito! Alcune armi speciali (Frusta di Spine, Pugnali del Vento, Falce del Mietitore, Balestra Gnomica, Tridente Oceanico) possono infliggere gli stessi status ai nemici.
 - **Oggetti Maledetti**: Troverai equipaggiamenti con la dicitura `[MALEDETTO]`. Hanno statistiche altissime ma applicano malus pesanti (drenano HP, rubano Oro, riducono la schivata). Puoi purificarli spendendo 100 Oro al Falò.
 - **Eventi a Catena e Oggetti Chiave**: Alcuni Eventi Narrativi ti daranno *Oggetti Chiave* (es. Chiave Arrugginita) che sbloccheranno scelte segrete in eventi successivi.
 

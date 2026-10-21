@@ -16,10 +16,14 @@ class Item:
         el_tag = f" [{get_element_icon(self.element)}]" if self.element != "Normale" and self.element != "" else ""
         self.display_name = f"{cursed_tag}{self.name}{el_tag}"
 
+STATUS_NAMES = {"poison": "Veleno", "bleed": "Sanguinamento"}
+
 class Weapon(Item):
-    def __init__(self, name: str, value: int, atk: int, element: str, level: int, flavor: str = "", is_cursed: bool = False, curse_effect: str = ""):
+    def __init__(self, name: str, value: int, atk: int, element: str, level: int, flavor: str = "", is_cursed: bool = False, curse_effect: str = "", status_inflict: dict = None):
         super().__init__(name, value, "weapon", level, flavor, is_cursed, curse_effect, element)
         self.atk = atk
+        # Stesso formato di status_inflict dei nemici: {"type", "chance", "duration"}
+        self.status_inflict = status_inflict
 
     def get_hit_chance_modifier(self) -> int:
         if "Ascia del Boia" in self.name:
@@ -66,7 +70,7 @@ def generate_weapon(level: int, is_epic: bool = False) -> Weapon:
         
     if element == "Normale": atk = int(atk * 1.2) + 1
     if is_epic: atk = int(atk * 1.5) + 2; name = f"EPICO {name}"
-    return Weapon(f"{name} (lv.{level})", atk * 5, atk, element, level, flavor, is_cursed, curse_effect)
+    return Weapon(f"{name} (lv.{level})", atk * 5, atk, element, level, flavor, is_cursed, curse_effect, w_data.get("status_inflict"))
 
 def generate_armor(level: int, is_epic: bool = False) -> Armor:
     a_data = random.choice(GAME_DATA["armors"])
@@ -196,7 +200,7 @@ class Player:
     def _load_starting_items(self):
         mapping = [
             ("starting_consumables", "consumables", lambda d: Consumable(f"{d['name']} (Cura {d['base_heal']})" if d['base_heal'] > 0 else d['name'], d["val_base"], d["base_heal"], d.get("category", "heal"))),
-            ("starting_weapons", "weapons", lambda d: Weapon(d["name"], d["val_base"], d["base_atk"], "Normale", 1)),
+            ("starting_weapons", "weapons", lambda d: Weapon(d["name"], d["val_base"], d["base_atk"], "Normale", 1, status_inflict=d.get("status_inflict"))),
             ("starting_armors", "armors", lambda d: Armor(d["name"], d["val_base"], d["base_def"], "Normale", 1)),
             ("starting_accessories", "accessories", lambda d: Accessory(d["name"], d["val_base"], "Normale", d["bonus_type"], d["bonus_value"], d["desc"]))
         ]

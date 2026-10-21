@@ -24,7 +24,7 @@ Oltre ai combattimenti, affronterai:
 
 ## ☣️ Sopravvivenza Avanzata
 Il Labirinto punisce chi non si prepara. Attento a queste minacce mortali:
-- **Status Alterati**: Mostri come Melme Acide e Vampiri possono infliggerti **Veleno** o **Sanguinamento**, che ridurranno i tuoi HP a ogni turno. Compra sempre un **Antidoto Universale** dal Mercante per salvarti la vita in casi estremi!
+- **Status Alterati**: Mostri come Melme Acide e Vampiri possono infliggerti **Veleno** o **Sanguinamento**, che ridurranno i tuoi HP a ogni turno finché dura lo scontro (a fine combattimento svaniscono). Compra sempre un **Antidoto Universale** dal Mercante per salvarti la vita in casi estremi! Puoi ripagarli con la stessa moneta: alcune armi speciali infliggono Veleno o Sanguinamento ai nemici.
 - **Equipaggiamenti Maledetti**: Potresti trovare armi e armature `[MALEDETTO]`. Sono infinitamente più potenti delle varianti base, ma ti dreneranno HP, ti ruberanno Oro, o ti appesantiranno riducendo la tua Schivata. Se sei ricco, puoi farli purificare visitando un Falò e pagando 100 Oro.
 - **Quest a Catena**: Alcuni eventi ti ricompenseranno con oggetti chiave, come la *Chiave Arrugginita*. Questi non occupano spazio nello zaino ma sbloccheranno finali segreti ed epici tesori in altri eventi che incontrerai più avanti!
 

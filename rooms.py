@@ -5,7 +5,7 @@ from ui import Colors, delay_print, clear_screen, get_choice, interactive_menu
 from data_manager import GAME_DATA, PROFILE_MANAGER, MULTIPLIERS, get_element_icon
 from archive import is_book_unlocked
 from constants import BASE_HIT_CHANCE, BLOOD_LETTER_CHANCE
-from entities import Player, Enemy, generate_weapon, generate_armor, generate_accessory, generate_potion, get_random_relic
+from entities import STATUS_NAMES, Player, Enemy, generate_weapon, generate_armor, generate_accessory, generate_potion, get_random_relic
 from inventory_menu import show_inventory_menu
 
 class CombatSession:
@@ -49,7 +49,7 @@ class CombatSession:
                 if self.player.statuses[status] <= 0: expired.append(status)
             for e in expired:
                 del self.player.statuses[e]
-                print(f"{Colors.CYAN}L'effetto di {e} è svanito dal tuo corpo.{Colors.RESET}")
+                print(f"{Colors.CYAN}L'effetto di {STATUS_NAMES.get(e, e)} è svanito dal tuo corpo.{Colors.RESET}")
         else:
             expired = []
             for status, duration in self.enemy.statuses.items():
@@ -66,7 +66,7 @@ class CombatSession:
                 if self.enemy.statuses[status] <= 0: expired.append(status)
             for e in expired:
                 del self.enemy.statuses[e]
-                print(f"{Colors.CYAN}L'effetto di {e} su {self.enemy.name} è svanito.{Colors.RESET}")
+                print(f"{Colors.CYAN}L'effetto di {STATUS_NAMES.get(e, e)} su {self.enemy.name} è svanito.{Colors.RESET}")
 
     def start(self):
         if self.enemy.modifier == "normal":
@@ -85,20 +85,43 @@ class CombatSession:
             delay_print(f"\"{letter}\"\n", 0.05)
             self.player.gain_exp(10)
 
-        if self.resonance == "Acqua":
-            self.enemy.atk = max(1, int(self.enemy.atk * 0.85))
-            print(f"{Colors.CYAN}✨ Risonanza d'Acqua! L'attacco del nemico è ridotto del 15%!{Colors.RESET}")
-        if self.resonance == "Vento":
-            self.player.temp_dodge = 15
-            print(f"{Colors.CYAN}✨ Risonanza di Vento! +15% Schivata!{Colors.RESET}")
-        if self.resonance == "Terra":
-            self.player.temp_def = 5
-            print(f"{Colors.CYAN}✨ Risonanza di Terra! +5 Difesa fissa!{Colors.RESET}")
-
+        self._announce_resonance()
         try:
             self._combat_loop()
         finally:
-            self.player.temp_dodge = self.player.temp_def = self.player.temp_acc = 0
+            self._end_combat()
+
+    def _announce_resonance(self):
+        msgs = {
+            "Acqua": "✨ Risonanza d'Acqua! L'attacco del nemico è ridotto del 15%!",
+            "Vento": "✨ Risonanza di Vento! +15% Schivata!",
+            "Terra": "✨ Risonanza di Terra! +5 Difesa fissa!",
+            "Tenebra": "✨ Risonanza di Tenebra! +5 Danni a ogni colpo!",
+            "Luce": "✨ Risonanza di Luce! Ogni colpo a segno ti cura 3 HP!",
+            "Fuoco": "✨ Risonanza di Fuoco! I tuoi colpi accumulano Ustione!",
+        }
+        if self.resonance in msgs: print(f"{Colors.CYAN}{msgs[self.resonance]}{Colors.RESET}")
+
+    def refresh_resonance(self):
+        """Ricalcola la Risonanza dopo un cambio di equipaggiamento durante lo scontro."""
+        new_res = self.player._get_resonance_element()
+        if new_res == self.resonance: return
+        if self.resonance: print(f"{Colors.YELLOW}La Risonanza di {self.resonance} si spegne.{Colors.RESET}")
+        self.resonance = new_res
+        self._announce_resonance()
+        self._apply_resonance_bonuses()
+
+    def _apply_resonance_bonuses(self):
+        self.player.temp_def = 5 if self.resonance == "Terra" else 0
+        self.player.temp_dodge = 15 if self.resonance == "Vento" else 0
+
+    def _end_combat(self):
+        self.player.temp_dodge = self.player.temp_def = self.player.temp_acc = 0
+        # Gli status sono effetti di combattimento: svaniscono a fine scontro
+        if self.player.hp > 0 and self.player.statuses:
+            names = ", ".join(STATUS_NAMES.get(s, s) for s in self.player.statuses)
+            self.player.statuses.clear()
+            print(f"{Colors.CYAN}Lo scontro è finito: {names} svanisce dal tuo corpo.{Colors.RESET}")
 
     def _combat_loop(self):
         while self.player.hp > 0 and self.enemy.hp > 0:
@@ -221,6 +244,12 @@ class CombatSession:
                 print(f"{Colors.YELLOW}✨ Risonanza di Luce: +3 HP!{Colors.RESET}")
             if self.resonance == "Fuoco":
                 self.burn_dmg += 5
+
+            s_data = self.player.weapon.status_inflict
+            if s_data and self.enemy.hp > 0 and random.randint(1, 100) <= s_data.get("chance", 100):
+                s_type = s_data["type"]
+                self.enemy.statuses[s_type] = max(self.enemy.statuses.get(s_type, 0), s_data["duration"])
+                print(f"{Colors.MAGENTA}{self.enemy.name} è afflitto da {STATUS_NAMES.get(s_type, s_type).upper()}!{Colors.RESET}")
             
             self.player.on_attack_landed(dmg_dealt, multiplier)
         else:
@@ -249,8 +278,7 @@ class CombatSession:
 
     def player_turn(self) -> bool:
         # I bonus di Risonanza devono restare attivi per tutto il combattimento
-        self.player.temp_def = 5 if self.resonance == "Terra" else 0
-        self.player.temp_dodge = 15 if self.resonance == "Vento" else 0
+        self._apply_resonance_bonuses()
         self.is_defending = False
 
         self.def_type, self.def_txt = self.player.get_defense_action()
@@ -276,6 +304,7 @@ class CombatSession:
                     
         elif idx == 2:
             action = show_inventory_menu(self.player, in_combat=True)
+            self.refresh_resonance()
             if action == "smoke_bomb":
                 if self.enemy.is_boss:
                     print(f"\n{Colors.RED}-> Il fumo si dirada all'istante: impossibile fuggire dai Boss!{Colors.RESET}")
@@ -328,7 +357,8 @@ class CombatSession:
 
     def _calc_enemy_damage(self, en_multiplier: float) -> int:
         defense = self.player.get_total_def()
-        dmg_taken = max(0, int((self.enemy.atk + random.randint(-1, 2)) * en_multiplier) - defense)
+        en_atk = max(1, int(self.enemy.atk * 0.85)) if self.resonance == "Acqua" else self.enemy.atk
+        dmg_taken = max(0, int((en_atk + random.randint(-1, 2)) * en_multiplier) - defense)
         if self.is_defending: dmg_taken //= 2
         for r in self.player.relic_effects: dmg_taken = r.on_take_damage(self, dmg_taken, en_multiplier)
         return dmg_taken
@@ -360,7 +390,7 @@ class CombatSession:
                     if random.randint(1, 100) <= s_data.get("chance", 100):
                         s_type = s_data["type"]
                         self.player.statuses[s_type] = max(self.player.statuses.get(s_type, 0), s_data["duration"])
-                        print(f"{Colors.MAGENTA}Sei stato afflitto da {s_type.upper()}!{Colors.RESET}")
+                        print(f"{Colors.MAGENTA}Sei stato afflitto da {STATUS_NAMES.get(s_type, s_type).upper()}!{Colors.RESET}")
                 
                 reflect_total = 0
                 if self.player.accessory and self.player.accessory.bonus_type == "reflect": reflect_total += self.player.accessory.bonus_value
