@@ -125,7 +125,8 @@ def update_game_data():
     GAME_DATA.clear()
     GAME_DATA.update({
         "enemies": RAW_DATA["enemies"], "bosses": RAW_DATA["bosses"], "lore": RAW_DATA["lore"], "elements": RAW_DATA["elements"],
-        "meta": RAW_DATA["meta"], "events": RAW_DATA["events"], "relics": RAW_DATA["relics"], "classes": RAW_DATA["classes"],
+        "meta": RAW_DATA["meta"], "events": RAW_DATA["events"], "classes": RAW_DATA["classes"],
+        "relics":[r for r in RAW_DATA["relics"] if r.get("unlock_id") is None or r["unlock_id"] in PROFILE_MANAGER.unlocked_ids],
         "weapons":[w for w in RAW_DATA["weapons"] if w.get("unlock_id") is None or w["unlock_id"] in PROFILE_MANAGER.unlocked_ids],
         "armors":[a for a in RAW_DATA["armors"] if a.get("unlock_id") is None or a["unlock_id"] in PROFILE_MANAGER.unlocked_ids],
         "accessories":[ac for ac in RAW_DATA["accessories"] if ac.get("unlock_id") is None or ac["unlock_id"] in PROFILE_MANAGER.unlocked_ids],

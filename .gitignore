@@ -1,0 +1,6 @@
+# Salvataggio del giocatore (generato automaticamente)
+profile.json
+
+# Python
+__pycache__/
+*.pyc

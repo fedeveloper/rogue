@@ -1,13 +1,14 @@
 import random
+import sys
 import time
 import traceback
 from ui import Colors, clear_screen, delay_print, get_choice, interactive_menu
-from data_manager import PROFILE_MANAGER, GAME_DATA, RAW_DATA, get_element_icon
+from data_manager import PROFILE_MANAGER, GAME_DATA, RAW_DATA, get_element_icon, update_game_data
 from entities import Player, Enemy
 from rooms import combat_room, mystery_room, event_room, vendor_room, campfire_room, treasure_room, trap_room
 from inventory_menu import show_inventory_menu, show_player_stats
 from archive import show_archive
-from constants import RATIO_GOLD_TO_ESSENCE_ON_DEATH, BOSS_ESSENCE_BONUS, XP_PER_FLOOR, XP_PER_BOSS, INFINITE_MODE_THRESHOLD, INFINITE_MODE_ESSENCE_MULTIPLIER
+from constants import RATIO_GOLD_TO_ESSENCE_ON_DEATH, BOSS_ESSENCE_BONUS, XP_PER_FLOOR, XP_PER_BOSS, INFINITE_MODE_THRESHOLD, INFINITE_MODE_ESSENCE_MULTIPLIER, BLIND_FURY_MIN_ATTACKS
 
 def _update_class_mastery(player: Player, floor: int):
     c_id = player.class_id
@@ -189,9 +190,7 @@ def base_camp_forge_category(cat, cat_name):
                 PROFILE_MANAGER.unlocked_ids.append(lkd[idx]["unlock_id"])
                 PROFILE_MANAGER.save()
                 print(f"\n{Colors.GREEN}Sbloccato: {lkd[idx]['name']}!{Colors.RESET}")
-                for c in ["weapons", "armors", "consumables", "accessories", "relics"]: 
-                    if c in GAME_DATA:
-                        GAME_DATA[c] = [x for x in RAW_DATA[c] if x.get("unlock_id") is None or x["unlock_id"] in PROFILE_MANAGER.unlocked_ids]
+                update_game_data()
                 time.sleep(1)
             elif cost == 0:
                 print(f"\n{Colors.RED}Questo oggetto può essere sbloccato solo completando un'Impresa specifica!{Colors.RESET}")
@@ -423,7 +422,7 @@ def play_game(infinite_mode=False):
     while player.hp > 0 and not player.escaped:
         if not infinite_mode and floor > INFINITE_MODE_THRESHOLD:
             clear_screen()
-            print(f"{Colors.YELLOW}{Colors.BOLD}="*50); delay_print("H A I   V I N T O ! ! !"); print("="*50 + Colors.RESET)
+            print(f"{Colors.YELLOW}{Colors.BOLD}" + "="*50); delay_print("H A I   V I N T O ! ! !"); print("="*50 + Colors.RESET)
             PROFILE_MANAGER.won_normal = True; player.essence_gathered += 1000; break
 
         clear_screen()
@@ -434,7 +433,7 @@ def play_game(infinite_mode=False):
             player.heal(sp_lvl)
             print(f"{Colors.GREEN}La Speranza di Luce ti rigenera {sp_lvl} HP. ({player.hp}/{player.max_hp}){Colors.RESET}")
             
-        if player.base_acc < 50: player.run_tracker["blind_fury_done"] = True
+        player.run_tracker["floor_attacks"] = player.run_tracker["floor_hits"] = 0
         
         for step in range(1, 6):
             if player.hp <= 0 or player.escaped: break
@@ -481,6 +480,8 @@ def play_game(infinite_mode=False):
         
         if player.hp > 0 and not player.escaped:
             delay_print(f"\n{Colors.YELLOW}{Colors.BOLD}*** PIANO {floor} SUPERATO! ***{Colors.RESET}", 0.05)
+            attacks, hits = player.run_tracker["floor_attacks"], player.run_tracker["floor_hits"]
+            if attacks >= BLIND_FURY_MIN_ATTACKS and hits * 2 < attacks: player.run_tracker["blind_fury_done"] = True
             heal = 20 + (floor * 5)
             player.heal(heal)
             print(f"Ti riposi prima delle scale. (HP: {player.hp}/{player.max_hp})")
@@ -505,6 +506,9 @@ def main():
             elif idx == 1: base_camp()
             elif idx == 2 and PROFILE_MANAGER.won_normal: play_game(infinite_mode=True)
             else: clear_screen(); print("Arrivederci!"); break
+    except KeyboardInterrupt:
+        sys.stdout.write('\033[?25h')
+        print("\nArrivederci!")
     except Exception as e:
         print(f"\n{Colors.RED}{Colors.BOLD}ERRORE IMPREVISTO! Il gioco è andato in crash:{Colors.RESET}")
         traceback.print_exc()

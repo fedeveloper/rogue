@@ -143,7 +143,7 @@
         {
             "id": "contratto_demoniaco",
             "name": "Contratto Demoniaco",
-            "desc": "Raddoppia i tuoi danni base, ma perdi 5 HP a fine combattimento.",
+            "desc": "Raddoppia i tuoi danni base, ma perdi 5 HP a fine combattimento (il tributo non può ucciderti).",
             "unlock_cost": 1000,
             "unlock_id": "contratto_demoniaco",
             "lore": "Un patto scritto con l'inchiostro del Vuoto. Il potere ha sempre un prezzo finale."

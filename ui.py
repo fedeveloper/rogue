@@ -47,6 +47,7 @@ def get_key() -> str:
         try:
             tty.setraw(sys.stdin.fileno())
             ch = sys.stdin.read(1)
+            if ch == '\x03': raise KeyboardInterrupt
             if ch == '\x1b':
                 ch2 = sys.stdin.read(2)
                 if ch2 == '[A': return "UP"

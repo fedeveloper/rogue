@@ -92,7 +92,7 @@
         },
         {
             "name": "Fiala del Caos",
-            "desc": "Danno esplosivo tra 10 e 100 ignorando la difesa.",
+            "desc": "Effetto casuale su di te (cura totale, ustione non letale, oro, +10 HP Max o nuovo elemento all'arma). In combattimento esplode anche, infliggendo 10-100 danni puri al nemico.",
             "base_heal": 0,
             "val_base": 100,
             "unlock_cost": 0,
