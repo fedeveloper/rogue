@@ -75,7 +75,7 @@ def _use_consumable(player, item, real_idx, in_combat) -> str:
     elif cat == "antidote":
         print(f"{Colors.GREEN}\nBevi l'Antidoto Universale! Tutti gli status alterati svaniscono.{Colors.RESET}")
         if hasattr(player, 'statuses'): player.statuses.clear()
-        actual_heal = player.heal(10)
+        actual_heal = player.heal(item.heal_amount)
         if actual_heal > 0: print(f"{Colors.GREEN}Recuperati {actual_heal} HP.{Colors.RESET}")
         res = "turn_used" if in_combat else ""
     elif cat == "whetstone":
@@ -193,7 +193,7 @@ def show_inventory_menu(player, in_combat=False) -> str:
 def show_player_stats(player, session=None):
     clear_screen()
     print(f"\n{Colors.CYAN}{Colors.BOLD}--- STATISTICHE DELL'EROE ---{Colors.RESET}")
-    print(f"Classe: {Colors.YELLOW}{player.role}{Colors.RESET} | Tratto: {Colors.MAGENTA}{getattr(player, 'trait_name', 'Nessuno')}{Colors.RESET}")
+    print(f"Classe: {Colors.YELLOW}{player.role}{Colors.RESET} | Tratto: {Colors.MAGENTA}{player.trait_name}{Colors.RESET}")
     print(f"❤️  HP: {Colors.GREEN}{player.hp}/{player.max_hp}{Colors.RESET} | 💰 Oro: {Colors.YELLOW}{player.gold}{Colors.RESET}")
     print(f"✨ EXP: {Colors.CYAN}{player.exp}/{player.max_exp}{Colors.RESET} (Livello {player.level})\n")
     

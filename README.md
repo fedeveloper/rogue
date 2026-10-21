@@ -24,7 +24,7 @@ L'obiettivo? **Raggiungere il Piano 30 e sconfiggere il boss finale** — o sfid
 Un sistema a **7 elementi** (Fuoco, Acqua, Terra, Vento, Luce, Tenebra, Normale) governa ogni scontro. I vantaggi e gli svantaggi elementali influenzano danni, precisione e schivata.
 
 ### 🗺️ Mappa a Bivi Strategica
-Ogni piano è composto da 5 stanze. Prima di ogni stanza scegli tra **2 porte** diverse: combattimento, mercante, falò, forziere, trappola, evento narrativo o la temibile *Stanza del Mistero*. La quinta stanza è sempre un **Boss**.
+Ogni piano è composto da 5 stanze. Prima di ogni stanza scegli tra **2 porte** diverse: combattimento, mercante, falò, forziere, trappola, evento narrativo o la temibile *Stanza del Mistero*. La quinta stanza è sempre un **Boss**. Nemici e Boss crescono con la profondità: ai primi piani incontri le creature più deboli, scendendo arrivano le più temibili, e il **DIO ANTICO** ti attende solo al Piano 30.
 
 ### 🧬 8 Classi Giocabili
 

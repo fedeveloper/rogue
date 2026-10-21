@@ -3,7 +3,7 @@ from typing import List, Dict
 from ui import Colors, delay_print, get_choice, clear_screen, display_msg
 from data_manager import GAME_DATA, RAW_DATA, PROFILE_MANAGER, ELEMENTS, MULTIPLIERS, get_element_icon
 from relic_effects import create_relic_effect
-from constants import BASE_HIT_CHANCE, WEAPON_LEVEL_SCALING, ARMOR_LEVEL_SCALING, CURSE_CHANCE, CURSE_STAT_MULTIPLIER
+from constants import BASE_HIT_CHANCE, ENEMY_DEPTH_WINDOW, BOSS_DEPTH_WINDOW, INFINITE_MODE_THRESHOLD, WEAPON_LEVEL_SCALING, ARMOR_LEVEL_SCALING, CURSE_CHANCE, CURSE_STAT_MULTIPLIER
 
 class Item:
     def __init__(self, name: str, value: int, item_type: str, level: int = 1, flavor: str = "", is_cursed: bool = False, curse_effect: str = "", element: str = "Normale"):
@@ -144,6 +144,7 @@ class Player:
         self.hp = self.max_hp
         
         self.trait = GAME_DATA["meta"]["traits"][trait_id]
+        self.trait_name = self.trait["name"]
         self.cursed, self.midas, self.ethereal_hunter, self.benedetto_save = False, False, False, False
         self.aristocrat = False
         self._apply_trait(trait_id)
@@ -359,12 +360,25 @@ class Player:
         else:
             return "recovery", "Riparo Magico (Dimezza danni e Cura 5% HP)"
 
+def pick_enemy_name(floor: int, is_boss: bool, final: bool = False) -> str:
+    """Sceglie un nemico adatto alla profondità: più si scende, più forti sono i candidati."""
+    pool = GAME_DATA["bosses" if is_boss else "enemies"]
+    if final:
+        finals = [n for n, d in pool.items() if d.get("final_boss")]
+        if finals: return random.choice(finals)
+    ranked = sorted((n for n, d in pool.items() if not d.get("final_boss")), key=lambda n: pool[n]["base_hp"] * pool[n]["base_atk"])
+    window = min(len(ranked), BOSS_DEPTH_WINDOW if is_boss else ENEMY_DEPTH_WINDOW)
+    progress = min(1.0, max(0.0, (floor - 1) / (INFINITE_MODE_THRESHOLD - 1)))
+    lo = round(progress * (len(ranked) - 1) - (window - 1) / 2)
+    lo = max(0, min(lo, len(ranked) - window))
+    return random.choice(ranked[lo:lo + window])
+
 class Enemy:
-    def __init__(self, floor: int, is_boss: bool, active_pacts: List[str], modifier: str = "normal"):
+    def __init__(self, floor: int, is_boss: bool, active_pacts: List[str], modifier: str = "normal", final: bool = False):
         self.is_boss = is_boss
         self.modifier = modifier
         category = "bosses" if is_boss else "enemies"
-        self.name = random.choice(list(GAME_DATA[category].keys()))
+        self.name = pick_enemy_name(floor, is_boss, final)
         data = GAME_DATA[category][self.name]
         
         self.element, self.base_acc, self.base_dodge = data["element"], data["base_acc"], data["base_dodge"]

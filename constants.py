@@ -20,6 +20,11 @@ ARMOR_LEVEL_SCALING = 1.2
 CURSE_CHANCE = 0.15
 CURSE_STAT_MULTIPLIER = 1.4
 
+# --- SELEZIONE NEMICI PER PROFONDITÀ ---
+# Quanti nemici/boss (ordinati per forza) possono uscire a una data profondità
+ENEMY_DEPTH_WINDOW = 6
+BOSS_DEPTH_WINDOW = 5
+
 # --- COMBATTIMENTO ---
 BASE_HIT_CHANCE = 85
 

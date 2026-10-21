@@ -373,7 +373,8 @@ def _generate_doors(floor: int, step: int, weights_def: dict, cooldowns_def: dic
         if room_cooldowns[k] > 0: room_cooldowns[k] -= 1
     
     if step == 5:
-        return [{"type": "boss", "enemy": Enemy(floor, True, active_pacts)}]
+        # Il boss finale attende solo all'ultimo piano della discesa standard
+        return [{"type": "boss", "enemy": Enemy(floor, True, active_pacts, final=floor == INFINITE_MODE_THRESHOLD)}]
     
     doors = []
     while True:
@@ -512,7 +513,7 @@ def settings_menu():
         clear_screen()
         options = [f"{labels.get(s, s)}{' [ATTUALE]' if s == PROFILE_MANAGER.text_speed else ''}" for s in speeds]
         prompt = f"{Colors.CYAN}--- IMPOSTAZIONI ---{Colors.RESET}\nVelocità del testo narrativo:"
-        idx = interactive_menu(options, prompt, cancellable=True)
+        idx = interactive_menu(options, prompt, cancellable=True, initial=speeds.index(PROFILE_MANAGER.text_speed))
         if idx == -1: break
         PROFILE_MANAGER.text_speed = speeds[idx]
         PROFILE_MANAGER.save()

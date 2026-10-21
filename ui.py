@@ -68,7 +68,7 @@ def get_key() -> str:
             termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
     return ""
 
-def interactive_menu(options: list, prompt: str = "", cancellable: bool = False) -> int:
+def interactive_menu(options: list, prompt: str = "", cancellable: bool = False, initial: int = 0) -> int:
     """
     Stampa un menu navigabile con le frecce, con supporto allo scrolling per liste lunghe.
     Restituisce l'indice (0-based) dell'opzione selezionata. 
@@ -83,7 +83,7 @@ def interactive_menu(options: list, prompt: str = "", cancellable: bool = False)
     if prompt:
         print(prompt)
         
-    selected_idx = 0
+    selected_idx = initial if 0 <= initial < len(_options) else 0
     num_options = len(_options)
     MAX_VISIBLE = 15
     window_start = 0
