@@ -1,293 +1,320 @@
+<div align="center">
+
 # 🌀 Il Labirinto degli Elementi e del Caos
 
-> Un roguelite testuale in Python con combattimento elementale, meta-progressione profonda e centinaia di build possibili.
+**Un roguelite da terminale in cui ogni discesa è diversa, ogni morte ti rende più forte e ogni elemento conta.**
 
-![Python](https://img.shields.io/badge/Python-3.7%2B-blue?logo=python&logoColor=white)
-![License](https://img.shields.io/badge/Licenza-Uso_Personale-green)
-![Status](https://img.shields.io/badge/Stato-In_Sviluppo_Attivo-orange)
+![Python](https://img.shields.io/badge/Python-3.9%2B-blue?logo=python&logoColor=white)
+![Dipendenze](https://img.shields.io/badge/Dipendenze-nessuna-brightgreen)
+[![Test](https://github.com/fedeveloper/rogue/actions/workflows/tests.yml/badge.svg)](https://github.com/fedeveloper/rogue/actions/workflows/tests.yml)
+![Piattaforme](https://img.shields.io/badge/Windows%20%7C%20macOS%20%7C%20Linux-grey)
+![Licenza](https://img.shields.io/badge/Licenza-Uso_Personale-green)
 
----
-
-## 📖 Panoramica
-
-**Il Labirinto degli Elementi e del Caos** è un gioco di ruolo roguelite da terminale. Ogni partita (detta *run*) ti mette nei panni di un avventuriero che scende sempre più in profondità in un labirinto pieno di mostri, trappole, tesori ed enigmi.
-
-Muori? Perdi quasi tutto. Ma l'**Essenza Astrale** che raccogli persiste tra una partita e l'altra, permettendoti di sbloccare nuove classi, potenziamenti permanenti, reliquie leggendarie e molto altro.
-
-L'obiettivo? **Raggiungere il Piano 30 e sconfiggere il boss finale** — o sfidare la sorte nella **Modalità Infinita**, dove i nemici non hanno fine e le ricompense crescono esponenzialmente.
+</div>
 
 ---
 
-## ✨ Caratteristiche Principali
+Sotto le rovine di Aethelgard si apre un labirinto che cambia forma a ogni passo. Scegli un eroe, un tratto e — se hai il coraggio — un patto con il Caos. Poi scendi: **30 piani** di mostri, trappole, mercanti, falò ed eventi che ti costringono a scegliere. In fondo ti aspetta il **DIO ANTICO**.
 
-### ⚔️ Combattimento Tattico Elementale
-Un sistema a **7 elementi** (Fuoco, Acqua, Terra, Vento, Luce, Tenebra, Normale) governa ogni scontro. I vantaggi e gli svantaggi elementali influenzano danni, precisione e schivata.
+Morirai. Spesso. Ma l'**Essenza Astrale** che riporti indietro resta: con essa sblocchi nuovi eroi, armi leggendarie, reliquie e potenziamenti permanenti. Ogni discesa ti avvicina un po' di più al fondo.
 
-### 🗺️ Mappa a Bivi Strategica
-Ogni piano è composto da 5 stanze. Prima di ogni stanza scegli tra **2 porte** diverse: combattimento, mercante, falò, forziere, trappola, evento narrativo o la temibile *Stanza del Mistero*. La quinta stanza è sempre un **Boss**. Nemici e Boss crescono con la profondità: ai primi piani incontri le creature più deboli, scendendo arrivano le più temibili, e il **DIO ANTICO** ti attende solo al Piano 30.
+```text
+!!! Incontri un GOBLIN [⚪ Normale] !!!
 
-### 🧬 8 Classi Giocabili
+--- ⚔️ IN COMBATTIMENTO ⚔️ ---
+Tu: 120/120 HP | Goblin: 11 HP
+  > Attacca
+    Difesa Aggressiva (Dimezza danni e Contrattacca)
+    Apri Inventario (Usa oggetto = Costa Turno)
+    Statistiche Eroe
+    Tenta la Fuga
+```
 
-| Classe | HP | Stile | Sblocco |
-|---|---|---|---|
-| ⚔️ **Guerriero** | 120 | Tank bilanciato, Contrattacco | Iniziale |
-| 🗡️ **Ladro** | 85 | Schivata alta, Colpo Critico garantito | Iniziale |
-| 🔮 **Mago** | 65 | Danno elementale puro, Rubavita su colpi SE | Iniziale |
-| 🛡️ **Paladino** | 180 | Ultra-tank, Cura in difesa | Maestria Guerriero Lv.5 |
-| 🪓 **Berserker** | 100 | Glass cannon, +50% ATK sotto il 30% HP | Impresa "Danza con la Morte" |
-| 🧪 **Alchimista** | 95 | Pozioni potenziate, danni caotici | Impresa "Genio Elementale" |
-| 🥷 **Assassino** | 75 | Schivata e Critico altissimi, Imboscata al primo colpo | Maestria Ladro Lv.5 |
-| 💀 **Negromante** | 70 | Risonanza di Tenebra iniziale, si cura uccidendo | Maestria Mago Lv.5 |
+## 🚀 Gioca in 30 secondi
 
-Ogni classe ha un **albero di Maestria** a 5 livelli che sblocca bonus personali, consumabili unici, bonus globali (per tutti gli eroi) e perfino nuove classi o reliquie.
+Serve solo **Python 3.9 o superiore**: nessuna libreria da installare.
 
-### 💍 Triplo Slot Equipaggiamento
-- **Arma** — Determina i tuoi danni e il tuo elemento offensivo.
-- **Armatura** — Assorbe i danni e determina il tuo elemento difensivo.
-- **Monile** *(Accessorio)* — Anelli, amuleti e cinture con effetti passivi unici:
-
-| Monile | Effetto |
-|---|---|
-| Anello del Berserker | +15% probabilità di colpo critico |
-| Amuleto del Vampiro | +2 HP rubati per ogni colpo a segno |
-| Cintura di Ferro | +15 HP Massimi |
-| Collana del Vento | +10% Schivata |
-| Occhio del Cacciatore | +15% Precisione |
-| Spallacci a Spilli | Rifletti 3 danni quando vieni colpito |
-
-### ✨ Risonanza Elementale
-Se equipaggi un'**Arma** e un'**Armatura** dello **stesso elemento** (escluso Normale), si attiva una **Risonanza** con bonus potenti per tutta la durata del combattimento:
-
-| Elemento | Risonanza | Effetto |
-|---|---|---|
-| 🔥 Fuoco | Ustione | +5 danni cumulativi per turno per ogni colpo a segno |
-| 💧 Acqua | Flusso | Riduce l'attacco nemico del 15% |
-| 🪨 Terra | Fortezza | +5 Difesa fissa aggiuntiva |
-| 💨 Vento | Raffica | +15% Schivata |
-| ✨ Luce | Benedizione | +3 HP curati per ogni colpo a segno |
-| 🌑 Tenebra | Perforazione | +5 danni puri (ignora la difesa nemica) |
-
-La Risonanza viene ricalcolata subito se cambi Arma o Armatura dall'inventario durante uno scontro: puoi attivarla (o perderla) a metà combattimento.
-
-Questo crea dilemmi strategici profondi: *tieni l'arma più forte, o quella più debole che mantiene attiva la Risonanza?*
-
-### ☣️ Meccaniche Avanzate: Status, Maledizioni e Quest
-Il Labirinto offre sfide dinamiche per metterti alla prova:
-- **Status Alterati**: Alcuni nemici infliggono *Veleno* o *Sanguinamento*, che ti danneggeranno ogni turno fino alla fine dello scontro. Usa l'*Antidoto Universale* per liberartene subito! Alcune armi speciali (Frusta di Spine, Pugnali del Vento, Falce del Mietitore, Balestra Gnomica, Tridente Oceanico) possono infliggere gli stessi status ai nemici.
-- **Oggetti Maledetti**: Troverai equipaggiamenti con la dicitura `[MALEDETTO]`. Hanno statistiche altissime ma applicano malus pesanti (drenano HP, rubano Oro, riducono la schivata). Puoi purificarli spendendo 100 Oro al Falò.
-- **Eventi a Catena e Oggetti Chiave**: Alcuni Eventi Narrativi ti daranno *Oggetti Chiave* (es. Chiave Arrugginita) che sbloccheranno scelte segrete in eventi successivi.
-
-### 🌟 30 Reliquie
-Artefatti passivi che stravolgono le regole del gioco. Alcune sono trovabili sconfiggendo boss, altre vanno sbloccate tramite Essenza o completando Imprese.
-
-<details>
-<summary>📜 Lista completa delle Reliquie (clicca per espandere)</summary>
-
-**Reliquie Base (drop da Boss)**
-| Reliquia | Effetto |
-|---|---|
-| Artiglio Vampirico | +5 HP per ogni attacco a segno |
-| Lente Prismatica | Vantaggi e svantaggi elementali RADDOPPIATI |
-| Scudo di Cristallo | Il primo danno in ogni combattimento è ridotto a 0 |
-| Tasca Dorata | +25% Oro trovato |
-| Idolo della Guerra | +5 ATK permanente |
-| Calice dell'Alchimista | Pozioni curano il 50% in più |
-| Mantello Nebbioso | +15% Schivata |
-| Bussola Perfetta | Fuga riuscita al 100% (non su Boss) |
-| Occhio del Cacciatore | +20% Precisione |
-| Spallacci di Rovo | Rifletti 5 danni quando colpito |
-| Cuore di Troll | +2 HP Max per ogni nemico ucciso |
-| Tomo della Conoscenza | +30% EXP |
-| Idolo dell'Avidità | Oro x2, ma Schivata a 0% |
-| Lama di Sangue | +10 ATK, ma subisci 3 danni per attacco |
-
-**Reliquie Sbloccabili (Essenza)**
-| Reliquia | Costo | Effetto |
-|---|---|---|
-| Corona del Re Folle | ✨1000 | Colpi SE o Critici +50% danni |
-| Anello Vampirico Maggiore | ✨1500 | +2 HP per attacco a segno |
-| Clessidra del Destino | ✨800 | -20% Schivata nemica |
-| Armatura a Spilli | ✨600 | Rifletti 3 danni |
-| Pergamena d'Oro | ✨700 | Cura 2 HP quando ottieni Oro |
-| Campanella degli Spiriti | ✨1200 | 15% di negare un attacco |
-| Pietra di Luna | ✨500 | +50% DEF in Difesa |
-| Contratto Demoniaco | ✨1000 | Danni x2, -5 HP a fine combattimento (non letale) |
-| Pozione Senza Fondo | ✨900 | 25% di non consumare le pozioni |
-| Bussola Dimensionale | ✨1000 | Più Tesori e Misteri sulla mappa |
-
-**Reliquie Sbloccabili (Imprese e Maestria)**
-| Reliquia | Sblocco | Effetto |
-|---|---|---|
-| Cuore di Drago | Impresa "Il Sopravvissuto" | +50 HP Max |
-| Sigillo Elementale | Impresa "Equilibrista" | Annulla debolezza difensiva |
-| Spirito della Spada | Impresa "Lama di Cristallo" | +15 ATK se arma Lv.1 |
-| Maschera Antigas | Impresa "Assaggiatore di Veleni" | Immunità trappole |
-| Teschio di Sangue | Maestria Berserker Lv.5 | +1 HP Max per nemico ucciso |
-| Pietra Filosofale | Maestria Alchimista Lv.5 | 20% chance XP → Oro |
-
-</details>
-
-### 🏕️ Campo Base (Hub di Meta-Progressione)
-Tra una run e l'altra, spendi l'**Essenza Astrale** al Campo Base:
-
-- **🔥 Il Fuoco dell'Anima** — 15 potenziamenti permanenti (HP, Oro, Schivata, Precisione, EXP, Sconti, ecc.), ognuno con più livelli.
-- **⚒️ La Forgia Dimensionale** — Sblocca nuove reliquie, armi e consumabili leggendari.
-- **🍺 La Taverna** — Recluta nuove classi di eroi.
-- **📜 Grimorio e Imprese** — Monitora le tue sfide e i progressi di Maestria.
-- **🔥 Speranza di Luce** (nel Fuoco dell'Anima) — Recuperi il 5% degli HP Max a ogni piano per livello (fino al 15%).
-- **📚 L'Archivio di Aethelgard** — Consulta i tomi di Lore trovati nel gioco. Sbloccare e completare questi tomi ti conferisce delle **Sinergie dell'Archivio**, veri e propri buff passivi permanenti (es. +10% Danni contro i Boss).
-- **🧪 La Tenda dello Speziale** — (Si sblocca salvando l'NPC nel labirinto). Ti permette di spendere piccole somme di Essenza per iniziare la run successiva con utili consumabili, come l'Antidoto Universale.
-
-### 📜 12 Imprese (Achievement)
-Sfide trasversali che sbloccano contenuti nascosti. Alcune si completano in una singola run, altre richiedono progressione cumulativa.
-
-<details>
-<summary>📜 Lista completa delle Imprese (clicca per espandere)</summary>
-
-| Impresa | Obiettivo | Ricompensa |
-|---|---|---|
-| L'Ombra | Fuggi da 10 combattimenti in una run | Perk: Scarpisti |
-| Fabbro Folle | 3 fusioni alla Forgia in una run | Arma: Spadone Infranto |
-| Cannone di Vetro | Sconfiggi un Boss senza subire danni | Armatura: Veste Eterea |
-| Danza con la Morte | Uccidi un nemico a 1 HP | Classe: Berserker |
-| L'Avaro | Esci con 2000+ Oro | Tratto: Aristocratico |
-| Genio Elementale | Fondi un'arma fino a Lv.5 | Classe: Alchimista |
-| Il Sopravvissuto | Piano 10+ senza riposare al falò | Reliquia: Cuore di Drago |
-| Epuratore di Demoni | 10 Boss totali sconfitti | Tratto: Cacciatore Etereo |
-| Mani Bucate | Spendi 2000+ Oro dal mercante in una run | Arma: Zweihander d'Oro |
-| Equilibrista | Finisci con Arma/Armatura di elementi diversi | Reliquia: Sigillo Elementale |
-| Lama di Cristallo | Piano 15 senza cambiare arma iniziale | Reliquia: Spirito della Spada |
-| Furia Cieca | Supera un piano mancando più di metà degli attacchi (min. 6) | Tratto: Titano |
-| Tiratore Scelto | 5 colpi Super Efficaci su un Boss | Consumabile: Filtro Preciso |
-| Assaggiatore di Veleni | Sopravvivi a 1 HP da un danno letale | Reliquia: Maschera Antigas |
-
-</details>
-
-### 🎭 7 Tratti di Partenza
-Modificatori globali che alterano radicalmente lo stile di gioco:
-
-| Tratto | Effetto | Sblocco |
-|---|---|---|
-| Nessun Tratto | Standard | Iniziale |
-| Patto del Sangue | +50 ATK, cure bloccate | 10 morti |
-| Tocco di Mida | No EXP, Oro x3 | 5000 Oro totali |
-| Aristocratico | +500 Oro iniziali | Impresa "L'Avaro" |
-| Cacciatore Etereo | Primo colpo nemico manca, -20% Schivata | Impresa "Epuratore" |
-| Titano | +100 HP, Precisione/Schivata dimezzate | Impresa "Furia Cieca" |
-| Benedetto | Scudo di Cristallo iniziale + resisti 1 colpo letale | Maestria Paladino Lv.5 |
-
-### ☠️ I Patti del Caos (Endgame)
-Una volta completata la prima run da 30 piani, puoi attivare fino a **5 Maledizioni** per moltiplicare le ricompense in Essenza:
-
-| Patto | Effetto | Bonus Essenza |
-|---|---|---|
-| Durezza | HP nemici +30% | +25% |
-| Furia | ATK nemici +30% | +25% |
-| Carestia | Pozioni curano la metà | +25% |
-| Inflazione | Prezzi mercante x2 | +25% |
-| Labirinto Mortale | Trappole danni x2 | +25% |
-
-Attivandoli tutti si raggiunge un moltiplicatore di **2.25x** sull'Essenza guadagnata!
-
-### 🔄 Altre Meccaniche
-- **⚒️ Fusione Equipaggiamento** — Al Falò, sacrifica un'arma o armatura per potenziarne un'altra. L'oggetto sacrificato dona metà dei suoi stats al primo.
-- **9 Eventi Narrativi** — Incontri unici con scelte multiple e conseguenze variabili (Fontana Fatata, Bisca dei Goblin, Altare del Sangue, ecc.).
-- **🔮 Stanza del Mistero** — Esito casuale: nemico potenziato, nemico debilitato, trappola o... niente.
-- **📊 Calcolo Essenza** — Morte = 20% Oro → Essenza. Fuga = 100% Oro → Essenza. +50 per Boss. Patti moltiplicano. Modalità Infinita oltre Piano 30: bonus +50%.
-
----
-
-## 📊 Contenuti in Numeri
-
-| Categoria | Quantità |
-|---|---|
-| Classi giocabili | 6 |
-| Tratti di partenza | 7 |
-| Armi base | 14 |
-| Armature base | 10 |
-| Accessori (Monili) | 6 |
-| Consumabili | 13 |
-| Reliquie | 30 |
-| Nemici comuni | 15 |
-| Boss | 10 |
-| Eventi narrativi | 9 |
-| Imprese/Achievement | 12 |
-| Patti del Caos | 5 |
-| Potenziamenti permanenti | 15 |
-| Elementi | 7 |
-| Risonanze Elementali | 6 |
-
----
-
-## 🚀 Installazione e Avvio
-
-### Requisiti
-- **Python 3.7+** installato sul sistema (Compatibilità nativa garantita su **Windows, macOS e Linux** senza dipendenze esterne come `colorama` o `msvcrt` in via esclusiva)
-- Un terminale con supporto UTF-8 (per le icone emoji)
-
-### Avvio
 ```bash
-# Clona la repository
-git clone https://github.com/tuousername/rogue.git
+git clone https://github.com/fedeveloper/rogue.git
 cd rogue
-
-# (Windows) Abilita UTF-8 nel terminale
-chcp 65001
-
-# Avvia il gioco
 python roguelike.py
 ```
 
-Il file di salvataggio `profile.json` viene generato automaticamente al primo avvio.
+> **Windows:** se le emoji non si vedono bene, esegui prima `chcp 65001` o usa *Windows Terminal*.
 
-### Struttura del Progetto
+Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **Invio** per confermare, **Ctrl+C** per uscire. Il salvataggio (`profile.json`) si crea da solo al primo avvio.
+
+## ✨ Perché giocarci
+
+- 🗺️ **Bivi a ogni passo.** Ogni piano ha 5 tappe: a ognuna scegli fra due porte (combattimento, mercante, falò, forziere, trappola, evento o la *Stanza del Mistero*). L'ultima è sempre un boss, e nemici e boss crescono con la profondità.
+- 🔥 **Combattimento elementale.** Sette elementi, vantaggi e svantaggi che cambiano danni e precisione, e le **Risonanze** quando arma e armatura condividono l'elemento.
+- 🧬 **8 classi** con alberi di Maestria a 5 livelli che sbloccano bonus, oggetti, reliquie e altre classi.
+- 🎭 **7 tratti** e **5 Patti del Caos**: 3,584 combinazioni di partenza diverse.
+- 🌟 **30 reliquie** che piegano le regole: danni raddoppiati, scudi, vampirismo, oro moltiplicato.
+- 🏕️ **Meta-progressione profonda**: potenziamenti permanenti, una Forgia per sbloccare equipaggiamento, artigiani da liberare, un Archivio di lore con bonus, imprese da completare.
+- ♾️ **Modalità Infinita** dopo la prima vittoria, per chi vuole spingersi oltre il piano 30.
+
+## 🧬 Gli eroi
+
+| Classe | HP | Stile | Maestria Lv.2 | Sblocco |
+|---|---|---|---|---|
+| ⚔️ **Guerriero** | 120 | Tank bilanciato, contrattacca quando si difende | Mano Pesante | Iniziale |
+| 🗡️ **Ladro** | 85 | Agile e ricco, critico garantito dopo la Concentrazione | Tasche Nascoste | Iniziale |
+| 🔮 **Mago** | 65 | Arma di Fuoco potente e mira eccellente, ma fragile | Sintonia | Iniziale |
+| 🛡️ **Paladino** | 180 | Ultra-tank con Risonanza di Luce fin dall'inizio | Baluardo della Fede | Maestria Guerriero Lv.5 |
+| 🪓 **Berserker** | 100 | Glass cannon: l'ascia più forte, nessuna armatura | Furia Sanguinaria | Impresa «Danza con la Morte» |
+| 🧪 **Alchimista** | 95 | Quattro pozioni iniziali e bombe di Fuoco | Metabolismo Alterato | Impresa «Genio Elementale» |
+| 🥷 **Assassino** | 75 | 20% di critico innato e schivata altissima, ma fragile | Imboscata | Maestria Ladro Lv.5 |
+| 💀 **Negromante** | 70 | Risonanza di Tenebra fin dall'inizio | Raccolto d'Anime | Maestria Mago Lv.5 |
+
+Ogni classe ha un **albero di Maestria** a 5 livelli. Si sale giocando con quella classe. Il **Lv.4** dà un bonus permanente a *tutti* gli eroi; il **Lv.5** sblocca una classe, un tratto o una reliquia. Assassino e Negromante, per esempio, si conquistano portando al massimo Ladro e Mago.
+
+## 🎭 Tratti e Patti
+
+All'inizio di ogni discesa scegli un **tratto**, che cambia le regole per tutta la partita:
+
+| Tratto | Effetto | Sblocco |
+|---|---|---|
+| **Nessun Tratto** | Gioca con le regole standard. | Iniziale |
+| **Patto del Sangue** | +50 ATK, ma le cure hanno effetto ZERO. | 10 morti |
+| **Tocco di Mida** | Non ottieni EXP dai mostri, ma l'Oro è TRIPLICATO. | 5.000 Oro raccolti in totale |
+| **Aristocratico** | Inizi con 500 Oro, ma i nemici non droppano più Oro. | Impresa «L'Avaro» |
+| **Cacciatore Etereo** | Primo colpo nemico manca sempre al 100%. -20% Schivata totale. | Impresa «Epuratore di Demoni» |
+| **Titano** | +100 HP Max. Precisione e Schivata dimezzate. | Impresa «Furia Cieca» |
+| **Benedetto** | Inizi con una Reliquia difensiva e resisti al primo colpo letale. | Maestria Paladino Lv.5 |
+
+Dopo la prima vittoria si sbloccano i **Patti del Caos**: maledizioni da attivare a piacere, una per una, in cambio di più Essenza. Con tutti e cinque il moltiplicatore arriva a **×2,25**.
+
+| Patto | Effetto | Essenza |
+|---|---|---|
+| **Durezza** | HP di tutti i Nemici +30% | +25% |
+| **Furia** | Attacco di tutti i Nemici +30% | +25% |
+| **Carestia** | Le pozioni curano la metà | +25% |
+| **Inflazione** | I prezzi del Mercante sono Raddoppiati | +25% |
+| **Labirinto Mortale** | Le Trappole infliggono danni Doppi | +25% |
+
+## ⚔️ Il combattimento
+
+A ogni turno puoi **attaccare**, **difenderti** (ogni classe ha la sua difesa: contrattacco, concentrazione o riparo magico), usare un oggetto dallo zaino, consultare le statistiche o **tentare la fuga** (impossibile contro i boss). Le statistiche mostrano la tua **probabilità reale di colpire** contro il nemico che hai davanti.
+
+**Elementi.** Un colpo *Super Efficace* fa il **50% di danni in più** e ha +15% di precisione; uno *Poco efficace* fa metà danni e −20% di precisione.
+
+- 🔥 **Fuoco** batte 🌪️ **Vento** · 💧 **Acqua** batte 🔥 **Fuoco** · 🪨 **Terra** batte 💧 **Acqua** · 🌪️ **Vento** batte 🪨 **Terra**
+- ✨ **Luce** e 🌑 **Tenebra** sono forti l'una contro l'altra e deboli contro sé stesse; ⚪ **Normale** è neutro.
+
+**Risonanze.** Se arma e armatura hanno lo stesso elemento (non Normale), ottieni un bonus per tutto lo scontro. Si ricalcola subito se cambi equipaggiamento a metà combattimento.
+
+| Elemento | Risonanza | Effetto |
+|---|---|---|
+| 💧 Acqua | Flusso | Attacco nemico ridotto del 15% |
+| 🌪️ Vento | Raffica | +15% Schivata in combattimento |
+| 🪨 Terra | Fortezza | +5 Difesa fissa |
+| 🌑 Tenebra | Ombra | +5 Danni fissi ad ogni colpo |
+| ✨ Luce | Benedizione | Cura 3 HP a ogni tuo attacco |
+| 🔥 Fuoco | Ustione | Infliggi 5 danni da Ustione cumulabili per colpo |
+
+**Status.** Alcuni nemici infliggono *Veleno* o *Sanguinamento*, che svaniscono a fine scontro (l'*Antidoto* li toglie subito). Alcune armi speciali li infliggono ai nemici.
+
+**Maledizioni.** Gli oggetti `[MALEDETTO]` hanno statistiche altissime ma drenano HP od Oro, o rallentano. Si purificano al Falò (100 Oro) o con l'*Acqua Santa*.
+
+## 🏕️ Il Campo Base
+
+Fra una discesa e l'altra spendi l'**Essenza Astrale**:
+
+- 🔥 **Il Fuoco dell'Anima** — 14 potenziamenti permanenti: HP, Oro, schivata, precisione, EXP, sconti, la *Speranza di Luce* (fino al 15% degli HP recuperati a ogni piano) e altro.
+- ⚒️ **La Forgia Dimensionale** — sblocca armi, armature, monili, consumabili e reliquie.
+- 🍺 **La Taverna** — le classi da conquistare e come ottenerle.
+- 📜 **Grimorio e Imprese** — le sfide completate e i progressi di Maestria.
+- 📚 **L'Archivio di Aethelgard** — 3 tomi di storia da sbloccare, ognuno con un bonus permanente.
+- 🧑‍🔧 **Gli artigiani** — salva lo *Speziale*, *Borek*, *Elara* e *Valerius* dagli eventi del labirinto: apriranno una bottega dove comprare consumabili, armi, armature e monili con cui iniziare la discesa successiva.
+
+E in **Impostazioni** scegli la velocità del testo: lenta, normale, veloce o istantanea.
+
+## 💰 L'Essenza
+
+| Come finisce la discesa | Essenza ottenuta |
+|---|---|
+| ☠️ Morte | 20% dell'Oro posseduto |
+| 🏃 Fuga dal labirinto | 100% dell'Oro posseduto |
+| 🏆 Vittoria al piano 30 | 100% dell'Oro + 1.000 |
+
+A questo si aggiungono **50 Essenza per ogni boss** sconfitto, il moltiplicatore dei **Patti** e, oltre il piano 30 in Modalità Infinita, un ulteriore **×1,5**.
+
+## 📚 Enciclopedia
+
+<details>
+<summary>🌟 Le 30 reliquie</summary>
+
+Si tengono al massimo 4 reliquie alla volta: trovandone un'altra scegli quale sacrificare.
+
+| Reliquia | Effetto | Come ottenerla |
+|---|---|---|
+| **Artiglio Vampirico** | Ogni tuo attacco a segno ti cura di 5 HP. | Boss, forzieri, eventi |
+| **Lente Prismatica** | Vantaggi e Svantaggi Elementali sono RADDOPPIATI. | Boss, forzieri, eventi |
+| **Scudo di Cristallo** | Il primo danno che subisci in ogni combattimento è ridotto a 0. | Boss, forzieri, eventi |
+| **Tasca Dorata** | Aumenta l'Oro trovato nei forzieri e dai mostri del 25%. | Boss, forzieri, eventi |
+| **Idolo della Guerra** | Aumenta in modo permanente il tuo Attacco Base di +5. | Boss, forzieri, eventi |
+| **Calice dell'Alchimista** | Le pozioni e i consumabili curano il 50% in più. | Boss, forzieri, eventi |
+| **Mantello Nebbioso** | Aumenta passivamente la Schivata del 15%. | Boss, forzieri, eventi |
+| **Bussola Perfetta** | La Fuga riesce sempre al 100% (non funziona sui Boss). | Boss, forzieri, eventi |
+| **Occhio del Cacciatore** | Aumenta la tua Precisione del 20%. | Boss, forzieri, eventi |
+| **Spallacci di Rovo** | Se subisci danno da un attacco, il nemico subisce 5 Danni Puri. | Boss, forzieri, eventi |
+| **Cuore di Troll** | Ottieni +2 HP Massimi ogni volta che uccidi un nemico. | Boss, forzieri, eventi |
+| **Tomo della Conoscenza** | L'Esperienza ottenuta aumenta del 30%. | Boss, forzieri, eventi |
+| **Idolo dell'Avidità** | Tutto l'Oro è RADDOPPIATO, ma non puoi più schivare (Schivata 0%). | Boss, forzieri, eventi |
+| **Lama di Sangue** | Attacco +10, ma subisci 3 Danni ogni volta che decidi di attaccare. | Boss, forzieri, eventi |
+| **Corona del Re Folle** | I colpi Super Efficaci o Critici infliggono il 50% di danni in più. | Forgia (✨1000) |
+| **Anello Vampirico Maggiore** | Recuperi 2 HP extra ad ogni tuo attacco a segno. | Forgia (✨1500) |
+| **Clessidra del Destino** | Riduce del 20% la Schivata di base di tutti i nemici. | Forgia (✨800) |
+| **Armatura a Spilli** | Riflette 3 danni al nemico ogni volta che vieni colpito. | Forgia (✨600) |
+| **Pergamena d'Oro** | Ogni volta che ottieni Oro in combattimento o tesori, recuperi 2 HP. | Forgia (✨700) |
+| **Campanella degli Spiriti** | 15% di probabilità di negare un attacco nemico andato a segno. | Forgia (✨1200) |
+| **Pietra di Luna** | La tua Difesa aumenta del 50% se usi Difesa/Riparo. | Forgia (✨500) |
+| **Contratto Demoniaco** | Raddoppia i tuoi danni base, ma perdi 5 HP a fine combattimento (il tributo non può ucciderti). | Forgia (✨1000) |
+| **Pozione Senza Fondo** | Le pozioni curative hanno il 25% di chance di non consumarsi. | Forgia (✨900) |
+| **Bussola Dimensionale** | Aumenta probabilità di trovare Tesori e Stanze del Mistero. | Forgia (✨1000) |
+| **Cuore di Drago** | +50 HP Max fissi, con i relativi HP subito disponibili. | Impresa «Il Sopravvissuto» |
+| **Sigillo Elementale** | Annulla la debolezza elementale in difesa. | Impresa «Equilibrista» |
+| **Spirito della Spada** | +15 ATK all'arma se il suo livello è 1. | Impresa «Lama di Cristallo» |
+| **Maschera Antigas** | Immunità totale ai danni delle Trappole. | Impresa «Assaggiatore di Veleni» |
+| **Teschio di Sangue** | Ogni nemico sconfitto incrementa i tuoi HP Massimi di 1. | Maestria Berserker Lv.5 |
+| **Pietra Filosofale** | A fine combattimento, 20% di chance di convertire l'XP in Oro sonante. | Maestria Alchimista Lv.5 |
+
+</details>
+
+<details>
+<summary>💍 I 16 monili</summary>
+
+| Monile | Effetto | Come ottenerlo |
+|---|---|---|
+| **Anello del Berserker** | +15% probabilità di infliggere colpo critico | Disponibile da subito |
+| **Amuleto del Vampiro** | Assorbi 2 HP per ogni colpo a segno | Disponibile da subito |
+| **Cintura di Ferro** | +15 HP Massimi | Disponibile da subito |
+| **Collana del Vento** | +10% Schivata | Disponibile da subito |
+| **Occhio del Cacciatore** | +15% Precisione | Disponibile da subito |
+| **Spallacci a Spilli** | Rifletti 3 danni ogni volta che vieni colpito | Disponibile da subito |
+| **Orecchino della Lince** | +10% Precisione | Disponibile da subito |
+| **Bracciale del Titano** | +25 HP Massimi | Forgia (✨300) |
+| **Anello del Re dei Ghiacci** | +12% Schivata | Disponibile da subito |
+| **Amuleto Sanguisuga** | Assorbi 3 HP per ogni colpo a segno | Forgia (✨500) |
+| **Veste di Piume Iridescenti** | +18% Schivata | Forgia (✨400) |
+| **Anello del Ritorsore** | Rifletti 5 danni ogni volta che vieni colpito | Forgia (✨350) |
+| **Corona di Spine** | Rifletti 8 danni ogni volta che vieni colpito | Forgia (✨600) |
+| **Occhio di Falco Assoluto** | +25% Precisione | Forgia (✨300) |
+| **Cuore di Pietra** | +35 HP Massimi | Forgia (✨450) |
+| **Dente di Drago Antico** | +20% probabilità di infliggere colpo critico | Forgia (✨500) |
+
+</details>
+
+<details>
+<summary>🧪 I 14 consumabili</summary>
+
+| Consumabile | Effetto | Come ottenerlo |
+|---|---|---|
+| **Fiala di Sangue** | Cura 15 HP (di più ai piani profondi) | Disponibile da subito |
+| **Pozione Minore** | Cura 25 HP (di più ai piani profondi) | Disponibile da subito |
+| **Decotto alle Erbe** | Cura 35 HP (di più ai piani profondi) | Disponibile da subito |
+| **Pozione Curativa** | Cura 50 HP (di più ai piani profondi) | Disponibile da subito |
+| **Elisir Maggiore** | Cura 80 HP (di più ai piani profondi) | Disponibile da subito |
+| **Lacrima di Fenice** | Cura 150 HP (di più ai piani profondi) | Disponibile da subito |
+| **Elisir degli Dei** | Cura quasi completamente qualsiasi eroe. | Forgia (✨200) |
+| **Pietra per Affilare** | Aumenta +5 ATK all'arma attuale in modo permanente. | Maestria Guerriero Lv.3 |
+| **Bomba Fumogena** | Ti permette di fuggire all'istante da un combattimento. | Maestria Ladro Lv.3 |
+| **Tomo del Caos** | Cambia casualmente l'elemento dell'arma che impugni. | Maestria Mago Lv.3 |
+| **Filtro Preciso** | Conferisce Precisione totale per questo combattimento. | Impresa «Tiratore Scelto» |
+| **Acqua Santa** | Purifica tutte le Maledizioni sull'equipaggiamento indossato. | Maestria Paladino Lv.3 |
+| **Fiala del Caos** | Effetto casuale su di te (cura totale, ustione non letale, oro, +10 HP Max o nuovo elemento all'arma). In combattimento esplode anche, infliggendo 10-100 danni puri al nemico. | Maestria Alchimista Lv.3 |
+| **Antidoto Universale** | Cura tutti gli stati alterati (Veleno, Sanguinamento). | Disponibile da subito |
+
+</details>
+
+<details>
+<summary>🏆 Le 14 imprese</summary>
+
+| Impresa | Obiettivo | Ricompensa |
+|---|---|---|
+| **L'Ombra** | Scappa da 10 combattimenti in una singola run. | Potenziamento: Scarpisti (+20% Fuga) |
+| **Fabbro Folle** | Fondi 3 oggetti alla Forgia in una run. | Sblocco: Spadone Infranto |
+| **Cannone di Vetro** | Sconfiggi un Boss senza subire alcun danno. | Sblocco: Veste Eterea |
+| **Danza con la Morte** | Sconfiggi un nemico avendo esattamente 1 HP rimanente. | Classe: Berserker |
+| **L'Avaro** | Esci dal labirinto con più di 2000 Oro non speso. | Tratto: Aristocratico |
+| **Genio Elementale** | Fondi un'arma fino al Livello 5. | Classe: Alchimista |
+| **Il Sopravvissuto** | Supera il Piano 10 senza MAI usare il riposo al Falò. | Sblocco: Cuore di Drago |
+| **Epuratore di Demoni** | Sconfiggi 10 Boss in totale. | Tratto: Cacciatore Etereo |
+| **Mani Bucate** | Spendi più di 2000 Oro dal Mercante in una singola run. | Sblocco: Zweihander d'Oro |
+| **Equilibrista** | Finisci una run con Arma e Armatura di elementi diversi. | Sblocco: Sigillo Elementale |
+| **Lama di Cristallo** | Arriva al piano 15 senza mai cambiare l'arma iniziale. | Sblocco: Spirito della Spada |
+| **Furia Cieca** | Supera un piano mancando più della metà dei tuoi attacchi (almeno 6 attacchi). | Tratto: Titano |
+| **Tiratore Scelto** | Infliggi 5 colpi Super Efficaci a un Boss. | Sblocco: Filtro Preciso |
+| **Assaggiatore di Veleni** | Sopravvivi a un danno letale rimanendo a 1 HP (es. Benedizione o Fiala del Caos). | Sblocco: Maschera Antigas |
+
+</details>
+
+<details>
+<summary>🎭 Gli eventi narrativi</summary>
+
+15 incontri con scelte e conseguenze: *La Fontana Fatata*, *Il Mendicante Ombra*, *Altare del Sangue*, *La Forgia Abissale*, *La Bisca dei Goblin*, *Il Cavaliere Caduto*, *L'Idolo Corrotto*, *Lo Specchio della Verità*, *L'Oasi Sotterranea*, *Il Cadavere del Saggio*, *La Porta Sigillata*, *Lo Speziale Prigioniero*, *Il Maestro d'Armi Prigioniero*, *L'Armaiola Imprigionata*, *L'Incantatore Intrappolato*. Alcuni consegnano *oggetti chiave* che aprono scelte segrete in eventi successivi; quattro nascondono gli artigiani prigionieri.
+
+</details>
+
+## 📊 In numeri
+
+| Contenuto | Quantità |
+|---|---|
+| Classi giocabili | 8 |
+| Tratti di partenza | 7 |
+| Patti del Caos | 5 |
+| Armi | 24 (8 subito, 16 da sbloccare) |
+| Armature | 10 (7 subito, 3 da sbloccare) |
+| Monili | 16 (8 subito, 8 da sbloccare) |
+| Consumabili | 14 (7 subito, 7 da sbloccare) |
+| Reliquie | 30 (14 subito, 16 da sbloccare) |
+| Nemici comuni | 25 |
+| Boss | 20 |
+| Eventi narrativi | 15 |
+| Imprese | 14 |
+| Tomi dell'Archivio | 3 |
+| Potenziamenti permanenti | 14 |
+| Elementi / Risonanze | 7 / 6 |
+| Combinazioni di partenza (modalità × classe × tratto × patti) | 3584 |
+
+## 🛠️ Per chi sviluppa
+
+Il gioco è **data-driven**: classi, nemici, oggetti, reliquie, eventi, Maestrie, Risonanze e bonus dell'Archivio stanno in `data/*.json` e si bilanciano senza toccare il codice. Usa solo la libreria standard di Python.
+
 ```text
 rogue/
-├── roguelike.py          # Menu principale, loop di gioco, evaluate_run
-├── entities.py           # Classi Player/Enemy, generatori item, applicazione attributi
-├── rooms.py              # Logica stanze, CombatSession (combattimento, falò, eventi)
-├── inventory_menu.py     # Gestione dell'inventario, uso consumabili e stats
-├── relic_effects.py      # Hook ed effetti ad attivazione per le Reliquie
-├── archive.py            # Logica dei tomi e Sinergie dell'Archivio
-├── data_manager.py       # Caricamento JSON, gestione salvataggio profilo
-├── ui.py                 # Utilità cross-platform I/O (colori ANSI nativi, get_key)
-├── constants.py          # Costanti di bilanciamento globale (es. chance drop)
-├── profile.json          # Salvataggio giocatore (generato automaticamente)
-└── data/
-    ├── accessories.json  # Database accessori
-    ├── armors.json       # Database armature
-    ├── classes.json      # Classi e alberi di maestria
-    ├── consumables.json  # Pozioni e consumabili
-    ├── elements.json     # Sistema elementale e moltiplicatori
-    ├── enemies.json      # Nemici comuni e boss
-    ├── events.json       # Eventi narrativi a scelte multiple
-    ├── lore.json         # Testi narrativi ambientali e di atmosfera
-    ├── meta.json         # Tratti, patti, imprese, config stanze e pesi
-    ├── relics.json       # Database reliquie
-    └── weapons.json      # Database armi
+├── roguelike.py       # Menu principale, Campo Base, scelta dell'eroe, ciclo dei piani, fine partita
+├── rooms.py           # Combattimento (CombatSession) e stanze: mercante, falò, forziere, trappola, eventi
+├── entities.py        # Eroe, nemici e oggetti; generazione dell'equipaggiamento
+├── relic_effects.py   # Effetti delle reliquie come hook (on_attack, on_take_damage, ...)
+├── inventory_menu.py  # Zaino, consumabili e schermata delle statistiche
+├── archive.py         # Archivio di Aethelgard e relativi bonus
+├── data_manager.py    # Caricamento dei dati e salvataggio del profilo
+├── ui.py              # Terminale: colori, menu a frecce, output centralizzato
+├── constants.py       # Costanti di bilanciamento
+├── data/              # Tutti i contenuti del gioco in JSON
+└── tests/             # Test automatici (unittest)
 ```
 
----
+```bash
+python -m unittest discover -s tests   # esegue i test, gli stessi della CI
+```
 
-## 🏗️ Architettura
-
-Il gioco segue un'architettura **Data-Driven**:
-- **Dati** (`data/*.json`) — Tutto il contenuto del gioco (classi, nemici, armi, eventi, bilanciamento) è definito in file JSON modificabili senza toccare il codice.
-- **Logica** (`entities.py`, `rooms.py`) — Entità e stanze leggono i dati a runtime e applicano le regole.
-- **Orchestrazione** (`roguelike.py`) — Menu, selezione classi/tratti/patti, loop di esplorazione e valutazione finale della run.
-- **Persistenza** (`data_manager.py`) — Caricamento dati, gestione del profilo e salvataggio automatico.
-
----
+- 📖 [**Manuale del Giocatore**](MANUALE_GIOCATORE.md) — strategie e regole in dettaglio.
+- 🔧 [**Documentazione Tecnica**](DOCUMENTAZIONE_TECNICA.md) — architettura, formato dei dati, formule e come aggiungere contenuti.
+- 📜 [**La Storia**](STORY.md) — il mondo di Aethelgard.
+- 🤖 [**AGENTS.md**](AGENTS.md) — regole per contribuire (anche con assistenti IA): branch e pull request, test, niente dipendenze esterne.
 
 ## 📝 Roadmap
 
-- [x] Nuova classe: **Assassino** (sblocco Maestria Ladro Lv.5)
-- [x] Nuova classe: **Negromante** (sblocco Maestria Mago Lv.5)
-- [ ] Nuovi accessori sbloccabili tramite Imprese e Maestria
-- [ ] Sistema di Rune/Incastoni per la personalizzazione di Armi e Armature
+- [x] Classi **Assassino** e **Negromante**
+- [x] Nemici e boss legati alla profondità
+- [x] Impostazioni (velocità del testo)
+- [ ] Sistema di Rune/Incastoni per armi e armature
 - [ ] Boss con meccaniche speciali (fasi, immunità, pattern)
 - [ ] Nuovi eventi narrativi e bivi ramificati
 
 ---
 
-*Sviluppato con ❤️ e Python.*
+<div align="center"><i>Sviluppato con ❤️ e Python. Buona discesa.</i></div>

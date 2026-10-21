@@ -83,7 +83,7 @@
         },
         {
             "name": "Acqua Santa",
-            "desc": "Cura 50 HP e aumenta temporaneamente Difesa e Schivata.",
+            "desc": "Purifica tutte le Maledizioni sull'equipaggiamento indossato.",
             "base_heal": 50,
             "val_base": 80,
             "unlock_cost": 0,

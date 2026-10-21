@@ -1,205 +1,204 @@
-# Walkthrough: Accessori e Risonanza Elementale
+# 🔧 Documentazione Tecnica
 
-## Panoramica
-Sono stati implementati due nuovi sistemi di personalizzazione delle build:
-
-1. **Slot Monile (Accessori)** — Un terzo slot equipaggiamento con effetti passivi unici.
-2. **Risonanza Elementale** — Bonus potenti quando Arma e Armatura condividono lo stesso elemento.
+Riferimento per chi modifica il gioco: architettura, formato dei dati, formule di combattimento, salvataggio, test e come aggiungere contenuti. Per le regole viste dal giocatore c'è il [Manuale](MANUALE_GIOCATORE.md); per le regole di contribuzione c'è [AGENTS.md](AGENTS.md).
 
 ---
 
-## 1. Slot Monile (Accessori)
+## 1. Principi
 
-### Come funziona
-- Il giocatore ha ora 3 slot: **Arma**, **Armatura**, **Monile**.
-- I Monili si trovano dal Mercante, negli Scrigni, e nelle Trappole.
-- Si equipaggiano dall'inventario come le armi/armature (sostituendo il vecchio).
-- Bonus stat (HP/Dodge/Acc) vengono rimossi correttamente quando si cambia monile.
-
-### 6 Accessori disponibili
-
-| Nome | Effetto | Tipo |
-|---|---|---|
-| Anello del Berserker | +15% probabilità critico | `crit_chance` |
-| Amuleto del Vampiro | +2 HP per colpo a segno | `lifesteal` |
-| Cintura di Ferro | +15 HP Massimi | `max_hp` |
-| Collana del Vento | +10% Schivata | `dodge` |
-| Occhio del Cacciatore | +15% Precisione | `acc` |
-| Spallacci a Spilli | Rifletti 3 danni quando colpito | `reflect` |
-
-### Integrazione nel combattimento
-- **Critico**: Roll aggiuntivo prima del calcolo hit, raddoppia i danni.
-- **Lifesteal**: Cura applicata dopo ogni colpo a segno (si somma a reliquie vampiriche).
-- **Riflesso**: Unificato con la reliquia `armatura_spilli` in un unico `reflect_total`.
-- **Stat passivi** (`max_hp`, `dodge`, `acc`): Applicati all'equipaggiamento, rimossi allo scambio.
+- **Solo libreria standard.** Il gioco gira con Python 3.9+ senza installare nulla (`pyproject.toml` dichiara `dependencies = []`).
+- **Data-driven.** Contenuti e bilanciamento stanno in `data/*.json`; il codice applica regole generiche. Classi, Maestrie, Risonanze, bonus dell'Archivio, nemici, oggetti ed eventi si cambiano senza toccare Python.
+- **Output centralizzato.** I moduli di gioco non chiamano `print` né `input`: passano da `ui.display_msg()` e `ui.wait_enter()`, così l'interfaccia è sostituibile e testabile. Un test lo verifica.
 
 ---
 
-## 2. Risonanza Elementale
+## 2. Moduli
 
-### Come funziona
-Se l'**Arma** e l'**Armatura** equipaggiate hanno lo **stesso elemento** (escluso Normale), si attiva una **Risonanza** con effetti passivi per tutta la durata del combattimento. `CombatSession.refresh_resonance()` la ricalcola dopo ogni uso dell'inventario in combattimento; la riduzione d'attacco dell'Acqua è applicata al momento del calcolo dei danni, senza modificare `enemy.atk`.
-
-### Tabella Risonanze
-
-| Elemento | Effetto | Quando si applica |
-|---|---|---|
-| 🔥 Fuoco | Ustione: +5 danni per turno (cumulativi) | Fine turno nemico |
-| 💧 Acqua | Riduce ATK nemico del 15% | Inizio combattimento |
-| 🪨 Terra | +5 Difesa fissa | Calcolo danni subiti |
-| 💨 Vento | +15% Schivata | Calcolo hit nemico |
-| ✨ Luce | +3 HP per ogni colpo a segno | Dopo danno inflitto |
-| 🌑 Tenebra | +5 danni puri (ignora difesa) | Calcolo danno inflitto |
-
-### Dilemma strategico
-La Risonanza crea una scelta tattica: un'arma con +5 ATK e un elemento diverso, o un'arma leggermente più debole che mantiene attiva la Risonanza di Fuoco?
-
-### Indicatore visivo
-L'inventario mostra `✨ RISONANZA ATTIVA: [elemento]!` quando la sinergia è attiva.
-
----
-
-## File Modificati
-
-| File | Modifica |
+| Modulo | Responsabilità |
 |---|---|
-| `data/accessories.json` | **NUOVO** — Database 6 accessori |
-| `data_manager.py` | Caricamento `accessories` in `RAW_DATA`/`GAME_DATA` |
-| `entities.py` | Classe `Accessory`, `generate_accessory()`, slot player, inventario, `_get_resonance_element()` |
-| `rooms.py` | Drop accessori (mercante/tesori/trappole), bonus combat (crit/lifesteal/reflect), risonanza (6 elementi) |
+| `roguelike.py` | Punto d'ingresso (`main`). Menu principale, Impostazioni, Campo Base (Fuoco dell'Anima, Forgia, Taverna, Grimorio, botteghe), scelta di eroe/tratto/patti, ciclo dei piani (`play_game`), generazione delle porte (`_generate_doors`), fine partita (`evaluate_run`), Maestria e imprese. |
+| `rooms.py` | `CombatSession` (turni, danni, status, Risonanze, fine scontro) e tutte le stanze: mercante, falò, forziere, trappola, mistero, eventi (`_handle_event_action`). |
+| `entities.py` | `Player`, `Enemy`, gli oggetti (`Weapon`, `Armor`, `Accessory`, `Consumable`) e i generatori casuali. Applica tratti, Maestrie, potenziamenti e oggetti iniziali. Sceglie i nemici in base alla profondità (`pick_enemy_name`). |
+| `relic_effects.py` | Una classe per reliquia, con gli hook che le servono; `RELIC_REGISTRY` collega l'id del JSON alla classe. |
+| `inventory_menu.py` | Zaino, uso dei consumabili (`_use_consumable`), equipaggiamento e schermata delle statistiche. |
+| `archive.py` | Tomi dell'Archivio: condizioni di sblocco e bonus (`get_archive_bonus`), letti una volta da `books.json`. |
+| `data_manager.py` | Carica i JSON (`RAW_DATA`), filtra ciò che è sbloccato (`GAME_DATA`, ricalcolato da `update_game_data()`), gestisce il profilo (`PROFILE_MANAGER`). |
+| `ui.py` | Terminale: colori ANSI, lettura dei tasti (Windows e POSIX), menu a frecce (`interactive_menu`), velocità del testo (`delay_print`, `set_text_speed`). |
+| `constants.py` | Costanti di bilanciamento (precisione base, scaling, finestre di profondità, velocità del testo…). |
+
+Dipendenze fra i moduli: `ui` ← `data_manager` ← `archive`/`relic_effects` ← `entities` ← `inventory_menu` ← `rooms` ← `roguelike`. Nessun modulo importa da uno che sta alla sua destra.
 
 ---
 
-## Test
+## 3. I dati (`data/*.json`)
 
-Lo stress test `fuzzer.py` usato all'epoca non fa più parte del repository. I test automatici ora sono in `tests/` e si eseguono con `python -m unittest discover -s tests`.
+Un campo `"unlock_id"` assente o `null` significa **disponibile da subito**. Un valore indica che l'oggetto va sbloccato: alla Forgia se ha `unlock_cost > 0`, altrimenti tramite un'impresa o una Maestria.
 
-# Refactoring di `base_camp` Completato!
-
-Ho completato con successo l'estrazione delle logiche dei sottomenu del campo base.
-
-## Modifiche Effettuate
-
-Nel file `roguelike.py` sono state create quattro nuove funzioni dedicate:
-- `base_camp_fire()`: Gestisce gli acquisti dei Perk con l'Essenza Astrale.
-- `base_camp_forge()`: Gestisce lo sblocco di nuovi oggetti nel database.
-- `base_camp_tavern()`: Gestisce lo sblocco di nuove classi giocabili.
-- `base_camp_grimoire()`: Mostra le Imprese completate e l'esperienza delle classi.
-
-La funzione originale `base_camp()` è stata drasticamente semplificata ed ora si occupa unicamente di mostrare il menu principale e reindirizzare la logica alle nuove funzioni in base all'input del giocatore.
-
-## Risultati dei Test
-- Ho verificato tramite compilatore Python locale che non ci fossero errori di sintassi.
-- Il codice ora è molto più leggibile e aderisce al principio di singola responsabilità (SRP), almeno a livello strutturale del menu. Questo renderà molto più facile in futuro aggiungere nuove funzionalità al campo base (ad esempio, una Stanza dei Trofei o un Mercante Esotico).
-
-# Sistema a Hook/Eventi Implementato
-
-Ho completato la creazione del sistema ad eventi per le reliquie, rimuovendo le dipendenze hardcoded dal resto del motore di gioco.
-
-## Modifiche Effettuate
-
-1. **Creazione di `relic_effects.py`**
-   - Ho creato il nuovo file `relic_effects.py` contenente la classe base `RelicEffect` che definisce i metodi vuoti (hook) per vari momenti di gioco come l'inizio del combattimento (`on_combat_start`), prima e dopo un attacco, quando si riceve un colpo e all'uccisione di un nemico.
-   - Sono state create circa 20 sottoclassi (es. `LamaSangue`, `CaliceAlchimista`, `PietraLuna`) ognuna delle quali estende solo l'hook di cui ha bisogno.
-   - Un dizionario `RELIC_REGISTRY` mappa l'ID testuale della reliquia (dal JSON) alla classe corrispondente.
-
-2. **Aggiornamento di `entities.py` (`Player`)**
-   - Quando il giocatore ottiene una reliquia (`add_relic`), viene ora istanziato il `RelicEffect` corretto e aggiunto a una nuova lista `self.relic_effects`.
-   - L'effetto viene innescato una sola volta con il metodo `on_equip()`.
-   - I calcoli passivi di schivata (`get_dodge`) ed exp (`gain_exp`) scorrono la lista degli effetti per raccogliere i modificatori anziché cercare le stringhe. Lo stesso avviene per le cure e l'uso degli oggetti in `manage_inventory`.
-
-3. **Pulizia in `rooms.py` e `roguelike.py`**
-   - Dalla classe `CombatSession` in `rooms.py` sono stati eliminati più di 20 `if "id_reliquia" in player.relic_ids:`. Adesso, quando il nemico muore, la stanza chiama semplicemente `r.on_enemy_death(self)` per tutte le reliquie del giocatore, e l'effetto della Pietra Filosofale, Teschio di Sangue e così via viene gestito internamente in `relic_effects.py`.
-   - Anche il check passivo della `Bussola Dimensionale` in `roguelike.py` ora avviene tramite l'hook `modify_room_weights`.
-
-## Risultato Finale
-Questo pattern ha trasformato un potenziale "spaghetti code" in un sistema elegante e scalabile. Per creare una nuova reliquia in futuro, non servirà toccare **mai più** `rooms.py` o `entities.py`: basterà definire una classe per il nuovo oggetto in `relic_effects.py` e aggiungerla al file JSON dei dati.
-
-# Implementazione Meccaniche Avanzate: Status, Maledizioni e Quest
-
-Abbiamo aggiunto tre nuovi livelli di profondità al gameplay core, modificando le fondamenta delle classi Entity e del loop di combattimento.
-
-## 1. Effetti di Stato Dinamici (`statuses`)
-- **Dati**: La classe `Player` e `Enemy` in `entities.py` ora includono un dizionario `self.statuses: Dict[str, int] = {}`.
-- **Applicazione**: In `enemies.json`, i nemici possono avere un campo `"status_inflict": {"type": "poison", "chance": 30, "duration": 3}`. In `rooms.py` (`CombatSession.enemy_turn`), questo viene parsato e applicato al giocatore su hit.
-- **Risoluzione**: Un nuovo metodo `process_statuses_and_curses(is_player_turn)` è stato aggiunto in `CombatSession`. Viene chiamato all'inizio di ogni mezzo-turno (giocatore/nemico) e applica danni puri per `poison` (5 danni) e `bleed` (8 danni), decrementando i timer.
-- **Cura**: Aggiunto l'oggetto `"Antidoto Universale"` in `consumables.json`. Usarlo in `inventory_menu.py` chiama `player.statuses.clear()`.
-
-## 2. Oggetti Maledetti (`is_cursed`)
-- **Dati**: Le classi `Weapon`, `Armor` e `Accessory` sono state estese con i flag `is_cursed: bool` e `curse_effect: str`.
-- **Generazione**: Le funzioni `generate_weapon`, `generate_armor`, `generate_accessory` in `entities.py` hanno ora un ~15% di chance di generare oggetti maledetti con stats base molto più alte.
-- **Effetti Malus**:
-  - `hp_drain`: Sottrae 2 HP in `process_statuses_and_curses`.
-# Implementazione Espansione Lore e NPC (B1 e B2)
-
-Il meta-game narrativo è stato integrato profondamente con le meccaniche roguelite, aggiungendo persistenza e vantaggi tattici all'esplorazione.
-
-## 1. Conoscenza è Potere (Sinergie dell'Archivio)
-- **Logica Centrale**: È stata creata la funzione globale `is_book_unlocked(b_id, profile)` all'interno di `archive.py`. Questa funzione verifica a runtime (leggendo le statistiche del `PROFILE` come `max_floor`, `total_bosses` e `won_normal`) se un dato libro della Lore è considerato sbloccato.
-- **Integrazione Meccaniche**:
-  - `Bestiario`: In `rooms.py` (`execute_player_attack`), se `is_book_unlocked("bestiario", PROFILE)` è True, il danno inflitto ai boss viene moltiplicato per `1.1`.
-  - `Diari di Silas`: Aumenta `f_chance` (fuga) di `5` e moltiplica `g_drop` (oro) per `1.05` in `rooms.py`.
-  - `Cronache delle Ere`: Aumenta dinamicamente la difesa di `5` in `rooms.py` (`enemy_turn`).
-- **UI**: Sia `archive.py` (`show_archive`) che `inventory_menu.py` (`show_inventory_menu`) ora importano e utilizzano `is_book_unlocked` per mostrare dinamicamente al giocatore le Sinergie dell'Archivio attive.
-
-## 2. Salvataggio NPC (Lo Speziale)
-- **Nuove Azioni Evento**: In `events.json` sono state inserite le azioni `"unlock_npc_speziale"` e `"unlock_npc_fight"` nell'evento `speziale_prigioniero`.
-- **Modifiche al Profilo**: In `event_room` (`rooms.py`), il successo di queste azioni istanzia e salva `PROFILE["npc_unlocked"]["speziale"] = True`.
-- **Nuovo Hub**: In `roguelike.py` è stata aggiunta la funzione `base_camp_apothecary()`, accessibile tramite una nuova voce di menu di `base_camp()` se il check sull'NPC nel profilo è positivo.
-- **Preparazione Run**: `base_camp_apothecary` permette di aggiungere stringhe (es. "Antidoto Universale") in `PROFILE["starting_consumables"]`. In `entities.py`, durante il `__init__` della classe `Player`, queste stringhe vengono consumate e trasformate in oggetti `Consumable` reali aggiunti all'inventario di partenza, svuotando poi l'array nel profilo.
-
-
----
-
-## 3. Negozi NPC, Forgia e Refactoring UI (Recente)
-
-### Lo Sblocco Dinamico NPC
-Sono state introdotte le botteghe di 4 NPC al Campo Base, salvabili negli eventi:
-- **Speziale** (Consumabili)
-- **Borek** (Armi)
-- **Elara** (Armature)
-- **Valerius** (Monili)
-
-### Sinergia con la Forgia Dimensionale
-La `base_camp_forge` è stata rifattorizzata:
-- Utilizza un sistema a sottomenu per la paginazione, con categorie condizionate agli NPC sbloccati.
-- Quando un pezzo di equipaggiamento viene sbloccato, si inietta immediatamente nell'inventario del corrispondente negozio NPC.
-- Il prezzo pre-run dell'NPC viene calcolato parametricamente come `max(20, unlock_cost // 10)`, garantendo uno scaling progressivo dell'Essenza richiesta in base alla rarità.
-
-### UI ed Esperienza in Combattimento
-- Sottomenu **Statistiche Eroe** ora accessibile e consultabile in combattimento a costo zero (non consuma il turno).
-- Risolto il bug di "sdoppiamento" (screen tearing/duplicazione) post-uso oggetti, forzando `clear_screen()`.
-- Le descrizioni delle Risonanze Elementali (es. +15% Schivata) sono chiaramente indicate nella schermata Statistiche.
-
-# Refactoring Architetturale e Compatibilità Cross-Platform (Recente)
-
-Abbiamo eseguito una profonda pulizia del codice (Priorità Bassa) e risolto bug legati alla piattaforma (Priorità Alta).
-
-## 1. Compatibilità Cross-Platform (`ui.py`)
-- L'input nativo per la selezione dei menu (`get_key`) utilizzava originariamente `msvcrt`, limitando il gioco a sistemi Windows.
-- È stato implementato un fallback cross-platform: su Windows usa `msvcrt`, mentre su sistemi Unix-like (Mac/Linux) sfrutta `sys`, `tty`, e `termios` per leggere i singoli caratteri senza attendere il tasto Invio.
-- Rimossa la dipendenza da `colorama`; ora la gestione dei colori ANSI è nativa.
-
-## 2. Refactoring UI e Pattern "Indietro"
-- La funzione `interactive_menu` in `ui.py` è stata estesa con il parametro `cancellable=True`. 
-- Se attivo, aggiunge automaticamente l'opzione "[ Indietro ]" alla lista e restituisce `-1` se selezionata, eliminando la necessità di incollare l'opzione "Indietro" e gestire indici variabili in ogni menu in `roguelike.py` e `rooms.py`.
-
-## 3. Modularizzazione del Codice (Refactoring)
-Il codice è stato alleggerito estraendo logiche complesse in funzioni di helper più gestibili e testabili:
-- **`entities.py`**: Il costruttore di `Player` è stato semplificato estraendo la logica di partenza (`_load_starting_items`) e l'applicazione dei Tratti in un dizionario dispatch.
-- **`inventory_menu.py`**: La funzione `show_inventory_menu` è stata alleggerita delegando l'uso specifico dei consumabili al nuovo helper `_use_consumable`.
-- **`rooms.py`**: I calcoli di combattimento (precisione e danni per eroe e nemico) in `CombatSession` sono ora isolati in helper dedicati (`_calc_hit_chance`, `_calc_base_damage`, ecc.). Inoltre, le numerose scelte dell'evento narrativo in `event_room` sono state disaccoppiate nella funzione `_handle_event_action`.
-- **`roguelike.py`**: I lunghi blocchi del loop di fine run e inizio partita sono stati estratti in funzioni semanticamente chiare come `_update_class_mastery`, `_check_feats`, `_hero_selection` e `_generate_doors`.
-
-# Bonus definiti nei dati e output centralizzato
-
-I bonus che prima erano scritti a mano nel codice ora si leggono dai file in `data/`, quindi si bilanciano senza toccare Python:
-
-| Dove | Campo | Esempio |
+| File | Contenuto | Campi principali |
 |---|---|---|
-| `classes.json` → `mastery["2"]` | `effect`: effetto personale della Maestria, controllato con `Player.has_mastery_effect()` | `"effect": "thief_potion_save"` |
-| `classes.json` → `mastery["4"]` | `bonus`: bonus globale per tutti gli eroi (`def`, `dodge`, `exp`, `max_hp`, `weapon_atk`, `acc`, `crit`, `lifesteal`) | `"bonus": {"stat": "def", "value": 5}` |
-| `elements.json` → `resonance` | `value`, `desc`, `announce` di ogni Risonanza | `"Vento": {"value": 15, ...}` |
-| `books.json` → ogni tomo | `unlock` (condizione), `bonus` (`gold_pct`, `escape`, `boss_dmg_pct`, `def`), `bonus_desc` | `"unlock": {"type": "max_floor", "value": 5}` |
+| `classes.json` | Le classi, per id (`"1"`…`"8"`) | `role`, `max_hp`, `gold`, `acc`, `dodge`, `crit` (opz.), `weapon`/`armor` iniziali (`name`, `value`, `atk`/`def`, `element`), `potions`, `unlocked_by_default`, `mastery` |
+| `enemies.json` | `enemies` e `bosses`, per nome | `element`, `base_hp`, `base_atk`, `base_dodge`, `base_acc`, `title`/`lore` (boss), `status_inflict` (opz.), `final_boss` (solo DIO ANTICO) |
+| `weapons.json` | Armi | `name`, `base_atk`, `val_base` (opz.), `status_inflict` (opz.), `unlock_id`, `unlock_cost`, `desc`, `flavor` |
+| `armors.json` | Armature | `name`, `base_def`, `unlock_id`, `unlock_cost`, `desc`, `flavor` |
+| `accessories.json` | Monili | `name`, `bonus_type` (`crit_chance`, `lifesteal`, `max_hp`, `dodge`, `acc`, `reflect`), `bonus_value`, `base_val`, `desc`, `lore`, `unlock_id`, `unlock_cost` |
+| `consumables.json` | Consumabili | `name`, `category` (`heal`, `antidote`, `smoke_bomb`, `chaos_tome`, `chaos_vial`, `holy_water`, `whetstone`, `accuracy_potion`), `base_heal`, `val_base`, `desc`, `unlock_id` |
+| `relics.json` | Reliquie | `id`, `name`, `desc`, `lore`, `unlock_id`, `unlock_cost` |
+| `elements.json` | Sistema elementale | `list`, `icons`, `multipliers[attaccante][difensore]`, `resonance[elemento] = {value, desc, announce}` |
+| `books.json` | Tomi dell'Archivio | `title`, `unlock_condition` (testo), `unlock = {type: max_floor\|total_bosses\|won_normal, value}`, `bonus = {gold_pct, escape, boss_dmg_pct, def}`, `bonus_desc`, `chapters` |
+| `meta.json` | Regole di contorno | `traits`, `pacts` (`bonus` di Essenza), `feats` (`target`, `reward_type`, `reward_id`), `mastery_xp_requirements`, `rooms.weights`/`rooms.cooldowns` |
+| `events.json` | Eventi narrativi | `title`, `text`, `choices[]` con `text`, `action`, `msg`, `msg_alt`, `requires_item`, `item_id`, `reward_*` |
+| `lore.json` | Frasi d'atmosfera | `combat`, `boss`, `vendor`, `treasure`, `trap`, `campfire`, `letters`, `mystery` |
 
-L'output del gioco passa da `ui.display_msg()` e le conferme "Premi INVIO" da `ui.wait_enter()`: i moduli di gioco non chiamano più `print`/`input` direttamente (un test lo verifica). I menu a frecce di `ui.interactive_menu()` contano le righe che vanno a capo, così il ridisegno resta pulito anche in terminali stretti.
+### Maestrie
+
+`classes.json → mastery` ha i livelli `"2"`…`"5"`. Ogni livello ha un `type`:
+
+| `type` | Livello | Campi | Effetto |
+|---|---|---|---|
+| `personal` | 2 | `effect` | Effetto della sola classe, controllato con `Player.has_mastery_effect(effect)` |
+| `unlock` | 3, 5 | `id` | Aggiunge `id` a `unlocked_ids` (oggetto, reliquia, tratto) |
+| `global` | 4 | `bonus = {stat, value}` | Bonus a **tutti** gli eroi. Valori di `stat`: `def`, `dodge`, `exp`, `max_hp`, `weapon_atk`, `acc`, `crit`, `lifesteal` |
+| `class` | 5 | `id` | Sblocca la classe con quell'id |
+
+Gli sblocchi dei livelli già raggiunti vengono riconcessi all'avvio (`_grant_retroactive_mastery_unlocks`). Così contenuti aggiunti più tardi arrivano anche a chi aveva già il livello.
+
+---
+
+## 4. Il ciclo di gioco
+
+```text
+main() ─▶ menu principale ─▶ play_game(infinite_mode)
+                                │
+          _hero_selection() ────┤  classe, tratto, patti
+          Player(...)           │
+                                ▼
+          per ogni piano: rigenerazione (Speranza di Luce)
+            per step 1..5: _generate_doors() ─▶ scelta ─▶ stanza
+            (step 5 = boss; al piano 30 il boss è final_boss)
+          piano superato: +20+5·piano HP, max_floor aggiornato
+                                ▼
+          evaluate_run(): Essenza, Maestria, imprese, salvataggio
+```
+
+**Porte.** Ogni tipo di stanza ha un peso (`rooms.weights`) e un tempo di ricarica in passi (`rooms.cooldowns`). I pesi vengono ricalcolati a ogni bivio: ci passano le reliquie con `modify_room_weights`. Due porte dello stesso tipo, o una trappola accanto a un forziere o a un mercante, non escono mai insieme.
+
+**Nemici per profondità.** `pick_enemy_name()` ordina i candidati per `base_hp × base_atk` e sceglie a caso in una finestra che sale con `(piano − 1) / 29`. La finestra è di `ENEMY_DEPTH_WINDOW` = 6 nemici e di `BOSS_DEPTH_WINDOW` = 5 boss. I boss con `final_boss` sono esclusi da questa scelta.
+
+**Statistiche dei nemici.** Partendo dai valori base, con `l = piano − 1`:
+
+| | HP | ATK | Oro | EXP |
+|---|---|---|---|---|
+| Nemico | base + 5·l ± 5 | base + l + (0..1) | max(5, 5 + 3,5·piano) | 30 + 10·piano |
+| Boss | base + 8·l + (0..10) | base + 2,5·l + (0..2) | 50 + 15·piano | 150 + 20·piano |
+
+Poi si applicano, in ordine: ×1,2 dal piano 10; ×1,25 dal piano 20; ×1,4 (potenziato) o ×0,6 (debilitato) nella Stanza del Mistero; ×1,3 agli HP con *Durezza* e ×1,3 all'ATK con *Furia*.
+
+---
+
+## 5. Formule di combattimento
+
+**Precisione dell'eroe** (`Player.get_hit_chance`):
+
+```text
+85 + precisione + bonus temporanei − schivata nemico
+   + 15 se Super Efficace / − 20 se Poco efficace
+   + modificatore dell'arma + bonus delle reliquie        → limitata fra 10 e 100
+```
+
+**Danni dell'eroe**, in quest'ordine:
+1. `(ATK arma + ATK reliquie ± caso) × moltiplicatore elementale`;
+2. effetto dell'arma (es. il critico dell'Ascia del Boia);
+3. +bonus dell'Archivio contro i boss;
+4. critico (classe + monile, ×2);
+5. *Imboscata* (×2);
+6. se il colpo va a segno: moltiplicatore di classe, hook `on_attack` delle reliquie, +Tenebra.
+
+**Precisione del nemico**: `85 + precisione nemico − schivata eroe ± elemento`, limitata fra 10 e 100. Il primo attacco di ogni scontro manca sempre con il *Cacciatore Etereo*.
+
+**Danni subiti**:
+1. `max(0, (ATK nemico ridotto dall'Acqua ± caso) × elemento − difesa)`, con la difesa che somma armatura, Terra, Eredità e Archivio;
+2. dimezzati se ti stai difendendo;
+3. modificati dagli hook `on_take_damage` delle reliquie (scudi, riflessi…).
+
+**Fuga**: `20 + schivata − schivata nemico + 20 (Scarpisti) + bonus dell'Archivio`, limitata fra 10 e 90; con la *Bussola Perfetta* è 100. Impossibile dai boss.
+
+**Elementi**: `elements.json → multipliers`; 1,5 Super Efficace, 0,5 Poco efficace, 1 altrimenti. Le reliquie possono modificarli con `modify_multiplier`.
+
+**Livello dell'eroe**: soglia iniziale 100 EXP, ×1,5 a ogni livello; a ogni livello +15 HP massimi, cura completa, +2 precisione e +2 schivata.
+
+---
+
+## 6. Reliquie
+
+Ogni reliquia è una sottoclasse di `RelicEffect` che ridefinisce solo gli hook che le servono:
+
+| Hook | Quando |
+|---|---|
+| `on_equip` / `on_unequip` | Quando la reliquia entra o esce (anche sacrificandola per farne posto a un'altra) |
+| `on_combat_start` | All'inizio di ogni scontro |
+| `on_before_attack` | Prima di attaccare; restituire `False` annulla l'attacco |
+| `on_attack(session, dmg, mult, testo)` | Su un colpo a segno, restituisce `(danni, testo)` |
+| `on_attack_landed` | Dopo un colpo a segno |
+| `on_take_damage(session, dmg, mult)` | Prima di subire danni, restituisce i danni |
+| `on_enemy_death` | Alla morte del nemico, prima dell'EXP |
+| `on_gold_gain` / `on_heal` | Modificano oro e cure |
+| `on_item_use` | Restituire `False` evita di consumare l'oggetto |
+| `get_dodge_modifier` / `get_acc_modifier` / `get_exp_modifier` / `get_escape_modifier` | Modificatori passivi |
+| `modify_multiplier(mult, is_defense)` / `modify_trap_damage` / `modify_room_weights` | Elementi, trappole e generazione delle stanze |
+
+---
+
+## 7. Il profilo (`profile.json`)
+
+Il salvataggio si crea al primo avvio e **non va committato** (è in `.gitignore`). La scrittura è atomica: file temporaneo e poi `os.replace`. Se il file è illeggibile viene messo da parte come `profile.json.corrotto` e si riparte da un profilo nuovo. Al caricamento le chiavi mancanti vengono aggiunte con i valori predefiniti.
+
+| Chiave | Contenuto |
+|---|---|
+| `essence`, `max_floor`, `won_normal` | Essenza, piano più profondo raggiunto, vittoria standard ottenuta (sblocca Patti e Modalità Infinita) |
+| `unlocked_ids` | Tutti gli sblocchi: oggetti, reliquie, classi (per id), tratti |
+| `class_xp`, `class_lvl` | Esperienza e livello di Maestria per classe |
+| `stats` | `total_deaths`, `total_gold`, `total_bosses` |
+| `completed_feats` | Imprese completate |
+| `perks` | Livelli dei potenziamenti del Fuoco dell'Anima |
+| `npc_unlocked` | Artigiani liberati |
+| `starting_consumables` / `_weapons` / `_armors` / `_accessories` | Oggetti comprati nelle botteghe per la prossima discesa. Vengono svuotati all'inizio della partita, anche se un oggetto non si può costruire, così un dato difettoso non blocca le partite successive |
+| `settings.text_speed` | `lenta`, `normale`, `veloce`, `istantanea` |
+
+---
+
+## 8. Aggiungere contenuti
+
+- **Un'arma, un'armatura, un monile o un consumabile.** Aggiungi l'oggetto al JSON. Per renderlo sbloccabile alla Forgia dagli un `unlock_id` e un `unlock_cost`; con `unlock_cost: 0` lo si ottiene solo da un'impresa o da una Maestria che ne citi l'`unlock_id`. Una volta sbloccato compare anche nella bottega dell'artigiano.
+- **Una reliquia.** Aggiungila a `relics.json`, scrivi la sua classe in `relic_effects.py` e registrala in `RELIC_REGISTRY`: un test controlla che dati e registro coincidano.
+- **Un nemico o un boss.** Basta `enemies.json`: la sua forza (`base_hp × base_atk`) decide a che profondità compare.
+- **Una classe.** Aggiungila a `classes.json` con le sue Maestrie e rendila sbloccabile da un'impresa o da una Maestria di tipo `class`. Gli effetti personali nuovi vanno controllati nel codice con `has_mastery_effect`.
+- **Un evento.** Aggiungilo a `events.json`. Le azioni esistenti sono in `_handle_event_action` (`rooms.py`); un'azione nuova va aggiunta lì.
+- **Una Risonanza o un tomo dell'Archivio.** Modifica `elements.json → resonance` o `books.json`.
+
+Dopo ogni modifica alla logica o ai dati aggiungi o aggiorna i test (vedi `AGENTS.md`).
+
+---
+
+## 9. Test
+
+```bash
+python -m unittest discover -s tests
+```
+
+La CI (`.github/workflows/tests.yml`) li esegue su Python 3.9 e sull'ultima 3.x; su ogni pull request gira anche [rsp](https://github.com/fedeveloper/rsp). I test non salvano mai il profilo: lo modificano in memoria e lo ripristinano.
+
+| File | Cosa copre |
+|---|---|
+| `test_data.py` | Coerenza dei JSON |
+| `test_entities.py` | Generazione di oggetti, eroi, nemici; reliquie registrate |
+| `test_mechanics.py` | Tratti, patti, Maestrie, ricompense di fine partita, profilo corrotto |
+| `test_combat_design.py` | Risonanza dinamica, status a fine scontro, armi con status |
+| `test_polish.py` | Messaggi di combattimento, Falò, Fuoco dell'Anima, limite di fuga |
+| `test_features.py` | Velocità del testo, Speranza di Luce, Assassino e Negromante, probabilità di colpire |
+| `test_depth.py` | Nemici e boss per profondità, boss finale, tratto e antidoto mostrati |
+| `test_refactor.py` | Ciclo del turno, ridisegno dei menu, bonus nei dati, output tramite `ui`, etichette dei consumabili |
+| `test_shops.py` | Botteghe degli artigiani, elenco della Forgia, Cuore di Drago |
+
+Oltre ai test automatici il gioco è stato provato al terminale vero, avviandolo in un pty e inviandogli tasti, con un profilo che sblocca tutto:
+- tutte le combinazioni del menu pre-partita, provate nel banco di prova automatico;
+- 112 partite al terminale, che coprono ogni classe e ogni tratto in entrambe le modalità e tutte le 32 combinazioni di Patti.

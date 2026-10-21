@@ -167,7 +167,7 @@
         {
             "id": "cuore_drago",
             "name": "Cuore di Drago",
-            "desc": "+50 HP Max fissi.",
+            "desc": "+50 HP Max fissi, con i relativi HP subito disponibili.",
             "unlock_id": "cuore_drago",
             "lore": "Il cuore cristallizzato di un guardiano dell'Oceano di Memoria."
         },
@@ -188,7 +188,7 @@
         {
             "id": "maschera_antigas",
             "name": "Maschera Antigas",
-            "desc": "Immunità totale alle Trappole e danni autoinflitti.",
+            "desc": "Immunità totale ai danni delle Trappole.",
             "unlock_id": "maschera_antigas",
             "lore": "Creata per gli operai delle Miniere della Testardaggine per resistere all'aria corrotta."
         },
