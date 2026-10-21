@@ -38,7 +38,7 @@ Sono stati implementati due nuovi sistemi di personalizzazione delle build:
 ## 2. Risonanza Elementale
 
 ### Come funziona
-Se l'**Arma** e l'**Armatura** equipaggiate hanno lo **stesso elemento** (escluso Normale), si attiva una **Risonanza** con effetti passivi per tutta la durata del combattimento.
+Se l'**Arma** e l'**Armatura** equipaggiate hanno lo **stesso elemento** (escluso Normale), si attiva una **Risonanza** con effetti passivi per tutta la durata del combattimento. `CombatSession.refresh_resonance()` la ricalcola dopo ogni uso dell'inventario in combattimento; la riduzione d'attacco dell'Acqua è applicata al momento del calcolo dei danni, senza modificare `enemy.atk`.
 
 ### Tabella Risonanze
 

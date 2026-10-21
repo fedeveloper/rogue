@@ -81,14 +81,18 @@
             "unlock_cost": 0,
             "unlock_id": "ascia_boia"
         },
-        
         {
             "name": "Falce del Mietitore",
-            "desc": "Estremamente letale. La lama è intrisa di buio.",
+            "desc": "Estremamente letale. La lama è intrisa di buio. 20% di infliggere Sanguinamento.",
             "flavor": "Drena l'essenza stessa di chi le sta vicino. Si dice che abbia una mente propria.",
             "base_atk": 22,
             "unlock_id": "falce_mietitore",
-            "unlock_cost": 650
+            "unlock_cost": 650,
+            "status_inflict": {
+                "type": "bleed",
+                "chance": 20,
+                "duration": 3
+            }
         },
         {
             "name": "Spadone del Re Caduto",
@@ -108,11 +112,16 @@
         },
         {
             "name": "Frusta di Spine Corrotte",
-            "desc": "Attacchi veloci e crudeli.",
+            "desc": "Attacchi veloci e crudeli. 30% di infliggere Sanguinamento.",
             "flavor": "Infligge dolore sia a chi la subisce sia a chi la brandisce.",
             "base_atk": 14,
             "unlock_id": "frusta_spine",
-            "unlock_cost": 250
+            "unlock_cost": 250,
+            "status_inflict": {
+                "type": "bleed",
+                "chance": 30,
+                "duration": 3
+            }
         },
         {
             "name": "Martello Meteoritico",
@@ -124,11 +133,16 @@
         },
         {
             "name": "Pugnali del Vento Tagliente",
-            "desc": "Due lame invisibili e rapidissime.",
+            "desc": "Due lame invisibili e rapidissime. 25% di infliggere Sanguinamento.",
             "flavor": "Talmente leggeri da sembrare invisibili. Fischiano nell'aria.",
             "base_atk": 12,
             "unlock_id": "pugnali_vento",
-            "unlock_cost": 200
+            "unlock_cost": 200,
+            "status_inflict": {
+                "type": "bleed",
+                "chance": 25,
+                "duration": 2
+            }
         },
         {
             "name": "Bastone dell'Alba",
@@ -148,19 +162,29 @@
         },
         {
             "name": "Balestra Gnomica a Ripetizione",
-            "desc": "Ingegneria avanzata, scocca raffiche di dardi.",
+            "desc": "Ingegneria avanzata, scocca raffiche di dardi. Dardi avvelenati: 30% di infliggere Veleno.",
             "flavor": "Un meccanismo complesso che scocca dardi a velocità inaudite.",
             "base_atk": 19,
             "unlock_id": "balestra_gnomica",
-            "unlock_cost": 550
+            "unlock_cost": 550,
+            "status_inflict": {
+                "type": "poison",
+                "chance": 30,
+                "duration": 3
+            }
         },
         {
             "name": "Tridente Oceanico",
-            "desc": "Arma letale associata alle maree.",
+            "desc": "Arma letale associata alle maree. 20% di infliggere Veleno.",
             "flavor": "Forgiato nelle profondità più oscure del regno sommerso.",
             "base_atk": 21,
             "unlock_id": "tridente_oceanico",
-            "unlock_cost": 600
+            "unlock_cost": 600,
+            "status_inflict": {
+                "type": "poison",
+                "chance": 20,
+                "duration": 3
+            }
         }
     ]
 }
