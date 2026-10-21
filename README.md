@@ -107,7 +107,7 @@ Artefatti passivi che stravolgono le regole del gioco. Alcune sono trovabili sco
 | Pergamena d'Oro | ✨700 | Cura 2 HP quando ottieni Oro |
 | Campanella degli Spiriti | ✨1200 | 15% di negare un attacco |
 | Pietra di Luna | ✨500 | +50% DEF in Difesa |
-| Contratto Demoniaco | ✨1000 | Danni x2, -5 HP a fine combattimento |
+| Contratto Demoniaco | ✨1000 | Danni x2, -5 HP a fine combattimento (non letale) |
 | Pozione Senza Fondo | ✨900 | 25% di non consumare le pozioni |
 | Bussola Dimensionale | ✨1000 | Più Tesori e Misteri sulla mappa |
 
@@ -152,7 +152,7 @@ Sfide trasversali che sbloccano contenuti nascosti. Alcune si completano in una 
 | Mani Bucate | Spendi 2000+ Oro dal mercante in una run | Arma: Zweihander d'Oro |
 | Equilibrista | Finisci con Arma/Armatura di elementi diversi | Reliquia: Sigillo Elementale |
 | Lama di Cristallo | Piano 15 senza cambiare arma iniziale | Reliquia: Spirito della Spada |
-| Furia Cieca | Finisci un piano con Precisione < 50% | Tratto: Titano |
+| Furia Cieca | Supera un piano mancando più di metà degli attacchi (min. 6) | Tratto: Titano |
 | Tiratore Scelto | 5 colpi Super Efficaci su un Boss | Consumabile: Filtro Preciso |
 | Assaggiatore di Veleni | Sopravvivi a 1 HP da un danno letale | Reliquia: Maschera Antigas |
 

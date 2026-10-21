@@ -185,8 +185,11 @@ class ContrattoDemoniaco(RelicEffect):
     def on_attack(self, session, dmg_dealt, multiplier, eff_text):
         return dmg_dealt * 2, eff_text
     def on_enemy_death(self, session):
-        session.player.take_damage(5)
-        display_msg(f"{Colors.RED}Il Contratto Demoniaco esige un tributo di sangue (5 HP)...{Colors.RESET}")
+        # Il tributo non può uccidere: lascia almeno 1 HP
+        tribute = min(5, session.player.hp - 1)
+        if tribute > 0:
+            session.player.hp -= tribute
+            display_msg(f"{Colors.RED}Il Contratto Demoniaco esige un tributo di sangue ({tribute} HP)...{Colors.RESET}")
 
 class PozioneInfinita(RelicEffect):
     def on_item_use(self, player, item_name):

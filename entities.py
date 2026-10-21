@@ -150,7 +150,7 @@ class Player:
 
         self.level, self.exp, self.max_exp = 1, 0, 100
         self.escaped = False
-        self.run_tracker = {"escapes": 0, "fusions": 0, "no_hit_boss_done": False, "kill_1_hp_done": False}
+        self.run_tracker = {"escapes": 0, "fusions": 0, "no_hit_boss_done": False, "kill_1_hp_done": False, "floor_attacks": 0, "floor_hits": 0}
         self.essence_gathered, self.bosses_killed = 0, 0
         
         w_data = data["weapon"]
@@ -295,11 +295,8 @@ class Player:
         if self.hp <= 0 and self.benedetto_save:
             self.hp = 1
             self.benedetto_save = False
-            display_msg(f"{Colors.YELLOW}La Benedizione ti salva dal colpo letale!{Colors.RESET}")
-        
-        if self.hp == 1:
             self.run_tracker["1_hp_survive"] = True
-            
+            display_msg(f"{Colors.YELLOW}La Benedizione ti salva dal colpo letale!{Colors.RESET}")
         return self.hp > 0
 
     def get_class_damage_multiplier(self) -> float:

@@ -8,7 +8,7 @@ from entities import Player, Enemy
 from rooms import combat_room, mystery_room, event_room, vendor_room, campfire_room, treasure_room, trap_room
 from inventory_menu import show_inventory_menu, show_player_stats
 from archive import show_archive
-from constants import RATIO_GOLD_TO_ESSENCE_ON_DEATH, BOSS_ESSENCE_BONUS, XP_PER_FLOOR, XP_PER_BOSS, INFINITE_MODE_THRESHOLD, INFINITE_MODE_ESSENCE_MULTIPLIER
+from constants import RATIO_GOLD_TO_ESSENCE_ON_DEATH, BOSS_ESSENCE_BONUS, XP_PER_FLOOR, XP_PER_BOSS, INFINITE_MODE_THRESHOLD, INFINITE_MODE_ESSENCE_MULTIPLIER, BLIND_FURY_MIN_ATTACKS
 
 def _update_class_mastery(player: Player, floor: int):
     c_id = player.class_id
@@ -433,7 +433,7 @@ def play_game(infinite_mode=False):
             player.heal(sp_lvl)
             print(f"{Colors.GREEN}La Speranza di Luce ti rigenera {sp_lvl} HP. ({player.hp}/{player.max_hp}){Colors.RESET}")
             
-        if player.base_acc < 50: player.run_tracker["blind_fury_done"] = True
+        player.run_tracker["floor_attacks"] = player.run_tracker["floor_hits"] = 0
         
         for step in range(1, 6):
             if player.hp <= 0 or player.escaped: break
@@ -480,6 +480,8 @@ def play_game(infinite_mode=False):
         
         if player.hp > 0 and not player.escaped:
             delay_print(f"\n{Colors.YELLOW}{Colors.BOLD}*** PIANO {floor} SUPERATO! ***{Colors.RESET}", 0.05)
+            attacks, hits = player.run_tracker["floor_attacks"], player.run_tracker["floor_hits"]
+            if attacks >= BLIND_FURY_MIN_ATTACKS and hits * 2 < attacks: player.run_tracker["blind_fury_done"] = True
             heal = 20 + (floor * 5)
             player.heal(heal)
             print(f"Ti riposi prima delle scale. (HP: {player.hp}/{player.max_hp})")

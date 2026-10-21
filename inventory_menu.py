@@ -53,7 +53,9 @@ def _use_consumable(player, item, real_idx, in_combat) -> str:
             dmg = int(player.max_hp * 0.3)
             alive = player.take_damage(dmg)
             print(f"{Colors.RED}Il liquido ti brucia dall'interno! Subisci {dmg} danni.{Colors.RESET}")
-            if not alive: player.hp = 1
+            if not alive:
+                player.hp = 1
+                player.run_tracker["1_hp_survive"] = True
         elif eff == "gold":
             g = random.randint(50, 150)
             player.gold += g

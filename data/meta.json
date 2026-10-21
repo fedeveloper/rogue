@@ -149,7 +149,7 @@
         },
         "feat_furia_cieca": {
             "name": "Furia Cieca",
-            "desc": "Finisci un piano con Precisione inferiore a 50%.",
+            "desc": "Supera un piano mancando più della metà dei tuoi attacchi (almeno 6 attacchi).",
             "target": 1,
             "reward_type": "trait",
             "reward_id": "titano"
@@ -163,7 +163,7 @@
         },
         "feat_assaggiatore": {
             "name": "Assaggiatore di Veleni",
-            "desc": "Sopravvivi a un danno letale rimanendo esattamente a 1 HP.",
+            "desc": "Sopravvivi a un danno letale rimanendo a 1 HP (es. Benedizione o Fiala del Caos).",
             "target": 1,
             "reward_type": "unlock",
             "reward_id": "maschera_antigas"

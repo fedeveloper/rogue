@@ -191,7 +191,9 @@ class CombatSession:
                 dmg_dealt *= 2
                 eff += f" {Colors.MAGENTA}[CRITICO!]{Colors.RESET}"
 
+        self.player.run_tracker["floor_attacks"] += 1
         if random.randint(1, 100) <= hit_chance:
+            self.player.run_tracker["floor_hits"] += 1
             dmg_dealt = int(dmg_dealt * self.player.get_class_damage_multiplier())
             if multiplier > 1.0 and self.enemy.is_boss:
                 if "super_effective_hits" not in self.player.run_tracker: self.player.run_tracker["super_effective_hits"] = 0
