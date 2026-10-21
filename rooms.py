@@ -21,6 +21,7 @@ class CombatSession:
         self.def_type = ""
         self.def_txt = ""
         self.first_enemy_attack = True
+        self.hit_negated_by_relic = False
 
         for r in self.player.relic_effects:
             r.on_combat_start(self)
@@ -335,13 +336,7 @@ class CombatSession:
                 print(f"\n{Colors.RED}-> Impossibile fuggire dai Boss!{Colors.RESET}")
                 return self.player_turn()
             
-            f_chance = max(10, min(90, 20 + self.player.get_dodge() - self.enemy.base_dodge + (20 if PROFILE_MANAGER.get_perk("scarpisti", False) else 0)))
-            if is_book_unlocked("diario_silas", PROFILE_MANAGER._data): f_chance += 5
-            for r in self.player.relic_effects:
-                mod = r.get_escape_modifier()
-                if mod > 0: f_chance = mod
-                
-            if random.randint(1, 100) <= f_chance:
+            if random.randint(1, 100) <= self._calc_escape_chance():
                 print(f"\n{Colors.YELLOW}-> Sei riuscito a scappare!{Colors.RESET}")
                 self.player.run_tracker["escapes"] += 1
                 input("\nPremi INVIO...")
@@ -352,6 +347,15 @@ class CombatSession:
         else:
             return self.player_turn()
 
+    def _calc_escape_chance(self) -> int:
+        f_chance = 20 + self.player.get_dodge() - self.enemy.base_dodge + (20 if PROFILE_MANAGER.get_perk("scarpisti", False) else 0)
+        if is_book_unlocked("diario_silas", PROFILE_MANAGER._data): f_chance += 5
+        f_chance = max(10, min(90, f_chance))
+        for r in self.player.relic_effects:
+            mod = r.get_escape_modifier()
+            if mod > 0: f_chance = mod
+        return f_chance
+
     def _calc_enemy_hit_chance(self, en_multiplier: float) -> int:
         return max(10, min(100, BASE_HIT_CHANCE + self.enemy.base_acc - self.player.get_dodge() + (15 if en_multiplier > 1.0 else -20 if en_multiplier < 1.0 else 0)))
 
@@ -360,7 +364,10 @@ class CombatSession:
         en_atk = max(1, int(self.enemy.atk * 0.85)) if self.resonance == "Acqua" else self.enemy.atk
         dmg_taken = max(0, int((en_atk + random.randint(-1, 2)) * en_multiplier) - defense)
         if self.is_defending: dmg_taken //= 2
+        before_relics = dmg_taken
         for r in self.player.relic_effects: dmg_taken = r.on_take_damage(self, dmg_taken, en_multiplier)
+        # Se una reliquia ha annullato il colpo, ha già stampato il suo messaggio
+        self.hit_negated_by_relic = before_relics > 0 and dmg_taken == 0
         return dmg_taken
 
     def enemy_turn(self) -> bool:
@@ -413,7 +420,7 @@ class CombatSession:
                     print(f"\n{Colors.RED}{Colors.BOLD}Sei caduto in battaglia contro {self.enemy.name}...{Colors.RESET}")
                     input("\nPremi INVIO per continuare...")
                     return False
-            elif dmg_taken == 0:
+            elif not self.hit_negated_by_relic:
                 print(f"<- {self.enemy.name} attacca, ma la corazza blocca TUTTO! {en_eff}")
         else:
             print(f"{Colors.CYAN}<- {self.enemy.name} attacca... ma riesci a schivarlo!{Colors.RESET}")
@@ -681,7 +688,7 @@ def campfire_room(player: Player, floor: int):
                         player.run_tracker["fusions"] += 1
                         print(f"{Colors.GREEN}FUSIONE RIUSCITA! Il primo oggetto ha assorbito il secondo.{Colors.RESET}")
                         input("Premi INVIO per continuare...")
-                        return 
+                        break
                     else: print(f"{Colors.RED}Puoi fondere solo oggetti dello stesso tipo!{Colors.RESET}"); time.sleep(1.5)
                 else: print(f"{Colors.RED}Selezione non valida o oggetto uguale.{Colors.RESET}"); time.sleep(1.5)
         elif options[idx].startswith(f"{Colors.CYAN}Purifica"):
@@ -707,7 +714,7 @@ def campfire_room(player: Player, floor: int):
                         target_item.refresh_display_name()
                         print(f"{Colors.GREEN}Il rituale ha successo! La maledizione è spezzata.{Colors.RESET}")
                         input("\nPremi INVIO...")
-                        return
+                        break
 
 def treasure_room(player: Player, floor: int):
     delay_print(f"\n{Colors.YELLOW}{random.choice(GAME_DATA['lore']['treasure'])}{Colors.RESET}")

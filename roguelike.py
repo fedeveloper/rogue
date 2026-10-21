@@ -129,11 +129,15 @@ def base_camp_fire():
         cost = p_cost_func(0) if p_bool else p_cost_func(lvl)
         
         can_buy = (p_bool and not lvl) or (not p_bool and lvl < p_max)
-        if can_buy and PROFILE_MANAGER.essence >= cost:
+        if not can_buy:
+            print(f"\n{Colors.YELLOW}{p_name} è già al livello massimo.{Colors.RESET}"); time.sleep(1.5)
+        elif PROFILE_MANAGER.essence >= cost:
             PROFILE_MANAGER.essence -= cost
             if p_bool: PROFILE_MANAGER.set_perk(p_key, True)
             else: PROFILE_MANAGER.set_perk(p_key, lvl + 1)
             PROFILE_MANAGER.save()
+        else:
+            print(f"\n{Colors.RED}Essenza insufficiente.{Colors.RESET}"); time.sleep(1.5)
 
 def base_camp_forge():
     while True:
