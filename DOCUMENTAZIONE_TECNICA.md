@@ -67,18 +67,12 @@ L'inventario mostra `✨ RISONANZA ATTIVA: [elemento]!` quando la sinergia è at
 | `data_manager.py` | Caricamento `accessories` in `RAW_DATA`/`GAME_DATA` |
 | `entities.py` | Classe `Accessory`, `generate_accessory()`, slot player, inventario, `_get_resonance_element()` |
 | `rooms.py` | Drop accessori (mercante/tesori/trappole), bonus combat (crit/lifesteal/reflect), risonanza (6 elementi) |
-| `fuzzer.py` | **NUOVO** — Stress test con accessori e risonanza forzata |
 
 ---
 
 ## Test
 
-Fuzzer eseguito con successo:
-- **50 run** simulate
-- **178 combattimenti** completati
-- **50 accessori** equipaggiati automaticamente
-- **17 run con risonanza forzata**
-- **0 crash** rilevati
+Lo stress test `fuzzer.py` usato all'epoca non fa più parte del repository. I test automatici ora sono in `tests/` e si eseguono con `python -m unittest discover -s tests`.
 
 # Refactoring di `base_camp` Completato!
 

@@ -111,22 +111,11 @@ class ProfileManager:
         if "npc_unlocked" not in self._data: self._data["npc_unlocked"] = {}
         self._data["npc_unlocked"][npc_name] = True
 
-    def get_starting_consumables(self) -> list:
-        return self._data.get("starting_consumables", [])
-
-    def add_starting_consumable(self, name: str):
-        if "starting_consumables" not in self._data: self._data["starting_consumables"] = []
-        self._data["starting_consumables"].append(name)
-        
-    def clear_starting_consumables(self):
-        self._data["starting_consumables"] = []
-        
-    def is_book_unlocked(self, book_id: str) -> bool:
-        return book_id in self._data.get("unlocked_books", [])
 
 PROFILE_MANAGER = ProfileManager()
+_ENEMIES_FILE = load_json_file("enemies.json")
 RAW_DATA = {
-    "enemies": load_json_file("enemies.json")["enemies"], "bosses": load_json_file("enemies.json")["bosses"],
+    "enemies": _ENEMIES_FILE["enemies"], "bosses": _ENEMIES_FILE["bosses"],
     "weapons": load_json_file("weapons.json")["weapons"], "armors": load_json_file("armors.json")["armors"],
     "accessories": load_json_file("accessories.json")["accessories"],
     "consumables": load_json_file("consumables.json")["consumables"], "classes": load_json_file("classes.json"),
