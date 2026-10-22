@@ -235,12 +235,33 @@ I nemici e i boss con `"biome": "id"` (in `enemies.json`) sono **nativi**: compa
 
 | | HP | ATK | Oro | EXP |
 |---|---|---|---|---|
-| Nemico | base + 5·l ± 5 | base + l + (0..1) | max(5, 5 + 3,5·piano) | 30 + 10·piano |
-| Boss | base + 8·l + (0..10) | base + 2,5·l + (0..2) | 50 + 15·piano | 150 + 20·piano |
+| Nemico | base + `ENEMY_HP_PER_FLOOR`·l ± 5 | base + `ENEMY_ATK_PER_FLOOR`·l + (0..1) | max(5, 5 + 3,5·piano) | 30 + 10·piano |
+| Boss | HP tipico × `BOSS_HP_MULT` × qualità + (0..10) | ATK tipico × `BOSS_ATK_MULT` × qualità + (0..2) | 50 + 15·piano | 150 + 20·piano |
+
+Il **nemico tipico** di un piano (`entities.typical_enemy`) è la media della finestra di profondità con la stessa crescita, salti di piano compresi. I boss ne sono un multiplo (2,2× gli HP, 1,8× l'ATK). I loro valori base diventano una **qualità**, `0,75 + 0,25 · base / media dei boss`, così si distinguono di circa ±25% a ogni piano: niente più boss di inizio partita fuori scala.
 
 Poi si applicano, in ordine: ×1,2 dal piano 10; ×1,25 dal piano 20; ×1,4 (potenziato) o ×0,6 (debilitato) nella Stanza del Mistero; ×1,3 agli HP con *Durezza* e ×1,3 all'ATK con *Furia*.
 
 ---
+
+**Equipaggiamento generato** (`generate_weapon`, `generate_armor`). Gli oggetti crescono con il nemico tipico del loro livello:
+
+```text
+ATK arma     = HP tipico / WEAPON_TARGET_HITS (3)        × qualità × caso(0,9–1,1)
+DIF armatura = ATK tipico × ARMOR_TARGET_ABSORB (0,4)    × qualità × caso(0,9–1,1)
+qualità arma     = 0,75 + base_atk / 60     (Spada Corta 0,80 … Lama del Creatore 1,25)
+qualità armatura = 0,6  + base_def / 25     (Veste Eterea 0,60 … Egida del Titano 1,40)
+poi: ×1,3 se maledetto, ×1,1 se di elemento Normale, ×1,35 se epico
+```
+
+Un'arma tipica abbatte un nemico tipico in circa 3 colpi e un'armatura tipica ne assorbe il 40% del colpo, a qualunque piano. La statistica base dei dati decide la qualità, non un bonus fisso: prima pesava tutta all'inizio (armature che annullavano ogni colpo per dieci piani, armi che abbattevano i nemici al primo colpo) e scompariva verso il fondo. `tests/test_balance.py` vieta di tornare indietro: nessuna arma sotto 1,5 colpi, nessuna armatura sopra il 75%, boss proporzionati al piano.
+
+**Strumenti di bilanciamento** (`tools/bilanciamento.py`):
+- `curve`: oggetti generabili contro nemici, piano per piano;
+- `oggetti`: ogni arma e armatura a ogni piano;
+- `run N nuovo|completo`: N run per classe con il codice vero e un giocatore automatico, con vittorie, piano raggiunto, Essenza, colpi annullati, morti per bioma e letalità dei boss.
+
+Il profilo del giocatore non viene mai toccato.
 
 ## 5. Formule di combattimento
 
@@ -263,9 +284,11 @@ Poi si applicano, in ordine: ×1,2 dal piano 10; ×1,25 dal piano 20; ×1,4 (pot
 **Precisione del nemico**: `85 + precisione nemico − schivata eroe ± elemento`, limitata fra 10 e 100. Il primo attacco di ogni scontro manca sempre con il *Cacciatore Etereo*.
 
 **Danni subiti**:
-1. `max(0, (ATK nemico ridotto dall'Acqua ± caso) × elemento − difesa)`, con la difesa che somma armatura, Terra, Eredità e Archivio;
+1. `max(grezzo − difesa, ⌈grezzo × MIN_DAMAGE_PCT⌉)`, con `grezzo = (ATK nemico ridotto dall'Acqua ± caso) × elemento × mossa`. La difesa somma armatura, Terra, Eredità e Archivio. **La difesa non annulla mai un colpo**: ne resta sempre almeno il 20%; solo le reliquie (es. lo Scudo di Cristallo) possono azzerarlo;
 2. dimezzati se ti stai difendendo;
 3. modificati dagli hook `on_take_damage` delle reliquie (scudi, riflessi…).
+
+**Stati e maledizioni**: veleno `max(3, 4% degli HP massimi)` a turno, per l'eroe e per i nemici; sanguinamento 5% degli HP; la maledizione che drena vita toglie `max(2, 2% degli HP massimi)` a turno. Il *Riparo Magico* cura il 10% degli HP, il *Baluardo della Fede* il 5% in più.
 
 **Fuga**: `20 + schivata − schivata nemico + 20 (Scarpisti) + bonus dell'Archivio`, limitata fra 10 e 90; con la *Bussola Perfetta* è 100. Impossibile dai boss.
 
@@ -369,6 +392,7 @@ La CI (`.github/workflows/tests.yml`) li esegue su Python 3.9 e sull'ultima 3.x;
 | `test_depth.py` | Nemici e boss per profondità, boss finale, tratto e antidoto mostrati |
 | `test_refactor.py` | Ciclo del turno, ridisegno dei menu, bonus nei dati, output tramite `ui`, etichette dei consumabili |
 | `test_shops.py` | Botteghe degli artigiani, elenco della Forgia, Cuore di Drago |
+| `test_balance.py` | Invarianti di bilanciamento: armi fra 1,5 e 5 colpi per il nemico tipico, armature sotto il 75% del colpo, qualità che mantiene il rango a ogni piano, nemico tipico fedele ai nemici veri, boss proporzionati al piano, difesa che non annulla mai un colpo, maledizione e veleno in % degli HP |
 | `test_endgame.py` | Corruzione (limiti, ATK, contratto della descrizione, Sguardo Velato, Voce del Labirinto, opzioni proibite, statistiche), finali (dati, condizioni, scelta e premio, vittoria nel vero ciclo), Fuoco del Campo (dati, personaggi e doni, strutture, Tavolo, Scrittoio, Altare, menu) |
 | `test_biomes.py` | Equipaggiamento iniziale (reazione o Risonanza), completezza dei biomi, contratti dei pericoli, Gas del Silenzio, Ebollizione, Paradosso, Dissoluzione, Caduta Astrale nel vero ciclo dei piani |
 | `test_tactics.py` | Intenti (pesi predefiniti e dei dati, regole delle mosse, prompt, Congelato) e reazioni (arma poi armatura, armatura poi arma, solo in guardia, stesso elemento, nessuna reazione, scadenza dei marchi, Codice) |

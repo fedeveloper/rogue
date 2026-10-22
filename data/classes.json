@@ -50,7 +50,7 @@
         "max_hp": 85,
         "gold": 100,
         "acc": 10,
-        "dodge": 20,
+        "dodge": 15,
         "weapon": {
             "name": "Pugnali Gemelli",
             "value": 30,
@@ -93,7 +93,7 @@
     },
     "3": {
         "role": "Mago",
-        "max_hp": 65,
+        "max_hp": 80,
         "gold": 40,
         "acc": 20,
         "dodge": 0,
@@ -142,7 +142,7 @@
         "max_hp": 180,
         "gold": 10,
         "acc": 5,
-        "dodge": -10,
+        "dodge": -5,
         "weapon": {
             "name": "Martello della Luce",
             "value": 40,
@@ -161,7 +161,7 @@
         "desc": "Sbloccato portando il Guerriero al Livello Maestria 5.",
         "mastery": {
             "2": {
-                "desc": "Baluardo della Fede: Recuperi 3 HP extra ogni volta che ti difendi.",
+                "desc": "Baluardo della Fede: Recuperi il 5% degli HP massimi extra ogni volta che ti difendi.",
                 "type": "personal",
                 "effect": "paladin_bulwark"
             },
@@ -187,7 +187,7 @@
     },
     "5": {
         "role": "Berserker",
-        "max_hp": 100,
+        "max_hp": 110,
         "gold": 0,
         "acc": 15,
         "dodge": 5,
@@ -203,7 +203,7 @@
             "def": 0,
             "element": "Normale"
         },
-        "potions": 0,
+        "potions": 1,
         "unlocked_by_default": false,
         "unlock_cost": 0,
         "desc": "Sbloccato completando l'Impresa 'Danza con la Morte'.",
@@ -287,8 +287,8 @@
         "max_hp": 75,
         "gold": 30,
         "acc": 20,
-        "dodge": 30,
-        "crit": 20,
+        "dodge": 20,
+        "crit": 15,
         "weapon": {
             "name": "Pugnale Ricurvo",
             "value": 50,
@@ -333,7 +333,7 @@
     },
     "8": {
         "role": "Negromante",
-        "max_hp": 70,
+        "max_hp": 85,
         "gold": 20,
         "acc": 10,
         "dodge": 5,

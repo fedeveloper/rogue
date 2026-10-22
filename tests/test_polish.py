@@ -6,6 +6,7 @@ import copy
 import io
 import random
 import unittest
+from constants import MIN_DAMAGE_PCT
 from contextlib import redirect_stdout
 from unittest import mock
 
@@ -55,11 +56,16 @@ class CombatMessageTest(Sandbox):
         self.assertNotIn("blocca TUTTO", output)
         self.assertEqual(self.player.hp, self.player.max_hp)
 
-    def test_armor_block_message_still_shown(self):
+    def test_armor_reduces_but_never_blocks_everything(self):
+        # Prima una difesa altissima annullava ogni colpo; ora resta sempre MIN_DAMAGE_PCT del danno grezzo
         self.player.armor.defense = 1000
         session = CombatSession(self.player, 1, Enemy(1, False, []))
-        session.enemy.base_acc = 1000
-        self.assertIn("blocca TUTTO", self.run_quietly(session.enemy_turn))
+        session.enemy.atk, session.enemy.element, session.enemy.base_acc = 50, "Normale", 1000
+        with mock.patch("rooms.random.randint", side_effect=lambda a, b: a if a == -1 else 1):
+            output = self.run_quietly(session.enemy_turn)
+        self.assertNotIn("blocca TUTTO", output)
+        raw = 50 - 1
+        self.assertEqual(self.player.max_hp - self.player.hp, -(-raw * MIN_DAMAGE_PCT // 100))
 
     def test_escape_chance_stays_within_cap(self):
         self.player.base_dodge = 500
