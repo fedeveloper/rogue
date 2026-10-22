@@ -610,5 +610,90 @@
         ]
       }
     }
+  },
+
+  "voce_cara": {
+    "title": "La Voce Cara",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Dietro una porta di marmo socchiusa, qualcuno canticchia una ninna nanna che conosci. È la voce di chi ti cantava per farti dormire, tanto tempo fa, prima del Labirinto. 'Entra,' dice. 'Ti aspettavo.'",
+        "extra": [
+          {"requires": {"flag": "statua_di_sale"}, "text": "L'ultima volta sei rimasto troppo a lungo. Ricordi ancora il sapore del sale."}
+        ],
+        "choices": [
+          {"text": "Entra e ascolta", "next": "ascolto"},
+          {"text": "Riconosci la voce: è un'eco, non un'anima", "requires": {"class": "8"}, "msg": "Le parli come si parla ai morti. L'eco si placa e ti lascia un frammento di ciò che era stata.", "effects": [{"exp": 60}, {"essence": 30}]},
+          {"text": "Tappati le orecchie e passa oltre", "msg": "La ninna nanna ti segue per tre corridoi, poi si spezza in un singhiozzo."}
+        ]
+      },
+      "ascolto": {
+        "text": "La stanza è vuota, ma la voce ora è vicinissima, calda, dietro la tua nuca. Ti racconta di un'estate ad Aethelgard, dell'odore dei pini, di quanto sei stato amato. Le gambe ti si fanno pesanti. Sarebbe così facile restare.",
+        "choices": [
+          {"text": "Resta ancora un po'", "chance": 60, "success": [{"max_hp": 15}, {"heal_pct": 100}], "msg": "Quando finalmente ti alzi, ti senti intero come non eri da anni.", "fail_msg": "Ti accorgi troppo tardi che le dita non si piegano più. Ti strappi via, ma una parte di te resta lì, bianca e salata.", "fail_effects": [{"max_hp": -15}, {"flag": "statua_di_sale"}]},
+          {"text": "Ringrazia la voce e vattene", "msg": "'Va bene,' dice la voce. 'Vai. Ma torna.'", "effects": [{"heal_pct": 40}]}
+        ]
+      }
+    }
+  },
+
+  "statua_sale": {
+    "title": "La Statua di Sale",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Al centro del chiostro c'è una statua bianca, inginocchiata, con l'orecchio teso verso una parete. Non è scolpita: è sale. Sul basamento qualcuno ha inciso un nome con le unghie.",
+        "extra": [
+          {"requires": {"flag": "statua_di_sale"}, "text": "La statua ha il tuo volto."}
+        ],
+        "choices": [
+          {"text": "Leggi il nome inciso", "msg": "È un nome qualunque, di qualcuno che qualcuno amava. Lo ripeti a voce alta, perché almeno una volta venga detto di nuovo.", "effects": [{"exp": 50}]},
+          {"text": "Raccogli un po' di sale", "msg": "Il sale ti brucia le mani come se fosse vivo. Tra i cristalli c'è una fiala che la statua stringeva.", "effects": [{"damage": 10}, {"potion": 1}]},
+          {"text": "Spezza la statua", "msg": "Il sale si incrina con un gemito. Poi la statua si alza.", "effects": [{"fight": "normal"}, {"gold": 50}]},
+          {"text": "Prosegui senza guardarla", "msg": "Senti il suo orecchio di sale seguire i tuoi passi."}
+        ]
+      }
+    }
+  },
+
+  "biblioteca_cenere": {
+    "title": "La Biblioteca di Cenere",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Scaffali alti fino al buio, carichi dei libri dell'accademia della Luce Calma. Quasi tutti sono cenere che conserva la forma delle pagine: basta un respiro per disfarli. Da uno scaffale, una voce legge ad alta voce un libro che non c'è più.",
+        "choices": [
+          {"text": "Cerca un tomo ancora intatto", "chance": 50, "success": [{"exp": 90}], "msg": "Tra mille ceneri, un libro resiste. Parla degli Architetti, e di un'ottava pietra mai posata.", "fail_msg": "Uno scaffale crolla e ti seppellisce sotto secoli di cenere.", "fail_effects": [{"damage": 15}]},
+          {"text": "Ricomponi le pagine con un incantesimo", "requires": {"class": "3"}, "msg": "Le ceneri si riordinano tra le tue dita. Una pagina nasconde un sigillo, e il sigillo nasconde un oggetto.", "effects": [{"damage": 20}, {"relic": "random"}]},
+          {"text": "Accendi un fuoco con le pagine bruciate", "msg": "È un sacrilegio, ma il calore è vero. La voce smette di leggere.", "effects": [{"heal_pct": 30}]},
+          {"text": "Esci in silenzio", "msg": "La voce riprende a leggere da dove si era interrotta."}
+        ]
+      }
+    }
+  },
+
+  "prima_pietra": {
+    "title": "La Prima Pietra",
+    "requires": {"biome": "chiostri", "min_floor": 3, "max_floor": 3},
+    "weight": 4,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Una lastra del pavimento è diversa da tutte le altre: non ha venature viola. È bianca, tiepida al tatto, e sotto senti pulsare qualcosa, come un cuore molto lento. Si dice che qui riposi la prima pietra posata dagli Architetti.",
+        "extra": [
+          {"requires": {"flag": "prima_pietra"}, "text": "La lastra è già stata sollevata, una volta. Da te."}
+        ],
+        "choices": [
+          {"text": "Solleva la lastra", "requires": {"not_flag": "prima_pietra"}, "msg": "Sotto c'è una pietra grezza, grande come un pugno, incisa con un solo segno. Quando la tocchi, il Labirinto trattiene il respiro.", "effects": [{"damage": 20}, {"relic": "random"}, {"flag": "prima_pietra"}]},
+          {"text": "Posa la mano dove c'era la pietra", "requires": {"flag": "prima_pietra"}, "msg": "Il marmo ricorda la forma della pietra, e ricorda te.", "effects": [{"essence": 50}]},
+          {"text": "Prega sulla pietra degli Architetti", "requires": {"class": "4"}, "msg": "Per un istante la Luce torna calma, come nei giorni prima della Discordia.", "effects": [{"heal_pct": 100}, {"def": 2}]},
+          {"text": "Ascolta il battito", "requires": {"class": "3"}, "msg": "Il battito ha un ritmo. È una parola, ripetuta all'infinito, nella lingua degli Architetti.", "effects": [{"exp": 100}]},
+          {"text": "Lasciala dov'è", "msg": "Certe pietre reggono più di un pavimento."}
+        ]
+      }
+    }
   }
 }

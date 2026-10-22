@@ -18,12 +18,34 @@ Se colori o emoji non si vedono bene, usa un terminale con codifica UTF-8 (su Wi
 ## 🧭 La discesa
 
 1. **Scegli l'eroe e il tratto.** Dopo la prima vittoria puoi attivare anche i **Patti del Caos** (vedi sotto).
-2. **Ogni piano ha 5 tappe.** A ogni tappa scegli fra **due porte**. Il tipo di stanza è sempre visibile; con il potenziamento *Sesto Senso* vedi anche quale nemico o evento ti aspetta.
+2. **Ogni piano ha una mappa.** All'arrivo vedi tutto il piano: quattro file di stanze collegate, e in fondo il boss (★). A ogni tappa scegli una delle stanze collegate a quella in cui ti trovi: in giallo le stanze raggiungibili, in verde il percorso fatto, in grigio ciò che ormai è fuori strada. Pianifica: un falò due file più in basso vale una deviazione? Con il potenziamento *Sesto Senso* vedi anche quale nemico o evento ti aspetta.
 3. **La quinta tappa è sempre un boss.**
 4. **Superato il piano** recuperi un po' di HP (20 + 5 per piano) e scendi.
 5. In qualsiasi bivio puoi scegliere **Fuga dal Labirinto**: porti a casa tutto l'Oro, convertito in Essenza.
 
 Più scendi, più i nemici sono forti: ai primi piani incontri banditi, goblin e scheletri, verso il fondo idre di lava e leviatani. Anche i boss crescono con la profondità, e il DIO ANTICO compare **solo al piano 30**.
+
+```text
+  1  👹 Scontro                      🎭 Evento
+      │       ╲               ╱       │
+  2  👹 Scontro      ❓ Mistero      💰 Mercante
+      │       ╱               ╲       │
+  3  🔥 Falò                         ❓ Mistero
+      │       ╲               ╱       │
+  4  👹 Scontro      💎 Forziere     🎭 Evento📿
+              ╲       │       ╱
+  ★                  👑 Boss
+```
+
+### I biomi
+
+Il Labirinto cambia mentre scendi: ogni cinque piani entri in un **bioma** diverso, con la sua atmosfera. I nomi vengono dalle cronache di Aethelgard: *I Chiostri del Rimpianto*, *Le Miniere della Testardaggine*, *Le Guglie del Vento Urlante*, *Il Ventre della Memoria*, *La Forgia del Caos*, *La Soglia del Dio Antico*.
+
+**📿 I Chiostri del Rimpianto (piani 1–5).** Le rovine di un'accademia della Luce Calma.
+- **Più eventi, meno trappole.** E più creature di Luce e di Tenebra.
+- **Nativi.** L'*Eco del Rimpianto*, la *Statua di Sale* e un boss, *La Badessa del Silenzio*, vivono solo qui.
+- **Pericolo: Nostalgia Letale.** In ogni piano una stanza, segnata con 📿, ospita un'eco del passato: *La Voce Cara*, *La Statua di Sale* o *La Biblioteca di Cenere*. Fermarsi ad ascoltare può guarirti… o trasformarti in sale, e il Labirinto se ne ricorderà.
+- **Segreto.** Al piano 3, sotto il marmo, si dice riposi la *Prima Pietra* posata dagli Architetti.
 
 ### Le stanze
 

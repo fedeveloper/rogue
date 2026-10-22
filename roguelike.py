@@ -3,10 +3,11 @@ import sys
 import time
 import traceback
 from ui import Colors, clear_screen, delay_print, interactive_menu, display_msg, wait_enter
-from data_manager import PROFILE_MANAGER, GAME_DATA, RAW_DATA, get_element_icon, update_game_data
-from entities import Player, Enemy
+from data_manager import PROFILE_MANAGER, GAME_DATA, RAW_DATA, get_biome, update_game_data
+from entities import Player
 from rooms import combat_room, mystery_room, vendor_room, campfire_room, treasure_room, trap_room
-from events import event_room, pick_event, pop_due_event
+from events import event_room
+from floor_map import ROWS, SIDES, generate_floor_map, reachable, render_map, room_label
 from inventory_menu import show_inventory_menu, show_player_stats
 from archive import show_archive
 from codex import show_codex
@@ -391,46 +392,6 @@ def _hero_selection() -> tuple[str, str, list[str]]:
 
     return c_choice, t_choice, active_pacts
 
-def _generate_doors(floor: int, step: int, weights_def: dict, cooldowns_def: dict, room_cooldowns: dict, active_pacts: list, player: Player = None) -> list[dict]:
-    for k in room_cooldowns:
-        if room_cooldowns[k] > 0: room_cooldowns[k] -= 1
-    
-    if step == 5:
-        # Il boss finale attende solo all'ultimo piano della discesa standard
-        return [{"type": "boss", "enemy": Enemy(floor, True, active_pacts, final=floor == INFINITE_MODE_THRESHOLD)}]
-    
-    doors = []
-    while True:
-        avail_rooms, avail_weights = [], []
-        
-        for rt, w in weights_def.items():
-            if room_cooldowns.get(rt, 0) <= 0:
-                avail_rooms.append(rt)
-                avail_weights.append(w)
-        
-        if not avail_rooms: 
-            avail_rooms, avail_weights = ["combat"], [100]
-
-        t1 = random.choices(avail_rooms, weights=avail_weights)[0]
-        t2 = random.choices(avail_rooms, weights=avail_weights)[0]
-        
-        if t1 == t2: continue 
-        combo = {t1, t2}
-        if combo == {"trap", "treasure"} or combo == {"trap", "vendor"} or combo == {"mystery", "mystery"}: 
-            continue 
-        break
-
-    room_cooldowns[t1] = cooldowns_def.get(t1, 0) + 1
-    room_cooldowns[t2] = cooldowns_def.get(t2, 0) + 1
-
-    for rt in [t1, t2]:
-        d = {"type": rt}
-        if rt == "combat": d["enemy"] = Enemy(floor, False, active_pacts)
-        if rt == "event": d["event_id"] = pick_event(floor, player)
-        doors.append(d)
-        
-    return doors
-
 def _apply_floor_regen(player: Player) -> int:
     sp_lvl = PROFILE_MANAGER.get_perk("speranza_luce_lvl", 0)
     if sp_lvl <= 0 or player.hp >= player.max_hp: return 0
@@ -459,34 +420,39 @@ def play_game(infinite_mode=False):
 
         clear_screen()
         delay_print(f"\n{Colors.MAGENTA}{Colors.BOLD}==== PIANO {floor} ===={Colors.RESET}", 0.05)
+        biome = get_biome(floor)
+        biome_title = f" · {biome['icon']} {biome['name']}" if biome else ""
+        # L'atmosfera del bioma resta sopra la mappa per tutto il piano; entrando in un bioma nuovo se ne legge il pericolo
+        biome_intro = f"{Colors.CYAN}{random.choice(biome['intro'])}{Colors.RESET}\n" if biome else ""
+        if biome and floor == biome["floors"][0]:
+            delay_print(f"\n{Colors.MAGENTA}{Colors.BOLD}{biome['icon']}  {biome['name'].upper()}{Colors.RESET}", 0.03)
+            delay_print(biome_intro, 0.03)
+            if biome.get("hazard"): display_msg(f"{Colors.RED}Pericolo: {biome['hazard']['name']}.{Colors.RESET} {biome['hazard']['desc']}")
+            wait_enter("\nPremi INVIO per entrare...")
         
         _apply_floor_regen(player)
             
         player.run_tracker["floor_attacks"] = player.run_tracker["floor_hits"] = 0
         
-        for step in range(1, 6):
+        # La mappa del piano si genera all'arrivo: le reliquie possedute in quel momento ne cambiano i pesi
+        weights_def = base_weights.copy()
+        for r in player.relic_effects: r.modify_room_weights(weights_def)
+        floor_map = generate_floor_map(floor, weights_def, cooldowns_def, room_cooldowns, active_pacts, player)
+        path, current = [], None
+
+        for step in range(1, ROWS + 2):
             if player.hp <= 0 or player.escaped: break
-            
-            # Ricalcolati a ogni bivio: le reliquie trovate durante la run contano subito
-            weights_def = base_weights.copy()
-            for r in player.relic_effects: r.modify_room_weights(weights_def)
-            doors = _generate_doors(floor, step, weights_def, cooldowns_def, room_cooldowns, active_pacts, player)
-            # Una scelta passata torna a bussare: l'evento richiamato prende il posto della prima porta (mai del boss)
-            if step < 5 and (due := pop_due_event(player, floor)): doors[0] = {"type": "event", "event_id": due, "fated": True}
-            
+            choices = reachable(floor_map, step, current)
+
             while True:
                 clear_screen()
-                prompt = f"\n{Colors.CYAN}--- Piano {floor} | Esplorazione {step}/5 ---{Colors.RESET}\n❤️  HP: {Colors.GREEN}{player.hp}/{player.max_hp}{Colors.RESET} | 💰 Oro: {Colors.YELLOW}{player.gold}{Colors.RESET}\nScegli dove proseguire:"
-                
-                options = []
-                for i, d in enumerate(doors):
-                    t_str = d["type"].upper()
-                    if d.get("fated"): t_str += f" {Colors.MAGENTA}✦ qualcosa ti stava aspettando{Colors.RESET}"
-                    if PROFILE_MANAGER.get_perk("sesto_senso", False):
-                        if d["type"] == "combat": t_str += f" ({d['enemy'].name} {get_element_icon(d['enemy'].element)})"
-                        elif d["type"] == "event": t_str += f" ({GAME_DATA['events'][d['event_id']]['title']})"
-                        elif d["type"] == "mystery": t_str += f" ({Colors.MAGENTA}Aura illeggibile{Colors.RESET})"
-                    options.append(f"Entra: [{t_str}]")
+                prompt = "\n".join([
+                    f"\n{Colors.CYAN}--- Piano {floor}{biome_title} | Esplorazione {step}/{ROWS + 1} ---{Colors.RESET}",
+                    f"❤️  HP: {Colors.GREEN}{player.hp}/{player.max_hp}{Colors.RESET} | 💰 Oro: {Colors.YELLOW}{player.gold}{Colors.RESET}", biome_intro,
+                    *render_map(floor_map, step, path, biome), "", "Scegli dove proseguire:"])
+                sixth = PROFILE_MANAGER.get_perk("sesto_senso", False)
+                options = [f"Entra: {room_label(floor_map[step - 1][i], sixth, biome)}" + (f" ({SIDES[floor_map[step - 1][i]['slot']]})" if step <= ROWS else "")
+                           for i in choices]
                 options.append("Apri Inventario")
                 options.append("Statistiche Eroe")
                 options.append("Fuga dal Labirinto")
@@ -500,7 +466,8 @@ def play_game(infinite_mode=False):
                     clear_screen(); display_msg(f"{Colors.YELLOW}Fuggi portando in salvo le ricchezze.{Colors.RESET}")
                     player.escaped = True; break
                 else:
-                    chosen_door = doors[idx]; clear_screen(); break
+                    path.append(choices[idx]); current = floor_map[step - 1][choices[idx]]
+                    chosen_door = current; clear_screen(); break
             
             if player.hp <= 0 or player.escaped: break
             

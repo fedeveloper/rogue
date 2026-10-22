@@ -1,0 +1,57 @@
+{
+  "biomes": [
+    {
+      "id": "chiostri",
+      "name": "I Chiostri del Rimpianto",
+      "icon": "📿",
+      "floors": [1, 5],
+      "intro": [
+        "Marmo bianco, venato di un viola che non dovrebbe esserci. L'aria sa di libri antichi e di polvere di stelle.",
+        "Le arcate di un'accademia della Luce Calma si piegano su corridoi vuoti. Da qualche parte, qualcuno pronuncia il tuo nome.",
+        "Nei chiostri il silenzio non è mai completo: c'è sempre una voce cara, appena dietro l'angolo."
+      ],
+      "hazard": {
+        "name": "Nostalgia Letale",
+        "desc": "In ogni piano una stanza ospita un'eco del passato, segnata con 📿 sulla mappa. Fermarsi ad ascoltare può guarire... o trasformarti in sale."
+      },
+      "room_weights": {"event": 1.5, "trap": 0.5},
+      "enemy_elements": {"Luce": 2, "Tenebra": 2},
+      "signature_events": ["voce_cara", "statua_sale", "biblioteca_cenere"]
+    },
+    {
+      "id": "miniere",
+      "name": "Le Miniere della Testardaggine",
+      "icon": "🦇",
+      "floors": [6, 10],
+      "intro": ["Corridoi stretti scavati nel basalto vivo. Le pareti trasudano un olio nero che sussurra nomi dimenticati, e ingranaggi di ferro girano a vuoto."]
+    },
+    {
+      "id": "guglie",
+      "name": "Le Guglie del Vento Urlante",
+      "icon": "🌀",
+      "floors": [11, 15],
+      "intro": ["Non ci sono più corridoi: solo ponti sospesi su abissi di nubi elettriche, e un vento che vorrebbe strapparti l'Essenza dal corpo."]
+    },
+    {
+      "id": "ventre",
+      "name": "Il Ventre della Memoria",
+      "icon": "🌊",
+      "floors": [16, 20],
+      "intro": ["Le pareti sono membrane traslucide. Dentro, oggetti e volti di persone morte da secoli. L'aria sa di salmastro e di fiori appassiti."]
+    },
+    {
+      "id": "forgia",
+      "name": "La Forgia del Caos",
+      "icon": "🌋",
+      "floors": [21, 25],
+      "intro": ["Lava bianca e fumi neri. Martelli ciclopici battono su incudini invisibili, senza sosta, da quando gli Architetti tentarono di riforgiare gli elementi."]
+    },
+    {
+      "id": "soglia",
+      "name": "La Soglia del Dio Antico",
+      "icon": "🌌",
+      "floors": [26, 30],
+      "intro": ["Non ci sono più pareti, solo piattaforme di pura volontà sospese nel vuoto. La Luce brucia la Tenebra, che a sua volta divora il Fuoco."]
+    }
+  ]
+}

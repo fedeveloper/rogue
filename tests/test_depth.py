@@ -9,6 +9,7 @@ import unittest
 from contextlib import redirect_stdout
 from unittest import mock
 
+import floor_map
 import roguelike
 from constants import INFINITE_MODE_THRESHOLD
 from data_manager import GAME_DATA, PROFILE_MANAGER
@@ -51,8 +52,10 @@ class DepthTest(unittest.TestCase):
                 self.assertLess(avg[0] * 3, avg[-1])
 
     def test_last_door_of_floor_30_is_the_final_boss(self):
-        doors = roguelike._generate_doors(INFINITE_MODE_THRESHOLD, 5, {"combat": 1}, {}, {}, [])
-        self.assertEqual(doors[0]["enemy"].name, "DIO ANTICO")
+        # La generazione delle porte ora vive in floor_map: l'ultima fila della mappa del piano 30 è il boss finale
+        rows = floor_map.generate_floor_map(INFINITE_MODE_THRESHOLD, {"combat": 1, "trap": 1}, {}, {}, [])
+        self.assertEqual(rows[-1][0]["type"], "boss")
+        self.assertEqual(rows[-1][0]["enemy"].name, "DIO ANTICO")
 
 
 class Sandbox(unittest.TestCase):
