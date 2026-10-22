@@ -211,6 +211,11 @@ def show_player_stats(player, session=None):
     if player.get_crit_chance() > 0: display_msg(f"💥 Probabilità di critico: {player.get_crit_chance()}%")
     if player.get_lifesteal() > 0: display_msg(f"🩸 Rubavita: {player.get_lifesteal()} HP per colpo")
     display_msg(f"💨 Schivata: {player.get_dodge()}%")
+    if player.corruption:
+        cfg = GAME_DATA["meta"]["corruption"]
+        veil, voice = cfg["veil"]["threshold"], cfg["voice"]["threshold"]
+        marks = [f"+{player.corruption_atk()} ATK"] + (["Sguardo Velato"] if player.corruption >= veil else []) + (["Voce del Labirinto"] if player.corruption >= voice else [])
+        display_msg(f"🩸 Corruzione: {Colors.MAGENTA}{player.corruption}/{cfg['max']}{Colors.RESET} ({', '.join(marks)})")
     
     res_el = player._get_resonance_element()
     if res_el:

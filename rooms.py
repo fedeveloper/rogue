@@ -2,11 +2,24 @@ import random
 import time
 from typing import List
 from ui import Colors, delay_print, clear_screen, interactive_menu, display_msg, wait_enter
-from data_manager import GAME_DATA, PROFILE_MANAGER, MULTIPLIERS, get_element_icon
+from data_manager import GAME_DATA, PROFILE_MANAGER, MULTIPLIERS, get_biome, get_element_icon
 from archive import get_archive_bonus
-from constants import BASE_HIT_CHANCE, BLOOD_LETTER_CHANCE
+from codex import record_enemy_killed, record_enemy_seen, record_letter, record_reaction
+from constants import BASE_HIT_CHANCE, BLOOD_LETTER_CHANCE, CURSE_HP_DRAIN_PCT, MIN_DAMAGE_PCT, POISON_MIN, POISON_PCT, RECOVERY_HEAL_PCT
 from entities import STATUS_NAMES, Player, Enemy, generate_weapon, generate_armor, generate_accessory, generate_potion, get_random_relic
 from inventory_menu import show_inventory_menu
+
+# Effetti di controllo delle reazioni: scadono alla fine del turno del nemico, non all'inizio
+CONTROL_STATUSES = ("stun", "blind", "slow")
+# Mosse del nemico che sono attacchi
+ATTACK_MOVES = ("attack", "heavy", "venom")
+
+
+def reaction_key(a: str, b: str):
+    """La reazione fra due elementi, nell'ordine in cui compare in elements.json, o None."""
+    reactions = GAME_DATA["elements"].get("reactions", {})
+    return next((k for k in (f"{a}+{b}", f"{b}+{a}") if k in reactions), None)
+
 
 class CombatSession:
     def __init__(self, player: Player, floor: int, enemy: Enemy):
@@ -23,6 +36,12 @@ class CombatSession:
         self.first_enemy_attack = True
         self.hit_negated_by_relic = False
         self.first_player_attack = True
+        self.intent = None  # la mossa che il nemico ha annunciato per il suo prossimo turno
+        # Le regole di combattimento del bioma (Gas del Silenzio, Ebollizione Astrale, Paradosso Temporale)
+        self.biome = get_biome(floor)
+        self.rules = (self.biome or {}).get("rules", {})
+        silence = self.rules.get("silence")
+        self.silenced = bool(silence) and random.random() * 100 < silence["chance"]
 
         for r in self.player.relic_effects:
             r.on_combat_start(self)
@@ -30,8 +49,9 @@ class CombatSession:
     def process_statuses_and_curses(self, is_player_turn: bool):
         if is_player_turn:
             if self.player.has_curse("hp_drain"):
-                self.player.take_damage(2)
-                display_msg(f"{Colors.MAGENTA}La Maledizione dell'equipaggiamento drena 2 HP! ({self.player.hp}/{self.player.max_hp}){Colors.RESET}")
+                drain = max(2, self.player.max_hp * CURSE_HP_DRAIN_PCT // 100)
+                self.player.take_damage(drain)
+                display_msg(f"{Colors.MAGENTA}La Maledizione dell'equipaggiamento drena {drain} HP! ({self.player.hp}/{self.player.max_hp}){Colors.RESET}")
             if self.player.has_curse("gold_drain") and self.player.gold > 0:
                 self.player.gold = max(0, self.player.gold - 5)
                 display_msg(f"{Colors.MAGENTA}La Maledizione divora 5 Oro! (Oro: {self.player.gold}){Colors.RESET}")
@@ -39,7 +59,7 @@ class CombatSession:
             expired = []
             for status, duration in self.player.statuses.items():
                 if status == "poison":
-                    dmg = 3 + self.floor
+                    dmg = max(POISON_MIN, self.player.max_hp * POISON_PCT // 100)
                     self.player.take_damage(dmg)
                     display_msg(f"{Colors.GREEN}Il veleno ti infligge {dmg} danni! ({self.player.hp}/{self.player.max_hp}){Colors.RESET}")
                 elif status == "bleed":
@@ -56,13 +76,18 @@ class CombatSession:
             expired = []
             for status, duration in self.enemy.statuses.items():
                 if status == "poison":
-                    dmg = 3 + self.floor
+                    dmg = max(POISON_MIN, self.enemy.max_hp * POISON_PCT // 100)
                     self.enemy.hp -= dmg
                     display_msg(f"{Colors.GREEN}Il veleno infligge {dmg} danni a {self.enemy.name}! ({self.enemy.hp}){Colors.RESET}")
                 elif status == "bleed":
                     dmg = max(5, int(self.enemy.hp * 0.05))
                     self.enemy.hp -= dmg
                     display_msg(f"{Colors.RED}Il sanguinamento infligge {dmg} danni a {self.enemy.name}! ({self.enemy.hp}){Colors.RESET}")
+                elif status == "scorch":
+                    dmg = max(1, self.enemy.max_hp * GAME_DATA["elements"]["conditions"]["scorch_pct"] // 100)
+                    self.enemy.hp -= dmg
+                    display_msg(f"{Colors.RED}🌋 Il magma brucia {self.enemy.name}: {dmg} danni! ({self.enemy.hp}){Colors.RESET}")
+                if status in CONTROL_STATUSES: continue  # scadono alla fine del turno del nemico (_tick_enemy_conditions)
                 
                 self.enemy.statuses[status] -= 1
                 if self.enemy.statuses[status] <= 0: expired.append(status)
@@ -80,14 +105,19 @@ class CombatSession:
             boss_tag = f"{Colors.MAGENTA} [BOSS]{Colors.RESET}" if self.enemy.is_boss else ""
             delay_print(f"{Colors.RED}!!! Incontri un {self.enemy.name.upper()}{boss_tag} [{get_element_icon(self.enemy.element)}] !!!{Colors.RESET}", 0.04)
         
+        record_enemy_seen(self.enemy.base_name)
         # Chance to find a Bloody Letter before combat
         if not self.enemy.is_boss and random.random() < BLOOD_LETTER_CHANCE:
-            letter = random.choice(GAME_DATA['lore']['letters'])
+            idx = random.randrange(len(GAME_DATA['lore']['letters']))
+            letter = GAME_DATA['lore']['letters'][idx]
+            record_letter(idx)
             display_msg(f"\n{Colors.YELLOW}📜 Noti un messaggio inciso sulla parete:{Colors.RESET}")
             delay_print(f"\"{letter}\"\n", 0.05)
             self.player.gain_exp(10)
 
         self._announce_resonance()
+        if self.silenced:
+            display_msg(f"{Colors.MAGENTA}{self.biome['icon']} {self.biome['hazard']['name']}: un vapore verdastro riempie la stanza. La tua Difesa perde la sua tecnica.{Colors.RESET}")
         try:
             self._combat_loop()
         finally:
@@ -123,6 +153,10 @@ class CombatSession:
             self.player.statuses.clear()
             display_msg(f"{Colors.CYAN}Lo scontro è finito: {names} svanisce dal tuo corpo.{Colors.RESET}")
 
+    def _paradox(self, key: str) -> bool:
+        rule = self.rules.get("paradox")
+        return bool(rule) and random.random() * 100 < rule[key]
+
     def _combat_loop(self):
         while self.player.hp > 0 and self.enemy.hp > 0:
             self.process_statuses_and_curses(is_player_turn=True)
@@ -133,6 +167,10 @@ class CombatSession:
                 
             if not self.player_turn():
                 break
+            if self.enemy.hp > 0 and self._paradox("player_repeat"):
+                display_msg(f"{Colors.MAGENTA}⏳ Il tempo si riavvolge: agisci ancora!{Colors.RESET}")
+                if not self.player_turn():
+                    break
                 
             if self.enemy.hp > 0:
                 self.process_statuses_and_curses(is_player_turn=False)
@@ -141,9 +179,15 @@ class CombatSession:
                     break
                 if not self.enemy_turn():
                     return
+                if self._paradox("enemy_double"):
+                    display_msg(f"{Colors.MAGENTA}⏳ Il tempo si lacera: {self.enemy.name} agisce di nuovo!{Colors.RESET}")
+                    self.intent = self.enemy.choose_move()
+                    if not self.enemy_turn():
+                        return
 
     def on_enemy_death(self):
         display_msg(f"\n{Colors.YELLOW}{Colors.BOLD}*** Hai sconfitto {self.enemy.name}! ***{Colors.RESET}")
+        record_enemy_killed(self.enemy.base_name)
         if self.player.hp == 1: self.player.run_tracker["kill_1_hp_done"] = True
         if self.enemy.is_boss and not self.boss_hit_taken: self.player.run_tracker["no_hit_boss_done"] = True
         
@@ -167,6 +211,16 @@ class CombatSession:
                 display_msg(f"\n{Colors.MAGENTA}DROP LEGGENDARIO: {drop.display_name}!{Colors.RESET}")
                 if drop.flavor: display_msg(f"{Colors.YELLOW}Flavor: {drop.flavor}{Colors.RESET}")
                 self.player.inventory.append(drop)
+            audacity_reward(self.player, self.floor, self.enemy.gold_drop)
+        elif self.enemy.modifier == "elite":
+            rule = GAME_DATA["meta"]["rooms"]["elite"]
+            relic = get_random_relic(self.player) if random.random() * 100 < rule["relic_chance"] else None
+            if relic: self.player.add_relic(relic)
+            else:
+                level, epic = self.floor + rule["loot_floor_bonus"], random.random() * 100 < rule["epic_chance"]
+                drop = generate_weapon(level, epic) if random.random() > 0.5 else generate_armor(level, epic)
+                display_msg(f"\n{Colors.MAGENTA}Il campione lascia cadere: {drop.display_name}!{Colors.RESET}")
+                self.player.inventory.append(drop)
         elif self.enemy.modifier == "hard":
             drop = generate_weapon(self.floor, False) if random.random() > 0.5 else generate_armor(self.floor, False)
             display_msg(f"\n{Colors.MAGENTA}Il nemico lascia cadere: {drop.display_name}!{Colors.RESET}")
@@ -181,7 +235,74 @@ class CombatSession:
         wait_enter("\nPremi INVIO per continuare...")
 
     def _calc_hit_chance(self, multiplier: float) -> int:
-        return self.player.get_hit_chance(self.enemy.base_dodge, multiplier)
+        slow = GAME_DATA["elements"]["conditions"]["slow"] if "slow" in self.enemy.statuses else 0
+        return self.player.get_hit_chance(self.enemy.base_dodge - slow, multiplier)
+
+    # ------------------------------------------------------------- marchi e reazioni elementali
+    def apply_element(self, element: str):
+        """Marchia il nemico con un elemento; se porta già un marchio di un elemento compatibile, scatena la reazione."""
+        if not element or element == "Normale" or self.enemy.hp <= 0: return
+        mark = self.enemy.mark
+        if mark and mark[0] != element and (key := reaction_key(mark[0], element)):
+            self._trigger_reaction(key)
+            return
+        if not mark or mark[0] != element:
+            display_msg(f"{Colors.CYAN}{self.enemy.name} porta il marchio {get_element_icon(element)}.{Colors.RESET}")
+        self.enemy.mark = [element, GAME_DATA["elements"]["marks"]["duration"]]
+
+    def _trigger_reaction(self, key: str):
+        r = GAME_DATA["elements"]["reactions"][key]
+        self.enemy.mark = None
+        record_reaction(key)
+        self.player.run_tracker["reactions"] = self.player.run_tracker.get("reactions", 0) + 1
+        msg = f"{Colors.MAGENTA}{Colors.BOLD}⚡ REAZIONE: {r['icon']} {r['name'].upper()}!{Colors.RESET}"
+        if r.get("bonus_pct"):
+            dmg = self.player.get_total_atk() * r["bonus_pct"] // 100
+            self.enemy.hp -= dmg
+            msg += f" {Colors.CYAN}{dmg} danni extra.{Colors.RESET}"
+        if r.get("status"):
+            s_type, turns = r["status"]["type"], r["status"]["duration"]
+            self.enemy.statuses[s_type] = max(self.enemy.statuses.get(s_type, 0), turns)
+            msg += f" {Colors.MAGENTA}{self.enemy.name}: {STATUS_NAMES[s_type]}.{Colors.RESET}"
+        display_msg(msg)
+
+    def _tick_enemy_conditions(self):
+        """Fine del turno del nemico: scadono marchio, Accecato e Impantanato."""
+        if self.enemy.mark:
+            self.enemy.mark[1] -= 1
+            if self.enemy.mark[1] <= 0: self.enemy.mark = None
+        for s in [s for s in self.enemy.statuses if s in ("blind", "slow")]:
+            self.enemy.statuses[s] -= 1
+            if self.enemy.statuses[s] <= 0: del self.enemy.statuses[s]
+
+    # ------------------------------------------------------------- intenti
+    def _move(self, move_id: str) -> dict:
+        return GAME_DATA["moves"]["moves"][move_id]
+
+    def choose_intent(self):
+        self.intent = "stunned" if "stun" in self.enemy.statuses else self.enemy.choose_move()
+        # Corruzione alta: il Labirinto a volte nasconde la mossa che il nemico prepara
+        voice = GAME_DATA["meta"]["corruption"]["voice"]
+        self.intent_hidden = self.player.corruption >= voice["threshold"] and random.random() * 100 < voice["chance"]
+
+    def intent_text(self) -> str:
+        if getattr(self, "intent_hidden", False): return f"❔ {Colors.MAGENTA}??? (il Labirinto ti nasconde la sua mossa){Colors.RESET}"
+        if self.intent == "stunned": return f"🧊 {Colors.CYAN}Congelato: perderà il turno{Colors.RESET}"
+        m = self._move(self.intent)
+        text = f"{m['icon']} {Colors.BOLD}{m['name']}{Colors.RESET}"
+        if self.intent in ATTACK_MOVES:
+            text += f" (≈{self.estimate_enemy_damage(m.get('damage_mult', 1))} danni)"
+            if self.intent == "heavy": text += f" {Colors.RED}— difenditi!{Colors.RESET}"
+            if self.intent == "venom" and self.enemy.status_inflict: text += f" + {STATUS_NAMES.get(self.enemy.status_inflict['type'], '')} se ti ferisce"
+        elif self.intent == "guard": text += f": i tuoi colpi faranno il {int(m['damage_taken_mult'] * 100)}% dei danni"
+        elif self.intent == "heal": text += f": recupererà il {m['heal_pct']}% degli HP"
+        return text
+
+    def enemy_status_text(self) -> str:
+        parts = []
+        if self.enemy.mark: parts.append(f"marchio {get_element_icon(self.enemy.mark[0])}")
+        parts += [STATUS_NAMES.get(s, s) for s in self.enemy.statuses]
+        return f" [{', '.join(parts)}]" if parts else ""
 
     def attack_multiplier(self) -> float:
         multiplier = MULTIPLIERS.get(self.player.weapon.element, {}).get(self.enemy.element, 1.0)
@@ -241,9 +362,13 @@ class CombatSession:
             if self.resonance == "Tenebra":
                 dmg_dealt += int(self._resonance_value("Tenebra"))
                 eff += f" {Colors.MAGENTA}[TENEBRA]{Colors.RESET}"
+            if self.intent == "guard":
+                dmg_dealt = int(dmg_dealt * self._move("guard")["damage_taken_mult"])
+                eff += f" {Colors.BLUE}[GUARDIA]{Colors.RESET}"
             
             self.enemy.hp -= dmg_dealt
             display_msg(f"\n-> Colpisci con {self.player.weapon.name} infliggendo {Colors.CYAN}{dmg_dealt} danni!{Colors.RESET} {eff}")
+            self.apply_element(self.player.weapon.element)
             
             for r in self.player.relic_effects: r.on_attack_landed(self, multiplier)
 
@@ -274,7 +399,9 @@ class CombatSession:
     def execute_player_defense(self):
         self.is_defending = True
         self.player.on_defense_started()
-        if self.def_type == "counter":
+        if self.def_type == "silenced":
+            display_msg(f"\n{Colors.BLUE}-> Ti ripari come puoi: nel gas la tecnica non ti riesce.{Colors.RESET}")
+        elif self.def_type == "counter":
             display_msg(f"\n{Colors.BLUE}-> Sollevi la guardia, pronto a sfruttare l'attacco nemico!{Colors.RESET}")
         elif self.def_type == "focus":
             self.focused_attack = True
@@ -283,7 +410,7 @@ class CombatSession:
             if self.player.cursed:
                 display_msg(f"\n{Colors.BLUE}-> Ti difendi, ma la Maledizione blocca il tuo recupero magico.{Colors.RESET}")
             else:
-                heal_amt = max(1, self.player.max_hp // 20)
+                heal_amt = max(1, self.player.max_hp * RECOVERY_HEAL_PCT // 100)
                 self.player.heal(heal_amt)
                 display_msg(f"\n{Colors.BLUE}-> Evochi una barriera vitale. {Colors.GREEN}Recuperi {heal_amt} HP!{Colors.RESET}")
 
@@ -299,8 +426,12 @@ class CombatSession:
             self.is_defending = False
 
             self.def_type, self.def_txt = self.player.get_defense_action()
+            if self.silenced: self.def_type, self.def_txt = "silenced", "Difesa (Dimezza danni; il gas soffoca la tecnica)"
+            if self.intent is None: self.choose_intent()
 
-            prompt = f"\n{Colors.BOLD}--- ⚔️ IN COMBATTIMENTO ⚔️ ---{Colors.RESET}\nTu: {Colors.GREEN}{self.player.hp}/{self.player.max_hp} HP{Colors.RESET} | {self.enemy.name}: {Colors.RED}{self.enemy.hp} HP{Colors.RESET}"
+            prompt = (f"\n{Colors.BOLD}--- ⚔️ IN COMBATTIMENTO ⚔️ ---{Colors.RESET}\nTu: {Colors.GREEN}{self.player.hp}/{self.player.max_hp} HP{Colors.RESET} | "
+                      f"{self.enemy.name}: {Colors.RED}{self.enemy.hp}/{self.enemy.max_hp} HP{Colors.RESET}{self.enemy_status_text()}\n"
+                      f"Intento del nemico: {self.intent_text()}")
             options = [
                 "Attacca",
                 self.def_txt,
@@ -367,12 +498,29 @@ class CombatSession:
         return f_chance
 
     def _calc_enemy_hit_chance(self, en_multiplier: float) -> int:
-        return max(10, min(100, BASE_HIT_CHANCE + self.enemy.base_acc - self.player.get_dodge() + (15 if en_multiplier > 1.0 else -20 if en_multiplier < 1.0 else 0)))
+        blind = GAME_DATA["elements"]["conditions"]["blind"] if "blind" in self.enemy.statuses else 0
+        return max(10, min(100, BASE_HIT_CHANCE + self.enemy.base_acc - blind - self.player.get_dodge() + (15 if en_multiplier > 1.0 else -20 if en_multiplier < 1.0 else 0)))
 
-    def _calc_enemy_damage(self, en_multiplier: float) -> int:
+    def _enemy_multiplier(self) -> float:
+        en_multiplier = MULTIPLIERS.get(self.enemy.element, {}).get(self.player.armor.element, 1.0)
+        for r in self.player.relic_effects: en_multiplier = r.modify_multiplier(en_multiplier, is_defense=True)
+        return en_multiplier
+
+    def _enemy_attack_power(self) -> int:
+        return max(1, int(self.enemy.atk * (1 - self._resonance_value("Acqua")))) if self.resonance == "Acqua" else self.enemy.atk
+
+    def estimate_enemy_damage(self, move_mult: float = 1.0) -> int:
+        """Danno atteso dell'attacco annunciato, senza difesa attiva né effetti casuali (per l'intento)."""
         defense = self.player.get_total_def() + sum(r.get_def_modifier(self) for r in self.player.relic_effects)
-        en_atk = max(1, int(self.enemy.atk * (1 - self._resonance_value("Acqua")))) if self.resonance == "Acqua" else self.enemy.atk
-        dmg_taken = max(0, int((en_atk + random.randint(-1, 2)) * en_multiplier) - defense)
+        raw = max(1, int(self._enemy_attack_power() * self._enemy_multiplier() * move_mult))
+        return max(raw - defense, -(-raw * MIN_DAMAGE_PCT // 100))
+
+    def _calc_enemy_damage(self, en_multiplier: float, move_mult: float = 1.0) -> int:
+        defense = self.player.get_total_def() + sum(r.get_def_modifier(self) for r in self.player.relic_effects)
+        en_atk = self._enemy_attack_power()
+        raw = max(1, int((en_atk + random.randint(-1, 2)) * en_multiplier * move_mult))
+        # La difesa riduce il colpo, ma non lo annulla mai: resta almeno MIN_DAMAGE_PCT del danno grezzo
+        dmg_taken = max(raw - defense, -(-raw * MIN_DAMAGE_PCT // 100))
         if self.is_defending: dmg_taken //= 2
         before_relics = dmg_taken
         for r in self.player.relic_effects: dmg_taken = r.on_take_damage(self, dmg_taken, en_multiplier)
@@ -381,8 +529,36 @@ class CombatSession:
         return dmg_taken
 
     def enemy_turn(self) -> bool:
-        en_multiplier = MULTIPLIERS.get(self.enemy.element, {}).get(self.player.armor.element, 1.0)
-        for r in self.player.relic_effects: en_multiplier = r.modify_multiplier(en_multiplier, is_defense=True)
+        """Il nemico esegue la mossa annunciata (un attacco, se non ne aveva annunciata nessuna)."""
+        intent, self.intent = self.intent or "attack", None
+        if "stun" in self.enemy.statuses:
+            del self.enemy.statuses["stun"]
+            display_msg(f"{Colors.CYAN}<- 🧊 {self.enemy.name} è congelato e perde il turno!{Colors.RESET}")
+            result = True
+        elif intent == "guard":
+            display_msg(f"{Colors.BLUE}<- {self.enemy.name} resta in guardia.{Colors.RESET}")
+            result = True
+        elif intent == "heal":
+            healed = min(self.enemy.max_hp - self.enemy.hp, self.enemy.max_hp * self._move("heal")["heal_pct"] // 100)
+            self.enemy.hp += healed
+            self.enemy.heals_used += 1
+            display_msg(f"{Colors.GREEN}<- 💚 {self.enemy.name} si rigenera: +{healed} HP. ({self.enemy.hp}/{self.enemy.max_hp}){Colors.RESET}")
+            result = True
+        else:
+            result = self._enemy_attack(intent)
+        if not result or self.enemy.hp <= 0 or self.player.hp <= 0: return result
+        self._tick_enemy_conditions()
+        if self.burn_dmg > 0:
+            self.enemy.hp -= self.burn_dmg
+            display_msg(f"{Colors.RED}🔥 Risonanza di Fuoco: Ustione infligge {self.burn_dmg} danni!{Colors.RESET}")
+            if self.enemy.hp <= 0:
+                self.on_enemy_death()
+                return False
+        return True
+
+    def _enemy_attack(self, move: str) -> bool:
+        en_multiplier = self._enemy_multiplier()
+        move_mult = self._move(move).get("damage_mult", 1)
         
         en_hit_chance = self._calc_enemy_hit_chance(en_multiplier)
         # Cacciatore Etereo: il primo attacco nemico di ogni scontro manca sempre
@@ -390,7 +566,7 @@ class CombatSession:
         self.first_enemy_attack = False
 
         if random.randint(1, 100) <= en_hit_chance:
-            dmg_taken = self._calc_enemy_damage(en_multiplier)
+            dmg_taken = self._calc_enemy_damage(en_multiplier, move_mult)
             if self.enemy.hp <= 0:
                 self.on_enemy_death()
                 return False
@@ -400,11 +576,12 @@ class CombatSession:
             if dmg_taken > 0: 
                 self.boss_hit_taken = True
                 dif = f"{Colors.BLUE}[DIFESA]{Colors.RESET}" if self.is_defending else ""
-                display_msg(f"<- {self.enemy.name} ti colpisce! Subisci {Colors.RED}{dmg_taken} danni{Colors.RESET}. {en_eff}{dif}")
+                heavy = f"{Colors.RED}[COLPO PESANTE]{Colors.RESET} " if move == "heavy" else ""
+                display_msg(f"<- {heavy}{self.enemy.name} ti colpisce! Subisci {Colors.RED}{dmg_taken} danni{Colors.RESET}. {en_eff}{dif}")
                 
                 if getattr(self.enemy, 'status_inflict', None):
                     s_data = self.enemy.status_inflict
-                    if random.randint(1, 100) <= s_data.get("chance", 100):
+                    if move == "venom" or random.randint(1, 100) <= s_data.get("chance", 100):
                         s_type = s_data["type"]
                         self.player.statuses[s_type] = max(self.player.statuses.get(s_type, 0), s_data["duration"])
                         display_msg(f"{Colors.MAGENTA}Sei stato afflitto da {STATUS_NAMES.get(s_type, s_type).upper()}!{Colors.RESET}")
@@ -430,22 +607,71 @@ class CombatSession:
                     display_msg(f"\n{Colors.RED}{Colors.BOLD}Sei caduto in battaglia contro {self.enemy.name}...{Colors.RESET}")
                     wait_enter("\nPremi INVIO per continuare...")
                     return False
+                boil = self.rules.get("boil")
+                if boil and self.player.gold > 0 and random.random() * 100 < boil["chance"]:
+                    lost = max(1, self.player.gold * boil["gold_pct"] // 100)
+                    self.player.gold -= lost
+                    display_msg(f"{Colors.YELLOW}{self.biome['icon']} {self.biome['hazard']['name']}: {lost} Oro ti bolle via dalla borsa. (Oro: {self.player.gold}){Colors.RESET}")
             elif not self.hit_negated_by_relic:
-                display_msg(f"<- {self.enemy.name} attacca, ma la corazza blocca TUTTO! {en_eff}")
+                display_msg(f"<- {self.enemy.name} attacca, ma il colpo non ti ferisce. {en_eff}")
+            if self.is_defending:
+                # In guardia, l'armatura marchia con il suo elemento chi ti colpisce: è così che si combinano due elementi
+                self.apply_element(self.player.armor.element)
+                if self.enemy.hp <= 0:
+                    self.on_enemy_death()
+                    return False
         else:
             display_msg(f"{Colors.CYAN}<- {self.enemy.name} attacca... ma riesci a schivarlo!{Colors.RESET}")
-        
-        if self.burn_dmg > 0 and self.enemy.hp > 0:
-            self.enemy.hp -= self.burn_dmg
-            display_msg(f"{Colors.RED}🔥 Risonanza di Fuoco: Ustione infligge {self.burn_dmg} danni!{Colors.RESET}")
-            if self.enemy.hp <= 0:
-                self.on_enemy_death()
-                return False
         return True
+
+def audacity_bonus(audacity: int) -> dict:
+    """Cosa aggiunge l'Audacia al bottino del boss: oro in più (in %) e un oggetto, epico alle soglie più alte."""
+    rule = GAME_DATA["meta"]["rooms"]["audacity"]
+    return {"gold_pct": audacity * rule["gold_pct_per_point"], "item": audacity >= rule["item_at"], "epic": audacity >= rule["epic_at"]}
+
+
+def audacity_text(audacity: int) -> str:
+    bonus = audacity_bonus(audacity)
+    if not audacity: return "nessun premio extra dal boss"
+    parts = [f"+{bonus['gold_pct']}% oro"]
+    if bonus["item"]: parts.append("oggetto epico" if bonus["epic"] else "oggetto")
+    return "boss: " + ", ".join(parts)
+
+
+def gain_audacity(player: Player, room_type: str) -> int:
+    points = GAME_DATA["meta"]["rooms"]["audacity"]["points"].get(room_type, 0)
+    player.audacity += points
+    return points
+
+
+def audacity_reward(player: Player, floor: int, boss_gold: int):
+    """Il premio del boss per i rischi corsi nel piano."""
+    if player.audacity <= 0: return
+    bonus = audacity_bonus(player.audacity)
+    display_msg(f"\n{Colors.RED}🎲 Audacia {player.audacity}: il Labirinto premia chi ha rischiato.{Colors.RESET}")
+    if not player.aristocrat:
+        extra = player.calculate_gold_gain(boss_gold * bonus["gold_pct"] // 100)
+        player.gold += extra
+        display_msg(f"Ottieni altri {Colors.YELLOW}{extra} oro{Colors.RESET}.")
+    if bonus["item"]:
+        drop = generate_weapon(floor + 2, bonus["epic"]) if random.random() > 0.5 else generate_armor(floor + 2, bonus["epic"])
+        display_msg(f"{Colors.MAGENTA}Premio dell'Audacia: {drop.display_name}!{Colors.RESET}")
+        player.inventory.append(drop)
+
 
 def combat_room(player: Player, floor: int, enemy_instance: Enemy):
     session = CombatSession(player, floor, enemy_instance)
     session.start()
+
+def mystery_odds() -> dict:
+    """Probabilità (in %) degli esiti della stanza del Mistero, come le rivela il Sesto Senso."""
+    outcomes = GAME_DATA["meta"]["rooms"]["mystery"]["outcomes"]
+    total = sum(outcomes.values())
+    return {k: round(w * 100 / total) for k, w in outcomes.items()}
+
+
+MYSTERY_NAMES = {"hoard": "Tesoro", "relic": "Reliquia", "hard": "Mostro", "easy": "Preda", "trap": "Trappola", "empty": "Vuoto"}
+
 
 def mystery_room(player: Player, floor: int, active_pacts: List[str]):
     delay_print(f"\n{Colors.MAGENTA}--- LA STANZA DEL MISTERO ---{Colors.RESET}")
@@ -453,7 +679,10 @@ def mystery_room(player: Player, floor: int, active_pacts: List[str]):
     delay_print(f"{random.choice(GAME_DATA['lore']['mystery'])}", 0.03)
     time.sleep(1)
 
-    outcome = random.choice(["hard", "easy", "trap", "empty"])
+    outcomes = GAME_DATA["meta"]["rooms"]["mystery"]["outcomes"]
+    outcome = random.choices(list(outcomes), weights=list(outcomes.values()))[0]
+    relic = get_random_relic(player) if outcome == "relic" else None
+    if outcome == "relic" and not relic: outcome = "hoard"
 
     if outcome == "hard":
         display_msg(f"\n{Colors.RED}Dall'oscurità emerge un mostro eccezionalmente feroce!{Colors.RESET}")
@@ -465,125 +694,19 @@ def mystery_room(player: Player, floor: int, active_pacts: List[str]):
         combat_room(player, floor, Enemy(floor, False, active_pacts, modifier="easy"))
     elif outcome == "trap":
         trap_room(player, floor, active_pacts)
+    elif outcome == "hoard":
+        display_msg(f"\n{Colors.YELLOW}La nebbia nascondeva il deposito di qualcuno che non è mai tornato a prenderlo.{Colors.RESET}")
+        rule = GAME_DATA["meta"]["rooms"]["mystery"]
+        _gain_gold(player, int(rule["hoard_gold_mult"] * _chest_gold(floor)))
+        _gain_item(player, generate_accessory(floor))
+        wait_enter("\nPremi INVIO per proseguire...")
+    elif outcome == "relic":
+        display_msg(f"\n{Colors.MAGENTA}Al centro della stanza, sospesa nel nulla, pulsa una reliquia.{Colors.RESET}")
+        player.add_relic(relic)
+        wait_enter("\nPremi INVIO per proseguire...")
     else:
         display_msg(f"\n{Colors.GREEN}La nebbia si dirada. La stanza è vuota. Tiri un sospiro di sollievo.{Colors.RESET}")
         wait_enter("Premi INVIO per proseguire...")
-
-def _handle_event_action(player: Player, floor: int, action: str, msg: str, msg_alt: str, ev: dict, idx: int) -> bool:
-    if action == "heal_max":
-        player.max_hp += 10
-        if not player.cursed: player.heal(player.max_hp); display_msg(f"{Colors.GREEN}Senti un potere immenso! HP Ripristinati!{Colors.RESET}")
-        else: display_msg(f"{Colors.RED}L'acqua scivola via... la maledizione blocca la cura.{Colors.RESET}")
-    elif action == "coin_toss":
-        if player.gold >= 20:
-            player.gold -= 20
-            if random.random() > 0.5:
-                r = get_random_relic(player)
-                if r: player.add_relic(r)
-                else: player.gold += 50; display_msg(f"{Colors.YELLOW}{msg} (+50 Oro){Colors.RESET}")
-            else: display_msg(f"{Colors.YELLOW}{msg_alt}{Colors.RESET}")
-        else: display_msg(f"{Colors.RED}Oro insufficiente!{Colors.RESET}")
-    elif action == "trade_weapon":
-        if player.gold >= 50:
-            player.gold -= 50
-            drop = generate_weapon(floor + 2, True)
-            player.inventory.append(drop); display_msg(f"{Colors.MAGENTA}Ottieni: {drop.display_name}!{Colors.RESET}")
-        else: display_msg(f"{Colors.RED}Non hai abbastanza Oro.{Colors.RESET}")
-    elif action == "trade_relic":
-        display_msg(f"{Colors.RED}{msg}{Colors.RESET}")
-        alive = player.take_damage(30)
-        if not alive:
-            display_msg(f"\n{Colors.RED}{Colors.BOLD}Il dissanguamento ti è stato fatale...{Colors.RESET}")
-            return False
-        r = get_random_relic(player)
-        if r: player.add_relic(r)
-    elif action == "blood_gold":
-        base = ev["choices"][idx].get("gold", 100)
-        g = base * 3 if player.midas else base
-        player.gold += g
-        display_msg(f"{Colors.RED}{msg}" + (f" (+{g} Oro)" if g else "") + f"{Colors.RESET}.")
-        alive = player.take_damage(40)
-        if not alive:
-            display_msg(f"\n{Colors.RED}{Colors.BOLD}Hai sacrificato troppa linfa vitale... Sei morto.{Colors.RESET}")
-            return False
-    elif action == "fight_elite" or action.startswith("unlock_npc_fight"):
-        display_msg(f"{Colors.RED}{msg}{Colors.RESET}")
-        e = Enemy(floor + 5, True, player.active_pacts)
-        wait_enter("Premi INVIO per combattere..."); combat_room(player, floor, e)
-        if player.hp <= 0: return False
-        if action.startswith("unlock_npc_fight_") and player.hp > 0:
-            npc_name = action.replace("unlock_npc_fight_", "")
-            PROFILE_MANAGER.unlock_npc(npc_name)
-            PROFILE_MANAGER.save()
-            display_msg(f"\n{Colors.GREEN}Il mostro è sconfitto! Raccogli le chiavi e liberi il prigioniero. Ti ringrazia e scappa verso il Campo Base.{Colors.RESET}")
-    elif action.startswith("unlock_npc_"):
-        if action.startswith("unlock_npc_fight"): return True
-        npc_name = action.replace("unlock_npc_", "")
-        alive = player.take_damage(40)
-        if not alive:
-            display_msg(f"\n{Colors.RED}{Colors.BOLD}Il dissanguamento ti è stato fatale...{Colors.RESET}")
-            return False
-        display_msg(f"{Colors.GREEN}{msg}{Colors.RESET}")
-        PROFILE_MANAGER.unlock_npc(npc_name)
-        PROFILE_MANAGER.save()
-    elif action == "give_quest_item":
-        q_item = ev["choices"][idx].get("item_id", "")
-        if q_item and q_item not in player.quest_items:
-            player.quest_items.append(q_item)
-            display_msg(f"{Colors.YELLOW}{msg}{Colors.RESET}")
-    elif action == "use_quest_item":
-        display_msg(f"{Colors.YELLOW}{msg}{Colors.RESET}")
-        if ev["choices"][idx].get("reward_weapon", False):
-            drop = generate_weapon(floor + 3, True)
-            player.inventory.append(drop); display_msg(f"{Colors.MAGENTA}Trovi Arma Epica: {drop.display_name}!{Colors.RESET}")
-        rg = ev["choices"][idx].get("reward_gold", 0)
-        if rg > 0:
-            player.gold += rg
-            display_msg(f"{Colors.YELLOW}Ottieni {rg} Oro!{Colors.RESET}")
-    elif action == "none":
-        display_msg(f"{Colors.CYAN}{msg}{Colors.RESET}")
-    
-    return True
-
-def event_room(player: Player, event_id: str, floor: int):
-    ev = GAME_DATA["events"][event_id]
-    clear_screen()
-    
-    first_time = True
-    
-    while True:
-        if first_time:
-            display_msg(f"\n{Colors.MAGENTA}{Colors.BOLD}--- {ev['title']} ---{Colors.RESET}")
-            display_msg(f"❤️  HP: {Colors.GREEN}{player.hp}/{player.max_hp}{Colors.RESET} | 💰 Oro: {Colors.YELLOW}{player.gold}{Colors.RESET}\n")
-            delay_print(ev["text"], 0.03)
-            prompt = "\nScegli:"
-            first_time = False
-        else:
-            clear_screen()
-            prompt = f"\n{Colors.MAGENTA}{Colors.BOLD}--- {ev['title']} ---{Colors.RESET}\n❤️  HP: {Colors.GREEN}{player.hp}/{player.max_hp}{Colors.RESET} | 💰 Oro: {Colors.YELLOW}{player.gold}{Colors.RESET}\n\n{ev['text']}\nScegli:"
-            
-        valid_choices = []
-        options = []
-        
-        for i, c in enumerate(ev["choices"]):
-            req_item = c.get("requires_item", "")
-            if req_item and req_item not in player.quest_items:
-                options.append(f"{Colors.RED}{c['text']} (Non possiedi l'oggetto richiesto){Colors.RESET}")
-            else:
-                valid_choices.append(i)
-                options.append(c['text'])
-                
-        idx = interactive_menu(options, prompt)
-        
-        if idx in valid_choices:
-            action = ev["choices"][idx]["action"]
-            msg = ev["choices"][idx].get("msg", "")
-            msg_alt = ev["choices"][idx].get("msg_alt", "")
-            
-            if not _handle_event_action(player, floor, action, msg, msg_alt, ev, idx): return
-            
-            wait_enter("\nPremi INVIO per proseguire...")
-            return
 
 def vendor_room(player: Player, floor: int):
     delay_print(f"\n{random.choice(GAME_DATA['lore']['vendor'])}")
@@ -728,51 +851,138 @@ def campfire_room(player: Player, floor: int):
                         wait_enter("\nPremi INVIO...")
                         break
 
-def treasure_room(player: Player, floor: int):
-    delay_print(f"\n{Colors.YELLOW}{random.choice(GAME_DATA['lore']['treasure'])}{Colors.RESET}")
-    gold = random.randint(30, 60) + (floor * 10)
-    g = player.calculate_gold_gain(gold)
-    
+def _chest_gold(floor: int) -> int:
+    return random.randint(30, 60) + (floor * 10)
+
+
+def _gain_gold(player: Player, amount: int):
+    g = player.calculate_gold_gain(amount)
     player.gold += g
     display_msg(f"{Colors.GREEN}Trovate {g} monete d'oro!{Colors.RESET}")
-    
-    if random.random() < 0.15:
+
+
+def _gear(level: int, epic: bool = False):
+    return generate_weapon(level, epic) if random.random() < 0.5 else generate_armor(level, epic)
+
+
+def _gain_item(player: Player, drop, text: str = "C'era anche"):
+    display_msg(f"{text}: {Colors.CYAN}{drop.display_name}{Colors.RESET}!")
+    player.inventory.append(drop)
+
+
+def chest_risks(floor: int) -> dict:
+    """Probabilità (in %) che un forziere del piano sia un Mimic o sia chiuso a chiave: crescono con la profondità."""
+    rules = GAME_DATA["meta"]["rooms"]["treasure"]
+    return {k: max(0.0, min(r["max"], (floor - r["from_floor"] + 1) * r["pct_per_floor"])) if floor >= r["from_floor"] else 0.0
+            for k, r in rules.items() if k in ("mimic", "locked")}
+
+
+def treasure_room(player: Player, floor: int):
+    delay_print(f"\n{Colors.YELLOW}{random.choice(GAME_DATA['lore']['treasure'])}{Colors.RESET}")
+    rules, risks = GAME_DATA["meta"]["rooms"]["treasure"], chest_risks(floor)
+    roll = random.random() * 100
+    kind = "mimic" if roll < risks["mimic"] else "locked" if roll < risks["mimic"] + risks["locked"] else "open"
+
+    if kind == "locked":
+        cost = max(1, player.max_hp * rules["locked"]["hp_cost_pct"] // 100)
+        prompt = (f"\n{Colors.YELLOW}Il forziere è chiuso da una serratura arrugginita. Dentro, qualcosa di pesante tintinna.{Colors.RESET}\n"
+                  f"❤️  HP: {player.hp}/{player.max_hp}")
+        if interactive_menu([f"Forza la serratura (-{cost} HP, bottino garantito)", "Lascialo stare"], prompt) != 0:
+            display_msg(f"{Colors.CYAN}Lasci il forziere alla polvere.{Colors.RESET}")
+            wait_enter("\nPremi INVIO per continuare..."); return
+        display_msg(f"{Colors.RED}Le dita sanguinano sul metallo: -{cost} HP.{Colors.RESET}")
+        if not player.take_damage(cost):
+            wait_enter("\nPremi INVIO per continuare..."); return
+        _gain_gold(player, _chest_gold(floor))
+        _gain_item(player, generate_accessory(floor) if random.random() < 0.5 else generate_potion(floor))
+        wait_enter("\nPremi INVIO per continuare..."); return
+
+    # Il Mimic a volte si tradisce, ma anche un forziere vero può sembrare respirare; il Sesto Senso non sbaglia
+    if PROFILE_MANAGER.get_perk("sesto_senso", False):
+        tell = kind == "mimic"
+        hint = f"{Colors.MAGENTA}Il Sesto Senso ti avverte: quel forziere ha fame.{Colors.RESET}" if tell else ""
+    else:
+        tell = random.random() * 100 < rules["mimic"]["tell" if kind == "mimic" else "false_tell"]
+        hint = f"{Colors.MAGENTA}Il coperchio sembra sollevarsi appena, come un respiro.{Colors.RESET}" if tell else ""
+    if hint:
+        if interactive_menu(["Aprilo comunque", "Lascialo stare"], f"\n{hint}\n❤️  HP: {player.hp}/{player.max_hp}") != 0:
+            display_msg(f"{Colors.CYAN}Ti allontani senza voltare le spalle al forziere.{Colors.RESET}")
+            wait_enter("\nPremi INVIO per continuare..."); return
+
+    if kind == "mimic":
+        display_msg(f"\n{Colors.RED}{Colors.BOLD}Il forziere spalanca una bocca di denti: è un MIMIC!{Colors.RESET}")
+        wait_enter("Premi INVIO per difenderti...")
+        mimic = Enemy(floor, False, player.active_pacts, name="Mimic")
+        combat_room(player, floor, mimic)
+        if player.hp > 0 and mimic.hp <= 0:
+            display_msg(f"\n{Colors.YELLOW}Nel ventre del Mimic c'è il bottino di chi lo ha aperto prima di te.{Colors.RESET}")
+            _gain_gold(player, 2 * _chest_gold(floor))
+            _gain_item(player, _gear(floor + rules["loot_floor_bonus"]), "Hai trovato")
+            wait_enter("\nPremi INVIO per continuare...")
+        return
+
+    _gain_gold(player, _chest_gold(floor))
+    if random.random() * 100 < rules["relic_chance"]:
         r = get_random_relic(player)
         if r: player.add_relic(r)
     elif random.random() < 0.20:
-        drop = generate_accessory(floor)
-        display_msg(f"C'era anche: {Colors.CYAN}{drop.display_name}{Colors.RESET}!"); player.inventory.append(drop)
+        _gain_item(player, generate_accessory(floor))
     elif random.random() > 0.4:
-        drop = generate_potion(floor)
-        display_msg(f"C'era anche: {Colors.CYAN}{drop.display_name}{Colors.RESET}!"); player.inventory.append(drop)
+        _gain_item(player, generate_potion(floor))
     wait_enter("\nPremi INVIO per continuare...")
 
-def trap_room(player: Player, floor: int, active_pacts: List[str]):
+
+def trap_chances(player: Player) -> dict:
+    """Probabilità (in %) di superare la trappola disinnescandola (Precisione) o attraversandola di corsa (Schivata)."""
+    rules = GAME_DATA["meta"]["rooms"]["trap"]
+    precision = player.base_acc + player.temp_acc + player.weapon.get_hit_chance_modifier() + sum(r.get_acc_modifier() for r in player.relic_effects)
+    stats = {"disarm": precision, "dash": player.get_dodge()}
+    return {k: int(max(rules["min_chance"], min(rules["max_chance"], rules[k]["base"] + stats[k] * rules[k]["per_point"]))) for k in stats}
+
+
+def trap_damage(player: Player, floor: int, active_pacts: List[str], base: int) -> int:
+    dmg = base + floor * 3
+    if "trappole" in active_pacts: dmg *= 2
+    for r in player.relic_effects: dmg = r.modify_trap_damage(dmg)
+    return dmg
+
+
+def trap_room(player: Player, floor: int, active_pacts: List[str]) -> bool:
+    """La trappola custodisce un bottino: chi la affronta lo ottiene sempre, e se fallisce la prova paga in HP.
+    Restituisce True se il giocatore l'ha affrontata."""
     delay_print(f"\n{random.choice(GAME_DATA['lore']['trap'])}")
-    delay_print(f"{Colors.RED}È UNA TRAPPOLA!{Colors.RESET}", 0.05)
-    
-    if random.randint(1, 100) <= player.get_dodge(): 
-        display_msg(f"{Colors.GREEN}Schivi il meccanismo! Ne esci illeso!{Colors.RESET}")
+    delay_print(f"{Colors.RED}È UNA TRAPPOLA!{Colors.RESET} {Colors.YELLOW}Oltre il meccanismo, qualcosa brilla.{Colors.RESET}", 0.05)
+    rules, chances = GAME_DATA["meta"]["rooms"]["trap"], trap_chances(player)
+    lo, hi = (trap_damage(player, floor, active_pacts, base) for base in (15, 30))
+    prompt = (f"\n❤️  HP: {Colors.GREEN}{player.hp}/{player.max_hp}{Colors.RESET} | Se la prova fallisce: {Colors.RED}{lo}-{hi} danni{Colors.RESET}"
+              f"\nCome affronti la trappola?")
+    options = [f"Disinnescala (Precisione: {chances['disarm']}%, recuperi anche dei pezzi)",
+               f"Attraversala di corsa (Schivata: {chances['dash']}%)",
+               "Torna indietro (niente bottino, nessun danno)"]
+    idx = interactive_menu(options, prompt)
+    if idx not in (0, 1):
+        display_msg(f"{Colors.CYAN}Ti ritiri lentamente. Il meccanismo resta in attesa del prossimo sventurato.{Colors.RESET}")
+        wait_enter("\nPremi INVIO per continuare...")
+        return False
+
+    way = "disarm" if idx == 0 else "dash"
+    if random.randint(1, 100) <= chances[way]:
+        display_msg(f"{Colors.GREEN}{'Blocchi il meccanismo con un clic soddisfatto.' if way == 'disarm' else 'Passi tra le lame un istante prima che si chiudano.'}{Colors.RESET}")
+        if way == "disarm":
+            base, per_floor = rules["salvage_gold"]
+            _gain_gold(player, base + floor * per_floor)
     else:
-        dmg = random.randint(15, 30) + (floor * 3)
-        if "trappole" in active_pacts: dmg *= 2
-        for r in player.relic_effects: dmg = r.modify_trap_damage(dmg)
-        display_msg(f"{Colors.RED}Subisci {dmg} danni puri.{Colors.RESET}")
+        dmg = trap_damage(player, floor, active_pacts, random.randint(15, 30))
+        display_msg(f"{Colors.RED}Il meccanismo scatta! Subisci {dmg} danni puri.{Colors.RESET}")
         alive = player.take_damage(dmg)
         display_msg(f"(HP: {player.hp}/{player.max_hp})")
         if not alive:
             display_msg(f"\n{Colors.RED}{Colors.BOLD}La trappola ti è stata fatale...{Colors.RESET}")
             wait_enter("\nPremi INVIO per continuare...")
-            return
-            
-    if random.randint(1, 100) <= 20:
-        display_msg(f"\n{Colors.GREEN}Tra gli ingranaggi spezzati della trappola noti qualcosa brillare...{Colors.RESET}")
-        roll = random.random()
-        if roll > 0.7: drop = generate_accessory(floor)
-        elif roll > 0.5: drop = generate_weapon(floor, False)
-        else: drop = generate_armor(floor, False)
-        display_msg(f"{Colors.MAGENTA}Hai trovato: {drop.display_name}!{Colors.RESET}")
-        player.inventory.append(drop)
+            return True
 
+    epic = random.random() * 100 < rules["epic_chance"]
+    loot = _gear(floor + rules["loot_floor_bonus"], epic) if random.random() * 100 < rules["gear_chance"] else generate_accessory(floor)
+    _gain_item(player, loot, f"{Colors.MAGENTA}Il bottino della trappola è tuo{Colors.RESET}")
     wait_enter("\nPremi INVIO per continuare...")
-
+    return True

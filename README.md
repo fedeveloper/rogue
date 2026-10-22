@@ -46,10 +46,16 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 
 ## ✨ Perché giocarci
 
-- 🗺️ **Bivi a ogni passo.** Ogni piano ha 5 tappe: a ognuna scegli fra due porte (combattimento, mercante, falò, forziere, trappola, evento o la *Stanza del Mistero*). L'ultima è sempre un boss, e nemici e boss crescono con la profondità.
-- 🔥 **Combattimento elementale.** Sette elementi, vantaggi e svantaggi che cambiano danni e precisione, e le **Risonanze** quando arma e armatura condividono l'elemento.
+- 🗺️ **Una mappa per ogni piano.** Quattro file di stanze collegate (combattimento, Élite, mercante, falò, forziere, trappola, evento o la *Stanza del Mistero*) e il boss in fondo, tutte visibili fin dall'arrivo: scegli il percorso, non solo la porta. Ogni stanza ha un prezzo e un premio: le trappole custodiscono un bottino, i forzieri profondi possono essere Mimic, e l'**Audacia** fa crescere il bottino del boss per ogni rischio corso nel piano. Nemici e boss crescono con la profondità.
+- 🌍 **Sei biomi, sei regole.** Ogni cinque piani il Labirinto cambia volto e legge: la *Nostalgia Letale* dei Chiostri, il *Gas del Silenzio* delle Miniere, la *Caduta Astrale* delle Guglie, la *Dissoluzione dell'Io* del Ventre, l'*Ebollizione Astrale* della Forgia e il *Paradosso Temporale* della Soglia. Ogni bioma ha i suoi nemici nativi e le sue stanze speciali.
+- 🔥 **Combattimento tattico.** Il nemico **annuncia la sua mossa**, colpo pesante, guardia, rigenerazione o colpo infetto, e tu decidi se attaccare o difenderti. Sette elementi, vantaggi e svantaggi, **Risonanze** quando arma e armatura condividono l'elemento e **7 reazioni** (Vapore, Gelo, Eclissi…) quando li combini.
 - 🧬 **8 classi** con alberi di Maestria a 5 livelli che sbloccano bonus, oggetti, reliquie e altre classi.
 - 🎭 **7 tratti** e **5 Patti del Caos**: 3,584 combinazioni di partenza diverse.
+- 📖 **Eventi che ricordano.** 46 storie a scene con opzioni che esistono solo per la tua classe, il tuo tratto o le tue reliquie: `[Mago]`, `[Tocco di Mida]`, `[Chiave Arrugginita]`. Il Labirinto ricorda chi hai aiutato e chi hai derubato, e certe scelte tornano a bussare qualche piano dopo.
+- 🗝️ **Personaggi che ritornano.** *Sir Alaric*, il Primo Paladino, e *Silas*, il Cercatore, hanno storie in tre capitoli che proseguono di run in run. Le tue scelte decidono come finiscono, e se liberi Alaric il Cavaliere Oscuro non tornerà più.
+- 🩸 **Corruzione.** Le scelte oscure danno potere e opzioni proibite, ma il Labirinto comincia a nasconderti le cose: gli effetti delle scelte, le mosse dei nemici.
+- 🏁 **5 finali.** Uccidere il Dio, prenderne il posto, risvegliare Aethelgard… e un finale segreto per chi legge davvero il Labirinto.
+- 🔥 **Un campo che ricorda.** Chi salvi nel Labirinto viene a scaldarsi al tuo fuoco, ti parla di ciò che hai fatto e ti aiuta a costruire.
 - 🌟 **30 reliquie** che piegano le regole: danni raddoppiati, scudi, vampirismo, oro moltiplicato.
 - 🏕️ **Meta-progressione profonda**: potenziamenti permanenti, una Forgia per sbloccare equipaggiamento, artigiani da liberare, un Archivio di lore con bonus, imprese da completare.
 - ♾️ **Modalità Infinita** dopo la prima vittoria, per chi vuole spingersi oltre il piano 30.
@@ -60,12 +66,12 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 |---|---|---|---|---|
 | ⚔️ **Guerriero** | 120 | Tank bilanciato, contrattacca quando si difende | Mano Pesante | Iniziale |
 | 🗡️ **Ladro** | 85 | Agile e ricco, critico garantito dopo la Concentrazione | Tasche Nascoste | Iniziale |
-| 🔮 **Mago** | 65 | Arma di Fuoco potente e mira eccellente, ma fragile | Sintonia | Iniziale |
+| 🔮 **Mago** | 80 | Arma di Fuoco potente e mira eccellente, ma fragile | Sintonia | Iniziale |
 | 🛡️ **Paladino** | 180 | Ultra-tank con Risonanza di Luce fin dall'inizio | Baluardo della Fede | Maestria Guerriero Lv.5 |
-| 🪓 **Berserker** | 100 | Glass cannon: l'ascia più forte, nessuna armatura | Furia Sanguinaria | Impresa «Danza con la Morte» |
+| 🪓 **Berserker** | 110 | Glass cannon: l'ascia più forte, nessuna armatura | Furia Sanguinaria | Impresa «Danza con la Morte» |
 | 🧪 **Alchimista** | 95 | Quattro pozioni iniziali e bombe di Fuoco | Metabolismo Alterato | Impresa «Genio Elementale» |
-| 🥷 **Assassino** | 75 | 20% di critico innato e schivata altissima, ma fragile | Imboscata | Maestria Ladro Lv.5 |
-| 💀 **Negromante** | 70 | Risonanza di Tenebra fin dall'inizio | Raccolto d'Anime | Maestria Mago Lv.5 |
+| 🥷 **Assassino** | 75 | 15% di critico innato e schivata alta, ma fragile | Imboscata | Maestria Ladro Lv.5 |
+| 💀 **Negromante** | 85 | Risonanza di Tenebra fin dall'inizio | Raccolto d'Anime | Maestria Mago Lv.5 |
 
 Ogni classe ha un **albero di Maestria** a 5 livelli. Si sale giocando con quella classe. Il **Lv.4** dà un bonus permanente a *tutti* gli eroi; il **Lv.5** sblocca una classe, un tratto o una reliquia. Assassino e Negromante, per esempio, si conquistano portando al massimo Ladro e Mago.
 
@@ -126,6 +132,7 @@ Fra una discesa e l'altra spendi l'**Essenza Astrale**:
 - 🍺 **La Taverna** — le classi da conquistare e come ottenerle.
 - 📜 **Grimorio e Imprese** — le sfide completate e i progressi di Maestria.
 - 📚 **L'Archivio di Aethelgard** — 3 tomi di storia da sbloccare, ognuno con un bonus permanente.
+- 📖 **Il Codice del Labirinto** — bestiario, personaggi, eventi, lettere insanguinate e reliquie scoperti fra una run e l'altra, con la percentuale di completamento. Ciò che manca è un `???` da riempire.
 - 🧑‍🔧 **Gli artigiani** — salva lo *Speziale*, *Borek*, *Elara* e *Valerius* dagli eventi del labirinto: apriranno una bottega dove comprare consumabili, armi, armature e monili con cui iniziare la discesa successiva.
 
 E in **Impostazioni** scegli la velocità del testo: lenta, normale, veloce o istantanea.
@@ -305,7 +312,9 @@ L'ATK reale cresce con il piano in cui l'arma viene trovata; le armi di elemento
 <details>
 <summary>🎭 Gli eventi narrativi</summary>
 
-15 incontri con scelte e conseguenze: *La Fontana Fatata*, *Il Mendicante Ombra*, *Altare del Sangue*, *La Forgia Abissale*, *La Bisca dei Goblin*, *Il Cavaliere Caduto*, *L'Idolo Corrotto*, *Lo Specchio della Verità*, *L'Oasi Sotterranea*, *Il Cadavere del Saggio*, *La Porta Sigillata*, *Lo Speziale Prigioniero*, *Il Maestro d'Armi Prigioniero*, *L'Armaiola Imprigionata*, *L'Incantatore Intrappolato*. Alcuni consegnano *oggetti chiave* che aprono scelte segrete in eventi successivi; quattro nascondono gli artigiani prigionieri.
+46 storie e 58 scene: *La Fontana Fatata*, *Il Mendicante Ombra*, *Altare del Sangue*, *La Forgia Abissale*, *La Bisca dei Goblin*, *Il Cavaliere Caduto*, *L'Idolo Corrotto*, *Lo Specchio della Verità*, *L'Oasi Sotterranea*, *Il Cadavere del Saggio*, *La Porta Sigillata*, *Lo Speziale Prigioniero*, *Il Maestro d'Armi Prigioniero*, *L'Armaiola Imprigionata*, *L'Incantatore Intrappolato*, *Il Viandante Cieco*, *Il Buio Vivente*, *La Cartografa Perduta*, *La Sala dei Cento Corridoi*, *Il Pozzo dei Desideri*, *Il Banchetto dei Morti*, *La Bilancia di Aethelgard*, *La Voce nel Buio*, *La Voce del Labirinto*, *Il Giardino Sepolto*, *Il Cavaliere alla Porta*, *Il Cavaliere Stanco*, *L'Ultimo Sigillo*, *Il Cercatore*, *Il Diario Strappato*, *La Soglia*, *La Prima Pietra*… e qualcuno che torna a cercarti più in basso.
+
+Ogni scelta mostra i suoi effetti reali, molte opzioni esistono solo per certe classi, tratti o reliquie, gli *oggetti chiave* di un evento aprono strade segrete in un altro e il Labirinto ricorda le tue decisioni da una run all'altra. Quattro eventi nascondono gli artigiani prigionieri.
 
 </details>
 
@@ -321,9 +330,9 @@ L'ATK reale cresce con il piano in cui l'arma viene trovata; le armi di elemento
 | Monili | 16 (8 subito, 8 da sbloccare) |
 | Consumabili | 14 (7 subito, 7 da sbloccare) |
 | Reliquie | 30 (14 subito, 16 da sbloccare) |
-| Nemici comuni | 25 |
-| Boss | 20 |
-| Eventi narrativi | 15 |
+| Nemici comuni | 38 |
+| Boss | 21 |
+| Eventi narrativi | 46 |
 | Imprese | 14 |
 | Tomi dell'Archivio | 3 |
 | Potenziamenti permanenti | 14 |
@@ -337,11 +346,16 @@ Il gioco è **data-driven**: classi, nemici, oggetti, reliquie, eventi, Maestrie
 ```text
 rogue/
 ├── roguelike.py       # Menu principale, Campo Base, scelta dell'eroe, ciclo dei piani, fine partita
-├── rooms.py           # Combattimento (CombatSession) e stanze: mercante, falò, forziere, trappola, eventi
+├── floor_map.py       # Mappa del piano: file di stanze, percorsi, biomi, disegno
+├── rooms.py           # Combattimento (CombatSession) e stanze: mercante, falò, forziere, trappola, mistero
+├── events.py          # Motore degli eventi: scene, condizioni, effetti, memoria fra le run
 ├── entities.py        # Eroe, nemici e oggetti; generazione dell'equipaggiamento
 ├── relic_effects.py   # Effetti delle reliquie come hook (on_attack, on_take_damage, ...)
 ├── inventory_menu.py  # Zaino, consumabili e schermata delle statistiche
 ├── archive.py         # Archivio di Aethelgard e relativi bonus
+├── camp.py            # Il Fuoco del Campo: personaggi e strutture
+├── endings.py         # I finali multipli
+├── codex.py           # Il Codice del Labirinto: ciò che hai scoperto fra le run
 ├── data_manager.py    # Caricamento dei dati e salvataggio del profilo
 ├── ui.py              # Terminale: colori, menu a frecce, output centralizzato
 ├── constants.py       # Costanti di bilanciamento
@@ -366,8 +380,13 @@ I **test di contratto** (`tests/test_contracts.py`) verificano che ogni reliquia
 - [x] Nemici e boss legati alla profondità
 - [x] Impostazioni (velocità del testo)
 - [ ] Sistema di Rune/Incastoni per armi e armature
-- [ ] Boss con meccaniche speciali (fasi, immunità, pattern)
-- [ ] Nuovi eventi narrativi e bivi ramificati
+- [x] Nemici che annunciano la mossa e reazioni elementali
+- [ ] Boss con meccaniche speciali (fasi, immunità)
+- [x] Eventi a scene, opzioni per classe e tratto, memoria fra le run
+- [x] Personaggi ricorrenti (Sir Alaric, Silas) e il Codice del Labirinto
+- [x] Mappa dei piani e primo bioma (I Chiostri del Rimpianto)
+- [x] Regole per tutti e sei i biomi
+- [x] Hub fra le run, finali multipli e Corruzione
 
 ---
 

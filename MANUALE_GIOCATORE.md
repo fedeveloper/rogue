@@ -18,24 +18,116 @@ Se colori o emoji non si vedono bene, usa un terminale con codifica UTF-8 (su Wi
 ## 🧭 La discesa
 
 1. **Scegli l'eroe e il tratto.** Dopo la prima vittoria puoi attivare anche i **Patti del Caos** (vedi sotto).
-2. **Ogni piano ha 5 tappe.** A ogni tappa scegli fra **due porte**. Il tipo di stanza è sempre visibile; con il potenziamento *Sesto Senso* vedi anche quale nemico o evento ti aspetta.
+2. **Ogni piano ha una mappa.** All'arrivo vedi tutto il piano: quattro file di stanze collegate, e in fondo il boss (★). A ogni tappa scegli una delle stanze collegate a quella in cui ti trovi: in giallo le stanze raggiungibili, in verde il percorso fatto, in grigio ciò che ormai è fuori strada. Pianifica: un falò due file più in basso vale una deviazione? Con il potenziamento *Sesto Senso* vedi anche quale nemico o evento ti aspetta.
 3. **La quinta tappa è sempre un boss.**
 4. **Superato il piano** recuperi un po' di HP (20 + 5 per piano) e scendi.
 5. In qualsiasi bivio puoi scegliere **Fuga dal Labirinto**: porti a casa tutto l'Oro, convertito in Essenza.
 
 Più scendi, più i nemici sono forti: ai primi piani incontri banditi, goblin e scheletri, verso il fondo idre di lava e leviatani. Anche i boss crescono con la profondità, e il DIO ANTICO compare **solo al piano 30**.
 
+```text
+  1      🎭 Evento      ❓ Mistero      💰 Mercante
+             │         ╱          ╲          │
+             │    ╱                    ╲     │
+  2     💎 Forziere                     🎭 Evento📿
+             │    ╲                    ╱     │
+             │         ╲          ╱          │
+  3     ❓ Mistero      👹 Scontro      💀 Trappola
+             │         ╱          ╲          │
+             │    ╱                    ╲     │
+  4     👹 Scontro                      ❓ Mistero
+                  ╲                    ╱
+                       ╲          ╱
+  ★                       👑 Boss
+```
+
+### 🩸 La Corruzione
+
+Alcune scelte degli eventi sono **oscure**: pregare l'Altare del Sangue, accettare i doni del Labirinto, colpire chi è debole. Altre sono **pure**: bere alla Fontana Fatata, giurare sul tuo onore, spezzare un sigillo. Il riepilogo di ogni scelta mostra quanta Corruzione ti dà o ti toglie, ad esempio `(+100 Oro; -40 HP; +10 Corruzione)`.
+
+La Corruzione va da 0 a 100 e vale per la sola discesa:
+- **Potere.** Ogni 10 punti ti danno +2 ATK, e alcune opzioni proibite compaiono solo a chi è abbastanza corrotto, come `[Corruzione 50+] Chiedi di vedere il fondo`.
+- **Sguardo Velato (da 50).** Il 25% delle volte il Labirinto ti offusca la vista: non vedi gli effetti di una scelta.
+- **Voce del Labirinto (da 75).** Il 30% delle volte non vedi la mossa che il nemico prepara.
+
+La vedi accanto agli HP sulla mappa e nelle Statistiche. Arrivare in fondo con il cuore nero apre un finale che gli altri non vedranno mai.
+
+### 🏁 I finali
+
+Sconfitto il Dio Antico, scegli come finisce la tua storia fra i finali che ti sei guadagnato. Il primo è sempre disponibile; gli altri dipendono da quello che hai fatto in questa discesa e in quelle passate: i personaggi che hai liberato, le verità che hai ascoltato, le lettere che hai raccolto, la tua Corruzione. Ogni finale nuovo dà un premio in Essenza e finisce nel Codice. Nel Codice i finali che non hai ancora visto mostrano un indizio.
+
+### I biomi
+
+Il Labirinto cambia mentre scendi: ogni cinque piani entri in un **bioma** diverso, con la sua atmosfera. I nomi vengono dalle cronache di Aethelgard: *I Chiostri del Rimpianto*, *Le Miniere della Testardaggine*, *Le Guglie del Vento Urlante*, *Il Ventre della Memoria*, *La Forgia del Caos*, *La Soglia del Dio Antico*.
+
+**📿 I Chiostri del Rimpianto (piani 1–5).** Le rovine di un'accademia della Luce Calma.
+- **Più eventi, meno trappole.** E più creature di Luce e di Tenebra.
+- **Nativi.** L'*Eco del Rimpianto*, la *Statua di Sale* e un boss, *La Badessa del Silenzio*, vivono solo qui.
+- **Pericolo: Nostalgia Letale.** In ogni piano una stanza, segnata con 📿, ospita un'eco del passato: *La Voce Cara*, *La Statua di Sale* o *La Biblioteca di Cenere*. Fermarsi ad ascoltare può guarirti… o trasformarti in sale, e il Labirinto se ne ricorderà.
+- **Segreto.** Al piano 3, sotto il marmo, si dice riposi la *Prima Pietra* posata dagli Architetti.
+
+**🦇 Le Miniere della Testardaggine (piani 6–10).** Basalto, olio nero e ingranaggi che girano a vuoto.
+- **Più forzieri, meno falò.** E più creature di Terra.
+- **Nativi.** Il *Minatore Svuotato* e l'*Ingranaggio Senziente*, che si ripara spesso.
+- **Pericolo: Gas del Silenzio.** In ogni scontro c'è il 35% di probabilità che il gas riempia la stanza. La tua Difesa dimezza ancora i danni, ma perde la tecnica della classe (contrattacco, concentrazione o riparo).
+- **Stanze speciali:** *La Galleria del Gas*, *L'Ingranaggio Fermo*.
+
+**🌀 Le Guglie del Vento Urlante (piani 11–15).** Ponti sospesi su nubi elettriche.
+- **Più trappole, meno mercanti.** E più creature di Vento.
+- **Nativi.** La *Sentinella di Nube* e il *Falco Astrale*, difficilissimi da colpire.
+- **Pericolo: Caduta Astrale.** Sui ponti sospesi puoi perdere l'equilibrio. Precipiti al piano successivo, senza riposo e senza il boss, e perdi il 40% dell'Oro. Puoi anche lasciarti cadere di proposito: un modo rischioso per saltare un boss.
+- **Stanze speciali:** *Il Ponte Sospeso*, *Il Nido della Tempesta*.
+
+**🌊 Il Ventre della Memoria (piani 16–20).** Pareti di membrana con dentro i volti dei morti.
+- **Più eventi e misteri.** E più creature d'Acqua e di Tenebra.
+- **Nativi.** Il *Ricordo Annegato*, che si rigenera, e il *Volto nella Membrana*, che fa sanguinare.
+- **Pericolo: Dissoluzione dell'Io.** A ogni piano del Ventre perdi il 4% degli HP massimi. Li ritrovi tutti quando ne esci.
+- **Stanze speciali:** *Il Volto nella Membrana*, *Il Giardino Appassito*.
+
+**🌋 La Forgia del Caos (piani 21–25).** Lava bianca, fumi neri, martelli ciclopici.
+- **Più mercanti, meno falò.** E più creature di Fuoco.
+- **Nativi.** Il *Golem di Scorie* e il *Martello Errante*, che ama i colpi pesanti.
+- **Pericolo: Ebollizione Astrale.** Ogni colpo che subisci ha il 25% di probabilità di far bollire il 5% del tuo Oro.
+- **Stanze speciali:** *L'Incudine Cosmica*, *La Colata d'Oro*.
+
+**🌌 La Soglia del Dio Antico (piani 26–30).** Piattaforme di pura volontà nel vuoto.
+- **Più misteri e forzieri.** E creature di Luce e di Tenebra.
+- **Nativi.** Il *Frammento di Galassia* e l'*Eco del Dio Antico*.
+- **Pericolo: Paradosso Temporale.** Dopo ogni tuo turno c'è il 10% di probabilità che tu agisca di nuovo; dopo ogni turno nemico, il 15% che il nemico agisca due volte (con una mossa non annunciata).
+- **Stanze speciali:** *L'Occhio Chiuso*, *L'Eco del Tempo*.
+
+In ogni piano una stanza della mappa, segnata con l'icona del bioma, è una delle sue stanze speciali.
+
 ### Le stanze
 
 | Stanza | Cosa succede |
 |---|---|
-| ⚔️ **Combattimento** | Un nemico adatto al piano. Vincendo ottieni Oro, EXP e a volte un oggetto. |
+| 👹 **Scontro** | Un nemico adatto al piano. La mappa mostra quanta EXP vale; vincendo ottieni anche Oro e a volte una pozione. |
+| 👺 **Élite** | Dal piano 2. Un campione più duro (HP ×1,6, ATK ×1,3) che vale il doppio di EXP e Oro e lascia sempre una **reliquia o un pezzo d'equipaggiamento**, a volte epico. |
 | 💰 **Mercante** | Compra armi, armature, monili e pozioni; vendi ciò che non ti serve. Dopo ogni acquisto il resto della merce rincara del 10%. |
 | 🔥 **Falò** | *Riposa* (50% degli HP) **oppure** *affila l'arma* (+3 ATK per 50 Oro): una delle due, poi il falò si spegne. Prima puoi usare l'**Altare dell'Evoluzione** e la **purificazione** quante volte vuoi. |
-| 💎 **Forziere** | Oro, a volte un monile, una pozione o una reliquia. |
-| ⚠️ **Trappola** | Danni (evitabili con la schivata), a volte un oggetto fra gli ingranaggi. |
-| 🎭 **Evento** | Una scelta narrativa: rischi e ricompense. Alcuni eventi nascondono un artigiano prigioniero da liberare. |
-| ❓ **Mistero** | Un nemico potenziato (che lascia un oggetto), uno debilitato, una trappola… o niente. |
+| 💎 **Forziere** | Oro, a volte un monile, una pozione o una reliquia. Dal piano 3 può essere **chiuso a chiave** (lo forzi pagando l'8% degli HP massimi, in cambio di un bottino garantito) o un **Mimic**: un mostro che, sconfitto, restituisce il doppio. La mappa mostra la probabilità del rischio, che cresce con la profondità. A volte il coperchio sembra respirare: può essere un Mimic, ma anche no. |
+| 💀 **Trappola** | Custodisce sempre un oggetto. Scegli come affrontarla: **disinnescarla** (prova di Precisione, se riesce recuperi anche dell'Oro), **attraversarla di corsa** (prova di Schivata) o **tornare indietro** senza danni e senza bottino. Il menu mostra le probabilità e i danni in caso di fallimento; chi la affronta prende il bottino anche se la prova fallisce. |
+| 🎭 **Evento** | Una piccola storia con bivi, a volte in più scene: vedi *Gli eventi* qui sotto. Alcuni nascondono un artigiano prigioniero da liberare. |
+| ❓ **Mistero** | Un azzardo: un tesoro nascosto (Oro e un monile), una reliquia, un nemico potenziato (che lascia un oggetto), uno debilitato, una trappola… o niente. In media rende più di un forziere. Con il *Sesto Senso* la mappa mostra le probabilità. |
+
+### L'Audacia
+
+Ogni rischio corso nel piano riempie l'**Audacia** (🎲, accanto agli HP): +1 per uno scontro, una trappola affrontata o un mistero, +2 per un'Élite. Il boss del piano paga l'Audacia accumulata: +15% di Oro per punto, un pezzo d'equipaggiamento da 5 punti, epico da 7. A ogni piano si riparte da zero. Chi passa solo da forzieri ed eventi arriva al boss con il premio base; chi rischia ottiene molto di più, se sopravvive.
+
+### Gli eventi
+
+Negli eventi le scelte contano, e non solo in quella stanza:
+
+- **Il riepilogo dice la verità.** Accanto a ogni scelta, fra parentesi, il gioco mostra cosa succede: `(-20 Oro; 50%: Reliquia)`, `(+12 ATK; -25 HP Max)`, `(60%: +120 Oro, altrimenti Combatti)`. Lo calcola dagli effetti reali, quindi non può sbagliare.
+- **Opzioni che esistono perché sei tu.** Alcune scelte compaiono solo per certe classi, tratti, reliquie o oggetti chiave, e lo dicono con un'etichetta: `[Mago] Riaccendi la lanterna`, `[Tocco di Mida] Immergi la mano`, `[Occhio del Cacciatore] Guarda meglio le impronte`. Rigiocare lo stesso evento con un altro eroe apre strade diverse.
+- **Scelte bloccate.** Le opzioni in rosso sono visibili ma non selezionabili. Ti manca qualcosa, per esempio "(Ti serve una chiave)", oppure l'oro per pagare.
+- **Più scene.** Molti eventi proseguono dopo la prima scelta: un brindisi dopo che ti sei seduto al banchetto, un desiderio dopo la moneta nel pozzo.
+- **Oggetti chiave.** Chiavi, mappe e lanterne trovate in un evento aprono scelte segrete in un altro, a volte molti piani più in basso.
+- **Il Labirinto ricorda.** Alcune scelte lasciano un segno che resta fra una run e l'altra: chi hai aiutato, chi hai derubato, quante volte hai accettato un patto. Le volte successive i personaggi possono riconoscerti.
+- **Conseguenze differite.** Certe scelte tornano qualche piano dopo: una delle porte mostrerà "✦ qualcosa ti stava aspettando".
+- **Personaggi ricorrenti.** *Sir Alaric*, il Primo Paladino, e *Silas*, il Cercatore, hanno una storia in tre capitoli che prosegue da una run all'altra: al massimo un capitolo per run, sempre più in profondità. Le tue scelte cambiano ciò che ti diranno e il loro destino. Un indizio: una lettera sulle pareti parla di un cavaliere stanco e di un fiore di lavanda. E chi libera Alaric non incontrerà più il Cavaliere Oscuro.
+- **Combattimenti negli eventi.** Le ricompense legate a uno scontro arrivano solo se lo vinci; se fuggi, l'evento finisce lì.
 
 ---
 
@@ -47,10 +139,53 @@ A ogni turno scegli una di queste azioni:
 - **Difenditi.** Dimezza i danni del prossimo colpo, e ogni classe aggiunge un effetto:
   - **Difesa Aggressiva** (Guerriero, Berserker): restituisci al nemico i danni subiti;
   - **Concentrazione** (Ladro, Assassino): il colpo successivo è un critico garantito;
-  - **Riparo Magico** (le altre classi): recuperi il 5% degli HP.
+  - **Riparo Magico** (le altre classi): recuperi il 10% degli HP.
 - **Apri l'inventario.** Usare un oggetto o cambiare equipaggiamento **costa il turno**; chiudere lo zaino senza fare nulla no.
 - **Statistiche Eroe.** Gratis, in qualsiasi momento. Mostrano la tua **probabilità reale di colpire** contro il nemico che hai davanti.
 - **Tenta la fuga.** Riesce più spesso se sei agile. Contro i boss è impossibile.
+
+### Gli intenti dei nemici
+
+Prima di ogni tuo turno il nemico **annuncia la sua prossima mossa**, con i danni previsti:
+
+```text
+Tu: 210/210 HP | Badessa del Silenzio: 120/180 HP [marchio 💧 Acqua]
+Intento del nemico: 💢 Colpo pesante (≈24 danni) — difenditi!
+```
+
+| Mossa | Cosa fa | Come rispondere |
+|---|---|---|
+| 👊 Attacco | Un attacco normale | — |
+| 💢 Colpo pesante | La sua forza raddoppia prima della tua difesa | **Difenditi**: dimezzi il colpo (e la Difesa Aggressiva lo restituisce) |
+| 🧱 Guardia | Non attacca; i tuoi colpi fanno il 50% dei danni | È il turno giusto per curarti, difenderti o usare un oggetto |
+| 💚 Rigenerazione | Non attacca; recupera il 15% degli HP massimi (solo sotto il 60%, al massimo due volte) | Colpisci forte prima |
+| 🧪 Colpo infetto | Se ti ferisce, infligge di sicuro il suo status (veleno, sanguinamento) | Difenditi o tieni pronto l'antidoto |
+
+Colpo pesante e Guardia non si ripetono mai due volte di fila. I boss si rigenerano più spesso, e alcuni nemici hanno abitudini proprie: i Golem si riparano, i Vampiri si curano col sangue.
+
+### Marchi e reazioni elementali
+
+- **Il marchio.** Ogni tuo colpo a segno lascia sul nemico il **marchio** dell'elemento della tua arma, per due suoi turni.
+- **L'armatura.** Quando ti **difendi** e il nemico ti colpisce, l'armatura lo marchia con il *suo* elemento.
+- **La reazione.** Se un nemico marchiato riceve un elemento diverso, i due possono **reagire**:
+
+| Reazione | Elementi | Effetto |
+|---|---|---|
+| 💨 Vapore | 🔥 + 💧 | Danni extra pari al 50% del tuo ATK; il nemico è Accecato (−25% Precisione) per 2 turni |
+| 🔥 Incendio | 🔥 + 🌪️ | Danni extra pari al 100% del tuo ATK |
+| 🌋 Magma | 🔥 + 🪨 | Il nemico perde il 5% degli HP massimi a ogni turno, per 3 turni |
+| 🧊 Gelo | 💧 + 🌪️ | Il nemico perde il suo prossimo turno, anche un colpo pesante annunciato |
+| 🟤 Fango | 💧 + 🪨 | Il nemico è Impantanato (−25% Schivata) per 3 turni |
+| 🌀 Tempesta di Sabbia | 🪨 + 🌪️ | Il nemico è Accecato (−25% Precisione) per 3 turni |
+| 🌗 Eclissi | ✨ + 🌑 | Danni extra pari al 150% del tuo ATK |
+
+Il ritmo tipico è *colpisci, poi difenditi*, oppure *difenditi, poi colpisci*. Ed ecco il nuovo dilemma dell'equipaggiamento:
+- **Stesso elemento** su arma e armatura: accende la **Risonanza**, ma non dà mai reazioni.
+- **Elementi diversi**: rinunci alla Risonanza, ma puoi scatenare le reazioni.
+
+Le reazioni che scopri finiscono nel **Codice**.
+
+**Difesa.** L'armatura riduce ogni colpo della sua difesa, ma **non lo annulla mai**: almeno il 20% del colpo arriva sempre. Gli oggetti che trovi crescono con i nemici del piano in cui li trovi. Un'arma comune abbatte un nemico tipico in circa tre colpi; un'armatura comune ne assorbe circa il 40%, quella migliore poco più della metà.
 
 ### Gli elementi
 
@@ -84,8 +219,8 @@ La Risonanza si ricalcola subito se cambi equipaggiamento durante lo scontro. Il
 
 ### Status e maledizioni
 
-- **Veleno e Sanguinamento.** Alcuni nemici li infliggono e fanno danni a ogni turno fino alla fine dello scontro. L'*Antidoto Universale* li toglie subito. Alcune armi speciali (Frusta di Spine, Pugnali del Vento, Falce del Mietitore, Balestra Gnomica, Tridente Oceanico) li infliggono ai nemici.
-- **Equipaggiamento `[MALEDETTO]`.** Ha statistiche molto più alte del normale, ma drena HP, ruba Oro o (le armature) riduce la schivata. Si purifica al Falò per 100 Oro, oppure con l'*Acqua Santa*.
+- **Veleno e Sanguinamento.** Alcuni nemici li infliggono e tolgono a ogni turno una parte degli HP massimi (il 4% il veleno, il 5% il sanguinamento) finché durano. L'*Antidoto Universale* li toglie subito. Alcune armi speciali (Frusta di Spine, Pugnali del Vento, Falce del Mietitore, Balestra Gnomica, Tridente Oceanico) li infliggono ai nemici.
+- **Equipaggiamento `[MALEDETTO]`.** Ha statistiche più alte del 30%, ma drena il 2% degli HP massimi a ogni turno, ruba Oro o (le armature) riduce la schivata. Si purifica al Falò per 100 Oro, oppure con l'*Acqua Santa*.
 
 ### Armi e armature speciali
 
@@ -108,14 +243,16 @@ L'enciclopedia nel [README](README.md) le elenca tutte.
 
 | Eroe | Punti di forza | Come si sblocca |
 |---|---|---|
-| ⚔️ **Guerriero** | 120 HP, solido, contrattacca in difesa | Subito |
-| 🗡️ **Ladro** | Schivata alta, 100 Oro iniziali, critico garantito dopo la Concentrazione | Subito |
-| 🔮 **Mago** | Bastone di Fuoco potente e mira eccellente, ma solo 65 HP | Subito |
+| ⚔️ **Guerriero** | 120 HP, solido, contrattacca in difesa. Spada di Terra, cotta d'Acqua: *Fango* | Subito |
+| 🗡️ **Ladro** | Schivata alta, 100 Oro iniziali, critico garantito dopo la Concentrazione. Pugnali di Vento, cuoio d'Acqua: *Gelo* | Subito |
+| 🔮 **Mago** | Bastone di Fuoco potente e mira eccellente, ma solo 80 HP. Vesti di Vento: *Incendio* | Subito |
 | 🛡️ **Paladino** | 180 HP e Risonanza di Luce fin dall'inizio | Maestria Guerriero Lv.5 |
 | 🪓 **Berserker** | L'ascia più forte, nessuna armatura | Impresa *Danza con la Morte* |
-| 🧪 **Alchimista** | 4 pozioni iniziali e bombe di Fuoco | Impresa *Genio Elementale* |
-| 🥷 **Assassino** | 20% di critico innato e 30% di schivata, ma solo 75 HP | Maestria Ladro Lv.5 |
+| 🧪 **Alchimista** | 4 pozioni iniziali e bombe di Fuoco. Grembiule di Terra: *Magma* | Impresa *Genio Elementale* |
+| 🥷 **Assassino** | 15% di critico innato e 20% di schivata, ma solo 75 HP. Pugnale di Vento, mantello di Terra: *Tempesta di Sabbia* | Maestria Ladro Lv.5 |
 | 💀 **Negromante** | Risonanza di Tenebra fin dall'inizio | Maestria Mago Lv.5 |
+
+Ogni eroe parte con un equipaggiamento che ha già un'idea di gioco. Cinque classi hanno arma e armatura di elementi che **reagiscono** fra loro: il nome della reazione è in tabella. Paladino e Negromante portano lo stesso elemento e partono con la **Risonanza**. Il Berserker combatte a petto nudo.
 
 ### La Maestria
 
@@ -166,6 +303,18 @@ Tra una discesa e l'altra spendi l'**Essenza Astrale**:
 - **🍺 Taverna** — mostra le classi ancora da conquistare.
 - **📜 Grimorio** — imprese completate e livelli di Maestria.
 - **📚 Archivio di Aethelgard** — tre tomi da sbloccare scendendo nel labirinto. Ognuno dà un bonus permanente: più Oro e fuga, danni contro i boss, difesa.
+- **🔥 Il Fuoco del Campo** — chi incontri nel Labirinto può venire a scaldarsi qui. *Silas*, *la Cartografa*, *il Viandante Cieco* e, se lo hai liberato, *la luce di Alaric* compaiono quando le loro storie sono andate abbastanza avanti. Ti parlano in base a ciò che hai fatto e la prima volta ti lasciano un dono (✦). Qui costruisci anche, con l'Essenza:
+  - *il Tavolo della Cartografa* (aiutala nel Labirinto): sulla mappa vedi quali storie ti aspettano nelle stanze speciali e negli eventi che tornano;
+  - *lo Scrittoio di Silas* (salvalo): a ogni partenza scegli un dono fra +20 HP Max, +3 ATK e +100 Oro;
+  - *l'Altare della Purificazione*: la Corruzione cresce del 25% in meno.
+- **📖 Il Codice del Labirinto** — tutto ciò che hai scoperto, raccolto fra una run e l'altra, con la percentuale di completamento. Ciò che manca è segnato con ???.
+  - *Reazioni elementali*: le combinazioni di elementi che hai scatenato almeno una volta.
+  - *Finali*: quelli che hai visto, e un indizio per gli altri.
+  - *Bestiario*: nemici e boss incontrati e sconfitti; la loro storia si legge solo dopo averli battuti.
+  - *Personaggi*: i capitoli vissuti con Alaric e Silas, e il segno lasciato dalle tue scelte.
+  - *Eventi*: quali hai visto e quante volte.
+  - *Lettere insanguinate*: i messaggi letti sulle pareti prima degli scontri.
+  - *Reliquie*: quelle che hai trovato almeno una volta, con la loro lore.
 - **🧑‍🔧 Gli artigiani** — liberali dagli eventi del labirinto:
   - lo *Speziale* (consumabili);
   - *Borek* (armi);

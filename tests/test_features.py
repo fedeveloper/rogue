@@ -14,7 +14,7 @@ from unittest import mock
 import roguelike
 import ui
 from constants import TEXT_SPEEDS
-from data_manager import PROFILE_MANAGER, RAW_DATA, update_game_data
+from data_manager import GAME_DATA, PROFILE_MANAGER, RAW_DATA, update_game_data
 from entities import Enemy, Player
 from inventory_menu import show_player_stats
 from rooms import CombatSession
@@ -119,7 +119,9 @@ class NewClassesTest(Sandbox):
         self.assertFalse(session.first_player_attack)
 
     def test_assassin_has_innate_crit(self):
-        self.assertEqual(Player("7", "base", []).get_crit_chance(), 20)
+        crit = GAME_DATA["classes"]["7"]["crit"]
+        self.assertGreater(crit, 0)
+        self.assertEqual(Player("7", "base", []).get_crit_chance(), crit)
 
     def test_necromancer_starts_with_dark_resonance_and_harvests_souls(self):
         PROFILE_MANAGER.set_class_lvl("8", 2)

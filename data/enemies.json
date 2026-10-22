@@ -1,5 +1,18 @@
 {
     "enemies": {
+        "Minatore Svuotato": {"element": "Terra", "base_hp": 26, "base_atk": 6, "base_dodge": 5, "base_acc": 10, "biome": "miniere", "lore": "Scava ancora. Non ricorda cosa cercava, solo che era sotto la prossima roccia."},
+        "Ingranaggio Senziente": {"element": "Normale", "base_hp": 30, "base_atk": 5, "base_dodge": 0, "base_acc": 5, "biome": "miniere", "moves": {"attack": 50, "heavy": 25, "guard": 25}, "lore": "Un dente della grande macchina dell'Era dell'Ambizione, che ha imparato a girare da solo."},
+        "Sentinella di Nube": {"element": "Vento", "base_hp": 22, "base_atk": 8, "base_dodge": 25, "base_acc": 10, "biome": "guglie", "lore": "Fatta di vapore e di ordini dimenticati. Sorveglia ponti che non portano più da nessuna parte."},
+        "Falco Astrale": {"element": "Vento", "base_hp": 20, "base_atk": 9, "base_dodge": 30, "base_acc": 15, "biome": "guglie", "lore": "Caccia nelle nubi elettriche. Il suo grido somiglia al rumore di una caduta."},
+        "Ricordo Annegato": {"element": "Acqua", "base_hp": 34, "base_atk": 9, "base_dodge": 10, "base_acc": 10, "biome": "ventre", "moves": {"attack": 60, "heavy": 15, "guard": 5, "heal": 20}, "lore": "La memoria di qualcuno, digerita a metà dal Ventre. Si ricompone ogni volta che la ferisci."},
+        "Volto nella Membrana": {"element": "Tenebra", "base_hp": 30, "base_atk": 10, "base_dodge": 15, "base_acc": 10, "biome": "ventre", "status_inflict": {"type": "bleed", "chance": 30, "duration": 3}, "lore": "Preme contro la parete dall'interno. Ha la tua stessa espressione."},
+        "Golem di Scorie": {"element": "Fuoco", "base_hp": 48, "base_atk": 9, "base_dodge": 0, "base_acc": 10, "biome": "forgia", "moves": {"attack": 50, "heavy": 20, "guard": 30}, "lore": "Ciò che resta quando la Forgia sbaglia una creazione. Ed è sbagliata quasi sempre."},
+        "Martello Errante": {"element": "Fuoco", "base_hp": 38, "base_atk": 11, "base_dodge": 10, "base_acc": 15, "biome": "forgia", "moves": {"attack": 50, "heavy": 40, "guard": 10}, "lore": "Un martello ciclopico che ha perso il suo fabbro e continua a battere su ciò che trova."},
+        "Frammento di Galassia": {"element": "Luce", "base_hp": 50, "base_atk": 11, "base_dodge": 20, "base_acc": 15, "biome": "soglia", "lore": "Una scheggia dell'occhio chiuso al centro del vuoto. Brilla di stelle che non esistono più."},
+        "Eco del Dio Antico": {"element": "Tenebra", "base_hp": 55, "base_atk": 11, "base_dodge": 15, "base_acc": 15, "biome": "soglia", "lore": "Un pensiero sfuggito al sonno del Dio. Sa già cosa farai, perché lo hai già fatto."},
+        "Eco del Rimpianto": {"element": "Luce", "base_hp": 14, "base_atk": 5, "base_dodge": 25, "base_acc": 10, "biome": "chiostri", "lore": "Ha la voce di qualcuno che amavi. Ti chiama finché non ti volti."},
+        "Statua di Sale": {"element": "Terra", "base_hp": 28, "base_atk": 4, "base_dodge": 0, "base_acc": 0, "biome": "chiostri", "lore": "Qualcuno che si è fermato ad ascoltare. Si muove ancora, piano, verso la voce.", "moves": {"attack": 55, "heavy": 10, "guard": 35}},
+        "Mimic": {"element": "Normale", "base_hp": 40, "base_atk": 8, "base_dodge": 0, "base_acc": 15, "lair": "treasure", "hp_mult": 1.5, "atk_mult": 1.3, "moves": {"attack": 60, "heavy": 30, "guard": 10}, "lore": "Un forziere che ha imparato ad aspettare. Le monete che contiene sono quelle di chi lo ha aperto prima di te."},
         "Goblin": {"element": "Normale", "base_hp": 15, "base_atk": 4, "base_dodge": 5, "base_acc": 5, "lore": "I resti deformi delle caste mercantili di Aethelgard."},
         "Scheletro": {"element": "Tenebra", "base_hp": 12, "base_atk": 6, "base_dodge": 5, "base_acc": 5, "lore": "Avventurieri 'svuotati' che non possono più morire."},
         "Orco": {"element": "Terra", "base_hp": 25, "base_atk": 5, "base_dodge": 0, "base_acc": 5, "lore": "Antichi minatori la cui pelle si è fusa con il basalto."},
@@ -8,8 +21,8 @@
         "Gargoyle": {"element": "Vento", "base_hp": 20, "base_atk": 5, "base_dodge": 15, "base_acc": 5},
         "Elementale del Fuoco": {"element": "Fuoco", "base_hp": 16, "base_atk": 6, "base_dodge": 10, "base_acc": 5, "lore": "Concentrazione di rabbia cinetica attorno a un ricordo."},
         "Melma Acida": {"element": "Acqua", "base_hp": 22, "base_atk": 4, "base_dodge": -5, "base_acc": 5, "status_inflict": {"type": "poison", "chance": 30, "duration": 3}, "lore": "La linfa vitale della terra lasciata a marcire."},
-        "Golem di Pietra": {"element": "Terra", "base_hp": 40, "base_atk": 6, "base_dodge": -10, "base_acc": 5},
-        "Vampiro Minore": {"element": "Tenebra", "base_hp": 30, "base_atk": 9, "base_dodge": 15, "base_acc": 10, "status_inflict": {"type": "bleed", "chance": 25, "duration": 2}},
+        "Golem di Pietra": {"element": "Terra", "base_hp": 40, "base_atk": 6, "base_dodge": -10, "base_acc": 5, "moves": {"attack": 55, "heavy": 15, "guard": 30}},
+        "Vampiro Minore": {"element": "Tenebra", "base_hp": 30, "base_atk": 9, "base_dodge": 15, "base_acc": 10, "status_inflict": {"type": "bleed", "chance": 25, "duration": 2}, "moves": {"attack": 55, "venom": 25, "heal": 20}},
         "Spirito della Tempesta": {"element": "Vento", "base_hp": 25, "base_atk": 8, "base_dodge": 25, "base_acc": 10, "lore": "Esploratori la cui curiosità è diventata tempesta."},
         "Paladino Corrotto": {"element": "Luce", "base_hp": 45, "base_atk": 8, "base_dodge": 5, "base_acc": 15, "lore": "Guerrieri che credono che il dolore sia purificazione."},
         "Costrutto Magico": {"element": "Luce", "base_hp": 35, "base_atk": 10, "base_dodge": 0, "base_acc": 20},
@@ -25,9 +38,10 @@
         "Arpia del Labirinto": {"element": "Vento", "base_hp": 22, "base_atk": 7, "base_dodge": 30, "base_acc": 5, "lore": "Scende in picchiata dai soffitti invisibili del dedalo."},
         "Gargoyle di Ossidiana": {"element": "Terra", "base_hp": 45, "base_atk": 6, "base_dodge": 5, "base_acc": 5, "lore": "Pietra nera e tagliente che non si scalfisce facilmente."},
         "Chierico Corrotto": {"element": "Luce", "base_hp": 30, "base_atk": 10, "base_dodge": 5, "base_acc": 15, "lore": "I suoi miracoli di guarigione sono diventati anatemi."},
-        "Vampiro Purosangue": {"element": "Tenebra", "base_hp": 40, "base_atk": 11, "base_dodge": 20, "base_acc": 15, "status_inflict": {"type": "bleed", "chance": 30, "duration": 3}, "lore": "Aristocratico decaduto che beve solo sangue puro."}
+        "Vampiro Purosangue": {"element": "Tenebra", "base_hp": 40, "base_atk": 11, "base_dodge": 20, "base_acc": 15, "status_inflict": {"type": "bleed", "chance": 30, "duration": 3}, "lore": "Aristocratico decaduto che beve solo sangue puro.", "moves": {"attack": 50, "venom": 25, "heavy": 10, "heal": 15}}
     },
     "bosses": {
+        "La Badessa del Silenzio": {"element": "Luce", "base_hp": 65, "base_atk": 9, "base_dodge": 10, "base_acc": 15, "biome": "chiostri", "title": "La Voce che Consola", "lore": "Guidava le preghiere dell'accademia. Ora prega perché tu resti per sempre.", "moves": {"attack": 40, "heavy": 20, "guard": 10, "heal": 30}},
         "Re dei Goblin": {
             "element": "Normale", "base_hp": 60, "base_atk": 8, "base_dodge": 15, "base_acc": 15,
             "title": "Il Sovrano del Nulla",
@@ -36,7 +50,7 @@
         "Cavaliere Oscuro": {
             "element": "Tenebra", "base_hp": 80, "base_atk": 10, "base_dodge": 10, "base_acc": 15,
             "title": "L'Ultimo Sigillo",
-            "lore": "Sir Alaric, custode di una porta che non conduce più a nulla."
+            "lore": "Sir Alaric, custode di una porta che non conduce più a nulla.", "retired_by_flag": "alaric_liberato"
         },
         "Drago di Zaffiro": {
             "element": "Acqua", "base_hp": 100, "base_atk": 12, "base_dodge": 10, "base_acc": 15,

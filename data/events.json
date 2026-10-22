@@ -1,325 +1,871 @@
 {
   "fontana_fatata": {
     "title": "La Fontana Fatata",
-    "text": "Una fonte d'acqua purissima brilla nel buio. Ha un'aura mistica.",
-    "choices": [
-      {
-        "text": "Bevi profondamente (+10 HP Max, Cura 100% HP)",
-        "action": "heal_max",
-        "msg": "L'acqua magica rigenera le tue ferite e purifica il tuo corpo!"
-      },
-      {
-        "text": "Lancia una moneta (-20 Oro, 50% Chance di Reliquia)",
-        "action": "coin_toss",
-        "msg": "La moneta brilla sul fondo... un potere ti avvolge!",
-        "msg_alt": "La moneta affonda e scompare nel nulla. Nessuna reazione."
-      },
-      {
-        "text": "Ignora e prosegui",
-        "action": "none",
-        "msg": "Ti allontani dalla fontana in silenzio."
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Una fonte d'acqua purissima brilla nel buio. Ha un'aura mistica.",
+        "choices": [
+          {"text": "Bevi profondamente", "msg": "L'acqua magica rigenera le tue ferite e purifica il tuo corpo!", "effects": [{"max_hp": 10}, {"heal_pct": 100}, {"corruption": -10}]},
+          {"text": "Lancia una moneta", "effects": [{"gold": -20}], "chance": 50, "success": [{"relic": "random"}],
+           "msg": "La moneta brilla sul fondo... un potere ti avvolge!", "fail_msg": "La moneta affonda e scompare nel nulla. Nessuna reazione."},
+          {"text": "Ignora e prosegui", "msg": "Ti allontani dalla fontana in silenzio."}
+        ]
       }
-    ]
+    }
   },
   "mendicante_ombra": {
     "title": "Il Mendicante Ombra",
-    "text": "Una figura avvolta da stracci ti tende una mano scheletrica.",
-    "choices": [
-      {
-        "text": "Dona 50 Oro (Ottieni un'Arma Epica)",
-        "action": "trade_weapon",
-        "msg": "Il mendicante estrae furtivamente dai rottami:"
-      },
-      {
-        "text": "Offri il tuo sangue (-30 HP, Ottieni Reliquia)",
-        "action": "trade_relic",
-        "msg": "Sanguini abbondantemente... l'ombra sorride e ti dona un manufatto."
-      },
-      {
-        "text": "Ignora",
-        "action": "none",
-        "msg": "Lo ignori e tiri dritto."
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Una figura avvolta da stracci ti tende una mano scheletrica.",
+        "choices": [
+          {"text": "Dona dell'oro", "msg": "Il mendicante estrae furtivamente dai rottami:", "effects": [{"gold": -50}, {"weapon": "epic", "level": 2}]},
+          {"text": "Offri il tuo sangue", "msg": "Sanguini abbondantemente... l'ombra sorride e ti dona un manufatto.", "effects": [{"damage": 30, "death_msg": "Il dissanguamento ti è stato fatale..."}, {"relic": "random"}, {"corruption": 5}]},
+          {"text": "Guardalo negli occhi: lo riconosci", "requires": {"corruption": 40}, "msg": "Sotto gli stracci c'è un Architetto minore, uno di quelli che sono rimasti. 'Allora sei già dei nostri,' sussurra, e ti mette in mano un frammento di cielo.", "effects": [{"essence": 80}, {"corruption": 5}]},
+          {"text": "Ignora", "msg": "Lo ignori e tiri dritto."}
+        ]
       }
-    ]
+    }
   },
   "altare_sangue": {
     "title": "Altare del Sangue",
-    "text": "Un altare pulsante di energia oscura attende un tributo.",
-    "choices": [
-      {
-        "text": "Prega l'Oscurità (+100 Oro, ma Subisci 40 Danni)",
-        "action": "blood_gold",
-        "msg": "Dolore lancinante! Ma l'altare vomita oro dalla sua base polverosa."
-      },
-      {
-        "text": "Distruggi l'Altare (Combatti un Nemico d'Elite)",
-        "action": "fight_elite",
-        "msg": "L'Altare si sgretola e risveglia un tremendo custode corrotto!"
-      },
-      {
-        "text": "Allontanati in silenzio",
-        "action": "none",
-        "msg": "Non vale la pena rischiare l'anima qui. Prosegui."
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Un altare pulsante di energia oscura attende un tributo.",
+        "choices": [
+          {"text": "Prega l'Oscurità", "msg": "Dolore lancinante! Ma l'altare vomita oro dalla sua base polverosa.", "effects": [{"gold": 100}, {"damage": 40, "death_msg": "Hai sacrificato troppa linfa vitale... Sei morto."}, {"corruption": 10}]},
+          {"text": "Distruggi l'Altare", "msg": "L'Altare si sgretola e risveglia un tremendo custode corrotto!", "effects": [{"fight": "elite"}]},
+          {"text": "Offri l'anima, non il sangue", "requires": {"corruption": 30}, "msg": "L'altare tace. Poi, dal buio sotto la pietra, una mano ti porge qualcosa. 'Finalmente uno che capisce il prezzo.'", "effects": [{"relic": "random"}, {"corruption": 15}]},
+          {"text": "Allontanati in silenzio", "msg": "Non vale la pena rischiare l'anima qui. Prosegui."}
+        ]
       }
-    ]
+    }
   },
   "forgia_abissale": {
     "title": "La Forgia Abissale",
-    "text": "Un'incudine avvolta da fiamme viola. Un martello spettrale batte senza sosta.",
-    "choices": [
-      {
-        "text": "Lancia monete nelle fiamme (-50 Oro, Arma Epica forgiata)",
-        "action": "trade_weapon",
-        "msg": "Il martello spettrale forgia a tempo di record una lama portentosa:"
-      },
-      {
-        "text": "Immergi la mano per afferrare un tesoro (-30 HP, Ottieni Reliquia)",
-        "action": "trade_relic",
-        "msg": "Il calore brucia la tua carne, ma stringi tra le dita un artefatto!"
-      },
-      {
-        "text": "Il calore è insopportabile, scappa",
-        "action": "none",
-        "msg": "Il calore è insopportabile, batti in ritirata."
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Un'incudine avvolta da fiamme viola. Un martello spettrale batte senza sosta.",
+        "choices": [
+          {"text": "Lancia monete nelle fiamme", "msg": "Il martello spettrale forgia a tempo di record una lama portentosa:", "effects": [{"gold": -50}, {"weapon": "epic", "level": 2}]},
+          {"text": "Immergi la mano per afferrare un tesoro", "msg": "Il calore brucia la tua carne, ma stringi tra le dita un artefatto!", "effects": [{"damage": 30}, {"relic": "random"}]},
+          {"text": "Il calore è insopportabile, scappa", "msg": "Il calore è insopportabile, batti in ritirata."}
+        ]
       }
-    ]
+    }
   },
   "bisca_goblin": {
     "title": "La Bisca dei Goblin",
-    "text": "Scorgi dei Goblin disarmati che lanciano dadi d'osso su un tappeto. Non ti hanno notato.",
-    "choices": [
-      {
-        "text": "Punta sul tavolo (-20 Oro, Scommetti per Reliquie o Oro)",
-        "action": "coin_toss",
-        "msg": "I Goblin imprecano! Vinci la scommessa e rubi la posta dal tavolo!",
-        "msg_alt": "I dadi rotolano contro di te. I goblin sghignazzano e intascano i soldi."
-      },
-      {
-        "text": "Sguaina l'arma e ruba il banco! (Combatti Elite)",
-        "action": "fight_elite",
-        "msg": "I goblin fuggono gridando e chiamano il loro gigantesco Boss!"
-      },
-      {
-        "text": "Allontanati senza fare rumore",
-        "action": "none",
-        "msg": "Eviti problemi e te la svigni furtivamente."
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Scorgi dei Goblin disarmati che lanciano dadi d'osso su un tappeto. Non ti hanno notato.",
+        "choices": [
+          {"text": "Punta sul tavolo", "effects": [{"gold": -20}], "chance": 50, "success": [{"relic": "random"}],
+           "msg": "I Goblin imprecano! Vinci la scommessa e rubi la posta dal tavolo!", "fail_msg": "I dadi rotolano contro di te. I goblin sghignazzano e intascano i soldi."},
+          {"text": "Sguaina l'arma e ruba il banco!", "msg": "I goblin fuggono gridando e chiamano il loro gigantesco Boss!", "effects": [{"fight": "elite"}]},
+          {"text": "Allontanati senza fare rumore", "msg": "Eviti problemi e te la svigni furtivamente."}
+        ]
       }
-    ]
+    }
   },
   "cavaliere_caduto": {
     "title": "Il Cavaliere Caduto",
-    "text": "Un guerriero in armatura è accasciato al muro. Stringe una spada splendente, ma respira a fatica.",
-    "choices": [
-      {
-        "text": "Lasciagli dell'oro per i soccorsi (-50 Oro, Ti dona la sua Arma Epica)",
-        "action": "trade_weapon",
-        "msg": "Il cavaliere annuisce debolmente e ti porge l'arma di famiglia:"
-      },
-      {
-        "text": "Aiutalo a curare le ferite (La sua magia ti dà +10 HP Max e ti cura al 100%)",
-        "action": "heal_max",
-        "msg": "Il cavaliere, grato, usa l'ultima pergamena sacra su di te! Ti senti invincibile."
-      },
-      {
-        "text": "Sacrifica il tuo sangue per guarirlo (-30 HP, Ti dona una Reliquia)",
-        "action": "trade_relic",
-        "msg": "Il cavaliere beve il tuo sangue, riprende colore e ti dona il suo amuleto."
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Un guerriero in armatura è accasciato al muro. Stringe una spada splendente, ma respira a fatica.",
+        "choices": [
+          {"text": "Lasciagli dell'oro per i soccorsi", "msg": "Il cavaliere annuisce debolmente e ti porge l'arma di famiglia:", "effects": [{"gold": -50}, {"weapon": "epic", "level": 2}]},
+          {"text": "Aiutalo a curare le ferite", "msg": "Il cavaliere, grato, usa l'ultima pergamena sacra su di te! Ti senti invincibile.", "effects": [{"max_hp": 10}, {"heal_pct": 100}]},
+          {"text": "Sacrifica il tuo sangue per guarirlo", "msg": "Il cavaliere beve il tuo sangue, riprende colore e ti dona il suo amuleto.", "effects": [{"damage": 30}, {"relic": "random"}]}
+        ]
       }
-    ]
+    }
   },
   "idolo_corrotto": {
     "title": "L'Idolo Corrotto",
-    "text": "Una statua d'oro con diamanti al posto degli occhi. Trasuda malvagità.",
-    "choices": [
-      {
-        "text": "Stacca i diamanti a forza (+100 Oro, Subisci 40 Danni)",
-        "action": "blood_gold",
-        "msg": "Stacchi i gioielli, ma una maledizione tetra brucia i tuoi polmoni!"
-      },
-      {
-        "text": "Usa una daga per staccarne uno (-20 Oro, Rischio Reliquia)",
-        "action": "coin_toss",
-        "msg": "Il gioiello si stacca dalla pietra rivelando un antico potere!",
-        "msg_alt": "La tua daga si spezza rovinosamente e l'idolo resta intatto."
-      },
-      {
-        "text": "Profanare le tombe è da stolti, prosegui",
-        "action": "none",
-        "msg": "Ti allontani. Certe cose è meglio non toccarle."
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Una statua d'oro con diamanti al posto degli occhi. Trasuda malvagità.",
+        "choices": [
+          {"text": "Stacca i diamanti a forza", "msg": "Stacchi i gioielli, ma una maledizione tetra brucia i tuoi polmoni!", "effects": [{"gold": 100}, {"damage": 40}, {"corruption": 5}]},
+          {"text": "Usa una daga per staccarne uno", "effects": [{"gold": -20}], "chance": 50, "success": [{"relic": "random"}],
+           "msg": "Il gioiello si stacca dalla pietra rivelando un antico potere!", "fail_msg": "La tua daga si spezza rovinosamente e l'idolo resta intatto."},
+          {"text": "Profanare le tombe è da stolti, prosegui", "msg": "Ti allontani. Certe cose è meglio non toccarle."}
+        ]
       }
-    ]
+    }
   },
   "specchio_verita": {
     "title": "Lo Specchio della Verità",
-    "text": "Uno specchio intatto riflette il tuo volto. L'immagine riflessa, però, estrae un'arma.",
-    "choices": [
-      {
-        "text": "Attacca il tuo riflesso! (Combatti Elite)",
-        "action": "fight_elite",
-        "msg": "Il tuo riflesso frantuma il vetro e balza fuori per ucciderti!"
-      },
-      {
-        "text": "Tocca il vetro tagliandoti (-30 HP, Assorbi una Reliquia)",
-        "action": "trade_relic",
-        "msg": "Il vetro ti taglia la pelle, ma il tuo riflesso ti porge un oggetto magico."
-      },
-      {
-        "text": "Distogli lo sguardo ed esci",
-        "action": "none",
-        "msg": "Rompi il contatto visivo, e la tensione sparisce all'istante."
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Uno specchio intatto riflette il tuo volto. L'immagine riflessa, però, estrae un'arma.",
+        "choices": [
+          {"text": "Attacca il tuo riflesso!", "msg": "Il tuo riflesso frantuma il vetro e balza fuori per ucciderti!", "effects": [{"fight": "elite"}]},
+          {"text": "Tocca il vetro tagliandoti", "msg": "Il vetro ti taglia la pelle, ma il tuo riflesso ti porge un oggetto magico.", "effects": [{"damage": 30}, {"relic": "random"}]},
+          {"text": "Distogli lo sguardo ed esci", "msg": "Rompi il contatto visivo, e la tensione sparisce all'istante."}
+        ]
       }
-    ]
+    }
   },
   "oasi_sotterranea": {
     "title": "L'Oasi Sotterranea",
-    "text": "Tra le rocce, un raggio di luce illumina un prato fiorito. Sembra un miraggio in questo luogo di morte.",
-    "choices": [
-      {
-        "text": "Riposa tra i fiori (+10 HP Max, Cura 100% HP)",
-        "action": "heal_max",
-        "msg": "I profumi dei fiori curano ogni tua ferita fisica e mentale!"
-      },
-      {
-        "text": "Raccogli i fiori spinosi (+100 Oro, I rovi ti infliggono 40 Danni)",
-        "action": "blood_gold",
-        "msg": "I rovi velenosi ti lacerano le mani, ma strappi via i preziosi petali dorati!"
-      },
-      {
-        "text": "Raccogli i frutti sull'albero (-50 Oro per strumenti, Trovi Arma)",
-        "action": "trade_weapon",
-        "msg": "Tra i rami più alti scovi i resti di un eroe antico e la sua maestosa arma:"
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Tra le rocce, un raggio di luce illumina un prato fiorito. Sembra un miraggio in questo luogo di morte.",
+        "choices": [
+          {"text": "Riposa tra i fiori", "msg": "I profumi dei fiori curano ogni tua ferita fisica e mentale!", "effects": [{"max_hp": 10}, {"heal_pct": 100}]},
+          {"text": "Raccogli i fiori spinosi", "msg": "I rovi velenosi ti lacerano le mani, ma strappi via i preziosi petali dorati!", "effects": [{"gold": 100}, {"damage": 40}]},
+          {"text": "Compra degli attrezzi e arrampicati sull'albero", "msg": "Tra i rami più alti scovi i resti di un eroe antico e la sua maestosa arma:", "effects": [{"gold": -50}, {"weapon": "epic", "level": 2}]}
+        ]
       }
-    ]
+    }
   },
   "cadavere_saggio": {
     "title": "Il Cadavere del Saggio",
-    "text": "Trovi i resti di un vecchio erudito. Stringe ancora qualcosa tra le dita scheletriche.",
-    "choices": [
-      {
-        "text": "Ispeziona le mani (Ottieni Oggetto Chiave)",
-        "action": "give_quest_item",
-        "item_id": "chiave_arrugginita",
-        "msg": "Hai ottenuto 'Chiave Arrugginita'!"
-      },
-      {
-        "text": "Fruga nello zaino (-30 HP, Ottieni Reliquia)",
-        "action": "trade_relic",
-        "msg": "Una vipera nascosta ti morde brutalmente, ma scovi una reliquia!"
-      },
-      {
-        "text": "Lascialo riposare",
-        "action": "none",
-        "msg": "Prosegui senza disturbare i morti."
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Trovi i resti di un vecchio erudito. Stringe ancora qualcosa tra le dita scheletriche.",
+        "choices": [
+          {"text": "Ispeziona le mani", "msg": "Le dita si sbriciolano: stringevano una chiave.", "effects": [{"quest_item": "chiave_arrugginita"}]},
+          {"text": "Fruga nello zaino", "msg": "Una vipera nascosta ti morde brutalmente, ma scovi una reliquia!", "effects": [{"damage": 30}, {"relic": "random"}]},
+          {"text": "Lascialo riposare", "msg": "Prosegui senza disturbare i morti."}
+        ]
       }
-    ]
+    }
   },
   "porta_sigillata": {
     "title": "La Porta Sigillata",
-    "text": "Un'imponente porta di ferro blocca una via. Al centro c'è una serratura incrostata.",
-    "choices": [
-      {
-        "text": "[RICHIEDE CHIAVE ARRUGGINITA] Apri la porta (Arma Epica + 200 Oro)",
-        "action": "use_quest_item",
-        "requires_item": "chiave_arrugginita",
-        "msg": "La chiave gira a fatica. La porta si apre su un'antica armeria!",
-        "reward_weapon": true,
-        "reward_gold": 200
-      },
-      {
-        "text": "Cerca di sfondarla (Subisci 40 Danni, niente tesoro)",
-        "gold": 0,
-        "action": "blood_gold",
-        "msg": "Ti lussi una spalla contro il metallo senza alcun risultato... la frustrazione è palpabile."
-      },
-      {
-        "text": "Ignora la porta",
-        "action": "none",
-        "msg": "Non hai tempo da perdere. Tiri dritto."
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Un'imponente porta di ferro blocca una via. Al centro c'è una serratura incrostata.",
+        "choices": [
+          {"text": "Apri la porta", "requires": {"quest_item": "chiave_arrugginita"}, "show_locked": true, "locked_hint": "Ti serve una chiave",
+           "msg": "La chiave gira a fatica. La porta si apre su un'antica armeria!", "effects": [{"weapon": "epic", "level": 3}, {"gold": 200}]},
+          {"text": "Cerca di sfondarla", "msg": "Ti lussi una spalla contro il metallo senza alcun risultato... la frustrazione è palpabile.", "effects": [{"damage": 40}]},
+          {"text": "Ignora la porta", "msg": "Non hai tempo da perdere. Tiri dritto."}
+        ]
       }
-    ]
+    }
   },
   "speziale_prigioniero": {
     "title": "Lo Speziale Prigioniero",
-    "text": "Trovi un anziano incatenato al muro. Le sue vesti sono sporche di pozioni esplose. 'Ti prego, le catene sono intrise di magia del sangue... serve un sacrificio per spezzarle!'",
-    "choices": [
-      {
-        "text": "Dona il tuo sangue (-40 HP) per liberarlo",
-        "action": "unlock_npc_speziale",
-        "msg": "Il tuo sangue dissolve il lucchetto! L'anziano ti ringrazia: 'Ci rivedremo al Campo Base, te lo prometto!'"
-      },
-      {
-        "text": "Cerca le chiavi (Combatti un Elite)",
-        "action": "unlock_npc_fight_speziale",
-        "msg": "Una mostruosità attirata dal rumore ti assale!"
-      },
-      {
-        "text": "Ignoralo",
-        "action": "none",
-        "msg": "Le sue urla si affievoliscono mentre prosegui nel buio."
+    "requires": {"not_npc": "speziale"},
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Trovi un anziano incatenato al muro. Le sue vesti sono sporche di pozioni esplose. 'Ti prego, le catene sono intrise di magia del sangue... serve un sacrificio per spezzarle!'",
+        "choices": [
+          {"text": "Dona il tuo sangue per liberarlo", "msg": "Il tuo sangue dissolve il lucchetto! L'anziano ti ringrazia: 'Ci rivedremo al Campo Base, te lo prometto!'", "effects": [{"damage": 40, "death_msg": "Il dissanguamento ti è stato fatale..."}, {"unlock_npc": "speziale"}]},
+          {"text": "Cerca le chiavi", "msg": "Una mostruosità attirata dal rumore ti assale!", "effects": [{"fight": "elite"}, {"unlock_npc": "speziale"}]},
+          {"text": "Ignoralo", "msg": "Le sue urla si affievoliscono mentre prosegui nel buio."}
+        ]
       }
-    ]
+    }
   },
   "borek_prigioniero": {
     "title": "Il Maestro d'Armi Prigioniero",
-    "text": "Tra le macerie vedi un nano dalla lunga barba bruciacchiata, bloccato da una grata magica. 'Questi mostri non sanno distinguere un buon acciaio dalla latta! Aiutami ad uscire e forgerò per te armi degne di questo nome!'",
-    "choices": [
-      {
-        "text": "Dona il tuo sangue (-40 HP) per spezzare il sigillo",
-        "action": "unlock_npc_borek",
-        "msg": "La grata si dissolve. Borek si sgranchisce le braccia: 'Hai fegato, ragazzo. Ti aspetto al Campo Base!'"
-      },
-      {
-        "text": "Cerca le chiavi (Combatti un Elite)",
-        "action": "unlock_npc_fight_borek",
-        "msg": "Il trambusto attira un nemico formidabile!"
-      },
-      {
-        "text": "Ignoralo",
-        "action": "none",
-        "msg": "Le lamentele del nano svaniscono dietro di te."
+    "requires": {"not_npc": "borek"},
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Tra le macerie vedi un nano dalla lunga barba bruciacchiata, bloccato da una grata magica. 'Questi mostri non sanno distinguere un buon acciaio dalla latta! Aiutami ad uscire e forgerò per te armi degne di questo nome!'",
+        "choices": [
+          {"text": "Dona il tuo sangue per spezzare il sigillo", "msg": "La grata si dissolve. Borek si sgranchisce le braccia: 'Hai fegato, ragazzo. Ti aspetto al Campo Base!'", "effects": [{"damage": 40, "death_msg": "Il dissanguamento ti è stato fatale..."}, {"unlock_npc": "borek"}]},
+          {"text": "Cerca le chiavi", "msg": "Il trambusto attira un nemico formidabile!", "effects": [{"fight": "elite"}, {"unlock_npc": "borek"}]},
+          {"text": "Ignoralo", "msg": "Le lamentele del nano svaniscono dietro di te."}
+        ]
       }
-    ]
+    }
   },
   "elara_prigioniera": {
     "title": "L'Armaiola Imprigionata",
-    "text": "Una donna dall'armatura parzialmente fusa è legata a un pilastro di pietra. 'Sono stata sopraffatta... Se mi liberi da questi vincoli magici, metterò la mia forgia al tuo servizio!'",
-    "choices": [
-      {
-        "text": "Dona il tuo sangue (-40 HP) per liberarla",
-        "action": "unlock_npc_elara",
-        "msg": "Elara si alza a fatica ma con gli occhi colmi di determinazione. 'Non dimenticherò questo debito. Ci vediamo al Campo Base.'"
-      },
-      {
-        "text": "Cerca le chiavi (Combatti un Elite)",
-        "action": "unlock_npc_fight_elara",
-        "msg": "Un Elite ti sbarra la strada per le chiavi!"
-      },
-      {
-        "text": "Ignorala",
-        "action": "none",
-        "msg": "Decidi che non vale la pena rischiare per un'estranea."
+    "requires": {"not_npc": "elara"},
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Una donna dall'armatura parzialmente fusa è legata a un pilastro di pietra. 'Sono stata sopraffatta... Se mi liberi da questi vincoli magici, metterò la mia forgia al tuo servizio!'",
+        "choices": [
+          {"text": "Dona il tuo sangue per liberarla", "msg": "Elara si alza a fatica ma con gli occhi colmi di determinazione. 'Non dimenticherò questo debito. Ci vediamo al Campo Base.'", "effects": [{"damage": 40, "death_msg": "Il dissanguamento ti è stato fatale..."}, {"unlock_npc": "elara"}]},
+          {"text": "Cerca le chiavi", "msg": "Un Elite ti sbarra la strada per le chiavi!", "effects": [{"fight": "elite"}, {"unlock_npc": "elara"}]},
+          {"text": "Ignorala", "msg": "Decidi che non vale la pena rischiare per un'estranea."}
+        ]
       }
-    ]
+    }
   },
   "valerius_prigioniero": {
     "title": "L'Incantatore Intrappolato",
-    "text": "Trovi un uomo avvolto in vesti eleganti ma logore, chiuso in una gabbia di cristallo. 'L'energia di questo luogo è caotica. Libera il mio potere e ti ricompenserò con monili di rara fattura!'",
-    "choices": [
-      {
-        "text": "Dona il tuo sangue (-40 HP) per infrangere il cristallo",
-        "action": "unlock_npc_valerius",
-        "msg": "Il cristallo va in mille pezzi. Valerius fa un inchino: 'La tua vitalità è notevole. Mi troverai al Campo Base.'"
-      },
-      {
-        "text": "Cerca le chiavi (Combatti un Elite)",
-        "action": "unlock_npc_fight_valerius",
-        "msg": "Il guardiano della gabbia fa la sua comparsa!"
-      },
-      {
-        "text": "Ignoralo",
-        "action": "none",
-        "msg": "Prosegui, lasciando Valerius alla sua prigione di cristallo."
+    "requires": {"not_npc": "valerius"},
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Trovi un uomo avvolto in vesti eleganti ma logore, chiuso in una gabbia di cristallo. 'L'energia di questo luogo è caotica. Libera il mio potere e ti ricompenserò con monili di rara fattura!'",
+        "choices": [
+          {"text": "Dona il tuo sangue per infrangere il cristallo", "msg": "Il cristallo va in mille pezzi. Valerius fa un inchino: 'La tua vitalità è notevole. Mi troverai al Campo Base.'", "effects": [{"damage": 40, "death_msg": "Il dissanguamento ti è stato fatale..."}, {"unlock_npc": "valerius"}]},
+          {"text": "Cerca le chiavi", "msg": "Il guardiano della gabbia fa la sua comparsa!", "effects": [{"fight": "elite"}, {"unlock_npc": "valerius"}]},
+          {"text": "Ignoralo", "msg": "Prosegui, lasciando Valerius alla sua prigione di cristallo."}
+        ]
       }
-    ]
+    }
+  },
+
+  "viandante_cieco": {
+    "title": "Il Viandante Cieco",
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Un vecchio avanza a tentoni, una lanterna spenta stretta al petto. Si ferma a un passo da te, come se ti vedesse. 'Che piano è questo, straniero? Ho perso il conto delle scale... e la luce.'",
+        "extra": [
+          {"requires": {"counter": {"viandante_incontri": 1}}, "text": "Inclina la testa. 'Questa voce... ci siamo già incontrati, in un'altra discesa. Tu non ricordi. Io sì.'"},
+          {"requires": {"counter": {"viandante_derubato": 1}}, "text": "Stringe a sé la bisaccia. 'E tieni le mani lontane dalle mie cose, questa volta.'"}
+        ],
+        "choices": [
+          {"text": "Riaccendi la lanterna con un incantesimo", "requires": {"class": "3"}, "next": "luce"},
+          {"text": "Ascolta i passi che lo seguono", "requires": {"class": "8"}, "next": "ombre"},
+          {"text": "Digli la verità sul piano in cui si trova", "next": "racconto"},
+          {"text": "Alleggeriscigli la bisaccia", "requires": {"class": ["2", "7"]}, "msg": "Le tue dita sono più veloci del suo udito. Il vecchio sorride lo stesso, come se lo sapesse.", "effects": [{"gold": 80}, {"counter": "viandante_derubato"}]},
+          {"text": "Tira dritto", "msg": "Lo lasci a borbottare numeri nel buio."}
+        ]
+      },
+      "luce": {
+        "text": "Una fiammella azzurra si accende nella lanterna. Rivela il suo volto: non ha occhi, solo due monete d'oro incastonate nelle orbite. 'Grazie. Ora vedo quello che vedi tu.' Ti porge la lanterna, che si spegne di nuovo appena la tocchi.",
+        "choices": [
+          {"text": "Accetta la lanterna", "msg": "'Portala giù, dove il buio è vivo. Lì saprà cosa fare.'", "effects": [{"quest_item": "lanterna_spenta"}, {"counter": "viandante_incontri"}]},
+          {"text": "Rifiuta con gentilezza", "msg": "Il vecchio ti sfiora la fronte con dita gelide: le ferite si chiudono.", "effects": [{"heal_pct": 50}, {"counter": "viandante_incontri"}]}
+        ]
+      },
+      "racconto": {
+        "text": "'Questo piano?' Conta sulle dita. 'Allora sono ancora vivo.' Ride, e la risata gli si spezza in tosse. 'Ad Aethelgard ero il cartografo del re. Ho disegnato questo labirinto prima che esistesse. Vuoi sapere dove l'ho nascosto, il mio oro?'",
+        "choices": [
+          {"text": "Sì, dimmelo", "effects": [{"counter": "viandante_incontri"}], "chance": 60, "success": [{"gold": 120}],
+           "msg": "Ti indica una crepa nel muro. Dietro c'è un sacchetto pesante.", "fail_msg": "Nella crepa non c'è oro: c'è un nido, e qualcosa si sveglia.", "fail_effects": [{"fight": "normal"}]},
+          {"text": "Chiedigli la strada per uscire", "msg": "'Uscire?' Il vecchio smette di ridere. 'Non c'è un'uscita. C'è solo il fondo.' Ti lascia con un consiglio che non dimenticherai.", "effects": [{"exp": 40}, {"counter": "viandante_incontri"}]}
+        ]
+      },
+      "ombre": {
+        "text": "Dietro il vecchio camminano sette ombre in fila, piccole, con le mani sulle spalle di quella davanti. Lui non le sente. Tu sì. 'Sono i suoi figli,' sussurra la prima. 'Ci ha portati lui quaggiù, per disegnare la mappa.'",
+        "choices": [
+          {"text": "Libera le ombre", "msg": "Le sette ombre si dissolvono una dopo l'altra. L'ultima ti lascia qualcosa: un frammento della sua eternità.", "effects": [{"max_hp": -5}, {"essence": 40}, {"counter": "viandante_incontri"}]},
+          {"text": "Lascia che continuino a seguirlo", "msg": "Una delle ombre si stacca dalla fila e si avvolge alla tua lama, come un gatto.", "effects": [{"atk": 3}, {"counter": "viandante_incontri"}]}
+        ]
+      }
+    }
+  },
+  "buio_vivente": {
+    "title": "Il Buio Vivente",
+    "requires": {"min_floor": 8},
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "La torcia si spegne da sola. Il buio qui è denso, quasi solido, e si muove come un animale che annusa la preda.",
+        "choices": [
+          {"text": "Solleva la lanterna del Viandante", "requires": {"quest_item": "lanterna_spenta"}, "show_locked": true, "locked_hint": "Ti serve una luce che non si spenga",
+           "msg": "La lanterna si accende da sola, di una luce bianca e fredda. Il buio urla e si ritira, lasciando sul pavimento ciò che aveva inghiottito.", "effects": [{"take_quest_item": "lanterna_spenta"}, {"relic": "random"}, {"exp": 80}]},
+          {"text": "Evoca una luce", "requires": {"class": "3"}, "msg": "La tua luce brucia anche te, ma il buio arretra quanto basta per vedere un forziere.", "effects": [{"damage": 10}, {"gold": 60}, {"exp": 30}]},
+          {"text": "Avanza alla cieca", "chance": 50, "success": [{"gold": 90}], "msg": "Le tue dita trovano un sacchetto di monete. Qualcuno, prima di te, non è stato così fortunato.",
+           "fail_msg": "Qualcosa ti morde nel buio, e non lascia la presa.", "fail_effects": [{"damage": 35}]},
+          {"text": "Torna indietro", "msg": "Arretri con la schiena al muro finché non torni alla luce."}
+        ]
+      }
+    }
+  },
+  "cartografa_perduta": {
+    "title": "La Cartografa Perduta",
+    "requires": {"min_floor": 2, "max_floor": 26},
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Una giovane donna è seduta su una pila di pergamene, il carboncino consumato fino alle dita. 'Mi manca un solo piano per completare la mappa di mio nonno. Ma ho finito le provviste... e quello che c'è là sotto non perdona.'",
+        "extra": [{"requires": {"counter": {"cartografa_aiutata": 1}}, "text": "Ti guarda meglio. 'Strano. Ho la sensazione che tu mi abbia già aiutata, una volta.'"}],
+        "choices": [
+          {"text": "Dividi con lei le tue provviste", "msg": "'Non lo dimenticherò. Ci rivedremo più in basso, te lo giuro sulla mappa.'", "effects": [{"gold": -40}, {"counter": "cartografa_aiutata"}, {"later": "cartografa_ritorno", "floors": 3}]},
+          {"text": "Accompagnala fino al prossimo pianerottolo", "msg": "Qualcosa vi stava seguendo da tempo. Ora che siete in due, attacca.", "effects": [{"fight": "hard"}, {"quest_item": "mappa_cartografa"}, {"counter": "cartografa_aiutata"}]},
+          {"text": "Comprale la mappa incompleta", "msg": "Esita, poi ti consegna il rotolo. 'La croce rossa... non andarci da solo.'", "effects": [{"gold": -80}, {"quest_item": "mappa_cartografa"}]},
+          {"text": "Lasciala al suo lavoro", "msg": "Il grattare del carboncino ti accompagna per un po', poi svanisce."}
+        ]
+      }
+    }
+  },
+  "cartografa_ritorno": {
+    "title": "La Cartografa Ritrovata",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "La riconosci subito: la Cartografa, il volto sporco di fuliggine ma viva. 'Te l'avevo detto! Mentre mappavo ho trovato una cosa. Credo fosse destinata a te.'",
+        "choices": [
+          {"text": "Accetta il suo dono", "msg": "Ti porge un'armatura avvolta in una pergamena. Sulla pergamena c'è il tuo nome, scritto con la sua calligrafia.", "effects": [{"armor": "epic", "level": 2}, {"exp": 50}]},
+          {"text": "Chiedile della croce rossa sulla mappa", "msg": "'Allora ci vuoi andare davvero.' Ti consegna la mappa e ti fascia le ferite.", "effects": [{"quest_item": "mappa_cartografa"}, {"heal_pct": 30}]}
+        ]
+      }
+    }
+  },
+  "sala_corridoi": {
+    "title": "La Sala dei Cento Corridoi",
+    "requires": {"min_floor": 6},
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Una sala rotonda da cui partono cento corridoi identici. Da ognuno arriva lo stesso suono: monete che cadono. Da uno solo, forse, arriva davvero.",
+        "choices": [
+          {"text": "Segui la croce rossa della mappa", "requires": {"quest_item": "mappa_cartografa"}, "show_locked": true, "locked_hint": "Senza una mappa è un azzardo",
+           "msg": "Il corridoio giusto è il più stretto. In fondo, il tesoro del cartografo di Aethelgard ti aspetta da secoli.", "effects": [{"take_quest_item": "mappa_cartografa"}, {"relic": "random"}, {"gold": 150}]},
+          {"text": "Scegli un corridoio a caso", "chance": 40, "success": [{"gold": 100}], "msg": "Fortuna o destino: in fondo c'è davvero dell'oro.",
+           "fail_msg": "Il corridoio si chiude alle tue spalle. Ne esci solo dopo ore, a costo di sangue.", "fail_effects": [{"damage": 35}]},
+          {"text": "Torna indietro", "msg": "Cento corridoi, cento trappole. Non oggi."}
+        ]
+      }
+    }
+  },
+  "pozzo_desideri": {
+    "title": "Il Pozzo dei Desideri",
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Un pozzo di pietra bianca, l'unica cosa pulita in tutto il piano. Sul fondo brillano migliaia di monete, e una voce paziente le conta una per una.",
+        "choices": [
+          {"text": "Getta una moneta ed esprimi un desiderio", "effects": [{"gold": -30}], "next": "desiderio"},
+          {"text": "Immergi la mano: l'oro ti riconosce", "requires": {"trait": "midas"}, "msg": "Le monete risalgono verso le tue dita come pesci affamati. Il pozzo si prende un po' della tua vita in cambio.", "effects": [{"gold": 60}, {"max_hp": -10}]},
+          {"text": "Pesca le monete degli altri", "requires": {"class": "2"}, "chance": 70, "success": [{"gold": 90}],
+           "msg": "Una corda, un amo, e tanta pazienza. La voce non si accorge di nulla.", "fail_msg": "La voce smette di contare. Una mano gelida ti afferra il polso.", "fail_effects": [{"damage": 25}]},
+          {"text": "Allontanati", "msg": "La voce continua a contare. Ti sembra di sentire il tuo nome tra i numeri."}
+        ]
+      },
+      "desiderio": {
+        "text": "La moneta non fa rumore toccando l'acqua. La voce tace. 'Cosa desideri, piccolo mortale?'",
+        "choices": [
+          {"text": "Forza", "msg": "Il braccio con cui hai lanciato la moneta formicola, poi si fa pesante come pietra.", "effects": [{"atk": 3}]},
+          {"text": "Salute", "msg": "Un calore gentile ti attraversa il petto.", "effects": [{"max_hp": 10}, {"heal_pct": 30}]},
+          {"text": "Ricchezza", "chance": 50, "success": [{"gold": 120}], "msg": "Il pozzo restituisce una manciata di monete antiche.", "fail_msg": "L'eco ride. 'Avido.'"},
+          {"text": "Conoscenza", "msg": "La voce ti sussurra i nomi di tutti quelli che hanno desiderato prima di te.", "effects": [{"exp": 80}]}
+        ]
+      }
+    }
+  },
+  "banchetto_morti": {
+    "title": "Il Banchetto dei Morti",
+    "requires": {"min_floor": 4},
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Una lunga tavola apparecchiata per tredici. Dodici commensali scheletrici, immobili, i calici alzati. Sull'unica sedia vuota è inciso il tuo nome.",
+        "extra": [{"requires": {"counter": {"banchetto_seduto": 1}}, "text": "Il cuscino della sedia è ancora caldo. Qualcuno, l'ultima volta, eri tu."}],
+        "choices": [
+          {"text": "Siediti al tuo posto", "effects": [{"counter": "banchetto_seduto"}], "next": "brindisi"},
+          {"text": "Chiedi ai commensali chi li ha invitati", "requires": {"class": "8"}, "next": "rivelazione"},
+          {"text": "Rovescia la tavola", "msg": "Dodici sedie strisciano all'unisono. I commensali si alzano.", "effects": [{"fight": "hard"}, {"potion": 2}]},
+          {"text": "Esci in punta di piedi", "msg": "Nessuno si volta. Ma senti dodici sguardi vuoti sulla schiena fino alla porta."}
+        ]
+      },
+      "brindisi": {
+        "text": "Dodici teste ruotano verso di te con un cigolio di ossa. Il più vecchio solleva il calice: 'Al Labirinto, che ci nutre e ci digerisce.' Il vino nel tuo bicchiere è scuro come inchiostro.",
+        "choices": [
+          {"text": "Bevi", "chance": 60, "success": [{"max_hp": 15}, {"heal_pct": 50}], "msg": "Il vino è caldo e dolce: ti scorre nelle vene come vita rubata.",
+           "fail_msg": "Non è vino. È sangue, ed è il tuo. Però ti rende più feroce.", "fail_effects": [{"damage": 30}, {"atk": 5}]},
+          {"text": "Bevi e offri in cambio il tuo sangue maledetto", "requires": {"trait": "maledetto"}, "msg": "I commensali chinano il capo: hanno riconosciuto uno dei loro.", "effects": [{"atk": 8}, {"corruption": 10}]},
+          {"text": "Fingi di bere e svuota il calice sotto la tavola", "chance": 50, "success": [{"gold": 80}], "msg": "Nessuno se ne accorge. Intaschi anche le posate d'argento.",
+           "fail_msg": "Il commensale accanto a te ti afferra il polso. 'Maleducato.'", "fail_effects": [{"fight": "normal"}]}
+        ]
+      },
+      "rivelazione": {
+        "text": "'Ci ha invitati lui,' rispondono dodici bocche senza lingua. 'Il Re Dimenticato. Ogni tredici discese apparecchia per un nuovo ospite.' Uno scheletro ti fa scivolare in mano un anello.",
+        "choices": [
+          {"text": "Prendi l'anello", "msg": "L'anello è freddo, e stringe un po' troppo. Come una promessa.", "effects": [{"accessory": true}, {"flag": "banchetto_rivelazione"}]},
+          {"text": "Chiedi chi fosse il Re", "msg": "'Il sovrano di Aethelgard. Quando la Fauce si aprì, implorò il Labirinto di risparmiare la sua corte.' Una pausa. 'Il Labirinto lo accontentò. Nessuno di noi è mai morto.'", "effects": [{"exp": 70}, {"flag": "banchetto_rivelazione"}]}
+        ]
+      }
+    }
+  },
+  "bilancia_aethelgard": {
+    "title": "La Bilancia di Aethelgard",
+    "requires": {"min_floor": 3},
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Una bilancia d'ottone alta tre uomini domina la sala. Su un piatto riposa una piuma. L'altro è vuoto, e sul bordo è inciso: 'Ciò che vali'.",
+        "choices": [
+          {"text": "Poggia sul piatto il tuo oro", "effects": [{"gold": -100}], "chance": 50, "success": [{"relic": "random"}],
+           "msg": "La bilancia si equilibra. Dal pavimento sale un piedistallo.", "fail_msg": "Il piatto sprofonda e l'oro scivola via: non basta a pesare un'anima."},
+          {"text": "Poggia sul piatto il tuo sangue", "msg": "La bilancia scende di un soffio. Senti il tuo sangue tornare indietro, più denso, più forte.", "effects": [{"max_hp": -10}, {"atk": 5}, {"corruption": 5}]},
+          {"text": "Giura sul tuo onore", "requires": {"class": "4"}, "msg": "La piuma si piega verso di te. La bilancia approva.", "effects": [{"heal_pct": 100}, {"def": 3}, {"corruption": -15}]},
+          {"text": "Sabota il meccanismo", "requires": {"class": "7"}, "chance": 60, "success": [{"gold": 150}], "msg": "Un colpo secco al perno: la bilancia sputa l'oro accumulato in secoli di pesate.",
+           "fail_msg": "Un ingranaggio scatta. Il guardiano della bilancia si risveglia.", "fail_effects": [{"fight": "elite"}]},
+          {"text": "Non farti pesare", "msg": "Certe misure è meglio non conoscerle."}
+        ]
+      }
+    }
+  },
+  "voce_nel_buio": {
+    "title": "La Voce nel Buio",
+    "requires": {"min_floor": 5},
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Un bambino piange in fondo al corridoio. 'Ho perso la mamma... mi aiuti a trovarla?' Non riesci a vederlo: la sua voce viene sempre da un passo più avanti.",
+        "extra": [{"requires": {"counter": {"bambino_ignorato": 1}}, "text": "Stavolta ti chiama per nome."}],
+        "choices": [
+          {"text": "Segui la voce", "next": "tana"},
+          {"text": "Guarda meglio le impronte: sono rovesciate", "requires": {"relic": "occhio_cacciatore"}, "next": "smascherato"},
+          {"text": "Muoviti nell'ombra e anticipalo", "requires": {"class": ["2", "7"]}, "next": "smascherato"},
+          {"text": "Ignoralo e prosegui", "msg": "Il pianto si trasforma in una risata. Poi, silenzio.", "effects": [{"counter": "bambino_ignorato"}]}
+        ]
+      },
+      "tana": {
+        "text": "La voce ti porta in una stanza tonda, piena di giocattoli di legno. In mezzo, qualcosa di enorme e paziente finge di dormire. La voce di bambino, ora, viene da dentro di lui.",
+        "choices": [
+          {"text": "Attacca per primo", "msg": "La creatura apre tutti gli occhi insieme.", "effects": [{"fight": "hard"}, {"potion": 2}]},
+          {"text": "Raccogli un giocattolo e scappa", "msg": "Il giocattolo è caldo, e ti brucia le mani. Non lo lasci.", "effects": [{"damage": 15}, {"accessory": true}]},
+          {"text": "Arretra lentamente", "chance": 50, "msg": "Esci senza voltarti. Ti segue solo l'eco di una ninna nanna.",
+           "fail_msg": "Un tentacolo ti sferza la schiena mentre fuggi!", "fail_effects": [{"damage": 25}]}
+        ]
+      },
+      "smascherato": {
+        "text": "Il mimo capisce di essere stato scoperto. La voce di bambino si spezza in un ringhio, la carne comincia a gonfiarsi. Prima che finisca di mutare, hai un'apertura.",
+        "choices": [
+          {"text": "Colpisci il cuore", "msg": "La creatura si affloscia prima di prendere forma. Nel suo ventre, i resti delle sue vittime e del loro oro.", "effects": [{"exp": 60}, {"gold": 70}]},
+          {"text": "Lascialo fuggire e saccheggia la tana", "msg": "Tra i giocattoli trovi oggetti che nessun bambino ha mai posseduto.", "effects": [{"potion": 1}, {"accessory": true}]}
+        ]
+      }
+    }
+  },
+  "voce_labirinto": {
+    "title": "La Voce del Labirinto",
+    "requires": {"min_floor": 12},
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Le pareti si avvicinano finché senti il loro respiro sul viso. Poi il Labirinto parla, con la voce di tutti quelli che hai perso. 'Sei arrivato lontano. Posso renderti più forte. Mi basta un pezzo di te.'",
+        "extra": [{"requires": {"counter": {"patti_labirinto": 1}}, "text": "Una pausa. 'Bentornato. Ricordi il nostro ultimo accordo? Io sì. Lo ricordo in ogni pietra.'"}],
+        "choices": [
+          {"text": "Accetta il dono", "msg": "Qualcosa ti viene strappato, qualcosa ti viene dato. Non sai quale delle due cose faccia più male.", "effects": [{"atk": 12}, {"max_hp": -25}, {"counter": "patti_labirinto"}, {"corruption": 15}]},
+          {"text": "Chiedi un dono diverso", "next": "trattativa"},
+          {"text": "Chiedi di vedere il fondo", "requires": {"corruption": 50}, "msg": "Le pareti si aprono come palpebre. Vedi il fondo, e il fondo vede te. Ti riconosce.", "effects": [{"essence": 150}, {"atk": 6}, {"corruption": 10}]},
+          {"text": "Rifiuta", "msg": "Il Labirinto sospira. 'Tornerai.' Le pareti si ritirano, e ti senti stranamente riposato.", "effects": [{"heal_pct": 30}, {"corruption": -5}]}
+        ]
+      },
+      "trattativa": {
+        "text": "'Diverso?' Le pareti ridono, e la polvere ti piove addosso. 'Tutti volete qualcosa di diverso. Scegli, allora.'",
+        "choices": [
+          {"text": "Il mio oro in cambio della mia vita", "msg": "Le monete affondano nella pietra come in acqua. Il tuo cuore batte più forte.", "effects": [{"gold": -150}, {"max_hp": 25}, {"heal_pct": 100}]},
+          {"text": "I tuoi segreti in cambio dei miei ricordi", "msg": "Dimentichi il volto di tua madre. In cambio, capisci come pensano i mostri.", "effects": [{"max_hp": -10}, {"exp": 150}, {"counter": "patti_labirinto"}, {"corruption": 10}]},
+          {"text": "Niente. Me ne vado.", "msg": "'Nessuno se ne va gratis.' Una pietra si stacca dal soffitto.", "effects": [{"damage": 20}]}
+        ]
+      }
+    }
+  },
+
+  "giardino_sepolto": {
+    "title": "Il Giardino Sepolto",
+    "requires": {"max_floor": 20},
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Il soffitto di questa grotta è crollato secoli fa. Sotto le macerie, dove nessuno l'ha mai seminato, cresce un piccolo campo di lavanda. Il profumo è così forte che per un istante dimentichi dove sei.",
+        "choices": [
+          {"text": "Raccogli un fiore di lavanda", "msg": "Lo avvolgi in un pezzo di stoffa. Non sai perché, ma ti sembra importante.", "effects": [{"quest_item": "fiore_lavanda"}]},
+          {"text": "Sdraiati tra i fiori", "msg": "Chiudi gli occhi. Quando li riapri, le ferite fanno meno male.", "effects": [{"heal_pct": 40}]},
+          {"text": "Strappa le radici per venderle", "msg": "La lavanda del Labirinto vale oro, per chi sa a chi venderla.", "effects": [{"gold": 40}]},
+          {"text": "Lascia il giardino com'è", "msg": "Ti allontani in punta di piedi, come da una tomba."}
+        ]
+      }
+    }
+  },
+
+  "alaric_porta": {
+    "title": "Il Cavaliere alla Porta",
+    "requires": {"min_floor": 3, "max_floor": 14, "counter_below": {"alaric": 1}},
+    "weight": 3,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Un cavaliere in armatura d'ossidiana sbarra un arco di pietra. Oltre l'arco non c'è niente: solo un muro liscio. 'Nessuno passa,' dice. La sua voce è un'eco che arriva da molto lontano.",
+        "choices": [
+          {"text": "Chiedigli cosa custodisce", "next": "domanda"},
+          {"text": "Saluta con il segno degli Architetti", "requires": {"class": "4"}, "msg": "Il cavaliere si irrigidisce. Poi, lentamente, risponde al saluto. 'Fratello. Credevo che non ne fosse rimasto nessuno.'", "effects": [{"def": 3}, {"flag": "alaric_paladino"}, {"counter": "alaric"}, {"run_flag": "alaric_visto"}]},
+          {"text": "Sfidalo", "msg": "'Sia.' Sguaina una lama che non riflette la luce.", "effects": [{"fight": "elite"}, {"atk": 4}, {"counter": "alaric"}, {"run_flag": "alaric_visto"}]},
+          {"text": "Torna sui tuoi passi", "msg": "Il cavaliere non ti guarda andare via. Continua a fissare il muro."}
+        ]
+      },
+      "domanda": {
+        "text": "'Custodisco la porta,' risponde. 'Gli Architetti mi ordinarono di non lasciar passare il Vuoto. Poi la Luce divenne crudele, e gli Architetti tacquero.' Inclina l'elmo. 'Ora la custodisco perché è l'unica cosa che ricordo di saper fare.'",
+        "choices": [
+          {"text": "Digli che i suoi Architetti non torneranno", "msg": "Il cavaliere tace a lungo. 'Lo so,' dice infine. 'Ma se smetto di aspettarli, cosa resta di me?'", "effects": [{"exp": 60}, {"counter": "alaric"}, {"run_flag": "alaric_visto"}]},
+          {"text": "Promettigli che tornerai", "msg": "'Molti l'hanno promesso.' Eppure abbassa lo scudo, e il calore di una luce antica ti chiude le ferite.", "effects": [{"heal_pct": 40}, {"counter": "alaric"}, {"run_flag": "alaric_visto"}]}
+        ]
+      }
+    }
+  },
+
+  "alaric_stanco": {
+    "title": "Il Cavaliere Stanco",
+    "requires": {"min_floor": 6, "max_floor": 22, "counter": {"alaric": 1}, "counter_below": {"alaric": 2}, "not_run_flag": "alaric_visto"},
+    "weight": 3,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Ritrovi il cavaliere seduto sui gradini di una cappella in rovina. Si è tolto l'elmo: sotto l'ossidiana c'è un volto di cenere, e occhi che hanno smesso di aspettare. 'Sei tornato,' dice. 'Nessuno torna mai.'",
+        "extra": [
+          {"requires": {"flag": "alaric_paladino"}, "text": "'Fratello d'ordine. Siediti con me.'"}
+        ],
+        "choices": [
+          {"text": "Porgigli il fiore di lavanda", "requires": {"quest_item": "fiore_lavanda"}, "show_locked": true, "locked_hint": "Una lettera parlava di un fiore...", "msg": "Il cavaliere prende il fiore con due dita, come se potesse rompersi. 'Lavanda. Mia figlia ne coltivava un campo intero, a Valeriana.' Per la prima volta, sorride, e ti dona l'anello che portava al collo.", "effects": [{"take_quest_item": "fiore_lavanda"}, {"heal_pct": 100}, {"accessory": true}, {"flag": "alaric_lavanda"}, {"counter": "alaric"}, {"run_flag": "alaric_visto"}]},
+          {"text": "Siediti accanto a lui in silenzio", "msg": "Restate così a lungo. Quando ti rialzi, il Labirinto ti sembra un po' meno grande.", "effects": [{"exp": 80}, {"counter": "alaric"}, {"run_flag": "alaric_visto"}]},
+          {"text": "Approfitta della sua debolezza", "msg": "'Anche tu,' sospira, e si rimette l'elmo.", "effects": [{"fight": "elite"}, {"weapon": "epic", "level": 2}, {"flag": "alaric_tradito"}, {"counter": "alaric"}, {"run_flag": "alaric_visto"}, {"corruption": 15}]},
+          {"text": "Lascialo riposare", "msg": "Non è il momento. Forse lo ritroverai più avanti."}
+        ]
+      }
+    }
+  },
+
+  "alaric_sigillo": {
+    "title": "L'Ultimo Sigillo",
+    "requires": {"min_floor": 12, "counter": {"alaric": 2}, "counter_below": {"alaric": 3}, "not_run_flag": "alaric_visto"},
+    "weight": 3,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "L'arco di pietra è di nuovo davanti a te, ma il cavaliere non lo sbarra più: ci è inginocchiato davanti. Sulla sua schiena, inciso nell'ossidiana, brilla un sigillo di luce. 'Il giuramento mi tiene qui,' dice. 'Non posso morire finché la porta ha un custode. Spezzalo.'",
+        "extra": [
+          {"requires": {"flag": "alaric_tradito"}, "text": "'Mi hai colpito alle spalle, una volta. Proprio per questo so che ne sei capace.'"},
+          {"requires": {"flag": "alaric_lavanda"}, "text": "Tra le dita stringe ancora il fiore di lavanda, secco."}
+        ],
+        "choices": [
+          {"text": "Spezza il sigillo", "msg": "Il sigillo ti brucia le mani come ferro rovente. Poi si spezza, e il cavaliere si dissolve in una luce calma, quasi tiepida. 'Grazie.' Il Cavaliere Oscuro non custodirà più nessuna porta.", "effects": [{"damage": 30}, {"relic": "random"}, {"essence": 100}, {"flag": "alaric_liberato"}, {"counter": "alaric"}, {"run_flag": "alaric_visto"}, {"corruption": -15}]},
+          {"text": "Giura di prendere il suo posto", "msg": "Il sigillo scivola dalla sua schiena alla tua. Alaric si alza leggero e scompare oltre l'arco. Senti il peso di un giuramento che non finirà con questa discesa.", "effects": [{"atk": 10}, {"def": 5}, {"max_hp": 20}, {"flag": "alaric_erede"}, {"counter": "alaric"}, {"run_flag": "alaric_visto"}, {"corruption": 10}]},
+          {"text": "Non sono pronto", "msg": "'Nessuno lo è,' risponde, e torna a guardare il muro."}
+        ]
+      }
+    }
+  },
+
+  "silas_fuoco": {
+    "title": "Il Cercatore",
+    "requires": {"min_floor": 2, "max_floor": 12, "counter_below": {"silas": 1}},
+    "weight": 3,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Un uomo magro scrive alla luce di un fuoco azzurro, così concentrato da non accorgersi di te. 'Giorno quattro... no. Cinque.' Alza gli occhi. 'Sei nuovo. Si vede da come guardi le ombre.'",
+        "choices": [
+          {"text": "Siediti al suo fuoco", "msg": "'Mi chiamo Silas. Cerco il fondo.' Ti offre una zuppa che sa di cenere. 'Se ci arrivi prima di me, lasciami un segno.'", "effects": [{"heal_pct": 40}, {"counter": "silas"}, {"run_flag": "silas_visto"}]},
+          {"text": "Chiedigli del Labirinto", "msg": "'Il Labirinto non è un luogo. È un ricordo che qualcuno si rifiuta di lasciar andare.' Ti guarda. 'Forse il tuo.'", "effects": [{"exp": 50}, {"counter": "silas"}, {"run_flag": "silas_visto"}]},
+          {"text": "Leggi il diario mentre non guarda", "requires": {"class": ["2", "7"]}, "msg": "Tra le pagine fitte, una frase sottolineata tre volte: 'Il nuovo arrivato. Non fidarti.' Accanto c'è un ritratto. È il tuo.", "effects": [{"exp": 80}, {"flag": "silas_letto"}, {"counter": "silas"}, {"run_flag": "silas_visto"}]},
+          {"text": "Lascialo scrivere", "msg": "Il grattare della penna ti segue per un po', poi si perde."}
+        ]
+      }
+    }
+  },
+
+  "silas_tracce": {
+    "title": "Il Diario Strappato",
+    "requires": {"min_floor": 8, "max_floor": 22, "counter": {"silas": 1}, "counter_below": {"silas": 2}, "not_run_flag": "silas_visto"},
+    "weight": 3,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Il fuoco azzurro è spento. Intorno ci sono pagine strappate del diario di Silas, e una scia d'inchiostro che si allontana nel buio, come se qualcuno fosse stato trascinato via mentre scriveva.",
+        "extra": [
+          {"requires": {"flag": "silas_letto"}, "text": "Su una pagina c'è il tuo ritratto, cancellato con furia."}
+        ],
+        "choices": [
+          {"text": "Segui la scia d'inchiostro", "next": "lotta"},
+          {"text": "Raccogli le pagine e prosegui", "msg": "Le pagine parlano di un drago fatto di lacrime e di una porta al piano trenta. Di Silas, nessuna traccia.", "effects": [{"exp": 60}, {"flag": "silas_abbandonato"}, {"counter": "silas"}, {"run_flag": "silas_visto"}]},
+          {"text": "Non è affar tuo", "msg": "Calpesti le pagine senza leggerle."}
+        ]
+      },
+      "lotta": {
+        "text": "In fondo alla scia, Silas è schiacciato contro la parete da qualcosa fatto d'ombra e d'inchiostro. Scrive ancora, con la mano libera, come se descrivere il mostro potesse fermarlo.",
+        "choices": [
+          {"text": "Aiutalo", "msg": "Ti lanci tra Silas e la creatura.", "effects": [{"fight": "hard"}, {"potion": 2}, {"flag": "silas_salvato"}, {"counter": "silas"}, {"run_flag": "silas_visto"}]},
+          {"text": "Resta a guardare", "msg": "Silas se la cava da solo, a stento. Quando ti vede, chiude il diario. 'Ho scritto anche questo,' dice, e se ne va zoppicando.", "effects": [{"exp": 100}, {"flag": "silas_abbandonato"}, {"counter": "silas"}, {"run_flag": "silas_visto"}, {"corruption": 10}]}
+        ]
+      }
+    }
+  },
+
+  "silas_soglia": {
+    "title": "La Soglia",
+    "requires": {"min_floor": 18, "counter": {"silas": 2}, "counter_below": {"silas": 3}, "not_run_flag": "silas_visto"},
+    "weight": 3,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Una porta d'ossidiana alta quanto il cielo che non vedi da settimane. Seduto davanti c'è Silas. Il diario è finito: resta solo l'ultima pagina, bianca. 'Ci sono stato,' dice. 'Oltre la soglia. Non c'è un mostro. C'è uno specchio.'",
+        "extra": [
+          {"requires": {"flag": "silas_salvato"}, "text": "'Ti devo la vita. Per questo te lo dico.'"},
+          {"requires": {"flag": "silas_abbandonato"}, "text": "'Non ti devo niente. Te lo dico lo stesso.'"}
+        ],
+        "choices": [
+          {"text": "Chiedigli cosa ha visto nello specchio", "msg": "'Aethelgard. Come sarebbe stata se non avessimo mai provato a dominare gli elementi.' Chiude gli occhi. 'Era così bella che sono tornato indietro.'", "effects": [{"essence": 100}, {"flag": "silas_verita"}, {"counter": "silas"}, {"run_flag": "silas_visto"}]},
+          {"text": "Proponigli di scendere insieme", "requires": {"flag": "silas_salvato"}, "msg": "Silas ci pensa a lungo. Poi strappa l'ultima pagina bianca e te la porge. 'Scrivici tu, la fine.'", "effects": [{"atk": 5}, {"def": 5}, {"flag": "silas_compagno"}, {"counter": "silas"}, {"run_flag": "silas_visto"}]},
+          {"text": "Lascialo alla sua porta", "msg": "Silas annuisce, come se se lo aspettasse."}
+        ]
+      }
+    }
+  },
+
+  "voce_cara": {
+    "title": "La Voce Cara",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Dietro una porta di marmo socchiusa, qualcuno canticchia una ninna nanna che conosci. È la voce di chi ti cantava per farti dormire, tanto tempo fa, prima del Labirinto. 'Entra,' dice. 'Ti aspettavo.'",
+        "extra": [
+          {"requires": {"flag": "statua_di_sale"}, "text": "L'ultima volta sei rimasto troppo a lungo. Ricordi ancora il sapore del sale."}
+        ],
+        "choices": [
+          {"text": "Entra e ascolta", "next": "ascolto"},
+          {"text": "Riconosci la voce: è un'eco, non un'anima", "requires": {"class": "8"}, "msg": "Le parli come si parla ai morti. L'eco si placa e ti lascia un frammento di ciò che era stata.", "effects": [{"exp": 60}, {"essence": 30}]},
+          {"text": "Tappati le orecchie e passa oltre", "msg": "La ninna nanna ti segue per tre corridoi, poi si spezza in un singhiozzo."}
+        ]
+      },
+      "ascolto": {
+        "text": "La stanza è vuota, ma la voce ora è vicinissima, calda, dietro la tua nuca. Ti racconta di un'estate ad Aethelgard, dell'odore dei pini, di quanto sei stato amato. Le gambe ti si fanno pesanti. Sarebbe così facile restare.",
+        "choices": [
+          {"text": "Resta ancora un po'", "chance": 60, "success": [{"max_hp": 15}, {"heal_pct": 100}], "msg": "Quando finalmente ti alzi, ti senti intero come non eri da anni.", "fail_msg": "Ti accorgi troppo tardi che le dita non si piegano più. Ti strappi via, ma una parte di te resta lì, bianca e salata.", "fail_effects": [{"max_hp": -15}, {"flag": "statua_di_sale"}]},
+          {"text": "Ringrazia la voce e vattene", "msg": "'Va bene,' dice la voce. 'Vai. Ma torna.'", "effects": [{"heal_pct": 40}]}
+        ]
+      }
+    }
+  },
+
+  "statua_sale": {
+    "title": "La Statua di Sale",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Al centro del chiostro c'è una statua bianca, inginocchiata, con l'orecchio teso verso una parete. Non è scolpita: è sale. Sul basamento qualcuno ha inciso un nome con le unghie.",
+        "extra": [
+          {"requires": {"flag": "statua_di_sale"}, "text": "La statua ha il tuo volto."}
+        ],
+        "choices": [
+          {"text": "Leggi il nome inciso", "msg": "È un nome qualunque, di qualcuno che qualcuno amava. Lo ripeti a voce alta, perché almeno una volta venga detto di nuovo.", "effects": [{"exp": 50}]},
+          {"text": "Raccogli un po' di sale", "msg": "Il sale ti brucia le mani come se fosse vivo. Tra i cristalli c'è una fiala che la statua stringeva.", "effects": [{"damage": 10}, {"potion": 1}]},
+          {"text": "Spezza la statua", "msg": "Il sale si incrina con un gemito. Poi la statua si alza.", "effects": [{"fight": "normal"}, {"gold": 50}]},
+          {"text": "Prosegui senza guardarla", "msg": "Senti il suo orecchio di sale seguire i tuoi passi."}
+        ]
+      }
+    }
+  },
+
+  "biblioteca_cenere": {
+    "title": "La Biblioteca di Cenere",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Scaffali alti fino al buio, carichi dei libri dell'accademia della Luce Calma. Quasi tutti sono cenere che conserva la forma delle pagine: basta un respiro per disfarli. Da uno scaffale, una voce legge ad alta voce un libro che non c'è più.",
+        "choices": [
+          {"text": "Cerca un tomo ancora intatto", "chance": 50, "success": [{"exp": 90}], "msg": "Tra mille ceneri, un libro resiste. Parla degli Architetti, e di un'ottava pietra mai posata.", "fail_msg": "Uno scaffale crolla e ti seppellisce sotto secoli di cenere.", "fail_effects": [{"damage": 15}]},
+          {"text": "Ricomponi le pagine con un incantesimo", "requires": {"class": "3"}, "msg": "Le ceneri si riordinano tra le tue dita. Una pagina nasconde un sigillo, e il sigillo nasconde un oggetto.", "effects": [{"damage": 20}, {"relic": "random"}]},
+          {"text": "Accendi un fuoco con le pagine bruciate", "msg": "È un sacrilegio, ma il calore è vero. La voce smette di leggere.", "effects": [{"heal_pct": 30}]},
+          {"text": "Esci in silenzio", "msg": "La voce riprende a leggere da dove si era interrotta."}
+        ]
+      }
+    }
+  },
+
+  "prima_pietra": {
+    "title": "La Prima Pietra",
+    "requires": {"biome": "chiostri", "min_floor": 3, "max_floor": 3},
+    "weight": 4,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Una lastra del pavimento è diversa da tutte le altre: non ha venature viola. È bianca, tiepida al tatto, e sotto senti pulsare qualcosa, come un cuore molto lento. Si dice che qui riposi la prima pietra posata dagli Architetti.",
+        "extra": [
+          {"requires": {"flag": "prima_pietra"}, "text": "La lastra è già stata sollevata, una volta. Da te."}
+        ],
+        "choices": [
+          {"text": "Solleva la lastra", "requires": {"not_flag": "prima_pietra"}, "msg": "Sotto c'è una pietra grezza, grande come un pugno, incisa con un solo segno. Quando la tocchi, il Labirinto trattiene il respiro.", "effects": [{"damage": 20}, {"relic": "random"}, {"flag": "prima_pietra"}]},
+          {"text": "Posa la mano dove c'era la pietra", "requires": {"flag": "prima_pietra"}, "msg": "Il marmo ricorda la forma della pietra, e ricorda te.", "effects": [{"essence": 50}]},
+          {"text": "Prega sulla pietra degli Architetti", "requires": {"class": "4"}, "msg": "Per un istante la Luce torna calma, come nei giorni prima della Discordia.", "effects": [{"heal_pct": 100}, {"def": 2}, {"corruption": -20}]},
+          {"text": "Ascolta il battito", "requires": {"class": "3"}, "msg": "Il battito ha un ritmo. È una parola, ripetuta all'infinito, nella lingua degli Architetti.", "effects": [{"exp": 100}]},
+          {"text": "Lasciala dov'è", "msg": "Certe pietre reggono più di un pavimento."}
+        ]
+      }
+    }
+  },
+
+  "galleria_gas": {
+    "title": "La Galleria del Gas",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Una galleria laterale è piena fino alle ginocchia di un vapore verdastro che non sale e non si muove. Dall'altra parte, una vena d'argento brilla nella roccia. Chi respira quel gas non parla più per giorni.",
+        "choices": [
+          {"text": "Trattieni il respiro e corri", "chance": 60, "success": [{"gold": 80}], "msg": "Arrivi alla vena con i polmoni in fiamme e la scavi a mani nude.", "fail_msg": "A metà strada respiri. Il silenzio ti entra dentro come acqua gelida.", "fail_effects": [{"damage": 25}]},
+          {"text": "Distilla il gas in una fiala", "requires": {"class": "6"}, "msg": "Il silenzio, imbottigliato, è un ottimo veleno. E anche un ottimo rimedio.", "effects": [{"potion": 2}]},
+          {"text": "Torna indietro", "msg": "L'argento resterà lì. Il gas anche."}
+        ]
+      }
+    }
+  },
+
+  "ingranaggio_fermo": {
+    "title": "L'Ingranaggio Fermo",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Un ingranaggio di ferro grande come una casa si è bloccato. Fra due denti è rimasta incastrata una mano scheletrica, che stringe ancora qualcosa.",
+        "choices": [
+          {"text": "Libera la mano", "msg": "Il metallo ti graffia fino all'osso, ma la mano si apre: dentro c'è un anello.", "effects": [{"damage": 20}, {"accessory": true}]},
+          {"text": "Fai ripartire l'ingranaggio a forza", "requires": {"atk": 30}, "msg": "Con un gemito l'ingranaggio riparte, e un'intera parete scivola di lato: dietro c'è il tesoro di un caposquadra.", "effects": [{"gold": 120}, {"exp": 60}]},
+          {"text": "Lascia stare", "msg": "Certe macchine è meglio non svegliarle."}
+        ]
+      }
+    }
+  },
+
+  "ponte_sospeso": {
+    "title": "Il Ponte Sospeso",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Un ponte di corda e assi marce si allunga nel vuoto, fra due guglie. Sotto, nubi elettriche. Il vento lo fa ondeggiare come la corda di un'arpa.",
+        "choices": [
+          {"text": "Attraversa con calma", "chance": 75, "success": [{"exp": 50}], "msg": "Un passo alla volta, senza guardare giù. Arrivi dall'altra parte con le gambe che tremano.", "fail_msg": "Un'asse si spezza sotto il tuo piede. Il vento ti strappa dal ponte.", "fail_effects": [{"fall": true, "gold_pct": 40}]},
+          {"text": "Corri sulle corde", "requires": {"class": ["2", "7"]}, "msg": "Salti da una corda all'altra come se il vuoto non esistesse. A metà ponte, un nido abbandonato pieno di monete.", "effects": [{"gold": 100}]},
+          {"text": "Lasciati cadere", "msg": "Fai un passo nel vuoto, di proposito. Le nubi ti inghiottono.", "effects": [{"fall": true, "gold_pct": 40}]},
+          {"text": "Torna indietro", "msg": "Il ponte continua a oscillare, vuoto."}
+        ]
+      }
+    }
+  },
+
+  "nido_tempesta": {
+    "title": "Il Nido della Tempesta",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "In cima a una guglia, un nido di rami carbonizzati. Dentro c'è un uovo azzurro che crepita di scintille. L'aria sa di temporale.",
+        "choices": [
+          {"text": "Ruba l'uovo", "msg": "Un grido squarcia le nubi: la madre è tornata.", "effects": [{"fight": "hard"}, {"relic": "random"}]},
+          {"text": "Imbriglia un fulmine dall'uovo", "requires": {"class": "3"}, "msg": "La scarica ti attraversa il braccio e resta lì, intrappolata nella tua arma.", "effects": [{"damage": 15}, {"atk": 5}]},
+          {"text": "Ascolta il vento", "msg": "Il vento qui porta i segreti degli Architetti. Ne afferri qualcuno.", "effects": [{"exp": 70}]}
+        ]
+      }
+    }
+  },
+
+  "volto_membrana": {
+    "title": "Il Volto nella Membrana",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "La parete è una membrana tiepida e traslucida. Dall'altra parte, premuto contro di essa, c'è un volto che conosci: è il tuo, più vecchio, con gli occhi chiusi.",
+        "choices": [
+          {"text": "Lascia che ti mostri un ricordo", "msg": "Vedi una run che non hai ancora fatto. Quando torni in te, ti manca qualcosa, ma sai di più.", "effects": [{"max_hp": -5}, {"exp": 100}]},
+          {"text": "Chiedigli chi era", "requires": {"class": "8"}, "msg": "'Ero te,' dice la bocca chiusa. 'Sono rimasto troppo a lungo.' Ti lascia un frammento di ciò che è stato.", "effects": [{"essence": 60}]},
+          {"text": "Strappa la membrana", "msg": "La membrana si lacera, e il volto si stacca dalla parete.", "effects": [{"fight": "normal"}, {"potion": 1}]},
+          {"text": "Allontanati", "msg": "Il volto apre gli occhi solo quando gli hai voltato le spalle."}
+        ]
+      }
+    }
+  },
+
+  "giardino_appassito": {
+    "title": "Il Giardino Appassito",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Fiori secchi coprono il pavimento molle. Hanno ancora un profumo, salmastro e dolce, che fa venire sonno.",
+        "extra": [
+          {"requires": {"flag": "alaric_lavanda"}, "text": "Fra i fiori secchi, uno è ancora viola: lavanda."}
+        ],
+        "choices": [
+          {"text": "Dormi tra i fiori", "chance": 50, "success": [{"heal_pct": 100}], "msg": "Dormi senza sogni, e ti svegli intero.", "fail_msg": "Ti svegli con le dita intrecciate alle radici. Il Ventre ha cominciato a digerirti.", "fail_effects": [{"max_hp": -10}]},
+          {"text": "Raccogli un fiore", "msg": "Fra i petali secchi c'è una goccia di linfa che non si è ancora rassegnata.", "effects": [{"potion": 1}]},
+          {"text": "Non fermarti", "msg": "Il profumo ti segue per tre stanze."}
+        ]
+      }
+    }
+  },
+
+  "incudine_cosmica": {
+    "title": "L'Incudine Cosmica",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Un'incudine grande come un altare, nera, con al centro un'impronta a forma di stella. Un martello è conficcato nella roccia accanto. Nessun fabbro in vista.",
+        "choices": [
+          {"text": "Forgia la tua arma", "msg": "Ogni colpo di martello costa oro fuso, e ogni colpo ne vale la pena.", "effects": [{"gold": -150}, {"atk": 6}]},
+          {"text": "Ruba il martello", "chance": 40, "success": [{"weapon": "epic", "level": 2}], "msg": "Il martello si stacca dalla roccia con un suono di campana.", "fail_msg": "La roccia trattiene il martello, e qualcosa si sveglia per difenderlo.", "fail_effects": [{"fight": "elite"}]},
+          {"text": "Lascia l'incudine in pace", "msg": "L'impronta a forma di stella continua a brillare."}
+        ]
+      }
+    }
+  },
+
+  "colata_oro": {
+    "title": "La Colata d'Oro",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Un fiume d'oro fuso attraversa la sala, lento e bianco di calore. Sulle rive, ossa di chi ha provato a raccoglierlo.",
+        "choices": [
+          {"text": "Riempi una borsa", "chance": 50, "success": [{"gold": 200}], "msg": "L'oro si raffredda nella borsa prima di bruciarla. Pesa come una promessa.", "fail_msg": "Uno schizzo ti prende in pieno.", "fail_effects": [{"damage": 40}]},
+          {"text": "Cammina sull'oro", "requires": {"trait": "midas"}, "msg": "L'oro ti riconosce e si solidifica sotto i tuoi piedi. Ne raccogli quanto vuoi.", "effects": [{"gold": 100}]},
+          {"text": "Prosegui", "msg": "Le ossa sulla riva ti sembrano sorridere."}
+        ]
+      }
+    }
+  },
+
+  "occhio_chiuso": {
+    "title": "L'Occhio Chiuso",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Da questa piattaforma l'occhio al centro del vuoto è vicinissimo: galassie al posto delle vene, polvere d'ossa al posto delle ciglia. La palpebra trema.",
+        "choices": [
+          {"text": "Guardalo finché non si apre", "chance": 50, "success": [{"relic": "random"}, {"essence": 80}], "msg": "L'occhio si apre per un istante e ti vede. Ti lascia un dono, o un avvertimento.", "fail_msg": "L'occhio si apre e ti attraversa. Una parte di te non torna indietro.", "fail_effects": [{"max_hp": -20}, {"corruption": 10}]},
+          {"text": "Ricorda le parole di Silas", "requires": {"flag": "silas_verita"}, "msg": "'Non c'è un mostro. C'è uno specchio.' Guardi l'occhio senza paura, e l'occhio ti restituisce le forze.", "effects": [{"heal_pct": 100}, {"def": 5}]},
+          {"text": "Apri l'occhio con le tue mani", "requires": {"corruption": 75}, "msg": "La palpebra cede sotto le tue dita. L'occhio ti guarda, e non c'è paura: solo riconoscimento. 'Figlio,' dice.", "effects": [{"relic": "random"}, {"essence": 150}, {"corruption": 10}]},
+          {"text": "Distogli lo sguardo", "msg": "Senti la palpebra richiudersi alle tue spalle."}
+        ]
+      }
+    }
+  },
+
+  "eco_del_tempo": {
+    "title": "L'Eco del Tempo",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Su una piattaforma sospesa qualcuno ti aspetta: sei tu, con l'equipaggiamento di una discesa che non ricordi. 'Sei in ritardo,' dice. 'Come sempre.'",
+        "extra": [
+          {"requires": {"counter": {"patti_labirinto": 1}}, "text": "Ha negli occhi la stessa fame del Labirinto. Anche lui ha accettato i suoi patti."}
+        ],
+        "choices": [
+          {"text": "Stringigli la mano", "msg": "Per un istante ricordi tutte le volte che sei morto quaggiù. Fa male, e insegna.", "effects": [{"exp": 150}]},
+          {"text": "Combatti il tuo eco", "msg": "Il tuo eco sorride e alza l'arma. Conosce ogni tua mossa.", "effects": [{"fight": "elite"}, {"atk": 6}, {"corruption": 5}]},
+          {"text": "Ignoralo", "msg": "'Ci rivedremo,' dice. 'Ci rivediamo sempre.'"}
+        ]
+      }
+    }
   }
 }

@@ -128,6 +128,21 @@ class ProfileFileTest(unittest.TestCase):
                 self.assertEqual(json.load(f)["essence"], 0)
             self.assertFalse(os.path.exists(path + ".tmp"))
 
+    def test_up_to_date_profile_is_not_rewritten_on_load(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = os.path.join(tmp, "profile.json")
+            manager = data_manager.ProfileManager.__new__(data_manager.ProfileManager)
+            manager.filepath = path
+            manager._load()  # crea il profilo predefinito
+            with open(path, "w", encoding="utf-8") as f: json.dump(manager._load(), f)
+            with mock.patch.object(data_manager.ProfileManager, "_write") as write:
+                manager._load()
+            write.assert_not_called()
+            # Un profilo senza le voci nuove viene invece migrato e salvato
+            with open(path, "w", encoding="utf-8") as f: json.dump({"essence": 7}, f)
+            self.assertEqual(manager._load()["essence"], 7)
+            with open(path, encoding="utf-8") as f: self.assertIn("codex", json.load(f))
+
 
 if __name__ == "__main__":
     unittest.main()

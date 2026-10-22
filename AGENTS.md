@@ -8,6 +8,11 @@ Questo repository è mantenuto in buona parte con assistenti IA. Queste regole v
 - Su ogni pull request gira [rsp](https://github.com/fedeveloper/rsp) (`.github/workflows/rsp.yml`), che commenta fatti riproducibili sul diff: test saltati o cancellati, import di pacchetti non dichiarati, controlli disattivati.
 - Prima di considerare pronta una PR, leggi il commento di rsp. Per ogni fatto segnalato correggi la modifica oppure spiega nella descrizione della PR perché è voluto. Non aggirare il segnale (per esempio spostando il codice o rinominando i test).
 
+## Branch
+
+- `main` è la versione stabile, sempre giocabile, e contiene la v2 (lore, eventi a scene, personaggi ricorrenti, mappa, biomi, finali).
+- Apri le PR verso `main`. Per uno sviluppo che stravolge il gioco si può usare di nuovo un branch di lungo periodo, come è stato `v2`.
+
 ## Dipendenze
 
 - Il gioco usa solo la libreria standard di Python, ed è una scelta voluta: funziona senza installare nulla.
