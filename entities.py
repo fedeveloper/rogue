@@ -156,6 +156,9 @@ class Player:
         self.seen_events: set = set()  # eventi già incontrati in questa run
         self.run_flags: set = set()  # scelte che valgono solo per la discesa in corso
         self.pending_events: list = []  # [piano, evento] richiamati da scelte passate
+        self.fallen = False  # Caduta Astrale: il piano finisce e si scende subito al successivo
+        self.dissolved = 0  # HP massimi tolti dalla Dissoluzione dell'Io, resi all'uscita dal bioma
+        self.biome_id = None
         
         self.exp_multiplier = 1.0
         self.bonus_def = 0

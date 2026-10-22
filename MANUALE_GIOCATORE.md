@@ -51,6 +51,38 @@ Il Labirinto cambia mentre scendi: ogni cinque piani entri in un **bioma** diver
 - **Pericolo: Nostalgia Letale.** In ogni piano una stanza, segnata con 📿, ospita un'eco del passato: *La Voce Cara*, *La Statua di Sale* o *La Biblioteca di Cenere*. Fermarsi ad ascoltare può guarirti… o trasformarti in sale, e il Labirinto se ne ricorderà.
 - **Segreto.** Al piano 3, sotto il marmo, si dice riposi la *Prima Pietra* posata dagli Architetti.
 
+**🦇 Le Miniere della Testardaggine (piani 6–10).** Basalto, olio nero e ingranaggi che girano a vuoto.
+- **Più forzieri, meno falò.** E più creature di Terra.
+- **Nativi.** Il *Minatore Svuotato* e l'*Ingranaggio Senziente*, che si ripara spesso.
+- **Pericolo: Gas del Silenzio.** In ogni scontro c'è il 35% di probabilità che il gas riempia la stanza. La tua Difesa dimezza ancora i danni, ma perde la tecnica della classe (contrattacco, concentrazione o riparo).
+- **Stanze speciali:** *La Galleria del Gas*, *L'Ingranaggio Fermo*.
+
+**🌀 Le Guglie del Vento Urlante (piani 11–15).** Ponti sospesi su nubi elettriche.
+- **Più trappole, meno mercanti.** E più creature di Vento.
+- **Nativi.** La *Sentinella di Nube* e il *Falco Astrale*, difficilissimi da colpire.
+- **Pericolo: Caduta Astrale.** Sui ponti sospesi puoi perdere l'equilibrio. Precipiti al piano successivo, senza riposo e senza il boss, e perdi il 40% dell'Oro. Puoi anche lasciarti cadere di proposito: un modo rischioso per saltare un boss.
+- **Stanze speciali:** *Il Ponte Sospeso*, *Il Nido della Tempesta*.
+
+**🌊 Il Ventre della Memoria (piani 16–20).** Pareti di membrana con dentro i volti dei morti.
+- **Più eventi e misteri.** E più creature d'Acqua e di Tenebra.
+- **Nativi.** Il *Ricordo Annegato*, che si rigenera, e il *Volto nella Membrana*, che fa sanguinare.
+- **Pericolo: Dissoluzione dell'Io.** A ogni piano del Ventre perdi il 4% degli HP massimi. Li ritrovi tutti quando ne esci.
+- **Stanze speciali:** *Il Volto nella Membrana*, *Il Giardino Appassito*.
+
+**🌋 La Forgia del Caos (piani 21–25).** Lava bianca, fumi neri, martelli ciclopici.
+- **Più mercanti, meno falò.** E più creature di Fuoco.
+- **Nativi.** Il *Golem di Scorie* e il *Martello Errante*, che ama i colpi pesanti.
+- **Pericolo: Ebollizione Astrale.** Ogni colpo che subisci ha il 25% di probabilità di far bollire il 5% del tuo Oro.
+- **Stanze speciali:** *L'Incudine Cosmica*, *La Colata d'Oro*.
+
+**🌌 La Soglia del Dio Antico (piani 26–30).** Piattaforme di pura volontà nel vuoto.
+- **Più misteri e forzieri.** E creature di Luce e di Tenebra.
+- **Nativi.** Il *Frammento di Galassia* e l'*Eco del Dio Antico*.
+- **Pericolo: Paradosso Temporale.** Dopo ogni tuo turno c'è il 10% di probabilità che tu agisca di nuovo; dopo ogni turno nemico, il 15% che il nemico agisca due volte (con una mossa non annunciata).
+- **Stanze speciali:** *L'Occhio Chiuso*, *L'Eco del Tempo*.
+
+In ogni piano una stanza della mappa, segnata con l'icona del bioma, è una delle sue stanze speciali.
+
 ### Le stanze
 
 | Stanza | Cosa succede |
@@ -189,14 +221,16 @@ L'enciclopedia nel [README](README.md) le elenca tutte.
 
 | Eroe | Punti di forza | Come si sblocca |
 |---|---|---|
-| ⚔️ **Guerriero** | 120 HP, solido, contrattacca in difesa | Subito |
-| 🗡️ **Ladro** | Schivata alta, 100 Oro iniziali, critico garantito dopo la Concentrazione | Subito |
-| 🔮 **Mago** | Bastone di Fuoco potente e mira eccellente, ma solo 65 HP | Subito |
+| ⚔️ **Guerriero** | 120 HP, solido, contrattacca in difesa. Spada di Terra, cotta d'Acqua: *Fango* | Subito |
+| 🗡️ **Ladro** | Schivata alta, 100 Oro iniziali, critico garantito dopo la Concentrazione. Pugnali di Vento, cuoio d'Acqua: *Gelo* | Subito |
+| 🔮 **Mago** | Bastone di Fuoco potente e mira eccellente, ma solo 65 HP. Vesti di Vento: *Incendio* | Subito |
 | 🛡️ **Paladino** | 180 HP e Risonanza di Luce fin dall'inizio | Maestria Guerriero Lv.5 |
 | 🪓 **Berserker** | L'ascia più forte, nessuna armatura | Impresa *Danza con la Morte* |
-| 🧪 **Alchimista** | 4 pozioni iniziali e bombe di Fuoco | Impresa *Genio Elementale* |
-| 🥷 **Assassino** | 20% di critico innato e 30% di schivata, ma solo 75 HP | Maestria Ladro Lv.5 |
+| 🧪 **Alchimista** | 4 pozioni iniziali e bombe di Fuoco. Grembiule di Terra: *Magma* | Impresa *Genio Elementale* |
+| 🥷 **Assassino** | 20% di critico innato e 30% di schivata, ma solo 75 HP. Pugnale di Vento, mantello di Terra: *Tempesta di Sabbia* | Maestria Ladro Lv.5 |
 | 💀 **Negromante** | Risonanza di Tenebra fin dall'inizio | Maestria Mago Lv.5 |
+
+Ogni eroe parte con un equipaggiamento che ha già un'idea di gioco. Cinque classi hanno arma e armatura di elementi che **reagiscono** fra loro: il nome della reazione è in tabella. Paladino e Negromante portano lo stesso elemento e partono con la **Risonanza**. Il Berserker combatte a petto nudo.
 
 ### La Maestria
 

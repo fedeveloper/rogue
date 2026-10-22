@@ -203,6 +203,15 @@ def _essence(p, v, eff, floor):
     display_msg(f"{Colors.MAGENTA}+{v} Essenza a fine run.{Colors.RESET}")
 
 
+def _fall(p, v, eff, floor):
+    """Caduta Astrale: si precipita al piano successivo, perdendo parte dell'Oro. Chiude l'evento."""
+    lost = p.gold * eff.get("gold_pct", 0) // 100
+    p.gold -= lost
+    p.fallen = True
+    display_msg(f"{Colors.RED}Precipiti nelle nubi... perdi {lost} Oro nella caduta.{Colors.RESET}")
+    raise _Stop(True)
+
+
 def _later(p, v, eff, floor):
     p.pending_events.append([floor + eff.get("floors", 1), v])
 
@@ -235,9 +244,10 @@ EFFECTS: Dict[str, tuple] = {
     "run_flag": (lambda p, v, e, f: _run_flags(p).add(v), None),
     "counter": (lambda p, v, e, f: add_counter(v, e.get("add", 1)), None),
     "later": (_later, None),
+    "fall": (_fall, lambda v, e: f"Precipiti al piano successivo, -{e.get('gold_pct', 0)}% Oro"),
 }
 # Parametri accessori ammessi accanto alla chiave principale di un effetto
-EFFECT_PARAMS = {"level", "floors", "value", "add", "death_msg"}
+EFFECT_PARAMS = {"level", "floors", "value", "add", "death_msg", "gold_pct"}
 
 
 def effect_key(effect: dict) -> str:

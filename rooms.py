@@ -2,7 +2,7 @@ import random
 import time
 from typing import List
 from ui import Colors, delay_print, clear_screen, interactive_menu, display_msg, wait_enter
-from data_manager import GAME_DATA, PROFILE_MANAGER, MULTIPLIERS, get_element_icon
+from data_manager import GAME_DATA, PROFILE_MANAGER, MULTIPLIERS, get_biome, get_element_icon
 from archive import get_archive_bonus
 from codex import record_enemy_killed, record_enemy_seen, record_letter, record_reaction
 from constants import BASE_HIT_CHANCE, BLOOD_LETTER_CHANCE
@@ -37,6 +37,11 @@ class CombatSession:
         self.hit_negated_by_relic = False
         self.first_player_attack = True
         self.intent = None  # la mossa che il nemico ha annunciato per il suo prossimo turno
+        # Le regole di combattimento del bioma (Gas del Silenzio, Ebollizione Astrale, Paradosso Temporale)
+        self.biome = get_biome(floor)
+        self.rules = (self.biome or {}).get("rules", {})
+        silence = self.rules.get("silence")
+        self.silenced = bool(silence) and random.random() * 100 < silence["chance"]
 
         for r in self.player.relic_effects:
             r.on_combat_start(self)
@@ -110,6 +115,8 @@ class CombatSession:
             self.player.gain_exp(10)
 
         self._announce_resonance()
+        if self.silenced:
+            display_msg(f"{Colors.MAGENTA}{self.biome['icon']} {self.biome['hazard']['name']}: un vapore verdastro riempie la stanza. La tua Difesa perde la sua tecnica.{Colors.RESET}")
         try:
             self._combat_loop()
         finally:
@@ -145,6 +152,10 @@ class CombatSession:
             self.player.statuses.clear()
             display_msg(f"{Colors.CYAN}Lo scontro è finito: {names} svanisce dal tuo corpo.{Colors.RESET}")
 
+    def _paradox(self, key: str) -> bool:
+        rule = self.rules.get("paradox")
+        return bool(rule) and random.random() * 100 < rule[key]
+
     def _combat_loop(self):
         while self.player.hp > 0 and self.enemy.hp > 0:
             self.process_statuses_and_curses(is_player_turn=True)
@@ -155,6 +166,10 @@ class CombatSession:
                 
             if not self.player_turn():
                 break
+            if self.enemy.hp > 0 and self._paradox("player_repeat"):
+                display_msg(f"{Colors.MAGENTA}⏳ Il tempo si riavvolge: agisci ancora!{Colors.RESET}")
+                if not self.player_turn():
+                    break
                 
             if self.enemy.hp > 0:
                 self.process_statuses_and_curses(is_player_turn=False)
@@ -163,6 +178,11 @@ class CombatSession:
                     break
                 if not self.enemy_turn():
                     return
+                if self._paradox("enemy_double"):
+                    display_msg(f"{Colors.MAGENTA}⏳ Il tempo si lacera: {self.enemy.name} agisce di nuovo!{Colors.RESET}")
+                    self.intent = self.enemy.choose_move()
+                    if not self.enemy_turn():
+                        return
 
     def on_enemy_death(self):
         display_msg(f"\n{Colors.YELLOW}{Colors.BOLD}*** Hai sconfitto {self.enemy.name}! ***{Colors.RESET}")
@@ -364,7 +384,9 @@ class CombatSession:
     def execute_player_defense(self):
         self.is_defending = True
         self.player.on_defense_started()
-        if self.def_type == "counter":
+        if self.def_type == "silenced":
+            display_msg(f"\n{Colors.BLUE}-> Ti ripari come puoi: nel gas la tecnica non ti riesce.{Colors.RESET}")
+        elif self.def_type == "counter":
             display_msg(f"\n{Colors.BLUE}-> Sollevi la guardia, pronto a sfruttare l'attacco nemico!{Colors.RESET}")
         elif self.def_type == "focus":
             self.focused_attack = True
@@ -389,6 +411,7 @@ class CombatSession:
             self.is_defending = False
 
             self.def_type, self.def_txt = self.player.get_defense_action()
+            if self.silenced: self.def_type, self.def_txt = "silenced", "Difesa (Dimezza danni; il gas soffoca la tecnica)"
             if self.intent is None: self.choose_intent()
 
             prompt = (f"\n{Colors.BOLD}--- ⚔️ IN COMBATTIMENTO ⚔️ ---{Colors.RESET}\nTu: {Colors.GREEN}{self.player.hp}/{self.player.max_hp} HP{Colors.RESET} | "
@@ -566,6 +589,11 @@ class CombatSession:
                     display_msg(f"\n{Colors.RED}{Colors.BOLD}Sei caduto in battaglia contro {self.enemy.name}...{Colors.RESET}")
                     wait_enter("\nPremi INVIO per continuare...")
                     return False
+                boil = self.rules.get("boil")
+                if boil and self.player.gold > 0 and random.random() * 100 < boil["chance"]:
+                    lost = max(1, self.player.gold * boil["gold_pct"] // 100)
+                    self.player.gold -= lost
+                    display_msg(f"{Colors.YELLOW}{self.biome['icon']} {self.biome['hazard']['name']}: {lost} Oro ti bolle via dalla borsa. (Oro: {self.player.gold}){Colors.RESET}")
             elif not self.hit_negated_by_relic:
                 display_msg(f"<- {self.enemy.name} attacca, ma la corazza blocca TUTTO! {en_eff}")
             if self.is_defending:

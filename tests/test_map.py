@@ -198,16 +198,18 @@ class BiomeTest(Sandbox):
             return sum(d["type"] == "trap" for _ in range(300) for row in self.make(floor, weights=WEIGHTS, cooldowns={})[:-1] for d in row)
         self.assertLess(traps(3), traps(8) * 0.8)
 
-    def test_every_cloister_floor_has_its_special_room(self):
-        for floor in range(1, 6):
-            rows = self.make(floor, player=self.hero())
-            special = [(r, d) for r, row in enumerate(rows) for d in row if d.get("signature")]
-            self.assertEqual(len(special), 1)
-            r, d = special[0]
-            self.assertIn(r, (1, 2, 3))
-            self.assertIn(d["event_id"], get_biome(floor)["signature_events"])
-            self.assertIn("Nostalgia Letale", floor_map.room_label(d, biome=get_biome(floor)))
-        self.assertFalse(any(d.get("signature") for row in self.make(8) for d in row))
+    def test_every_floor_has_the_special_room_of_its_biome(self):
+        for floor in range(1, 31):
+            biome = get_biome(floor)
+            with self.subTest(floor=floor):
+                rows = self.make(floor, player=self.hero())
+                special = [(r, d) for r, row in enumerate(rows) for d in row if d.get("signature")]
+                self.assertEqual(len(special), 1)
+                r, d = special[0]
+                self.assertIn(r, (1, 2, 3))
+                self.assertIn(d["event_id"], biome["signature_events"])
+                self.assertIn(biome["hazard"]["name"], floor_map.room_label(d, biome=biome))
+        self.assertFalse(any(d.get("signature") for row in self.make(31) for d in row))
 
     def test_special_rooms_rotate_within_a_run(self):
         p = self.hero()

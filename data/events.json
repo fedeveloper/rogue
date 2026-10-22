@@ -695,5 +695,173 @@
         ]
       }
     }
+  },
+
+  "galleria_gas": {
+    "title": "La Galleria del Gas",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Una galleria laterale è piena fino alle ginocchia di un vapore verdastro che non sale e non si muove. Dall'altra parte, una vena d'argento brilla nella roccia. Chi respira quel gas non parla più per giorni.",
+        "choices": [
+          {"text": "Trattieni il respiro e corri", "chance": 60, "success": [{"gold": 80}], "msg": "Arrivi alla vena con i polmoni in fiamme e la scavi a mani nude.", "fail_msg": "A metà strada respiri. Il silenzio ti entra dentro come acqua gelida.", "fail_effects": [{"damage": 25}]},
+          {"text": "Distilla il gas in una fiala", "requires": {"class": "6"}, "msg": "Il silenzio, imbottigliato, è un ottimo veleno. E anche un ottimo rimedio.", "effects": [{"potion": 2}]},
+          {"text": "Torna indietro", "msg": "L'argento resterà lì. Il gas anche."}
+        ]
+      }
+    }
+  },
+
+  "ingranaggio_fermo": {
+    "title": "L'Ingranaggio Fermo",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Un ingranaggio di ferro grande come una casa si è bloccato. Fra due denti è rimasta incastrata una mano scheletrica, che stringe ancora qualcosa.",
+        "choices": [
+          {"text": "Libera la mano", "msg": "Il metallo ti graffia fino all'osso, ma la mano si apre: dentro c'è un anello.", "effects": [{"damage": 20}, {"accessory": true}]},
+          {"text": "Fai ripartire l'ingranaggio a forza", "requires": {"atk": 30}, "msg": "Con un gemito l'ingranaggio riparte, e un'intera parete scivola di lato: dietro c'è il tesoro di un caposquadra.", "effects": [{"gold": 120}, {"exp": 60}]},
+          {"text": "Lascia stare", "msg": "Certe macchine è meglio non svegliarle."}
+        ]
+      }
+    }
+  },
+
+  "ponte_sospeso": {
+    "title": "Il Ponte Sospeso",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Un ponte di corda e assi marce si allunga nel vuoto, fra due guglie. Sotto, nubi elettriche. Il vento lo fa ondeggiare come la corda di un'arpa.",
+        "choices": [
+          {"text": "Attraversa con calma", "chance": 75, "success": [{"exp": 50}], "msg": "Un passo alla volta, senza guardare giù. Arrivi dall'altra parte con le gambe che tremano.", "fail_msg": "Un'asse si spezza sotto il tuo piede. Il vento ti strappa dal ponte.", "fail_effects": [{"fall": true, "gold_pct": 40}]},
+          {"text": "Corri sulle corde", "requires": {"class": ["2", "7"]}, "msg": "Salti da una corda all'altra come se il vuoto non esistesse. A metà ponte, un nido abbandonato pieno di monete.", "effects": [{"gold": 100}]},
+          {"text": "Lasciati cadere", "msg": "Fai un passo nel vuoto, di proposito. Le nubi ti inghiottono.", "effects": [{"fall": true, "gold_pct": 40}]},
+          {"text": "Torna indietro", "msg": "Il ponte continua a oscillare, vuoto."}
+        ]
+      }
+    }
+  },
+
+  "nido_tempesta": {
+    "title": "Il Nido della Tempesta",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "In cima a una guglia, un nido di rami carbonizzati. Dentro c'è un uovo azzurro che crepita di scintille. L'aria sa di temporale.",
+        "choices": [
+          {"text": "Ruba l'uovo", "msg": "Un grido squarcia le nubi: la madre è tornata.", "effects": [{"fight": "hard"}, {"relic": "random"}]},
+          {"text": "Imbriglia un fulmine dall'uovo", "requires": {"class": "3"}, "msg": "La scarica ti attraversa il braccio e resta lì, intrappolata nella tua arma.", "effects": [{"damage": 15}, {"atk": 5}]},
+          {"text": "Ascolta il vento", "msg": "Il vento qui porta i segreti degli Architetti. Ne afferri qualcuno.", "effects": [{"exp": 70}]}
+        ]
+      }
+    }
+  },
+
+  "volto_membrana": {
+    "title": "Il Volto nella Membrana",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "La parete è una membrana tiepida e traslucida. Dall'altra parte, premuto contro di essa, c'è un volto che conosci: è il tuo, più vecchio, con gli occhi chiusi.",
+        "choices": [
+          {"text": "Lascia che ti mostri un ricordo", "msg": "Vedi una run che non hai ancora fatto. Quando torni in te, ti manca qualcosa, ma sai di più.", "effects": [{"max_hp": -5}, {"exp": 100}]},
+          {"text": "Chiedigli chi era", "requires": {"class": "8"}, "msg": "'Ero te,' dice la bocca chiusa. 'Sono rimasto troppo a lungo.' Ti lascia un frammento di ciò che è stato.", "effects": [{"essence": 60}]},
+          {"text": "Strappa la membrana", "msg": "La membrana si lacera, e il volto si stacca dalla parete.", "effects": [{"fight": "normal"}, {"potion": 1}]},
+          {"text": "Allontanati", "msg": "Il volto apre gli occhi solo quando gli hai voltato le spalle."}
+        ]
+      }
+    }
+  },
+
+  "giardino_appassito": {
+    "title": "Il Giardino Appassito",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Fiori secchi coprono il pavimento molle. Hanno ancora un profumo, salmastro e dolce, che fa venire sonno.",
+        "extra": [
+          {"requires": {"flag": "alaric_lavanda"}, "text": "Fra i fiori secchi, uno è ancora viola: lavanda."}
+        ],
+        "choices": [
+          {"text": "Dormi tra i fiori", "chance": 50, "success": [{"heal_pct": 100}], "msg": "Dormi senza sogni, e ti svegli intero.", "fail_msg": "Ti svegli con le dita intrecciate alle radici. Il Ventre ha cominciato a digerirti.", "fail_effects": [{"max_hp": -10}]},
+          {"text": "Raccogli un fiore", "msg": "Fra i petali secchi c'è una goccia di linfa che non si è ancora rassegnata.", "effects": [{"potion": 1}]},
+          {"text": "Non fermarti", "msg": "Il profumo ti segue per tre stanze."}
+        ]
+      }
+    }
+  },
+
+  "incudine_cosmica": {
+    "title": "L'Incudine Cosmica",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Un'incudine grande come un altare, nera, con al centro un'impronta a forma di stella. Un martello è conficcato nella roccia accanto. Nessun fabbro in vista.",
+        "choices": [
+          {"text": "Forgia la tua arma", "msg": "Ogni colpo di martello costa oro fuso, e ogni colpo ne vale la pena.", "effects": [{"gold": -150}, {"atk": 6}]},
+          {"text": "Ruba il martello", "chance": 40, "success": [{"weapon": "epic", "level": 2}], "msg": "Il martello si stacca dalla roccia con un suono di campana.", "fail_msg": "La roccia trattiene il martello, e qualcosa si sveglia per difenderlo.", "fail_effects": [{"fight": "elite"}]},
+          {"text": "Lascia l'incudine in pace", "msg": "L'impronta a forma di stella continua a brillare."}
+        ]
+      }
+    }
+  },
+
+  "colata_oro": {
+    "title": "La Colata d'Oro",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Un fiume d'oro fuso attraversa la sala, lento e bianco di calore. Sulle rive, ossa di chi ha provato a raccoglierlo.",
+        "choices": [
+          {"text": "Riempi una borsa", "chance": 50, "success": [{"gold": 200}], "msg": "L'oro si raffredda nella borsa prima di bruciarla. Pesa come una promessa.", "fail_msg": "Uno schizzo ti prende in pieno.", "fail_effects": [{"damage": 40}]},
+          {"text": "Cammina sull'oro", "requires": {"trait": "midas"}, "msg": "L'oro ti riconosce e si solidifica sotto i tuoi piedi. Ne raccogli quanto vuoi.", "effects": [{"gold": 100}]},
+          {"text": "Prosegui", "msg": "Le ossa sulla riva ti sembrano sorridere."}
+        ]
+      }
+    }
+  },
+
+  "occhio_chiuso": {
+    "title": "L'Occhio Chiuso",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Da questa piattaforma l'occhio al centro del vuoto è vicinissimo: galassie al posto delle vene, polvere d'ossa al posto delle ciglia. La palpebra trema.",
+        "choices": [
+          {"text": "Guardalo finché non si apre", "chance": 50, "success": [{"relic": "random"}, {"essence": 80}], "msg": "L'occhio si apre per un istante e ti vede. Ti lascia un dono, o un avvertimento.", "fail_msg": "L'occhio si apre e ti attraversa. Una parte di te non torna indietro.", "fail_effects": [{"max_hp": -20}]},
+          {"text": "Ricorda le parole di Silas", "requires": {"flag": "silas_verita"}, "msg": "'Non c'è un mostro. C'è uno specchio.' Guardi l'occhio senza paura, e l'occhio ti restituisce le forze.", "effects": [{"heal_pct": 100}, {"def": 5}]},
+          {"text": "Distogli lo sguardo", "msg": "Senti la palpebra richiudersi alle tue spalle."}
+        ]
+      }
+    }
+  },
+
+  "eco_del_tempo": {
+    "title": "L'Eco del Tempo",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Su una piattaforma sospesa qualcuno ti aspetta: sei tu, con l'equipaggiamento di una discesa che non ricordi. 'Sei in ritardo,' dice. 'Come sempre.'",
+        "extra": [
+          {"requires": {"counter": {"patti_labirinto": 1}}, "text": "Ha negli occhi la stessa fame del Labirinto. Anche lui ha accettato i suoi patti."}
+        ],
+        "choices": [
+          {"text": "Stringigli la mano", "msg": "Per un istante ricordi tutte le volte che sei morto quaggiù. Fa male, e insegna.", "effects": [{"exp": 150}]},
+          {"text": "Combatti il tuo eco", "msg": "Il tuo eco sorride e alza l'arma. Conosce ogni tua mossa.", "effects": [{"fight": "elite"}, {"atk": 6}]},
+          {"text": "Ignoralo", "msg": "'Ci rivedremo,' dice. 'Ci rivediamo sempre.'"}
+        ]
+      }
+    }
   }
 }

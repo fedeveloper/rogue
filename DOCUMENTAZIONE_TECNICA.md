@@ -112,7 +112,7 @@ Una scelta che costa oro è grigia, con "(Oro insufficiente)", se non puoi pagar
 
 **Condizioni** (`requires`, tutte in AND): `class`/`not_class` (id o lista), `trait`, `relic`, `quest_item`, `pact`, `gold`, `level`, `atk`, `dodge` (soglie minime), `hp_pct_below`, `min_floor`/`max_floor`, `flag`/`not_flag` (profilo), `run_flag`/`not_run_flag` (run), `counter` (`{"nome": soglia}`, almeno) e `counter_below` (`{"nome": soglia}`, meno di), `npc`/`not_npc`, `biome` (id del bioma del piano). A livello di evento decidono se l'evento può uscire in una porta; vengono valutate anche senza l'eroe, contando solo piano e profilo.
 
-**Effetti** (una chiave per voce, più eventuali parametri `level`, `floors`, `value`, `add`, `death_msg`):
+**Effetti** (una chiave per voce, più eventuali parametri `level`, `floors`, `value`, `add`, `death_msg`, `gold_pct`):
 
 | Effetto | Riepilogo | Note |
 |---|---|---|
@@ -131,6 +131,7 @@ Una scelta che costa oro è grigia, con "(Oro insufficiente)", se non puoi pagar
 | `flag`, `counter` | nessuno | Memoria nel profilo, resta fra le run |
 | `run_flag` | nessuno | Memoria della sola run |
 | `later` | nessuno | `{"later": "evento", "floors": N}`: l'evento torna N piani dopo |
+| `fall` | `Precipiti al piano successivo, -N% Oro` | `{"fall": true, "gold_pct": N}`: Caduta Astrale, chiude l'evento (vedi *Biomi*) |
 
 **Scelta e memoria.** `pick_event` esclude gli eventi `scripted` e quelli con `requires` non soddisfatti, preferisce quelli non ancora visti nella run e usa `weight` (predefinito 1). Un evento `scripted` compare solo quando una scelta lo richiama con `later`: al piano giusto prende il posto della prima porta (mai del boss), con la scritta "✦ qualcosa ti stava aspettando". Flag, contatori e numero di incontri per evento (`story.seen_events`) vengono salvati alla fine di ogni evento.
 
@@ -189,9 +190,19 @@ main() ─▶ menu principale ─▶ play_game(infinite_mode)
 - `hazard` (`name`, `desc`): annunciato all'ingresso nel bioma;
 - `room_weights`: moltiplicatori dei pesi delle stanze;
 - `enemy_elements`: moltiplicatori della probabilità dei nemici di un elemento, dentro la finestra di profondità;
-- `signature_events`: eventi `scripted`, uno per piano, segnati con l'icona del bioma. Se possibile non si ripete quello già visto nella run.
+- `signature_events`: eventi `scripted`, uno per piano, segnati con l'icona del bioma. Se possibile non si ripete quello già visto nella run;
+- `rules`: le regole del pericolo, ognuna con i suoi parametri (un test verifica che i numeri della `hazard.desc` siano questi):
 
-I nemici e i boss con `"biome": "id"` (in `enemies.json`) sono **nativi**: compaiono solo in quel bioma, e lì si aggiungono sempre ai candidati della profondità. La condizione `biome` degli eventi vale nei piani del bioma. Oggi ha tutte le regole *I Chiostri del Rimpianto* (piani 1–5); gli altri cinque biomi hanno nome, icona e atmosfera.
+| Regola | Parametri | Dove agisce |
+|---|---|---|
+| `silence` (Miniere) | `chance` | All'inizio di uno scontro (`CombatSession.silenced`): la Difesa diventa `def_type = "silenced"`, dimezza i danni senza la tecnica della classe |
+| `dissolve` (Ventre) | `max_hp_pct` | All'arrivo su ogni piano (`floor_map.apply_biome_on_floor`): toglie HP massimi e li accumula in `Player.dissolved`, che si restituisce quando cambia il bioma |
+| `boil` (Forgia) | `chance`, `gold_pct` | Dopo ogni colpo subito con danni (`_enemy_attack`) |
+| `paradox` (Soglia) | `player_repeat`, `enemy_double` | In `_combat_loop`: un turno in più al giocatore, o una seconda mossa (non annunciata) al nemico |
+
+La *Caduta Astrale* delle Guglie è invece un effetto degli eventi, `{"fall": true, "gold_pct": 40}`. Toglie l'Oro, imposta `Player.fallen` e chiude l'evento. `play_game` interrompe allora il piano e passa al successivo, senza boss e senza riposo; un test controlla che `fall` sia sempre l'ultimo effetto della sua lista.
+
+I nemici e i boss con `"biome": "id"` (in `enemies.json`) sono **nativi**: compaiono solo in quel bioma, e lì si aggiungono sempre ai candidati della profondità. La condizione `biome` degli eventi vale nei piani del bioma. Tutti e sei i biomi hanno pericolo, stanze speciali, nativi, pesi delle stanze e affinità elementale.
 
 **Nemici per profondità.** `pick_enemy_name()` ordina i candidati non nativi per `base_hp × base_atk` e sceglie in una finestra che sale con `(piano − 1) / 29`. La finestra è di `ENEMY_DEPTH_WINDOW` = 6 nemici e di `BOSS_DEPTH_WINDOW` = 5 boss. Vi si aggiungono i nativi del bioma; la scelta è pesata da `enemy_elements`. I boss con `final_boss` sono esclusi da questa scelta, e quelli con `retired_by_flag` spariscono quando il flag è vero.
 
@@ -333,6 +344,7 @@ La CI (`.github/workflows/tests.yml`) li esegue su Python 3.9 e sull'ultima 3.x;
 | `test_depth.py` | Nemici e boss per profondità, boss finale, tratto e antidoto mostrati |
 | `test_refactor.py` | Ciclo del turno, ridisegno dei menu, bonus nei dati, output tramite `ui`, etichette dei consumabili |
 | `test_shops.py` | Botteghe degli artigiani, elenco della Forgia, Cuore di Drago |
+| `test_biomes.py` | Equipaggiamento iniziale (reazione o Risonanza), completezza dei biomi, contratti dei pericoli, Gas del Silenzio, Ebollizione, Paradosso, Dissoluzione, Caduta Astrale nel vero ciclo dei piani |
 | `test_tactics.py` | Intenti (pesi predefiniti e dei dati, regole delle mosse, prompt, Congelato) e reazioni (arma poi armatura, armatura poi arma, solo in guardia, stesso elemento, nessuna reazione, scadenza dei marchi, Codice) |
 | `test_map.py` | Mappa (file alternate, collegamenti senza incroci né vicoli ciechi, tipi e tempi di ricarica, evento richiamato, disegno, ciclo dei piani reale) e biomi (copertura dei piani, dati, nativi, elementi, pesi delle stanze, stanza speciale per piano, Prima Pietra, annuncio del pericolo) |
 | `test_codex.py` | Codice (registrazione, pagine, completamento, menu) e personaggi ricorrenti (catena dei capitoli, un capitolo per run, boss ritirato, indizio della lavanda) |

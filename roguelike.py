@@ -8,7 +8,7 @@ from data_manager import PROFILE_MANAGER, GAME_DATA, RAW_DATA, get_biome, update
 from entities import Player
 from rooms import combat_room, mystery_room, vendor_room, campfire_room, treasure_room, trap_room
 from events import event_room
-from floor_map import ROWS, SIDES, TALL_MAP_ROWS, generate_floor_map, reachable, render_map, room_label
+from floor_map import ROWS, SIDES, TALL_MAP_ROWS, apply_biome_on_floor, generate_floor_map, reachable, render_map, room_label
 from inventory_menu import show_inventory_menu, show_player_stats
 from archive import show_archive
 from codex import show_codex
@@ -432,6 +432,7 @@ def play_game(infinite_mode=False):
             wait_enter("\nPremi INVIO per entrare...")
         
         _apply_floor_regen(player)
+        apply_biome_on_floor(player, biome)
             
         player.run_tracker["floor_attacks"] = player.run_tracker["floor_hits"] = 0
         
@@ -480,8 +481,16 @@ def play_game(infinite_mode=False):
             elif rt == "campfire": campfire_room(player, floor)
             elif rt == "event": event_room(player, chosen_door["event_id"], floor)
             elif rt == "mystery": mystery_room(player, floor, active_pacts)
-        
-        if player.hp > 0 and not player.escaped:
+            if player.fallen: break
+
+        if player.fallen and player.hp > 0 and not player.escaped:
+            # Caduta Astrale: niente boss né riposo, si atterra direttamente sul piano successivo
+            player.fallen = False
+            delay_print(f"\n{Colors.RED}{Colors.BOLD}*** PRECIPITI AL PIANO {floor + 1}! ***{Colors.RESET}", 0.05)
+            floor += 1
+            if floor > PROFILE_MANAGER.max_floor: PROFILE_MANAGER.max_floor = floor
+            wait_enter("\nPremi INVIO per rialzarti...")
+        elif player.hp > 0 and not player.escaped:
             delay_print(f"\n{Colors.YELLOW}{Colors.BOLD}*** PIANO {floor} SUPERATO! ***{Colors.RESET}", 0.05)
             attacks, hits = player.run_tracker["floor_attacks"], player.run_tracker["floor_hits"]
             if attacks >= BLIND_FURY_MIN_ATTACKS and hits * 2 < attacks: player.run_tracker["blind_fury_done"] = True
