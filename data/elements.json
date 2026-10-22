@@ -27,5 +27,16 @@
         "Tenebra": {"value": 5, "desc": "+5 Danni fissi ad ogni colpo", "announce": "✨ Risonanza di Tenebra! +5 Danni a ogni colpo!"},
         "Luce": {"value": 3, "desc": "Cura 3 HP a ogni tuo attacco", "announce": "✨ Risonanza di Luce! Ogni colpo a segno ti cura 3 HP!"},
         "Fuoco": {"value": 5, "desc": "Infliggi 5 danni da Ustione cumulabili per colpo", "announce": "✨ Risonanza di Fuoco! I tuoi colpi accumulano Ustione!"}
+    },
+    "marks": {"duration": 2},
+    "conditions": {"blind": 25, "slow": 25, "scorch_pct": 5},
+    "reactions": {
+        "Fuoco+Acqua": {"name": "Vapore", "icon": "💨", "bonus_pct": 50, "status": {"type": "blind", "duration": 2}, "desc": "Danni extra pari al 50% del tuo ATK; il nemico è Accecato (-25% Precisione) per 2 turni."},
+        "Fuoco+Vento": {"name": "Incendio", "icon": "🔥", "bonus_pct": 100, "desc": "Danni extra pari al 100% del tuo ATK."},
+        "Fuoco+Terra": {"name": "Magma", "icon": "🌋", "status": {"type": "scorch", "duration": 3}, "desc": "Il nemico brucia: perde il 5% degli HP massimi a ogni turno per 3 turni."},
+        "Acqua+Vento": {"name": "Gelo", "icon": "🧊", "status": {"type": "stun", "duration": 1}, "desc": "Il nemico è congelato e perde il suo prossimo turno."},
+        "Acqua+Terra": {"name": "Fango", "icon": "🟤", "status": {"type": "slow", "duration": 3}, "desc": "Il nemico è Impantanato (-25% Schivata) per 3 turni."},
+        "Terra+Vento": {"name": "Tempesta di Sabbia", "icon": "🌀", "status": {"type": "blind", "duration": 3}, "desc": "Il nemico è Accecato (-25% Precisione) per 3 turni."},
+        "Luce+Tenebra": {"name": "Eclissi", "icon": "🌗", "bonus_pct": 150, "desc": "Danni extra pari al 150% del tuo ATK."}
     }
 }

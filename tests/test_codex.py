@@ -29,7 +29,7 @@ class Sandbox(unittest.TestCase):
     def setUp(self):
         self._saved = copy.deepcopy(PROFILE_MANAGER._data)
         PROFILE_MANAGER._data["story"] = {"flags": {}, "counters": {}, "seen_events": {}}
-        PROFILE_MANAGER._data["codex"] = {"enemies": {}, "letters": [], "relics": []}
+        PROFILE_MANAGER._data["codex"] = {"enemies": {}, "letters": [], "relics": [], "reactions": []}
         self._save = mock.patch.object(PROFILE_MANAGER, "save")
         self._save.start()
         random.seed(3)
@@ -102,8 +102,9 @@ class PagesTest(Sandbox):
         total = sum(t for _, _, t in codex.sections())
         codex.record_relic("tasca_dorata")
         codex.record_letter(0)
-        self.assertEqual([s[1] for s in codex.sections()], [0, 0, 0, 1, 1])
-        self.assertEqual(codex.completion(), 2 * 100 // total)
+        codex.record_reaction("Fuoco+Acqua")
+        self.assertEqual([s[1] for s in codex.sections()], [0, 0, 0, 1, 1, 1])
+        self.assertEqual(codex.completion(), 3 * 100 // total)
 
     def test_characters_page_follows_the_arc(self):
         text = "\n".join(plain(codex.characters_page()))

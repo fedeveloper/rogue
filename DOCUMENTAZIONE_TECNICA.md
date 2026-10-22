@@ -46,17 +46,18 @@ Un test controlla che ogni oggetto sbloccabile abbia davvero una di queste strad
 | File | Contenuto | Campi principali |
 |---|---|---|
 | `classes.json` | Le classi, per id (`"1"`…`"8"`) | `role`, `max_hp`, `gold`, `acc`, `dodge`, `crit` (opz.), `weapon`/`armor` iniziali (`name`, `value`, `atk`/`def`, `element`), `potions`, `unlocked_by_default`, `mastery` |
-| `enemies.json` | `enemies` e `bosses`, per nome | `element`, `base_hp`, `base_atk`, `base_dodge`, `base_acc`, `title`/`lore` (boss), `status_inflict` (opz.), `final_boss` (solo DIO ANTICO), `retired_by_flag` (opz.: il boss non compare più quando il flag del profilo è vero) |
+| `enemies.json` | `enemies` e `bosses`, per nome | `element`, `base_hp`, `base_atk`, `base_dodge`, `base_acc`, `title`/`lore` (boss), `status_inflict` (opz.), `final_boss` (solo DIO ANTICO), `retired_by_flag` (opz.: il boss non compare più quando il flag del profilo è vero), `moves` (opz.: pesi delle mosse al posto di quelli predefiniti) |
 | `weapons.json` | Armi | `name`, `base_atk`, `val_base` (opz.), `element` (opz., altrimenti casuale), `status_inflict` (opz.), `hit_modifier`, `crit_chance`, `gold_atk_per`/`gold_atk_max` (opz.), `unlock_id`, `unlock_cost`, `desc`, `flavor` |
 | `armors.json` | Armature | `name`, `base_def`, `element` (opz.), `dodge_bonus` (opz.), `unlock_id`, `unlock_cost`, `desc`, `flavor` |
 | `accessories.json` | Monili | `name`, `bonus_type` (`crit_chance`, `lifesteal`, `max_hp`, `dodge`, `acc`, `reflect`), `bonus_value`, `base_val`, `desc`, `lore`, `unlock_id`, `unlock_cost` |
 | `consumables.json` | Consumabili | `name`, `category` (`heal`, `antidote`, `smoke_bomb`, `chaos_tome`, `chaos_vial`, `holy_water`, `whetstone`, `accuracy_potion`), `base_heal`, `val_base`, `desc`, `unlock_id` |
 | `relics.json` | Reliquie | `id`, `name`, `desc`, `lore`, `unlock_id`, `unlock_cost` |
-| `elements.json` | Sistema elementale | `list`, `icons`, `multipliers[attaccante][difensore]`, `resonance[elemento] = {value, desc, announce}` |
+| `elements.json` | Sistema elementale | `list`, `icons`, `multipliers[attaccante][difensore]`, `resonance[elemento] = {value, desc, announce}`, `marks.duration`, `conditions` (`blind`, `slow`, `scorch_pct`), `reactions["A+B"] = {name, icon, desc, bonus_pct, status: {type, duration}}` |
 | `books.json` | Tomi dell'Archivio | `title`, `unlock_condition` (testo), `unlock = {type: max_floor\|total_bosses\|won_normal, value}`, `bonus = {gold_pct, escape, boss_dmg_pct, def}`, `bonus_desc`, `chapters` |
 | `meta.json` | Regole di contorno | `traits`, `pacts` (`bonus` di Essenza), `feats` (`target`, `reward_type`, `reward_id`), `mastery_xp_requirements`, `rooms.weights`/`rooms.cooldowns` |
 | `biomes.json` | Biomi | `id`, `name`, `icon`, `floors`, `intro`, `hazard`, `room_weights`, `enemy_elements`, `signature_events` (opzionali gli ultimi quattro) |
 | `events.json` | Eventi narrativi | `title`, `start`, `scenes`, `requires` (opz.), `scripted` (opz.), `weight` (opz.): vedi [Eventi narrativi](#eventi-narrativi) |
+| `moves.json` | Mosse dei nemici (intenti) | `moves` (`name`, `icon`, `desc`, `damage_mult`, `damage_taken_mult`, `heal_pct`), `defaults` (pesi di `enemy`, `boss`, `with_status`), `rules` (`heal_below_pct`, `max_heals`, `no_repeat`) |
 | `story.json` | Elementi della storia | `quest_items` (oggetti chiave: `name`, `desc`), `npcs` (nomi degli artigiani), `characters` (personaggi ricorrenti: vedi sotto) |
 | `lore.json` | Frasi d'atmosfera | `combat`, `boss`, `vendor`, `treasure`, `trap`, `campfire`, `letters`, `mystery` |
 
@@ -176,6 +177,7 @@ main() ─▶ menu principale ─▶ play_game(infinite_mode)
 - Le file hanno 2 e 3 stanze alternate (2-3-2-3 o 3-2-3-2), in tre colonne (sinistra, centro, destra).
 - Da una stanza si passa a quelle della fila successiva nella stessa colonna o in una accanto: i percorsi non si incrociano, nessuna stanza resta isolata e nessuna è un vicolo cieco.
 - Il giocatore vede tutta la mappa (`render_map`): in verde il percorso fatto, in giallo le stanze raggiungibili ora, in grigio ciò che è ormai fuori strada.
+- Le etichette sono centrate sulla loro colonna e i collegamenti uniscono i centri. Se il terminale è alto almeno `TALL_MAP_ROWS` righe (30), ogni collegamento occupa due righe e le diagonali si leggono come linee; altrimenti una sola, così mappa e menu stanno in 80×24.
 
 **Tipi di stanza.**
 - Ogni tipo ha un peso (`rooms.weights`) e un tempo di ricarica in file (`rooms.cooldowns`), applicati fila dopo fila. I pesi si calcolano all'arrivo sul piano: le reliquie con `modify_room_weights` contano dal piano successivo a quello in cui le trovi.
@@ -237,6 +239,26 @@ Poi si applicano, in ordine: ×1,2 dal piano 10; ×1,25 dal piano 20; ×1,4 (pot
 
 ---
 
+### Intenti e reazioni
+
+**Intenti.**
+- *Quando si sceglie.* All'inizio del turno del giocatore `CombatSession.choose_intent()` chiede la mossa a `Enemy.choose_move()`; un nemico con lo status `stun` annuncia "Congelato". La mossa si sceglie a peso:
+  - `Enemy.moves` sono i pesi dei dati, oppure `defaults` più `with_status` se il nemico infligge uno status;
+  - niente `heal` sopra `heal_below_pct` degli HP o dopo `max_heals`;
+  - niente `venom` senza status;
+  - nessuna mossa di `no_repeat` due volte di fila.
+- *Cosa vede il giocatore.* Il prompt mostra `intent_text()`. Per gli attacchi riporta i danni previsti da `estimate_enemy_damage()`: la stessa formula dell'attacco, senza il tiro casuale, la difesa attiva e le reliquie.
+- *Come si risolve.* `enemy_turn()` esegue la mossa e la consuma:
+  - `attack`, `heavy` (`damage_mult` sulla forza, prima della difesa) e `venom` (status garantito) passano da `_enemy_attack`;
+  - `guard` non attacca, e durante il turno del giocatore `damage_taken_mult` riduce i suoi colpi;
+  - `heal` cura `heal_pct` degli HP massimi.
+- Senza intento (es. nei test) il nemico attacca.
+
+**Marchi e reazioni.**
+- *Il marchio.* `apply_element(elemento)` marchia il nemico (`Enemy.mark = [elemento, marks.duration]`). Lo chiamano il colpo a segno del giocatore, con l'elemento dell'arma, e l'attacco a segno del nemico mentre il giocatore è in guardia, con l'elemento dell'armatura. `Normale` non marchia.
+- *La reazione.* Se il nemico ha già un marchio di un altro elemento e la coppia è in `reactions` (in qualsiasi ordine), scatta `_trigger_reaction`: danni pari a `bonus_pct` del `get_total_atk()`, poi lo `status`. Il marchio si consuma e la scoperta finisce nel Codice. Senza reazione il marchio viene sostituito; con lo stesso elemento si rinnova.
+- *Gli effetti di controllo.* `stun` fa saltare il turno del nemico. `blind` toglie `conditions.blind` alla precisione nemica, `slow` toglie `conditions.slow` alla schivata nemica. Scadono, come il marchio, alla fine del turno del nemico (`_tick_enemy_conditions`). `scorch` è un danno nel tempo (`scorch_pct` degli HP massimi) che segue le regole di veleno e sanguinamento.
+
 ## 6. Reliquie
 
 Ogni reliquia è una sottoclasse di `RelicEffect` che ridefinisce solo gli hook che le servono:
@@ -272,7 +294,7 @@ Il salvataggio si crea al primo avvio e **non va committato** (è in `.gitignore
 | `completed_feats` | Imprese completate |
 | `perks` | Livelli dei potenziamenti del Fuoco dell'Anima |
 | `story` | Memoria del Labirinto: `flags`, `counters`, `seen_events` (incontri per evento) |
-| `codex` | Codice: `enemies` (`seen`/`killed` per nome), `letters` (indici), `relics` (id) |
+| `codex` | Codice: `enemies` (`seen`/`killed` per nome), `letters` (indici), `relics` (id), `reactions` (chiavi `"A+B"`) |
 | `npc_unlocked` | Artigiani liberati |
 | `starting_consumables` / `_weapons` / `_armors` / `_accessories` | Oggetti comprati nelle botteghe per la prossima discesa. Vengono svuotati all'inizio della partita, anche se un oggetto non si può costruire, così un dato difettoso non blocca le partite successive |
 | `settings.text_speed` | `lenta`, `normale`, `veloce`, `istantanea` |
@@ -311,10 +333,11 @@ La CI (`.github/workflows/tests.yml`) li esegue su Python 3.9 e sull'ultima 3.x;
 | `test_depth.py` | Nemici e boss per profondità, boss finale, tratto e antidoto mostrati |
 | `test_refactor.py` | Ciclo del turno, ridisegno dei menu, bonus nei dati, output tramite `ui`, etichette dei consumabili |
 | `test_shops.py` | Botteghe degli artigiani, elenco della Forgia, Cuore di Drago |
+| `test_tactics.py` | Intenti (pesi predefiniti e dei dati, regole delle mosse, prompt, Congelato) e reazioni (arma poi armatura, armatura poi arma, solo in guardia, stesso elemento, nessuna reazione, scadenza dei marchi, Codice) |
 | `test_map.py` | Mappa (file alternate, collegamenti senza incroci né vicoli ciechi, tipi e tempi di ricarica, evento richiamato, disegno, ciclo dei piani reale) e biomi (copertura dei piani, dati, nativi, elementi, pesi delle stanze, stanza speciale per piano, Prima Pietra, annuncio del pericolo) |
 | `test_codex.py` | Codice (registrazione, pagine, completamento, menu) e personaggi ricorrenti (catena dei capitoli, un capitolo per run, boss ritirato, indizio della lavanda) |
 | `test_events.py` | Motore degli eventi: integrità dei dati, opzioni con etichetta e bloccate, scene a più passi, fuga e morte, memoria fra le run, conseguenze differite, scelta degli eventi |
-| `test_contracts.py` | **Contratti descrizione ↔ effetto** per reliquie, armi, armature, monili (anche maledetti), consumabili, scelte degli eventi, tratti, patti, potenziamenti, Maestrie e imprese; ogni sbloccabile è ottenibile |
+| `test_contracts.py` | **Contratti descrizione ↔ effetto** per mosse dei nemici e stima dei danni, reazioni elementali ed effetti di controllo, reliquie, armi, armature, monili (anche maledetti), consumabili, scelte degli eventi, tratti, patti, potenziamenti, Maestrie e imprese; ogni sbloccabile è ottenibile |
 
 Oltre ai test automatici il gioco è stato provato al terminale vero, avviandolo in un pty e inviandogli tasti, con un profilo che sblocca tutto:
 - tutte le combinazioni del menu pre-partita, provate nel banco di prova automatico;

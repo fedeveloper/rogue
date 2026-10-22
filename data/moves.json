@@ -1,0 +1,15 @@
+{
+  "moves": {
+    "attack": {"name": "Attacco", "icon": "👊", "desc": "Un attacco normale."},
+    "heavy": {"name": "Colpo pesante", "icon": "💢", "damage_mult": 2, "desc": "La sua forza raddoppia (×2) prima che la tua difesa la riduca. Difenditi per dimezzare il colpo."},
+    "guard": {"name": "Guardia", "icon": "🧱", "damage_taken_mult": 0.5, "desc": "Non attacca. I tuoi colpi di questo turno fanno il 50% dei danni."},
+    "heal": {"name": "Rigenerazione", "icon": "💚", "heal_pct": 15, "desc": "Non attacca. Recupera il 15% degli HP massimi."},
+    "venom": {"name": "Colpo infetto", "icon": "🧪", "desc": "Attacco che, se ti ferisce, infligge di sicuro il suo status."}
+  },
+  "defaults": {
+    "enemy": {"attack": 70, "heavy": 20, "guard": 10},
+    "boss": {"attack": 50, "heavy": 25, "guard": 10, "heal": 15},
+    "with_status": {"venom": 25}
+  },
+  "rules": {"heal_below_pct": 60, "max_heals": 2, "no_repeat": ["heavy", "guard"]}
+}

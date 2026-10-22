@@ -29,6 +29,11 @@ def record_letter(index: int):
     if index not in PROFILE_MANAGER.codex["letters"]: PROFILE_MANAGER.codex["letters"].append(index)
 
 
+def record_reaction(key: str):
+    found = PROFILE_MANAGER.codex.setdefault("reactions", [])
+    if key not in found: found.append(key)
+
+
 def record_relic(relic_id: str):
     if relic_id not in PROFILE_MANAGER.codex["relics"]: PROFILE_MANAGER.codex["relics"].append(relic_id)
 
@@ -53,6 +58,7 @@ def sections() -> List[Tuple[str, int, int]]:
         ("Eventi", sum(1 for k in events if PROFILE_MANAGER.story["seen_events"].get(k)), len(events)),
         ("Lettere insanguinate", len(set(PROFILE_MANAGER.codex["letters"]) & set(range(len(GAME_DATA["lore"]["letters"])))), len(GAME_DATA["lore"]["letters"])),
         ("Reliquie", len(set(PROFILE_MANAGER.codex["relics"]) & {r["id"] for r in RAW_DATA["relics"]}), len(RAW_DATA["relics"])),
+        ("Reazioni elementali", len(set(PROFILE_MANAGER.codex.get("reactions", [])) & set(GAME_DATA["elements"]["reactions"])), len(GAME_DATA["elements"]["reactions"])),
     ]
 
 
@@ -122,8 +128,19 @@ def relics_page() -> List[str]:
     return lines
 
 
+def reactions_page() -> List[str]:
+    found = set(PROFILE_MANAGER.codex.get("reactions", []))
+    lines = [f"  {Colors.CYAN}L'arma marchia il nemico con il suo elemento; in guardia, anche l'armatura marchia chi ti colpisce.",
+             f"  Due elementi diversi sullo stesso nemico possono reagire.{Colors.RESET}", ""]
+    for key, r in GAME_DATA["elements"]["reactions"].items():
+        a, b = key.split("+")
+        if key in found: lines.append(f"  {r['icon']} {Colors.MAGENTA}{r['name']}{Colors.RESET} ({get_element_icon(a)} + {get_element_icon(b)}) — {r['desc']}")
+        else: lines.append(f"  {UNKNOWN}")
+    return lines
+
+
 PAGES = {"Bestiario": bestiary_page, "Personaggi": characters_page, "Eventi": events_page,
-         "Lettere insanguinate": letters_page, "Reliquie": relics_page}
+         "Lettere insanguinate": letters_page, "Reliquie": relics_page, "Reazioni elementali": reactions_page}
 
 
 def show_codex():

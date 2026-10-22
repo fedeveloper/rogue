@@ -15,6 +15,7 @@ from events import pick_event, pop_due_event
 from ui import Colors, visible_width
 
 ROWS = 4  # file di stanze prima del boss
+TALL_MAP_ROWS = 30  # da quest'altezza del terminale i collegamenti occupano due righe
 # Solo emoji larghe di natura (senza selettore di variante): le colonne della mappa restano allineate in ogni terminale
 ROOM_ICONS = {"combat": "👹", "vendor": "💰", "campfire": "🔥", "treasure": "💎", "trap": "💀", "event": "🎭", "mystery": "❓", "boss": "👑"}
 ROOM_NAMES = {"combat": "Scontro", "vendor": "Mercante", "campfire": "Falò", "treasure": "Forziere", "trap": "Trappola",
@@ -24,6 +25,7 @@ SIDES = {0: "sinistra", 1: "centro", 2: "destra"}
 # Coppie di stanze che non escono mai nella stessa fila
 FORBIDDEN = ({"trap", "treasure"}, {"trap", "vendor"})
 CELL = 16  # colonne di terminale per ogni colonna della mappa
+DIM = "\033[90m"
 
 
 def generate_row(floor: int, step: int, weights_def: dict, cooldowns_def: dict, room_cooldowns: dict, active_pacts: list,
@@ -117,30 +119,37 @@ def _short(d: dict, biome: Optional[dict]) -> str:
     return f"{ROOM_ICONS[d['type']]} {ROOM_NAMES[d['type']]}{mark}"
 
 
-def _pad(text: str, width: int) -> str:
-    return text + " " * max(0, width - visible_width(text))
+def _place(cells: List[tuple]) -> str:
+    """Una riga con i testi centrati sulle colonne: cells = [(centro, testo)]."""
+    line, col = "", 0
+    for center, text in sorted(cells):
+        start = max(col, center - visible_width(text) // 2)
+        line += " " * (start - col) + text
+        col = start + visible_width(text)
+    return line
 
 
-def render_map(rows: List[List[dict]], step: int, path: List[int], biome: Optional[dict] = None) -> List[str]:
+def render_map(rows: List[List[dict]], step: int, path: List[int], biome: Optional[dict] = None, tall: bool = False) -> List[str]:
     """Righe della mappa. `path` sono gli indici scelti nelle file già superate; `step` è la fila da scegliere.
 
     Verde: il percorso fatto. Giallo: le stanze raggiungibili ora. Grigio: ciò che resta fuori dal percorso.
+    Le etichette sono centrate sulla loro colonna e i collegamenti uniscono i centri; con `tall` ogni collegamento
+    occupa due righe, così le diagonali si leggono come linee continue.
     """
     current = rows[len(path) - 1][path[-1]] if path else None
     options = set(reachable(rows, step, current)) if step <= len(rows) else set()
     future = _future(rows, step, current)
     lines = []
     for r, row in enumerate(rows):
-        cells = [""] * 3
+        cells = []
         for i, d in enumerate(row):
-            text = _short(d, biome)
-            if r < len(path): color = Colors.GREEN + Colors.BOLD if path[r] == i else "\033[90m"
-            elif r == step - 1: color = Colors.YELLOW + Colors.BOLD if i in options else "\033[90m"
-            else: color = "" if (r, i) in future else "\033[90m"
-            cells[d["slot"]] = f"{color}{text}{Colors.RESET}"
+            if r < len(path): color = Colors.GREEN + Colors.BOLD if path[r] == i else DIM
+            elif r == step - 1: color = Colors.YELLOW + Colors.BOLD if i in options else DIM
+            else: color = "" if (r, i) in future else DIM
+            cells.append((_center(d["slot"]), f"{color}{_short(d, biome)}{Colors.RESET}"))
         marker = "★" if r == len(rows) - 1 else str(r + 1)
-        lines.append(f"  {marker}  " + "".join(_pad(c, CELL) for c in cells).rstrip())
-        if r < len(rows) - 1: lines.append("     " + _connectors(row, rows[r + 1]))
+        lines.append(f"  {marker}  " + _place(cells))
+        if r < len(rows) - 1: lines += ["     " + l for l in _connectors(row, rows[r + 1], 2 if tall else 1)]
     return lines
 
 
@@ -157,12 +166,17 @@ def _future(rows, step, current) -> set:
     return seen
 
 
-def _connectors(row: List[dict], nxt: List[dict]) -> str:
-    chars = [" "] * (3 * CELL)
+def _center(slot: int) -> int:
+    return slot * CELL + CELL // 2
+
+
+def _connectors(row: List[dict], nxt: List[dict], height: int = 1) -> List[str]:
+    """Linee fra una fila e la successiva: verticali sotto il centro, diagonali divise in `height` tratti."""
+    lines = [[" "] * (3 * CELL) for _ in range(height)]
     for d in row:
         for j in d["links"]:
-            a, b = d["slot"], nxt[j]["slot"]
-            if a == b: chars[a * CELL + 1] = "│"
-            else: chars[min(a, b) * CELL + CELL // 2 + 1] = "╲" if b > a else "╱"
-    return "".join(chars).rstrip()
-
+            a, b = _center(d["slot"]), _center(nxt[j]["slot"])
+            for k in range(height):
+                x = a + (b - a) * (k + 1) // (height + 1)
+                lines[k][x] = "│" if a == b else ("╲" if b > a else "╱")
+    return ["".join(l).rstrip() for l in lines]

@@ -4,10 +4,22 @@ from typing import List
 from ui import Colors, delay_print, clear_screen, interactive_menu, display_msg, wait_enter
 from data_manager import GAME_DATA, PROFILE_MANAGER, MULTIPLIERS, get_element_icon
 from archive import get_archive_bonus
-from codex import record_enemy_killed, record_enemy_seen, record_letter
+from codex import record_enemy_killed, record_enemy_seen, record_letter, record_reaction
 from constants import BASE_HIT_CHANCE, BLOOD_LETTER_CHANCE
 from entities import STATUS_NAMES, Player, Enemy, generate_weapon, generate_armor, generate_accessory, generate_potion, get_random_relic
 from inventory_menu import show_inventory_menu
+
+# Effetti di controllo delle reazioni: scadono alla fine del turno del nemico, non all'inizio
+CONTROL_STATUSES = ("stun", "blind", "slow")
+# Mosse del nemico che sono attacchi
+ATTACK_MOVES = ("attack", "heavy", "venom")
+
+
+def reaction_key(a: str, b: str):
+    """La reazione fra due elementi, nell'ordine in cui compare in elements.json, o None."""
+    reactions = GAME_DATA["elements"].get("reactions", {})
+    return next((k for k in (f"{a}+{b}", f"{b}+{a}") if k in reactions), None)
+
 
 class CombatSession:
     def __init__(self, player: Player, floor: int, enemy: Enemy):
@@ -24,6 +36,7 @@ class CombatSession:
         self.first_enemy_attack = True
         self.hit_negated_by_relic = False
         self.first_player_attack = True
+        self.intent = None  # la mossa che il nemico ha annunciato per il suo prossimo turno
 
         for r in self.player.relic_effects:
             r.on_combat_start(self)
@@ -64,6 +77,11 @@ class CombatSession:
                     dmg = max(5, int(self.enemy.hp * 0.05))
                     self.enemy.hp -= dmg
                     display_msg(f"{Colors.RED}Il sanguinamento infligge {dmg} danni a {self.enemy.name}! ({self.enemy.hp}){Colors.RESET}")
+                elif status == "scorch":
+                    dmg = max(1, self.enemy.max_hp * GAME_DATA["elements"]["conditions"]["scorch_pct"] // 100)
+                    self.enemy.hp -= dmg
+                    display_msg(f"{Colors.RED}🌋 Il magma brucia {self.enemy.name}: {dmg} danni! ({self.enemy.hp}){Colors.RESET}")
+                if status in CONTROL_STATUSES: continue  # scadono alla fine del turno del nemico (_tick_enemy_conditions)
                 
                 self.enemy.statuses[status] -= 1
                 if self.enemy.statuses[status] <= 0: expired.append(status)
@@ -186,7 +204,70 @@ class CombatSession:
         wait_enter("\nPremi INVIO per continuare...")
 
     def _calc_hit_chance(self, multiplier: float) -> int:
-        return self.player.get_hit_chance(self.enemy.base_dodge, multiplier)
+        slow = GAME_DATA["elements"]["conditions"]["slow"] if "slow" in self.enemy.statuses else 0
+        return self.player.get_hit_chance(self.enemy.base_dodge - slow, multiplier)
+
+    # ------------------------------------------------------------- marchi e reazioni elementali
+    def apply_element(self, element: str):
+        """Marchia il nemico con un elemento; se porta già un marchio di un elemento compatibile, scatena la reazione."""
+        if not element or element == "Normale" or self.enemy.hp <= 0: return
+        mark = self.enemy.mark
+        if mark and mark[0] != element and (key := reaction_key(mark[0], element)):
+            self._trigger_reaction(key)
+            return
+        if not mark or mark[0] != element:
+            display_msg(f"{Colors.CYAN}{self.enemy.name} porta il marchio {get_element_icon(element)}.{Colors.RESET}")
+        self.enemy.mark = [element, GAME_DATA["elements"]["marks"]["duration"]]
+
+    def _trigger_reaction(self, key: str):
+        r = GAME_DATA["elements"]["reactions"][key]
+        self.enemy.mark = None
+        record_reaction(key)
+        self.player.run_tracker["reactions"] = self.player.run_tracker.get("reactions", 0) + 1
+        msg = f"{Colors.MAGENTA}{Colors.BOLD}⚡ REAZIONE: {r['icon']} {r['name'].upper()}!{Colors.RESET}"
+        if r.get("bonus_pct"):
+            dmg = self.player.get_total_atk() * r["bonus_pct"] // 100
+            self.enemy.hp -= dmg
+            msg += f" {Colors.CYAN}{dmg} danni extra.{Colors.RESET}"
+        if r.get("status"):
+            s_type, turns = r["status"]["type"], r["status"]["duration"]
+            self.enemy.statuses[s_type] = max(self.enemy.statuses.get(s_type, 0), turns)
+            msg += f" {Colors.MAGENTA}{self.enemy.name}: {STATUS_NAMES[s_type]}.{Colors.RESET}"
+        display_msg(msg)
+
+    def _tick_enemy_conditions(self):
+        """Fine del turno del nemico: scadono marchio, Accecato e Impantanato."""
+        if self.enemy.mark:
+            self.enemy.mark[1] -= 1
+            if self.enemy.mark[1] <= 0: self.enemy.mark = None
+        for s in [s for s in self.enemy.statuses if s in ("blind", "slow")]:
+            self.enemy.statuses[s] -= 1
+            if self.enemy.statuses[s] <= 0: del self.enemy.statuses[s]
+
+    # ------------------------------------------------------------- intenti
+    def _move(self, move_id: str) -> dict:
+        return GAME_DATA["moves"]["moves"][move_id]
+
+    def choose_intent(self):
+        self.intent = "stunned" if "stun" in self.enemy.statuses else self.enemy.choose_move()
+
+    def intent_text(self) -> str:
+        if self.intent == "stunned": return f"🧊 {Colors.CYAN}Congelato: perderà il turno{Colors.RESET}"
+        m = self._move(self.intent)
+        text = f"{m['icon']} {Colors.BOLD}{m['name']}{Colors.RESET}"
+        if self.intent in ATTACK_MOVES:
+            text += f" (≈{self.estimate_enemy_damage(m.get('damage_mult', 1))} danni)"
+            if self.intent == "heavy": text += f" {Colors.RED}— difenditi!{Colors.RESET}"
+            if self.intent == "venom" and self.enemy.status_inflict: text += f" + {STATUS_NAMES.get(self.enemy.status_inflict['type'], '')} se ti ferisce"
+        elif self.intent == "guard": text += f": i tuoi colpi faranno il {int(m['damage_taken_mult'] * 100)}% dei danni"
+        elif self.intent == "heal": text += f": recupererà il {m['heal_pct']}% degli HP"
+        return text
+
+    def enemy_status_text(self) -> str:
+        parts = []
+        if self.enemy.mark: parts.append(f"marchio {get_element_icon(self.enemy.mark[0])}")
+        parts += [STATUS_NAMES.get(s, s) for s in self.enemy.statuses]
+        return f" [{', '.join(parts)}]" if parts else ""
 
     def attack_multiplier(self) -> float:
         multiplier = MULTIPLIERS.get(self.player.weapon.element, {}).get(self.enemy.element, 1.0)
@@ -246,9 +327,13 @@ class CombatSession:
             if self.resonance == "Tenebra":
                 dmg_dealt += int(self._resonance_value("Tenebra"))
                 eff += f" {Colors.MAGENTA}[TENEBRA]{Colors.RESET}"
+            if self.intent == "guard":
+                dmg_dealt = int(dmg_dealt * self._move("guard")["damage_taken_mult"])
+                eff += f" {Colors.BLUE}[GUARDIA]{Colors.RESET}"
             
             self.enemy.hp -= dmg_dealt
             display_msg(f"\n-> Colpisci con {self.player.weapon.name} infliggendo {Colors.CYAN}{dmg_dealt} danni!{Colors.RESET} {eff}")
+            self.apply_element(self.player.weapon.element)
             
             for r in self.player.relic_effects: r.on_attack_landed(self, multiplier)
 
@@ -304,8 +389,11 @@ class CombatSession:
             self.is_defending = False
 
             self.def_type, self.def_txt = self.player.get_defense_action()
+            if self.intent is None: self.choose_intent()
 
-            prompt = f"\n{Colors.BOLD}--- ⚔️ IN COMBATTIMENTO ⚔️ ---{Colors.RESET}\nTu: {Colors.GREEN}{self.player.hp}/{self.player.max_hp} HP{Colors.RESET} | {self.enemy.name}: {Colors.RED}{self.enemy.hp} HP{Colors.RESET}"
+            prompt = (f"\n{Colors.BOLD}--- ⚔️ IN COMBATTIMENTO ⚔️ ---{Colors.RESET}\nTu: {Colors.GREEN}{self.player.hp}/{self.player.max_hp} HP{Colors.RESET} | "
+                      f"{self.enemy.name}: {Colors.RED}{self.enemy.hp}/{self.enemy.max_hp} HP{Colors.RESET}{self.enemy_status_text()}\n"
+                      f"Intento del nemico: {self.intent_text()}")
             options = [
                 "Attacca",
                 self.def_txt,
@@ -372,12 +460,26 @@ class CombatSession:
         return f_chance
 
     def _calc_enemy_hit_chance(self, en_multiplier: float) -> int:
-        return max(10, min(100, BASE_HIT_CHANCE + self.enemy.base_acc - self.player.get_dodge() + (15 if en_multiplier > 1.0 else -20 if en_multiplier < 1.0 else 0)))
+        blind = GAME_DATA["elements"]["conditions"]["blind"] if "blind" in self.enemy.statuses else 0
+        return max(10, min(100, BASE_HIT_CHANCE + self.enemy.base_acc - blind - self.player.get_dodge() + (15 if en_multiplier > 1.0 else -20 if en_multiplier < 1.0 else 0)))
 
-    def _calc_enemy_damage(self, en_multiplier: float) -> int:
+    def _enemy_multiplier(self) -> float:
+        en_multiplier = MULTIPLIERS.get(self.enemy.element, {}).get(self.player.armor.element, 1.0)
+        for r in self.player.relic_effects: en_multiplier = r.modify_multiplier(en_multiplier, is_defense=True)
+        return en_multiplier
+
+    def _enemy_attack_power(self) -> int:
+        return max(1, int(self.enemy.atk * (1 - self._resonance_value("Acqua")))) if self.resonance == "Acqua" else self.enemy.atk
+
+    def estimate_enemy_damage(self, move_mult: float = 1.0) -> int:
+        """Danno atteso dell'attacco annunciato, senza difesa attiva né effetti casuali (per l'intento)."""
         defense = self.player.get_total_def() + sum(r.get_def_modifier(self) for r in self.player.relic_effects)
-        en_atk = max(1, int(self.enemy.atk * (1 - self._resonance_value("Acqua")))) if self.resonance == "Acqua" else self.enemy.atk
-        dmg_taken = max(0, int((en_atk + random.randint(-1, 2)) * en_multiplier) - defense)
+        return max(0, int(self._enemy_attack_power() * self._enemy_multiplier() * move_mult) - defense)
+
+    def _calc_enemy_damage(self, en_multiplier: float, move_mult: float = 1.0) -> int:
+        defense = self.player.get_total_def() + sum(r.get_def_modifier(self) for r in self.player.relic_effects)
+        en_atk = self._enemy_attack_power()
+        dmg_taken = max(0, int((en_atk + random.randint(-1, 2)) * en_multiplier * move_mult) - defense)
         if self.is_defending: dmg_taken //= 2
         before_relics = dmg_taken
         for r in self.player.relic_effects: dmg_taken = r.on_take_damage(self, dmg_taken, en_multiplier)
@@ -386,8 +488,36 @@ class CombatSession:
         return dmg_taken
 
     def enemy_turn(self) -> bool:
-        en_multiplier = MULTIPLIERS.get(self.enemy.element, {}).get(self.player.armor.element, 1.0)
-        for r in self.player.relic_effects: en_multiplier = r.modify_multiplier(en_multiplier, is_defense=True)
+        """Il nemico esegue la mossa annunciata (un attacco, se non ne aveva annunciata nessuna)."""
+        intent, self.intent = self.intent or "attack", None
+        if "stun" in self.enemy.statuses:
+            del self.enemy.statuses["stun"]
+            display_msg(f"{Colors.CYAN}<- 🧊 {self.enemy.name} è congelato e perde il turno!{Colors.RESET}")
+            result = True
+        elif intent == "guard":
+            display_msg(f"{Colors.BLUE}<- {self.enemy.name} resta in guardia.{Colors.RESET}")
+            result = True
+        elif intent == "heal":
+            healed = min(self.enemy.max_hp - self.enemy.hp, self.enemy.max_hp * self._move("heal")["heal_pct"] // 100)
+            self.enemy.hp += healed
+            self.enemy.heals_used += 1
+            display_msg(f"{Colors.GREEN}<- 💚 {self.enemy.name} si rigenera: +{healed} HP. ({self.enemy.hp}/{self.enemy.max_hp}){Colors.RESET}")
+            result = True
+        else:
+            result = self._enemy_attack(intent)
+        if not result or self.enemy.hp <= 0 or self.player.hp <= 0: return result
+        self._tick_enemy_conditions()
+        if self.burn_dmg > 0:
+            self.enemy.hp -= self.burn_dmg
+            display_msg(f"{Colors.RED}🔥 Risonanza di Fuoco: Ustione infligge {self.burn_dmg} danni!{Colors.RESET}")
+            if self.enemy.hp <= 0:
+                self.on_enemy_death()
+                return False
+        return True
+
+    def _enemy_attack(self, move: str) -> bool:
+        en_multiplier = self._enemy_multiplier()
+        move_mult = self._move(move).get("damage_mult", 1)
         
         en_hit_chance = self._calc_enemy_hit_chance(en_multiplier)
         # Cacciatore Etereo: il primo attacco nemico di ogni scontro manca sempre
@@ -395,7 +525,7 @@ class CombatSession:
         self.first_enemy_attack = False
 
         if random.randint(1, 100) <= en_hit_chance:
-            dmg_taken = self._calc_enemy_damage(en_multiplier)
+            dmg_taken = self._calc_enemy_damage(en_multiplier, move_mult)
             if self.enemy.hp <= 0:
                 self.on_enemy_death()
                 return False
@@ -405,11 +535,12 @@ class CombatSession:
             if dmg_taken > 0: 
                 self.boss_hit_taken = True
                 dif = f"{Colors.BLUE}[DIFESA]{Colors.RESET}" if self.is_defending else ""
-                display_msg(f"<- {self.enemy.name} ti colpisce! Subisci {Colors.RED}{dmg_taken} danni{Colors.RESET}. {en_eff}{dif}")
+                heavy = f"{Colors.RED}[COLPO PESANTE]{Colors.RESET} " if move == "heavy" else ""
+                display_msg(f"<- {heavy}{self.enemy.name} ti colpisce! Subisci {Colors.RED}{dmg_taken} danni{Colors.RESET}. {en_eff}{dif}")
                 
                 if getattr(self.enemy, 'status_inflict', None):
                     s_data = self.enemy.status_inflict
-                    if random.randint(1, 100) <= s_data.get("chance", 100):
+                    if move == "venom" or random.randint(1, 100) <= s_data.get("chance", 100):
                         s_type = s_data["type"]
                         self.player.statuses[s_type] = max(self.player.statuses.get(s_type, 0), s_data["duration"])
                         display_msg(f"{Colors.MAGENTA}Sei stato afflitto da {STATUS_NAMES.get(s_type, s_type).upper()}!{Colors.RESET}")
@@ -437,15 +568,14 @@ class CombatSession:
                     return False
             elif not self.hit_negated_by_relic:
                 display_msg(f"<- {self.enemy.name} attacca, ma la corazza blocca TUTTO! {en_eff}")
+            if self.is_defending:
+                # In guardia, l'armatura marchia con il suo elemento chi ti colpisce: è così che si combinano due elementi
+                self.apply_element(self.player.armor.element)
+                if self.enemy.hp <= 0:
+                    self.on_enemy_death()
+                    return False
         else:
             display_msg(f"{Colors.CYAN}<- {self.enemy.name} attacca... ma riesci a schivarlo!{Colors.RESET}")
-        
-        if self.burn_dmg > 0 and self.enemy.hp > 0:
-            self.enemy.hp -= self.burn_dmg
-            display_msg(f"{Colors.RED}🔥 Risonanza di Fuoco: Ustione infligge {self.burn_dmg} danni!{Colors.RESET}")
-            if self.enemy.hp <= 0:
-                self.on_enemy_death()
-                return False
         return True
 
 def combat_room(player: Player, floor: int, enemy_instance: Enemy):
