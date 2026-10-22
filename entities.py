@@ -5,7 +5,7 @@ from data_manager import GAME_DATA, RAW_DATA, PROFILE_MANAGER, ELEMENTS, MULTIPL
 from relic_effects import create_relic_effect
 from archive import get_archive_bonus
 from codex import record_relic
-from constants import BASE_HIT_CHANCE, ENEMY_DEPTH_WINDOW, BOSS_DEPTH_WINDOW, INFINITE_MODE_THRESHOLD, WEAPON_LEVEL_SCALING, ARMOR_LEVEL_SCALING, CURSE_CHANCE, CURSE_STAT_MULTIPLIER
+from constants import BASE_HIT_CHANCE, ENEMY_DEPTH_WINDOW, BOSS_DEPTH_WINDOW, INFINITE_MODE_THRESHOLD, CURSE_CHANCE, CURSE_STAT_MULTIPLIER, BOSS_HP_MULT, BOSS_ATK_MULT, ENEMY_HP_PER_FLOOR, ENEMY_ATK_PER_FLOOR, RECOVERY_HEAL_PCT, BULWARK_HEAL_PCT, WEAPON_TARGET_HITS, ARMOR_TARGET_ABSORB, WEAPON_QUALITY, ARMOR_QUALITY, NORMAL_ELEMENT_BONUS, EPIC_MULTIPLIER
 
 class Item:
     def __init__(self, name: str, value: int, item_type: str, level: int = 1, flavor: str = "", is_cursed: bool = False, curse_effect: str = "", element: str = "Normale"):
@@ -69,10 +69,46 @@ def generate_random_element() -> str:
     if random.random() < 0.4: return "Normale"
     return random.choice([e for e in ELEMENTS if e != "Normale"])
 
+def floor_multiplier(floor: int) -> float:
+    """I salti di forza dei nemici ai piani 10 e 20 (vedi Enemy)."""
+    return (1.2 if floor >= 10 else 1.0) * (1.25 if floor >= 20 else 1.0)
+
+
+_TYPICAL = {}
+
+def typical_enemy(floor: int) -> tuple:
+    """(HP, ATK) attesi di un nemico normale al piano: media della finestra di profondità, crescita e salti di piano."""
+    floor = max(1, floor)
+    if floor not in _TYPICAL:
+        pool = {n: d for n, d in RAW_DATA["enemies"].items() if "biome" not in d}
+        ranked = sorted(pool, key=lambda n: pool[n]["base_hp"] * pool[n]["base_atk"])
+        window = min(len(ranked), ENEMY_DEPTH_WINDOW)
+        progress = min(1.0, (floor - 1) / (INFINITE_MODE_THRESHOLD - 1))
+        lo = max(0, min(round(progress * (len(ranked) - 1) - (window - 1) / 2), len(ranked) - window))
+        names = ranked[lo:lo + window]
+        hp = (sum(pool[n]["base_hp"] for n in names) / window + int((floor - 1) * ENEMY_HP_PER_FLOOR)) * floor_multiplier(floor)
+        atk = (sum(pool[n]["base_atk"] for n in names) / window + int((floor - 1) * ENEMY_ATK_PER_FLOOR) + 0.5) * floor_multiplier(floor)
+        _TYPICAL[floor] = (hp, atk)
+    return _TYPICAL[floor]
+
+
+def boss_quality(data: dict) -> tuple:
+    """Qualità (HP, ATK) di un boss rispetto alla media dei boss: 0.75 + 0.25 · base / media."""
+    bosses = [d for d in RAW_DATA["bosses"].values()]
+    mean_hp = sum(d["base_hp"] for d in bosses) / len(bosses)
+    mean_atk = sum(d["base_atk"] for d in bosses) / len(bosses)
+    return 0.75 + 0.25 * data["base_hp"] / mean_hp, 0.75 + 0.25 * data["base_atk"] / mean_atk
+
+
+def _quality(base: float, rule: tuple) -> float:
+    return rule[0] + base / rule[1]
+
+
 def generate_weapon(level: int, is_epic: bool = False) -> Weapon:
     w_data = random.choice(GAME_DATA["weapons"])
     name, flavor = w_data["name"], w_data.get("flavor", "")
-    atk = w_data["base_atk"] + int(level * WEAPON_LEVEL_SCALING) + random.randint(0, 3)
+    hp, _ = typical_enemy(level)
+    power = hp / WEAPON_TARGET_HITS * _quality(w_data["base_atk"], WEAPON_QUALITY) * random.uniform(0.9, 1.1)
     # Le armi a tema (es. il Bastone dell'Alba) hanno sempre il loro elemento
     element = w_data.get("element") or generate_random_element()
     
@@ -80,26 +116,29 @@ def generate_weapon(level: int, is_epic: bool = False) -> Weapon:
     if not is_epic and random.random() < CURSE_CHANCE:
         is_cursed = True
         curse_effect = random.choice(["hp_drain", "gold_drain"])
-        atk = int(atk * CURSE_STAT_MULTIPLIER)
+        power *= CURSE_STAT_MULTIPLIER
         
-    if element == "Normale": atk = int(atk * 1.2) + 1
-    if is_epic: atk = int(atk * 1.5) + 2; name = f"EPICO {name}"
+    if element == "Normale": power *= NORMAL_ELEMENT_BONUS
+    if is_epic: power *= EPIC_MULTIPLIER; name = f"EPICO {name}"
+    atk = max(1, round(power))
     return Weapon(f"{name} (lv.{level})", atk * 5, atk, element, level, flavor, is_cursed, curse_effect, w_data.get("status_inflict"), w_data)
 
 def generate_armor(level: int, is_epic: bool = False) -> Armor:
     a_data = random.choice(GAME_DATA["armors"])
     name, flavor = a_data["name"], a_data.get("flavor", "")
-    defense = a_data["base_def"] + int(level * ARMOR_LEVEL_SCALING) + random.randint(0, 2)
+    _, atk = typical_enemy(level)
+    power = atk * ARMOR_TARGET_ABSORB * _quality(a_data["base_def"], ARMOR_QUALITY) * random.uniform(0.9, 1.1)
     element = a_data.get("element") or generate_random_element()
     
     is_cursed, curse_effect = False, ""
     if not is_epic and random.random() < CURSE_CHANCE:
         is_cursed = True
         curse_effect = random.choice(["hp_drain", "gold_drain", "heavy"])
-        defense = int(defense * CURSE_STAT_MULTIPLIER)
+        power *= CURSE_STAT_MULTIPLIER
 
-    if element == "Normale": defense = int(defense * 1.2) + 1
-    if is_epic: defense = int(defense * 1.5) + 2; name = f"EPICO {name}"
+    if element == "Normale": power *= NORMAL_ELEMENT_BONUS
+    if is_epic: power *= EPIC_MULTIPLIER; name = f"EPICO {name}"
+    defense = max(1, round(power))
     return Armor(f"{name} (lv.{level})", defense * 8, defense, element, level, flavor, is_cursed, curse_effect, a_data.get("dodge_bonus", 0))
 
 def generate_accessory(level: int) -> Accessory:
@@ -407,7 +446,8 @@ class Player:
 
     def on_defense_started(self):
         if self.has_mastery_effect("paladin_bulwark"):
-            if self.heal(3) > 0: display_msg(f"{Colors.GREEN}Baluardo della Fede: Recuperi 3 HP!{Colors.RESET}")
+            healed = self.heal(max(1, self.max_hp * BULWARK_HEAL_PCT // 100))
+            if healed > 0: display_msg(f"{Colors.GREEN}Baluardo della Fede: Recuperi {healed} HP!{Colors.RESET}")
 
     def on_attack_landed(self, dmg_dealt: int, multiplier: float):
         if self.has_mastery_effect("mage_attunement") and multiplier > 1.0:
@@ -421,7 +461,7 @@ class Player:
         elif self.role in ["Ladro", "Assassino"]:
             return "focus", "Concentrazione (Dimezza danni, prossimo colpo Critico 100%)"
         else:
-            return "recovery", "Riparo Magico (Dimezza danni e Cura 5% HP)"
+            return "recovery", f"Riparo Magico (Dimezza danni e Cura {RECOVERY_HEAL_PCT}% HP)"
 
 def pick_enemy_name(floor: int, is_boss: bool, final: bool = False) -> str:
     """Sceglie un nemico adatto alla profondità: più si scende, più forti sono i candidati."""
@@ -461,12 +501,15 @@ class Enemy:
         
         lvl_scale = floor - 1
         if is_boss:
-            self.hp = data["base_hp"] + int(lvl_scale * 8) + random.randint(0, 10)
-            self.atk = data["base_atk"] + int(lvl_scale * 2.5) + random.randint(0, 2)
+            hp, atk = typical_enemy(floor)
+            q_hp, q_atk = boss_quality(data)
+            # typical_enemy include già i salti di forza dei piani 10 e 20: qui si tolgono per non applicarli due volte
+            self.hp = int(hp * BOSS_HP_MULT * q_hp / floor_multiplier(floor)) + random.randint(0, 10)
+            self.atk = int(atk * BOSS_ATK_MULT * q_atk / floor_multiplier(floor)) + random.randint(0, 2)
             self.gold_drop, self.exp_drop = 50 + (floor * 15), 150 + (floor * 20)
         else:
-            self.hp = data["base_hp"] + int(lvl_scale * 5) + random.randint(-5, 5)
-            self.atk = data["base_atk"] + int(lvl_scale * 1.0) + random.randint(0, 1)
+            self.hp = data["base_hp"] + int(lvl_scale * ENEMY_HP_PER_FLOOR) + random.randint(-5, 5)
+            self.atk = data["base_atk"] + int(lvl_scale * ENEMY_ATK_PER_FLOOR) + random.randint(0, 1)
             self.gold_drop, self.exp_drop = max(5, 5 + int(floor * 3.5)), 30 + (floor * 10)
             
         if floor >= 10:

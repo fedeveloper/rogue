@@ -596,10 +596,11 @@ class RulesContractTest(Sandbox):
             "artigiano_lvl": built(lambda p: p.weapon.atk), "pelle_dura_lvl": built(lambda p: p.armor.defense),
             "farmacista": built(lambda p: sum(1 for i in p.inventory if i.type == "consumable")),
             "speranza_luce_lvl": lambda: round(regen() * 100 / 200),
-            "discount_lvl": lambda: -round(100 - self.vendor_prices([])[0] * 100 / self.base_price),
+            # Lo sconto che, troncato all'Oro intero come fa il mercante, dà esattamente i prezzi visti
+            "discount_lvl": lambda: -next(p for p in range(100) if [max(1, int(b * (1.0 - p / 100))) for b in self.base_prices] == self.vendor_prices([])),
         }
         not_numeric = {"sesto_senso", "altare_benedizione", "riciclatore_lvl"}
-        PROFILE_MANAGER.set_perk("discount_lvl", 0); self.base_price = self.vendor_prices([])[0]
+        PROFILE_MANAGER.set_perk("discount_lvl", 0); self.base_prices = self.vendor_prices([])
         for key, name, desc, *_ in roguelike.PERK_DEFS:
             if key in not_numeric: continue
             with self.subTest(perk=name):
@@ -740,7 +741,10 @@ class MoveContractTest(Sandbox):
         p, s = self.enemy_hit("attack")
         self.assertNotIn("poison", p.statuses)
         p, s = self.setup_fight("venom")
-        p.bonus_def = 1000  # la corazza blocca tutto: niente ferita, niente status
+        # Nessuna armatura annulla più un colpo; lo fa lo Scudo di Cristallo, e senza ferita niente status
+        with quiet(): p.add_relic(next(r for r in RAW_DATA["relics"] if r["id"] == "scudo_cristallo"))
+        s = self.session(p, 10); s.enemy.atk, s.enemy.base_acc, s.intent = 20, 100, "venom"
+        s.enemy.status_inflict = {"type": "poison", "chance": 0, "duration": 3}
         with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: a), mock.patch("rooms.wait_enter"):
             s.enemy_turn()
         self.assertNotIn("poison", p.statuses)

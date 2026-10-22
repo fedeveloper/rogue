@@ -5,7 +5,7 @@ from ui import Colors, delay_print, clear_screen, interactive_menu, display_msg,
 from data_manager import GAME_DATA, PROFILE_MANAGER, MULTIPLIERS, get_biome, get_element_icon
 from archive import get_archive_bonus
 from codex import record_enemy_killed, record_enemy_seen, record_letter, record_reaction
-from constants import BASE_HIT_CHANCE, BLOOD_LETTER_CHANCE
+from constants import BASE_HIT_CHANCE, BLOOD_LETTER_CHANCE, CURSE_HP_DRAIN_PCT, MIN_DAMAGE_PCT, POISON_MIN, POISON_PCT, RECOVERY_HEAL_PCT
 from entities import STATUS_NAMES, Player, Enemy, generate_weapon, generate_armor, generate_accessory, generate_potion, get_random_relic
 from inventory_menu import show_inventory_menu
 
@@ -49,8 +49,9 @@ class CombatSession:
     def process_statuses_and_curses(self, is_player_turn: bool):
         if is_player_turn:
             if self.player.has_curse("hp_drain"):
-                self.player.take_damage(2)
-                display_msg(f"{Colors.MAGENTA}La Maledizione dell'equipaggiamento drena 2 HP! ({self.player.hp}/{self.player.max_hp}){Colors.RESET}")
+                drain = max(2, self.player.max_hp * CURSE_HP_DRAIN_PCT // 100)
+                self.player.take_damage(drain)
+                display_msg(f"{Colors.MAGENTA}La Maledizione dell'equipaggiamento drena {drain} HP! ({self.player.hp}/{self.player.max_hp}){Colors.RESET}")
             if self.player.has_curse("gold_drain") and self.player.gold > 0:
                 self.player.gold = max(0, self.player.gold - 5)
                 display_msg(f"{Colors.MAGENTA}La Maledizione divora 5 Oro! (Oro: {self.player.gold}){Colors.RESET}")
@@ -58,7 +59,7 @@ class CombatSession:
             expired = []
             for status, duration in self.player.statuses.items():
                 if status == "poison":
-                    dmg = 3 + self.floor
+                    dmg = max(POISON_MIN, self.player.max_hp * POISON_PCT // 100)
                     self.player.take_damage(dmg)
                     display_msg(f"{Colors.GREEN}Il veleno ti infligge {dmg} danni! ({self.player.hp}/{self.player.max_hp}){Colors.RESET}")
                 elif status == "bleed":
@@ -75,7 +76,7 @@ class CombatSession:
             expired = []
             for status, duration in self.enemy.statuses.items():
                 if status == "poison":
-                    dmg = 3 + self.floor
+                    dmg = max(POISON_MIN, self.enemy.max_hp * POISON_PCT // 100)
                     self.enemy.hp -= dmg
                     display_msg(f"{Colors.GREEN}Il veleno infligge {dmg} danni a {self.enemy.name}! ({self.enemy.hp}){Colors.RESET}")
                 elif status == "bleed":
@@ -399,7 +400,7 @@ class CombatSession:
             if self.player.cursed:
                 display_msg(f"\n{Colors.BLUE}-> Ti difendi, ma la Maledizione blocca il tuo recupero magico.{Colors.RESET}")
             else:
-                heal_amt = max(1, self.player.max_hp // 20)
+                heal_amt = max(1, self.player.max_hp * RECOVERY_HEAL_PCT // 100)
                 self.player.heal(heal_amt)
                 display_msg(f"\n{Colors.BLUE}-> Evochi una barriera vitale. {Colors.GREEN}Recuperi {heal_amt} HP!{Colors.RESET}")
 
@@ -501,12 +502,15 @@ class CombatSession:
     def estimate_enemy_damage(self, move_mult: float = 1.0) -> int:
         """Danno atteso dell'attacco annunciato, senza difesa attiva né effetti casuali (per l'intento)."""
         defense = self.player.get_total_def() + sum(r.get_def_modifier(self) for r in self.player.relic_effects)
-        return max(0, int(self._enemy_attack_power() * self._enemy_multiplier() * move_mult) - defense)
+        raw = max(1, int(self._enemy_attack_power() * self._enemy_multiplier() * move_mult))
+        return max(raw - defense, -(-raw * MIN_DAMAGE_PCT // 100))
 
     def _calc_enemy_damage(self, en_multiplier: float, move_mult: float = 1.0) -> int:
         defense = self.player.get_total_def() + sum(r.get_def_modifier(self) for r in self.player.relic_effects)
         en_atk = self._enemy_attack_power()
-        dmg_taken = max(0, int((en_atk + random.randint(-1, 2)) * en_multiplier * move_mult) - defense)
+        raw = max(1, int((en_atk + random.randint(-1, 2)) * en_multiplier * move_mult))
+        # La difesa riduce il colpo, ma non lo annulla mai: resta almeno MIN_DAMAGE_PCT del danno grezzo
+        dmg_taken = max(raw - defense, -(-raw * MIN_DAMAGE_PCT // 100))
         if self.is_defending: dmg_taken //= 2
         before_relics = dmg_taken
         for r in self.player.relic_effects: dmg_taken = r.on_take_damage(self, dmg_taken, en_multiplier)
@@ -599,7 +603,7 @@ class CombatSession:
                     self.player.gold -= lost
                     display_msg(f"{Colors.YELLOW}{self.biome['icon']} {self.biome['hazard']['name']}: {lost} Oro ti bolle via dalla borsa. (Oro: {self.player.gold}){Colors.RESET}")
             elif not self.hit_negated_by_relic:
-                display_msg(f"<- {self.enemy.name} attacca, ma la corazza blocca TUTTO! {en_eff}")
+                display_msg(f"<- {self.enemy.name} attacca, ma il colpo non ti ferisce. {en_eff}")
             if self.is_defending:
                 # In guardia, l'armatura marchia con il suo elemento chi ti colpisce: è così che si combinano due elementi
                 self.apply_element(self.player.armor.element)

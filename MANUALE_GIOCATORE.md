@@ -134,7 +134,7 @@ A ogni turno scegli una di queste azioni:
 - **Difenditi.** Dimezza i danni del prossimo colpo, e ogni classe aggiunge un effetto:
   - **Difesa Aggressiva** (Guerriero, Berserker): restituisci al nemico i danni subiti;
   - **Concentrazione** (Ladro, Assassino): il colpo successivo è un critico garantito;
-  - **Riparo Magico** (le altre classi): recuperi il 5% degli HP.
+  - **Riparo Magico** (le altre classi): recuperi il 10% degli HP.
 - **Apri l'inventario.** Usare un oggetto o cambiare equipaggiamento **costa il turno**; chiudere lo zaino senza fare nulla no.
 - **Statistiche Eroe.** Gratis, in qualsiasi momento. Mostrano la tua **probabilità reale di colpire** contro il nemico che hai davanti.
 - **Tenta la fuga.** Riesce più spesso se sei agile. Contro i boss è impossibile.
@@ -180,6 +180,8 @@ Il ritmo tipico è *colpisci, poi difenditi*, oppure *difenditi, poi colpisci*. 
 
 Le reazioni che scopri finiscono nel **Codice**.
 
+**Difesa.** L'armatura riduce ogni colpo della sua difesa, ma **non lo annulla mai**: almeno il 20% del colpo arriva sempre. Gli oggetti che trovi crescono con i nemici del piano in cui li trovi. Un'arma comune abbatte un nemico tipico in circa tre colpi; un'armatura comune ne assorbe circa il 40%, quella migliore poco più della metà.
+
 ### Gli elementi
 
 | | Più forte contro | Più debole contro |
@@ -212,8 +214,8 @@ La Risonanza si ricalcola subito se cambi equipaggiamento durante lo scontro. Il
 
 ### Status e maledizioni
 
-- **Veleno e Sanguinamento.** Alcuni nemici li infliggono e fanno danni a ogni turno fino alla fine dello scontro. L'*Antidoto Universale* li toglie subito. Alcune armi speciali (Frusta di Spine, Pugnali del Vento, Falce del Mietitore, Balestra Gnomica, Tridente Oceanico) li infliggono ai nemici.
-- **Equipaggiamento `[MALEDETTO]`.** Ha statistiche molto più alte del normale, ma drena HP, ruba Oro o (le armature) riduce la schivata. Si purifica al Falò per 100 Oro, oppure con l'*Acqua Santa*.
+- **Veleno e Sanguinamento.** Alcuni nemici li infliggono e tolgono a ogni turno una parte degli HP massimi (il 4% il veleno, il 5% il sanguinamento) finché durano. L'*Antidoto Universale* li toglie subito. Alcune armi speciali (Frusta di Spine, Pugnali del Vento, Falce del Mietitore, Balestra Gnomica, Tridente Oceanico) li infliggono ai nemici.
+- **Equipaggiamento `[MALEDETTO]`.** Ha statistiche più alte del 30%, ma drena il 2% degli HP massimi a ogni turno, ruba Oro o (le armature) riduce la schivata. Si purifica al Falò per 100 Oro, oppure con l'*Acqua Santa*.
 
 ### Armi e armature speciali
 
@@ -238,11 +240,11 @@ L'enciclopedia nel [README](README.md) le elenca tutte.
 |---|---|---|
 | ⚔️ **Guerriero** | 120 HP, solido, contrattacca in difesa. Spada di Terra, cotta d'Acqua: *Fango* | Subito |
 | 🗡️ **Ladro** | Schivata alta, 100 Oro iniziali, critico garantito dopo la Concentrazione. Pugnali di Vento, cuoio d'Acqua: *Gelo* | Subito |
-| 🔮 **Mago** | Bastone di Fuoco potente e mira eccellente, ma solo 65 HP. Vesti di Vento: *Incendio* | Subito |
+| 🔮 **Mago** | Bastone di Fuoco potente e mira eccellente, ma solo 80 HP. Vesti di Vento: *Incendio* | Subito |
 | 🛡️ **Paladino** | 180 HP e Risonanza di Luce fin dall'inizio | Maestria Guerriero Lv.5 |
 | 🪓 **Berserker** | L'ascia più forte, nessuna armatura | Impresa *Danza con la Morte* |
 | 🧪 **Alchimista** | 4 pozioni iniziali e bombe di Fuoco. Grembiule di Terra: *Magma* | Impresa *Genio Elementale* |
-| 🥷 **Assassino** | 20% di critico innato e 30% di schivata, ma solo 75 HP. Pugnale di Vento, mantello di Terra: *Tempesta di Sabbia* | Maestria Ladro Lv.5 |
+| 🥷 **Assassino** | 15% di critico innato e 20% di schivata, ma solo 75 HP. Pugnale di Vento, mantello di Terra: *Tempesta di Sabbia* | Maestria Ladro Lv.5 |
 | 💀 **Negromante** | Risonanza di Tenebra fin dall'inizio | Maestria Mago Lv.5 |
 
 Ogni eroe parte con un equipaggiamento che ha già un'idea di gioco. Cinque classi hanno arma e armatura di elementi che **reagiscono** fra loro: il nome della reazione è in tabella. Paladino e Negromante portano lo stesso elemento e partono con la **Risonanza**. Il Berserker combatte a petto nudo.

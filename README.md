@@ -66,12 +66,12 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 |---|---|---|---|---|
 | ⚔️ **Guerriero** | 120 | Tank bilanciato, contrattacca quando si difende | Mano Pesante | Iniziale |
 | 🗡️ **Ladro** | 85 | Agile e ricco, critico garantito dopo la Concentrazione | Tasche Nascoste | Iniziale |
-| 🔮 **Mago** | 65 | Arma di Fuoco potente e mira eccellente, ma fragile | Sintonia | Iniziale |
+| 🔮 **Mago** | 80 | Arma di Fuoco potente e mira eccellente, ma fragile | Sintonia | Iniziale |
 | 🛡️ **Paladino** | 180 | Ultra-tank con Risonanza di Luce fin dall'inizio | Baluardo della Fede | Maestria Guerriero Lv.5 |
-| 🪓 **Berserker** | 100 | Glass cannon: l'ascia più forte, nessuna armatura | Furia Sanguinaria | Impresa «Danza con la Morte» |
+| 🪓 **Berserker** | 110 | Glass cannon: l'ascia più forte, nessuna armatura | Furia Sanguinaria | Impresa «Danza con la Morte» |
 | 🧪 **Alchimista** | 95 | Quattro pozioni iniziali e bombe di Fuoco | Metabolismo Alterato | Impresa «Genio Elementale» |
-| 🥷 **Assassino** | 75 | 20% di critico innato e schivata altissima, ma fragile | Imboscata | Maestria Ladro Lv.5 |
-| 💀 **Negromante** | 70 | Risonanza di Tenebra fin dall'inizio | Raccolto d'Anime | Maestria Mago Lv.5 |
+| 🥷 **Assassino** | 75 | 15% di critico innato e schivata alta, ma fragile | Imboscata | Maestria Ladro Lv.5 |
+| 💀 **Negromante** | 85 | Risonanza di Tenebra fin dall'inizio | Raccolto d'Anime | Maestria Mago Lv.5 |
 
 Ogni classe ha un **albero di Maestria** a 5 livelli. Si sale giocando con quella classe. Il **Lv.4** dà un bonus permanente a *tutti* gli eroi; il **Lv.5** sblocca una classe, un tratto o una reliquia. Assassino e Negromante, per esempio, si conquistano portando al massimo Ladro e Mago.
 
