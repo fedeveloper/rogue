@@ -18,6 +18,7 @@ Riferimento per chi modifica il gioco: architettura, formato dei dati, formule d
 |---|---|
 | `roguelike.py` | Punto d'ingresso (`main`). Menu principale, Impostazioni, Campo Base (Fuoco dell'Anima, Forgia, Taverna, Grimorio, botteghe), scelta di eroe/tratto/patti, ciclo dei piani (`play_game`), generazione delle porte (`_generate_doors`), fine partita (`evaluate_run`), Maestria e imprese. |
 | `rooms.py` | `CombatSession` (turni, danni, status, Risonanze, fine scontro) e le stanze: mercante, falò, forziere, trappola, mistero. |
+| `codex.py` | Il Codice del Labirinto: registra nemici visti e sconfitti, lettere e reliquie (`record_*`), calcola il completamento e mostra le pagine (`show_codex`). |
 | `events.py` | Motore degli eventi narrativi: condizioni (`CONDITIONS`), effetti (`EFFECTS`), riepiloghi generati dagli effetti, scene a più passi (`event_room`), scelta dell'evento per le porte (`pick_event`), memoria fra le run e conseguenze differite (`pop_due_event`). |
 | `entities.py` | `Player`, `Enemy`, gli oggetti (`Weapon`, `Armor`, `Accessory`, `Consumable`) e i generatori casuali. Applica tratti, Maestrie, potenziamenti e oggetti iniziali. Sceglie i nemici in base alla profondità (`pick_enemy_name`). |
 | `relic_effects.py` | Una classe per reliquia, con gli hook che le servono; `RELIC_REGISTRY` collega l'id del JSON alla classe. |
@@ -27,7 +28,7 @@ Riferimento per chi modifica il gioco: architettura, formato dei dati, formule d
 | `ui.py` | Terminale: colori ANSI, lettura dei tasti (Windows e POSIX), menu a frecce (`interactive_menu`), velocità del testo (`delay_print`, `set_text_speed`). |
 | `constants.py` | Costanti di bilanciamento (precisione base, scaling, finestre di profondità, velocità del testo…). |
 
-Dipendenze fra i moduli: `ui` ← `data_manager` ← `archive`/`relic_effects` ← `entities` ← `inventory_menu` ← `rooms` ← `events` ← `roguelike`. Nessun modulo importa da uno che sta alla sua destra.
+Dipendenze fra i moduli: `ui` ← `data_manager` ← `archive`/`relic_effects`/`codex` ← `entities` ← `inventory_menu` ← `rooms` ← `events` ← `roguelike`. Nessun modulo importa da uno che sta alla sua destra.
 
 ---
 
@@ -44,7 +45,7 @@ Un test controlla che ogni oggetto sbloccabile abbia davvero una di queste strad
 | File | Contenuto | Campi principali |
 |---|---|---|
 | `classes.json` | Le classi, per id (`"1"`…`"8"`) | `role`, `max_hp`, `gold`, `acc`, `dodge`, `crit` (opz.), `weapon`/`armor` iniziali (`name`, `value`, `atk`/`def`, `element`), `potions`, `unlocked_by_default`, `mastery` |
-| `enemies.json` | `enemies` e `bosses`, per nome | `element`, `base_hp`, `base_atk`, `base_dodge`, `base_acc`, `title`/`lore` (boss), `status_inflict` (opz.), `final_boss` (solo DIO ANTICO) |
+| `enemies.json` | `enemies` e `bosses`, per nome | `element`, `base_hp`, `base_atk`, `base_dodge`, `base_acc`, `title`/`lore` (boss), `status_inflict` (opz.), `final_boss` (solo DIO ANTICO), `retired_by_flag` (opz.: il boss non compare più quando il flag del profilo è vero) |
 | `weapons.json` | Armi | `name`, `base_atk`, `val_base` (opz.), `element` (opz., altrimenti casuale), `status_inflict` (opz.), `hit_modifier`, `crit_chance`, `gold_atk_per`/`gold_atk_max` (opz.), `unlock_id`, `unlock_cost`, `desc`, `flavor` |
 | `armors.json` | Armature | `name`, `base_def`, `element` (opz.), `dodge_bonus` (opz.), `unlock_id`, `unlock_cost`, `desc`, `flavor` |
 | `accessories.json` | Monili | `name`, `bonus_type` (`crit_chance`, `lifesteal`, `max_hp`, `dodge`, `acc`, `reflect`), `bonus_value`, `base_val`, `desc`, `lore`, `unlock_id`, `unlock_cost` |
@@ -54,7 +55,7 @@ Un test controlla che ogni oggetto sbloccabile abbia davvero una di queste strad
 | `books.json` | Tomi dell'Archivio | `title`, `unlock_condition` (testo), `unlock = {type: max_floor\|total_bosses\|won_normal, value}`, `bonus = {gold_pct, escape, boss_dmg_pct, def}`, `bonus_desc`, `chapters` |
 | `meta.json` | Regole di contorno | `traits`, `pacts` (`bonus` di Essenza), `feats` (`target`, `reward_type`, `reward_id`), `mastery_xp_requirements`, `rooms.weights`/`rooms.cooldowns` |
 | `events.json` | Eventi narrativi | `title`, `start`, `scenes`, `requires` (opz.), `scripted` (opz.), `weight` (opz.): vedi [Eventi narrativi](#eventi-narrativi) |
-| `story.json` | Elementi della storia | `quest_items` (oggetti chiave: `name`, `desc`), `npcs` (nomi degli artigiani) |
+| `story.json` | Elementi della storia | `quest_items` (oggetti chiave: `name`, `desc`), `npcs` (nomi degli artigiani), `characters` (personaggi ricorrenti: vedi sotto) |
 | `lore.json` | Frasi d'atmosfera | `combat`, `boss`, `vendor`, `treasure`, `trap`, `campfire`, `letters`, `mystery` |
 
 ### Maestrie
@@ -106,7 +107,7 @@ Un evento è una piccola storia a **scene**. `start` indica la prima; ogni scena
 
 Una scelta che costa oro è grigia, con "(Oro insufficiente)", se non puoi pagarla.
 
-**Condizioni** (`requires`, tutte in AND): `class`/`not_class` (id o lista), `trait`, `relic`, `quest_item`, `pact`, `gold`, `level`, `atk`, `dodge` (soglie minime), `hp_pct_below`, `min_floor`/`max_floor`, `flag`/`not_flag` (profilo), `run_flag`/`not_run_flag` (run), `counter` (`{"nome": soglia}`), `npc`/`not_npc`. A livello di evento decidono se l'evento può uscire in una porta; vengono valutate anche senza l'eroe, contando solo piano e profilo.
+**Condizioni** (`requires`, tutte in AND): `class`/`not_class` (id o lista), `trait`, `relic`, `quest_item`, `pact`, `gold`, `level`, `atk`, `dodge` (soglie minime), `hp_pct_below`, `min_floor`/`max_floor`, `flag`/`not_flag` (profilo), `run_flag`/`not_run_flag` (run), `counter` (`{"nome": soglia}`, almeno) e `counter_below` (`{"nome": soglia}`, meno di), `npc`/`not_npc`. A livello di evento decidono se l'evento può uscire in una porta; vengono valutate anche senza l'eroe, contando solo piano e profilo.
 
 **Effetti** (una chiave per voce, più eventuali parametri `level`, `floors`, `value`, `add`, `death_msg`):
 
@@ -129,6 +130,28 @@ Una scelta che costa oro è grigia, con "(Oro insufficiente)", se non puoi pagar
 | `later` | nessuno | `{"later": "evento", "floors": N}`: l'evento torna N piani dopo |
 
 **Scelta e memoria.** `pick_event` esclude gli eventi `scripted` e quelli con `requires` non soddisfatti, preferisce quelli non ancora visti nella run e usa `weight` (predefinito 1). Un evento `scripted` compare solo quando una scelta lo richiama con `later`: al piano giusto prende il posto della prima porta (mai del boss), con la scritta "✦ qualcosa ti stava aspettando". Flag, contatori e numero di incontri per evento (`story.seen_events`) vengono salvati alla fine di ogni evento.
+
+### Personaggi ricorrenti e Codice
+
+Un personaggio ricorrente (`story.json → characters`) è una catena di eventi legati da un contatore del profilo:
+
+```json
+"alaric": {"name": "Sir Alaric", "epithet": "il Primo Paladino", "counter": "alaric", "hint": "...",
+           "chapters": [{"event": "alaric_porta", "text": "..."}, "..."],
+           "notes": [{"flag": "alaric_lavanda", "text": "..."}]}
+```
+
+- Il capitolo *k* (da 0) è un evento con `requires: {"counter": {"alaric": k}, "counter_below": {"alaric": k + 1}}`. Le scelte che chiudono il capitolo hanno `{"counter": "alaric"}`; quelle che lo rimandano no.
+- Dal secondo capitolo l'evento ha anche `not_run_flag: "alaric_visto"`, e le scelte che avanzano impostano quel `run_flag`: un solo capitolo per run.
+- Nel Codice, `text` di ogni capitolo vissuto racconta la storia fin lì, e le `notes` compaiono quando il loro flag è vero. `hint` si vede finché il personaggio è sconosciuto.
+- `retired_by_flag` su un boss chiude la storia anche in combattimento: liberando Alaric (`alaric_liberato`) il Cavaliere Oscuro esce dalla scelta dei boss.
+
+Il **Codice** (`codex.py`) legge e scrive `profile.codex`:
+- `enemies[nome] = {seen, killed}`, aggiornato da `CombatSession.start` e `on_enemy_death` con `Enemy.base_name` (il nome senza "(Potenziato)");
+- `letters`, gli indici in `lore.json → letters`;
+- `relics`, aggiornato da `Player.add_relic`.
+
+Gli eventi visti e i personaggi vengono da `profile.story`. Il completamento conta i nemici sconfitti, i capitoli vissuti, gli eventi visti, le lettere e le reliquie trovate.
 
 ## 4. Il ciclo di gioco
 
@@ -229,6 +252,7 @@ Il salvataggio si crea al primo avvio e **non va committato** (è in `.gitignore
 | `completed_feats` | Imprese completate |
 | `perks` | Livelli dei potenziamenti del Fuoco dell'Anima |
 | `story` | Memoria del Labirinto: `flags`, `counters`, `seen_events` (incontri per evento) |
+| `codex` | Codice: `enemies` (`seen`/`killed` per nome), `letters` (indici), `relics` (id) |
 | `npc_unlocked` | Artigiani liberati |
 | `starting_consumables` / `_weapons` / `_armors` / `_accessories` | Oggetti comprati nelle botteghe per la prossima discesa. Vengono svuotati all'inizio della partita, anche se un oggetto non si può costruire, così un dato difettoso non blocca le partite successive |
 | `settings.text_speed` | `lenta`, `normale`, `veloce`, `istantanea` |
@@ -267,6 +291,7 @@ La CI (`.github/workflows/tests.yml`) li esegue su Python 3.9 e sull'ultima 3.x;
 | `test_depth.py` | Nemici e boss per profondità, boss finale, tratto e antidoto mostrati |
 | `test_refactor.py` | Ciclo del turno, ridisegno dei menu, bonus nei dati, output tramite `ui`, etichette dei consumabili |
 | `test_shops.py` | Botteghe degli artigiani, elenco della Forgia, Cuore di Drago |
+| `test_codex.py` | Codice (registrazione, pagine, completamento, menu) e personaggi ricorrenti (catena dei capitoli, un capitolo per run, boss ritirato, indizio della lavanda) |
 | `test_events.py` | Motore degli eventi: integrità dei dati, opzioni con etichetta e bloccate, scene a più passi, fuga e morte, memoria fra le run, conseguenze differite, scelta degli eventi |
 | `test_contracts.py` | **Contratti descrizione ↔ effetto** per reliquie, armi, armature, monili (anche maledetti), consumabili, scelte degli eventi, tratti, patti, potenziamenti, Maestrie e imprese; ogni sbloccabile è ottenibile |
 

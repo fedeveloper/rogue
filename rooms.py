@@ -4,6 +4,7 @@ from typing import List
 from ui import Colors, delay_print, clear_screen, interactive_menu, display_msg, wait_enter
 from data_manager import GAME_DATA, PROFILE_MANAGER, MULTIPLIERS, get_element_icon
 from archive import get_archive_bonus
+from codex import record_enemy_killed, record_enemy_seen, record_letter
 from constants import BASE_HIT_CHANCE, BLOOD_LETTER_CHANCE
 from entities import STATUS_NAMES, Player, Enemy, generate_weapon, generate_armor, generate_accessory, generate_potion, get_random_relic
 from inventory_menu import show_inventory_menu
@@ -80,9 +81,12 @@ class CombatSession:
             boss_tag = f"{Colors.MAGENTA} [BOSS]{Colors.RESET}" if self.enemy.is_boss else ""
             delay_print(f"{Colors.RED}!!! Incontri un {self.enemy.name.upper()}{boss_tag} [{get_element_icon(self.enemy.element)}] !!!{Colors.RESET}", 0.04)
         
+        record_enemy_seen(self.enemy.base_name)
         # Chance to find a Bloody Letter before combat
         if not self.enemy.is_boss and random.random() < BLOOD_LETTER_CHANCE:
-            letter = random.choice(GAME_DATA['lore']['letters'])
+            idx = random.randrange(len(GAME_DATA['lore']['letters']))
+            letter = GAME_DATA['lore']['letters'][idx]
+            record_letter(idx)
             display_msg(f"\n{Colors.YELLOW}📜 Noti un messaggio inciso sulla parete:{Colors.RESET}")
             delay_print(f"\"{letter}\"\n", 0.05)
             self.player.gain_exp(10)
@@ -144,6 +148,7 @@ class CombatSession:
 
     def on_enemy_death(self):
         display_msg(f"\n{Colors.YELLOW}{Colors.BOLD}*** Hai sconfitto {self.enemy.name}! ***{Colors.RESET}")
+        record_enemy_killed(self.enemy.base_name)
         if self.player.hp == 1: self.player.run_tracker["kill_1_hp_done"] = True
         if self.enemy.is_boss and not self.boss_hit_taken: self.player.run_tracker["no_hit_boss_done"] = True
         

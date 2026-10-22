@@ -26,6 +26,7 @@ class ProfileManager:
             "unlocked_ids":[], "class_xp": {}, "class_lvl": {},
             "stats": {"total_deaths": 0, "total_gold": 0, "total_bosses": 0}, "completed_feats":[],
             "story": {"flags": {}, "counters": {}, "seen_events": {}},
+            "codex": {"enemies": {}, "letters": [], "relics": []},
             "settings": {"text_speed": DEFAULT_TEXT_SPEED},
             "perks": {
                 "hp_lvl": 0, "gold_lvl": 0, "discount_lvl": 0, "sesto_senso": False, "scarpisti": False,
@@ -116,6 +117,27 @@ class ProfileManager:
     def text_speed(self, value: str):
         self._data["settings"]["text_speed"] = value
         set_text_speed(TEXT_SPEEDS[value])
+
+    # --- Memoria del Labirinto: resta fra una run e l'altra ---
+    @property
+    def story(self) -> dict:
+        return self._data.setdefault("story", {"flags": {}, "counters": {}, "seen_events": {}})
+
+    def get_flag(self, name: str) -> bool:
+        return bool(self.story["flags"].get(name, False))
+
+    def set_flag(self, name: str, value: bool = True):
+        self.story["flags"][name] = value
+
+    def get_counter(self, name: str) -> int:
+        return int(self.story["counters"].get(name, 0))
+
+    def add_counter(self, name: str, amount: int = 1):
+        self.story["counters"][name] = self.get_counter(name) + amount
+
+    @property
+    def codex(self) -> dict:
+        return self._data.setdefault("codex", {"enemies": {}, "letters": [], "relics": []})
 
     def get_npc_unlocked(self, npc_name: str) -> bool:
         return self._data.get("npc_unlocked", {}).get(npc_name, False)

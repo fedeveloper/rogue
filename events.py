@@ -28,23 +28,11 @@ FIGHTS = {
 
 # ------------------------------------------------------------------ memoria (profilo e run)
 def _story() -> dict:
-    return PROFILE_MANAGER._data.setdefault("story", {"flags": {}, "counters": {}, "seen_events": {}})
+    return PROFILE_MANAGER.story
 
 
-def get_flag(name: str) -> bool:
-    return bool(_story()["flags"].get(name, False))
-
-
-def set_flag(name: str, value: bool = True):
-    _story()["flags"][name] = value
-
-
-def get_counter(name: str) -> int:
-    return int(_story()["counters"].get(name, 0))
-
-
-def add_counter(name: str, amount: int = 1):
-    _story()["counters"][name] = get_counter(name) + amount
+get_flag, set_flag = PROFILE_MANAGER.get_flag, PROFILE_MANAGER.set_flag
+get_counter, add_counter = PROFILE_MANAGER.get_counter, PROFILE_MANAGER.add_counter
 
 
 def times_seen(event_id: str) -> int:
@@ -98,11 +86,12 @@ CONDITIONS: Dict[str, tuple] = {
     "run_flag": (lambda p, v, f: v in _run_flags(p), None),
     "not_run_flag": (lambda p, v, f: v not in _run_flags(p), None),
     "counter": (lambda p, v, f: all(get_counter(k) >= n for k, n in v.items()), None),
+    "counter_below": (lambda p, v, f: all(get_counter(k) < n for k, n in v.items()), None),
     "npc": (lambda p, v, f: PROFILE_MANAGER.get_npc_unlocked(v), None),
     "not_npc": (lambda p, v, f: not PROFILE_MANAGER.get_npc_unlocked(v), None),
 }
 # Condizioni che dipendono solo da piano e profilo: valutabili anche senza un eroe (es. nella scelta delle porte)
-PROFILE_CONDITIONS = {"min_floor", "max_floor", "flag", "not_flag", "counter", "npc", "not_npc"}
+PROFILE_CONDITIONS = {"min_floor", "max_floor", "flag", "not_flag", "counter", "counter_below", "npc", "not_npc"}
 
 
 def check(player: Optional[Player], requires: dict, floor: int) -> bool:

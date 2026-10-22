@@ -50,7 +50,8 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 - 🔥 **Combattimento elementale.** Sette elementi, vantaggi e svantaggi che cambiano danni e precisione, e le **Risonanze** quando arma e armatura condividono l'elemento.
 - 🧬 **8 classi** con alberi di Maestria a 5 livelli che sbloccano bonus, oggetti, reliquie e altre classi.
 - 🎭 **7 tratti** e **5 Patti del Caos**: 3,584 combinazioni di partenza diverse.
-- 📖 **Eventi che ricordano.** 25 storie a scene con opzioni che esistono solo per la tua classe, il tuo tratto o le tue reliquie: `[Mago]`, `[Tocco di Mida]`, `[Chiave Arrugginita]`. Il Labirinto ricorda chi hai aiutato e chi hai derubato, e certe scelte tornano a bussare qualche piano dopo.
+- 📖 **Eventi che ricordano.** 32 storie a scene con opzioni che esistono solo per la tua classe, il tuo tratto o le tue reliquie: `[Mago]`, `[Tocco di Mida]`, `[Chiave Arrugginita]`. Il Labirinto ricorda chi hai aiutato e chi hai derubato, e certe scelte tornano a bussare qualche piano dopo.
+- 🗝️ **Personaggi che ritornano.** *Sir Alaric*, il Primo Paladino, e *Silas*, il Cercatore, hanno storie in tre capitoli che proseguono di run in run. Le tue scelte decidono come finiscono, e se liberi Alaric il Cavaliere Oscuro non tornerà più.
 - 🌟 **30 reliquie** che piegano le regole: danni raddoppiati, scudi, vampirismo, oro moltiplicato.
 - 🏕️ **Meta-progressione profonda**: potenziamenti permanenti, una Forgia per sbloccare equipaggiamento, artigiani da liberare, un Archivio di lore con bonus, imprese da completare.
 - ♾️ **Modalità Infinita** dopo la prima vittoria, per chi vuole spingersi oltre il piano 30.
@@ -127,6 +128,7 @@ Fra una discesa e l'altra spendi l'**Essenza Astrale**:
 - 🍺 **La Taverna** — le classi da conquistare e come ottenerle.
 - 📜 **Grimorio e Imprese** — le sfide completate e i progressi di Maestria.
 - 📚 **L'Archivio di Aethelgard** — 3 tomi di storia da sbloccare, ognuno con un bonus permanente.
+- 📖 **Il Codice del Labirinto** — bestiario, personaggi, eventi, lettere insanguinate e reliquie scoperti fra una run e l'altra, con la percentuale di completamento. Ciò che manca è un `???` da riempire.
 - 🧑‍🔧 **Gli artigiani** — salva lo *Speziale*, *Borek*, *Elara* e *Valerius* dagli eventi del labirinto: apriranno una bottega dove comprare consumabili, armi, armature e monili con cui iniziare la discesa successiva.
 
 E in **Impostazioni** scegli la velocità del testo: lenta, normale, veloce o istantanea.
@@ -306,7 +308,7 @@ L'ATK reale cresce con il piano in cui l'arma viene trovata; le armi di elemento
 <details>
 <summary>🎭 Gli eventi narrativi</summary>
 
-25 storie e 34 scene: *La Fontana Fatata*, *Il Mendicante Ombra*, *Altare del Sangue*, *La Forgia Abissale*, *La Bisca dei Goblin*, *Il Cavaliere Caduto*, *L'Idolo Corrotto*, *Lo Specchio della Verità*, *L'Oasi Sotterranea*, *Il Cadavere del Saggio*, *La Porta Sigillata*, *Lo Speziale Prigioniero*, *Il Maestro d'Armi Prigioniero*, *L'Armaiola Imprigionata*, *L'Incantatore Intrappolato*, *Il Viandante Cieco*, *Il Buio Vivente*, *La Cartografa Perduta*, *La Sala dei Cento Corridoi*, *Il Pozzo dei Desideri*, *Il Banchetto dei Morti*, *La Bilancia di Aethelgard*, *La Voce nel Buio*, *La Voce del Labirinto*… e qualcuno che torna a cercarti più in basso.
+32 storie e 43 scene: *La Fontana Fatata*, *Il Mendicante Ombra*, *Altare del Sangue*, *La Forgia Abissale*, *La Bisca dei Goblin*, *Il Cavaliere Caduto*, *L'Idolo Corrotto*, *Lo Specchio della Verità*, *L'Oasi Sotterranea*, *Il Cadavere del Saggio*, *La Porta Sigillata*, *Lo Speziale Prigioniero*, *Il Maestro d'Armi Prigioniero*, *L'Armaiola Imprigionata*, *L'Incantatore Intrappolato*, *Il Viandante Cieco*, *Il Buio Vivente*, *La Cartografa Perduta*, *La Sala dei Cento Corridoi*, *Il Pozzo dei Desideri*, *Il Banchetto dei Morti*, *La Bilancia di Aethelgard*, *La Voce nel Buio*, *La Voce del Labirinto*, *Il Giardino Sepolto*, *Il Cavaliere alla Porta*, *Il Cavaliere Stanco*, *L'Ultimo Sigillo*, *Il Cercatore*, *Il Diario Strappato*, *La Soglia*… e qualcuno che torna a cercarti più in basso.
 
 Ogni scelta mostra i suoi effetti reali, molte opzioni esistono solo per certe classi, tratti o reliquie, gli *oggetti chiave* di un evento aprono strade segrete in un altro e il Labirinto ricorda le tue decisioni da una run all'altra. Quattro eventi nascondono gli artigiani prigionieri.
 
@@ -326,7 +328,7 @@ Ogni scelta mostra i suoi effetti reali, molte opzioni esistono solo per certe c
 | Reliquie | 30 (14 subito, 16 da sbloccare) |
 | Nemici comuni | 25 |
 | Boss | 20 |
-| Eventi narrativi | 25 |
+| Eventi narrativi | 32 |
 | Imprese | 14 |
 | Tomi dell'Archivio | 3 |
 | Potenziamenti permanenti | 14 |
@@ -346,6 +348,7 @@ rogue/
 ├── relic_effects.py   # Effetti delle reliquie come hook (on_attack, on_take_damage, ...)
 ├── inventory_menu.py  # Zaino, consumabili e schermata delle statistiche
 ├── archive.py         # Archivio di Aethelgard e relativi bonus
+├── codex.py           # Il Codice del Labirinto: ciò che hai scoperto fra le run
 ├── data_manager.py    # Caricamento dei dati e salvataggio del profilo
 ├── ui.py              # Terminale: colori, menu a frecce, output centralizzato
 ├── constants.py       # Costanti di bilanciamento
@@ -372,7 +375,7 @@ I **test di contratto** (`tests/test_contracts.py`) verificano che ogni reliquia
 - [ ] Sistema di Rune/Incastoni per armi e armature
 - [ ] Boss con meccaniche speciali (fasi, immunità, pattern)
 - [x] Eventi a scene, opzioni per classe e tratto, memoria fra le run
-- [ ] Personaggi ricorrenti con archi narrativi e il Codice
+- [x] Personaggi ricorrenti (Sir Alaric, Silas) e il Codice del Labirinto
 - [ ] Mappa dei piani, biomi, finali multipli
 
 ---

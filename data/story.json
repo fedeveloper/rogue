@@ -1,13 +1,112 @@
 {
   "quest_items": {
-    "chiave_arrugginita": {"name": "Chiave Arrugginita", "desc": "Una chiave di ferro mangiata dalla ruggine. Apre qualcosa, da qualche parte."},
-    "mappa_cartografa": {"name": "Mappa della Cartografa", "desc": "Uno schizzo a carboncino dei piani inferiori, con una croce rossa e la scritta 'qui ti aspetto'."},
-    "lanterna_spenta": {"name": "Lanterna Spenta", "desc": "La lanterna del Viandante Cieco. Pesa più di quanto dovrebbe."}
+    "chiave_arrugginita": {
+      "name": "Chiave Arrugginita",
+      "desc": "Una chiave di ferro mangiata dalla ruggine. Apre qualcosa, da qualche parte."
+    },
+    "mappa_cartografa": {
+      "name": "Mappa della Cartografa",
+      "desc": "Uno schizzo a carboncino dei piani inferiori, con una croce rossa e la scritta 'qui ti aspetto'."
+    },
+    "lanterna_spenta": {
+      "name": "Lanterna Spenta",
+      "desc": "La lanterna del Viandante Cieco. Pesa più di quanto dovrebbe."
+    },
+    "fiore_lavanda": {
+      "name": "Fiore di Lavanda",
+      "desc": "Un fiore cresciuto dove nessuno l'ha seminato. Una lettera sulle pareti dice a chi portarlo."
+    }
   },
   "npcs": {
     "speziale": "lo Speziale",
     "borek": "Borek",
     "elara": "Elara",
     "valerius": "Valerius"
+  },
+  "characters": {
+    "alaric": {
+      "name": "Sir Alaric",
+      "epithet": "il Primo Paladino",
+      "counter": "alaric",
+      "hint": "Una lettera parla di un cavaliere stanco e di un fiore di lavanda.",
+      "chapters": [
+        {
+          "event": "alaric_porta",
+          "text": "Lo hai incontrato davanti a una porta che non conduce a nulla. La custodisce da secoli, per abitudine più che per odio."
+        },
+        {
+          "event": "alaric_stanco",
+          "text": "Si è tolto l'elmo davanti a te. Sotto l'ossidiana c'è un volto di cenere, e una stanchezza più antica del Labirinto."
+        },
+        {
+          "event": "alaric_sigillo",
+          "text": "Ti ha chiesto di spezzare il giuramento che lo lega alla porta. Qualunque cosa tu abbia scelto, il Labirinto la ricorda."
+        }
+      ],
+      "notes": [
+        {
+          "flag": "alaric_paladino",
+          "text": "Ti ha riconosciuto come un fratello d'ordine."
+        },
+        {
+          "flag": "alaric_lavanda",
+          "text": "Il fiore di lavanda gli ha ricordato sua figlia, a Valeriana."
+        },
+        {
+          "flag": "alaric_tradito",
+          "text": "Lo hai colpito quando era più debole. Non lo ha dimenticato."
+        },
+        {
+          "flag": "alaric_liberato",
+          "text": "Lo hai liberato: il Cavaliere Oscuro non custodisce più nessuna porta, e non lo incontrerai più."
+        },
+        {
+          "flag": "alaric_erede",
+          "text": "Hai preso il suo posto. Un giorno, qualcuno verrà a liberare te."
+        }
+      ]
+    },
+    "silas": {
+      "name": "Silas",
+      "epithet": "il Cercatore",
+      "counter": "silas",
+      "hint": "Qualcuno scrive un diario, sempre un piano più in basso di te.",
+      "chapters": [
+        {
+          "event": "silas_fuoco",
+          "text": "Hai diviso il fuoco con lui. Scrive tutto, ogni giorno, perché ha paura di dimenticare chi era."
+        },
+        {
+          "event": "silas_tracce",
+          "text": "Hai trovato le pagine strappate del suo diario, e una scia d'inchiostro che portava a lui."
+        },
+        {
+          "event": "silas_soglia",
+          "text": "Alla soglia ti ha raccontato cosa c'è oltre l'ultima porta: non un mostro, ma uno specchio."
+        }
+      ],
+      "notes": [
+        {
+          "flag": "silas_letto",
+          "text": "Hai letto il suo diario di nascosto: c'era anche il tuo ritratto."
+        },
+        {
+          "flag": "silas_salvato",
+          "text": "Gli hai salvato la vita."
+        },
+        {
+          "flag": "silas_abbandonato",
+          "text": "Lo hai lasciato solo. È sopravvissuto lo stesso."
+        },
+        {
+          "flag": "silas_verita",
+          "text": "Sai cosa c'è oltre la soglia."
+        },
+        {
+          "flag": "silas_compagno",
+          "text": "Ti ha dato l'ultima pagina del suo diario. La fine, adesso, la scrivi tu."
+        }
+      ]
+    }
   }
 }
