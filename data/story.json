@@ -1,0 +1,13 @@
+{
+  "quest_items": {
+    "chiave_arrugginita": {"name": "Chiave Arrugginita", "desc": "Una chiave di ferro mangiata dalla ruggine. Apre qualcosa, da qualche parte."},
+    "mappa_cartografa": {"name": "Mappa della Cartografa", "desc": "Uno schizzo a carboncino dei piani inferiori, con una croce rossa e la scritta 'qui ti aspetto'."},
+    "lanterna_spenta": {"name": "Lanterna Spenta", "desc": "La lanterna del Viandante Cieco. Pesa più di quanto dovrebbe."}
+  },
+  "npcs": {
+    "speziale": "lo Speziale",
+    "borek": "Borek",
+    "elara": "Elara",
+    "valerius": "Valerius"
+  }
+}

@@ -17,7 +17,8 @@ Riferimento per chi modifica il gioco: architettura, formato dei dati, formule d
 | Modulo | Responsabilità |
 |---|---|
 | `roguelike.py` | Punto d'ingresso (`main`). Menu principale, Impostazioni, Campo Base (Fuoco dell'Anima, Forgia, Taverna, Grimorio, botteghe), scelta di eroe/tratto/patti, ciclo dei piani (`play_game`), generazione delle porte (`_generate_doors`), fine partita (`evaluate_run`), Maestria e imprese. |
-| `rooms.py` | `CombatSession` (turni, danni, status, Risonanze, fine scontro) e tutte le stanze: mercante, falò, forziere, trappola, mistero, eventi (`_handle_event_action`). |
+| `rooms.py` | `CombatSession` (turni, danni, status, Risonanze, fine scontro) e le stanze: mercante, falò, forziere, trappola, mistero. |
+| `events.py` | Motore degli eventi narrativi: condizioni (`CONDITIONS`), effetti (`EFFECTS`), riepiloghi generati dagli effetti, scene a più passi (`event_room`), scelta dell'evento per le porte (`pick_event`), memoria fra le run e conseguenze differite (`pop_due_event`). |
 | `entities.py` | `Player`, `Enemy`, gli oggetti (`Weapon`, `Armor`, `Accessory`, `Consumable`) e i generatori casuali. Applica tratti, Maestrie, potenziamenti e oggetti iniziali. Sceglie i nemici in base alla profondità (`pick_enemy_name`). |
 | `relic_effects.py` | Una classe per reliquia, con gli hook che le servono; `RELIC_REGISTRY` collega l'id del JSON alla classe. |
 | `inventory_menu.py` | Zaino, uso dei consumabili (`_use_consumable`), equipaggiamento e schermata delle statistiche. |
@@ -26,7 +27,7 @@ Riferimento per chi modifica il gioco: architettura, formato dei dati, formule d
 | `ui.py` | Terminale: colori ANSI, lettura dei tasti (Windows e POSIX), menu a frecce (`interactive_menu`), velocità del testo (`delay_print`, `set_text_speed`). |
 | `constants.py` | Costanti di bilanciamento (precisione base, scaling, finestre di profondità, velocità del testo…). |
 
-Dipendenze fra i moduli: `ui` ← `data_manager` ← `archive`/`relic_effects` ← `entities` ← `inventory_menu` ← `rooms` ← `roguelike`. Nessun modulo importa da uno che sta alla sua destra.
+Dipendenze fra i moduli: `ui` ← `data_manager` ← `archive`/`relic_effects` ← `entities` ← `inventory_menu` ← `rooms` ← `events` ← `roguelike`. Nessun modulo importa da uno che sta alla sua destra.
 
 ---
 
@@ -52,7 +53,8 @@ Un test controlla che ogni oggetto sbloccabile abbia davvero una di queste strad
 | `elements.json` | Sistema elementale | `list`, `icons`, `multipliers[attaccante][difensore]`, `resonance[elemento] = {value, desc, announce}` |
 | `books.json` | Tomi dell'Archivio | `title`, `unlock_condition` (testo), `unlock = {type: max_floor\|total_bosses\|won_normal, value}`, `bonus = {gold_pct, escape, boss_dmg_pct, def}`, `bonus_desc`, `chapters` |
 | `meta.json` | Regole di contorno | `traits`, `pacts` (`bonus` di Essenza), `feats` (`target`, `reward_type`, `reward_id`), `mastery_xp_requirements`, `rooms.weights`/`rooms.cooldowns` |
-| `events.json` | Eventi narrativi | `title`, `text`, `choices[]` con `text`, `action`, `msg`, `msg_alt`, `requires_item`, `item_id`, `reward_*`, `gold` (oro di `blood_gold`, predefinito 100) |
+| `events.json` | Eventi narrativi | `title`, `start`, `scenes`, `requires` (opz.), `scripted` (opz.), `weight` (opz.): vedi [Eventi narrativi](#eventi-narrativi) |
+| `story.json` | Elementi della storia | `quest_items` (oggetti chiave: `name`, `desc`), `npcs` (nomi degli artigiani) |
 | `lore.json` | Frasi d'atmosfera | `combat`, `boss`, `vendor`, `treasure`, `trap`, `campfire`, `letters`, `mystery` |
 
 ### Maestrie
@@ -69,6 +71,64 @@ Un test controlla che ogni oggetto sbloccabile abbia davvero una di queste strad
 Gli sblocchi dei livelli già raggiunti vengono riconcessi all'avvio (`_grant_retroactive_mastery_unlocks`). Così contenuti aggiunti più tardi arrivano anche a chi aveva già il livello.
 
 ---
+
+### Eventi narrativi
+
+Un evento è una piccola storia a **scene**. `start` indica la prima; ogni scena ha un `text`, delle `choices` e, se serve, degli `extra`: frasi aggiunte al testo solo quando le loro condizioni sono vere, per esempio "ci siamo già incontrati" se un contatore del profilo è almeno 1.
+
+```json
+"pozzo_desideri": {
+  "title": "Il Pozzo dei Desideri", "start": "inizio",
+  "scenes": {
+    "inizio": {"text": "...", "choices": [
+      {"text": "Getta una moneta", "effects": [{"gold": -30}], "next": "desiderio"},
+      {"text": "Immergi la mano", "requires": {"trait": "midas"}, "effects": [{"gold": 60}, {"max_hp": -10}], "msg": "..."},
+      {"text": "Pesca le monete", "requires": {"class": "2"}, "chance": 70, "success": [{"gold": 90}],
+       "fail_effects": [{"damage": 25}], "msg": "...", "fail_msg": "..."},
+      {"text": "Allontanati", "msg": "..."}
+    ]},
+    "desiderio": {"text": "...", "choices": ["..."]}
+  }
+}
+```
+
+**Campi di una scelta.**
+
+| Campo | Significato |
+|---|---|
+| `text` | Il testo dell'opzione. **Senza numeri**: il riepilogo fra parentesi lo genera il gioco dagli effetti |
+| `requires` | Condizioni per vederla. Se mancano la scelta è nascosta, oppure grigia e non selezionabile con `show_locked` (motivo in `locked_hint`). Classe, tratto, reliquia, oggetto chiave e patto compaiono come etichetta, ad esempio `[Mago]` |
+| `effects` | Effetti applicati in ordine (con `chance` sono il costo, pagato prima del tiro) |
+| `chance`, `success`, `fail_effects` | Probabilità di successo in % (1–99), effetti dei due esiti |
+| `msg`, `fail_msg` | Racconto dell'esito. Senza `chance`, `msg` viene mostrato prima degli effetti |
+| `next`, `fail_next` | Scena successiva; se manca, l'evento finisce |
+| `hidden` | Non mostra il riepilogo degli effetti (sorpresa voluta) |
+
+Una scelta che costa oro è grigia, con "(Oro insufficiente)", se non puoi pagarla.
+
+**Condizioni** (`requires`, tutte in AND): `class`/`not_class` (id o lista), `trait`, `relic`, `quest_item`, `pact`, `gold`, `level`, `atk`, `dodge` (soglie minime), `hp_pct_below`, `min_floor`/`max_floor`, `flag`/`not_flag` (profilo), `run_flag`/`not_run_flag` (run), `counter` (`{"nome": soglia}`), `npc`/`not_npc`. A livello di evento decidono se l'evento può uscire in una porta; vengono valutate anche senza l'eroe, contando solo piano e profilo.
+
+**Effetti** (una chiave per voce, più eventuali parametri `level`, `floors`, `value`, `add`, `death_msg`):
+
+| Effetto | Riepilogo | Note |
+|---|---|---|
+| `gold` | `+N Oro` / `-N Oro` | Guadagni triplicati da *Tocco di Mida* |
+| `damage` | `-N HP` | Può uccidere; `death_msg` personalizza il messaggio |
+| `heal`, `heal_pct` | `Cura N HP`, `Cura N% HP` | Bloccate da *Patto del Sangue* |
+| `max_hp` | `±N HP Max` | |
+| `atk`, `def` | `±N ATK`, `±N DIF` | Per il resto della discesa |
+| `relic` | `Reliquia` | `random` o un id; se le possiedi tutte, +50 Oro |
+| `weapon`, `armor` | `Arma Epica`, `Armatura` | `epic`/`normal`; `level` aggiunge piani al livello |
+| `accessory`, `potion` | `Monile`, `N Pozioni` | |
+| `fight` | `Combatti…` | `normal`, `hard`, `elite`. Gli effetti successivi arrivano solo se vinci; se fuggi l'evento finisce |
+| `quest_item`, `take_quest_item` | `Oggetto chiave: …`, `Consuma: …` | Gli id stanno in `story.json` |
+| `unlock_npc` | `Libera …` | Artigiano al Campo Base |
+| `exp`, `essence` | `+N EXP`, `+N Essenza` | L'EXP passa dai moltiplicatori dell'eroe |
+| `flag`, `counter` | nessuno | Memoria nel profilo, resta fra le run |
+| `run_flag` | nessuno | Memoria della sola run |
+| `later` | nessuno | `{"later": "evento", "floors": N}`: l'evento torna N piani dopo |
+
+**Scelta e memoria.** `pick_event` esclude gli eventi `scripted` e quelli con `requires` non soddisfatti, preferisce quelli non ancora visti nella run e usa `weight` (predefinito 1). Un evento `scripted` compare solo quando una scelta lo richiama con `later`: al piano giusto prende il posto della prima porta (mai del boss), con la scritta "✦ qualcosa ti stava aspettando". Flag, contatori e numero di incontri per evento (`story.seen_events`) vengono salvati alla fine di ogni evento.
 
 ## 4. Il ciclo di gioco
 
@@ -168,6 +228,7 @@ Il salvataggio si crea al primo avvio e **non va committato** (è in `.gitignore
 | `stats` | `total_deaths`, `total_gold`, `total_bosses` |
 | `completed_feats` | Imprese completate |
 | `perks` | Livelli dei potenziamenti del Fuoco dell'Anima |
+| `story` | Memoria del Labirinto: `flags`, `counters`, `seen_events` (incontri per evento) |
 | `npc_unlocked` | Artigiani liberati |
 | `starting_consumables` / `_weapons` / `_armors` / `_accessories` | Oggetti comprati nelle botteghe per la prossima discesa. Vengono svuotati all'inizio della partita, anche se un oggetto non si può costruire, così un dato difettoso non blocca le partite successive |
 | `settings.text_speed` | `lenta`, `normale`, `veloce`, `istantanea` |
@@ -180,7 +241,7 @@ Il salvataggio si crea al primo avvio e **non va committato** (è in `.gitignore
 - **Una reliquia.** Aggiungila a `relics.json`, scrivi la sua classe in `relic_effects.py`, registrala in `RELIC_REGISTRY` e aggiungi il suo contratto in `RelicContractTest`: un test fallisce se ne manca uno.
 - **Un nemico o un boss.** Basta `enemies.json`: la sua forza (`base_hp × base_atk`) decide a che profondità compare.
 - **Una classe.** Aggiungila a `classes.json` con le sue Maestrie e rendila sbloccabile da un'impresa o da una Maestria di tipo `class`. Gli effetti personali nuovi vanno controllati nel codice con `has_mastery_effect`.
-- **Un evento.** Aggiungilo a `events.json`. Le azioni esistenti sono in `_handle_event_action` (`rooms.py`); un'azione nuova va aggiunta lì.
+- **Un evento.** Aggiungilo a `events.json` con condizioni ed effetti esistenti: di solito non serve toccare il codice. Un effetto o una condizione nuovi vanno aggiunti a `EFFECTS`/`CONDITIONS` in `events.py` e al contratto in `EventContractTest`. I test controllano che ogni scena sia raggiungibile, che abbia sempre un'uscita senza requisiti, che ogni oggetto chiave serva a qualcosa e che ogni evento `scripted` venga richiamato.
 - **Una Risonanza o un tomo dell'Archivio.** Modifica `elements.json → resonance` o `books.json`.
 
 Dopo ogni modifica alla logica o ai dati aggiungi o aggiorna i test (vedi `AGENTS.md`). Per i contenuti nuovi vuol dire anche: descrizione con i numeri reali e, se servono, i contratti in `tests/test_contracts.py`.
@@ -206,6 +267,7 @@ La CI (`.github/workflows/tests.yml`) li esegue su Python 3.9 e sull'ultima 3.x;
 | `test_depth.py` | Nemici e boss per profondità, boss finale, tratto e antidoto mostrati |
 | `test_refactor.py` | Ciclo del turno, ridisegno dei menu, bonus nei dati, output tramite `ui`, etichette dei consumabili |
 | `test_shops.py` | Botteghe degli artigiani, elenco della Forgia, Cuore di Drago |
+| `test_events.py` | Motore degli eventi: integrità dei dati, opzioni con etichetta e bloccate, scene a più passi, fuga e morte, memoria fra le run, conseguenze differite, scelta degli eventi |
 | `test_contracts.py` | **Contratti descrizione ↔ effetto** per reliquie, armi, armature, monili (anche maledetti), consumabili, scelte degli eventi, tratti, patti, potenziamenti, Maestrie e imprese; ogni sbloccabile è ottenibile |
 
 Oltre ai test automatici il gioco è stato provato al terminale vero, avviandolo in un pty e inviandogli tasti, con un profilo che sblocca tutto:

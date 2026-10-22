@@ -50,6 +50,7 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 - 🔥 **Combattimento elementale.** Sette elementi, vantaggi e svantaggi che cambiano danni e precisione, e le **Risonanze** quando arma e armatura condividono l'elemento.
 - 🧬 **8 classi** con alberi di Maestria a 5 livelli che sbloccano bonus, oggetti, reliquie e altre classi.
 - 🎭 **7 tratti** e **5 Patti del Caos**: 3,584 combinazioni di partenza diverse.
+- 📖 **Eventi che ricordano.** 25 storie a scene con opzioni che esistono solo per la tua classe, il tuo tratto o le tue reliquie: `[Mago]`, `[Tocco di Mida]`, `[Chiave Arrugginita]`. Il Labirinto ricorda chi hai aiutato e chi hai derubato, e certe scelte tornano a bussare qualche piano dopo.
 - 🌟 **30 reliquie** che piegano le regole: danni raddoppiati, scudi, vampirismo, oro moltiplicato.
 - 🏕️ **Meta-progressione profonda**: potenziamenti permanenti, una Forgia per sbloccare equipaggiamento, artigiani da liberare, un Archivio di lore con bonus, imprese da completare.
 - ♾️ **Modalità Infinita** dopo la prima vittoria, per chi vuole spingersi oltre il piano 30.
@@ -305,7 +306,9 @@ L'ATK reale cresce con il piano in cui l'arma viene trovata; le armi di elemento
 <details>
 <summary>🎭 Gli eventi narrativi</summary>
 
-15 incontri con scelte e conseguenze: *La Fontana Fatata*, *Il Mendicante Ombra*, *Altare del Sangue*, *La Forgia Abissale*, *La Bisca dei Goblin*, *Il Cavaliere Caduto*, *L'Idolo Corrotto*, *Lo Specchio della Verità*, *L'Oasi Sotterranea*, *Il Cadavere del Saggio*, *La Porta Sigillata*, *Lo Speziale Prigioniero*, *Il Maestro d'Armi Prigioniero*, *L'Armaiola Imprigionata*, *L'Incantatore Intrappolato*. Alcuni consegnano *oggetti chiave* che aprono scelte segrete in eventi successivi; quattro nascondono gli artigiani prigionieri.
+25 storie e 34 scene: *La Fontana Fatata*, *Il Mendicante Ombra*, *Altare del Sangue*, *La Forgia Abissale*, *La Bisca dei Goblin*, *Il Cavaliere Caduto*, *L'Idolo Corrotto*, *Lo Specchio della Verità*, *L'Oasi Sotterranea*, *Il Cadavere del Saggio*, *La Porta Sigillata*, *Lo Speziale Prigioniero*, *Il Maestro d'Armi Prigioniero*, *L'Armaiola Imprigionata*, *L'Incantatore Intrappolato*, *Il Viandante Cieco*, *Il Buio Vivente*, *La Cartografa Perduta*, *La Sala dei Cento Corridoi*, *Il Pozzo dei Desideri*, *Il Banchetto dei Morti*, *La Bilancia di Aethelgard*, *La Voce nel Buio*, *La Voce del Labirinto*… e qualcuno che torna a cercarti più in basso.
+
+Ogni scelta mostra i suoi effetti reali, molte opzioni esistono solo per certe classi, tratti o reliquie, gli *oggetti chiave* di un evento aprono strade segrete in un altro e il Labirinto ricorda le tue decisioni da una run all'altra. Quattro eventi nascondono gli artigiani prigionieri.
 
 </details>
 
@@ -323,7 +326,7 @@ L'ATK reale cresce con il piano in cui l'arma viene trovata; le armi di elemento
 | Reliquie | 30 (14 subito, 16 da sbloccare) |
 | Nemici comuni | 25 |
 | Boss | 20 |
-| Eventi narrativi | 15 |
+| Eventi narrativi | 25 |
 | Imprese | 14 |
 | Tomi dell'Archivio | 3 |
 | Potenziamenti permanenti | 14 |
@@ -337,7 +340,8 @@ Il gioco è **data-driven**: classi, nemici, oggetti, reliquie, eventi, Maestrie
 ```text
 rogue/
 ├── roguelike.py       # Menu principale, Campo Base, scelta dell'eroe, ciclo dei piani, fine partita
-├── rooms.py           # Combattimento (CombatSession) e stanze: mercante, falò, forziere, trappola, eventi
+├── rooms.py           # Combattimento (CombatSession) e stanze: mercante, falò, forziere, trappola, mistero
+├── events.py          # Motore degli eventi: scene, condizioni, effetti, memoria fra le run
 ├── entities.py        # Eroe, nemici e oggetti; generazione dell'equipaggiamento
 ├── relic_effects.py   # Effetti delle reliquie come hook (on_attack, on_take_damage, ...)
 ├── inventory_menu.py  # Zaino, consumabili e schermata delle statistiche
@@ -367,7 +371,9 @@ I **test di contratto** (`tests/test_contracts.py`) verificano che ogni reliquia
 - [x] Impostazioni (velocità del testo)
 - [ ] Sistema di Rune/Incastoni per armi e armature
 - [ ] Boss con meccaniche speciali (fasi, immunità, pattern)
-- [ ] Nuovi eventi narrativi e bivi ramificati
+- [x] Eventi a scene, opzioni per classe e tratto, memoria fra le run
+- [ ] Personaggi ricorrenti con archi narrativi e il Codice
+- [ ] Mappa dei piani, biomi, finali multipli
 
 ---
 

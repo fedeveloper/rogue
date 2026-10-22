@@ -34,8 +34,21 @@ Più scendi, più i nemici sono forti: ai primi piani incontri banditi, goblin e
 | 🔥 **Falò** | *Riposa* (50% degli HP) **oppure** *affila l'arma* (+3 ATK per 50 Oro): una delle due, poi il falò si spegne. Prima puoi usare l'**Altare dell'Evoluzione** e la **purificazione** quante volte vuoi. |
 | 💎 **Forziere** | Oro, a volte un monile, una pozione o una reliquia. |
 | ⚠️ **Trappola** | Danni (evitabili con la schivata), a volte un oggetto fra gli ingranaggi. |
-| 🎭 **Evento** | Una scelta narrativa: rischi e ricompense. Alcuni eventi nascondono un artigiano prigioniero da liberare. |
+| 🎭 **Evento** | Una piccola storia con bivi, a volte in più scene: vedi *Gli eventi* qui sotto. Alcuni nascondono un artigiano prigioniero da liberare. |
 | ❓ **Mistero** | Un nemico potenziato (che lascia un oggetto), uno debilitato, una trappola… o niente. |
+
+### Gli eventi
+
+Negli eventi le scelte contano, e non solo in quella stanza:
+
+- **Il riepilogo dice la verità.** Accanto a ogni scelta, fra parentesi, il gioco mostra cosa succede: `(-20 Oro; 50%: Reliquia)`, `(+12 ATK; -25 HP Max)`, `(60%: +120 Oro, altrimenti Combatti)`. Lo calcola dagli effetti reali, quindi non può sbagliare.
+- **Opzioni che esistono perché sei tu.** Alcune scelte compaiono solo per certe classi, tratti, reliquie o oggetti chiave, e lo dicono con un'etichetta: `[Mago] Riaccendi la lanterna`, `[Tocco di Mida] Immergi la mano`, `[Occhio del Cacciatore] Guarda meglio le impronte`. Rigiocare lo stesso evento con un altro eroe apre strade diverse.
+- **Scelte bloccate.** Le opzioni in rosso sono visibili ma non selezionabili. Ti manca qualcosa, per esempio "(Ti serve una chiave)", oppure l'oro per pagare.
+- **Più scene.** Molti eventi proseguono dopo la prima scelta: un brindisi dopo che ti sei seduto al banchetto, un desiderio dopo la moneta nel pozzo.
+- **Oggetti chiave.** Chiavi, mappe e lanterne trovate in un evento aprono scelte segrete in un altro, a volte molti piani più in basso.
+- **Il Labirinto ricorda.** Alcune scelte lasciano un segno che resta fra una run e l'altra: chi hai aiutato, chi hai derubato, quante volte hai accettato un patto. Le volte successive i personaggi possono riconoscerti.
+- **Conseguenze differite.** Certe scelte tornano qualche piano dopo: una delle porte mostrerà "✦ qualcosa ti stava aspettando".
+- **Combattimenti negli eventi.** Le ricompense legate a uno scontro arrivano solo se lo vinci; se fuggi, l'evento finisce lì.
 
 ---
 

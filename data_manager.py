@@ -25,6 +25,7 @@ class ProfileManager:
             "essence": 0, "max_floor": 0, "won_normal": False,
             "unlocked_ids":[], "class_xp": {}, "class_lvl": {},
             "stats": {"total_deaths": 0, "total_gold": 0, "total_bosses": 0}, "completed_feats":[],
+            "story": {"flags": {}, "counters": {}, "seen_events": {}},
             "settings": {"text_speed": DEFAULT_TEXT_SPEED},
             "perks": {
                 "hp_lvl": 0, "gold_lvl": 0, "discount_lvl": 0, "sesto_senso": False, "scarpisti": False,
@@ -133,7 +134,8 @@ RAW_DATA = {
     "accessories": load_json_file("accessories.json")["accessories"],
     "consumables": load_json_file("consumables.json")["consumables"], "classes": load_json_file("classes.json"),
     "lore": load_json_file("lore.json"), "elements": load_json_file("elements.json"),
-    "meta": load_json_file("meta.json"), "events": load_json_file("events.json"), "relics": load_json_file("relics.json")["relics"]
+    "meta": load_json_file("meta.json"), "events": load_json_file("events.json"), "relics": load_json_file("relics.json")["relics"],
+    "story": load_json_file("story.json")
 }
 
 def update_game_data():
@@ -141,7 +143,7 @@ def update_game_data():
     GAME_DATA.clear()
     GAME_DATA.update({
         "enemies": RAW_DATA["enemies"], "bosses": RAW_DATA["bosses"], "lore": RAW_DATA["lore"], "elements": RAW_DATA["elements"],
-        "meta": RAW_DATA["meta"], "events": RAW_DATA["events"], "classes": RAW_DATA["classes"],
+        "meta": RAW_DATA["meta"], "events": RAW_DATA["events"], "classes": RAW_DATA["classes"], "story": RAW_DATA["story"],
         "relics":[r for r in RAW_DATA["relics"] if r.get("unlock_id") is None or r["unlock_id"] in PROFILE_MANAGER.unlocked_ids],
         "weapons":[w for w in RAW_DATA["weapons"] if w.get("unlock_id") is None or w["unlock_id"] in PROFILE_MANAGER.unlocked_ids],
         "armors":[a for a in RAW_DATA["armors"] if a.get("unlock_id") is None or a["unlock_id"] in PROFILE_MANAGER.unlocked_ids],
