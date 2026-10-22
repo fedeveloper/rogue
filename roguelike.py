@@ -5,7 +5,8 @@ import traceback
 from ui import Colors, clear_screen, delay_print, interactive_menu, display_msg, wait_enter
 from data_manager import PROFILE_MANAGER, GAME_DATA, RAW_DATA, get_element_icon, update_game_data
 from entities import Player, Enemy
-from rooms import combat_room, mystery_room, event_room, vendor_room, campfire_room, treasure_room, trap_room
+from rooms import combat_room, mystery_room, vendor_room, campfire_room, treasure_room, trap_room
+from events import event_room, pick_event, pop_due_event
 from inventory_menu import show_inventory_menu, show_player_stats
 from archive import show_archive
 from constants import TEXT_SPEEDS, SPERANZA_LUCE_PCT_PER_LVL, RATIO_GOLD_TO_ESSENCE_ON_DEATH, BOSS_ESSENCE_BONUS, XP_PER_FLOOR, XP_PER_BOSS, INFINITE_MODE_THRESHOLD, INFINITE_MODE_ESSENCE_MULTIPLIER, BLIND_FURY_MIN_ATTACKS
@@ -386,7 +387,7 @@ def _hero_selection() -> tuple[str, str, list[str]]:
 
     return c_choice, t_choice, active_pacts
 
-def _generate_doors(floor: int, step: int, weights_def: dict, cooldowns_def: dict, room_cooldowns: dict, active_pacts: list) -> list[dict]:
+def _generate_doors(floor: int, step: int, weights_def: dict, cooldowns_def: dict, room_cooldowns: dict, active_pacts: list, player: Player = None) -> list[dict]:
     for k in room_cooldowns:
         if room_cooldowns[k] > 0: room_cooldowns[k] -= 1
     
@@ -421,15 +422,7 @@ def _generate_doors(floor: int, step: int, weights_def: dict, cooldowns_def: dic
     for rt in [t1, t2]:
         d = {"type": rt}
         if rt == "combat": d["enemy"] = Enemy(floor, False, active_pacts)
-        if rt == "event":
-            avail_events = [k for k in GAME_DATA["events"].keys() if not (
-                (k == "speziale_prigioniero" and PROFILE_MANAGER.get_npc_unlocked("speziale")) or
-                (k == "borek_prigioniero" and PROFILE_MANAGER.get_npc_unlocked("borek")) or
-                (k == "elara_prigioniera" and PROFILE_MANAGER.get_npc_unlocked("elara")) or
-                (k == "valerius_prigioniero" and PROFILE_MANAGER.get_npc_unlocked("valerius"))
-            )]
-            if not avail_events: avail_events = list(GAME_DATA["events"].keys())
-            d["event_id"] = random.choice(avail_events)
+        if rt == "event": d["event_id"] = pick_event(floor, player)
         doors.append(d)
         
     return doors
@@ -473,7 +466,9 @@ def play_game(infinite_mode=False):
             # Ricalcolati a ogni bivio: le reliquie trovate durante la run contano subito
             weights_def = base_weights.copy()
             for r in player.relic_effects: r.modify_room_weights(weights_def)
-            doors = _generate_doors(floor, step, weights_def, cooldowns_def, room_cooldowns, active_pacts)
+            doors = _generate_doors(floor, step, weights_def, cooldowns_def, room_cooldowns, active_pacts, player)
+            # Una scelta passata torna a bussare: l'evento richiamato prende il posto della prima porta (mai del boss)
+            if step < 5 and (due := pop_due_event(player, floor)): doors[0] = {"type": "event", "event_id": due, "fated": True}
             
             while True:
                 clear_screen()
@@ -482,6 +477,7 @@ def play_game(infinite_mode=False):
                 options = []
                 for i, d in enumerate(doors):
                     t_str = d["type"].upper()
+                    if d.get("fated"): t_str += f" {Colors.MAGENTA}✦ qualcosa ti stava aspettando{Colors.RESET}"
                     if PROFILE_MANAGER.get_perk("sesto_senso", False):
                         if d["type"] == "combat": t_str += f" ({d['enemy'].name} {get_element_icon(d['enemy'].element)})"
                         elif d["type"] == "event": t_str += f" ({GAME_DATA['events'][d['event_id']]['title']})"

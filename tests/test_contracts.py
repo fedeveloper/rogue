@@ -12,6 +12,7 @@ import unittest
 from contextlib import redirect_stdout
 from unittest import mock
 
+import events
 import inventory_menu
 import roguelike
 import rooms
@@ -398,47 +399,81 @@ class ConsumableContractTest(Sandbox):
 
 # ---------------------------------------------------------------- eventi
 class EventContractTest(Sandbox):
-    PATTERNS = (r"-(\d+) Oro", r"Dona (\d+) Oro", r"\+ ?(\d+) Oro", r"-(\d+) HP", r"(\d+) Danni", r"\+(\d+) HP Max", r"\d+%")
+    """Il riepilogo accanto a ogni scelta è generato dagli effetti: qui si verifica che gli effetti facciano davvero
+    ciò che dichiarano, per ogni scelta di ogni scena e per entrambi gli esiti delle scelte a probabilità."""
 
-    def run_choice(self, ev, idx):
-        p = self.hero(); p.max_hp = p.hp = 500; p.gold = 500
-        choice = ev["choices"][idx]
-        if choice.get("requires_item"): p.quest_items.append(choice["requires_item"])
-        before = {"gold": p.gold, "hp": p.hp, "max_hp": p.max_hp, "relics": len(p.relic_ids), "items": len(p.inventory), "quest": len(p.quest_items)}
-        with quiet(), mock.patch("rooms.random.random", return_value=0.0), mock.patch("builtins.input", return_value=""), \
-             mock.patch("entities.interactive_menu", side_effect=lambda options, prompt="": len(options) - 1), mock.patch.object(PROFILE_MANAGER, "save"), \
-             mock.patch("rooms.get_random_relic", return_value=next(r for r in RAW_DATA["relics"] if r["id"] == "tasca_dorata")):
-            rooms._handle_event_action(p, 1, choice["action"], choice.get("msg", ""), choice.get("msg_alt", ""), ev, idx)
-        return p, before
+    def choices(self):
+        for ev_id, ev in GAME_DATA["events"].items():
+            for sc_id, scene in ev["scenes"].items():
+                for i, choice in enumerate(scene["choices"]):
+                    yield f"{ev_id}/{sc_id}/{i}", choice
+
+    def snapshot(self, p):
+        story = PROFILE_MANAGER._data["story"]
+        return {"gold": p.gold, "hp": p.hp, "max_hp": p.max_hp, "atk": p.bonus_atk_relic, "def": p.bonus_def,
+                "relics": len(p.relic_ids), "items": len(p.inventory), "quest": sorted(p.quest_items),
+                "essence": p.essence_gathered, "exp": 0, "flags": dict(story["flags"]), "counters": dict(story["counters"]),
+                "npcs": dict(PROFILE_MANAGER._data.get("npc_unlocked", {})), "pending": [list(x) for x in p.pending_events]}
+
+    def expected(self, before, effects, floor):
+        """Ciò che gli effetti dichiarano, calcolato senza passare dal motore degli eventi."""
+        e = copy.deepcopy(before)
+        for eff in effects:
+            key = events.effect_key(eff); v = eff[key]
+            if key == "gold": e["gold"] = max(0, e["gold"] + v)
+            elif key == "damage": e["hp"] -= v
+            elif key in ("heal", "heal_pct"): e["hp"] += min(v if key == "heal" else e["max_hp"] * v // 100, e["max_hp"] - e["hp"])
+            elif key == "max_hp": e["max_hp"] += v; e["hp"] = min(e["hp"], e["max_hp"])
+            elif key == "relic": e["relics"] += 1
+            elif key in ("weapon", "armor", "accessory"): e["items"] += 1
+            elif key == "potion": e["items"] += v
+            elif key == "quest_item": e["quest"] = sorted(set(e["quest"]) | {v})
+            elif key == "take_quest_item": e["quest"] = sorted(set(e["quest"]) - {v})
+            elif key == "unlock_npc": e["npcs"][v] = True
+            elif key in ("atk", "def"): e[key] += v
+            elif key == "exp": e["exp"] += v
+            elif key == "essence": e["essence"] += v
+            elif key == "flag": e["flags"][v] = eff.get("value", True)
+            elif key == "counter": e["counters"][v] = e["counters"].get(v, 0) + eff.get("add", 1)
+            elif key == "later": e["pending"].append([floor + eff.get("floors", 1), v])
+            elif key != "fight": self.fail(f"effetto senza contratto: {key}")
+        return e
+
+    def play(self, choice, success):
+        p = self.hero(); p.max_hp = 500; p.hp = 250; p.gold = 500
+        p.quest_items = list(GAME_DATA["story"]["quest_items"])
+        before = self.snapshot(p)
+        exp = []
+        won = lambda player, floor, enemy: setattr(enemy, "hp", 0)
+        with quiet(), mock.patch("events.random.random", return_value=0.0 if success else 0.9999), \
+             mock.patch("events.combat_room", side_effect=won), mock.patch("events.wait_enter"), \
+             mock.patch.object(p, "gain_exp", side_effect=exp.append), \
+             mock.patch("events.get_random_relic", return_value=next(r for r in RAW_DATA["relics"] if r["id"] == "tasca_dorata")):
+            alive, nxt = events.run_choice(p, choice, 10)
+        after = self.snapshot(p); after["exp"] = sum(exp)
+        return before, after, alive, nxt
 
     def test_every_choice_does_what_its_text_says(self):
-        for ev_id, ev in GAME_DATA["events"].items():
-            for idx, choice in enumerate(ev["choices"]):
-                if choice["action"] in ("none", "fight_elite") or choice["action"].startswith("unlock_npc_fight"):
-                    continue
-                text = choice["text"]
-                with self.subTest(event=ev_id, choice=text):
-                    p, b = self.run_choice(ev, idx)
-                    gold = p.gold - b["gold"]
-                    if m := re.search(r"-(\d+) Oro|Dona (\d+) Oro", text): self.assertEqual(gold, -int(m.group(1) or m.group(2)))
-                    if m := re.search(r"\+ ?(\d+) Oro", text): self.assertEqual(gold, int(m.group(1)))
-                    if "niente tesoro" in text: self.assertEqual(gold, 0)
-                    if m := re.search(r"-(\d+) HP|(\d+) Danni", text):
-                        self.assertEqual(b["hp"] - p.hp, int(m.group(1) or m.group(2)))
-                    if m := re.search(r"\+(\d+) HP Max", text): self.assertEqual(p.max_hp - b["max_hp"], int(m.group(1)))
-                    if re.search(r"[Cc]ura(rti)? (al )?100%|ti cura al 100%", text): self.assertEqual(p.hp, p.max_hp)
-                    if "Reliquia" in text and choice["action"] == "trade_relic": self.assertEqual(len(p.relic_ids), b["relics"] + 1)
-                    if "Arma" in text and "Epica" in text: self.assertTrue(any(i.name.startswith("EPICO") for i in p.inventory))
-                    if "Oggetto Chiave" in text: self.assertEqual(len(p.quest_items), b["quest"] + 1)
+        for name, choice in self.choices():
+            for success in ((True, False) if "chance" in choice else (True,)):
+                with self.subTest(choice=name, success=success):
+                    before, after, alive, nxt = self.play(choice, success)
+                    outcome = choice.get("success" if success else "fail_effects", []) if "chance" in choice else []
+                    self.assertTrue(alive)
+                    self.assertEqual(after, self.expected(before, choice.get("effects", []) + outcome, 10))
+                    self.assertEqual(nxt, choice.get("next") if success else choice.get("fail_next"))
+                    label = events.choice_summary(choice)
+                    for part in events.summarize(choice.get("effects", []) + outcome):
+                        self.assertIn(part, label)
 
     def test_every_number_in_a_choice_is_checked(self):
-        for ev in GAME_DATA["events"].values():
-            for choice in ev["choices"]:
-                text = choice["text"]
-                rest = text
-                for pat in self.PATTERNS: rest = re.sub(pat, "", rest)
-                with self.subTest(choice=text):
-                    self.assertFalse(NUM.search(rest), f"numero non verificato in: {text}")
+        # I numeri compaiono solo nel riepilogo generato dagli effetti, mai scritti a mano nel testo della scelta
+        for name, choice in self.choices():
+            with self.subTest(choice=name):
+                self.assertFalse(NUM.search(choice["text"]), f"numero scritto a mano in: {choice['text']}")
+                if "chance" in choice:
+                    self.assertTrue(0 < choice["chance"] < 100)
+                    self.assertIn(f"{choice['chance']}%" if choice.get("success") else f"{100 - choice['chance']}%", events.choice_summary(choice))
 
 
 # ---------------------------------------------------------------- tratti, patti, potenziamenti, Maestrie, imprese

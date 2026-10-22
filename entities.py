@@ -151,6 +151,9 @@ class Player:
         self.bonus_atk_relic = 0
         self.statuses: Dict[str, int] = {}
         self.quest_items: List[str] = []
+        self.seen_events: set = set()  # eventi già incontrati in questa run
+        self.run_flags: set = set()  # scelte che valgono solo per la discesa in corso
+        self.pending_events: list = []  # [piano, evento] richiamati da scelte passate
         
         self.exp_multiplier = 1.0
         self.bonus_def = 0
@@ -168,6 +171,7 @@ class Player:
         self.base_lifesteal += global_bonus.get("lifesteal", 0)
         self.hp = self.max_hp
         
+        self.trait_id = trait_id
         self.trait = GAME_DATA["meta"]["traits"][trait_id]
         self.trait_name = self.trait["name"]
         self.cursed, self.midas, self.ethereal_hunter, self.benedetto_save = False, False, False, False
