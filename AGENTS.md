@@ -10,9 +10,8 @@ Questo repository è mantenuto in buona parte con assistenti IA. Queste regole v
 
 ## Branch
 
-- `main` è la versione stabile, sempre giocabile.
-- La nuova versione (lore, eventi a scene, personaggi ricorrenti, mappa, biomi, finali) si sviluppa su `v2`. Apri verso `v2` le PR che la riguardano; `v2` confluirà in `main` quando sarà stabile.
-- Le correzioni alla versione stabile vanno verso `main`.
+- `main` è la versione stabile, sempre giocabile, e contiene la v2 (lore, eventi a scene, personaggi ricorrenti, mappa, biomi, finali).
+- Apri le PR verso `main`. Per uno sviluppo che stravolge il gioco si può usare di nuovo un branch di lungo periodo, come è stato `v2`.
 
 ## Dipendenze
 
