@@ -159,6 +159,7 @@ class Player:
         self.fallen = False  # Caduta Astrale: il piano finisce e si scende subito al successivo
         self.dissolved = 0  # HP massimi tolti dalla Dissoluzione dell'Io, resi all'uscita dal bioma
         self.biome_id = None
+        self.corruption = 0  # 0-100: cresce con le scelte oscure, vale per la sola discesa
         
         self.exp_multiplier = 1.0
         self.bonus_def = 0
@@ -303,8 +304,21 @@ class Player:
         display_msg(f"Effetto: {relic['desc']}")
         if "lore" in relic: display_msg(f"{Colors.YELLOW}Lore: {relic['lore']}{Colors.RESET}")
 
+    def add_corruption(self, amount: int) -> int:
+        """Varia la Corruzione e ritorna la variazione reale. L'Altare della Purificazione riduce gli aumenti."""
+        cfg = GAME_DATA["meta"]["corruption"]
+        if amount > 0:
+            altar = next((s for s in GAME_DATA["story"]["camp"]["structures"] if s["id"] == "altare_purificazione"), None)
+            if altar and PROFILE_MANAGER.get_flag("camp_altare_purificazione"): amount = amount * altar["corruption_gain_pct"] // 100
+        before = self.corruption
+        self.corruption = max(0, min(cfg["max"], self.corruption + amount))
+        return self.corruption - before
+
+    def corruption_atk(self) -> int:
+        return self.corruption // 10 * GAME_DATA["meta"]["corruption"]["atk_per_10"]
+
     def get_total_atk(self):
-        atk = self.weapon.atk + self.bonus_atk_relic + self.weapon.get_gold_atk_bonus(self.gold)
+        atk = self.weapon.atk + self.bonus_atk_relic + self.weapon.get_gold_atk_bonus(self.gold) + self.corruption_atk()
         for r in self.relic_effects: atk += r.get_atk_modifier(self)
         return atk
 

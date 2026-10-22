@@ -179,7 +179,7 @@ class ChoiceVisibilityTest(Sandbox):
 
     def test_summary_is_generated_from_effects(self):
         p = self.hero()
-        self.assertIn(("Prega l'Oscurità (+100 Oro; -40 HP)", True), self.labels(p, "altare_sangue"))
+        self.assertIn(("Prega l'Oscurità (+100 Oro; -40 HP; +10 Corruzione)", True), self.labels(p, "altare_sangue"))
         self.assertIn(("Arretra lentamente (50%: -25 HP)", True), self.labels(p, "voce_nel_buio", "tana"))
         self.assertIn(("Ricchezza (50%: +120 Oro)", True), self.labels(p, "pozzo_desideri", "desiderio"))
 
@@ -256,7 +256,7 @@ class MemoryTest(Sandbox):
              mock.patch("roguelike.interactive_menu", side_effect=menu), mock.patch("roguelike.event_room", side_effect=lambda p, e, f: visited.append((f, e))), \
              mock.patch.multiple("roguelike", **rooms), mock.patch("roguelike.evaluate_run"), mock.patch("roguelike.wait_enter"), \
              mock.patch("roguelike.clear_screen"), mock.patch("roguelike.delay_print"), mock.patch("roguelike.time.sleep"), \
-             mock.patch("roguelike._grant_victory_rewards"):
+             mock.patch("roguelike._grant_victory_rewards"), mock.patch("roguelike.choose_ending"), mock.patch("roguelike.start_of_run_boon"):
             roguelike.play_game()
         self.assertIn((2, "cartografa_ritorno"), visited)
         self.assertEqual([e for _, e in visited].count("cartografa_ritorno"), 1)

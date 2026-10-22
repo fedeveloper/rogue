@@ -12,6 +12,8 @@ from floor_map import ROWS, SIDES, TALL_MAP_ROWS, apply_biome_on_floor, generate
 from inventory_menu import show_inventory_menu, show_player_stats
 from archive import show_archive
 from codex import show_codex
+from camp import show_camp_fire, start_of_run_boon
+from endings import choose_ending
 from constants import TEXT_SPEEDS, SPERANZA_LUCE_PCT_PER_LVL, RATIO_GOLD_TO_ESSENCE_ON_DEATH, BOSS_ESSENCE_BONUS, XP_PER_FLOOR, XP_PER_BOSS, INFINITE_MODE_THRESHOLD, INFINITE_MODE_ESSENCE_MULTIPLIER, BLIND_FURY_MIN_ATTACKS
 
 def _update_class_mastery(player: Player, floor: int):
@@ -322,7 +324,8 @@ def base_camp():
             "La Taverna delle Imprese (Sfide ed Eroi)",
             "Grimorio e Imprese",
             "L'Archivio di Aethelgard (Lore)",
-            "Il Codice del Labirinto (Bestiario, Personaggi, Eventi, Lettere, Reliquie)"
+            "Il Codice del Labirinto (Bestiario, Personaggi, Eventi, Lettere, Reliquie)",
+            "Il Fuoco del Campo (Personaggi e Strutture)"
         ]
         
         if has_speziale:
@@ -353,6 +356,8 @@ def base_camp():
             show_archive(PROFILE_MANAGER._data)
         elif idx == 5:
             show_codex()
+        elif idx == 6:
+            show_camp_fire()
         else:
             opt = options[idx]
             if "Tenda dello Speziale" in opt: base_camp_apothecary()
@@ -404,6 +409,7 @@ def play_game(infinite_mode=False):
     c_choice, t_choice, active_pacts = _hero_selection()
 
     player = Player(c_choice, t_choice, active_pacts)
+    start_of_run_boon(player)
     delay_print(f"\nLe porte si chiudono alle tue spalle, {player.role}.", 0.03); time.sleep(1)
     
     base_weights = GAME_DATA["meta"]["rooms"]["weights"]
@@ -416,6 +422,7 @@ def play_game(infinite_mode=False):
             clear_screen()
             display_msg(f"{Colors.YELLOW}{Colors.BOLD}" + "="*50); delay_print("H A I   V I N T O ! ! !"); display_msg("="*50 + Colors.RESET)
             PROFILE_MANAGER.won_normal = True; player.won = True; player.essence_gathered += 1000
+            choose_ending(player)
             _grant_victory_rewards()
             break
 
@@ -450,7 +457,8 @@ def play_game(infinite_mode=False):
                 clear_screen()
                 prompt = "\n".join([
                     f"\n{Colors.CYAN}--- Piano {floor}{biome_title} | Esplorazione {step}/{ROWS + 1} ---{Colors.RESET}",
-                    f"❤️  HP: {Colors.GREEN}{player.hp}/{player.max_hp}{Colors.RESET} | 💰 Oro: {Colors.YELLOW}{player.gold}{Colors.RESET}", biome_intro,
+                    f"❤️  HP: {Colors.GREEN}{player.hp}/{player.max_hp}{Colors.RESET} | 💰 Oro: {Colors.YELLOW}{player.gold}{Colors.RESET}"
+                    + (f" | 🩸 Corruzione: {Colors.MAGENTA}{player.corruption}{Colors.RESET}" if player.corruption else ""), biome_intro,
                     *render_map(floor_map, step, path, biome, tall=shutil.get_terminal_size().lines >= TALL_MAP_ROWS), "", "Scegli dove proseguire:"])
                 sixth = PROFILE_MANAGER.get_perk("sesto_senso", False)
                 options = [f"Entra: {room_label(floor_map[step - 1][i], sixth, biome)}" + (f" ({SIDES[floor_map[step - 1][i]['slot']]})" if step <= ROWS else "")

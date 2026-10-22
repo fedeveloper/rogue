@@ -35,6 +35,11 @@ get_flag, set_flag = PROFILE_MANAGER.get_flag, PROFILE_MANAGER.set_flag
 get_counter, add_counter = PROFILE_MANAGER.get_counter, PROFILE_MANAGER.add_counter
 
 
+def letters_complete() -> bool:
+    """Tutte le lettere insanguinate sono nel Codice."""
+    return set(range(len(GAME_DATA["lore"]["letters"]))) <= set(PROFILE_MANAGER.codex["letters"])
+
+
 def times_seen(event_id: str) -> int:
     return int(_story()["seen_events"].get(event_id, 0))
 
@@ -89,10 +94,15 @@ CONDITIONS: Dict[str, tuple] = {
     "counter": (lambda p, v, f: all(get_counter(k) >= n for k, n in v.items()), None),
     "counter_below": (lambda p, v, f: all(get_counter(k) < n for k, n in v.items()), None),
     "npc": (lambda p, v, f: PROFILE_MANAGER.get_npc_unlocked(v), None),
+    "flags": (lambda p, v, f: all(get_flag(x) for x in v), None),
+    "any_flags": (lambda p, v, f: any(get_flag(x) for x in v), None),
+    "letters_complete": (lambda p, v, f: letters_complete() == v, None),
+    "corruption": (lambda p, v, f: p.corruption >= v, lambda v: f"Corruzione {v}+"),
+    "corruption_below": (lambda p, v, f: p.corruption < v, None),
     "not_npc": (lambda p, v, f: not PROFILE_MANAGER.get_npc_unlocked(v), None),
 }
 # Condizioni che dipendono solo da piano e profilo: valutabili anche senza un eroe (es. nella scelta delle porte)
-PROFILE_CONDITIONS = {"biome", "min_floor", "max_floor", "flag", "not_flag", "counter", "counter_below", "npc", "not_npc"}
+PROFILE_CONDITIONS = {"flags", "any_flags", "letters_complete", "biome", "min_floor", "max_floor", "flag", "not_flag", "counter", "counter_below", "npc", "not_npc"}
 
 
 def check(player: Optional[Player], requires: dict, floor: int) -> bool:
@@ -212,6 +222,11 @@ def _fall(p, v, eff, floor):
     raise _Stop(True)
 
 
+def _corruption(p, v, eff, floor):
+    delta = p.add_corruption(v)
+    if delta: display_msg(f"{Colors.MAGENTA if delta > 0 else Colors.CYAN}🩸 Corruzione {delta:+d} ({p.corruption}).{Colors.RESET}")
+
+
 def _later(p, v, eff, floor):
     p.pending_events.append([floor + eff.get("floors", 1), v])
 
@@ -244,6 +259,7 @@ EFFECTS: Dict[str, tuple] = {
     "run_flag": (lambda p, v, e, f: _run_flags(p).add(v), None),
     "counter": (lambda p, v, e, f: add_counter(v, e.get("add", 1)), None),
     "later": (_later, None),
+    "corruption": (_corruption, lambda v, e: f"{v:+d} Corruzione"),
     "fall": (_fall, lambda v, e: f"Precipiti al piano successivo, -{e.get('gold_pct', 0)}% Oro"),
 }
 # Parametri accessori ammessi accanto alla chiave principale di un effetto
@@ -320,10 +336,18 @@ def scene_text(player: Player, scene: dict, floor: int) -> str:
     return text
 
 
+def veiled(player: Player) -> bool:
+    """Sguardo Velato: con molta Corruzione, a volte il Labirinto nasconde gli effetti di una scelta."""
+    veil = GAME_DATA["meta"]["corruption"]["veil"]
+    return player.corruption >= veil["threshold"] and random.random() * 100 < veil["chance"]
+
+
 def _choice_label(player: Player, choice: dict, floor: int) -> tuple:
     """Etichetta della scelta e se è selezionabile."""
     tag = "".join(f"{Colors.CYAN}[{t}]{Colors.RESET} " for t in tags(choice.get("requires")))
-    label = f"{tag}{choice['text']}{choice_summary(choice)}"
+    summary = choice_summary(choice)
+    if summary and veiled(player): summary = f" {Colors.MAGENTA}(il Labirinto ti offusca la vista){Colors.RESET}"
+    label = f"{tag}{choice['text']}{summary}"
     cost = gold_cost(choice)
     if cost and player.gold < cost: return f"{Colors.RED}{choice['text']}{choice_summary(choice)} (Oro insufficiente){Colors.RESET}", False
     return label, True

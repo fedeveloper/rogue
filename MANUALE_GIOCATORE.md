@@ -41,6 +41,21 @@ Più scendi, più i nemici sono forti: ai primi piani incontri banditi, goblin e
   ★                       👑 Boss
 ```
 
+### 🩸 La Corruzione
+
+Alcune scelte degli eventi sono **oscure**: pregare l'Altare del Sangue, accettare i doni del Labirinto, colpire chi è debole. Altre sono **pure**: bere alla Fontana Fatata, giurare sul tuo onore, spezzare un sigillo. Il riepilogo di ogni scelta mostra quanta Corruzione ti dà o ti toglie, ad esempio `(+100 Oro; -40 HP; +10 Corruzione)`.
+
+La Corruzione va da 0 a 100 e vale per la sola discesa:
+- **Potere.** Ogni 10 punti ti danno +2 ATK, e alcune opzioni proibite compaiono solo a chi è abbastanza corrotto, come `[Corruzione 50+] Chiedi di vedere il fondo`.
+- **Sguardo Velato (da 50).** Il 25% delle volte il Labirinto ti offusca la vista: non vedi gli effetti di una scelta.
+- **Voce del Labirinto (da 75).** Il 30% delle volte non vedi la mossa che il nemico prepara.
+
+La vedi accanto agli HP sulla mappa e nelle Statistiche. Arrivare in fondo con il cuore nero apre un finale che gli altri non vedranno mai.
+
+### 🏁 I finali
+
+Sconfitto il Dio Antico, scegli come finisce la tua storia fra i finali che ti sei guadagnato. Il primo è sempre disponibile; gli altri dipendono da quello che hai fatto in questa discesa e in quelle passate: i personaggi che hai liberato, le verità che hai ascoltato, le lettere che hai raccolto, la tua Corruzione. Ogni finale nuovo dà un premio in Essenza e finisce nel Codice. Nel Codice i finali che non hai ancora visto mostrano un indizio.
+
 ### I biomi
 
 Il Labirinto cambia mentre scendi: ogni cinque piani entri in un **bioma** diverso, con la sua atmosfera. I nomi vengono dalle cronache di Aethelgard: *I Chiostri del Rimpianto*, *Le Miniere della Testardaggine*, *Le Guglie del Vento Urlante*, *Il Ventre della Memoria*, *La Forgia del Caos*, *La Soglia del Dio Antico*.
@@ -281,8 +296,13 @@ Tra una discesa e l'altra spendi l'**Essenza Astrale**:
 - **🍺 Taverna** — mostra le classi ancora da conquistare.
 - **📜 Grimorio** — imprese completate e livelli di Maestria.
 - **📚 Archivio di Aethelgard** — tre tomi da sbloccare scendendo nel labirinto. Ognuno dà un bonus permanente: più Oro e fuga, danni contro i boss, difesa.
+- **🔥 Il Fuoco del Campo** — chi incontri nel Labirinto può venire a scaldarsi qui. *Silas*, *la Cartografa*, *il Viandante Cieco* e, se lo hai liberato, *la luce di Alaric* compaiono quando le loro storie sono andate abbastanza avanti. Ti parlano in base a ciò che hai fatto e la prima volta ti lasciano un dono (✦). Qui costruisci anche, con l'Essenza:
+  - *il Tavolo della Cartografa* (aiutala nel Labirinto): sulla mappa vedi quali storie ti aspettano nelle stanze speciali e negli eventi che tornano;
+  - *lo Scrittoio di Silas* (salvalo): a ogni partenza scegli un dono fra +20 HP Max, +3 ATK e +100 Oro;
+  - *l'Altare della Purificazione*: la Corruzione cresce del 25% in meno.
 - **📖 Il Codice del Labirinto** — tutto ciò che hai scoperto, raccolto fra una run e l'altra, con la percentuale di completamento. Ciò che manca è segnato con ???.
   - *Reazioni elementali*: le combinazioni di elementi che hai scatenato almeno una volta.
+  - *Finali*: quelli che hai visto, e un indizio per gli altri.
   - *Bestiario*: nemici e boss incontrati e sconfitti; la loro storia si legge solo dopo averli battuti.
   - *Personaggi*: i capitoli vissuti con Alaric e Silas, e il segno lasciato dalle tue scelte.
   - *Eventi*: quali hai visto e quante volte.

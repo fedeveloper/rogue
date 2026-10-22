@@ -145,7 +145,7 @@ class RenderTest(Sandbox):
         with quiet(), mock.patch("roguelike._hero_selection", return_value=("1", "base", [])), mock.patch("roguelike.interactive_menu", side_effect=menu), \
              mock.patch("roguelike.combat_room", side_effect=lambda p, f, e: bosses.append((f, e.is_boss))), mock.patch.multiple("roguelike", **rooms), \
              mock.patch("roguelike.evaluate_run"), mock.patch("roguelike.wait_enter"), mock.patch("roguelike.clear_screen"), \
-             mock.patch("roguelike.delay_print"), mock.patch("roguelike.time.sleep"), mock.patch("roguelike._grant_victory_rewards"), \
+             mock.patch("roguelike.delay_print"), mock.patch("roguelike.time.sleep"), mock.patch("roguelike._grant_victory_rewards"), mock.patch("roguelike.choose_ending"), mock.patch("roguelike.start_of_run_boon"), \
              mock.patch("roguelike.reachable", wraps=floor_map.reachable) as reach:
             roguelike.play_game()
         self.assertEqual(len(visited), 30 * 5)
