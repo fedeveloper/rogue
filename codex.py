@@ -1,0 +1,142 @@
+"""Il Codice del Labirinto: ciò che hai visto, incontrato e scoperto, raccolto fra una run e l'altra.
+
+Il gioco registra qui nemici incontrati e sconfitti, lettere lette sulle pareti e reliquie trovate; eventi visti,
+flag e contatori dei personaggi vengono dalla memoria del Labirinto (`PROFILE_MANAGER.story`).
+Ciò che non hai ancora scoperto compare come "???".
+"""
+from typing import List, Tuple
+
+from data_manager import GAME_DATA, PROFILE_MANAGER, RAW_DATA, get_element_icon
+from ui import Colors, clear_screen, display_msg, interactive_menu, wait_enter
+
+UNKNOWN = f"{Colors.RED}???{Colors.RESET}"
+
+
+# ------------------------------------------------------------------ registrazione
+def _enemy(name: str) -> dict:
+    return PROFILE_MANAGER.codex["enemies"].setdefault(name, {"seen": 0, "killed": 0})
+
+
+def record_enemy_seen(name: str):
+    _enemy(name)["seen"] += 1
+
+
+def record_enemy_killed(name: str):
+    _enemy(name)["killed"] += 1
+
+
+def record_letter(index: int):
+    if index not in PROFILE_MANAGER.codex["letters"]: PROFILE_MANAGER.codex["letters"].append(index)
+
+
+def record_relic(relic_id: str):
+    if relic_id not in PROFILE_MANAGER.codex["relics"]: PROFILE_MANAGER.codex["relics"].append(relic_id)
+
+
+# ------------------------------------------------------------------ capitoli dei personaggi
+def character_chapters(char_id: str) -> int:
+    """Quanti capitoli della storia del personaggio hai vissuto."""
+    char = GAME_DATA["story"]["characters"][char_id]
+    return min(len(char["chapters"]), PROFILE_MANAGER.get_counter(char["counter"]))
+
+
+# ------------------------------------------------------------------ completamento
+def sections() -> List[Tuple[str, int, int]]:
+    """(nome, scoperti, totale) per ogni sezione del Codice."""
+    enemies = PROFILE_MANAGER.codex["enemies"]
+    bestiary = list(RAW_DATA["enemies"]) + list(RAW_DATA["bosses"])
+    chars = GAME_DATA["story"]["characters"]
+    events = [k for k in GAME_DATA["events"]]
+    return [
+        ("Bestiario", sum(1 for n in bestiary if enemies.get(n, {}).get("killed")), len(bestiary)),
+        ("Personaggi", sum(character_chapters(c) for c in chars), sum(len(c["chapters"]) for c in chars.values())),
+        ("Eventi", sum(1 for k in events if PROFILE_MANAGER.story["seen_events"].get(k)), len(events)),
+        ("Lettere insanguinate", len(set(PROFILE_MANAGER.codex["letters"]) & set(range(len(GAME_DATA["lore"]["letters"])))), len(GAME_DATA["lore"]["letters"])),
+        ("Reliquie", len(set(PROFILE_MANAGER.codex["relics"]) & {r["id"] for r in RAW_DATA["relics"]}), len(RAW_DATA["relics"])),
+    ]
+
+
+def completion() -> int:
+    found = sum(s[1] for s in sections())
+    total = sum(s[2] for s in sections())
+    return found * 100 // total if total else 0
+
+
+# ------------------------------------------------------------------ pagine
+def bestiary_page() -> List[str]:
+    lines = []
+    known = PROFILE_MANAGER.codex["enemies"]
+    for title, pool in (("NEMICI", RAW_DATA["enemies"]), ("BOSS", RAW_DATA["bosses"])):
+        lines.append(f"{Colors.YELLOW}{Colors.BOLD}{title}{Colors.RESET}")
+        for name, data in sorted(pool.items(), key=lambda kv: kv[1]["base_hp"] * kv[1]["base_atk"]):
+            rec = known.get(name)
+            if not rec or not rec["seen"]:
+                lines.append(f"  {UNKNOWN}")
+                continue
+            head = f"  {Colors.BOLD}{name}{Colors.RESET}" + (f" — {data['title']}" if data.get("title") else "")
+            lines.append(f"{head} [{get_element_icon(data['element'])}]  incontri {rec['seen']} · sconfitti {rec['killed']}")
+            if rec["killed"] and data.get("lore"): lines.append(f"    {Colors.CYAN}{data['lore']}{Colors.RESET}")
+            elif not rec["killed"]: lines.append(f"    {Colors.RED}Sconfiggilo per conoscerne la storia.{Colors.RESET}")
+    return lines
+
+
+def characters_page() -> List[str]:
+    lines = []
+    for char_id, char in GAME_DATA["story"]["characters"].items():
+        done = character_chapters(char_id)
+        if not done:
+            lines += [f"{UNKNOWN} — {Colors.RED}{char['hint']}{Colors.RESET}", ""]
+            continue
+        lines.append(f"{Colors.MAGENTA}{Colors.BOLD}{char['name']}{Colors.RESET}, {char['epithet']}  ({done}/{len(char['chapters'])})")
+        for i, chapter in enumerate(char["chapters"]):
+            lines.append(f"  {i + 1}. {chapter['text']}" if i < done else f"  {i + 1}. {UNKNOWN}")
+        for note in char.get("notes", []):
+            if PROFILE_MANAGER.get_flag(note["flag"]): lines.append(f"  {Colors.YELLOW}✦ {note['text']}{Colors.RESET}")
+        lines.append("")
+    return lines
+
+
+def events_page() -> List[str]:
+    seen = PROFILE_MANAGER.story["seen_events"]
+    lines = []
+    for ev_id, ev in GAME_DATA["events"].items():
+        n = seen.get(ev_id, 0)
+        lines.append(f"  {ev['title']}  {Colors.CYAN}(visto {n} {'volta' if n == 1 else 'volte'}){Colors.RESET}" if n else f"  {UNKNOWN}")
+    return lines
+
+
+def letters_page() -> List[str]:
+    found = set(PROFILE_MANAGER.codex["letters"])
+    return [f"  {i + 1:2d}. \"{text}\"" if i in found else f"  {i + 1:2d}. {UNKNOWN}" for i, text in enumerate(GAME_DATA["lore"]["letters"])]
+
+
+def relics_page() -> List[str]:
+    found = set(PROFILE_MANAGER.codex["relics"])
+    lines = []
+    for r in RAW_DATA["relics"]:
+        if r["id"] in found:
+            lines.append(f"  {Colors.MAGENTA}{r['name']}{Colors.RESET} — {r['desc']}")
+            if r.get("lore"): lines.append(f"    {Colors.YELLOW}{r['lore']}{Colors.RESET}")
+        else:
+            lines.append(f"  {UNKNOWN}")
+    return lines
+
+
+PAGES = {"Bestiario": bestiary_page, "Personaggi": characters_page, "Eventi": events_page,
+         "Lettere insanguinate": letters_page, "Reliquie": relics_page}
+
+
+def show_codex():
+    while True:
+        clear_screen()
+        stats = sections()
+        options = [f"{name} ({found}/{total})" for name, found, total in stats]
+        prompt = (f"{Colors.MAGENTA}{Colors.BOLD}=== 📖 IL CODICE DEL LABIRINTO ==={Colors.RESET}\n"
+                  f"Completato al {Colors.CYAN}{completion()}%{Colors.RESET}. Ciò che non hai ancora scoperto è segnato con ???")
+        idx = interactive_menu(options, prompt, cancellable=True)
+        if idx == -1: break  # "Indietro", aggiunto dal menu
+        name = stats[idx][0]
+        clear_screen()
+        display_msg(f"{Colors.MAGENTA}{Colors.BOLD}--- {name.upper()} ({stats[idx][1]}/{stats[idx][2]}) ---{Colors.RESET}\n")
+        for line in PAGES[name](): display_msg(line)
+        wait_enter("\nPremi INVIO per tornare al Codice...")

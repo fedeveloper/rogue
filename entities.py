@@ -4,6 +4,7 @@ from ui import Colors, delay_print, clear_screen, display_msg, interactive_menu
 from data_manager import GAME_DATA, RAW_DATA, PROFILE_MANAGER, ELEMENTS, MULTIPLIERS, get_element_icon
 from relic_effects import create_relic_effect
 from archive import get_archive_bonus
+from codex import record_relic
 from constants import BASE_HIT_CHANCE, ENEMY_DEPTH_WINDOW, BOSS_DEPTH_WINDOW, INFINITE_MODE_THRESHOLD, WEAPON_LEVEL_SCALING, ARMOR_LEVEL_SCALING, CURSE_CHANCE, CURSE_STAT_MULTIPLIER
 
 class Item:
@@ -290,6 +291,7 @@ class Player:
 
         self.relics.append(relic)
         self.relic_ids.append(relic["id"])
+        record_relic(relic["id"])
         effect = create_relic_effect(relic["id"])
         self.relic_effects.append(effect)
         effect.on_equip(self)
@@ -409,7 +411,9 @@ def pick_enemy_name(floor: int, is_boss: bool, final: bool = False) -> str:
     if final:
         finals = [n for n, d in pool.items() if d.get("final_boss")]
         if finals: return random.choice(finals)
-    ranked = sorted((n for n, d in pool.items() if not d.get("final_boss")), key=lambda n: pool[n]["base_hp"] * pool[n]["base_atk"])
+    # Un boss il cui destino si è compiuto in una storia (es. Sir Alaric liberato) non torna più
+    candidates = [n for n, d in pool.items() if not d.get("final_boss") and not PROFILE_MANAGER.get_flag(d.get("retired_by_flag", ""))]
+    ranked = sorted(candidates, key=lambda n: pool[n]["base_hp"] * pool[n]["base_atk"])
     window = min(len(ranked), BOSS_DEPTH_WINDOW if is_boss else ENEMY_DEPTH_WINDOW)
     progress = min(1.0, max(0.0, (floor - 1) / (INFINITE_MODE_THRESHOLD - 1)))
     lo = round(progress * (len(ranked) - 1) - (window - 1) / 2)
@@ -422,6 +426,7 @@ class Enemy:
         self.modifier = modifier
         category = "bosses" if is_boss else "enemies"
         self.name = pick_enemy_name(floor, is_boss, final)
+        self.base_name = self.name  # senza i suffissi (Potenziato)/(Debilitato): è la voce del Bestiario
         data = GAME_DATA[category][self.name]
         
         self.element, self.base_acc, self.base_dodge = data["element"], data["base_acc"], data["base_dodge"]

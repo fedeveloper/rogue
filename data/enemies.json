@@ -36,7 +36,7 @@
         "Cavaliere Oscuro": {
             "element": "Tenebra", "base_hp": 80, "base_atk": 10, "base_dodge": 10, "base_acc": 15,
             "title": "L'Ultimo Sigillo",
-            "lore": "Sir Alaric, custode di una porta che non conduce più a nulla."
+            "lore": "Sir Alaric, custode di una porta che non conduce più a nulla.", "retired_by_flag": "alaric_liberato"
         },
         "Drago di Zaffiro": {
             "element": "Acqua", "base_hp": 100, "base_atk": 12, "base_dodge": 10, "base_acc": 15,

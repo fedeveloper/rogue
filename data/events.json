@@ -460,5 +460,155 @@
         ]
       }
     }
+  },
+
+  "giardino_sepolto": {
+    "title": "Il Giardino Sepolto",
+    "requires": {"max_floor": 20},
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Il soffitto di questa grotta è crollato secoli fa. Sotto le macerie, dove nessuno l'ha mai seminato, cresce un piccolo campo di lavanda. Il profumo è così forte che per un istante dimentichi dove sei.",
+        "choices": [
+          {"text": "Raccogli un fiore di lavanda", "msg": "Lo avvolgi in un pezzo di stoffa. Non sai perché, ma ti sembra importante.", "effects": [{"quest_item": "fiore_lavanda"}]},
+          {"text": "Sdraiati tra i fiori", "msg": "Chiudi gli occhi. Quando li riapri, le ferite fanno meno male.", "effects": [{"heal_pct": 40}]},
+          {"text": "Strappa le radici per venderle", "msg": "La lavanda del Labirinto vale oro, per chi sa a chi venderla.", "effects": [{"gold": 40}]},
+          {"text": "Lascia il giardino com'è", "msg": "Ti allontani in punta di piedi, come da una tomba."}
+        ]
+      }
+    }
+  },
+
+  "alaric_porta": {
+    "title": "Il Cavaliere alla Porta",
+    "requires": {"min_floor": 3, "max_floor": 14, "counter_below": {"alaric": 1}},
+    "weight": 3,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Un cavaliere in armatura d'ossidiana sbarra un arco di pietra. Oltre l'arco non c'è niente: solo un muro liscio. 'Nessuno passa,' dice. La sua voce è un'eco che arriva da molto lontano.",
+        "choices": [
+          {"text": "Chiedigli cosa custodisce", "next": "domanda"},
+          {"text": "Saluta con il segno degli Architetti", "requires": {"class": "4"}, "msg": "Il cavaliere si irrigidisce. Poi, lentamente, risponde al saluto. 'Fratello. Credevo che non ne fosse rimasto nessuno.'", "effects": [{"def": 3}, {"flag": "alaric_paladino"}, {"counter": "alaric"}, {"run_flag": "alaric_visto"}]},
+          {"text": "Sfidalo", "msg": "'Sia.' Sguaina una lama che non riflette la luce.", "effects": [{"fight": "elite"}, {"atk": 4}, {"counter": "alaric"}, {"run_flag": "alaric_visto"}]},
+          {"text": "Torna sui tuoi passi", "msg": "Il cavaliere non ti guarda andare via. Continua a fissare il muro."}
+        ]
+      },
+      "domanda": {
+        "text": "'Custodisco la porta,' risponde. 'Gli Architetti mi ordinarono di non lasciar passare il Vuoto. Poi la Luce divenne crudele, e gli Architetti tacquero.' Inclina l'elmo. 'Ora la custodisco perché è l'unica cosa che ricordo di saper fare.'",
+        "choices": [
+          {"text": "Digli che i suoi Architetti non torneranno", "msg": "Il cavaliere tace a lungo. 'Lo so,' dice infine. 'Ma se smetto di aspettarli, cosa resta di me?'", "effects": [{"exp": 60}, {"counter": "alaric"}, {"run_flag": "alaric_visto"}]},
+          {"text": "Promettigli che tornerai", "msg": "'Molti l'hanno promesso.' Eppure abbassa lo scudo, e il calore di una luce antica ti chiude le ferite.", "effects": [{"heal_pct": 40}, {"counter": "alaric"}, {"run_flag": "alaric_visto"}]}
+        ]
+      }
+    }
+  },
+
+  "alaric_stanco": {
+    "title": "Il Cavaliere Stanco",
+    "requires": {"min_floor": 6, "max_floor": 22, "counter": {"alaric": 1}, "counter_below": {"alaric": 2}, "not_run_flag": "alaric_visto"},
+    "weight": 3,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Ritrovi il cavaliere seduto sui gradini di una cappella in rovina. Si è tolto l'elmo: sotto l'ossidiana c'è un volto di cenere, e occhi che hanno smesso di aspettare. 'Sei tornato,' dice. 'Nessuno torna mai.'",
+        "extra": [
+          {"requires": {"flag": "alaric_paladino"}, "text": "'Fratello d'ordine. Siediti con me.'"}
+        ],
+        "choices": [
+          {"text": "Porgigli il fiore di lavanda", "requires": {"quest_item": "fiore_lavanda"}, "show_locked": true, "locked_hint": "Una lettera parlava di un fiore...", "msg": "Il cavaliere prende il fiore con due dita, come se potesse rompersi. 'Lavanda. Mia figlia ne coltivava un campo intero, a Valeriana.' Per la prima volta, sorride, e ti dona l'anello che portava al collo.", "effects": [{"take_quest_item": "fiore_lavanda"}, {"heal_pct": 100}, {"accessory": true}, {"flag": "alaric_lavanda"}, {"counter": "alaric"}, {"run_flag": "alaric_visto"}]},
+          {"text": "Siediti accanto a lui in silenzio", "msg": "Restate così a lungo. Quando ti rialzi, il Labirinto ti sembra un po' meno grande.", "effects": [{"exp": 80}, {"counter": "alaric"}, {"run_flag": "alaric_visto"}]},
+          {"text": "Approfitta della sua debolezza", "msg": "'Anche tu,' sospira, e si rimette l'elmo.", "effects": [{"fight": "elite"}, {"weapon": "epic", "level": 2}, {"flag": "alaric_tradito"}, {"counter": "alaric"}, {"run_flag": "alaric_visto"}]},
+          {"text": "Lascialo riposare", "msg": "Non è il momento. Forse lo ritroverai più avanti."}
+        ]
+      }
+    }
+  },
+
+  "alaric_sigillo": {
+    "title": "L'Ultimo Sigillo",
+    "requires": {"min_floor": 12, "counter": {"alaric": 2}, "counter_below": {"alaric": 3}, "not_run_flag": "alaric_visto"},
+    "weight": 3,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "L'arco di pietra è di nuovo davanti a te, ma il cavaliere non lo sbarra più: ci è inginocchiato davanti. Sulla sua schiena, inciso nell'ossidiana, brilla un sigillo di luce. 'Il giuramento mi tiene qui,' dice. 'Non posso morire finché la porta ha un custode. Spezzalo.'",
+        "extra": [
+          {"requires": {"flag": "alaric_tradito"}, "text": "'Mi hai colpito alle spalle, una volta. Proprio per questo so che ne sei capace.'"},
+          {"requires": {"flag": "alaric_lavanda"}, "text": "Tra le dita stringe ancora il fiore di lavanda, secco."}
+        ],
+        "choices": [
+          {"text": "Spezza il sigillo", "msg": "Il sigillo ti brucia le mani come ferro rovente. Poi si spezza, e il cavaliere si dissolve in una luce calma, quasi tiepida. 'Grazie.' Il Cavaliere Oscuro non custodirà più nessuna porta.", "effects": [{"damage": 30}, {"relic": "random"}, {"essence": 100}, {"flag": "alaric_liberato"}, {"counter": "alaric"}, {"run_flag": "alaric_visto"}]},
+          {"text": "Giura di prendere il suo posto", "msg": "Il sigillo scivola dalla sua schiena alla tua. Alaric si alza leggero e scompare oltre l'arco. Senti il peso di un giuramento che non finirà con questa discesa.", "effects": [{"atk": 10}, {"def": 5}, {"max_hp": 20}, {"flag": "alaric_erede"}, {"counter": "alaric"}, {"run_flag": "alaric_visto"}]},
+          {"text": "Non sono pronto", "msg": "'Nessuno lo è,' risponde, e torna a guardare il muro."}
+        ]
+      }
+    }
+  },
+
+  "silas_fuoco": {
+    "title": "Il Cercatore",
+    "requires": {"min_floor": 2, "max_floor": 12, "counter_below": {"silas": 1}},
+    "weight": 3,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Un uomo magro scrive alla luce di un fuoco azzurro, così concentrato da non accorgersi di te. 'Giorno quattro... no. Cinque.' Alza gli occhi. 'Sei nuovo. Si vede da come guardi le ombre.'",
+        "choices": [
+          {"text": "Siediti al suo fuoco", "msg": "'Mi chiamo Silas. Cerco il fondo.' Ti offre una zuppa che sa di cenere. 'Se ci arrivi prima di me, lasciami un segno.'", "effects": [{"heal_pct": 40}, {"counter": "silas"}, {"run_flag": "silas_visto"}]},
+          {"text": "Chiedigli del Labirinto", "msg": "'Il Labirinto non è un luogo. È un ricordo che qualcuno si rifiuta di lasciar andare.' Ti guarda. 'Forse il tuo.'", "effects": [{"exp": 50}, {"counter": "silas"}, {"run_flag": "silas_visto"}]},
+          {"text": "Leggi il diario mentre non guarda", "requires": {"class": ["2", "7"]}, "msg": "Tra le pagine fitte, una frase sottolineata tre volte: 'Il nuovo arrivato. Non fidarti.' Accanto c'è un ritratto. È il tuo.", "effects": [{"exp": 80}, {"flag": "silas_letto"}, {"counter": "silas"}, {"run_flag": "silas_visto"}]},
+          {"text": "Lascialo scrivere", "msg": "Il grattare della penna ti segue per un po', poi si perde."}
+        ]
+      }
+    }
+  },
+
+  "silas_tracce": {
+    "title": "Il Diario Strappato",
+    "requires": {"min_floor": 8, "max_floor": 22, "counter": {"silas": 1}, "counter_below": {"silas": 2}, "not_run_flag": "silas_visto"},
+    "weight": 3,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Il fuoco azzurro è spento. Intorno ci sono pagine strappate del diario di Silas, e una scia d'inchiostro che si allontana nel buio, come se qualcuno fosse stato trascinato via mentre scriveva.",
+        "extra": [
+          {"requires": {"flag": "silas_letto"}, "text": "Su una pagina c'è il tuo ritratto, cancellato con furia."}
+        ],
+        "choices": [
+          {"text": "Segui la scia d'inchiostro", "next": "lotta"},
+          {"text": "Raccogli le pagine e prosegui", "msg": "Le pagine parlano di un drago fatto di lacrime e di una porta al piano trenta. Di Silas, nessuna traccia.", "effects": [{"exp": 60}, {"flag": "silas_abbandonato"}, {"counter": "silas"}, {"run_flag": "silas_visto"}]},
+          {"text": "Non è affar tuo", "msg": "Calpesti le pagine senza leggerle."}
+        ]
+      },
+      "lotta": {
+        "text": "In fondo alla scia, Silas è schiacciato contro la parete da qualcosa fatto d'ombra e d'inchiostro. Scrive ancora, con la mano libera, come se descrivere il mostro potesse fermarlo.",
+        "choices": [
+          {"text": "Aiutalo", "msg": "Ti lanci tra Silas e la creatura.", "effects": [{"fight": "hard"}, {"potion": 2}, {"flag": "silas_salvato"}, {"counter": "silas"}, {"run_flag": "silas_visto"}]},
+          {"text": "Resta a guardare", "msg": "Silas se la cava da solo, a stento. Quando ti vede, chiude il diario. 'Ho scritto anche questo,' dice, e se ne va zoppicando.", "effects": [{"exp": 100}, {"flag": "silas_abbandonato"}, {"counter": "silas"}, {"run_flag": "silas_visto"}]}
+        ]
+      }
+    }
+  },
+
+  "silas_soglia": {
+    "title": "La Soglia",
+    "requires": {"min_floor": 18, "counter": {"silas": 2}, "counter_below": {"silas": 3}, "not_run_flag": "silas_visto"},
+    "weight": 3,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Una porta d'ossidiana alta quanto il cielo che non vedi da settimane. Seduto davanti c'è Silas. Il diario è finito: resta solo l'ultima pagina, bianca. 'Ci sono stato,' dice. 'Oltre la soglia. Non c'è un mostro. C'è uno specchio.'",
+        "extra": [
+          {"requires": {"flag": "silas_salvato"}, "text": "'Ti devo la vita. Per questo te lo dico.'"},
+          {"requires": {"flag": "silas_abbandonato"}, "text": "'Non ti devo niente. Te lo dico lo stesso.'"}
+        ],
+        "choices": [
+          {"text": "Chiedigli cosa ha visto nello specchio", "msg": "'Aethelgard. Come sarebbe stata se non avessimo mai provato a dominare gli elementi.' Chiude gli occhi. 'Era così bella che sono tornato indietro.'", "effects": [{"essence": 100}, {"flag": "silas_verita"}, {"counter": "silas"}, {"run_flag": "silas_visto"}]},
+          {"text": "Proponigli di scendere insieme", "requires": {"flag": "silas_salvato"}, "msg": "Silas ci pensa a lungo. Poi strappa l'ultima pagina bianca e te la porge. 'Scrivici tu, la fine.'", "effects": [{"atk": 5}, {"def": 5}, {"flag": "silas_compagno"}, {"counter": "silas"}, {"run_flag": "silas_visto"}]},
+          {"text": "Lascialo alla sua porta", "msg": "Silas annuisce, come se se lo aspettasse."}
+        ]
+      }
+    }
   }
 }

@@ -48,6 +48,7 @@ Negli eventi le scelte contano, e non solo in quella stanza:
 - **Oggetti chiave.** Chiavi, mappe e lanterne trovate in un evento aprono scelte segrete in un altro, a volte molti piani più in basso.
 - **Il Labirinto ricorda.** Alcune scelte lasciano un segno che resta fra una run e l'altra: chi hai aiutato, chi hai derubato, quante volte hai accettato un patto. Le volte successive i personaggi possono riconoscerti.
 - **Conseguenze differite.** Certe scelte tornano qualche piano dopo: una delle porte mostrerà "✦ qualcosa ti stava aspettando".
+- **Personaggi ricorrenti.** *Sir Alaric*, il Primo Paladino, e *Silas*, il Cercatore, hanno una storia in tre capitoli che prosegue da una run all'altra: al massimo un capitolo per run, sempre più in profondità. Le tue scelte cambiano ciò che ti diranno e il loro destino. Un indizio: una lettera sulle pareti parla di un cavaliere stanco e di un fiore di lavanda. E chi libera Alaric non incontrerà più il Cavaliere Oscuro.
 - **Combattimenti negli eventi.** Le ricompense legate a uno scontro arrivano solo se lo vinci; se fuggi, l'evento finisce lì.
 
 ---
@@ -179,6 +180,12 @@ Tra una discesa e l'altra spendi l'**Essenza Astrale**:
 - **🍺 Taverna** — mostra le classi ancora da conquistare.
 - **📜 Grimorio** — imprese completate e livelli di Maestria.
 - **📚 Archivio di Aethelgard** — tre tomi da sbloccare scendendo nel labirinto. Ognuno dà un bonus permanente: più Oro e fuga, danni contro i boss, difesa.
+- **📖 Il Codice del Labirinto** — tutto ciò che hai scoperto, raccolto fra una run e l'altra, con la percentuale di completamento. Ciò che manca è segnato con ???.
+  - *Bestiario*: nemici e boss incontrati e sconfitti; la loro storia si legge solo dopo averli battuti.
+  - *Personaggi*: i capitoli vissuti con Alaric e Silas, e il segno lasciato dalle tue scelte.
+  - *Eventi*: quali hai visto e quante volte.
+  - *Lettere insanguinate*: i messaggi letti sulle pareti prima degli scontri.
+  - *Reliquie*: quelle che hai trovato almeno una volta, con la loro lore.
 - **🧑‍🔧 Gli artigiani** — liberali dagli eventi del labirinto:
   - lo *Speziale* (consumabili);
   - *Borek* (armi);

@@ -413,7 +413,8 @@ class EventContractTest(Sandbox):
         return {"gold": p.gold, "hp": p.hp, "max_hp": p.max_hp, "atk": p.bonus_atk_relic, "def": p.bonus_def,
                 "relics": len(p.relic_ids), "items": len(p.inventory), "quest": sorted(p.quest_items),
                 "essence": p.essence_gathered, "exp": 0, "flags": dict(story["flags"]), "counters": dict(story["counters"]),
-                "npcs": dict(PROFILE_MANAGER._data.get("npc_unlocked", {})), "pending": [list(x) for x in p.pending_events]}
+                "npcs": dict(PROFILE_MANAGER._data.get("npc_unlocked", {})), "pending": [list(x) for x in p.pending_events],
+                "run_flags": sorted(p.run_flags)}
 
     def expected(self, before, effects, floor):
         """Ciò che gli effetti dichiarano, calcolato senza passare dal motore degli eventi."""
@@ -436,6 +437,7 @@ class EventContractTest(Sandbox):
             elif key == "flag": e["flags"][v] = eff.get("value", True)
             elif key == "counter": e["counters"][v] = e["counters"].get(v, 0) + eff.get("add", 1)
             elif key == "later": e["pending"].append([floor + eff.get("floors", 1), v])
+            elif key == "run_flag": e["run_flags"] = sorted(set(e["run_flags"]) | {v})
             elif key != "fight": self.fail(f"effetto senza contratto: {key}")
         return e
 

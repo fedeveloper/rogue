@@ -9,6 +9,7 @@ from rooms import combat_room, mystery_room, vendor_room, campfire_room, treasur
 from events import event_room, pick_event, pop_due_event
 from inventory_menu import show_inventory_menu, show_player_stats
 from archive import show_archive
+from codex import show_codex
 from constants import TEXT_SPEEDS, SPERANZA_LUCE_PCT_PER_LVL, RATIO_GOLD_TO_ESSENCE_ON_DEATH, BOSS_ESSENCE_BONUS, XP_PER_FLOOR, XP_PER_BOSS, INFINITE_MODE_THRESHOLD, INFINITE_MODE_ESSENCE_MULTIPLIER, BLIND_FURY_MIN_ATTACKS
 
 def _update_class_mastery(player: Player, floor: int):
@@ -318,7 +319,8 @@ def base_camp():
             "La Forgia Dimensionale (Sblocca Oggetti)",
             "La Taverna delle Imprese (Sfide ed Eroi)",
             "Grimorio e Imprese",
-            "L'Archivio di Aethelgard (Lore)"
+            "L'Archivio di Aethelgard (Lore)",
+            "Il Codice del Labirinto (Bestiario, Personaggi, Eventi, Lettere, Reliquie)"
         ]
         
         if has_speziale:
@@ -347,6 +349,8 @@ def base_camp():
             base_camp_grimoire()
         elif idx == 4:
             show_archive(PROFILE_MANAGER._data)
+        elif idx == 5:
+            show_codex()
         else:
             opt = options[idx]
             if "Tenda dello Speziale" in opt: base_camp_apothecary()
