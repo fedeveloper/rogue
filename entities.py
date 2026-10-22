@@ -1,7 +1,7 @@
 import random
 from typing import List, Dict
 from ui import Colors, delay_print, clear_screen, display_msg, interactive_menu
-from data_manager import GAME_DATA, RAW_DATA, PROFILE_MANAGER, ELEMENTS, MULTIPLIERS, get_element_icon
+from data_manager import GAME_DATA, RAW_DATA, PROFILE_MANAGER, ELEMENTS, MULTIPLIERS, get_biome, get_element_icon
 from relic_effects import create_relic_effect
 from archive import get_archive_bonus
 from codex import record_relic
@@ -411,14 +411,20 @@ def pick_enemy_name(floor: int, is_boss: bool, final: bool = False) -> str:
     if final:
         finals = [n for n, d in pool.items() if d.get("final_boss")]
         if finals: return random.choice(finals)
+    biome = get_biome(floor)
     # Un boss il cui destino si è compiuto in una storia (es. Sir Alaric liberato) non torna più
-    candidates = [n for n, d in pool.items() if not d.get("final_boss") and not PROFILE_MANAGER.get_flag(d.get("retired_by_flag", ""))]
+    alive = {n: d for n, d in pool.items() if not d.get("final_boss") and not PROFILE_MANAGER.get_flag(d.get("retired_by_flag", ""))}
+    # I nativi di un bioma vivono solo lì, e lì si aggiungono sempre ai candidati della profondità
+    natives = [n for n, d in alive.items() if biome and d.get("biome") == biome["id"]]
+    candidates = [n for n, d in alive.items() if "biome" not in d]
     ranked = sorted(candidates, key=lambda n: pool[n]["base_hp"] * pool[n]["base_atk"])
     window = min(len(ranked), BOSS_DEPTH_WINDOW if is_boss else ENEMY_DEPTH_WINDOW)
     progress = min(1.0, max(0.0, (floor - 1) / (INFINITE_MODE_THRESHOLD - 1)))
     lo = round(progress * (len(ranked) - 1) - (window - 1) / 2)
     lo = max(0, min(lo, len(ranked) - window))
-    return random.choice(ranked[lo:lo + window])
+    picks = ranked[lo:lo + window] + natives
+    affinity = (biome or {}).get("enemy_elements", {})
+    return random.choices(picks, weights=[affinity.get(pool[n]["element"], 1) for n in picks])[0]
 
 class Enemy:
     def __init__(self, floor: int, is_boss: bool, active_pacts: List[str], modifier: str = "normal", final: bool = False):

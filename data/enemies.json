@@ -1,5 +1,7 @@
 {
     "enemies": {
+        "Eco del Rimpianto": {"element": "Luce", "base_hp": 14, "base_atk": 5, "base_dodge": 25, "base_acc": 10, "biome": "chiostri", "lore": "Ha la voce di qualcuno che amavi. Ti chiama finché non ti volti."},
+        "Statua di Sale": {"element": "Terra", "base_hp": 28, "base_atk": 4, "base_dodge": 0, "base_acc": 0, "biome": "chiostri", "lore": "Qualcuno che si è fermato ad ascoltare. Si muove ancora, piano, verso la voce."},
         "Goblin": {"element": "Normale", "base_hp": 15, "base_atk": 4, "base_dodge": 5, "base_acc": 5, "lore": "I resti deformi delle caste mercantili di Aethelgard."},
         "Scheletro": {"element": "Tenebra", "base_hp": 12, "base_atk": 6, "base_dodge": 5, "base_acc": 5, "lore": "Avventurieri 'svuotati' che non possono più morire."},
         "Orco": {"element": "Terra", "base_hp": 25, "base_atk": 5, "base_dodge": 0, "base_acc": 5, "lore": "Antichi minatori la cui pelle si è fusa con il basalto."},
@@ -28,6 +30,7 @@
         "Vampiro Purosangue": {"element": "Tenebra", "base_hp": 40, "base_atk": 11, "base_dodge": 20, "base_acc": 15, "status_inflict": {"type": "bleed", "chance": 30, "duration": 3}, "lore": "Aristocratico decaduto che beve solo sangue puro."}
     },
     "bosses": {
+        "La Badessa del Silenzio": {"element": "Luce", "base_hp": 65, "base_atk": 9, "base_dodge": 10, "base_acc": 15, "biome": "chiostri", "title": "La Voce che Consola", "lore": "Guidava le preghiere dell'accademia. Ora prega perché tu resti per sempre."},
         "Re dei Goblin": {
             "element": "Normale", "base_hp": 60, "base_atk": 8, "base_dodge": 15, "base_acc": 15,
             "title": "Il Sovrano del Nulla",

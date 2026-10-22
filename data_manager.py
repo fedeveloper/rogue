@@ -157,7 +157,8 @@ RAW_DATA = {
     "consumables": load_json_file("consumables.json")["consumables"], "classes": load_json_file("classes.json"),
     "lore": load_json_file("lore.json"), "elements": load_json_file("elements.json"),
     "meta": load_json_file("meta.json"), "events": load_json_file("events.json"), "relics": load_json_file("relics.json")["relics"],
-    "story": load_json_file("story.json")
+    "story": load_json_file("story.json"),
+    "biomes": load_json_file("biomes.json")["biomes"]
 }
 
 def update_game_data():
@@ -165,7 +166,7 @@ def update_game_data():
     GAME_DATA.clear()
     GAME_DATA.update({
         "enemies": RAW_DATA["enemies"], "bosses": RAW_DATA["bosses"], "lore": RAW_DATA["lore"], "elements": RAW_DATA["elements"],
-        "meta": RAW_DATA["meta"], "events": RAW_DATA["events"], "classes": RAW_DATA["classes"], "story": RAW_DATA["story"],
+        "meta": RAW_DATA["meta"], "events": RAW_DATA["events"], "classes": RAW_DATA["classes"], "story": RAW_DATA["story"], "biomes": RAW_DATA["biomes"],
         "relics":[r for r in RAW_DATA["relics"] if r.get("unlock_id") is None or r["unlock_id"] in PROFILE_MANAGER.unlocked_ids],
         "weapons":[w for w in RAW_DATA["weapons"] if w.get("unlock_id") is None or w["unlock_id"] in PROFILE_MANAGER.unlocked_ids],
         "armors":[a for a in RAW_DATA["armors"] if a.get("unlock_id") is None or a["unlock_id"] in PROFILE_MANAGER.unlocked_ids],
@@ -188,6 +189,10 @@ E_ICONS = {}
 MULTIPLIERS = {}
 
 update_game_data()
+
+def get_biome(floor: int):
+    """Il bioma del piano, o None oltre l'ultimo (Modalità Infinita)."""
+    return next((b for b in GAME_DATA["biomes"] if b["floors"][0] <= floor <= b["floors"][1]), None)
 
 def get_element_icon(el_name: str) -> str: 
     return f"{E_ICONS.get(el_name, '')} {el_name}"

@@ -16,7 +16,8 @@ Riferimento per chi modifica il gioco: architettura, formato dei dati, formule d
 
 | Modulo | Responsabilità |
 |---|---|
-| `roguelike.py` | Punto d'ingresso (`main`). Menu principale, Impostazioni, Campo Base (Fuoco dell'Anima, Forgia, Taverna, Grimorio, botteghe), scelta di eroe/tratto/patti, ciclo dei piani (`play_game`), generazione delle porte (`_generate_doors`), fine partita (`evaluate_run`), Maestria e imprese. |
+| `roguelike.py` | Punto d'ingresso (`main`). Menu principale, Impostazioni, Campo Base (Fuoco dell'Anima, Forgia, Taverna, Grimorio, botteghe), scelta di eroe/tratto/patti, ciclo dei piani (`play_game`) con la mappa e l'atmosfera del bioma, fine partita (`evaluate_run`), Maestria e imprese. |
+| `floor_map.py` | Mappa del piano: file di stanze (`generate_row`), collegamenti e stanze speciali (`generate_floor_map`), percorsi (`reachable`), disegno (`render_map`) ed etichette (`room_label`). |
 | `rooms.py` | `CombatSession` (turni, danni, status, Risonanze, fine scontro) e le stanze: mercante, falò, forziere, trappola, mistero. |
 | `codex.py` | Il Codice del Labirinto: registra nemici visti e sconfitti, lettere e reliquie (`record_*`), calcola il completamento e mostra le pagine (`show_codex`). |
 | `events.py` | Motore degli eventi narrativi: condizioni (`CONDITIONS`), effetti (`EFFECTS`), riepiloghi generati dagli effetti, scene a più passi (`event_room`), scelta dell'evento per le porte (`pick_event`), memoria fra le run e conseguenze differite (`pop_due_event`). |
@@ -28,7 +29,7 @@ Riferimento per chi modifica il gioco: architettura, formato dei dati, formule d
 | `ui.py` | Terminale: colori ANSI, lettura dei tasti (Windows e POSIX), menu a frecce (`interactive_menu`), velocità del testo (`delay_print`, `set_text_speed`). |
 | `constants.py` | Costanti di bilanciamento (precisione base, scaling, finestre di profondità, velocità del testo…). |
 
-Dipendenze fra i moduli: `ui` ← `data_manager` ← `archive`/`relic_effects`/`codex` ← `entities` ← `inventory_menu` ← `rooms` ← `events` ← `roguelike`. Nessun modulo importa da uno che sta alla sua destra.
+Dipendenze fra i moduli: `ui` ← `data_manager` ← `archive`/`relic_effects`/`codex` ← `entities` ← `inventory_menu` ← `rooms` ← `events` ← `floor_map` ← `roguelike`. Nessun modulo importa da uno che sta alla sua destra.
 
 ---
 
@@ -54,6 +55,7 @@ Un test controlla che ogni oggetto sbloccabile abbia davvero una di queste strad
 | `elements.json` | Sistema elementale | `list`, `icons`, `multipliers[attaccante][difensore]`, `resonance[elemento] = {value, desc, announce}` |
 | `books.json` | Tomi dell'Archivio | `title`, `unlock_condition` (testo), `unlock = {type: max_floor\|total_bosses\|won_normal, value}`, `bonus = {gold_pct, escape, boss_dmg_pct, def}`, `bonus_desc`, `chapters` |
 | `meta.json` | Regole di contorno | `traits`, `pacts` (`bonus` di Essenza), `feats` (`target`, `reward_type`, `reward_id`), `mastery_xp_requirements`, `rooms.weights`/`rooms.cooldowns` |
+| `biomes.json` | Biomi | `id`, `name`, `icon`, `floors`, `intro`, `hazard`, `room_weights`, `enemy_elements`, `signature_events` (opzionali gli ultimi quattro) |
 | `events.json` | Eventi narrativi | `title`, `start`, `scenes`, `requires` (opz.), `scripted` (opz.), `weight` (opz.): vedi [Eventi narrativi](#eventi-narrativi) |
 | `story.json` | Elementi della storia | `quest_items` (oggetti chiave: `name`, `desc`), `npcs` (nomi degli artigiani), `characters` (personaggi ricorrenti: vedi sotto) |
 | `lore.json` | Frasi d'atmosfera | `combat`, `boss`, `vendor`, `treasure`, `trap`, `campfire`, `letters`, `mystery` |
@@ -107,7 +109,7 @@ Un evento è una piccola storia a **scene**. `start` indica la prima; ogni scena
 
 Una scelta che costa oro è grigia, con "(Oro insufficiente)", se non puoi pagarla.
 
-**Condizioni** (`requires`, tutte in AND): `class`/`not_class` (id o lista), `trait`, `relic`, `quest_item`, `pact`, `gold`, `level`, `atk`, `dodge` (soglie minime), `hp_pct_below`, `min_floor`/`max_floor`, `flag`/`not_flag` (profilo), `run_flag`/`not_run_flag` (run), `counter` (`{"nome": soglia}`, almeno) e `counter_below` (`{"nome": soglia}`, meno di), `npc`/`not_npc`. A livello di evento decidono se l'evento può uscire in una porta; vengono valutate anche senza l'eroe, contando solo piano e profilo.
+**Condizioni** (`requires`, tutte in AND): `class`/`not_class` (id o lista), `trait`, `relic`, `quest_item`, `pact`, `gold`, `level`, `atk`, `dodge` (soglie minime), `hp_pct_below`, `min_floor`/`max_floor`, `flag`/`not_flag` (profilo), `run_flag`/`not_run_flag` (run), `counter` (`{"nome": soglia}`, almeno) e `counter_below` (`{"nome": soglia}`, meno di), `npc`/`not_npc`, `biome` (id del bioma del piano). A livello di evento decidono se l'evento può uscire in una porta; vengono valutate anche senza l'eroe, contando solo piano e profilo.
 
 **Effetti** (una chiave per voce, più eventuali parametri `level`, `floors`, `value`, `add`, `death_msg`):
 
@@ -162,16 +164,34 @@ main() ─▶ menu principale ─▶ play_game(infinite_mode)
           Player(...)           │
                                 ▼
           per ogni piano: rigenerazione (Speranza di Luce)
-            per step 1..5: _generate_doors() ─▶ scelta ─▶ stanza
+            generate_floor_map(): 4 file di stanze + boss, bioma, stanze speciali
+            per step 1..5: render_map() ─▶ scelta fra le stanze collegate ─▶ stanza
             (step 5 = boss; al piano 30 il boss è final_boss)
           piano superato: +20+5·piano HP, max_floor aggiornato
                                 ▼
           evaluate_run(): Essenza, Maestria, imprese, salvataggio
 ```
 
-**Porte.** Ogni tipo di stanza ha un peso (`rooms.weights`) e un tempo di ricarica in passi (`rooms.cooldowns`). I pesi vengono ricalcolati a ogni bivio: ci passano le reliquie con `modify_room_weights`. Due porte dello stesso tipo, o una trappola accanto a un forziere o a un mercante, non escono mai insieme.
+**Mappa del piano.** All'arrivo su un piano `generate_floor_map()` crea 4 file di stanze e il boss.
+- Le file hanno 2 e 3 stanze alternate (2-3-2-3 o 3-2-3-2), in tre colonne (sinistra, centro, destra).
+- Da una stanza si passa a quelle della fila successiva nella stessa colonna o in una accanto: i percorsi non si incrociano, nessuna stanza resta isolata e nessuna è un vicolo cieco.
+- Il giocatore vede tutta la mappa (`render_map`): in verde il percorso fatto, in giallo le stanze raggiungibili ora, in grigio ciò che è ormai fuori strada.
 
-**Nemici per profondità.** `pick_enemy_name()` ordina i candidati per `base_hp × base_atk` e sceglie a caso in una finestra che sale con `(piano − 1) / 29`. La finestra è di `ENEMY_DEPTH_WINDOW` = 6 nemici e di `BOSS_DEPTH_WINDOW` = 5 boss. I boss con `final_boss` sono esclusi da questa scelta.
+**Tipi di stanza.**
+- Ogni tipo ha un peso (`rooms.weights`) e un tempo di ricarica in file (`rooms.cooldowns`), applicati fila dopo fila. I pesi si calcolano all'arrivo sul piano: le reliquie con `modify_room_weights` contano dal piano successivo a quello in cui le trovi.
+- In una fila i tipi sono diversi; solo lo scontro può ripetersi, quando i tempi di ricarica lasciano pochi tipi disponibili.
+- Una trappola non esce mai nella stessa fila di un forziere o di un mercante.
+- Un evento richiamato da `later` prende il posto di una stanza della prima fila. La stanza speciale del bioma va in una delle file centrali, al posto dell'evento della fila se ce n'è uno.
+
+**Biomi** (`biomes.json`). Ogni bioma copre un intervallo di piani (`floors`) e ha `name`, `icon` e `intro` (una frase a caso, mostrata sopra la mappa). I campi opzionali ne fanno un luogo con regole proprie:
+- `hazard` (`name`, `desc`): annunciato all'ingresso nel bioma;
+- `room_weights`: moltiplicatori dei pesi delle stanze;
+- `enemy_elements`: moltiplicatori della probabilità dei nemici di un elemento, dentro la finestra di profondità;
+- `signature_events`: eventi `scripted`, uno per piano, segnati con l'icona del bioma. Se possibile non si ripete quello già visto nella run.
+
+I nemici e i boss con `"biome": "id"` (in `enemies.json`) sono **nativi**: compaiono solo in quel bioma, e lì si aggiungono sempre ai candidati della profondità. La condizione `biome` degli eventi vale nei piani del bioma. Oggi ha tutte le regole *I Chiostri del Rimpianto* (piani 1–5); gli altri cinque biomi hanno nome, icona e atmosfera.
+
+**Nemici per profondità.** `pick_enemy_name()` ordina i candidati non nativi per `base_hp × base_atk` e sceglie in una finestra che sale con `(piano − 1) / 29`. La finestra è di `ENEMY_DEPTH_WINDOW` = 6 nemici e di `BOSS_DEPTH_WINDOW` = 5 boss. Vi si aggiungono i nativi del bioma; la scelta è pesata da `enemy_elements`. I boss con `final_boss` sono esclusi da questa scelta, e quelli con `retired_by_flag` spariscono quando il flag è vero.
 
 **Statistiche dei nemici.** Partendo dai valori base, con `l = piano − 1`:
 
@@ -291,6 +311,7 @@ La CI (`.github/workflows/tests.yml`) li esegue su Python 3.9 e sull'ultima 3.x;
 | `test_depth.py` | Nemici e boss per profondità, boss finale, tratto e antidoto mostrati |
 | `test_refactor.py` | Ciclo del turno, ridisegno dei menu, bonus nei dati, output tramite `ui`, etichette dei consumabili |
 | `test_shops.py` | Botteghe degli artigiani, elenco della Forgia, Cuore di Drago |
+| `test_map.py` | Mappa (file alternate, collegamenti senza incroci né vicoli ciechi, tipi e tempi di ricarica, evento richiamato, disegno, ciclo dei piani reale) e biomi (copertura dei piani, dati, nativi, elementi, pesi delle stanze, stanza speciale per piano, Prima Pietra, annuncio del pericolo) |
 | `test_codex.py` | Codice (registrazione, pagine, completamento, menu) e personaggi ricorrenti (catena dei capitoli, un capitolo per run, boss ritirato, indizio della lavanda) |
 | `test_events.py` | Motore degli eventi: integrità dei dati, opzioni con etichetta e bloccate, scene a più passi, fuga e morte, memoria fra le run, conseguenze differite, scelta degli eventi |
 | `test_contracts.py` | **Contratti descrizione ↔ effetto** per reliquie, armi, armature, monili (anche maledetti), consumabili, scelte degli eventi, tratti, patti, potenziamenti, Maestrie e imprese; ogni sbloccabile è ottenibile |

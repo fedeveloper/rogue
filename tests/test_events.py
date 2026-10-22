@@ -96,6 +96,7 @@ class EventDataTest(Sandbox):
                 if "relic" in req: self.assertIn(req["relic"], relics)
                 if "quest_item" in req: self.assertIn(req["quest_item"], story["quest_items"])
                 if "pact" in req: self.assertIn(req["pact"], GAME_DATA["meta"]["pacts"])
+                if "biome" in req: self.assertIn(req["biome"], {b["id"] for b in GAME_DATA["biomes"]})
                 for k in ("npc", "not_npc"):
                     if k in req: self.assertIn(req[k], story["npcs"])
         for ev_id, eff in all_effects():
@@ -140,6 +141,7 @@ class EventDataTest(Sandbox):
         flags = {eff["flag"] for _, eff in all_effects() if "flag" in eff}
         counters = {eff["counter"] for _, eff in all_effects() if "counter" in eff}
         called = {eff["later"] for _, eff in all_effects() if "later" in eff}
+        called |= {e for b in GAME_DATA["biomes"] for e in b.get("signature_events", [])}  # stanze speciali dei biomi
         for ev_id, req in all_requires():
             with self.subTest(event=ev_id, requires=req):
                 if "quest_item" in req: self.assertIn(req["quest_item"], given)

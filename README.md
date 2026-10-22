@@ -46,11 +46,12 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 
 ## ✨ Perché giocarci
 
-- 🗺️ **Bivi a ogni passo.** Ogni piano ha 5 tappe: a ognuna scegli fra due porte (combattimento, mercante, falò, forziere, trappola, evento o la *Stanza del Mistero*). L'ultima è sempre un boss, e nemici e boss crescono con la profondità.
+- 🗺️ **Una mappa per ogni piano.** Quattro file di stanze collegate (combattimento, mercante, falò, forziere, trappola, evento o la *Stanza del Mistero*) e il boss in fondo, tutte visibili fin dall'arrivo: scegli il percorso, non solo la porta. Nemici e boss crescono con la profondità.
+- 🌍 **Biomi.** Ogni cinque piani il Labirinto cambia volto, dai *Chiostri del Rimpianto* alla *Soglia del Dio Antico*. Il primo ha già le sue regole: nemici nativi, un boss tutto suo, la *Nostalgia Letale* e il segreto della Prima Pietra.
 - 🔥 **Combattimento elementale.** Sette elementi, vantaggi e svantaggi che cambiano danni e precisione, e le **Risonanze** quando arma e armatura condividono l'elemento.
 - 🧬 **8 classi** con alberi di Maestria a 5 livelli che sbloccano bonus, oggetti, reliquie e altre classi.
 - 🎭 **7 tratti** e **5 Patti del Caos**: 3,584 combinazioni di partenza diverse.
-- 📖 **Eventi che ricordano.** 32 storie a scene con opzioni che esistono solo per la tua classe, il tuo tratto o le tue reliquie: `[Mago]`, `[Tocco di Mida]`, `[Chiave Arrugginita]`. Il Labirinto ricorda chi hai aiutato e chi hai derubato, e certe scelte tornano a bussare qualche piano dopo.
+- 📖 **Eventi che ricordano.** 36 storie a scene con opzioni che esistono solo per la tua classe, il tuo tratto o le tue reliquie: `[Mago]`, `[Tocco di Mida]`, `[Chiave Arrugginita]`. Il Labirinto ricorda chi hai aiutato e chi hai derubato, e certe scelte tornano a bussare qualche piano dopo.
 - 🗝️ **Personaggi che ritornano.** *Sir Alaric*, il Primo Paladino, e *Silas*, il Cercatore, hanno storie in tre capitoli che proseguono di run in run. Le tue scelte decidono come finiscono, e se liberi Alaric il Cavaliere Oscuro non tornerà più.
 - 🌟 **30 reliquie** che piegano le regole: danni raddoppiati, scudi, vampirismo, oro moltiplicato.
 - 🏕️ **Meta-progressione profonda**: potenziamenti permanenti, una Forgia per sbloccare equipaggiamento, artigiani da liberare, un Archivio di lore con bonus, imprese da completare.
@@ -308,7 +309,7 @@ L'ATK reale cresce con il piano in cui l'arma viene trovata; le armi di elemento
 <details>
 <summary>🎭 Gli eventi narrativi</summary>
 
-32 storie e 43 scene: *La Fontana Fatata*, *Il Mendicante Ombra*, *Altare del Sangue*, *La Forgia Abissale*, *La Bisca dei Goblin*, *Il Cavaliere Caduto*, *L'Idolo Corrotto*, *Lo Specchio della Verità*, *L'Oasi Sotterranea*, *Il Cadavere del Saggio*, *La Porta Sigillata*, *Lo Speziale Prigioniero*, *Il Maestro d'Armi Prigioniero*, *L'Armaiola Imprigionata*, *L'Incantatore Intrappolato*, *Il Viandante Cieco*, *Il Buio Vivente*, *La Cartografa Perduta*, *La Sala dei Cento Corridoi*, *Il Pozzo dei Desideri*, *Il Banchetto dei Morti*, *La Bilancia di Aethelgard*, *La Voce nel Buio*, *La Voce del Labirinto*, *Il Giardino Sepolto*, *Il Cavaliere alla Porta*, *Il Cavaliere Stanco*, *L'Ultimo Sigillo*, *Il Cercatore*, *Il Diario Strappato*, *La Soglia*… e qualcuno che torna a cercarti più in basso.
+36 storie e 48 scene: *La Fontana Fatata*, *Il Mendicante Ombra*, *Altare del Sangue*, *La Forgia Abissale*, *La Bisca dei Goblin*, *Il Cavaliere Caduto*, *L'Idolo Corrotto*, *Lo Specchio della Verità*, *L'Oasi Sotterranea*, *Il Cadavere del Saggio*, *La Porta Sigillata*, *Lo Speziale Prigioniero*, *Il Maestro d'Armi Prigioniero*, *L'Armaiola Imprigionata*, *L'Incantatore Intrappolato*, *Il Viandante Cieco*, *Il Buio Vivente*, *La Cartografa Perduta*, *La Sala dei Cento Corridoi*, *Il Pozzo dei Desideri*, *Il Banchetto dei Morti*, *La Bilancia di Aethelgard*, *La Voce nel Buio*, *La Voce del Labirinto*, *Il Giardino Sepolto*, *Il Cavaliere alla Porta*, *Il Cavaliere Stanco*, *L'Ultimo Sigillo*, *Il Cercatore*, *Il Diario Strappato*, *La Soglia*, *La Prima Pietra*… e qualcuno che torna a cercarti più in basso.
 
 Ogni scelta mostra i suoi effetti reali, molte opzioni esistono solo per certe classi, tratti o reliquie, gli *oggetti chiave* di un evento aprono strade segrete in un altro e il Labirinto ricorda le tue decisioni da una run all'altra. Quattro eventi nascondono gli artigiani prigionieri.
 
@@ -326,9 +327,9 @@ Ogni scelta mostra i suoi effetti reali, molte opzioni esistono solo per certe c
 | Monili | 16 (8 subito, 8 da sbloccare) |
 | Consumabili | 14 (7 subito, 7 da sbloccare) |
 | Reliquie | 30 (14 subito, 16 da sbloccare) |
-| Nemici comuni | 25 |
-| Boss | 20 |
-| Eventi narrativi | 32 |
+| Nemici comuni | 27 |
+| Boss | 21 |
+| Eventi narrativi | 36 |
 | Imprese | 14 |
 | Tomi dell'Archivio | 3 |
 | Potenziamenti permanenti | 14 |
@@ -342,6 +343,7 @@ Il gioco è **data-driven**: classi, nemici, oggetti, reliquie, eventi, Maestrie
 ```text
 rogue/
 ├── roguelike.py       # Menu principale, Campo Base, scelta dell'eroe, ciclo dei piani, fine partita
+├── floor_map.py       # Mappa del piano: file di stanze, percorsi, biomi, disegno
 ├── rooms.py           # Combattimento (CombatSession) e stanze: mercante, falò, forziere, trappola, mistero
 ├── events.py          # Motore degli eventi: scene, condizioni, effetti, memoria fra le run
 ├── entities.py        # Eroe, nemici e oggetti; generazione dell'equipaggiamento
@@ -376,7 +378,9 @@ I **test di contratto** (`tests/test_contracts.py`) verificano che ogni reliquia
 - [ ] Boss con meccaniche speciali (fasi, immunità, pattern)
 - [x] Eventi a scene, opzioni per classe e tratto, memoria fra le run
 - [x] Personaggi ricorrenti (Sir Alaric, Silas) e il Codice del Labirinto
-- [ ] Mappa dei piani, biomi, finali multipli
+- [x] Mappa dei piani e primo bioma (I Chiostri del Rimpianto)
+- [ ] Regole per gli altri cinque biomi
+- [ ] Finali multipli
 
 ---
 

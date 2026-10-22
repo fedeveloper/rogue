@@ -11,7 +11,7 @@ per la sola discesa in corso, `later` fa riaffiorare un evento qualche piano piÃ
 import random
 from typing import Callable, Dict, List, Optional
 
-from data_manager import GAME_DATA, PROFILE_MANAGER, RAW_DATA
+from data_manager import GAME_DATA, PROFILE_MANAGER, RAW_DATA, get_biome
 from entities import Enemy, Player, generate_accessory, generate_armor, generate_potion, generate_weapon, get_random_relic
 from rooms import combat_room
 from ui import Colors, clear_screen, delay_print, display_msg, interactive_menu, wait_enter
@@ -80,6 +80,7 @@ CONDITIONS: Dict[str, tuple] = {
     "dodge": (lambda p, v, f: p.get_dodge() >= v, lambda v: f"Schivata {v}%+"),
     "hp_pct_below": (lambda p, v, f: p.hp * 100 < p.max_hp * v, lambda v: f"HP sotto il {v}%"),
     "min_floor": (lambda p, v, f: f >= v, None),
+    "biome": (lambda p, v, f: (get_biome(f) or {}).get("id") == v, None),
     "max_floor": (lambda p, v, f: f <= v, None),
     "flag": (lambda p, v, f: get_flag(v), None),
     "not_flag": (lambda p, v, f: not get_flag(v), None),
@@ -91,7 +92,7 @@ CONDITIONS: Dict[str, tuple] = {
     "not_npc": (lambda p, v, f: not PROFILE_MANAGER.get_npc_unlocked(v), None),
 }
 # Condizioni che dipendono solo da piano e profilo: valutabili anche senza un eroe (es. nella scelta delle porte)
-PROFILE_CONDITIONS = {"min_floor", "max_floor", "flag", "not_flag", "counter", "counter_below", "npc", "not_npc"}
+PROFILE_CONDITIONS = {"biome", "min_floor", "max_floor", "flag", "not_flag", "counter", "counter_below", "npc", "not_npc"}
 
 
 def check(player: Optional[Player], requires: dict, floor: int) -> bool:
@@ -281,7 +282,7 @@ def apply_effects(player: Player, effects: List[dict], floor: int) -> bool:
 # ------------------------------------------------------------------ scelta degli eventi
 def is_available(event_id: str, floor: int, player: Optional[Player] = None) -> bool:
     ev = GAME_DATA["events"][event_id]
-    if ev.get("scripted"): return False  # compare solo quando un'altra scelta lo richiama (`later`)
+    if ev.get("scripted"): return False  # compare solo quando lo richiama una scelta (`later`) o un bioma
     return check(player, ev.get("requires"), floor)
 
 
