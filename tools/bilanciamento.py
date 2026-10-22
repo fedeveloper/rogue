@@ -4,11 +4,14 @@ Uso, dalla radice del repository:
     python tools/bilanciamento.py curve               # difesa e attacco degli oggetti generabili contro i nemici, piano per piano
     python tools/bilanciamento.py oggetti             # ogni arma e armatura: colpi per abbattere un nemico, % del colpo assorbita
     python tools/bilanciamento.py run [N] [profilo]   # N run per classe (predefinito 50); profilo: nuovo (predefinito) o completo
+    python tools/bilanciamento.py strategie [N] [profilo]  # le stesse run con diversi modi di scegliere le stanze
 
 Il profilo del giocatore non viene mai letto per le statistiche né salvato: ogni simulazione parte da un profilo
 costruito in memoria ("nuovo": nulla di sbloccato; "completo": tutto sbloccato, potenziamenti e Maestrie al massimo).
 Il giocatore automatico è ragionevole ma non ottimo: si difende dai colpi pesanti, si cura sotto il 35% degli HP,
 riposa ai falò sotto il 70%, equipaggia l'arma e l'armatura con la statistica più alta e sceglie a caso negli eventi.
+Sulla mappa sceglie la stanza in base agli HP (strategia "adattiva"); `strategie` lo confronta con chi segue sempre
+lo stesso ordine di preferenza. Un buon bilanciamento non premia molto nessun ordine fisso rispetto agli altri.
 I risultati vanno letti come confronto fra versioni del gioco, non come la difficoltà vissuta da una persona.
 """
 import contextlib
@@ -25,8 +28,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 os.chdir(ROOT)
 
-with mock.patch("data_manager.ProfileManager._write"):  # nemmeno il caricamento deve toccare profile.json
-    import data_manager
+# Il caricamento riscrive profile.json solo se va migrato da una versione precedente (come all'avvio del gioco);
+# da qui in poi nessun salvataggio arriva al file
 from data_manager import GAME_DATA, PROFILE_MANAGER, RAW_DATA, get_biome, update_game_data
 
 ANSI = re.compile(r"\x1b\[[0-9;?]*[A-Za-z]")
@@ -103,9 +106,18 @@ def plain(text):
     return ANSI.sub("", text or "")
 
 
+# Ordini di preferenza fissi delle stanze (falò e mercante restano scelte di necessità); None: sceglie in base agli HP
+STRATEGIES = {
+    "adattiva": None,
+    "prudente": ["Forziere", "Evento", "Mistero", "Scontro", "Élite", "Trappola"],
+    "aggressiva": ["Élite", "Scontro", "Mistero", "Trappola", "Forziere", "Evento"],
+    "trappole": ["Trappola", "Mistero", "Forziere", "Evento", "Scontro", "Élite"],
+}
+
+
 class Bot:
-    def __init__(self, cls):
-        self.cls, self.player, self.calls, self.state = cls, None, 0, {}
+    def __init__(self, cls, strategy="adattiva"):
+        self.cls, self.player, self.calls, self.state, self.order = cls, None, 0, {}, STRATEGIES[strategy]
 
     def equip(self):
         p = self.player
@@ -131,17 +143,26 @@ class Bot:
         if "Il Dio Antico è caduto" in pr: return 0
         if "Scegli dove proseguire" in pr:
             self.equip()
-            low = p.hp < p.max_hp * 0.5
+            low, high = p.hp < p.max_hp * 0.5, p.hp > p.max_hp * 0.75
             def score(i):
                 o = opts[i]
                 if "Falò" in o: return 10 if low else 3
                 if "Mercante" in o: return 6 if p.gold > 120 else 1
-                if "Forziere" in o: return 7
-                if "Evento" in o: return 5
-                if "Trappola" in o: return 0 if low else 2
-                if "Mistero" in o: return 1 if low else 4
+                if self.order:
+                    return next((len(self.order) - k for k, w in enumerate(self.order) if w in o), 0)
+                if "Élite" in o: return 7 if high else 0
+                if "Forziere" in o: return 5
+                if "Evento" in o: return 4
+                if "Trappola" in o: return 0 if low else 6 if high else 3
+                if "Mistero" in o: return 1 if low else 6
                 return 2 if low else 5
             return max((i for i, o in enumerate(opts) if o.startswith("Entra:")), key=lambda i: (score(i), random.random()))
+        if "Come affronti la trappola" in pr:
+            if p.hp < p.max_hp * 0.35: return 2
+            chances = [int(re.search(r"(\d+)%", o).group(1)) for o in opts[:2]]
+            return chances.index(max(chances))
+        if find("Forza la serratura") is not None: return 0 if p.hp > p.max_hp * 0.4 else 1
+        if find("Aprilo comunque") is not None: return 0 if p.hp > p.max_hp * 0.6 else 1
         if "Intento del nemico" in pr:
             potion = any(i.type == "consumable" and i.category == "heal" for i in p.inventory)
             if p.hp < p.max_hp * 0.35 and potion: self.state["potion"] = True; return 2
@@ -165,11 +186,11 @@ class Bot:
         return -1 if cancellable else 0
 
 
-def play(cls, seed, base):
+def play(cls, seed, base, strategy="adattiva"):
     import camp, endings, entities, events, inventory_menu, roguelike, rooms
     random.seed(seed)
     use_profile(base)
-    bot, log = Bot(cls), {"cls": cls, "hits": 0, "zero": 0, "bosses": [], "killer": None}
+    bot, log = Bot(cls, strategy), {"cls": cls, "hits": 0, "zero": 0, "bosses": [], "killer": None}
     real_player, real_damage, real_start, real_evaluate = entities.Player, rooms.CombatSession._calc_enemy_damage, rooms.CombatSession.start, roguelike.evaluate_run
 
     def make_player(*a):
@@ -204,6 +225,7 @@ def play(cls, seed, base):
             roguelike.play_game()
         except Stuck as e:
             log.update(stuck=str(e), floor=0, won=False, essence=0)
+    log["level"] = bot.player.level if bot.player else 1
     if not log["won"]:
         b = get_biome(log["floor"])
         log["biome"] = b["id"] if b else "oltre"
@@ -230,9 +252,22 @@ def cmd_run(n, kind):
     if stuck: print(f"ATTENZIONE: {len(stuck)} run bloccate, es.: {stuck[0]['stuck'][:300]}")
 
 
+def cmd_strategie(n, kind):
+    base = profile(kind)
+    use_profile(base)
+    classes = list(GAME_DATA["classes"]) if kind == "completo" else [c for c, d in RAW_DATA["classes"].items() if d.get("unlocked_by_default", True)]
+    print(f"profilo {kind}: {n} run per classe e per strategia")
+    print(f"{'strategia':<11} {'vittorie':>8} {'piano mediano':>13} {'livello mediano':>15}")
+    for strategy in STRATEGIES:
+        logs = [play(c, int(c) * 100003 + i * 7919, base, strategy) for c in classes for i in range(n)]
+        print(f"{strategy:<11} {sum(l['won'] for l in logs) / len(logs) * 100:>7.0f}% {st.median(l['floor'] for l in logs):>13} "
+              f"{st.median(l['level'] for l in logs):>15}")
+
+
 if __name__ == "__main__":
     args = sys.argv[1:] or ["curve"]
     if args[0] == "curve": cmd_curve()
     elif args[0] == "oggetti": cmd_oggetti()
     elif args[0] == "run": cmd_run(int(args[1]) if len(args) > 1 else 50, args[2] if len(args) > 2 else "nuovo")
+    elif args[0] == "strategie": cmd_strategie(int(args[1]) if len(args) > 1 else 30, args[2] if len(args) > 2 else "nuovo")
     else: print(__doc__)

@@ -12,13 +12,14 @@ from constants import INFINITE_MODE_THRESHOLD
 from data_manager import GAME_DATA, PROFILE_MANAGER, get_biome, get_element_icon
 from entities import Enemy, Player
 from events import pick_event, pop_due_event
+from rooms import MYSTERY_NAMES, chest_risks, mystery_odds
 from ui import Colors, display_msg, visible_width
 
 ROWS = 4  # file di stanze prima del boss
 TALL_MAP_ROWS = 30  # da quest'altezza del terminale i collegamenti occupano due righe
 # Solo emoji larghe di natura (senza selettore di variante): le colonne della mappa restano allineate in ogni terminale
-ROOM_ICONS = {"combat": "👹", "vendor": "💰", "campfire": "🔥", "treasure": "💎", "trap": "💀", "event": "🎭", "mystery": "❓", "boss": "👑"}
-ROOM_NAMES = {"combat": "Scontro", "vendor": "Mercante", "campfire": "Falò", "treasure": "Forziere", "trap": "Trappola",
+ROOM_ICONS = {"combat": "👹", "elite": "👺", "vendor": "💰", "campfire": "🔥", "treasure": "💎", "trap": "💀", "event": "🎭", "mystery": "❓", "boss": "👑"}
+ROOM_NAMES = {"combat": "Scontro", "elite": "Élite", "vendor": "Mercante", "campfire": "Falò", "treasure": "Forziere", "trap": "Trappola",
               "event": "Evento", "mystery": "Mistero", "boss": "Boss"}
 SLOTS = {1: [1], 2: [0, 2], 3: [0, 1, 2]}
 SIDES = {0: "sinistra", 1: "centro", 2: "destra"}
@@ -40,6 +41,7 @@ def generate_row(floor: int, step: int, weights_def: dict, cooldowns_def: dict, 
         return [{"type": "boss", "enemy": Enemy(floor, True, active_pacts, final=floor == INFINITE_MODE_THRESHOLD)}]
 
     avail = {rt: w for rt, w in weights_def.items() if room_cooldowns.get(rt, 0) <= 0 and w > 0}
+    if floor < GAME_DATA["meta"]["rooms"]["elite"]["from_floor"]: avail.pop("elite", None)
     if len(avail) < 2: avail = {"combat": 100, "mystery": 1}
     while True:
         types = []
@@ -54,7 +56,9 @@ def generate_row(floor: int, step: int, weights_def: dict, cooldowns_def: dict, 
     for rt in types:
         d = {"type": rt}
         if rt == "combat": d["enemy"] = Enemy(floor, False, active_pacts)
+        if rt == "elite": d["enemy"] = Enemy(floor, False, active_pacts, modifier="elite")
         if rt == "event": d["event_id"] = pick_event(floor, player)
+        if rt == "treasure": d["risk"] = round(sum(chest_risks(floor).values()))
         row.append(d)
     return row
 
@@ -127,10 +131,17 @@ def room_label(d: dict, sixth_sense: bool = False, biome: Optional[dict] = None)
     # Il Tavolo della Cartografa: le storie delle stanze speciali e degli eventi che tornano sono segnate sulla mappa
     if not sixth_sense and d["type"] == "event" and (d.get("signature") or d.get("fated")) and PROFILE_MANAGER.get_flag("camp_tavolo_cartografa"):
         label += f" ({GAME_DATA['events'][d['event_id']]['title']})"
+    # Ciò che la stanza promette, in cambio del rischio
+    if d["type"] == "combat": label += f" {Colors.CYAN}+{d['enemy'].exp_drop} EXP{Colors.RESET}"
+    elif d["type"] == "elite": label += f" {Colors.CYAN}+{d['enemy'].exp_drop} EXP{Colors.RESET} {Colors.MAGENTA}· reliquia o equipaggiamento{Colors.RESET}"
+    elif d["type"] == "trap": label += f" {Colors.MAGENTA}· custodisce un oggetto{Colors.RESET}"
+    elif d["type"] == "treasure" and d.get("risk"): label += f" {Colors.RED}· {d['risk']}% chiuso o Mimic{Colors.RESET}"
     if sixth_sense:
-        if d["type"] in ("combat", "boss"): label += f" ({d['enemy'].name} {get_element_icon(d['enemy'].element)})"
+        if d["type"] in ("combat", "elite", "boss"): label += f" ({d['enemy'].name} {get_element_icon(d['enemy'].element)})"
         elif d["type"] == "event": label += f" ({GAME_DATA['events'][d['event_id']]['title']})"
-        elif d["type"] == "mystery": label += f" ({Colors.MAGENTA}Aura illeggibile{Colors.RESET})"
+        elif d["type"] == "mystery":
+            odds = " · ".join(f"{MYSTERY_NAMES[k]} {v}%" for k, v in mystery_odds().items() if v)
+            label += f" ({Colors.MAGENTA}{odds}{Colors.RESET})"
     return label
 
 

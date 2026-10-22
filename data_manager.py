@@ -46,12 +46,14 @@ class ProfileManager:
             print(f"{Colors.RED}ATTENZIONE:{Colors.RESET} profile.json illeggibile ({e}). Copia salvata in '{os.path.basename(backup)}', si riparte da un profilo nuovo.")
             self._write(default_profile)
             return default_profile
+        # Un profilo di una versione precedente riceve le voci nuove; uno già aggiornato non viene riscritto
+        migrated = False
         for key, val in default_profile.items():
-            if key not in loaded: loaded[key] = val
+            if key not in loaded: loaded[key] = val; migrated = True
             elif isinstance(val, dict):
                 for sub_k, sub_v in val.items():
-                    if sub_k not in loaded[key]: loaded[key][sub_k] = sub_v
-        self._write(loaded)
+                    if sub_k not in loaded[key]: loaded[key][sub_k] = sub_v; migrated = True
+        if migrated: self._write(loaded)
         return loaded
 
     def _write(self, data: Dict[str, Any]):

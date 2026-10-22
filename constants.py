@@ -36,7 +36,7 @@ POISON_PCT, POISON_MIN = 4, 3  # il veleno toglie il 4% degli HP massimi a ogni 
 
 # --- CRESCITA DEI NEMICI PER PIANO ---
 ENEMY_HP_PER_FLOOR = 5
-ENEMY_ATK_PER_FLOOR = 1.0
+ENEMY_ATK_PER_FLOOR = 1.2
 # I boss sono un multiplo del nemico tipico del loro piano (entities.typical_enemy); i valori base dei dati
 # diventano la loro qualità: qualità = 0.75 + 0.25 · base / media dei boss
 BOSS_HP_MULT = 2.2

@@ -171,7 +171,8 @@
     },
     "rooms": {
         "weights": {
-            "combat": 60.0,
+            "combat": 54.0,
+            "elite": 6.0,
             "mystery": 10.0,
             "event": 10.0,
             "trap": 10.0,
@@ -181,13 +182,28 @@
         },
         "cooldowns": {
             "combat": 0,
+            "elite": 3,
             "mystery": 0,
             "event": 10,
             "trap": 10,
             "treasure": 10,
             "vendor": 10,
             "campfire": 10
-        }
+        },
+        "elite": {"from_floor": 2, "hp_mult": 1.6, "atk_mult": 1.3, "reward_mult": 2, "relic_chance": 20, "loot_floor_bonus": 0, "epic_chance": 15},
+        "trap": {
+            "loot_floor_bonus": 0, "epic_chance": 10, "gear_chance": 70, "salvage_gold": [20, 5],
+            "disarm": {"base": 45, "per_point": 1.5},
+            "dash": {"base": 40, "per_point": 2},
+            "min_chance": 15, "max_chance": 90
+        },
+        "treasure": {
+            "relic_chance": 6, "loot_floor_bonus": 0,
+            "mimic": {"from_floor": 3, "pct_per_floor": 1.5, "max": 30, "tell": 60, "false_tell": 10},
+            "locked": {"from_floor": 3, "pct_per_floor": 2, "max": 30, "hp_cost_pct": 8}
+        },
+        "mystery": {"hoard_gold_mult": 1.5, "outcomes": {"hoard": 20, "relic": 5, "hard": 25, "easy": 15, "trap": 15, "empty": 20}},
+        "audacity": {"points": {"combat": 1, "elite": 2, "trap": 1, "mystery": 1}, "gold_pct_per_point": 15, "item_at": 5, "epic_at": 7}
     },
     "corruption": {
         "max": 100,

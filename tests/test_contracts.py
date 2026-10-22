@@ -545,7 +545,8 @@ class RulesContractTest(Sandbox):
             random.seed(7); return Enemy(10, False, pacts)
         def trap(pacts):
             p = self.hero(pacts=pacts); p.base_dodge = -100; p.max_hp = p.hp = 1000
-            with quiet(), mock.patch("rooms.delay_print"), mock.patch("builtins.input", return_value=""), \
+            # Attraversa di corsa e fallisce la prova: il patto raddoppia il danno del meccanismo
+            with quiet(), mock.patch("rooms.delay_print"), mock.patch("builtins.input", return_value=""), mock.patch("rooms.interactive_menu", return_value=1), \
                  mock.patch("rooms.random.randint", side_effect=lambda lo, hi: 100 if (lo, hi) == (1, 100) else 20):
                 rooms.trap_room(p, 1, pacts)
             return 1000 - p.hp

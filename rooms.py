@@ -211,6 +211,16 @@ class CombatSession:
                 display_msg(f"\n{Colors.MAGENTA}DROP LEGGENDARIO: {drop.display_name}!{Colors.RESET}")
                 if drop.flavor: display_msg(f"{Colors.YELLOW}Flavor: {drop.flavor}{Colors.RESET}")
                 self.player.inventory.append(drop)
+            audacity_reward(self.player, self.floor, self.enemy.gold_drop)
+        elif self.enemy.modifier == "elite":
+            rule = GAME_DATA["meta"]["rooms"]["elite"]
+            relic = get_random_relic(self.player) if random.random() * 100 < rule["relic_chance"] else None
+            if relic: self.player.add_relic(relic)
+            else:
+                level, epic = self.floor + rule["loot_floor_bonus"], random.random() * 100 < rule["epic_chance"]
+                drop = generate_weapon(level, epic) if random.random() > 0.5 else generate_armor(level, epic)
+                display_msg(f"\n{Colors.MAGENTA}Il campione lascia cadere: {drop.display_name}!{Colors.RESET}")
+                self.player.inventory.append(drop)
         elif self.enemy.modifier == "hard":
             drop = generate_weapon(self.floor, False) if random.random() > 0.5 else generate_armor(self.floor, False)
             display_msg(f"\n{Colors.MAGENTA}Il nemico lascia cadere: {drop.display_name}!{Colors.RESET}")
@@ -614,9 +624,54 @@ class CombatSession:
             display_msg(f"{Colors.CYAN}<- {self.enemy.name} attacca... ma riesci a schivarlo!{Colors.RESET}")
         return True
 
+def audacity_bonus(audacity: int) -> dict:
+    """Cosa aggiunge l'Audacia al bottino del boss: oro in più (in %) e un oggetto, epico alle soglie più alte."""
+    rule = GAME_DATA["meta"]["rooms"]["audacity"]
+    return {"gold_pct": audacity * rule["gold_pct_per_point"], "item": audacity >= rule["item_at"], "epic": audacity >= rule["epic_at"]}
+
+
+def audacity_text(audacity: int) -> str:
+    bonus = audacity_bonus(audacity)
+    if not audacity: return "nessun premio extra dal boss"
+    parts = [f"+{bonus['gold_pct']}% oro"]
+    if bonus["item"]: parts.append("oggetto epico" if bonus["epic"] else "oggetto")
+    return "boss: " + ", ".join(parts)
+
+
+def gain_audacity(player: Player, room_type: str) -> int:
+    points = GAME_DATA["meta"]["rooms"]["audacity"]["points"].get(room_type, 0)
+    player.audacity += points
+    return points
+
+
+def audacity_reward(player: Player, floor: int, boss_gold: int):
+    """Il premio del boss per i rischi corsi nel piano."""
+    if player.audacity <= 0: return
+    bonus = audacity_bonus(player.audacity)
+    display_msg(f"\n{Colors.RED}🎲 Audacia {player.audacity}: il Labirinto premia chi ha rischiato.{Colors.RESET}")
+    if not player.aristocrat:
+        extra = player.calculate_gold_gain(boss_gold * bonus["gold_pct"] // 100)
+        player.gold += extra
+        display_msg(f"Ottieni altri {Colors.YELLOW}{extra} oro{Colors.RESET}.")
+    if bonus["item"]:
+        drop = generate_weapon(floor + 2, bonus["epic"]) if random.random() > 0.5 else generate_armor(floor + 2, bonus["epic"])
+        display_msg(f"{Colors.MAGENTA}Premio dell'Audacia: {drop.display_name}!{Colors.RESET}")
+        player.inventory.append(drop)
+
+
 def combat_room(player: Player, floor: int, enemy_instance: Enemy):
     session = CombatSession(player, floor, enemy_instance)
     session.start()
+
+def mystery_odds() -> dict:
+    """Probabilità (in %) degli esiti della stanza del Mistero, come le rivela il Sesto Senso."""
+    outcomes = GAME_DATA["meta"]["rooms"]["mystery"]["outcomes"]
+    total = sum(outcomes.values())
+    return {k: round(w * 100 / total) for k, w in outcomes.items()}
+
+
+MYSTERY_NAMES = {"hoard": "Tesoro", "relic": "Reliquia", "hard": "Mostro", "easy": "Preda", "trap": "Trappola", "empty": "Vuoto"}
+
 
 def mystery_room(player: Player, floor: int, active_pacts: List[str]):
     delay_print(f"\n{Colors.MAGENTA}--- LA STANZA DEL MISTERO ---{Colors.RESET}")
@@ -624,7 +679,10 @@ def mystery_room(player: Player, floor: int, active_pacts: List[str]):
     delay_print(f"{random.choice(GAME_DATA['lore']['mystery'])}", 0.03)
     time.sleep(1)
 
-    outcome = random.choice(["hard", "easy", "trap", "empty"])
+    outcomes = GAME_DATA["meta"]["rooms"]["mystery"]["outcomes"]
+    outcome = random.choices(list(outcomes), weights=list(outcomes.values()))[0]
+    relic = get_random_relic(player) if outcome == "relic" else None
+    if outcome == "relic" and not relic: outcome = "hoard"
 
     if outcome == "hard":
         display_msg(f"\n{Colors.RED}Dall'oscurità emerge un mostro eccezionalmente feroce!{Colors.RESET}")
@@ -636,6 +694,16 @@ def mystery_room(player: Player, floor: int, active_pacts: List[str]):
         combat_room(player, floor, Enemy(floor, False, active_pacts, modifier="easy"))
     elif outcome == "trap":
         trap_room(player, floor, active_pacts)
+    elif outcome == "hoard":
+        display_msg(f"\n{Colors.YELLOW}La nebbia nascondeva il deposito di qualcuno che non è mai tornato a prenderlo.{Colors.RESET}")
+        rule = GAME_DATA["meta"]["rooms"]["mystery"]
+        _gain_gold(player, int(rule["hoard_gold_mult"] * _chest_gold(floor)))
+        _gain_item(player, generate_accessory(floor))
+        wait_enter("\nPremi INVIO per proseguire...")
+    elif outcome == "relic":
+        display_msg(f"\n{Colors.MAGENTA}Al centro della stanza, sospesa nel nulla, pulsa una reliquia.{Colors.RESET}")
+        player.add_relic(relic)
+        wait_enter("\nPremi INVIO per proseguire...")
     else:
         display_msg(f"\n{Colors.GREEN}La nebbia si dirada. La stanza è vuota. Tiri un sospiro di sollievo.{Colors.RESET}")
         wait_enter("Premi INVIO per proseguire...")
@@ -783,51 +851,138 @@ def campfire_room(player: Player, floor: int):
                         wait_enter("\nPremi INVIO...")
                         break
 
-def treasure_room(player: Player, floor: int):
-    delay_print(f"\n{Colors.YELLOW}{random.choice(GAME_DATA['lore']['treasure'])}{Colors.RESET}")
-    gold = random.randint(30, 60) + (floor * 10)
-    g = player.calculate_gold_gain(gold)
-    
+def _chest_gold(floor: int) -> int:
+    return random.randint(30, 60) + (floor * 10)
+
+
+def _gain_gold(player: Player, amount: int):
+    g = player.calculate_gold_gain(amount)
     player.gold += g
     display_msg(f"{Colors.GREEN}Trovate {g} monete d'oro!{Colors.RESET}")
-    
-    if random.random() < 0.15:
+
+
+def _gear(level: int, epic: bool = False):
+    return generate_weapon(level, epic) if random.random() < 0.5 else generate_armor(level, epic)
+
+
+def _gain_item(player: Player, drop, text: str = "C'era anche"):
+    display_msg(f"{text}: {Colors.CYAN}{drop.display_name}{Colors.RESET}!")
+    player.inventory.append(drop)
+
+
+def chest_risks(floor: int) -> dict:
+    """Probabilità (in %) che un forziere del piano sia un Mimic o sia chiuso a chiave: crescono con la profondità."""
+    rules = GAME_DATA["meta"]["rooms"]["treasure"]
+    return {k: max(0.0, min(r["max"], (floor - r["from_floor"] + 1) * r["pct_per_floor"])) if floor >= r["from_floor"] else 0.0
+            for k, r in rules.items() if k in ("mimic", "locked")}
+
+
+def treasure_room(player: Player, floor: int):
+    delay_print(f"\n{Colors.YELLOW}{random.choice(GAME_DATA['lore']['treasure'])}{Colors.RESET}")
+    rules, risks = GAME_DATA["meta"]["rooms"]["treasure"], chest_risks(floor)
+    roll = random.random() * 100
+    kind = "mimic" if roll < risks["mimic"] else "locked" if roll < risks["mimic"] + risks["locked"] else "open"
+
+    if kind == "locked":
+        cost = max(1, player.max_hp * rules["locked"]["hp_cost_pct"] // 100)
+        prompt = (f"\n{Colors.YELLOW}Il forziere è chiuso da una serratura arrugginita. Dentro, qualcosa di pesante tintinna.{Colors.RESET}\n"
+                  f"❤️  HP: {player.hp}/{player.max_hp}")
+        if interactive_menu([f"Forza la serratura (-{cost} HP, bottino garantito)", "Lascialo stare"], prompt) != 0:
+            display_msg(f"{Colors.CYAN}Lasci il forziere alla polvere.{Colors.RESET}")
+            wait_enter("\nPremi INVIO per continuare..."); return
+        display_msg(f"{Colors.RED}Le dita sanguinano sul metallo: -{cost} HP.{Colors.RESET}")
+        if not player.take_damage(cost):
+            wait_enter("\nPremi INVIO per continuare..."); return
+        _gain_gold(player, _chest_gold(floor))
+        _gain_item(player, generate_accessory(floor) if random.random() < 0.5 else generate_potion(floor))
+        wait_enter("\nPremi INVIO per continuare..."); return
+
+    # Il Mimic a volte si tradisce, ma anche un forziere vero può sembrare respirare; il Sesto Senso non sbaglia
+    if PROFILE_MANAGER.get_perk("sesto_senso", False):
+        tell = kind == "mimic"
+        hint = f"{Colors.MAGENTA}Il Sesto Senso ti avverte: quel forziere ha fame.{Colors.RESET}" if tell else ""
+    else:
+        tell = random.random() * 100 < rules["mimic"]["tell" if kind == "mimic" else "false_tell"]
+        hint = f"{Colors.MAGENTA}Il coperchio sembra sollevarsi appena, come un respiro.{Colors.RESET}" if tell else ""
+    if hint:
+        if interactive_menu(["Aprilo comunque", "Lascialo stare"], f"\n{hint}\n❤️  HP: {player.hp}/{player.max_hp}") != 0:
+            display_msg(f"{Colors.CYAN}Ti allontani senza voltare le spalle al forziere.{Colors.RESET}")
+            wait_enter("\nPremi INVIO per continuare..."); return
+
+    if kind == "mimic":
+        display_msg(f"\n{Colors.RED}{Colors.BOLD}Il forziere spalanca una bocca di denti: è un MIMIC!{Colors.RESET}")
+        wait_enter("Premi INVIO per difenderti...")
+        mimic = Enemy(floor, False, player.active_pacts, name="Mimic")
+        combat_room(player, floor, mimic)
+        if player.hp > 0 and mimic.hp <= 0:
+            display_msg(f"\n{Colors.YELLOW}Nel ventre del Mimic c'è il bottino di chi lo ha aperto prima di te.{Colors.RESET}")
+            _gain_gold(player, 2 * _chest_gold(floor))
+            _gain_item(player, _gear(floor + rules["loot_floor_bonus"]), "Hai trovato")
+            wait_enter("\nPremi INVIO per continuare...")
+        return
+
+    _gain_gold(player, _chest_gold(floor))
+    if random.random() * 100 < rules["relic_chance"]:
         r = get_random_relic(player)
         if r: player.add_relic(r)
     elif random.random() < 0.20:
-        drop = generate_accessory(floor)
-        display_msg(f"C'era anche: {Colors.CYAN}{drop.display_name}{Colors.RESET}!"); player.inventory.append(drop)
+        _gain_item(player, generate_accessory(floor))
     elif random.random() > 0.4:
-        drop = generate_potion(floor)
-        display_msg(f"C'era anche: {Colors.CYAN}{drop.display_name}{Colors.RESET}!"); player.inventory.append(drop)
+        _gain_item(player, generate_potion(floor))
     wait_enter("\nPremi INVIO per continuare...")
 
-def trap_room(player: Player, floor: int, active_pacts: List[str]):
+
+def trap_chances(player: Player) -> dict:
+    """Probabilità (in %) di superare la trappola disinnescandola (Precisione) o attraversandola di corsa (Schivata)."""
+    rules = GAME_DATA["meta"]["rooms"]["trap"]
+    precision = player.base_acc + player.temp_acc + player.weapon.get_hit_chance_modifier() + sum(r.get_acc_modifier() for r in player.relic_effects)
+    stats = {"disarm": precision, "dash": player.get_dodge()}
+    return {k: int(max(rules["min_chance"], min(rules["max_chance"], rules[k]["base"] + stats[k] * rules[k]["per_point"]))) for k in stats}
+
+
+def trap_damage(player: Player, floor: int, active_pacts: List[str], base: int) -> int:
+    dmg = base + floor * 3
+    if "trappole" in active_pacts: dmg *= 2
+    for r in player.relic_effects: dmg = r.modify_trap_damage(dmg)
+    return dmg
+
+
+def trap_room(player: Player, floor: int, active_pacts: List[str]) -> bool:
+    """La trappola custodisce un bottino: chi la affronta lo ottiene sempre, e se fallisce la prova paga in HP.
+    Restituisce True se il giocatore l'ha affrontata."""
     delay_print(f"\n{random.choice(GAME_DATA['lore']['trap'])}")
-    delay_print(f"{Colors.RED}È UNA TRAPPOLA!{Colors.RESET}", 0.05)
-    
-    if random.randint(1, 100) <= player.get_dodge(): 
-        display_msg(f"{Colors.GREEN}Schivi il meccanismo! Ne esci illeso!{Colors.RESET}")
+    delay_print(f"{Colors.RED}È UNA TRAPPOLA!{Colors.RESET} {Colors.YELLOW}Oltre il meccanismo, qualcosa brilla.{Colors.RESET}", 0.05)
+    rules, chances = GAME_DATA["meta"]["rooms"]["trap"], trap_chances(player)
+    lo, hi = (trap_damage(player, floor, active_pacts, base) for base in (15, 30))
+    prompt = (f"\n❤️  HP: {Colors.GREEN}{player.hp}/{player.max_hp}{Colors.RESET} | Se la prova fallisce: {Colors.RED}{lo}-{hi} danni{Colors.RESET}"
+              f"\nCome affronti la trappola?")
+    options = [f"Disinnescala (Precisione: {chances['disarm']}%, recuperi anche dei pezzi)",
+               f"Attraversala di corsa (Schivata: {chances['dash']}%)",
+               "Torna indietro (niente bottino, nessun danno)"]
+    idx = interactive_menu(options, prompt)
+    if idx not in (0, 1):
+        display_msg(f"{Colors.CYAN}Ti ritiri lentamente. Il meccanismo resta in attesa del prossimo sventurato.{Colors.RESET}")
+        wait_enter("\nPremi INVIO per continuare...")
+        return False
+
+    way = "disarm" if idx == 0 else "dash"
+    if random.randint(1, 100) <= chances[way]:
+        display_msg(f"{Colors.GREEN}{'Blocchi il meccanismo con un clic soddisfatto.' if way == 'disarm' else 'Passi tra le lame un istante prima che si chiudano.'}{Colors.RESET}")
+        if way == "disarm":
+            base, per_floor = rules["salvage_gold"]
+            _gain_gold(player, base + floor * per_floor)
     else:
-        dmg = random.randint(15, 30) + (floor * 3)
-        if "trappole" in active_pacts: dmg *= 2
-        for r in player.relic_effects: dmg = r.modify_trap_damage(dmg)
-        display_msg(f"{Colors.RED}Subisci {dmg} danni puri.{Colors.RESET}")
+        dmg = trap_damage(player, floor, active_pacts, random.randint(15, 30))
+        display_msg(f"{Colors.RED}Il meccanismo scatta! Subisci {dmg} danni puri.{Colors.RESET}")
         alive = player.take_damage(dmg)
         display_msg(f"(HP: {player.hp}/{player.max_hp})")
         if not alive:
             display_msg(f"\n{Colors.RED}{Colors.BOLD}La trappola ti è stata fatale...{Colors.RESET}")
             wait_enter("\nPremi INVIO per continuare...")
-            return
-            
-    if random.randint(1, 100) <= 20:
-        display_msg(f"\n{Colors.GREEN}Tra gli ingranaggi spezzati della trappola noti qualcosa brillare...{Colors.RESET}")
-        roll = random.random()
-        if roll > 0.7: drop = generate_accessory(floor)
-        elif roll > 0.5: drop = generate_weapon(floor, False)
-        else: drop = generate_armor(floor, False)
-        display_msg(f"{Colors.MAGENTA}Hai trovato: {drop.display_name}!{Colors.RESET}")
-        player.inventory.append(drop)
+            return True
 
+    epic = random.random() * 100 < rules["epic_chance"]
+    loot = _gear(floor + rules["loot_floor_bonus"], epic) if random.random() * 100 < rules["gear_chance"] else generate_accessory(floor)
+    _gain_item(player, loot, f"{Colors.MAGENTA}Il bottino della trappola è tuo{Colors.RESET}")
     wait_enter("\nPremi INVIO per continuare...")
-
+    return True

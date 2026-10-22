@@ -209,6 +209,19 @@ main() ─▶ menu principale ─▶ play_game(infinite_mode)
 - Ogni tipo ha un peso (`rooms.weights`) e un tempo di ricarica in file (`rooms.cooldowns`), applicati fila dopo fila. I pesi si calcolano all'arrivo sul piano: le reliquie con `modify_room_weights` contano dal piano successivo a quello in cui le trovi.
 - In una fila i tipi sono diversi; solo lo scontro può ripetersi, quando i tempi di ricarica lasciano pochi tipi disponibili.
 - Una trappola non esce mai nella stessa fila di un forziere o di un mercante.
+- L'Élite esce solo dal piano `rooms.elite.from_floor` (2).
+
+**Rischio e ricompensa** (`meta.json`, `rooms`). Nessuna stanza è gratuita e nessuna è solo una punizione; i numeri sono tutti nei dati:
+
+| Chiave | Stanza | Regola |
+|---|---|---|
+| `elite` | 👺 Élite | `Enemy(modifier="elite")`: HP × `hp_mult`, ATK × `atk_mult`, Oro ed EXP × `reward_mult`. Alla morte: reliquia con `relic_chance`%, altrimenti un pezzo d'equipaggiamento (epico con `epic_chance`%) |
+| `trap` | 💀 Trappola | `trap_chances()`: disinnescare = `disarm.base` + Precisione × `per_point`, correre = `dash.base` + Schivata × `per_point`, fra `min_chance` e `max_chance`. Chi la affronta prende sempre il bottino (equipaggiamento con `gear_chance`%, altrimenti un monile); se la prova fallisce subisce `trap_damage()`; disinnescando recupera `salvage_gold`. `trap_room` restituisce se la trappola è stata affrontata |
+| `treasure` | 💎 Forziere | `chest_risks(piano)`: probabilità di `mimic` e `locked`, da `from_floor`, + `pct_per_floor` a piano, fino a `max`. Chiuso: costa `hp_cost_pct`% degli HP massimi. Mimic: indizio con `tell`% (falso allarme con `false_tell`% sui forzieri veri; il *Sesto Senso* non sbaglia). La mappa mostra il rischio totale (`d["risk"]`) |
+| `mystery` | ❓ Mistero | `outcomes`: pesi degli esiti; `hoard_gold_mult` per il tesoro nascosto. `mystery_odds()` è ciò che mostra il *Sesto Senso* |
+| `audacity` | — | `points` per tipo di stanza (la trappola solo se affrontata), azzerati all'inizio del piano in `Player.audacity`. `audacity_reward()` al boss: + `gold_pct_per_point`% del suo Oro per punto, equipaggiamento da `item_at`, epico da `epic_at` |
+
+Il **Mimic** (`enemies.json`) ha `"lair": "treasure"`: non entra mai nelle scelte casuali né nel nemico tipico, e le sue statistiche sono quelle del nemico tipico del piano × `hp_mult`/`atk_mult`. `Enemy(..., name=...)` crea un nemico preciso.
 - Un evento richiamato da `later` prende il posto di una stanza della prima fila. La stanza speciale del bioma va in una delle file centrali, al posto dell'evento della fila se ce n'è uno.
 
 **Biomi** (`biomes.json`). Ogni bioma copre un intervallo di piani (`floors`) e ha `name`, `icon` e `intro` (una frase a caso, mostrata sopra la mappa). I campi opzionali ne fanno un luogo con regole proprie:
@@ -240,7 +253,7 @@ I nemici e i boss con `"biome": "id"` (in `enemies.json`) sono **nativi**: compa
 
 Il **nemico tipico** di un piano (`entities.typical_enemy`) è la media della finestra di profondità con la stessa crescita, salti di piano compresi. I boss ne sono un multiplo (2,2× gli HP, 1,8× l'ATK). I loro valori base diventano una **qualità**, `0,75 + 0,25 · base / media dei boss`, così si distinguono di circa ±25% a ogni piano: niente più boss di inizio partita fuori scala.
 
-Poi si applicano, in ordine: ×1,2 dal piano 10; ×1,25 dal piano 20; ×1,4 (potenziato) o ×0,6 (debilitato) nella Stanza del Mistero; ×1,3 agli HP con *Durezza* e ×1,3 all'ATK con *Furia*.
+Poi si applicano, in ordine: ×1,2 dal piano 10; ×1,25 dal piano 20; ×1,4 (potenziato) o ×0,6 (debilitato) nella Stanza del Mistero, oppure i moltiplicatori dell'Élite; ×1,3 agli HP con *Durezza* e ×1,3 all'ATK con *Furia*.
 
 ---
 
@@ -259,9 +272,10 @@ Un'arma tipica abbatte un nemico tipico in circa 3 colpi e un'armatura tipica ne
 **Strumenti di bilanciamento** (`tools/bilanciamento.py`):
 - `curve`: oggetti generabili contro nemici, piano per piano;
 - `oggetti`: ogni arma e armatura a ogni piano;
-- `run N nuovo|completo`: N run per classe con il codice vero e un giocatore automatico, con vittorie, piano raggiunto, Essenza, colpi annullati, morti per bioma e letalità dei boss.
+- `run N nuovo|completo`: N run per classe con il codice vero e un giocatore automatico, con vittorie, piano raggiunto, Essenza, colpi annullati, morti per bioma e letalità dei boss;
+- `strategie N nuovo|completo`: le stesse run con diversi modi di scegliere le stanze (adattiva in base agli HP, prudente, aggressiva, trappole per prime). Serve a verificare che nessun ordine fisso domini: è la prova che la scelta della stanza è una decisione.
 
-Il profilo del giocatore non viene mai toccato.
+Il profilo del giocatore non viene mai toccato (il caricamento lo riscrive solo se va migrato da una versione precedente).
 
 ## 5. Formule di combattimento
 
@@ -397,6 +411,7 @@ La CI (`.github/workflows/tests.yml`) li esegue su Python 3.9 e sull'ultima 3.x;
 | `test_biomes.py` | Equipaggiamento iniziale (reazione o Risonanza), completezza dei biomi, contratti dei pericoli, Gas del Silenzio, Ebollizione, Paradosso, Dissoluzione, Caduta Astrale nel vero ciclo dei piani |
 | `test_tactics.py` | Intenti (pesi predefiniti e dei dati, regole delle mosse, prompt, Congelato) e reazioni (arma poi armatura, armatura poi arma, solo in guardia, stesso elemento, nessuna reazione, scadenza dei marchi, Codice) |
 | `test_map.py` | Mappa (file alternate, collegamenti senza incroci né vicoli ciechi, tipi e tempi di ricarica, evento richiamato, disegno, ciclo dei piani reale) e biomi (copertura dei piani, dati, nativi, elementi, pesi delle stanze, stanza speciale per piano, Prima Pietra, annuncio del pericolo) |
+| `test_risk_rooms.py` | Stanze a rischio: trappola (ritirata, bottino garantito, prove e probabilità mostrate), forziere (rischio per piano, serratura, Mimic, Sesto Senso), Élite (piano minimo, statistiche, ricompensa, etichette), Audacia (punti, premio del boss, ciclo dei piani), Mistero (probabilità dai dati, reliquia esaurita) |
 | `test_codex.py` | Codice (registrazione, pagine, completamento, menu) e personaggi ricorrenti (catena dei capitoli, un capitolo per run, boss ritirato, indizio della lavanda) |
 | `test_events.py` | Motore degli eventi: integrità dei dati, opzioni con etichetta e bloccate, scene a più passi, fuga e morte, memoria fra le run, conseguenze differite, scelta degli eventi |
 | `test_contracts.py` | **Contratti descrizione ↔ effetto** per mosse dei nemici e stima dei danni, reazioni elementali ed effetti di controllo, reliquie, armi, armature, monili (anche maledetti), consumabili, scelte degli eventi, tratti, patti, potenziamenti, Maestrie e imprese; ogni sbloccabile è ottenibile |
