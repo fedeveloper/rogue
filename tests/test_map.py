@@ -105,6 +105,28 @@ class RenderTest(Sandbox):
         self.assertIn("\033[92m", drawn[0])  # il percorso fatto è verde
         self.assertTrue(any(ch in ANSI.sub("", "".join(drawn)) for ch in "│╱╲"))
 
+    def test_labels_are_centered_and_links_join_the_centers(self):
+        for tall in (False, True):
+            rows = self.make()
+            lines = [ANSI.sub("", l)[5:] for l in floor_map.render_map(rows, 1, [], tall=tall)]
+            per_row = 3 if tall else 2
+            self.assertEqual(len(lines), 5 + 4 * (per_row - 1))
+            for r, row in enumerate(rows):
+                text = lines[r * per_row]
+                for d in row:
+                    label = floor_map._short(d, None)
+                    start = text.index(label)
+                    width = visible_width(text[:start] + label) - visible_width(text[:start])
+                    center = visible_width(text[:start]) + width // 2
+                    self.assertLessEqual(abs(center - floor_map._center(d["slot"])), 1, label)
+                if r == len(rows) - 1: break
+                for d in row:
+                    for j in d["links"]:
+                        a, b = floor_map._center(d["slot"]), floor_map._center(rows[r + 1][j]["slot"])
+                        for k in range(per_row - 1):
+                            x = a + (b - a) * (k + 1) // per_row
+                            self.assertEqual(lines[r * per_row + 1 + k][x], "│" if a == b else ("╲" if b > a else "╱"))
+
     def test_sixth_sense_reveals_what_is_behind(self):
         rows = self.make()
         combat = next(d for row in rows for d in row if d["type"] in ("combat", "boss"))

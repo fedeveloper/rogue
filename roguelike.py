@@ -1,4 +1,5 @@
 import random
+import shutil
 import sys
 import time
 import traceback
@@ -7,7 +8,7 @@ from data_manager import PROFILE_MANAGER, GAME_DATA, RAW_DATA, get_biome, update
 from entities import Player
 from rooms import combat_room, mystery_room, vendor_room, campfire_room, treasure_room, trap_room
 from events import event_room
-from floor_map import ROWS, SIDES, generate_floor_map, reachable, render_map, room_label
+from floor_map import ROWS, SIDES, TALL_MAP_ROWS, generate_floor_map, reachable, render_map, room_label
 from inventory_menu import show_inventory_menu, show_player_stats
 from archive import show_archive
 from codex import show_codex
@@ -449,7 +450,7 @@ def play_game(infinite_mode=False):
                 prompt = "\n".join([
                     f"\n{Colors.CYAN}--- Piano {floor}{biome_title} | Esplorazione {step}/{ROWS + 1} ---{Colors.RESET}",
                     f"❤️  HP: {Colors.GREEN}{player.hp}/{player.max_hp}{Colors.RESET} | 💰 Oro: {Colors.YELLOW}{player.gold}{Colors.RESET}", biome_intro,
-                    *render_map(floor_map, step, path, biome), "", "Scegli dove proseguire:"])
+                    *render_map(floor_map, step, path, biome, tall=shutil.get_terminal_size().lines >= TALL_MAP_ROWS), "", "Scegli dove proseguire:"])
                 sixth = PROFILE_MANAGER.get_perk("sesto_senso", False)
                 options = [f"Entra: {room_label(floor_map[step - 1][i], sixth, biome)}" + (f" ({SIDES[floor_map[step - 1][i]['slot']]})" if step <= ROWS else "")
                            for i in choices]

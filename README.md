@@ -48,7 +48,7 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 
 - 🗺️ **Una mappa per ogni piano.** Quattro file di stanze collegate (combattimento, mercante, falò, forziere, trappola, evento o la *Stanza del Mistero*) e il boss in fondo, tutte visibili fin dall'arrivo: scegli il percorso, non solo la porta. Nemici e boss crescono con la profondità.
 - 🌍 **Biomi.** Ogni cinque piani il Labirinto cambia volto, dai *Chiostri del Rimpianto* alla *Soglia del Dio Antico*. Il primo ha già le sue regole: nemici nativi, un boss tutto suo, la *Nostalgia Letale* e il segreto della Prima Pietra.
-- 🔥 **Combattimento elementale.** Sette elementi, vantaggi e svantaggi che cambiano danni e precisione, e le **Risonanze** quando arma e armatura condividono l'elemento.
+- 🔥 **Combattimento tattico.** Il nemico **annuncia la sua mossa**, colpo pesante, guardia, rigenerazione o colpo infetto, e tu decidi se attaccare o difenderti. Sette elementi, vantaggi e svantaggi, **Risonanze** quando arma e armatura condividono l'elemento e **7 reazioni** (Vapore, Gelo, Eclissi…) quando li combini.
 - 🧬 **8 classi** con alberi di Maestria a 5 livelli che sbloccano bonus, oggetti, reliquie e altre classi.
 - 🎭 **7 tratti** e **5 Patti del Caos**: 3,584 combinazioni di partenza diverse.
 - 📖 **Eventi che ricordano.** 36 storie a scene con opzioni che esistono solo per la tua classe, il tuo tratto o le tue reliquie: `[Mago]`, `[Tocco di Mida]`, `[Chiave Arrugginita]`. Il Labirinto ricorda chi hai aiutato e chi hai derubato, e certe scelte tornano a bussare qualche piano dopo.
@@ -375,7 +375,8 @@ I **test di contratto** (`tests/test_contracts.py`) verificano che ogni reliquia
 - [x] Nemici e boss legati alla profondità
 - [x] Impostazioni (velocità del testo)
 - [ ] Sistema di Rune/Incastoni per armi e armature
-- [ ] Boss con meccaniche speciali (fasi, immunità, pattern)
+- [x] Nemici che annunciano la mossa e reazioni elementali
+- [ ] Boss con meccaniche speciali (fasi, immunità)
 - [x] Eventi a scene, opzioni per classe e tratto, memoria fra le run
 - [x] Personaggi ricorrenti (Sir Alaric, Silas) e il Codice del Labirinto
 - [x] Mappa dei piani e primo bioma (I Chiostri del Rimpianto)

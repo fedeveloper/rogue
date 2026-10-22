@@ -668,3 +668,152 @@ class RulesContractTest(Sandbox):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+# ---------------------------------------------------------------- mosse dei nemici e reazioni elementali
+class MoveContractTest(Sandbox):
+    """Ogni mossa annunciata fa ciò che dice la sua descrizione."""
+
+    def setup_fight(self, intent, defending=False):
+        p = self.hero(); p.max_hp = p.hp = 1000
+        p.armor = Armor("Nessuna", 0, 0, "Normale", 1)
+        p.bonus_def = 0
+        s = self.session(p, 10)
+        self.assertEqual(p.get_total_def(), 0)
+        s.enemy.hp = s.enemy.max_hp = 500
+        s.enemy.atk, s.enemy.element, s.enemy.base_acc = 20, "Normale", 50
+        s.enemy.status_inflict = {"type": "poison", "chance": 0, "duration": 3}
+        s.intent, s.is_defending = intent, defending
+        return p, s
+
+    def enemy_hit(self, intent, defending=False):
+        p, s = self.setup_fight(intent, defending)
+        # Ogni tiro al minimo: il colpo va a segno, il danno è il più basso, lo status a probabilità 0 non scatta
+        with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: a), mock.patch("rooms.wait_enter"):
+            s.enemy_turn()
+        return p, s
+
+    def test_every_move_has_a_contract(self):
+        self.assertEqual(set(GAME_DATA["moves"]["moves"]), {"attack", "heavy", "guard", "heal", "venom"})
+
+    def test_heavy_blow(self):
+        desc = GAME_DATA["moves"]["moves"]["heavy"]["desc"]
+        mult = GAME_DATA["moves"]["moves"]["heavy"]["damage_mult"]
+        self.assertIn(f"×{mult}", desc)
+        normal = 1000 - self.enemy_hit("attack")[0].hp
+        heavy = 1000 - self.enemy_hit("heavy")[0].hp
+        self.assertEqual(heavy, normal * mult)
+        self.assertIn("Difenditi per dimezzare", desc)
+        self.assertEqual(1000 - self.enemy_hit("heavy", defending=True)[0].hp, heavy // 2)
+
+    def test_guard(self):
+        m = GAME_DATA["moves"]["moves"]["guard"]
+        self.assertIn(f"{int(m['damage_taken_mult'] * 100)}% dei danni", m["desc"])
+        p, s = self.enemy_hit("guard")
+        self.assertEqual(p.hp, 1000, "la guardia non attacca")
+        dealt = {}
+        for intent in ("attack", "guard"):
+            p, s = self.setup_fight(intent)
+            p.weapon.element = "Normale"
+            with quiet(), mock.patch("rooms.random.randint", return_value=1):
+                s.execute_player_attack()
+            dealt[intent] = 500 - s.enemy.hp
+        self.assertEqual(dealt["guard"], int(dealt["attack"] * m["damage_taken_mult"]))
+
+    def test_heal(self):
+        m = GAME_DATA["moves"]["moves"]["heal"]
+        self.assertIn(f"{m['heal_pct']}% degli HP massimi", m["desc"])
+        p, s = self.setup_fight("heal")
+        s.enemy.hp = 100
+        with quiet(): s.enemy_turn()
+        self.assertEqual(s.enemy.hp, 100 + 500 * m["heal_pct"] // 100)
+        self.assertEqual(p.hp, 1000)
+
+    def test_venom_always_inflicts_its_status(self):
+        self.assertIn("se ti ferisce", GAME_DATA["moves"]["moves"]["venom"]["desc"])
+        p, s = self.enemy_hit("venom")
+        self.assertIn("poison", p.statuses)
+        p, s = self.enemy_hit("attack")
+        self.assertNotIn("poison", p.statuses)
+        p, s = self.setup_fight("venom")
+        p.bonus_def = 1000  # la corazza blocca tutto: niente ferita, niente status
+        with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: a), mock.patch("rooms.wait_enter"):
+            s.enemy_turn()
+        self.assertNotIn("poison", p.statuses)
+
+    def test_intent_estimate_is_the_real_damage(self):
+        for intent in ("attack", "heavy"):
+            p, s = self.setup_fight(intent)
+            estimate = s.estimate_enemy_damage(GAME_DATA["moves"]["moves"][intent].get("damage_mult", 1))
+            self.assertIn(f"≈{estimate} danni", s.intent_text())
+            with quiet(), mock.patch("rooms.random.randint", return_value=0), mock.patch("rooms.wait_enter"):
+                s.enemy_turn()
+            self.assertEqual(1000 - p.hp, estimate)
+
+
+class ReactionContractTest(Sandbox):
+    """Ogni reazione elementale fa ciò che dice la sua descrizione."""
+    PATTERN = re.compile(r"(\d+)% del tuo ATK|(-\d+)% (Precisione|Schivata)|(\d+)% degli HP massimi|per (\d+) turni|prossimo turno")
+
+    def react(self, key):
+        a, b = key.split("+")
+        p = self.hero(); p.weapon.atk = 40
+        s = self.session(p, 10)
+        s.enemy.hp = s.enemy.max_hp = 1000
+        s.enemy.mark = [a, 2]
+        with quiet(): s.apply_element(b)
+        return p, s
+
+    def test_every_reaction_has_a_contract(self):
+        statuses = {"stun", "blind", "slow", "scorch"}
+        for key, r in GAME_DATA["elements"]["reactions"].items():
+            with self.subTest(reaction=key):
+                a, b = key.split("+")
+                self.assertTrue({a, b} <= set(GAME_DATA["elements"]["list"]) - {"Normale"})
+                self.assertTrue(r.get("bonus_pct") or r.get("status"))
+                if r.get("status"): self.assertIn(r["status"]["type"], statuses)
+                rest = self.PATTERN.sub("", r["desc"])
+                self.assertFalse(NUM.search(rest), f"numero non verificato: {r['desc']}")
+
+    def test_every_reaction_does_what_it_says(self):
+        cond = GAME_DATA["elements"]["conditions"]
+        for key, r in GAME_DATA["elements"]["reactions"].items():
+            with self.subTest(reaction=key):
+                p, s = self.react(key)
+                desc = r["desc"]
+                self.assertIsNone(s.enemy.mark, "la reazione consuma il marchio")
+                bonus = r.get("bonus_pct", 0)
+                if bonus: self.assertIn(f"{bonus}% del tuo ATK", desc)
+                self.assertEqual(1000 - s.enemy.hp, p.get_total_atk() * bonus // 100)
+                st = r.get("status")
+                if not st:
+                    self.assertEqual(s.enemy.statuses, {})
+                    continue
+                self.assertEqual(s.enemy.statuses, {st["type"]: st["duration"]})
+                if st["type"] == "stun": self.assertIn("perde il suo prossimo turno", desc)
+                else: self.assertIn(f"per {st['duration']} turni", desc)
+                if st["type"] == "blind": self.assertIn(f"-{cond['blind']}% Precisione", desc)
+                if st["type"] == "slow": self.assertIn(f"-{cond['slow']}% Schivata", desc)
+                if st["type"] == "scorch": self.assertIn(f"{cond['scorch_pct']}% degli HP massimi", desc)
+
+    def test_conditions_do_what_the_descriptions_say(self):
+        cond = GAME_DATA["elements"]["conditions"]
+        p = self.hero()
+        s = self.session(p, 10)
+        s.enemy.base_acc, s.enemy.base_dodge = 0, 30
+        hit, chance = s._calc_enemy_hit_chance(1.0), s._calc_hit_chance(1.0)
+        s.enemy.statuses = {"blind": 2, "slow": 2}
+        self.assertEqual(s._calc_enemy_hit_chance(1.0), max(10, hit - cond["blind"]))
+        self.assertEqual(s._calc_hit_chance(1.0), min(100, chance + cond["slow"]) if chance + cond["slow"] <= 100 else s._calc_hit_chance(1.0))
+        # Magma: il 5% degli HP massimi a ogni turno, per 3 turni
+        s.enemy.statuses = {"scorch": 3}
+        s.enemy.hp = s.enemy.max_hp = 400
+        with quiet():
+            for _ in range(4): s.process_statuses_and_curses(is_player_turn=False)
+        self.assertEqual(400 - s.enemy.hp, 3 * 400 * cond["scorch_pct"] // 100)
+        # Gelo: il nemico perde il turno
+        s.enemy.statuses = {"stun": 1}
+        p.hp = 100
+        with quiet(): s.enemy_turn()
+        self.assertEqual(p.hp, 100)
+        self.assertNotIn("stun", s.enemy.statuses)

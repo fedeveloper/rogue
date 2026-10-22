@@ -18,7 +18,8 @@ class Item:
         el_tag = f" [{get_element_icon(self.element)}]" if self.element != "Normale" and self.element != "" else ""
         self.display_name = f"{cursed_tag}{self.name}{el_tag}"
 
-STATUS_NAMES = {"poison": "Veleno", "bleed": "Sanguinamento"}
+# Gli ultimi quattro nascono dalle reazioni elementali e colpiscono solo i nemici
+STATUS_NAMES = {"poison": "Veleno", "bleed": "Sanguinamento", "stun": "Gelo", "blind": "Accecato", "slow": "Impantanato", "scorch": "Magma"}
 
 # Proprietà speciali di un'arma che weapons.json può definire
 WEAPON_TRAIT_KEYS = ("hit_modifier", "crit_chance", "gold_atk_per", "gold_atk_max")
@@ -469,4 +470,25 @@ class Enemy:
             
         if "durezza" in active_pacts: self.hp = int(self.hp * 1.3)
         if "furia" in active_pacts: self.atk = int(self.atk * 1.3)
+        self.max_hp = self.hp
+
+        # Mosse annunciate in anticipo (intenti): pesi del nemico o quelli predefiniti della sua categoria
+        defaults = GAME_DATA["moves"]["defaults"]
+        self.moves = dict(data.get("moves") or defaults["boss" if is_boss else "enemy"])
+        if self.status_inflict and not data.get("moves"): self.moves.update(defaults["with_status"])
+        self.last_move = None
+        self.heals_used = 0
+        self.mark = None  # [elemento, turni]: il marchio elementale che una reazione può far esplodere
+
+    def choose_move(self) -> str:
+        """La prossima mossa, annunciata al giocatore prima del suo turno."""
+        rules = GAME_DATA["moves"]["rules"]
+        weights = dict(self.moves)
+        if self.last_move in rules["no_repeat"]: weights.pop(self.last_move, None)
+        if self.hp * 100 >= self.max_hp * rules["heal_below_pct"] or self.heals_used >= rules["max_heals"]: weights.pop("heal", None)
+        if not self.status_inflict: weights.pop("venom", None)
+        weights = {m: w for m, w in weights.items() if w > 0}
+        move = random.choices(list(weights), weights=list(weights.values()))[0] if weights else "attack"
+        self.last_move = move
+        return move
 

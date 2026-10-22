@@ -26,15 +26,19 @@ Se colori o emoji non si vedono bene, usa un terminale con codifica UTF-8 (su Wi
 Più scendi, più i nemici sono forti: ai primi piani incontri banditi, goblin e scheletri, verso il fondo idre di lava e leviatani. Anche i boss crescono con la profondità, e il DIO ANTICO compare **solo al piano 30**.
 
 ```text
-  1  👹 Scontro                      🎭 Evento
-      │       ╲               ╱       │
-  2  👹 Scontro      ❓ Mistero      💰 Mercante
-      │       ╱               ╲       │
-  3  🔥 Falò                         ❓ Mistero
-      │       ╲               ╱       │
-  4  👹 Scontro      💎 Forziere     🎭 Evento📿
-              ╲       │       ╱
-  ★                  👑 Boss
+  1      🎭 Evento      ❓ Mistero      💰 Mercante
+             │         ╱          ╲          │
+             │    ╱                    ╲     │
+  2     💎 Forziere                     🎭 Evento📿
+             │    ╲                    ╱     │
+             │         ╲          ╱          │
+  3     ❓ Mistero      👹 Scontro      💀 Trappola
+             │         ╱          ╲          │
+             │    ╱                    ╲     │
+  4     👹 Scontro                      ❓ Mistero
+                  ╲                    ╱
+                       ╲          ╱
+  ★                       👑 Boss
 ```
 
 ### I biomi
@@ -87,6 +91,47 @@ A ogni turno scegli una di queste azioni:
 - **Apri l'inventario.** Usare un oggetto o cambiare equipaggiamento **costa il turno**; chiudere lo zaino senza fare nulla no.
 - **Statistiche Eroe.** Gratis, in qualsiasi momento. Mostrano la tua **probabilità reale di colpire** contro il nemico che hai davanti.
 - **Tenta la fuga.** Riesce più spesso se sei agile. Contro i boss è impossibile.
+
+### Gli intenti dei nemici
+
+Prima di ogni tuo turno il nemico **annuncia la sua prossima mossa**, con i danni previsti:
+
+```text
+Tu: 210/210 HP | Badessa del Silenzio: 120/180 HP [marchio 💧 Acqua]
+Intento del nemico: 💢 Colpo pesante (≈24 danni) — difenditi!
+```
+
+| Mossa | Cosa fa | Come rispondere |
+|---|---|---|
+| 👊 Attacco | Un attacco normale | — |
+| 💢 Colpo pesante | La sua forza raddoppia prima della tua difesa | **Difenditi**: dimezzi il colpo (e la Difesa Aggressiva lo restituisce) |
+| 🧱 Guardia | Non attacca; i tuoi colpi fanno il 50% dei danni | È il turno giusto per curarti, difenderti o usare un oggetto |
+| 💚 Rigenerazione | Non attacca; recupera il 15% degli HP massimi (solo sotto il 60%, al massimo due volte) | Colpisci forte prima |
+| 🧪 Colpo infetto | Se ti ferisce, infligge di sicuro il suo status (veleno, sanguinamento) | Difenditi o tieni pronto l'antidoto |
+
+Colpo pesante e Guardia non si ripetono mai due volte di fila. I boss si rigenerano più spesso, e alcuni nemici hanno abitudini proprie: i Golem si riparano, i Vampiri si curano col sangue.
+
+### Marchi e reazioni elementali
+
+- **Il marchio.** Ogni tuo colpo a segno lascia sul nemico il **marchio** dell'elemento della tua arma, per due suoi turni.
+- **L'armatura.** Quando ti **difendi** e il nemico ti colpisce, l'armatura lo marchia con il *suo* elemento.
+- **La reazione.** Se un nemico marchiato riceve un elemento diverso, i due possono **reagire**:
+
+| Reazione | Elementi | Effetto |
+|---|---|---|
+| 💨 Vapore | 🔥 + 💧 | Danni extra pari al 50% del tuo ATK; il nemico è Accecato (−25% Precisione) per 2 turni |
+| 🔥 Incendio | 🔥 + 🌪️ | Danni extra pari al 100% del tuo ATK |
+| 🌋 Magma | 🔥 + 🪨 | Il nemico perde il 5% degli HP massimi a ogni turno, per 3 turni |
+| 🧊 Gelo | 💧 + 🌪️ | Il nemico perde il suo prossimo turno, anche un colpo pesante annunciato |
+| 🟤 Fango | 💧 + 🪨 | Il nemico è Impantanato (−25% Schivata) per 3 turni |
+| 🌀 Tempesta di Sabbia | 🪨 + 🌪️ | Il nemico è Accecato (−25% Precisione) per 3 turni |
+| 🌗 Eclissi | ✨ + 🌑 | Danni extra pari al 150% del tuo ATK |
+
+Il ritmo tipico è *colpisci, poi difenditi*, oppure *difenditi, poi colpisci*. Ed ecco il nuovo dilemma dell'equipaggiamento:
+- **Stesso elemento** su arma e armatura: accende la **Risonanza**, ma non dà mai reazioni.
+- **Elementi diversi**: rinunci alla Risonanza, ma puoi scatenare le reazioni.
+
+Le reazioni che scopri finiscono nel **Codice**.
 
 ### Gli elementi
 
@@ -203,6 +248,7 @@ Tra una discesa e l'altra spendi l'**Essenza Astrale**:
 - **📜 Grimorio** — imprese completate e livelli di Maestria.
 - **📚 Archivio di Aethelgard** — tre tomi da sbloccare scendendo nel labirinto. Ognuno dà un bonus permanente: più Oro e fuga, danni contro i boss, difesa.
 - **📖 Il Codice del Labirinto** — tutto ciò che hai scoperto, raccolto fra una run e l'altra, con la percentuale di completamento. Ciò che manca è segnato con ???.
+  - *Reazioni elementali*: le combinazioni di elementi che hai scatenato almeno una volta.
   - *Bestiario*: nemici e boss incontrati e sconfitti; la loro storia si legge solo dopo averli battuti.
   - *Personaggi*: i capitoli vissuti con Alaric e Silas, e il segno lasciato dalle tue scelte.
   - *Eventi*: quali hai visto e quante volte.
