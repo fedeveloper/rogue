@@ -102,13 +102,18 @@ In ogni piano una stanza della mappa, segnata con l'icona del bioma, è una dell
 
 | Stanza | Cosa succede |
 |---|---|
-| ⚔️ **Combattimento** | Un nemico adatto al piano. Vincendo ottieni Oro, EXP e a volte un oggetto. |
+| 👹 **Scontro** | Un nemico adatto al piano. La mappa mostra quanta EXP vale; vincendo ottieni anche Oro e a volte una pozione. |
+| 👺 **Élite** | Dal piano 2. Un campione più duro (HP ×1,6, ATK ×1,3) che vale il doppio di EXP e Oro e lascia sempre una **reliquia o un pezzo d'equipaggiamento**, a volte epico. |
 | 💰 **Mercante** | Compra armi, armature, monili e pozioni; vendi ciò che non ti serve. Dopo ogni acquisto il resto della merce rincara del 10%. |
 | 🔥 **Falò** | *Riposa* (50% degli HP) **oppure** *affila l'arma* (+3 ATK per 50 Oro): una delle due, poi il falò si spegne. Prima puoi usare l'**Altare dell'Evoluzione** e la **purificazione** quante volte vuoi. |
-| 💎 **Forziere** | Oro, a volte un monile, una pozione o una reliquia. |
-| ⚠️ **Trappola** | Danni (evitabili con la schivata), a volte un oggetto fra gli ingranaggi. |
+| 💎 **Forziere** | Oro, a volte un monile, una pozione o una reliquia. Dal piano 3 può essere **chiuso a chiave** (lo forzi pagando l'8% degli HP massimi, in cambio di un bottino garantito) o un **Mimic**: un mostro che, sconfitto, restituisce il doppio. La mappa mostra la probabilità del rischio, che cresce con la profondità. A volte il coperchio sembra respirare: può essere un Mimic, ma anche no. |
+| 💀 **Trappola** | Custodisce sempre un oggetto. Scegli come affrontarla: **disinnescarla** (prova di Precisione, se riesce recuperi anche dell'Oro), **attraversarla di corsa** (prova di Schivata) o **tornare indietro** senza danni e senza bottino. Il menu mostra le probabilità e i danni in caso di fallimento; chi la affronta prende il bottino anche se la prova fallisce. |
 | 🎭 **Evento** | Una piccola storia con bivi, a volte in più scene: vedi *Gli eventi* qui sotto. Alcuni nascondono un artigiano prigioniero da liberare. |
-| ❓ **Mistero** | Un nemico potenziato (che lascia un oggetto), uno debilitato, una trappola… o niente. |
+| ❓ **Mistero** | Un azzardo: un tesoro nascosto (Oro e un monile), una reliquia, un nemico potenziato (che lascia un oggetto), uno debilitato, una trappola… o niente. In media rende più di un forziere. Con il *Sesto Senso* la mappa mostra le probabilità. |
+
+### L'Audacia
+
+Ogni rischio corso nel piano riempie l'**Audacia** (🎲, accanto agli HP): +1 per uno scontro, una trappola affrontata o un mistero, +2 per un'Élite. Il boss del piano paga l'Audacia accumulata: +15% di Oro per punto, un pezzo d'equipaggiamento da 5 punti, epico da 7. A ogni piano si riparte da zero. Chi passa solo da forzieri ed eventi arriva al boss con il premio base; chi rischia ottiene molto di più, se sopravvive.
 
 ### Gli eventi
 

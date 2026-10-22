@@ -6,7 +6,7 @@ import traceback
 from ui import Colors, clear_screen, delay_print, interactive_menu, display_msg, wait_enter
 from data_manager import PROFILE_MANAGER, GAME_DATA, RAW_DATA, get_biome, update_game_data
 from entities import Player
-from rooms import combat_room, mystery_room, vendor_room, campfire_room, treasure_room, trap_room
+from rooms import audacity_text, combat_room, gain_audacity, mystery_room, vendor_room, campfire_room, treasure_room, trap_room
 from events import event_room
 from floor_map import ROWS, SIDES, TALL_MAP_ROWS, apply_biome_on_floor, generate_floor_map, reachable, render_map, room_label
 from inventory_menu import show_inventory_menu, show_player_stats
@@ -442,6 +442,7 @@ def play_game(infinite_mode=False):
         apply_biome_on_floor(player, biome)
             
         player.run_tracker["floor_attacks"] = player.run_tracker["floor_hits"] = 0
+        player.audacity = 0
         
         # La mappa del piano si genera all'arrivo: le reliquie possedute in quel momento ne cambiano i pesi
         weights_def = base_weights.copy()
@@ -458,7 +459,8 @@ def play_game(infinite_mode=False):
                 prompt = "\n".join([
                     f"\n{Colors.CYAN}--- Piano {floor}{biome_title} | Esplorazione {step}/{ROWS + 1} ---{Colors.RESET}",
                     f"❤️  HP: {Colors.GREEN}{player.hp}/{player.max_hp}{Colors.RESET} | 💰 Oro: {Colors.YELLOW}{player.gold}{Colors.RESET}"
-                    + (f" | 🩸 Corruzione: {Colors.MAGENTA}{player.corruption}{Colors.RESET}" if player.corruption else ""), biome_intro,
+                    + (f" | 🩸 Corruzione: {Colors.MAGENTA}{player.corruption}{Colors.RESET}" if player.corruption else "")
+                    + f" | 🎲 Audacia: {Colors.RED}{player.audacity}{Colors.RESET} ({audacity_text(player.audacity)})", biome_intro,
                     *render_map(floor_map, step, path, biome, tall=shutil.get_terminal_size().lines >= TALL_MAP_ROWS), "", "Scegli dove proseguire:"])
                 sixth = PROFILE_MANAGER.get_perk("sesto_senso", False)
                 options = [f"Entra: {room_label(floor_map[step - 1][i], sixth, biome)}" + (f" ({SIDES[floor_map[step - 1][i]['slot']]})" if step <= ROWS else "")
@@ -482,10 +484,13 @@ def play_game(infinite_mode=False):
             if player.hp <= 0 or player.escaped: break
             
             rt = chosen_door["type"]
-            if rt in ("combat", "boss"): combat_room(player, floor, chosen_door["enemy"])
+            # L'Audacia premia chi entra nel rischio; la trappola conta solo se la si affronta
+            if rt in ("combat", "elite", "mystery"): gain_audacity(player, rt)
+            if rt in ("combat", "elite", "boss"): combat_room(player, floor, chosen_door["enemy"])
             elif rt == "vendor": vendor_room(player, floor)
             elif rt == "treasure": treasure_room(player, floor)
-            elif rt == "trap": trap_room(player, floor, active_pacts)
+            elif rt == "trap":
+                if trap_room(player, floor, active_pacts): gain_audacity(player, rt)
             elif rt == "campfire": campfire_room(player, floor)
             elif rt == "event": event_room(player, chosen_door["event_id"], floor)
             elif rt == "mystery": mystery_room(player, floor, active_pacts)

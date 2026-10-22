@@ -80,7 +80,7 @@ def typical_enemy(floor: int) -> tuple:
     """(HP, ATK) attesi di un nemico normale al piano: media della finestra di profondità, crescita e salti di piano."""
     floor = max(1, floor)
     if floor not in _TYPICAL:
-        pool = {n: d for n, d in RAW_DATA["enemies"].items() if "biome" not in d}
+        pool = {n: d for n, d in RAW_DATA["enemies"].items() if "biome" not in d and "lair" not in d}
         ranked = sorted(pool, key=lambda n: pool[n]["base_hp"] * pool[n]["base_atk"])
         window = min(len(ranked), ENEMY_DEPTH_WINDOW)
         progress = min(1.0, (floor - 1) / (INFINITE_MODE_THRESHOLD - 1))
@@ -198,6 +198,7 @@ class Player:
         self.fallen = False  # Caduta Astrale: il piano finisce e si scende subito al successivo
         self.dissolved = 0  # HP massimi tolti dalla Dissoluzione dell'Io, resi all'uscita dal bioma
         self.biome_id = None
+        self.audacity = 0  # rischi corsi nel piano: fanno crescere il bottino del boss
         self.corruption = 0  # 0-100: cresce con le scelte oscure, vale per la sola discesa
         
         self.exp_multiplier = 1.0
@@ -471,7 +472,8 @@ def pick_enemy_name(floor: int, is_boss: bool, final: bool = False) -> str:
         if finals: return random.choice(finals)
     biome = get_biome(floor)
     # Un boss il cui destino si è compiuto in una storia (es. Sir Alaric liberato) non torna più
-    alive = {n: d for n, d in pool.items() if not d.get("final_boss") and not PROFILE_MANAGER.get_flag(d.get("retired_by_flag", ""))}
+    # Le creature legate a una stanza (es. il Mimic dei forzieri) non si incontrano mai per caso
+    alive = {n: d for n, d in pool.items() if not d.get("final_boss") and "lair" not in d and not PROFILE_MANAGER.get_flag(d.get("retired_by_flag", ""))}
     # I nativi di un bioma vivono solo lì, e lì si aggiungono sempre ai candidati della profondità
     natives = [n for n, d in alive.items() if biome and d.get("biome") == biome["id"]]
     candidates = [n for n, d in alive.items() if "biome" not in d]
@@ -485,11 +487,11 @@ def pick_enemy_name(floor: int, is_boss: bool, final: bool = False) -> str:
     return random.choices(picks, weights=[affinity.get(pool[n]["element"], 1) for n in picks])[0]
 
 class Enemy:
-    def __init__(self, floor: int, is_boss: bool, active_pacts: List[str], modifier: str = "normal", final: bool = False):
+    def __init__(self, floor: int, is_boss: bool, active_pacts: List[str], modifier: str = "normal", final: bool = False, name: str = ""):
         self.is_boss = is_boss
         self.modifier = modifier
         category = "bosses" if is_boss else "enemies"
-        self.name = pick_enemy_name(floor, is_boss, final)
+        self.name = name or pick_enemy_name(floor, is_boss, final)
         self.base_name = self.name  # senza i suffissi (Potenziato)/(Debilitato): è la voce del Bestiario
         data = GAME_DATA[category][self.name]
         
@@ -507,6 +509,12 @@ class Enemy:
             self.hp = int(hp * BOSS_HP_MULT * q_hp / floor_multiplier(floor)) + random.randint(0, 10)
             self.atk = int(atk * BOSS_ATK_MULT * q_atk / floor_multiplier(floor)) + random.randint(0, 2)
             self.gold_drop, self.exp_drop = 50 + (floor * 15), 150 + (floor * 20)
+        elif data.get("lair"):
+            # Forte quanto il nemico tipico del piano, qualunque sia la profondità (i salti di piano si applicano sotto)
+            hp, atk = typical_enemy(floor)
+            self.hp = int(hp * data["hp_mult"] / floor_multiplier(floor)) + random.randint(-5, 5)
+            self.atk = int(atk * data["atk_mult"] / floor_multiplier(floor)) + random.randint(0, 1)
+            self.gold_drop, self.exp_drop = max(5, 5 + int(floor * 3.5)), 30 + (floor * 10)
         else:
             self.hp = data["base_hp"] + int(lvl_scale * ENEMY_HP_PER_FLOOR) + random.randint(-5, 5)
             self.atk = data["base_atk"] + int(lvl_scale * ENEMY_ATK_PER_FLOOR) + random.randint(0, 1)
@@ -523,6 +531,12 @@ class Enemy:
             self.hp = int(self.hp * 1.4)
             self.atk = int(self.atk * 1.4)
             self.name += f"{Colors.MAGENTA} (Potenziato){Colors.RESET}"
+        elif self.modifier == "elite":
+            rule = GAME_DATA["meta"]["rooms"]["elite"]
+            self.hp = int(self.hp * rule["hp_mult"])
+            self.atk = int(self.atk * rule["atk_mult"])
+            self.gold_drop *= rule["reward_mult"]; self.exp_drop *= rule["reward_mult"]
+            self.name += f"{Colors.RED} (Élite){Colors.RESET}"
         elif self.modifier == "easy":
             self.hp = int(self.hp * 0.6)
             self.atk = int(self.atk * 0.6)

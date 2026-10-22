@@ -12,6 +12,7 @@
         "Eco del Dio Antico": {"element": "Tenebra", "base_hp": 55, "base_atk": 11, "base_dodge": 15, "base_acc": 15, "biome": "soglia", "lore": "Un pensiero sfuggito al sonno del Dio. Sa già cosa farai, perché lo hai già fatto."},
         "Eco del Rimpianto": {"element": "Luce", "base_hp": 14, "base_atk": 5, "base_dodge": 25, "base_acc": 10, "biome": "chiostri", "lore": "Ha la voce di qualcuno che amavi. Ti chiama finché non ti volti."},
         "Statua di Sale": {"element": "Terra", "base_hp": 28, "base_atk": 4, "base_dodge": 0, "base_acc": 0, "biome": "chiostri", "lore": "Qualcuno che si è fermato ad ascoltare. Si muove ancora, piano, verso la voce.", "moves": {"attack": 55, "heavy": 10, "guard": 35}},
+        "Mimic": {"element": "Normale", "base_hp": 40, "base_atk": 8, "base_dodge": 0, "base_acc": 15, "lair": "treasure", "hp_mult": 1.5, "atk_mult": 1.3, "moves": {"attack": 60, "heavy": 30, "guard": 10}, "lore": "Un forziere che ha imparato ad aspettare. Le monete che contiene sono quelle di chi lo ha aperto prima di te."},
         "Goblin": {"element": "Normale", "base_hp": 15, "base_atk": 4, "base_dodge": 5, "base_acc": 5, "lore": "I resti deformi delle caste mercantili di Aethelgard."},
         "Scheletro": {"element": "Tenebra", "base_hp": 12, "base_atk": 6, "base_dodge": 5, "base_acc": 5, "lore": "Avventurieri 'svuotati' che non possono più morire."},
         "Orco": {"element": "Terra", "base_hp": 25, "base_atk": 5, "base_dodge": 0, "base_acc": 5, "lore": "Antichi minatori la cui pelle si è fusa con il basalto."},
