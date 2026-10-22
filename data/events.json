@@ -6,7 +6,7 @@
       "inizio": {
         "text": "Una fonte d'acqua purissima brilla nel buio. Ha un'aura mistica.",
         "choices": [
-          {"text": "Bevi profondamente", "msg": "L'acqua magica rigenera le tue ferite e purifica il tuo corpo!", "effects": [{"max_hp": 10}, {"heal_pct": 100}]},
+          {"text": "Bevi profondamente", "msg": "L'acqua magica rigenera le tue ferite e purifica il tuo corpo!", "effects": [{"max_hp": 10}, {"heal_pct": 100}, {"corruption": -10}]},
           {"text": "Lancia una moneta", "effects": [{"gold": -20}], "chance": 50, "success": [{"relic": "random"}],
            "msg": "La moneta brilla sul fondo... un potere ti avvolge!", "fail_msg": "La moneta affonda e scompare nel nulla. Nessuna reazione."},
           {"text": "Ignora e prosegui", "msg": "Ti allontani dalla fontana in silenzio."}
@@ -22,7 +22,8 @@
         "text": "Una figura avvolta da stracci ti tende una mano scheletrica.",
         "choices": [
           {"text": "Dona dell'oro", "msg": "Il mendicante estrae furtivamente dai rottami:", "effects": [{"gold": -50}, {"weapon": "epic", "level": 2}]},
-          {"text": "Offri il tuo sangue", "msg": "Sanguini abbondantemente... l'ombra sorride e ti dona un manufatto.", "effects": [{"damage": 30, "death_msg": "Il dissanguamento ti è stato fatale..."}, {"relic": "random"}]},
+          {"text": "Offri il tuo sangue", "msg": "Sanguini abbondantemente... l'ombra sorride e ti dona un manufatto.", "effects": [{"damage": 30, "death_msg": "Il dissanguamento ti è stato fatale..."}, {"relic": "random"}, {"corruption": 5}]},
+          {"text": "Guardalo negli occhi: lo riconosci", "requires": {"corruption": 40}, "msg": "Sotto gli stracci c'è un Architetto minore, uno di quelli che sono rimasti. 'Allora sei già dei nostri,' sussurra, e ti mette in mano un frammento di cielo.", "effects": [{"essence": 80}, {"corruption": 5}]},
           {"text": "Ignora", "msg": "Lo ignori e tiri dritto."}
         ]
       }
@@ -35,8 +36,9 @@
       "inizio": {
         "text": "Un altare pulsante di energia oscura attende un tributo.",
         "choices": [
-          {"text": "Prega l'Oscurità", "msg": "Dolore lancinante! Ma l'altare vomita oro dalla sua base polverosa.", "effects": [{"gold": 100}, {"damage": 40, "death_msg": "Hai sacrificato troppa linfa vitale... Sei morto."}]},
+          {"text": "Prega l'Oscurità", "msg": "Dolore lancinante! Ma l'altare vomita oro dalla sua base polverosa.", "effects": [{"gold": 100}, {"damage": 40, "death_msg": "Hai sacrificato troppa linfa vitale... Sei morto."}, {"corruption": 10}]},
           {"text": "Distruggi l'Altare", "msg": "L'Altare si sgretola e risveglia un tremendo custode corrotto!", "effects": [{"fight": "elite"}]},
+          {"text": "Offri l'anima, non il sangue", "requires": {"corruption": 30}, "msg": "L'altare tace. Poi, dal buio sotto la pietra, una mano ti porge qualcosa. 'Finalmente uno che capisce il prezzo.'", "effects": [{"relic": "random"}, {"corruption": 15}]},
           {"text": "Allontanati in silenzio", "msg": "Non vale la pena rischiare l'anima qui. Prosegui."}
         ]
       }
@@ -92,7 +94,7 @@
       "inizio": {
         "text": "Una statua d'oro con diamanti al posto degli occhi. Trasuda malvagità.",
         "choices": [
-          {"text": "Stacca i diamanti a forza", "msg": "Stacchi i gioielli, ma una maledizione tetra brucia i tuoi polmoni!", "effects": [{"gold": 100}, {"damage": 40}]},
+          {"text": "Stacca i diamanti a forza", "msg": "Stacchi i gioielli, ma una maledizione tetra brucia i tuoi polmoni!", "effects": [{"gold": 100}, {"damage": 40}, {"corruption": 5}]},
           {"text": "Usa una daga per staccarne uno", "effects": [{"gold": -20}], "chance": 50, "success": [{"relic": "random"}],
            "msg": "Il gioiello si stacca dalla pietra rivelando un antico potere!", "fail_msg": "La tua daga si spezza rovinosamente e l'idolo resta intatto."},
           {"text": "Profanare le tombe è da stolti, prosegui", "msg": "Ti allontani. Certe cose è meglio non toccarle."}
@@ -371,7 +373,7 @@
         "choices": [
           {"text": "Bevi", "chance": 60, "success": [{"max_hp": 15}, {"heal_pct": 50}], "msg": "Il vino è caldo e dolce: ti scorre nelle vene come vita rubata.",
            "fail_msg": "Non è vino. È sangue, ed è il tuo. Però ti rende più feroce.", "fail_effects": [{"damage": 30}, {"atk": 5}]},
-          {"text": "Bevi e offri in cambio il tuo sangue maledetto", "requires": {"trait": "maledetto"}, "msg": "I commensali chinano il capo: hanno riconosciuto uno dei loro.", "effects": [{"atk": 8}]},
+          {"text": "Bevi e offri in cambio il tuo sangue maledetto", "requires": {"trait": "maledetto"}, "msg": "I commensali chinano il capo: hanno riconosciuto uno dei loro.", "effects": [{"atk": 8}, {"corruption": 10}]},
           {"text": "Fingi di bere e svuota il calice sotto la tavola", "chance": 50, "success": [{"gold": 80}], "msg": "Nessuno se ne accorge. Intaschi anche le posate d'argento.",
            "fail_msg": "Il commensale accanto a te ti afferra il polso. 'Maleducato.'", "fail_effects": [{"fight": "normal"}]}
         ]
@@ -395,8 +397,8 @@
         "choices": [
           {"text": "Poggia sul piatto il tuo oro", "effects": [{"gold": -100}], "chance": 50, "success": [{"relic": "random"}],
            "msg": "La bilancia si equilibra. Dal pavimento sale un piedistallo.", "fail_msg": "Il piatto sprofonda e l'oro scivola via: non basta a pesare un'anima."},
-          {"text": "Poggia sul piatto il tuo sangue", "msg": "La bilancia scende di un soffio. Senti il tuo sangue tornare indietro, più denso, più forte.", "effects": [{"max_hp": -10}, {"atk": 5}]},
-          {"text": "Giura sul tuo onore", "requires": {"class": "4"}, "msg": "La piuma si piega verso di te. La bilancia approva.", "effects": [{"heal_pct": 100}, {"def": 3}]},
+          {"text": "Poggia sul piatto il tuo sangue", "msg": "La bilancia scende di un soffio. Senti il tuo sangue tornare indietro, più denso, più forte.", "effects": [{"max_hp": -10}, {"atk": 5}, {"corruption": 5}]},
+          {"text": "Giura sul tuo onore", "requires": {"class": "4"}, "msg": "La piuma si piega verso di te. La bilancia approva.", "effects": [{"heal_pct": 100}, {"def": 3}, {"corruption": -15}]},
           {"text": "Sabota il meccanismo", "requires": {"class": "7"}, "chance": 60, "success": [{"gold": 150}], "msg": "Un colpo secco al perno: la bilancia sputa l'oro accumulato in secoli di pesate.",
            "fail_msg": "Un ingranaggio scatta. Il guardiano della bilancia si risveglia.", "fail_effects": [{"fight": "elite"}]},
           {"text": "Non farti pesare", "msg": "Certe misure è meglio non conoscerle."}
@@ -446,16 +448,17 @@
         "text": "Le pareti si avvicinano finché senti il loro respiro sul viso. Poi il Labirinto parla, con la voce di tutti quelli che hai perso. 'Sei arrivato lontano. Posso renderti più forte. Mi basta un pezzo di te.'",
         "extra": [{"requires": {"counter": {"patti_labirinto": 1}}, "text": "Una pausa. 'Bentornato. Ricordi il nostro ultimo accordo? Io sì. Lo ricordo in ogni pietra.'"}],
         "choices": [
-          {"text": "Accetta il dono", "msg": "Qualcosa ti viene strappato, qualcosa ti viene dato. Non sai quale delle due cose faccia più male.", "effects": [{"atk": 12}, {"max_hp": -25}, {"counter": "patti_labirinto"}]},
+          {"text": "Accetta il dono", "msg": "Qualcosa ti viene strappato, qualcosa ti viene dato. Non sai quale delle due cose faccia più male.", "effects": [{"atk": 12}, {"max_hp": -25}, {"counter": "patti_labirinto"}, {"corruption": 15}]},
           {"text": "Chiedi un dono diverso", "next": "trattativa"},
-          {"text": "Rifiuta", "msg": "Il Labirinto sospira. 'Tornerai.' Le pareti si ritirano, e ti senti stranamente riposato.", "effects": [{"heal_pct": 30}]}
+          {"text": "Chiedi di vedere il fondo", "requires": {"corruption": 50}, "msg": "Le pareti si aprono come palpebre. Vedi il fondo, e il fondo vede te. Ti riconosce.", "effects": [{"essence": 150}, {"atk": 6}, {"corruption": 10}]},
+          {"text": "Rifiuta", "msg": "Il Labirinto sospira. 'Tornerai.' Le pareti si ritirano, e ti senti stranamente riposato.", "effects": [{"heal_pct": 30}, {"corruption": -5}]}
         ]
       },
       "trattativa": {
         "text": "'Diverso?' Le pareti ridono, e la polvere ti piove addosso. 'Tutti volete qualcosa di diverso. Scegli, allora.'",
         "choices": [
           {"text": "Il mio oro in cambio della mia vita", "msg": "Le monete affondano nella pietra come in acqua. Il tuo cuore batte più forte.", "effects": [{"gold": -150}, {"max_hp": 25}, {"heal_pct": 100}]},
-          {"text": "I tuoi segreti in cambio dei miei ricordi", "msg": "Dimentichi il volto di tua madre. In cambio, capisci come pensano i mostri.", "effects": [{"max_hp": -10}, {"exp": 150}, {"counter": "patti_labirinto"}]},
+          {"text": "I tuoi segreti in cambio dei miei ricordi", "msg": "Dimentichi il volto di tua madre. In cambio, capisci come pensano i mostri.", "effects": [{"max_hp": -10}, {"exp": 150}, {"counter": "patti_labirinto"}, {"corruption": 10}]},
           {"text": "Niente. Me ne vado.", "msg": "'Nessuno se ne va gratis.' Una pietra si stacca dal soffitto.", "effects": [{"damage": 20}]}
         ]
       }
@@ -518,7 +521,7 @@
         "choices": [
           {"text": "Porgigli il fiore di lavanda", "requires": {"quest_item": "fiore_lavanda"}, "show_locked": true, "locked_hint": "Una lettera parlava di un fiore...", "msg": "Il cavaliere prende il fiore con due dita, come se potesse rompersi. 'Lavanda. Mia figlia ne coltivava un campo intero, a Valeriana.' Per la prima volta, sorride, e ti dona l'anello che portava al collo.", "effects": [{"take_quest_item": "fiore_lavanda"}, {"heal_pct": 100}, {"accessory": true}, {"flag": "alaric_lavanda"}, {"counter": "alaric"}, {"run_flag": "alaric_visto"}]},
           {"text": "Siediti accanto a lui in silenzio", "msg": "Restate così a lungo. Quando ti rialzi, il Labirinto ti sembra un po' meno grande.", "effects": [{"exp": 80}, {"counter": "alaric"}, {"run_flag": "alaric_visto"}]},
-          {"text": "Approfitta della sua debolezza", "msg": "'Anche tu,' sospira, e si rimette l'elmo.", "effects": [{"fight": "elite"}, {"weapon": "epic", "level": 2}, {"flag": "alaric_tradito"}, {"counter": "alaric"}, {"run_flag": "alaric_visto"}]},
+          {"text": "Approfitta della sua debolezza", "msg": "'Anche tu,' sospira, e si rimette l'elmo.", "effects": [{"fight": "elite"}, {"weapon": "epic", "level": 2}, {"flag": "alaric_tradito"}, {"counter": "alaric"}, {"run_flag": "alaric_visto"}, {"corruption": 15}]},
           {"text": "Lascialo riposare", "msg": "Non è il momento. Forse lo ritroverai più avanti."}
         ]
       }
@@ -538,8 +541,8 @@
           {"requires": {"flag": "alaric_lavanda"}, "text": "Tra le dita stringe ancora il fiore di lavanda, secco."}
         ],
         "choices": [
-          {"text": "Spezza il sigillo", "msg": "Il sigillo ti brucia le mani come ferro rovente. Poi si spezza, e il cavaliere si dissolve in una luce calma, quasi tiepida. 'Grazie.' Il Cavaliere Oscuro non custodirà più nessuna porta.", "effects": [{"damage": 30}, {"relic": "random"}, {"essence": 100}, {"flag": "alaric_liberato"}, {"counter": "alaric"}, {"run_flag": "alaric_visto"}]},
-          {"text": "Giura di prendere il suo posto", "msg": "Il sigillo scivola dalla sua schiena alla tua. Alaric si alza leggero e scompare oltre l'arco. Senti il peso di un giuramento che non finirà con questa discesa.", "effects": [{"atk": 10}, {"def": 5}, {"max_hp": 20}, {"flag": "alaric_erede"}, {"counter": "alaric"}, {"run_flag": "alaric_visto"}]},
+          {"text": "Spezza il sigillo", "msg": "Il sigillo ti brucia le mani come ferro rovente. Poi si spezza, e il cavaliere si dissolve in una luce calma, quasi tiepida. 'Grazie.' Il Cavaliere Oscuro non custodirà più nessuna porta.", "effects": [{"damage": 30}, {"relic": "random"}, {"essence": 100}, {"flag": "alaric_liberato"}, {"counter": "alaric"}, {"run_flag": "alaric_visto"}, {"corruption": -15}]},
+          {"text": "Giura di prendere il suo posto", "msg": "Il sigillo scivola dalla sua schiena alla tua. Alaric si alza leggero e scompare oltre l'arco. Senti il peso di un giuramento che non finirà con questa discesa.", "effects": [{"atk": 10}, {"def": 5}, {"max_hp": 20}, {"flag": "alaric_erede"}, {"counter": "alaric"}, {"run_flag": "alaric_visto"}, {"corruption": 10}]},
           {"text": "Non sono pronto", "msg": "'Nessuno lo è,' risponde, e torna a guardare il muro."}
         ]
       }
@@ -585,7 +588,7 @@
         "text": "In fondo alla scia, Silas è schiacciato contro la parete da qualcosa fatto d'ombra e d'inchiostro. Scrive ancora, con la mano libera, come se descrivere il mostro potesse fermarlo.",
         "choices": [
           {"text": "Aiutalo", "msg": "Ti lanci tra Silas e la creatura.", "effects": [{"fight": "hard"}, {"potion": 2}, {"flag": "silas_salvato"}, {"counter": "silas"}, {"run_flag": "silas_visto"}]},
-          {"text": "Resta a guardare", "msg": "Silas se la cava da solo, a stento. Quando ti vede, chiude il diario. 'Ho scritto anche questo,' dice, e se ne va zoppicando.", "effects": [{"exp": 100}, {"flag": "silas_abbandonato"}, {"counter": "silas"}, {"run_flag": "silas_visto"}]}
+          {"text": "Resta a guardare", "msg": "Silas se la cava da solo, a stento. Quando ti vede, chiude il diario. 'Ho scritto anche questo,' dice, e se ne va zoppicando.", "effects": [{"exp": 100}, {"flag": "silas_abbandonato"}, {"counter": "silas"}, {"run_flag": "silas_visto"}, {"corruption": 10}]}
         ]
       }
     }
@@ -689,7 +692,7 @@
         "choices": [
           {"text": "Solleva la lastra", "requires": {"not_flag": "prima_pietra"}, "msg": "Sotto c'è una pietra grezza, grande come un pugno, incisa con un solo segno. Quando la tocchi, il Labirinto trattiene il respiro.", "effects": [{"damage": 20}, {"relic": "random"}, {"flag": "prima_pietra"}]},
           {"text": "Posa la mano dove c'era la pietra", "requires": {"flag": "prima_pietra"}, "msg": "Il marmo ricorda la forma della pietra, e ricorda te.", "effects": [{"essence": 50}]},
-          {"text": "Prega sulla pietra degli Architetti", "requires": {"class": "4"}, "msg": "Per un istante la Luce torna calma, come nei giorni prima della Discordia.", "effects": [{"heal_pct": 100}, {"def": 2}]},
+          {"text": "Prega sulla pietra degli Architetti", "requires": {"class": "4"}, "msg": "Per un istante la Luce torna calma, come nei giorni prima della Discordia.", "effects": [{"heal_pct": 100}, {"def": 2}, {"corruption": -20}]},
           {"text": "Ascolta il battito", "requires": {"class": "3"}, "msg": "Il battito ha un ritmo. È una parola, ripetuta all'infinito, nella lingua degli Architetti.", "effects": [{"exp": 100}]},
           {"text": "Lasciala dov'è", "msg": "Certe pietre reggono più di un pavimento."}
         ]
@@ -838,8 +841,9 @@
       "inizio": {
         "text": "Da questa piattaforma l'occhio al centro del vuoto è vicinissimo: galassie al posto delle vene, polvere d'ossa al posto delle ciglia. La palpebra trema.",
         "choices": [
-          {"text": "Guardalo finché non si apre", "chance": 50, "success": [{"relic": "random"}, {"essence": 80}], "msg": "L'occhio si apre per un istante e ti vede. Ti lascia un dono, o un avvertimento.", "fail_msg": "L'occhio si apre e ti attraversa. Una parte di te non torna indietro.", "fail_effects": [{"max_hp": -20}]},
+          {"text": "Guardalo finché non si apre", "chance": 50, "success": [{"relic": "random"}, {"essence": 80}], "msg": "L'occhio si apre per un istante e ti vede. Ti lascia un dono, o un avvertimento.", "fail_msg": "L'occhio si apre e ti attraversa. Una parte di te non torna indietro.", "fail_effects": [{"max_hp": -20}, {"corruption": 10}]},
           {"text": "Ricorda le parole di Silas", "requires": {"flag": "silas_verita"}, "msg": "'Non c'è un mostro. C'è uno specchio.' Guardi l'occhio senza paura, e l'occhio ti restituisce le forze.", "effects": [{"heal_pct": 100}, {"def": 5}]},
+          {"text": "Apri l'occhio con le tue mani", "requires": {"corruption": 75}, "msg": "La palpebra cede sotto le tue dita. L'occhio ti guarda, e non c'è paura: solo riconoscimento. 'Figlio,' dice.", "effects": [{"relic": "random"}, {"essence": 150}, {"corruption": 10}]},
           {"text": "Distogli lo sguardo", "msg": "Senti la palpebra richiudersi alle tue spalle."}
         ]
       }
@@ -858,7 +862,7 @@
         ],
         "choices": [
           {"text": "Stringigli la mano", "msg": "Per un istante ricordi tutte le volte che sei morto quaggiù. Fa male, e insegna.", "effects": [{"exp": 150}]},
-          {"text": "Combatti il tuo eco", "msg": "Il tuo eco sorride e alza l'arma. Conosce ogni tua mossa.", "effects": [{"fight": "elite"}, {"atk": 6}]},
+          {"text": "Combatti il tuo eco", "msg": "Il tuo eco sorride e alza l'arma. Conosce ogni tua mossa.", "effects": [{"fight": "elite"}, {"atk": 6}, {"corruption": 5}]},
           {"text": "Ignoralo", "msg": "'Ci rivedremo,' dice. 'Ci rivediamo sempre.'"}
         ]
       }

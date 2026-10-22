@@ -124,6 +124,9 @@ def room_label(d: dict, sixth_sense: bool = False, biome: Optional[dict] = None)
     label = f"{ROOM_ICONS[d['type']]} {ROOM_NAMES[d['type']]}"
     if d.get("fated"): label += f" {Colors.MAGENTA}✦ qualcosa ti stava aspettando{Colors.RESET}"
     if d.get("signature") and biome: label += f" {biome['icon']} {Colors.MAGENTA}{biome['hazard']['name']}{Colors.RESET}"
+    # Il Tavolo della Cartografa: le storie delle stanze speciali e degli eventi che tornano sono segnate sulla mappa
+    if not sixth_sense and d["type"] == "event" and (d.get("signature") or d.get("fated")) and PROFILE_MANAGER.get_flag("camp_tavolo_cartografa"):
+        label += f" ({GAME_DATA['events'][d['event_id']]['title']})"
     if sixth_sense:
         if d["type"] in ("combat", "boss"): label += f" ({d['enemy'].name} {get_element_icon(d['enemy'].element)})"
         elif d["type"] == "event": label += f" ({GAME_DATA['events'][d['event_id']]['title']})"

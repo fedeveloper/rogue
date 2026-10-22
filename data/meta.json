@@ -188,5 +188,12 @@
             "vendor": 10,
             "campfire": 10
         }
+    },
+    "corruption": {
+        "max": 100,
+        "atk_per_10": 2,
+        "veil": {"threshold": 50, "chance": 25},
+        "voice": {"threshold": 75, "chance": 30},
+        "desc": "Cresce con le scelte oscure e cala con quelle pure, e vale per la sola discesa. Ogni 10 punti danno +2 ATK. Da 50 il Labirinto ti offusca la vista: il 25% delle volte non vedi gli effetti di una scelta. Da 75 ti nasconde il nemico: il 30% delle volte non vedi la mossa che prepara."
     }
 }

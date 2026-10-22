@@ -270,8 +270,12 @@ class CombatSession:
 
     def choose_intent(self):
         self.intent = "stunned" if "stun" in self.enemy.statuses else self.enemy.choose_move()
+        # Corruzione alta: il Labirinto a volte nasconde la mossa che il nemico prepara
+        voice = GAME_DATA["meta"]["corruption"]["voice"]
+        self.intent_hidden = self.player.corruption >= voice["threshold"] and random.random() * 100 < voice["chance"]
 
     def intent_text(self) -> str:
+        if getattr(self, "intent_hidden", False): return f"❔ {Colors.MAGENTA}??? (il Labirinto ti nasconde la sua mossa){Colors.RESET}"
         if self.intent == "stunned": return f"🧊 {Colors.CYAN}Congelato: perderà il turno{Colors.RESET}"
         m = self._move(self.intent)
         text = f"{m['icon']} {Colors.BOLD}{m['name']}{Colors.RESET}"

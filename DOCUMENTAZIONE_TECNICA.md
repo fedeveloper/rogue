@@ -19,6 +19,8 @@ Riferimento per chi modifica il gioco: architettura, formato dei dati, formule d
 | `roguelike.py` | Punto d'ingresso (`main`). Menu principale, Impostazioni, Campo Base (Fuoco dell'Anima, Forgia, Taverna, Grimorio, botteghe), scelta di eroe/tratto/patti, ciclo dei piani (`play_game`) con la mappa e l'atmosfera del bioma, fine partita (`evaluate_run`), Maestria e imprese. |
 | `floor_map.py` | Mappa del piano: file di stanze (`generate_row`), collegamenti e stanze speciali (`generate_floor_map`), percorsi (`reachable`), disegno (`render_map`) ed etichette (`room_label`). |
 | `rooms.py` | `CombatSession` (turni, danni, status, Risonanze, fine scontro) e le stanze: mercante, falò, forziere, trappola, mistero. |
+| `camp.py` | Il Fuoco del Campo: personaggi presenti, frasi e doni (`talk`), strutture (`build`, `built`), dono dello Scrittoio a inizio run (`start_of_run_boon`). |
+| `endings.py` | Finali: disponibili (`available_endings`), scelta e premio (`choose_ending`), registro in `profile.story.endings`. |
 | `codex.py` | Il Codice del Labirinto: registra nemici visti e sconfitti, lettere e reliquie (`record_*`), calcola il completamento e mostra le pagine (`show_codex`). |
 | `events.py` | Motore degli eventi narrativi: condizioni (`CONDITIONS`), effetti (`EFFECTS`), riepiloghi generati dagli effetti, scene a più passi (`event_room`), scelta dell'evento per le porte (`pick_event`), memoria fra le run e conseguenze differite (`pop_due_event`). |
 | `entities.py` | `Player`, `Enemy`, gli oggetti (`Weapon`, `Armor`, `Accessory`, `Consumable`) e i generatori casuali. Applica tratti, Maestrie, potenziamenti e oggetti iniziali. Sceglie i nemici in base alla profondità (`pick_enemy_name`). |
@@ -29,7 +31,7 @@ Riferimento per chi modifica il gioco: architettura, formato dei dati, formule d
 | `ui.py` | Terminale: colori ANSI, lettura dei tasti (Windows e POSIX), menu a frecce (`interactive_menu`), velocità del testo (`delay_print`, `set_text_speed`). |
 | `constants.py` | Costanti di bilanciamento (precisione base, scaling, finestre di profondità, velocità del testo…). |
 
-Dipendenze fra i moduli: `ui` ← `data_manager` ← `archive`/`relic_effects`/`codex` ← `entities` ← `inventory_menu` ← `rooms` ← `events` ← `floor_map` ← `roguelike`. Nessun modulo importa da uno che sta alla sua destra.
+Dipendenze fra i moduli: `ui` ← `data_manager` ← `archive`/`relic_effects`/`codex` ← `entities` ← `inventory_menu` ← `rooms` ← `events` ← `floor_map`/`camp`/`endings` ← `roguelike`. Nessun modulo importa da uno che sta alla sua destra.
 
 ---
 
@@ -54,11 +56,11 @@ Un test controlla che ogni oggetto sbloccabile abbia davvero una di queste strad
 | `relics.json` | Reliquie | `id`, `name`, `desc`, `lore`, `unlock_id`, `unlock_cost` |
 | `elements.json` | Sistema elementale | `list`, `icons`, `multipliers[attaccante][difensore]`, `resonance[elemento] = {value, desc, announce}`, `marks.duration`, `conditions` (`blind`, `slow`, `scorch_pct`), `reactions["A+B"] = {name, icon, desc, bonus_pct, status: {type, duration}}` |
 | `books.json` | Tomi dell'Archivio | `title`, `unlock_condition` (testo), `unlock = {type: max_floor\|total_bosses\|won_normal, value}`, `bonus = {gold_pct, escape, boss_dmg_pct, def}`, `bonus_desc`, `chapters` |
-| `meta.json` | Regole di contorno | `traits`, `pacts` (`bonus` di Essenza), `feats` (`target`, `reward_type`, `reward_id`), `mastery_xp_requirements`, `rooms.weights`/`rooms.cooldowns` |
+| `meta.json` | Regole di contorno | `traits`, `pacts` (`bonus` di Essenza), `feats` (`target`, `reward_type`, `reward_id`), `mastery_xp_requirements`, `rooms.weights`/`rooms.cooldowns`, `corruption` (`max`, `atk_per_10`, `veil`, `voice`, `desc`) |
 | `biomes.json` | Biomi | `id`, `name`, `icon`, `floors`, `intro`, `hazard`, `room_weights`, `enemy_elements`, `signature_events` (opzionali gli ultimi quattro) |
 | `events.json` | Eventi narrativi | `title`, `start`, `scenes`, `requires` (opz.), `scripted` (opz.), `weight` (opz.): vedi [Eventi narrativi](#eventi-narrativi) |
 | `moves.json` | Mosse dei nemici (intenti) | `moves` (`name`, `icon`, `desc`, `damage_mult`, `damage_taken_mult`, `heal_pct`), `defaults` (pesi di `enemy`, `boss`, `with_status`), `rules` (`heal_below_pct`, `max_heals`, `no_repeat`) |
-| `story.json` | Elementi della storia | `quest_items` (oggetti chiave: `name`, `desc`), `npcs` (nomi degli artigiani), `characters` (personaggi ricorrenti: vedi sotto) |
+| `story.json` | Elementi della storia | `quest_items` (oggetti chiave: `name`, `desc`), `npcs` (nomi degli artigiani), `characters` (personaggi ricorrenti: vedi sotto), `camp` (Fuoco del Campo), `endings` (finali) |
 | `lore.json` | Frasi d'atmosfera | `combat`, `boss`, `vendor`, `treasure`, `trap`, `campfire`, `letters`, `mystery` |
 
 ### Maestrie
@@ -110,7 +112,7 @@ Un evento è una piccola storia a **scene**. `start` indica la prima; ogni scena
 
 Una scelta che costa oro è grigia, con "(Oro insufficiente)", se non puoi pagarla.
 
-**Condizioni** (`requires`, tutte in AND): `class`/`not_class` (id o lista), `trait`, `relic`, `quest_item`, `pact`, `gold`, `level`, `atk`, `dodge` (soglie minime), `hp_pct_below`, `min_floor`/`max_floor`, `flag`/`not_flag` (profilo), `run_flag`/`not_run_flag` (run), `counter` (`{"nome": soglia}`, almeno) e `counter_below` (`{"nome": soglia}`, meno di), `npc`/`not_npc`, `biome` (id del bioma del piano). A livello di evento decidono se l'evento può uscire in una porta; vengono valutate anche senza l'eroe, contando solo piano e profilo.
+**Condizioni** (`requires`, tutte in AND): `class`/`not_class` (id o lista), `trait`, `relic`, `quest_item`, `pact`, `gold`, `level`, `atk`, `dodge` (soglie minime), `hp_pct_below`, `min_floor`/`max_floor`, `flag`/`not_flag` (profilo), `run_flag`/`not_run_flag` (run), `counter` (`{"nome": soglia}`, almeno) e `counter_below` (`{"nome": soglia}`, meno di), `npc`/`not_npc`, `biome` (id del bioma del piano), `flags`/`any_flags` (liste di flag: tutti / almeno uno), `letters_complete`, `corruption` (almeno; etichetta `[Corruzione N+]`) e `corruption_below`. A livello di evento decidono se l'evento può uscire in una porta; vengono valutate anche senza l'eroe, contando solo piano e profilo.
 
 **Effetti** (una chiave per voce, più eventuali parametri `level`, `floors`, `value`, `add`, `death_msg`, `gold_pct`):
 
@@ -131,6 +133,7 @@ Una scelta che costa oro è grigia, con "(Oro insufficiente)", se non puoi pagar
 | `flag`, `counter` | nessuno | Memoria nel profilo, resta fra le run |
 | `run_flag` | nessuno | Memoria della sola run |
 | `later` | nessuno | `{"later": "evento", "floors": N}`: l'evento torna N piani dopo |
+| `corruption` | `±N Corruzione` | Corruzione della run, fra 0 e `meta.corruption.max`; gli aumenti sono ridotti dall'Altare della Purificazione |
 | `fall` | `Precipiti al piano successivo, -N% Oro` | `{"fall": true, "gold_pct": N}`: Caduta Astrale, chiude l'evento (vedi *Biomi*) |
 
 **Scelta e memoria.** `pick_event` esclude gli eventi `scripted` e quelli con `requires` non soddisfatti, preferisce quelli non ancora visti nella run e usa `weight` (predefinito 1). Un evento `scripted` compare solo quando una scelta lo richiama con `later`: al piano giusto prende il posto della prima porta (mai del boss), con la scritta "✦ qualcosa ti stava aspettando". Flag, contatori e numero di incontri per evento (`story.seen_events`) vengono salvati alla fine di ogni evento.
@@ -156,6 +159,28 @@ Il **Codice** (`codex.py`) legge e scrive `profile.codex`:
 - `relics`, aggiornato da `Player.add_relic`.
 
 Gli eventi visti e i personaggi vengono da `profile.story`. Il completamento conta i nemici sconfitti, i capitoli vissuti, gli eventi visti, le lettere e le reliquie trovate.
+
+### Corruzione, finali e Fuoco del Campo
+
+**Corruzione** (`Player.corruption`, solo per la run).
+- *Come varia.* `add_corruption()` la tiene fra 0 e `max`. Con l'Altare costruito gli aumenti valgono `corruption_gain_pct`%.
+- *Il potere.* `corruption_atk()` aggiunge `atk_per_10` ATK ogni 10 punti a `get_total_atk()`.
+- *Sguardo Velato.* Con `veil.threshold` o più, `events.veiled()` nasconde il riepilogo di una scelta con probabilità `veil.chance`.
+- *Voce del Labirinto.* Con `voice.threshold` o più, `choose_intent()` nasconde l'intento con probabilità `voice.chance`.
+- Un test verifica che i numeri di `corruption.desc` siano questi.
+
+**Finali** (`story.json → endings`).
+- *Campi.* `id`, `title`, `hint` (per il Codice), `choice` (l'opzione nel menu), `requires`, `text` (paragrafi) e `reward.essence`.
+- *Condizioni.* Sono le stesse degli eventi, valutate con l'eroe al piano 30: la Corruzione è quella della run, flag e lettere quelli del profilo.
+- *Scelta.* Alla vittoria `play_game` chiama `choose_ending()`. Il finale scelto va in `profile.story.endings` (`{id: volte}`) e nel Codice.
+
+**Fuoco del Campo** (`story.json → camp`).
+- `characters`: `id`, `name`, `requires`, `lines` (la prima con condizioni vere; l'ultima, senza condizioni, è quella di riserva) e `gift` (`essence`, `text`), ricevuto una volta sola (flag `camp_dono_<id>`).
+- `structures`: `id`, `name`, `cost`, `desc`, `requires`, `locked_hint`. Una volta costruite diventano il flag `camp_<id>`.
+  - Il *Tavolo della Cartografa* fa mostrare a `floor_map.room_label` il titolo delle stanze speciali e degli eventi richiamati.
+  - Lo *Scrittoio di Silas* ha i suoi `boons`, effetti degli eventi con riepilogo generato.
+  - L'*Altare* ha `corruption_gain_pct`.
+- Le condizioni del campo sono solo quelle del profilo (`PROFILE_CONDITIONS`).
 
 ## 4. Il ciclo di gioco
 
@@ -304,7 +329,7 @@ Il salvataggio si crea al primo avvio e **non va committato** (è in `.gitignore
 | `stats` | `total_deaths`, `total_gold`, `total_bosses` |
 | `completed_feats` | Imprese completate |
 | `perks` | Livelli dei potenziamenti del Fuoco dell'Anima |
-| `story` | Memoria del Labirinto: `flags`, `counters`, `seen_events` (incontri per evento) |
+| `story` | Memoria del Labirinto: `flags` (anche strutture `camp_<id>` e doni `camp_dono_<id>`), `counters`, `seen_events` (incontri per evento), `endings` (finali visti) |
 | `codex` | Codice: `enemies` (`seen`/`killed` per nome), `letters` (indici), `relics` (id), `reactions` (chiavi `"A+B"`) |
 | `npc_unlocked` | Artigiani liberati |
 | `starting_consumables` / `_weapons` / `_armors` / `_accessories` | Oggetti comprati nelle botteghe per la prossima discesa. Vengono svuotati all'inizio della partita, anche se un oggetto non si può costruire, così un dato difettoso non blocca le partite successive |
@@ -344,6 +369,7 @@ La CI (`.github/workflows/tests.yml`) li esegue su Python 3.9 e sull'ultima 3.x;
 | `test_depth.py` | Nemici e boss per profondità, boss finale, tratto e antidoto mostrati |
 | `test_refactor.py` | Ciclo del turno, ridisegno dei menu, bonus nei dati, output tramite `ui`, etichette dei consumabili |
 | `test_shops.py` | Botteghe degli artigiani, elenco della Forgia, Cuore di Drago |
+| `test_endgame.py` | Corruzione (limiti, ATK, contratto della descrizione, Sguardo Velato, Voce del Labirinto, opzioni proibite, statistiche), finali (dati, condizioni, scelta e premio, vittoria nel vero ciclo), Fuoco del Campo (dati, personaggi e doni, strutture, Tavolo, Scrittoio, Altare, menu) |
 | `test_biomes.py` | Equipaggiamento iniziale (reazione o Risonanza), completezza dei biomi, contratti dei pericoli, Gas del Silenzio, Ebollizione, Paradosso, Dissoluzione, Caduta Astrale nel vero ciclo dei piani |
 | `test_tactics.py` | Intenti (pesi predefiniti e dei dati, regole delle mosse, prompt, Congelato) e reazioni (arma poi armatura, armatura poi arma, solo in guardia, stesso elemento, nessuna reazione, scadenza dei marchi, Codice) |
 | `test_map.py` | Mappa (file alternate, collegamenti senza incroci né vicoli ciechi, tipi e tempi di ricarica, evento richiamato, disegno, ciclo dei piani reale) e biomi (copertura dei piani, dati, nativi, elementi, pesi delle stanze, stanza speciale per piano, Prima Pietra, annuncio del pericolo) |

@@ -195,7 +195,7 @@ class HazardMechanicsTest(Sandbox):
              mock.patch("roguelike.combat_room", side_effect=combat), mock.patch.multiple("roguelike", **rooms), \
              mock.patch("roguelike.evaluate_run"), mock.patch("roguelike.wait_enter"), \
              mock.patch("roguelike.clear_screen"), mock.patch("roguelike.delay_print", side_effect=lambda t, d=0: print(t)), \
-             mock.patch("roguelike.time.sleep"), mock.patch("roguelike._grant_victory_rewards"):
+             mock.patch("roguelike.time.sleep"), mock.patch("roguelike._grant_victory_rewards"), mock.patch("roguelike.choose_ending"), mock.patch("roguelike.start_of_run_boon"):
             roguelike.play_game()
         self.assertNotIn(11, bosses, "chi precipita salta il boss")
         self.assertIn(10, bosses)

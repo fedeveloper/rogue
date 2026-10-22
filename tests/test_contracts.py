@@ -37,6 +37,7 @@ class Sandbox(unittest.TestCase):
         data = PROFILE_MANAGER._data
         data.update(unlocked_ids=list(ALL_UNLOCKS), class_lvl={}, completed_feats=[], max_floor=0, won_normal=False)
         data["stats"] = {"total_deaths": 0, "total_gold": 0, "total_bosses": 0}
+        data["story"] = {"flags": {}, "counters": {}, "seen_events": {}}  # nessuna struttura del campo (es. l'Altare)
         data["perks"] = {k: (False if isinstance(v, bool) else 0) for k, v in data["perks"].items()}
         for k in ("starting_consumables", "starting_weapons", "starting_armors", "starting_accessories"): data[k] = []
         update_game_data()
@@ -414,7 +415,7 @@ class EventContractTest(Sandbox):
                 "relics": len(p.relic_ids), "items": len(p.inventory), "quest": sorted(p.quest_items),
                 "essence": p.essence_gathered, "exp": 0, "flags": dict(story["flags"]), "counters": dict(story["counters"]),
                 "npcs": dict(PROFILE_MANAGER._data.get("npc_unlocked", {})), "pending": [list(x) for x in p.pending_events],
-                "run_flags": sorted(p.run_flags), "fallen": p.fallen}
+                "run_flags": sorted(p.run_flags), "fallen": p.fallen, "corruption": p.corruption}
 
     def expected(self, before, effects, floor):
         """Ciò che gli effetti dichiarano, calcolato senza passare dal motore degli eventi."""
@@ -439,11 +440,13 @@ class EventContractTest(Sandbox):
             elif key == "later": e["pending"].append([floor + eff.get("floors", 1), v])
             elif key == "run_flag": e["run_flags"] = sorted(set(e["run_flags"]) | {v})
             elif key == "fall": e["gold"] -= e["gold"] * eff["gold_pct"] // 100; e["fallen"] = True
+            elif key == "corruption": e["corruption"] = max(0, min(GAME_DATA["meta"]["corruption"]["max"], e["corruption"] + v))
             elif key != "fight": self.fail(f"effetto senza contratto: {key}")
         return e
 
     def play(self, choice, success):
         p = self.hero(); p.max_hp = 500; p.hp = 250; p.gold = 500
+        p.corruption = 80  # sopra ogni soglia delle opzioni proibite, e con margine per misurare aumenti e cali
         p.quest_items = list(GAME_DATA["story"]["quest_items"])
         before = self.snapshot(p)
         exp = []

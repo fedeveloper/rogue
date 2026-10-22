@@ -58,6 +58,7 @@ def sections() -> List[Tuple[str, int, int]]:
         ("Eventi", sum(1 for k in events if PROFILE_MANAGER.story["seen_events"].get(k)), len(events)),
         ("Lettere insanguinate", len(set(PROFILE_MANAGER.codex["letters"]) & set(range(len(GAME_DATA["lore"]["letters"])))), len(GAME_DATA["lore"]["letters"])),
         ("Reliquie", len(set(PROFILE_MANAGER.codex["relics"]) & {r["id"] for r in RAW_DATA["relics"]}), len(RAW_DATA["relics"])),
+        ("Finali", len(set(PROFILE_MANAGER.story.get("endings", {})) & {e["id"] for e in GAME_DATA["story"]["endings"]}), len(GAME_DATA["story"]["endings"])),
         ("Reazioni elementali", len(set(PROFILE_MANAGER.codex.get("reactions", [])) & set(GAME_DATA["elements"]["reactions"])), len(GAME_DATA["elements"]["reactions"])),
     ]
 
@@ -139,8 +140,21 @@ def reactions_page() -> List[str]:
     return lines
 
 
+def endings_page() -> List[str]:
+    seen = PROFILE_MANAGER.story.get("endings", {})
+    lines = []
+    for e in GAME_DATA["story"]["endings"]:
+        if e["id"] in seen:
+            n = seen[e["id"]]
+            lines.append(f"  {Colors.MAGENTA}{e['title']}{Colors.RESET}  {Colors.CYAN}(visto {n} {'volta' if n == 1 else 'volte'}){Colors.RESET}")
+            lines.append(f"    {e['text'][-1]}")
+        else:
+            lines.append(f"  {UNKNOWN} — {Colors.RED}{e['hint']}{Colors.RESET}")
+    return lines
+
+
 PAGES = {"Bestiario": bestiary_page, "Personaggi": characters_page, "Eventi": events_page,
-         "Lettere insanguinate": letters_page, "Reliquie": relics_page, "Reazioni elementali": reactions_page}
+         "Lettere insanguinate": letters_page, "Reliquie": relics_page, "Finali": endings_page, "Reazioni elementali": reactions_page}
 
 
 def show_codex():

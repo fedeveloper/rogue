@@ -53,6 +53,9 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 - 🎭 **7 tratti** e **5 Patti del Caos**: 3,584 combinazioni di partenza diverse.
 - 📖 **Eventi che ricordano.** 46 storie a scene con opzioni che esistono solo per la tua classe, il tuo tratto o le tue reliquie: `[Mago]`, `[Tocco di Mida]`, `[Chiave Arrugginita]`. Il Labirinto ricorda chi hai aiutato e chi hai derubato, e certe scelte tornano a bussare qualche piano dopo.
 - 🗝️ **Personaggi che ritornano.** *Sir Alaric*, il Primo Paladino, e *Silas*, il Cercatore, hanno storie in tre capitoli che proseguono di run in run. Le tue scelte decidono come finiscono, e se liberi Alaric il Cavaliere Oscuro non tornerà più.
+- 🩸 **Corruzione.** Le scelte oscure danno potere e opzioni proibite, ma il Labirinto comincia a nasconderti le cose: gli effetti delle scelte, le mosse dei nemici.
+- 🏁 **5 finali.** Uccidere il Dio, prenderne il posto, risvegliare Aethelgard… e un finale segreto per chi legge davvero il Labirinto.
+- 🔥 **Un campo che ricorda.** Chi salvi nel Labirinto viene a scaldarsi al tuo fuoco, ti parla di ciò che hai fatto e ti aiuta a costruire.
 - 🌟 **30 reliquie** che piegano le regole: danni raddoppiati, scudi, vampirismo, oro moltiplicato.
 - 🏕️ **Meta-progressione profonda**: potenziamenti permanenti, una Forgia per sbloccare equipaggiamento, artigiani da liberare, un Archivio di lore con bonus, imprese da completare.
 - ♾️ **Modalità Infinita** dopo la prima vittoria, per chi vuole spingersi oltre il piano 30.
@@ -350,6 +353,8 @@ rogue/
 ├── relic_effects.py   # Effetti delle reliquie come hook (on_attack, on_take_damage, ...)
 ├── inventory_menu.py  # Zaino, consumabili e schermata delle statistiche
 ├── archive.py         # Archivio di Aethelgard e relativi bonus
+├── camp.py            # Il Fuoco del Campo: personaggi e strutture
+├── endings.py         # I finali multipli
 ├── codex.py           # Il Codice del Labirinto: ciò che hai scoperto fra le run
 ├── data_manager.py    # Caricamento dei dati e salvataggio del profilo
 ├── ui.py              # Terminale: colori, menu a frecce, output centralizzato
@@ -381,7 +386,7 @@ I **test di contratto** (`tests/test_contracts.py`) verificano che ogni reliquia
 - [x] Personaggi ricorrenti (Sir Alaric, Silas) e il Codice del Labirinto
 - [x] Mappa dei piani e primo bioma (I Chiostri del Rimpianto)
 - [x] Regole per tutti e sei i biomi
-- [ ] Finali multipli
+- [x] Hub fra le run, finali multipli e Corruzione
 
 ---
 
