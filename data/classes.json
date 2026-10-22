@@ -9,13 +9,13 @@
             "name": "Spada di Ferro",
             "value": 20,
             "atk": 5,
-            "element": "Normale"
+            "element": "Terra"
         },
         "armor": {
             "name": "Cotta di Maglia",
             "value": 30,
             "def": 4,
-            "element": "Normale"
+            "element": "Acqua"
         },
         "potions": 1,
         "unlocked_by_default": true,
@@ -61,7 +61,7 @@
             "name": "Cuoio Leggero",
             "value": 10,
             "def": 1,
-            "element": "Normale"
+            "element": "Acqua"
         },
         "potions": 2,
         "unlocked_by_default": true,
@@ -107,7 +107,7 @@
             "name": "Vesti di Seta",
             "value": 5,
             "def": 0,
-            "element": "Luce"
+            "element": "Vento"
         },
         "potions": 3,
         "unlocked_by_default": true,
@@ -249,7 +249,7 @@
             "name": "Grembiule in Pelle",
             "value": 15,
             "def": 3,
-            "element": "Normale"
+            "element": "Terra"
         },
         "potions": 4,
         "unlocked_by_default": false,
@@ -299,7 +299,7 @@
             "name": "Mantello d'Ombra",
             "value": 20,
             "def": 1,
-            "element": "Normale"
+            "element": "Terra"
         },
         "potions": 1,
         "unlocked_by_default": false,

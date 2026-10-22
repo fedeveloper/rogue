@@ -12,7 +12,7 @@ from constants import INFINITE_MODE_THRESHOLD
 from data_manager import GAME_DATA, PROFILE_MANAGER, get_biome, get_element_icon
 from entities import Enemy, Player
 from events import pick_event, pop_due_event
-from ui import Colors, visible_width
+from ui import Colors, display_msg, visible_width
 
 ROWS = 4  # file di stanze prima del boss
 TALL_MAP_ROWS = 30  # da quest'altezza del terminale i collegamenti occupano due righe
@@ -93,6 +93,23 @@ def generate_floor_map(floor: int, weights_def: dict, cooldowns_def: dict, room_
             d["links"] = [j for j, nxt in enumerate(rows[r + 1]) if abs(nxt["slot"] - d["slot"]) <= 1]
     rows[-1][0]["links"] = []
     return rows
+
+
+def apply_biome_on_floor(player: Player, biome: Optional[dict]):
+    """Regole del bioma che agiscono all'arrivo su un piano (oggi: la Dissoluzione dell'Io del Ventre)."""
+    bid = biome["id"] if biome else None
+    if player.biome_id != bid and player.dissolved:
+        player.max_hp += player.dissolved
+        display_msg(f"{Colors.GREEN}Ti lasci alle spalle la dissoluzione e ritrovi te stesso: +{player.dissolved} HP Max. ({player.hp}/{player.max_hp}){Colors.RESET}")
+        player.dissolved = 0
+    player.biome_id = bid
+    rule = (biome or {}).get("rules", {}).get("dissolve")
+    if rule:
+        loss = max(1, player.max_hp * rule["max_hp_pct"] // 100)
+        player.max_hp -= loss
+        player.hp = min(player.hp, player.max_hp)
+        player.dissolved += loss
+        display_msg(f"{Colors.MAGENTA}{biome['hazard']['name']}: -{loss} HP Max (-{player.dissolved} finché resti qui). ({player.hp}/{player.max_hp}){Colors.RESET}")
 
 
 def reachable(rows: List[List[dict]], step: int, current: Optional[dict]) -> List[int]:
