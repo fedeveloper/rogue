@@ -16,9 +16,10 @@ Riferimento per chi modifica il gioco: architettura, formato dei dati, formule d
 
 | Modulo | Responsabilità |
 |---|---|
-| `roguelike.py` | Punto d'ingresso (`main`). Menu principale, Impostazioni, Campo Base (Fuoco dell'Anima, Forgia, Taverna, Grimorio, botteghe), scelta di eroe/tratto/patti, ciclo dei piani (`play_game`) con la mappa e l'atmosfera del bioma, fine partita (`evaluate_run`), Maestria e imprese. |
+| `roguelike.py` | Punto d'ingresso (`main`). Menu principale, Impostazioni, Campo Base (Fuoco dell'Anima, Forgia, Taverna, Grimorio, botteghe), scelta di eroe/tratto e del grado di Ascensione (`_choose_ascension`), Sfida del Giorno (`daily_menu`, `daily_page`), ciclo dei piani (`play_game` → `_descent`) con la mappa e l'atmosfera del bioma, fine partita (`evaluate_run`), Maestria e imprese. |
 | `floor_map.py` | Mappa del piano: file di stanze (`generate_row`), collegamenti e stanze speciali (`generate_floor_map`), percorsi (`reachable`), disegno (`render_map`) ed etichette (`room_label`). |
 | `rooms.py` | `CombatSession` (turni, danni, status, Risonanze, fine scontro) e le stanze: mercante, falò, forziere, trappola, mistero. |
+| `modes.py` | Modalità: regole della discesa in corso (`RUN`, `rule`, `combine`, `start_run`/`end_run`), gradi di Ascensione (`max_grade`, `ascension_rules`, `ascension_essence_mult`, `record_ascension_win`) e Sfida del Giorno (`daily_setup`, `daily_rules`, `daily_score`, `record_daily`, `daily_streak`). |
 | `camp.py` | Il Fuoco del Campo: personaggi presenti, frasi e doni (`talk`), strutture (`build`, `built`), dono dello Scrittoio a inizio run (`start_of_run_boon`). |
 | `endings.py` | Finali: disponibili (`available_endings`), scelta e premio (`choose_ending`), registro in `profile.story.endings`. |
 | `codex.py` | Il Codice del Labirinto: registra nemici visti e sconfitti, lettere e reliquie (`record_*`), calcola il completamento e mostra le pagine (`show_codex`). |
@@ -31,7 +32,7 @@ Riferimento per chi modifica il gioco: architettura, formato dei dati, formule d
 | `ui.py` | Terminale: colori ANSI, lettura dei tasti (Windows e POSIX), menu a frecce (`interactive_menu`), velocità del testo (`delay_print`, `set_text_speed`). |
 | `constants.py` | Costanti di bilanciamento (precisione base, scaling, finestre di profondità, velocità del testo…). |
 
-Dipendenze fra i moduli: `ui` ← `data_manager` ← `archive`/`relic_effects`/`codex` ← `entities` ← `inventory_menu` ← `rooms` ← `events` ← `floor_map`/`camp`/`endings` ← `roguelike`. Nessun modulo importa da uno che sta alla sua destra.
+Dipendenze fra i moduli: `ui` ← `data_manager` ← `archive`/`relic_effects`/`codex`/`modes` ← `entities` ← `inventory_menu` ← `rooms` ← `events` ← `floor_map`/`camp`/`endings` ← `roguelike`. Nessun modulo importa da uno che sta alla sua destra.
 
 ---
 
@@ -56,11 +57,12 @@ Un test controlla che ogni oggetto sbloccabile abbia davvero una di queste strad
 | `relics.json` | Reliquie | `id`, `name`, `desc`, `lore`, `unlock_id`, `unlock_cost` |
 | `elements.json` | Sistema elementale | `list`, `icons`, `multipliers[attaccante][difensore]`, `resonance[elemento] = {value, desc, announce}`, `marks.duration`, `conditions` (`blind`, `slow`, `scorch_pct`), `reactions["A+B"] = {name, icon, desc, bonus_pct, status: {type, duration}}` |
 | `books.json` | Tomi dell'Archivio | `title`, `unlock_condition` (testo), `unlock = {type: max_floor\|total_bosses\|won_normal, value}`, `bonus = {gold_pct, escape, boss_dmg_pct, def}`, `bonus_desc`, `chapters` |
-| `meta.json` | Regole di contorno | `traits`, `pacts` (`bonus` di Essenza), `feats` (`target`, `reward_type`, `reward_id`), `mastery_xp_requirements`, `rooms.weights`/`rooms.cooldowns`, `corruption` (`max`, `atk_per_10`, `veil`, `voice`, `desc`) |
+| `meta.json` | Regole di contorno | `traits`, `pacts` (`name`, `desc`: gli effetti dei gradi di Ascensione con `pact`), `feats` (`target`, `reward_type`, `reward_id`), `mastery_xp_requirements`, `rooms.weights`/`rooms.cooldowns`, `corruption` (`max`, `atk_per_10`, `veil`, `voice`, `desc`) |
 | `biomes.json` | Biomi | `id`, `name`, `icon`, `floors`, `intro`, `hazard`, `room_weights`, `enemy_elements`, `signature_events` (opzionali gli ultimi quattro) |
 | `events.json` | Eventi narrativi | `title`, `start`, `scenes`, `requires` (opz.), `scripted` (opz.), `weight` (opz.): vedi [Eventi narrativi](#eventi-narrativi) |
 | `moves.json` | Mosse dei nemici (intenti) | `moves` (`name`, `icon`, `desc`, `damage_mult`, `damage_taken_mult`, `heal_pct`), `defaults` (pesi di `enemy`, `boss`, `with_status`), `rules` (`heal_below_pct`, `max_heals`, `no_repeat`) |
 | `story.json` | Elementi della storia | `quest_items` (oggetti chiave: `name`, `desc`), `npcs` (nomi degli artigiani), `characters` (personaggi ricorrenti: vedi sotto), `camp` (Fuoco del Campo), `endings` (finali) |
+| `modes.json` | Modalità | `ascension` (`max`, `grades`: `name`, `desc`, `essence_bonus`, `effects`), `daily` (`maluses`, `first_attempt_essence_mult`, `history`, `score`, `boons`: `name`, `desc`, `effects`): vedi [Modalità](#modalità) |
 | `lore.json` | Frasi d'atmosfera | `combat`, `boss`, `vendor`, `treasure`, `trap`, `campfire`, `letters`, `mystery` |
 
 ### Maestrie
@@ -185,16 +187,19 @@ Gli eventi visti e i personaggi vengono da `profile.story`. Il completamento con
 ## 4. Il ciclo di gioco
 
 ```text
-main() ─▶ menu principale ─▶ play_game(infinite_mode)
+main() ─▶ menu principale ─▶ play_game(infinite_mode, daily)
                                 │
-          _hero_selection() ────┤  classe, tratto, patti
-          Player(...)           │
+          _hero_selection() ────┤  classe e tratto (o quelli della Sfida del Giorno)
+          _choose_ascension() ──┤  grado (dopo la prima vittoria)
+          modes.start_run() ────┤  regole della discesa; modes.end_run() alla fine
+          _descent(): Player(...), _apply_mode_start()
+                                │
                                 ▼
           per ogni piano: rigenerazione (Speranza di Luce)
             generate_floor_map(): 4 file di stanze + boss, bioma, stanze speciali
             per step 1..5: render_map() ─▶ scelta fra le stanze collegate ─▶ stanza
             (step 5 = boss; al piano 30 il boss è final_boss)
-          piano superato: +20+5·piano HP, max_floor aggiornato
+          piano superato: rest_heal() = (20+5·piano) × rest_heal_mult HP, max_floor aggiornato
                                 ▼
           evaluate_run(): Essenza, Maestria, imprese, salvataggio
 ```
@@ -273,9 +278,37 @@ Un'arma tipica abbatte un nemico tipico in circa 3 colpi e un'armatura tipica ne
 - `curve`: oggetti generabili contro nemici, piano per piano;
 - `oggetti`: ogni arma e armatura a ogni piano;
 - `run N nuovo|completo`: N run per classe con il codice vero e un giocatore automatico, con vittorie, piano raggiunto, Essenza, colpi annullati, morti per bioma e letalità dei boss;
+- `ascensione N gradi`: profilo completo, N run per classe a ogni grado (es. `0,5,10,15,20`), con vittorie e piano mediano;
 - `strategie N nuovo|completo`: le stesse run con diversi modi di scegliere le stanze (adattiva in base agli HP, prudente, aggressiva, trappole per prime). Serve a verificare che nessun ordine fisso domini: è la prova che la scelta della stanza è una decisione.
 
 Il profilo del giocatore non viene mai toccato (il caricamento lo riscrive solo se va migrato da una versione precedente).
+
+**README.** `README.md` si genera con `python tools/genera_readme.py`: il testo è nello script, tabelle e numeri vengono da `data/`. `tests/test_docs.py` fallisce se il README non è aggiornato, quindi va rigenerato in ogni PR che cambia i dati.
+
+### Modalità
+
+`modes.py` e `data/modes.json`. Ascensione e Sfida del Giorno cambiano una discesa con gli stessi **effetti**: `combine()` li somma in un dizionario di regole, `start_run()` lo rende attivo in `modes.RUN` e `modes.rule(chiave)` lo legge dove serve. Fuori da una discesa (e nei test) le regole sono neutre; `play_game` chiama sempre `end_run()` alla fine, anche se la discesa si interrompe con un errore.
+
+| Effetto | Tipo | Dove agisce |
+|---|---|---|
+| `room_weights` | moltiplicatori per tipo di stanza | `roguelike.floor_room_weights`, dopo le reliquie |
+| `rest_heal_mult` | × | `roguelike.rest_heal`, riposo prima delle scale |
+| `campfire_heal_mult` | × | Falò: riposo = `CAMPFIRE_REST_PCT` (50) × valore, % degli HP massimi |
+| `boss_hp_mult`, `boss_atk_mult`, `final_boss_hp_mult` | × | `Enemy` (boss; l'ultimo solo per il `final_boss`) |
+| `enemy_hp_mult`, `elite_hp_mult` | × | `Enemy` (non boss; il secondo solo con `modifier="elite"`) |
+| `enemy_atk_mult` | × | `Enemy`, tutti |
+| `enemy_acc_add` | + | `Enemy.base_acc` |
+| `enemy_gold_mult` | × | `Enemy.gold_drop` |
+| `chest_risk_mult` | × | `rooms.chest_risks`, con un tetto del 50% per tipo |
+| `curse_chance_mult` | × | `CURSE_CHANCE` dei generatori di armi, armature e monili |
+| `start_gold_mult`, `start_gold_add`, `start_corruption`, `start_relic`, `start_potions_add` | ×, + | `roguelike._apply_mode_start`, a inizio discesa |
+| `pact` | id di un patto | aggiunto a `active_pacts` (effetti già esistenti: `carestia`, `inflazione`, `trappole`) |
+
+**Ascensione.** I gradi sono cumulativi: `ascension_rules(n)` combina gli effetti dei primi `n`. L'Essenza finale è moltiplicata per `1 + Σ essence_bonus`. `max_grade()` è 0 senza vittorie, poi `profile.ascension.best_win + 1`; una vittoria della discesa standard (non della Sfida) chiama `record_ascension_win(grado)`. I vecchi patti `durezza` e `furia` non esistono più: sono diventati gli effetti `enemy_hp_mult`/`boss_hp_mult` ed `enemy_atk_mult` dei gradi omonimi, con valori più leggeri perché si sommano agli altri gradi. La curva dei gradi si misura con `tools/bilanciamento.py ascensione`.
+
+**Sfida del Giorno.** `daily_setup(data)` usa un `random.Random` con il seme `AAAAMMGG`: classe e tratto (fra tutti, anche non sbloccati), `maluses` gradi distinti e un dono. `play_game(daily=setup)` salta la scelta dell'eroe e del grado, imposta `random.seed(seme)` all'inizio e `random.seed(seme·100 + piano)` prima di generare ogni piano: la mappa di un piano non dipende dalla strada fatta. `evaluate_run` registra solo il primo tentativo (`record_daily`) e gli dà `first_attempt_essence_mult`; `daily_streak` conta i giorni consecutivi. La Sfida non sblocca gradi di Ascensione.
+
+`tests/test_modes.py` ha un contratto per ogni chiave di effetto e controlla che ogni descrizione contenga i numeri dei suoi effetti; `tests/test_docs.py` controlla che il Manuale elenchi gradi e doni come sono nei dati.
 
 ## 5. Formule di combattimento
 
@@ -360,7 +393,9 @@ Il salvataggio si crea al primo avvio e **non va committato** (è in `.gitignore
 
 | Chiave | Contenuto |
 |---|---|
-| `essence`, `max_floor`, `won_normal` | Essenza, piano più profondo raggiunto, vittoria standard ottenuta (sblocca Patti e Modalità Infinita) |
+| `essence`, `max_floor`, `won_normal` | Essenza, piano più profondo raggiunto, vittoria standard ottenuta (sblocca Ascensione e Modalità Infinita) |
+| `ascension` | `best_win`: il grado più alto vinto; è disponibile fino a `best_win + 1` (massimo 20) |
+| `daily` | Sfide del Giorno registrate, per data ISO: `score`, `floor`, `won`, `class` (solo il primo tentativo; ultime `history` date) |
 | `unlocked_ids` | Tutti gli sblocchi: oggetti, reliquie, classi (per id), tratti |
 | `class_xp`, `class_lvl` | Esperienza e livello di Maestria per classe |
 | `stats` | `total_deaths`, `total_gold`, `total_bosses` |
@@ -399,6 +434,8 @@ La CI (`.github/workflows/tests.yml`) li esegue su Python 3.9 e sull'ultima 3.x;
 |---|---|
 | `test_data.py` | Coerenza dei JSON |
 | `test_entities.py` | Generazione di oggetti, eroi, nemici; reliquie registrate |
+| `test_modes.py` | Modalità: contratto e testo di ogni effetto, gradi cumulativi e sblocco, menu del grado, Essenza, regole nella vera discesa e pulizia; Sfida del Giorno (stessa sfida nello stesso giorno, regole, primo tentativo, storico e serie, Essenza, mappe uguali qualunque strada, schermata, statistiche) |
+| `test_docs.py` | Il Manuale elenca gradi di Ascensione e doni della Sfida come nei dati |
 | `test_mechanics.py` | Tratti, patti, Maestrie, ricompense di fine partita, profilo corrotto |
 | `test_combat_design.py` | Risonanza dinamica, status a fine scontro, armi con status |
 | `test_polish.py` | Messaggi di combattimento, Falò, Fuoco dell'Anima, limite di fuga |

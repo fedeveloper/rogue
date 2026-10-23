@@ -43,30 +43,17 @@
         }
     },
     "pacts": {
-        "durezza": {
-            "name": "Durezza",
-            "desc": "HP di tutti i Nemici +30%",
-            "bonus": 0.25
-        },
-        "furia": {
-            "name": "Furia",
-            "desc": "Attacco di tutti i Nemici +30%",
-            "bonus": 0.25
-        },
         "carestia": {
             "name": "Carestia",
-            "desc": "Le pozioni curano la met\u00e0",
-            "bonus": 0.25
+            "desc": "Le pozioni curano la met\u00e0"
         },
         "inflazione": {
             "name": "Inflazione",
-            "desc": "I prezzi del Mercante sono Raddoppiati",
-            "bonus": 0.25
+            "desc": "I prezzi del Mercante sono Raddoppiati"
         },
         "trappole": {
             "name": "Labirinto Mortale",
-            "desc": "Le Trappole infliggono danni Doppi",
-            "bonus": 0.25
+            "desc": "Le Trappole infliggono danni Doppi"
         }
     },
     "feats": {

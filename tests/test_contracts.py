@@ -554,8 +554,6 @@ class RulesContractTest(Sandbox):
             p = self.hero(pacts=pacts); p.max_hp, p.hp = 1000, 1
             self.drink(p, Consumable("Pozione", 1, 40, "heal")); return p.hp - 1
         checks = {
-            "durezza": lambda: self.assertEqual(enemy(["durezza"]).hp, int(enemy([]).hp * 1.3)),
-            "furia": lambda: self.assertEqual(enemy(["furia"]).atk, int(enemy([]).atk * 1.3)),
             "carestia": lambda: self.assertEqual(potion(["carestia"]), potion([]) // 2),
             "inflazione": lambda: self.assertEqual(self.vendor_prices(["inflazione"]), [v * 2 for v in self.vendor_prices([])]),
             "trappole": lambda: self.assertEqual(trap(["trappole"]), trap([]) * 2),

@@ -17,7 +17,7 @@ Se colori o emoji non si vedono bene, usa un terminale con codifica UTF-8 (su Wi
 
 ## 🧭 La discesa
 
-1. **Scegli l'eroe e il tratto.** Dopo la prima vittoria puoi attivare anche i **Patti del Caos** (vedi sotto).
+1. **Scegli l'eroe e il tratto.** Dopo la prima vittoria scegli anche il grado di **Ascensione** (vedi *Modalità*).
 2. **Ogni piano ha una mappa.** All'arrivo vedi tutto il piano: quattro file di stanze collegate, e in fondo il boss (★). A ogni tappa scegli una delle stanze collegate a quella in cui ti trovi: in giallo le stanze raggiungibili, in verde il percorso fatto, in grigio ciò che ormai è fuori strada. Pianifica: un falò due file più in basso vale una deviazione? Con il potenziamento *Sesto Senso* vedi anche quale nemico o evento ti aspetta.
 3. **La quinta tappa è sempre un boss.**
 4. **Superato il piano** recuperi un po' di HP (20 + 5 per piano) e scendi.
@@ -265,7 +265,7 @@ Ogni eroe ha un albero di **Maestria** a 5 livelli, che sale con l'esperienza ac
 
 ---
 
-## 🎭 Tratti e Patti del Caos
+## 🎭 Tratti
 
 **Tratti.** Si sceglie un tratto a ogni partenza:
 
@@ -279,15 +279,65 @@ Ogni eroe ha un albero di **Maestria** a 5 livelli, che sale con l'esperienza ac
 | Titano | +100 HP, ma precisione e schivata dimezzate |
 | Benedetto | Inizi con lo Scudo di Cristallo e resisti al primo colpo letale |
 
-**Patti del Caos.** Dopo la prima vittoria puoi attivare all'inizio di ogni discesa fino a 5 maledizioni. Ognuna aggiunge +25% all'Essenza finale, fino a **×2,25** con tutte e cinque:
+---
 
-| Patto | Effetto |
+## 🎮 Modalità
+
+Dal menu principale:
+
+- **Discesa standard** — 30 piani fino al DIO ANTICO.
+- **📅 Sfida del Giorno** — sempre disponibile (vedi sotto).
+- **Discesa infinita** — dopo la prima vittoria: si prosegue oltre il piano 30 finché resisti; se lo superi, l'Essenza finale vale ×1,5.
+
+### Ascensione
+
+Dopo la prima vittoria, a ogni partenza scegli un **grado di Ascensione**. Ogni grado aggiunge una regola a quelle dei gradi precedenti e aumenta l'Essenza finale. All'inizio è disponibile il grado 1; vincendo la discesa standard al grado più alto sblocchi il successivo, fino al **20**. Il grado scelto è indicato in cima alla mappa e nelle Statistiche dell'Eroe.
+
+I cinque **Patti del Caos** delle versioni precedenti sono diventati gradi: *Labirinto Mortale*, *Inflazione*, *Carestia*, *Durezza* e *Furia* (questi ultimi due più leggeri, perché si sommano agli altri gradi).
+
+| Grado | Nome | Regola che si aggiunge | Essenza |
+|---|---|---|---|
+| 1 | Campioni | Gli scontri d'Élite compaiono il doppio delle volte. | ×1,15 |
+| 2 | Scale Fredde | Il riposo prima delle scale cura la metà. | ×1,3 |
+| 3 | Labirinto Mortale | Le trappole infliggono danni doppi. | ×1,55 |
+| 4 | Forzieri Avidi | Forzieri chiusi e Mimic sono il doppio più probabili (fino a uno su due). | ×1,7 |
+| 5 | Boss Feroci | I boss hanno il 15% di HP in più. | ×1,85 |
+| 6 | Inflazione | I prezzi del Mercante sono raddoppiati. | ×2,1 |
+| 7 | Borsa Vuota | Parti con metà dell'Oro. | ×2,25 |
+| 8 | Braci Deboli | Riposare al Falò cura il 30% degli HP invece del 50%. | ×2,4 |
+| 9 | Occhi nel Buio | I nemici hanno +5 di Precisione. | ×2,55 |
+| 10 | Campioni Temprati | Gli scontri d'Élite hanno il 20% di HP in più. | ×2,7 |
+| 11 | Oggetti Inquieti | Gli oggetti maledetti compaiono il doppio delle volte. | ×2,85 |
+| 12 | Avarizia | I nemici lasciano il 25% di Oro in meno. | ×3 |
+| 13 | Carestia | Le pozioni curano la metà. | ×3,25 |
+| 14 | Macchia | Inizi la discesa con 20 di Corruzione. | ×3,4 |
+| 15 | Durezza | I nemici e i boss hanno il 15% di HP in più. | ×3,65 |
+| 16 | Mercanti in Fuga | I Mercanti compaiono la metà delle volte. | ×3,8 |
+| 17 | Boss Implacabili | I boss hanno il 10% di ATK in più. | ×3,95 |
+| 18 | Nemici Coriacei | I nemici comuni hanno il 10% di HP in più. | ×4,1 |
+| 19 | Furia | I nemici e i boss hanno il 10% di ATK in più. | ×4,35 |
+| 20 | Il Dio si Sveglia | Il DIO ANTICO ha il 30% di HP in più. | ×4,65 |
+
+### Sfida del Giorno
+
+Una discesa al giorno, **uguale per chiunque la giochi quel giorno**:
+
+- l'eroe e il tratto sono assegnati, anche se non li hai ancora sbloccati: è un modo per provarli;
+- 2 **malus** presi dai gradi di Ascensione e un **dono**:
+
+| Dono | Effetto |
 |---|---|
-| Durezza | HP dei nemici +30% |
-| Furia | Attacco dei nemici +30% |
-| Carestia | Le pozioni curano la metà |
-| Inflazione | Prezzi del mercante raddoppiati |
-| Labirinto Mortale | Le trappole fanno danni doppi |
+| Borsa Piena | Parti con 150 Oro in più. |
+| Dono Antico | Parti con una Reliquia casuale. |
+| Scorte | Parti con 2 pozioni in più. |
+| Nebbie Generose | Le Stanze del Mistero compaiono il doppio delle volte. |
+| Taglie | I nemici lasciano il 50% di Oro in più. |
+| Scale Calde | Il riposo prima delle scale cura il 50% in più. |
+
+- ogni piano nasce dallo stesso seme: la mappa di un piano è la stessa qualunque strada tu abbia preso prima;
+- conta solo il **primo tentativo** del giorno, che vale anche Essenza ×1,5; i tentativi successivi sono allenamento;
+- **punteggio**: 100 per piano raggiunto, 250 per boss, 2000 per la vittoria, più un punto ogni 10 Oro;
+- la schermata della sfida mostra il punteggio di oggi, la **serie** di giorni consecutivi, il record e le ultime sfide (lo storico tiene 30 giorni).
 
 ---
 
@@ -331,7 +381,7 @@ Tra una discesa e l'altra spendi l'**Essenza Astrale**:
 | 🏃 Fuga dal labirinto | 100% dell'Oro |
 | 🏆 Vittoria al piano 30 | 100% dell'Oro + 1.000 (e la leggendaria *Lama del Creatore*) |
 
-Si aggiungono **50 Essenza per ogni boss** sconfitto, il moltiplicatore dei Patti e, oltre il piano 30 in **Modalità Infinita**, un ulteriore ×1,5.
+Si aggiungono **50 Essenza per ogni boss** sconfitto; poi si applicano il moltiplicatore del grado di **Ascensione** (o ×1,5 per il primo tentativo della **Sfida del Giorno**) e, oltre il piano 30 in **Modalità Infinita**, un ulteriore ×1,5.
 
 ---
 
