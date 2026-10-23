@@ -22,7 +22,7 @@
         "Il Tristo Mietitore": [{"at_pct": 50, "name": "L'Ora Segnata", "text": "La clessidra alla cintura del Mietitore si rovescia. Il tempo che ti resta comincia a scendere.", "atk_mult": 1.2, "moves": {"attack": 40, "drain": 30, "heavy": 20, "seal": 10}}],
         "DIO ANTICO": [
             {"at_pct": 66, "name": "L'Architetto Ricorda", "text": "Il Dio apre gli occhi e ti guarda davvero. Il suo elemento cambia: diventa ciò che ti ferisce di più.", "element": "counter", "moves": {"attack": 45, "heavy": 25, "seal": 15, "guard": 15}},
-            {"at_pct": 33, "name": "Il Rinnegato", "text": "Il Labirinto intero si contrae attorno al suo creatore. Ogni pietra lo protegge.", "ward": 0.5, "atk_mult": 1.2, "moves": {"attack": 40, "charge": 25, "drain": 20, "heavy": 15}}
+            {"at_pct": 33, "name": "Il Rinnegato", "text": "Il Labirinto intero si contrae attorno al suo creatore. Ogni pietra lo protegge.", "ward": 0.5, "atk_mult": 1.1, "moves": {"attack": 45, "charge": 20, "drain": 20, "heavy": 15}}
         ]
     }
 }
