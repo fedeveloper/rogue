@@ -259,7 +259,7 @@ L'ATK reale cresce con il piano in cui l'arma viene trovata; le armi di elemento
 </details>
 
 <details>
-<summary>🛡️ Le 10 armature</summary>
+<summary>🛡️ Le 20 armature</summary>
 
 | Armatura | DEF base | Caratteristiche | Come ottenerla |
 |---|---|---|---|
@@ -273,11 +273,21 @@ L'ATK reale cresce con il piano in cui l'arma viene trovata; le armi di elemento
 | **Mantello Riflettente** | 9 | Leggera ma resistente: difesa vicina a quella del Mithril. | Forgia (✨300) |
 | **Egida del Titano** | 20 | Un muro impenetrabile. | Forgia (✨600) |
 | **Veste Eterea** | 0 | Difesa zero, ma +20% Schivata finché la indossi. | Impresa «Cannone di Vetro» |
+| **Vesti di Brace** | 5 | Sempre di elemento Fuoco. | Disponibile da subito |
+| **Cappa delle Maree** | 5 | Sempre di elemento Acqua. | Disponibile da subito |
+| **Usbergo di Basalto** | 9 | Sempre di elemento Terra. Pesante: -5% Schivata finché la indossi. | Disponibile da subito |
+| **Giaco del Vento** | 3 | Sempre di elemento Vento. Leggero: +8% Schivata finché lo indossi. | Disponibile da subito |
+| **Manto dell'Alba** | 7 | Sempre di elemento Luce. | Forgia (✨350) |
+| **Sudario d'Ombra** | 6 | Sempre di elemento Tenebra. +5% Schivata finché lo indossi. | Forgia (✨350) |
+| **Brigantina del Contrabbandiere** | 3 | Tasche ovunque e niente piastre: +10% Schivata finché la indossi. | Disponibile da subito |
+| **Corazza del Penitente** | 16 | Una delle difese più alte, ma -10% Schivata finché la indossi. | Forgia (✨450) |
+| **Corazza Runica** | 6 | Ha sempre almeno 2 incastoni per le rune. | Forgia (✨400) |
+| **Armatura del Custode** | 11 | Ha sempre 3 incastoni per le rune. | Forgia (✨800) |
 
 </details>
 
 <details>
-<summary>💍 I 16 monili</summary>
+<summary>💍 I 24 monili</summary>
 
 | Monile | Effetto | Come ottenerlo |
 |---|---|---|
@@ -297,11 +307,19 @@ L'ATK reale cresce con il piano in cui l'arma viene trovata; le armi di elemento
 | **Occhio di Falco Assoluto** | +25% Precisione | Forgia (✨300) |
 | **Cuore di Pietra** | +35 HP Massimi | Forgia (✨450) |
 | **Dente di Drago Antico** | +20% probabilità di infliggere colpo critico | Forgia (✨500) |
+| **Occhio di Falco Minore** | +10% probabilità di infliggere colpo critico | Disponibile da subito |
+| **Zanna di Lupo** | Assorbi 1 HP per ogni colpo a segno | Disponibile da subito |
+| **Cuore di Quercia** | +20 HP Massimi | Disponibile da subito |
+| **Piuma di Fenice** | +8% Schivata | Disponibile da subito |
+| **Lente del Cartografo** | +20% Precisione | Forgia (✨250) |
+| **Bracciale di Spine** | Rifletti 4 danni ogni volta che vieni colpito | Disponibile da subito |
+| **Medaglione del Guardiano** | +45 HP Massimi | Forgia (✨650) |
+| **Sigillo dello Specchio** | Rifletti 12 danni ogni volta che vieni colpito | Forgia (✨750) |
 
 </details>
 
 <details>
-<summary>🧪 I 14 consumabili</summary>
+<summary>🧪 I 20 consumabili</summary>
 
 | Consumabile | Effetto | Come ottenerlo |
 |---|---|---|
@@ -319,6 +337,12 @@ L'ATK reale cresce con il piano in cui l'arma viene trovata; le armi di elemento
 | **Acqua Santa** | Purifica tutte le Maledizioni sull'equipaggiamento indossato. | Maestria Paladino Lv.3 |
 | **Fiala del Caos** | Effetto casuale su di te (cura totale, ustione non letale, oro, +10 HP Max o nuovo elemento all'arma). In combattimento esplode anche, infliggendo 10-100 danni puri al nemico. | Maestria Alchimista Lv.3 |
 | **Antidoto Universale** | Cura tutti gli stati alterati (Veleno, Sanguinamento). | Disponibile da subito |
+| **Tè di Lavanda** | Cura 20 HP (di più ai piani profondi) | Disponibile da subito |
+| **Infuso di Radici** | Cura 45 HP (di più ai piani profondi) | Disponibile da subito |
+| **Balsamo d'Ossidiana** | Una cura potente, raffreddata nella Forgia. | Forgia (✨150) |
+| **Siero Purificante** | Cura tutti gli stati alterati (Veleno, Sanguinamento) e qualche ferita. | Forgia (✨120) |
+| **Solvente Runico** | Estrae gratis una runa dall'arma o dall'armatura equipaggiata e la rimette nello zaino. | Disponibile da subito |
+| **Scalpello Runico** | Aggiunge un incastone all'arma o all'armatura equipaggiata (al massimo 3). | Forgia (✨300) |
 
 </details>
 
@@ -404,9 +428,9 @@ Ogni scelta mostra i suoi effetti reali, molte opzioni esistono solo per certe c
 | Gradi di Ascensione | 20 |
 | Doni della Sfida del Giorno | 6 |
 | Armi | 24 (8 subito, 16 da sbloccare) |
-| Armature | 10 (7 subito, 3 da sbloccare) |
-| Monili | 16 (8 subito, 8 da sbloccare) |
-| Consumabili | 14 (7 subito, 7 da sbloccare) |
+| Armature | 20 (12 subito, 8 da sbloccare) |
+| Monili | 24 (13 subito, 11 da sbloccare) |
+| Consumabili | 20 (10 subito, 10 da sbloccare) |
 | Reliquie | 30 (14 subito, 16 da sbloccare) |
 | Nemici comuni | 38 |
 | Boss | 21 |

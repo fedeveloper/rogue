@@ -74,9 +74,9 @@ def generate_rune(floor: int, rune_id: str = "") -> "Rune":
     return Rune(rune_id or rune_rules.random_rune_id(), floor)
 
 
-def set_sockets(item, kind: str):
-    """Incastoni di un oggetto generato: normale, epico o premio di un boss."""
-    item.sockets = rune_rules.rules()["sockets"][kind]
+def set_sockets(item, kind: str, at_least: int = 0):
+    """Incastoni di un oggetto generato: normale, epico o premio di un boss (e almeno quelli dei suoi dati)."""
+    item.sockets = max(rune_rules.rules()["sockets"][kind], at_least)
     item.refresh_display_name()
     return item
 
@@ -145,7 +145,7 @@ def generate_weapon(level: int, is_epic: bool = False) -> Weapon:
     if is_epic: power *= EPIC_MULTIPLIER; name = f"EPICO {name}"
     atk = max(1, round(power))
     w = Weapon(f"{name} (lv.{level})", atk * 5, atk, element, level, flavor, is_cursed, curse_effect, w_data.get("status_inflict"), w_data)
-    return set_sockets(w, "epic") if is_epic else w
+    return set_sockets(w, "epic" if is_epic else "normal", w_data.get("sockets", 0))
 
 def generate_armor(level: int, is_epic: bool = False) -> Armor:
     a_data = random.choice(GAME_DATA["armors"])
@@ -164,7 +164,7 @@ def generate_armor(level: int, is_epic: bool = False) -> Armor:
     if is_epic: power *= EPIC_MULTIPLIER; name = f"EPICO {name}"
     defense = max(1, round(power))
     a = Armor(f"{name} (lv.{level})", defense * 8, defense, element, level, flavor, is_cursed, curse_effect, a_data.get("dodge_bonus", 0))
-    return set_sockets(a, "epic") if is_epic else a
+    return set_sockets(a, "epic" if is_epic else "normal", a_data.get("sockets", 0))
 
 def generate_accessory(level: int) -> Accessory:
     a_data = random.choice(GAME_DATA["accessories"])

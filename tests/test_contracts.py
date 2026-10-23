@@ -17,7 +17,7 @@ import inventory_menu
 import roguelike
 import rooms
 from data_manager import GAME_DATA, PROFILE_MANAGER, RAW_DATA, update_game_data
-from entities import Accessory, Armor, Consumable, Enemy, Player, Weapon, generate_accessory, generate_weapon
+from entities import Accessory, Armor, Consumable, Enemy, Player, Weapon, generate_accessory, generate_armor, generate_weapon
 from rooms import CombatSession
 
 ALL_UNLOCKS = sorted({i["unlock_id"] for cat in ("weapons", "armors", "accessories", "consumables", "relics")
@@ -279,7 +279,19 @@ class EquipmentContractTest(Sandbox):
         for a in RAW_DATA["armors"]:
             with self.subTest(armor=a["name"]):
                 for n in NUM.findall(a.get("desc", "")):
-                    self.assertIn(int(n), {a.get("dodge_bonus"), a["base_def"]})
+                    self.assertIn(int(n), {abs(a.get("dodge_bonus", 0)), a["base_def"], a.get("sockets")})
+                if a.get("element"): self.assertIn(a["element"], a["desc"])
+
+    def test_armor_data_traits_behave_as_described(self):
+        for a in RAW_DATA["armors"]:
+            with self.subTest(armor=a["name"]), mock.patch("entities.random.choice", side_effect=lambda seq: a if isinstance(seq, list) and a in seq else seq[0]):
+                armor = generate_armor(5)
+                if a.get("element"): self.assertEqual(armor.element, a["element"])
+                self.assertEqual(armor.dodge_bonus, a.get("dodge_bonus", 0))
+                if a.get("dodge_bonus"): self.assertIn(f"{a['dodge_bonus']:+d}% Schivata", a["desc"])
+                if a.get("sockets"):
+                    self.assertEqual(armor.sockets, a["sockets"])
+                    self.assertIn(f"{a['sockets']} incastoni", a["desc"])
 
     def test_armor_dodge_bonus(self):
         veste = next(a for a in RAW_DATA["armors"] if a["name"] == "Veste Eterea")
@@ -328,7 +340,8 @@ class EquipmentContractTest(Sandbox):
 class ConsumableContractTest(Sandbox):
     def contracts(self):
         return {"heal": self.c_heal, "antidote": self.c_antidote, "whetstone": self.c_whetstone, "smoke_bomb": self.c_smoke,
-                "chaos_tome": self.c_tome, "accuracy_potion": self.c_accuracy, "holy_water": self.c_holy, "chaos_vial": self.c_vial}
+                "chaos_tome": self.c_tome, "accuracy_potion": self.c_accuracy, "holy_water": self.c_holy, "chaos_vial": self.c_vial,
+                "rune_solvent": self.c_solvent, "socket_chisel": self.c_chisel}
 
     def item(self, category):
         d = next(c for c in RAW_DATA["consumables"] if c.get("category", "heal") == category)
@@ -372,6 +385,27 @@ class ConsumableContractTest(Sandbox):
         self.assertEqual(p.get_hit_chance(s.enemy.base_dodge), 100)
         with quiet(): s._end_combat()
         self.assertLess(p.get_hit_chance(), 100, "vale solo per questo combattimento")
+
+    def c_solvent(self, d, item):
+        p = self.hero(); p.weapon.runes = ["forza"]; gold = p.gold
+        self.drink(p, item)
+        self.assertEqual(p.weapon.runes, [])
+        self.assertEqual([i.rune_id for i in p.inventory if i.type == "rune"], ["forza"])
+        self.assertEqual(p.gold, gold, "gratis: la descrizione lo promette")
+        self.assertIn("gratis", d["desc"])
+        p = self.hero(); p.inventory = [item]
+        with quiet(), mock.patch("builtins.input", return_value=""): inventory_menu._use_consumable(p, item, 0, False)
+        self.assertEqual(p.inventory, [item], "senza rune incastonate non si consuma")
+
+    def c_chisel(self, d, item):
+        top = GAME_DATA["runes"]["rules"]["sockets"]["boss"]
+        self.assertIn(f"al massimo {top}", d["desc"])
+        p = self.hero(); p.armor.sockets = top; before = p.weapon.sockets
+        self.drink(p, item)
+        self.assertEqual(p.weapon.sockets, before + 1)
+        p = self.hero(); p.weapon.sockets = p.armor.sockets = top; p.inventory = [item]
+        with quiet(), mock.patch("builtins.input", return_value=""): inventory_menu._use_consumable(p, item, 0, False)
+        self.assertEqual((p.weapon.sockets, p.inventory), (top, [item]))
 
     def c_holy(self, d, item):
         p = self.hero(); p.weapon.is_cursed, p.weapon.curse_effect = True, "hp_drain"; self.drink(p, item)

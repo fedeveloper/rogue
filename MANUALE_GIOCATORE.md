@@ -247,7 +247,9 @@ La Risonanza si ricalcola subito se cambi equipaggiamento durante lo scontro. Il
 Molte armi hanno un elemento casuale, ma quelle a tema hanno sempre il loro: il *Bastone dell'Alba* è di Luce, il *Tridente Oceanico* d'Acqua, e così via. Alcune hanno proprietà proprie, scritte nella loro descrizione:
 - l'*Ascia del Boia*: −15% di precisione, ma 35% di critico;
 - lo *Zweihander d'Oro*: più ATK quanto più oro porti;
-- la *Veste Eterea*: +20% di schivata.
+- la *Veste Eterea*: +20% di schivata;
+- le armature elementali, come le *Vesti di Brace* (Fuoco) o il *Giaco del Vento* (Vento, +8% di schivata): sempre del loro elemento, quindi utili per cercare una Risonanza o una reazione;
+- le armature pesanti, come la *Corazza del Penitente*: tanta difesa, meno schivata.
 
 L'enciclopedia nel [README](README.md) le elenca tutte.
 
@@ -264,6 +266,7 @@ Armi e armature hanno degli **incastoni** (◇ accanto al nome): 1 per gli ogget
 - **Dove si trovano le rune.** Le lasciano le Élite (35%), i boss (60%), le trappole affrontate (15%), i tesori del Mistero (30%) e i Mimic (35%); il Mercante ne vende 1.
 - **Incastonare.** Al Falò, voce *Rune e Incastoni*: incastonare è gratis e il falò resta acceso. Ogni runa va su un'arma, su un'armatura o su entrambe.
 - **Estrarre.** Costa 30 Oro più 5 per piano, e la runa torna nello zaino. Cambiando arma le rune restano su quella vecchia: spostarle è una scelta.
+- **Oggetti per le rune.** Il *Solvente Runico* estrae gratis una runa dall'equipaggiamento; lo *Scalpello Runico* (dalla Forgia) apre un incastone in più nell'arma o nell'armatura, fino a 3. Alcune armature hanno sempre più incastoni: la *Corazza Runica* almeno 2, l'*Armatura del Custode* 3.
 - **Contano solo le rune dell'arma e dell'armatura equipaggiate.** Quelle che trovi finiscono nel Codice, alla pagina *Rune*.
 
 | Runa | Famiglia | Dove | Effetto |

@@ -1,7 +1,8 @@
 import random
 from ui import Colors, clear_screen, interactive_menu, display_msg, wait_enter
 from data_manager import GAME_DATA, PROFILE_MANAGER, get_element_icon
-from entities import generate_random_element
+from entities import Rune, generate_random_element
+import runes as rune_rules
 from archive import unlocked_archive_bonuses
 
 def _use_consumable(player, item, real_idx, in_combat) -> str:
@@ -93,6 +94,27 @@ def _use_consumable(player, item, real_idx, in_combat) -> str:
         display_msg(f"{Colors.CYAN}\nBevi il Filtro Preciso! I tuoi colpi non mancheranno più!{Colors.RESET}")
         player.temp_acc = 999  # Azzerato a fine combattimento
         res = "turn_used"
+    elif cat == "rune_solvent":
+        holders = [it for it in (player.weapon, player.armor) if it.runes]
+        if not holders:
+            display_msg(f"{Colors.YELLOW}\nNon hai rune incastonate nell'equipaggiamento.{Colors.RESET}"); wait_enter("Premi INVIO..."); return ""
+        it = holders[0] if len(holders) == 1 else holders[interactive_menu([h.display_name for h in holders], "\nDa quale oggetto estrarre una runa?")]
+        k = 0 if len(it.runes) == 1 else interactive_menu([rune_rules.describe(r) for r in it.runes], "\nQuale runa?")
+        rid = it.runes.pop(k)
+        it.refresh_display_name()
+        player.inventory.append(Rune(rid))
+        display_msg(f"{Colors.CYAN}\nIl solvente scioglie il castone: {rune_rules.rune(rid)['name']} torna nello zaino.{Colors.RESET}")
+        res = "turn_used" if in_combat else ""
+    elif cat == "socket_chisel":
+        top = rune_rules.rules()["sockets"]["boss"]
+        targets = [it for it in (player.weapon, player.armor) if it.sockets < top]
+        if not targets:
+            display_msg(f"{Colors.YELLOW}\nArma e armatura hanno già {top} incastoni.{Colors.RESET}"); wait_enter("Premi INVIO..."); return ""
+        it = targets[0] if len(targets) == 1 else targets[interactive_menu([t.display_name for t in targets], "\nDove aprire un nuovo incastone?")]
+        it.sockets += 1
+        it.refresh_display_name()
+        display_msg(f"{Colors.CYAN}\nLo scalpello apre un nuovo incastone: {it.display_name}.{Colors.RESET}")
+        res = "turn_used" if in_combat else ""
 
     consume_item = True
     if cat == "heal" and player.thief_save and random.random() < 0.30:
