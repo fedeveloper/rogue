@@ -280,7 +280,7 @@ L'enciclopedia nel [README](README.md) le elenca tutte.
 
 ### Reliquie, livelli e fusioni
 
-- **Reliquie.** Artefatti passivi trovati sconfiggendo i boss, nei forzieri o negli eventi. Ne porti al massimo **4**: trovandone una quinta, scegli quale sacrificare.
+- **Reliquie.** Artefatti passivi trovati sconfiggendo i boss, nei forzieri o negli eventi. Ne porti al massimo **4**: trovandone una quinta, scegli quale sacrificare. Molte si combinano con una strategia: veleno e sanguinamento (l'*Ago dell'Untore* li raddoppia), oro (la *Bilancia del Mercante* trasforma l'Oro in Attacco), reazioni elementali (il *Catalizzatore Antico*), difesa (il *Corno del Bastione*), rune (il *Cristallo Runico* le potenzia del 50%), Nemesi ed Élite (il *Marchio del Cacciatore*). L'enciclopedia nel README le elenca tutte.
 - **Livelli.** Con l'EXP sali di livello: +15 HP massimi, cura completa, +2% di precisione e di schivata.
 - **Altare dell'Evoluzione.** Al Falò, fondi due armi (o due armature) dello zaino: la prima assorbe metà delle statistiche della seconda e sale di livello. Le rune della prima restano; quelle della seconda tornano nello zaino.
 

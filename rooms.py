@@ -84,15 +84,15 @@ class CombatSession:
             expired = []
             for status, duration in self.enemy.statuses.items():
                 if status == "poison":
-                    dmg = max(POISON_MIN, self.enemy.max_hp * POISON_PCT // 100)
+                    dmg = self._enemy_status_damage(status, max(POISON_MIN, self.enemy.max_hp * POISON_PCT // 100))
                     self.enemy.hp -= dmg
                     display_msg(f"{Colors.GREEN}Il veleno infligge {dmg} danni a {self.enemy.name}! ({self.enemy.hp}){Colors.RESET}")
                 elif status == "bleed":
-                    dmg = max(5, int(self.enemy.hp * 0.05))
+                    dmg = self._enemy_status_damage(status, max(5, int(self.enemy.hp * 0.05)))
                     self.enemy.hp -= dmg
                     display_msg(f"{Colors.RED}Il sanguinamento infligge {dmg} danni a {self.enemy.name}! ({self.enemy.hp}){Colors.RESET}")
                 elif status == "scorch":
-                    dmg = max(1, self.enemy.max_hp * GAME_DATA["elements"]["conditions"]["scorch_pct"] // 100)
+                    dmg = self._enemy_status_damage(status, max(1, self.enemy.max_hp * GAME_DATA["elements"]["conditions"]["scorch_pct"] // 100))
                     self.enemy.hp -= dmg
                     display_msg(f"{Colors.RED}🌋 Il magma brucia {self.enemy.name}: {dmg} danni! ({self.enemy.hp}){Colors.RESET}")
                 if status in CONTROL_STATUSES: continue  # scadono alla fine del turno del nemico (_tick_enemy_conditions)
@@ -174,6 +174,10 @@ class CombatSession:
             names = ", ".join(STATUS_NAMES.get(s, s) for s in self.player.statuses)
             self.player.statuses.clear()
             display_msg(f"{Colors.CYAN}Lo scontro è finito: {names} svanisce dal tuo corpo.{Colors.RESET}")
+
+    def _enemy_status_damage(self, status: str, dmg: int) -> int:
+        for r in self.player.relic_effects: dmg = r.modify_enemy_status_damage(status, dmg)
+        return dmg
 
     def _paradox(self, key: str) -> bool:
         rule = self.rules.get("paradox")
@@ -307,6 +311,7 @@ class CombatSession:
             self.enemy.statuses[s_type] = max(self.enemy.statuses.get(s_type, 0), turns)
             msg += f" {Colors.MAGENTA}{self.enemy.name}: {STATUS_NAMES[s_type]}.{Colors.RESET}"
         display_msg(msg)
+        for relic in self.player.relic_effects: relic.on_reaction(self, key)
 
     def _tick_enemy_conditions(self):
         """Fine del turno del nemico: scadono marchio, Accecato e Impantanato."""
@@ -793,6 +798,7 @@ def audacity_text(audacity: int) -> str:
 
 def gain_audacity(player: Player, room_type: str) -> int:
     points = GAME_DATA["meta"]["rooms"]["audacity"]["points"].get(room_type, 0)
+    if points: points += sum(r.get_audacity_bonus() for r in player.relic_effects)
     player.audacity += points
     return points
 
@@ -931,7 +937,7 @@ def _socketable(player: Player) -> list:
 
 def rune_workshop(player: Player, floor: int):
     """Al Falò: incastonare una runa (gratis) o estrarla (Oro), così le rune passano da un oggetto all'altro."""
-    cost = rune_rules.extract_cost(floor)
+    cost = 0 if any(r.free_rune_extraction for r in player.relic_effects) else rune_rules.extract_cost(floor)
     while True:
         clear_screen()
         bag = [i for i in player.inventory if i.type == "rune"]
@@ -1078,7 +1084,7 @@ def campfire_room(player: Player, floor: int):
 
 def rune_drop(player: Player, floor: int, source: str):
     """Una runa con la probabilità della fonte (`runes.json`, `rules.drops`)."""
-    if rune_rules.roll_drop(source):
+    if rune_rules.roll_drop(source) or any(source in r.rune_drop_always for r in player.relic_effects):
         r = generate_rune(floor)
         record_rune(r.rune_id)
         display_msg(f"{Colors.CYAN}Trovi una runa: {r.display_name}! (Si incastona al Falò){Colors.RESET}")

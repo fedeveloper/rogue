@@ -443,6 +443,14 @@ Ogni reliquia è una sottoclasse di `RelicEffect` che ridefinisce solo gli hook 
 | `on_item_use(player, item)` | Restituire `False` evita di consumare l'oggetto |
 | `get_dodge_modifier` / `get_acc_modifier` / `get_exp_modifier` / `get_escape_modifier` | Modificatori passivi |
 | `modify_multiplier(mult, is_defense)` / `modify_trap_damage` / `modify_room_weights` | Elementi, trappole e generazione delle stanze |
+| `get_rune_bonus(chiave)` | Un bonus con le chiavi degli effetti delle rune, sommato da `Player.rune_value` (la sottoclasse `RuneBonus` lo dichiara con `BONUS`) |
+| `get_rune_multiplier()` | Le rune incastonate valgono × (1 + valore) |
+| `modify_enemy_status_damage(status, dmg)` | Danni di veleno, sanguinamento e magma sul nemico (`CombatSession._enemy_status_damage`) |
+| `on_reaction(session, chiave)` | Dopo ogni reazione elementale |
+| `get_audacity_bonus()` | Punti di Audacia in più per ogni stanza che ne dà (`rooms.gain_audacity`) |
+| `free_rune_extraction`, `rune_drop_always` | Attributi letti dal laboratorio del Falò (estrazione gratis) e da `rune_drop` (fonti che lasciano sempre una runa) |
+
+Le reliquie sono organizzate per archetipi: status (Ago dell'Untore, Fiala Cremisi, Spora Nera), Oro (Bilancia del Mercante, Moneta del Traghettatore, Dente d'Oro), reazioni (Catalizzatore Antico, Cristallo di Marea, Specchio degli Elementi), difesa (Piastra del Custode, Corno del Bastione, Rovo Antico, Amuleto della Quiete), rune (Cristallo Runico, Martello del Lapicida, Pietra Parlante), Nemesi e Audacia (Marchio del Cacciatore, Stendardo dell'Audacia, Teschio del Rivale), più le originali.
 
 ---
 

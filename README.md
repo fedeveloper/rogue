@@ -61,7 +61,7 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 - 🩸 **Corruzione.** Le scelte oscure danno potere e opzioni proibite, ma il Labirinto comincia a nasconderti le cose: gli effetti delle scelte, le mosse dei nemici.
 - 🏁 **5 finali.** Uccidere il Dio, prenderne il posto, risvegliare Aethelgard… e un finale segreto per chi legge davvero il Labirinto.
 - 🔥 **Un campo che ricorda.** Chi salvi nel Labirinto viene a scaldarsi al tuo fuoco, ti parla di ciò che hai fatto e ti aiuta a costruire.
-- 🌟 **30 reliquie** che piegano le regole: danni raddoppiati, scudi, vampirismo, oro moltiplicato.
+- 🌟 **50 reliquie** che piegano le regole: danni raddoppiati, scudi, vampirismo, oro moltiplicato.
 - 🏕️ **Meta-progressione profonda**: potenziamenti permanenti, una Forgia per sbloccare equipaggiamento, artigiani da liberare, un Archivio di lore con bonus, imprese da completare.
 - ♾️ **Modalità Infinita** dopo la prima vittoria, per chi vuole spingersi oltre il piano 30.
 
@@ -187,7 +187,7 @@ A questo si aggiungono **50 Essenza per ogni boss** sconfitto, il moltiplicatore
 ## 📚 Enciclopedia
 
 <details>
-<summary>🌟 Le 30 reliquie</summary>
+<summary>🌟 Le 50 reliquie</summary>
 
 Si tengono al massimo 4 reliquie alla volta: trovandone un'altra scegli quale sacrificare.
 
@@ -223,6 +223,26 @@ Si tengono al massimo 4 reliquie alla volta: trovandone un'altra scegli quale sa
 | **Maschera Antigas** | Immunità totale ai danni delle Trappole. | Impresa «Assaggiatore di Veleni» |
 | **Teschio di Sangue** | Ogni nemico sconfitto incrementa i tuoi HP Massimi di 1. | Maestria Berserker Lv.5 |
 | **Pietra Filosofale** | A fine combattimento, 20% di chance di convertire l'XP in Oro sonante. | Maestria Alchimista Lv.5 |
+| **Ago dell'Untore** | Il Veleno e il Sanguinamento che infliggi fanno danni doppi. | Boss, forzieri, eventi |
+| **Fiala Cremisi** | I tuoi colpi a segno hanno il 20% di probabilità di far sanguinare il nemico. | Boss, forzieri, eventi |
+| **Spora Nera** | Ogni nemico inizia lo scontro avvelenato per 3 turni. | Forgia (✨400) |
+| **Bilancia del Mercante** | +1 ATK ogni 100 Oro che possiedi, fino a +10. | Boss, forzieri, eventi |
+| **Moneta del Traghettatore** | Ogni boss sconfitto ti dà 100 Oro in più. | Boss, forzieri, eventi |
+| **Dente d'Oro** | +15% di Oro raccolto e +5% di EXP. | Boss, forzieri, eventi |
+| **Catalizzatore Antico** | Le reazioni elementali infliggono il 50% di danni in più. | Forgia (✨450) |
+| **Cristallo di Marea** | Ogni reazione elementale che scateni ti cura del 5% degli HP massimi. | Boss, forzieri, eventi |
+| **Specchio degli Elementi** | I marchi elementali durano 2 turni in più. | Boss, forzieri, eventi |
+| **Piastra del Custode** | +10% di Difesa dell'armatura. | Boss, forzieri, eventi |
+| **Corno del Bastione** | Quando ti difendi, i colpi che subisci sono dimezzati un'altra volta. | Forgia (✨500) |
+| **Rovo Antico** | Chi ti ferisce subisce il 20% dei danni che ti ha inflitto. | Boss, forzieri, eventi |
+| **Amuleto della Quiete** | Quando ti difendi recuperi il 5% degli HP massimi. | Boss, forzieri, eventi |
+| **Cristallo Runico** | Le rune incastonate valgono il 50% in più. | Forgia (✨550) |
+| **Martello del Lapicida** | Estrarre una runa al Falò è gratis. | Boss, forzieri, eventi |
+| **Pietra Parlante** | Le Élite lasciano sempre una runa. | Boss, forzieri, eventi |
+| **Marchio del Cacciatore** | I tuoi colpi contro le Élite e le Nemesi infliggono il 30% di danni in più. | Boss, forzieri, eventi |
+| **Stendardo dell'Audacia** | Ogni stanza rischiosa ti dà 1 punto di Audacia in più. | Forgia (✨350) |
+| **Teschio del Rivale** | Ogni Nemesi sconfitta ti dà +20 HP massimi. | Boss, forzieri, eventi |
+| **Lanterna del Cartografo** | Gli Eventi e le Stanze del Mistero compaiono più spesso. | Boss, forzieri, eventi |
 
 </details>
 
@@ -433,7 +453,7 @@ Ogni scelta mostra i suoi effetti reali, molte opzioni esistono solo per certe c
 | Armature | 20 (12 subito, 8 da sbloccare) |
 | Monili | 24 (13 subito, 11 da sbloccare) |
 | Consumabili | 20 (10 subito, 10 da sbloccare) |
-| Reliquie | 30 (14 subito, 16 da sbloccare) |
+| Reliquie | 50 (29 subito, 21 da sbloccare) |
 | Nemici comuni | 38 |
 | Boss | 21 |
 | Fasi dei boss | 22 |

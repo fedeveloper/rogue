@@ -388,7 +388,9 @@ class Player:
 
     def rune_value(self, key: str):
         """Somma di un effetto delle rune (e delle parole runiche) dell'arma e dell'armatura equipaggiate."""
-        return sum(effects.get(key, 0) for item in (self.weapon, self.armor) for effects in rune_rules.item_effects(item))
+        runes = sum(effects.get(key, 0) for item in (self.weapon, self.armor) for effects in rune_rules.item_effects(item))
+        mult = 1 + sum(r.get_rune_multiplier() for r in self.relic_effects)
+        return int(runes * mult) + sum(r.get_rune_bonus(key) for r in self.relic_effects)
 
     def get_total_atk(self):
         atk = self.weapon.atk + self.bonus_atk_relic + self.weapon.get_gold_atk_bonus(self.gold) + self.corruption_atk()
