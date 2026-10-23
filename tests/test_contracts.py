@@ -698,7 +698,60 @@ class MoveContractTest(Sandbox):
         return p, s
 
     def test_every_move_has_a_contract(self):
-        self.assertEqual(set(GAME_DATA["moves"]["moves"]), {"attack", "heavy", "guard", "heal", "venom"})
+        self.assertEqual(set(GAME_DATA["moves"]["moves"]), {"attack", "heavy", "guard", "heal", "venom", "drain", "seal", "charge", "unleash", "shield"})
+
+    def test_drain_heals_as_much_as_it_hurts(self):
+        m = GAME_DATA["moves"]["moves"]["drain"]
+        self.assertEqual(m["heal_ratio"], 1)
+        self.assertIn("tanti HP quanti te ne toglie", m["desc"])
+        normal = 1000 - self.enemy_hit("attack")[0].hp
+        p, s = self.setup_fight("drain"); s.enemy.hp = 100
+        with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: a), mock.patch("rooms.wait_enter"):
+            s.enemy_turn()
+        self.assertEqual(1000 - p.hp, normal)
+        self.assertEqual(s.enemy.hp, 100 + normal)
+
+    def test_seal_forbids_defending_for_one_turn(self):
+        self.assertIn("non potrai difenderti", GAME_DATA["moves"]["moves"]["seal"]["desc"])
+        p, s = self.enemy_hit("seal")
+        self.assertEqual(p.hp, 1000, "il Sigillo non attacca")
+        self.assertTrue(s.sealed)
+        picks = iter([1, 0])  # prova a difendersi, poi attacca
+        with quiet(), mock.patch("rooms.interactive_menu", side_effect=lambda *a, **k: next(picks)), mock.patch("rooms.clear_screen"), \
+             mock.patch("rooms.random.randint", return_value=100):
+            s.player_turn()
+        self.assertFalse(s.is_defending)
+        self.assertEqual(next(picks, "finito"), "finito", "la difesa sigillata non consuma il turno")
+
+    def test_charge_announces_the_unleashed_blow(self):
+        charge, unleash = GAME_DATA["moves"]["moves"]["charge"], GAME_DATA["moves"]["moves"]["unleash"]
+        self.assertIn("Colpo caricato", charge["desc"])
+        self.assertIn(f"×{unleash['damage_mult']}", unleash["desc"])
+        p, s = self.enemy_hit("charge")
+        self.assertEqual(p.hp, 1000, "la Carica non attacca")
+        self.assertEqual(s.enemy.choose_move(), "unleash")
+        self.assertNotEqual(s.enemy.choose_move(), "unleash", "il Colpo caricato arriva una volta sola")
+        normal = 1000 - self.enemy_hit("attack")[0].hp
+        self.assertEqual(1000 - self.enemy_hit("unleash")[0].hp, normal * unleash["damage_mult"])
+        self.assertIn("Difenditi per dimezzare", unleash["desc"])
+        self.assertEqual(1000 - self.enemy_hit("unleash", defending=True)[0].hp, normal * unleash["damage_mult"] // 2)
+        p, s = self.setup_fight("charge")
+        self.assertIn(f"≈{s.estimate_enemy_damage(unleash['damage_mult'])} danni", s.intent_text())
+
+    def test_shield_absorbs_attacks(self):
+        m = GAME_DATA["moves"]["moves"]["shield"]
+        self.assertIn(f"{m['shield_pct']}% degli HP massimi", m["desc"])
+        p, s = self.enemy_hit("shield")
+        self.assertEqual(p.hp, 1000)
+        self.assertEqual(s.enemy.shield, 500 * m["shield_pct"] // 100)
+        dealt = {}
+        for shield in (0, 30):
+            p, s = self.setup_fight("attack"); s.enemy.shield = shield
+            p.weapon.element = "Normale"
+            with quiet(), mock.patch("rooms.random.randint", return_value=1):
+                s.execute_player_attack()
+            dealt[shield] = 500 - s.enemy.hp
+        self.assertEqual(dealt[30], max(0, dealt[0] - 30))
 
     def test_heavy_blow(self):
         desc = GAME_DATA["moves"]["moves"]["heavy"]["desc"]

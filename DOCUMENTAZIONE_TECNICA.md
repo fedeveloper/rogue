@@ -22,7 +22,7 @@ Riferimento per chi modifica il gioco: architettura, formato dei dati, formule d
 | `modes.py` | Modalità: regole della discesa in corso (`RUN`, `rule`, `combine`, `start_run`/`end_run`), gradi di Ascensione (`max_grade`, `ascension_rules`, `ascension_essence_mult`, `record_ascension_win`) e Sfida del Giorno (`daily_setup`, `daily_rules`, `daily_score`, `record_daily`, `daily_streak`). |
 | `camp.py` | Il Fuoco del Campo: personaggi presenti, frasi e doni (`talk`), strutture (`build`, `built`), dono dello Scrittoio a inizio run (`start_of_run_boon`). |
 | `endings.py` | Finali: disponibili (`available_endings`), scelta e premio (`choose_ending`), registro in `profile.story.endings`. |
-| `codex.py` | Il Codice del Labirinto: registra nemici visti e sconfitti, lettere e reliquie (`record_*`), calcola il completamento e mostra le pagine (`show_codex`). |
+| `codex.py` | Il Codice del Labirinto: registra nemici visti e sconfitti, fasi dei boss, lettere e reliquie (`record_*`), calcola il completamento e mostra le pagine (`show_codex`). |
 | `events.py` | Motore degli eventi narrativi: condizioni (`CONDITIONS`), effetti (`EFFECTS`), riepiloghi generati dagli effetti, scene a più passi (`event_room`), scelta dell'evento per le porte (`pick_event`), memoria fra le run e conseguenze differite (`pop_due_event`). |
 | `entities.py` | `Player`, `Enemy`, gli oggetti (`Weapon`, `Armor`, `Accessory`, `Consumable`) e i generatori casuali. Applica tratti, Maestrie, potenziamenti e oggetti iniziali. Sceglie i nemici in base alla profondità (`pick_enemy_name`). |
 | `relic_effects.py` | Una classe per reliquia, con gli hook che le servono; `RELIC_REGISTRY` collega l'id del JSON alla classe. |
@@ -63,6 +63,7 @@ Un test controlla che ogni oggetto sbloccabile abbia davvero una di queste strad
 | `moves.json` | Mosse dei nemici (intenti) | `moves` (`name`, `icon`, `desc`, `damage_mult`, `damage_taken_mult`, `heal_pct`), `defaults` (pesi di `enemy`, `boss`, `with_status`), `rules` (`heal_below_pct`, `max_heals`, `no_repeat`) |
 | `story.json` | Elementi della storia | `quest_items` (oggetti chiave: `name`, `desc`), `npcs` (nomi degli artigiani), `characters` (personaggi ricorrenti: vedi sotto), `camp` (Fuoco del Campo), `endings` (finali) |
 | `modes.json` | Modalità | `ascension` (`max`, `grades`: `name`, `desc`, `essence_bonus`, `effects`), `daily` (`maluses`, `first_attempt_essence_mult`, `history`, `score`, `boons`: `name`, `desc`, `effects`): vedi [Modalità](#modalità) |
+| `phases.json` | Fasi dei boss | `bosses[nome] = [{at_pct, name, text, element, atk_mult, heal_pct, shield_pct, ward, status_inflict, moves}]`: vedi [Intenti e reazioni](#intenti-e-reazioni) |
 | `lore.json` | Frasi d'atmosfera | `combat`, `boss`, `vendor`, `treasure`, `trap`, `campfire`, `letters`, `mystery` |
 
 ### Maestrie
@@ -256,7 +257,7 @@ I nemici e i boss con `"biome": "id"` (in `enemies.json`) sono **nativi**: compa
 | Nemico | base + `ENEMY_HP_PER_FLOOR`·l ± 5 | base + `ENEMY_ATK_PER_FLOOR`·l + (0..1) | max(5, 5 + 3,5·piano) | 30 + 10·piano |
 | Boss | HP tipico × `BOSS_HP_MULT` × qualità + (0..10) | ATK tipico × `BOSS_ATK_MULT` × qualità + (0..2) | 50 + 15·piano | 150 + 20·piano |
 
-Il **nemico tipico** di un piano (`entities.typical_enemy`) è la media della finestra di profondità con la stessa crescita, salti di piano compresi. I boss ne sono un multiplo (2,2× gli HP, 1,8× l'ATK). I loro valori base diventano una **qualità**, `0,75 + 0,25 · base / media dei boss`, così si distinguono di circa ±25% a ogni piano: niente più boss di inizio partita fuori scala.
+Il **nemico tipico** di un piano (`entities.typical_enemy`) è la media della finestra di profondità con la stessa crescita, salti di piano compresi. I boss ne sono un multiplo (2× gli HP, 1,8× l'ATK; le fasi aggiungono il resto della loro resistenza). I loro valori base diventano una **qualità**, `0,75 + 0,25 · base / media dei boss`, così si distinguono di circa ±25% a ogni piano: niente più boss di inizio partita fuori scala.
 
 Poi si applicano, in ordine: ×1,2 dal piano 10; ×1,25 dal piano 20; ×1,4 (potenziato) o ×0,6 (debilitato) nella Stanza del Mistero, oppure i moltiplicatori dell'Élite; ×1,3 agli HP con *Durezza* e ×1,3 all'ATK con *Furia*.
 
@@ -357,8 +358,26 @@ Il profilo del giocatore non viene mai toccato (il caricamento lo riscrive solo 
 - *Come si risolve.* `enemy_turn()` esegue la mossa e la consuma:
   - `attack`, `heavy` (`damage_mult` sulla forza, prima della difesa) e `venom` (status garantito) passano da `_enemy_attack`;
   - `guard` non attacca, e durante il turno del giocatore `damage_taken_mult` riduce i suoi colpi;
-  - `heal` cura `heal_pct` degli HP massimi.
+  - `heal` cura `heal_pct` degli HP massimi;
+  - `drain` è un attacco che poi cura il nemico di `heal_ratio` × i danni inflitti;
+  - `seal` imposta `CombatSession.sealed`: al turno seguente la Difesa è sigillata (sceglierla non consuma il turno), poi `_combat_loop` lo azzera;
+  - `charge` imposta `Enemy.charged`: la prossima `choose_move()` restituisce sempre `unleash` (`damage_mult` 3), che non compare mai nei pesi;
+  - `shield` aggiunge a `Enemy.shield` `shield_pct` degli HP massimi; lo scudo assorbe i danni degli attacchi dell'eroe (`_absorb`), non quelli di status, reazioni o riflessi.
 - Senza intento (es. nei test) il nemico attacca.
+
+**Fasi dei boss** (`data/phases.json`, `bosses[nome] = [fase, ...]`). `Enemy.phases` sono le fasi del boss in ordine di `at_pct` decrescente; `Enemy.phase` conta quelle attraversate. `CombatSession.check_phase()` gira all'inizio di ogni giro e dopo il turno del giocatore: finché gli HP sono ≤ `at_pct`% e il boss è vivo, entra nella fase successiva, la annuncia, la registra nel Codice (`record_phase`) e ne applica gli effetti con `_apply_phase`. Se la fase scatta dopo il turno del giocatore, l'intento diventa `transform` e il boss usa il suo turno per trasformarsi. Effetti di una fase (tutti opzionali, almeno uno):
+
+| Chiave | Effetto |
+|---|---|
+| `element` | Nuovo elemento (il marchio si azzera); `"counter"` sceglie l'elemento con il moltiplicatore più alto contro l'armatura dell'eroe |
+| `atk_mult` | ATK × valore |
+| `heal_pct` | Cura del valore % degli HP massimi |
+| `shield_pct` | Scudo del valore % degli HP massimi |
+| `ward` | Scaglie: gli attacchi dell'eroe fanno × valore, finché una reazione (`_trigger_reaction`) non le infrange |
+| `status_inflict` | Nuovo status dei suoi colpi (`type`, `chance`, `duration`) |
+| `moves` | Nuovi pesi delle mosse (deve esserci `attack`; mai `unleash`) |
+
+Un colpo che porta il boss a 0 HP non fa scattare la fase. Il Codice ha la sezione *Fasi dei boss* (`codex.phases_page`), contata nel completamento.
 
 **Marchi e reazioni.**
 - *Il marchio.* `apply_element(elemento)` marchia il nemico (`Enemy.mark = [elemento, marks.duration]`). Lo chiamano il colpo a segno del giocatore, con l'elemento dell'arma, e l'attacco a segno del nemico mentre il giocatore è in guardia, con l'elemento dell'armatura. `Normale` non marchia.
@@ -402,7 +421,7 @@ Il salvataggio si crea al primo avvio e **non va committato** (è in `.gitignore
 | `completed_feats` | Imprese completate |
 | `perks` | Livelli dei potenziamenti del Fuoco dell'Anima |
 | `story` | Memoria del Labirinto: `flags` (anche strutture `camp_<id>` e doni `camp_dono_<id>`), `counters`, `seen_events` (incontri per evento), `endings` (finali visti) |
-| `codex` | Codice: `enemies` (`seen`/`killed` per nome), `letters` (indici), `relics` (id), `reactions` (chiavi `"A+B"`) |
+| `codex` | Codice: `enemies` (`seen`/`killed` per nome, `phases` per i boss: fasi viste), `letters` (indici), `relics` (id), `reactions` (chiavi `"A+B"`) |
 | `npc_unlocked` | Artigiani liberati |
 | `starting_consumables` / `_weapons` / `_armors` / `_accessories` | Oggetti comprati nelle botteghe per la prossima discesa. Vengono svuotati all'inizio della partita, anche se un oggetto non si può costruire, così un dato difettoso non blocca le partite successive |
 | `settings.text_speed` | `lenta`, `normale`, `veloce`, `istantanea` |
@@ -434,6 +453,7 @@ La CI (`.github/workflows/tests.yml`) li esegue su Python 3.9 e sull'ultima 3.x;
 |---|---|
 | `test_data.py` | Coerenza dei JSON |
 | `test_entities.py` | Generazione di oggetti, eroi, nemici; reliquie registrate |
+| `test_boss_phases.py` | Fasi dei boss: dati di tutti i boss, contratto di ogni effetto (soglia e unicità, elemento e contro-elemento, cura, scudo, Scaglie e reazione, status, mosse, annuncio), turno di trasformazione, Codice, soglie multiple, colpo letale, nemici senza fasi |
 | `test_modes.py` | Modalità: contratto e testo di ogni effetto, gradi cumulativi e sblocco, menu del grado, Essenza, regole nella vera discesa e pulizia; Sfida del Giorno (stessa sfida nello stesso giorno, regole, primo tentativo, storico e serie, Essenza, mappe uguali qualunque strada, schermata, statistiche) |
 | `test_docs.py` | Il Manuale elenca gradi di Ascensione e doni della Sfida come nei dati |
 | `test_mechanics.py` | Tratti, patti, Maestrie, ricompense di fine partita, profilo corrotto |

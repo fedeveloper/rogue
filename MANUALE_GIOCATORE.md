@@ -160,8 +160,28 @@ Intento del nemico: 💢 Colpo pesante (≈24 danni) — difenditi!
 | 🧱 Guardia | Non attacca; i tuoi colpi fanno il 50% dei danni | È il turno giusto per curarti, difenderti o usare un oggetto |
 | 💚 Rigenerazione | Non attacca; recupera il 15% degli HP massimi (solo sotto il 60%, al massimo due volte) | Colpisci forte prima |
 | 🧪 Colpo infetto | Se ti ferisce, infligge di sicuro il suo status (veleno, sanguinamento) | Difenditi o tieni pronto l'antidoto |
+| 🩸 Prosciugamento | Un attacco che lo cura di tanti HP quanti te ne toglie | Difenditi: dimezzi sia il danno sia la sua cura |
+| 🔒 Sigillo | Non attacca; al tuo prossimo turno non puoi difenderti | Cùrati o attacca adesso; il Sigillo dura un turno |
+| ⏳ Carica | Non attacca; il turno dopo arriva il **Colpo caricato** (l'intento mostra già i danni) | Preparati: il turno dopo difenditi |
+| 💥 Colpo caricato | Arriva sempre dopo la Carica: la sua forza triplica prima della tua difesa | **Difenditi**, o abbattilo prima |
+| 💠 Barriera | Non attacca; si protegge con uno scudo pari al 20% degli HP massimi, che assorbe i danni dei tuoi attacchi | Lo scudo si consuma colpendo: conviene continuare ad attaccare |
 
-Colpo pesante e Guardia non si ripetono mai due volte di fila. I boss si rigenerano più spesso, e alcuni nemici hanno abitudini proprie: i Golem si riparano, i Vampiri si curano col sangue.
+Colpo pesante, Guardia, Sigillo, Carica e Barriera non si ripetono mai due volte di fila. I boss si rigenerano più spesso, e alcuni nemici hanno abitudini proprie: i Golem si riparano, i Vampiri si curano col sangue.
+
+### Le fasi dei boss
+
+Ogni boss, arrivato a una soglia di HP (di solito il 50%), **cambia fase**: lo annuncia con un nome e una frase, e mostra cosa è cambiato. Il turno in cui si trasforma non attacca. Il DIO ANTICO ha tre fasi.
+
+Una fase può:
+
+- cambiargli l'**elemento** (il DIO ANTICO diventa quello che colpisce meglio la tua armatura);
+- aumentargli l'**attacco**, o fargli **recuperare** HP;
+- dargli uno **scudo**, che assorbe i danni dei tuoi attacchi finché non lo consumi;
+- coprirlo di **Scaglie**: i tuoi attacchi fanno metà dei danni finché una **reazione elementale** non le infrange;
+- rendere i suoi colpi **infetti** (sanguinamento più probabile);
+- cambiargli le **mosse**: Sigillo, Carica, Prosciugamento, Barriera.
+
+Le fasi che hai visto finiscono nel Codice, alla pagina *Fasi dei boss*; quelle che non hai ancora visto restano "???".
 
 ### Marchi e reazioni elementali
 

@@ -562,9 +562,19 @@ class Enemy:
         self.last_move = None
         self.heals_used = 0
         self.mark = None  # [elemento, turni]: il marchio elementale che una reazione può far esplodere
+        # Fasi dei boss (phases.json): a ogni soglia di HP cambiano mosse e regole; vedi CombatSession.check_phase
+        self.phases = sorted(GAME_DATA["phases"].get(self.base_name, []), key=lambda ph: -ph["at_pct"]) if is_boss else []
+        self.phase = 0      # fasi già attraversate
+        self.shield = 0     # scudo della Barriera: assorbe i danni degli attacchi dell'eroe
+        self.ward = None    # Scaglie: moltiplicatore dei danni degli attacchi, finché una reazione non le infrange
+        self.charged = False  # dopo la Carica arriva sempre il Colpo caricato
 
     def choose_move(self) -> str:
         """La prossima mossa, annunciata al giocatore prima del suo turno."""
+        if self.charged:
+            self.charged = False
+            self.last_move = "unleash"
+            return "unleash"
         rules = GAME_DATA["moves"]["rules"]
         weights = dict(self.moves)
         if self.last_move in rules["no_repeat"]: weights.pop(self.last_move, None)

@@ -40,7 +40,7 @@ ENEMY_HP_PER_FLOOR = 5
 ENEMY_ATK_PER_FLOOR = 1.2
 # I boss sono un multiplo del nemico tipico del loro piano (entities.typical_enemy); i valori base dei dati
 # diventano la loro qualità: qualità = 0.75 + 0.25 · base / media dei boss
-BOSS_HP_MULT = 2.2
+BOSS_HP_MULT = 2.0
 BOSS_ATK_MULT = 1.8
 
 # --- SELEZIONE NEMICI PER PROFONDITÀ ---

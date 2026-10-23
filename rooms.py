@@ -4,7 +4,7 @@ from typing import List
 from ui import Colors, delay_print, clear_screen, interactive_menu, display_msg, wait_enter
 from data_manager import GAME_DATA, PROFILE_MANAGER, MULTIPLIERS, get_biome, get_element_icon
 from archive import get_archive_bonus
-from codex import record_enemy_killed, record_enemy_seen, record_letter, record_reaction
+from codex import record_enemy_killed, record_enemy_seen, record_letter, record_phase, record_reaction
 from constants import CAMPFIRE_REST_PCT, BASE_HIT_CHANCE, BLOOD_LETTER_CHANCE, CURSE_HP_DRAIN_PCT, MIN_DAMAGE_PCT, POISON_MIN, POISON_PCT, RECOVERY_HEAL_PCT
 from entities import STATUS_NAMES, Player, Enemy, generate_weapon, generate_armor, generate_accessory, generate_potion, get_random_relic
 from inventory_menu import show_inventory_menu
@@ -13,7 +13,9 @@ import modes
 # Effetti di controllo delle reazioni: scadono alla fine del turno del nemico, non all'inizio
 CONTROL_STATUSES = ("stun", "blind", "slow")
 # Mosse del nemico che sono attacchi
-ATTACK_MOVES = ("attack", "heavy", "venom")
+ATTACK_MOVES = ("attack", "heavy", "venom", "drain", "unleash")
+# Attacchi da cui conviene difendersi: l'intento lo dice
+HEAVY_MOVES = ("heavy", "unleash")
 
 
 def reaction_key(a: str, b: str):
@@ -38,6 +40,7 @@ class CombatSession:
         self.hit_negated_by_relic = False
         self.first_player_attack = True
         self.intent = None  # la mossa che il nemico ha annunciato per il suo prossimo turno
+        self.sealed = False  # Sigillo: al prossimo turno l'eroe non può difendersi
         # Le regole di combattimento del bioma (Gas del Silenzio, Ebollizione Astrale, Paradosso Temporale)
         self.biome = get_biome(floor)
         self.rules = (self.biome or {}).get("rules", {})
@@ -160,6 +163,7 @@ class CombatSession:
 
     def _combat_loop(self):
         while self.player.hp > 0 and self.enemy.hp > 0:
+            self.check_phase()
             self.process_statuses_and_curses(is_player_turn=True)
             if self.player.hp <= 0:
                 display_msg(f"\n{Colors.RED}{Colors.BOLD}Sei caduto a causa delle tue ferite...{Colors.RESET}")
@@ -168,11 +172,14 @@ class CombatSession:
                 
             if not self.player_turn():
                 break
+            self.sealed = False  # il Sigillo vale per un solo turno
             if self.enemy.hp > 0 and self._paradox("player_repeat"):
                 display_msg(f"{Colors.MAGENTA}⏳ Il tempo si riavvolge: agisci ancora!{Colors.RESET}")
                 if not self.player_turn():
                     break
                 
+            # Il boss che cambia fase dopo il tuo turno usa il suo per trasformarsi
+            if self.enemy.hp > 0 and self.check_phase(): self.intent = "transform"
             if self.enemy.hp > 0:
                 self.process_statuses_and_curses(is_player_turn=False)
                 if self.enemy.hp <= 0:
@@ -254,6 +261,9 @@ class CombatSession:
     def _trigger_reaction(self, key: str):
         r = GAME_DATA["elements"]["reactions"][key]
         self.enemy.mark = None
+        if self.enemy.ward is not None:
+            self.enemy.ward = None
+            display_msg(f"{Colors.YELLOW}{Colors.BOLD}La reazione infrange le Scaglie di {self.enemy.name}!{Colors.RESET}")
         record_reaction(key)
         self.player.run_tracker["reactions"] = self.player.run_tracker.get("reactions", 0) + 1
         msg = f"{Colors.MAGENTA}{Colors.BOLD}⚡ REAZIONE: {r['icon']} {r['name'].upper()}!{Colors.RESET}"
@@ -276,6 +286,66 @@ class CombatSession:
             self.enemy.statuses[s] -= 1
             if self.enemy.statuses[s] <= 0: del self.enemy.statuses[s]
 
+    # ------------------------------------------------------------- fasi dei boss
+    def check_phase(self) -> bool:
+        """Se il boss è sceso sotto la soglia della sua prossima fase, ci entra. True se ha cambiato fase."""
+        e = self.enemy
+        changed = False
+        while e.hp > 0 and e.phase < len(e.phases) and e.hp * 100 <= e.max_hp * e.phases[e.phase]["at_pct"]:
+            ph = e.phases[e.phase]
+            e.phase += 1
+            changed = True
+            record_phase(e.base_name, e.phase)
+            display_msg(f"\n{Colors.RED}{Colors.BOLD}⚠ {e.name.upper()}: {ph['name'].upper()}{Colors.RESET}\n{Colors.YELLOW}{ph['text']}{Colors.RESET}")
+            for line in self._apply_phase(ph): display_msg(f"{Colors.MAGENTA}  · {line}{Colors.RESET}")
+        if changed: self.intent = None
+        return changed
+
+    def _apply_phase(self, ph: dict) -> List[str]:
+        """Applica gli effetti di una fase e restituisce cosa è cambiato, da mostrare al giocatore."""
+        e, out = self.enemy, []
+        if "element" in ph:
+            element = ph["element"]
+            if element == "counter":
+                # Diventa l'elemento che colpisce meglio la tua armatura
+                armor = self.player.armor.element
+                element = max(GAME_DATA["elements"]["list"], key=lambda el: (MULTIPLIERS.get(el, {}).get(armor, 1.0), el == e.element))
+            e.element, e.mark = element, None
+            out.append(f"Ora è di elemento {get_element_icon(element)}.")
+        if "atk_mult" in ph:
+            e.atk = int(e.atk * ph["atk_mult"])
+            out.append(f"Attacco +{round((ph['atk_mult'] - 1) * 100)}%.")
+        if "heal_pct" in ph:
+            healed = min(e.max_hp - e.hp, e.max_hp * ph["heal_pct"] // 100)
+            e.hp += healed
+            out.append(f"Recupera {healed} HP ({e.hp}/{e.max_hp}).")
+        if "shield_pct" in ph:
+            e.shield += e.max_hp * ph["shield_pct"] // 100
+            out.append(f"Uno scudo di {e.shield} assorbe i danni dei tuoi attacchi.")
+        if "ward" in ph:
+            e.ward = ph["ward"]
+            out.append(f"Scaglie: i tuoi attacchi fanno il {round(ph['ward'] * 100)}% dei danni finché una reazione elementale non le infrange.")
+        if "status_inflict" in ph:
+            e.status_inflict = dict(ph["status_inflict"])
+            out.append(f"I suoi colpi infliggono {STATUS_NAMES[ph['status_inflict']['type']]} ({ph['status_inflict']['chance']}%).")
+        if "moves" in ph:
+            e.moves = dict(ph["moves"])
+            new = [self._move(m)["name"] for m in ph["moves"] if m not in ("attack",)]
+            out.append("Mosse: " + ", ".join(new) + ".")
+        return out
+
+    def _absorb(self, dmg: int, eff: str) -> tuple:
+        """Scaglie e scudo riducono i danni degli attacchi dell'eroe."""
+        if self.enemy.ward is not None:
+            dmg = int(dmg * self.enemy.ward)
+            eff += f" {Colors.BLUE}[SCAGLIE]{Colors.RESET}"
+        if self.enemy.shield > 0:
+            taken = min(self.enemy.shield, dmg)
+            self.enemy.shield -= taken
+            dmg -= taken
+            eff += f" {Colors.BLUE}[SCUDO -{taken}{', infranto' if not self.enemy.shield else ''}]{Colors.RESET}"
+        return dmg, eff
+
     # ------------------------------------------------------------- intenti
     def _move(self, move_id: str) -> dict:
         return GAME_DATA["moves"]["moves"][move_id]
@@ -293,15 +363,22 @@ class CombatSession:
         text = f"{m['icon']} {Colors.BOLD}{m['name']}{Colors.RESET}"
         if self.intent in ATTACK_MOVES:
             text += f" (≈{self.estimate_enemy_damage(m.get('damage_mult', 1))} danni)"
-            if self.intent == "heavy": text += f" {Colors.RED}— difenditi!{Colors.RESET}"
+            if self.intent in HEAVY_MOVES: text += f" {Colors.RED}— difenditi!{Colors.RESET}"
+            if self.intent == "drain": text += f" e si cura di altrettanto"
             if self.intent == "venom" and self.enemy.status_inflict: text += f" + {STATUS_NAMES.get(self.enemy.status_inflict['type'], '')} se ti ferisce"
         elif self.intent == "guard": text += f": i tuoi colpi faranno il {int(m['damage_taken_mult'] * 100)}% dei danni"
         elif self.intent == "heal": text += f": recupererà il {m['heal_pct']}% degli HP"
+        elif self.intent == "seal": text += f": {Colors.RED}al tuo prossimo turno non potrai difenderti{Colors.RESET}"
+        elif self.intent == "charge":
+            text += f": il turno dopo arriva il Colpo caricato (≈{self.estimate_enemy_damage(self._move('unleash')['damage_mult'])} danni)"
+        elif self.intent == "shield": text += f": scudo di {self.enemy.max_hp * m['shield_pct'] // 100}"
         return text
 
     def enemy_status_text(self) -> str:
         parts = []
         if self.enemy.mark: parts.append(f"marchio {get_element_icon(self.enemy.mark[0])}")
+        if self.enemy.shield: parts.append(f"scudo {self.enemy.shield}")
+        if self.enemy.ward is not None: parts.append("scaglie")
         parts += [STATUS_NAMES.get(s, s) for s in self.enemy.statuses]
         return f" [{', '.join(parts)}]" if parts else ""
 
@@ -366,6 +443,7 @@ class CombatSession:
             if self.intent == "guard":
                 dmg_dealt = int(dmg_dealt * self._move("guard")["damage_taken_mult"])
                 eff += f" {Colors.BLUE}[GUARDIA]{Colors.RESET}"
+            dmg_dealt, eff = self._absorb(dmg_dealt, eff)
             
             self.enemy.hp -= dmg_dealt
             display_msg(f"\n-> Colpisci con {self.player.weapon.name} infliggendo {Colors.CYAN}{dmg_dealt} danni!{Colors.RESET} {eff}")
@@ -428,6 +506,7 @@ class CombatSession:
 
             self.def_type, self.def_txt = self.player.get_defense_action()
             if self.silenced: self.def_type, self.def_txt = "silenced", "Difesa (Dimezza danni; il gas soffoca la tecnica)"
+            if self.sealed: self.def_txt = f"{Colors.RED}🔒 Difesa sigillata (non puoi difenderti in questo turno){Colors.RESET}"
             if self.intent is None: self.choose_intent()
 
             prompt = (f"\n{Colors.BOLD}--- ⚔️ IN COMBATTIMENTO ⚔️ ---{Colors.RESET}\nTu: {Colors.GREEN}{self.player.hp}/{self.player.max_hp} HP{Colors.RESET} | "
@@ -448,6 +527,9 @@ class CombatSession:
                 return self.execute_player_attack()
 
             elif idx == 1:
+                if self.sealed:
+                    display_msg(f"\n{Colors.RED}-> Il Sigillo ti blocca: in questo turno non puoi difenderti.{Colors.RESET}")
+                    continue
                 self.execute_player_defense()
                 return True
 
@@ -539,6 +621,22 @@ class CombatSession:
         elif intent == "guard":
             display_msg(f"{Colors.BLUE}<- {self.enemy.name} resta in guardia.{Colors.RESET}")
             result = True
+        elif intent == "transform":
+            display_msg(f"{Colors.MAGENTA}<- {self.enemy.name} usa il suo turno per trasformarsi.{Colors.RESET}")
+            result = True
+        elif intent == "seal":
+            self.sealed = True
+            display_msg(f"{Colors.RED}<- 🔒 {self.enemy.name} ti sigilla: al prossimo turno non potrai difenderti.{Colors.RESET}")
+            result = True
+        elif intent == "charge":
+            self.enemy.charged = True
+            display_msg(f"{Colors.RED}<- ⏳ {self.enemy.name} raccoglie le forze. Il prossimo colpo sarà devastante.{Colors.RESET}")
+            result = True
+        elif intent == "shield":
+            gain = self.enemy.max_hp * self._move("shield")["shield_pct"] // 100
+            self.enemy.shield += gain
+            display_msg(f"{Colors.BLUE}<- 💠 {self.enemy.name} alza una barriera: scudo {self.enemy.shield}.{Colors.RESET}")
+            result = True
         elif intent == "heal":
             healed = min(self.enemy.max_hp - self.enemy.hp, self.enemy.max_hp * self._move("heal")["heal_pct"] // 100)
             self.enemy.hp += healed
@@ -577,7 +675,7 @@ class CombatSession:
             if dmg_taken > 0: 
                 self.boss_hit_taken = True
                 dif = f"{Colors.BLUE}[DIFESA]{Colors.RESET}" if self.is_defending else ""
-                heavy = f"{Colors.RED}[COLPO PESANTE]{Colors.RESET} " if move == "heavy" else ""
+                heavy = f"{Colors.RED}[{self._move(move)['name'].upper()}]{Colors.RESET} " if move in HEAVY_MOVES else ""
                 display_msg(f"<- {heavy}{self.enemy.name} ti colpisce! Subisci {Colors.RED}{dmg_taken} danni{Colors.RESET}. {en_eff}{dif}")
                 
                 if getattr(self.enemy, 'status_inflict', None):
@@ -604,6 +702,10 @@ class CombatSession:
                         return False
                 
                 alive = self.player.take_damage(dmg_taken)
+                if move == "drain":
+                    drained = min(self.enemy.max_hp - self.enemy.hp, int(dmg_taken * self._move("drain")["heal_ratio"]))
+                    self.enemy.hp += drained
+                    display_msg(f"{Colors.RED}🩸 {self.enemy.name} si nutre della tua vita: +{drained} HP. ({self.enemy.hp}/{self.enemy.max_hp}){Colors.RESET}")
                 if not alive:
                     display_msg(f"\n{Colors.RED}{Colors.BOLD}Sei caduto in battaglia contro {self.enemy.name}...{Colors.RESET}")
                     wait_enter("\nPremi INVIO per continuare...")

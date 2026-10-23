@@ -168,7 +168,8 @@ class Bot:
         if "Intento del nemico" in pr:
             potion = any(i.type == "consumable" and i.category == "heal" for i in p.inventory)
             if p.hp < p.max_hp * 0.35 and potion: self.state["potion"] = True; return 2
-            return 1 if "Colpo pesante" in pr else 0
+            if "sigillata" in opts[1]: return 0
+            return 1 if "Colpo pesante" in pr or "Colpo caricato" in pr else 0
         if "ZAINO E INVENTARIO" in pr:
             if self.state.pop("potion", False):
                 i = next((i for i, o in enumerate(opts) if "(Cura" in o and "Antidoto" not in o), None)
