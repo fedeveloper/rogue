@@ -105,6 +105,52 @@
             "base_heal": 10,
             "val_base": 40,
             "category": "antidote"
+        },
+        {
+            "name": "Tè di Lavanda",
+            "base_heal": 20,
+            "val_base": 8,
+            "category": "heal"
+        },
+        {
+            "name": "Infuso di Radici",
+            "base_heal": 45,
+            "val_base": 18,
+            "category": "heal"
+        },
+        {
+            "name": "Balsamo d'Ossidiana",
+            "base_heal": 110,
+            "val_base": 50,
+            "unlock_id": "balsamo_ossidiana",
+            "unlock_cost": 150,
+            "desc": "Una cura potente, raffreddata nella Forgia.",
+            "category": "heal"
+        },
+        {
+            "name": "Siero Purificante",
+            "base_heal": 30,
+            "val_base": 60,
+            "unlock_id": "siero_purificante",
+            "unlock_cost": 120,
+            "desc": "Cura tutti gli stati alterati (Veleno, Sanguinamento) e qualche ferita.",
+            "category": "antidote"
+        },
+        {
+            "name": "Solvente Runico",
+            "base_heal": 0,
+            "val_base": 45,
+            "desc": "Estrae gratis una runa dall'arma o dall'armatura equipaggiata e la rimette nello zaino.",
+            "category": "rune_solvent"
+        },
+        {
+            "name": "Scalpello Runico",
+            "base_heal": 0,
+            "val_base": 120,
+            "unlock_id": "scalpello_runico",
+            "unlock_cost": 300,
+            "desc": "Aggiunge un incastone all'arma o all'armatura equipaggiata (al massimo 3).",
+            "category": "socket_chisel"
         }
     ]
 }
