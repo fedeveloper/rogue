@@ -6,6 +6,7 @@ from relic_effects import create_relic_effect
 from archive import get_archive_bonus
 from codex import record_relic
 import modes
+import runes as rune_rules
 from constants import BASE_HIT_CHANCE, ENEMY_DEPTH_WINDOW, BOSS_DEPTH_WINDOW, INFINITE_MODE_THRESHOLD, CURSE_CHANCE, CURSE_STAT_MULTIPLIER, BOSS_HP_MULT, BOSS_ATK_MULT, ENEMY_HP_PER_FLOOR, ENEMY_ATK_PER_FLOOR, RECOVERY_HEAL_PCT, BULWARK_HEAL_PCT, WEAPON_TARGET_HITS, ARMOR_TARGET_ABSORB, WEAPON_QUALITY, ARMOR_QUALITY, NORMAL_ELEMENT_BONUS, EPIC_MULTIPLIER
 
 class Item:
@@ -17,7 +18,7 @@ class Item:
     def refresh_display_name(self):
         cursed_tag = f"{Colors.MAGENTA}[MALEDETTO]{Colors.RESET} " if self.is_cursed else ""
         el_tag = f" [{get_element_icon(self.element)}]" if self.element != "Normale" and self.element != "" else ""
-        self.display_name = f"{cursed_tag}{self.name}{el_tag}"
+        self.display_name = f"{cursed_tag}{self.name}{el_tag}{rune_rules.socket_tag(self)}"
 
 # Gli ultimi quattro nascono dalle reazioni elementali e colpiscono solo i nemici
 STATUS_NAMES = {"poison": "Veleno", "bleed": "Sanguinamento", "stun": "Gelo", "blind": "Accecato", "slow": "Impantanato", "scorch": "Magma"}
@@ -27,6 +28,7 @@ WEAPON_TRAIT_KEYS = ("hit_modifier", "crit_chance", "gold_atk_per", "gold_atk_ma
 
 class Weapon(Item):
     def __init__(self, name: str, value: int, atk: int, element: str, level: int, flavor: str = "", is_cursed: bool = False, curse_effect: str = "", status_inflict: dict = None, traits: dict = None):
+        self.sockets, self.runes = rune_rules.rules()["sockets"]["normal"], []  # incastoni e rune incastonate
         super().__init__(name, value, "weapon", level, flavor, is_cursed, curse_effect, element)
         self.atk = atk
         # Stesso formato di status_inflict dei nemici: {"type", "chance", "duration"}
@@ -50,6 +52,7 @@ class Weapon(Item):
 
 class Armor(Item):
     def __init__(self, name: str, value: int, defense: int, element: str, level: int, flavor: str = "", is_cursed: bool = False, curse_effect: str = "", dodge_bonus: int = 0):
+        self.sockets, self.runes = rune_rules.rules()["sockets"]["normal"], []
         super().__init__(name, value, "armor", level, flavor, is_cursed, curse_effect, element)
         self.defense = defense
         self.dodge_bonus = dodge_bonus
@@ -58,6 +61,25 @@ class Accessory(Item):
     def __init__(self, name: str, value: int, element: str, bonus_type: str, bonus_value: int, desc: str, flavor: str = "", is_cursed: bool = False, curse_effect: str = ""):
         super().__init__(name, value, "accessory", 1, flavor, is_cursed, curse_effect, element)
         self.bonus_type, self.bonus_value, self.desc = bonus_type, bonus_value, desc
+
+class Rune(Item):
+    """Una runa nello zaino: si incastona al Falò in un'arma o in un'armatura (vedi runes.py)."""
+    def __init__(self, rune_id: str, floor: int = 1):
+        data = rune_rules.rune(rune_id)
+        super().__init__(f"{data['icon']} {data['name']}", rune_rules.item_value(rune_id, floor), "rune")
+        self.rune_id, self.desc = rune_id, data["desc"]
+
+
+def generate_rune(floor: int, rune_id: str = "") -> "Rune":
+    return Rune(rune_id or rune_rules.random_rune_id(), floor)
+
+
+def set_sockets(item, kind: str):
+    """Incastoni di un oggetto generato: normale, epico o premio di un boss."""
+    item.sockets = rune_rules.rules()["sockets"][kind]
+    item.refresh_display_name()
+    return item
+
 
 class Consumable(Item):
     def __init__(self, name: str, value: int, heal_amount: int, category: str = "heal"):
@@ -122,7 +144,8 @@ def generate_weapon(level: int, is_epic: bool = False) -> Weapon:
     if element == "Normale": power *= NORMAL_ELEMENT_BONUS
     if is_epic: power *= EPIC_MULTIPLIER; name = f"EPICO {name}"
     atk = max(1, round(power))
-    return Weapon(f"{name} (lv.{level})", atk * 5, atk, element, level, flavor, is_cursed, curse_effect, w_data.get("status_inflict"), w_data)
+    w = Weapon(f"{name} (lv.{level})", atk * 5, atk, element, level, flavor, is_cursed, curse_effect, w_data.get("status_inflict"), w_data)
+    return set_sockets(w, "epic") if is_epic else w
 
 def generate_armor(level: int, is_epic: bool = False) -> Armor:
     a_data = random.choice(GAME_DATA["armors"])
@@ -140,7 +163,8 @@ def generate_armor(level: int, is_epic: bool = False) -> Armor:
     if element == "Normale": power *= NORMAL_ELEMENT_BONUS
     if is_epic: power *= EPIC_MULTIPLIER; name = f"EPICO {name}"
     defense = max(1, round(power))
-    return Armor(f"{name} (lv.{level})", defense * 8, defense, element, level, flavor, is_cursed, curse_effect, a_data.get("dodge_bonus", 0))
+    a = Armor(f"{name} (lv.{level})", defense * 8, defense, element, level, flavor, is_cursed, curse_effect, a_data.get("dodge_bonus", 0))
+    return set_sockets(a, "epic") if is_epic else a
 
 def generate_accessory(level: int) -> Accessory:
     a_data = random.choice(GAME_DATA["accessories"])
@@ -359,13 +383,20 @@ class Player:
     def corruption_atk(self) -> int:
         return self.corruption // 10 * GAME_DATA["meta"]["corruption"]["atk_per_10"]
 
+    def rune_value(self, key: str):
+        """Somma di un effetto delle rune incastonate nell'arma e nell'armatura equipaggiate."""
+        total = 0
+        for item in (self.weapon, self.armor):
+            for rid in getattr(item, "runes", []): total += rune_rules.rune(rid)["effects"].get(key, 0)
+        return total
+
     def get_total_atk(self):
         atk = self.weapon.atk + self.bonus_atk_relic + self.weapon.get_gold_atk_bonus(self.gold) + self.corruption_atk()
         for r in self.relic_effects: atk += r.get_atk_modifier(self)
-        return atk
+        return atk + self.weapon.atk * self.rune_value("atk_pct") // 100
 
     def get_crit_chance(self) -> int:
-        crit = self.base_crit
+        crit = self.base_crit + self.rune_value("crit_chance_add")
         if self.accessory and self.accessory.bonus_type == "crit_chance": crit += self.accessory.bonus_value
         return min(100, crit)
 
@@ -382,10 +413,11 @@ class Player:
         return max(10, min(100, hit))
 
     def get_total_def(self) -> int:
-        return self.armor.defense + self.temp_def + self.bonus_def + get_archive_bonus("def", PROFILE_MANAGER._data)
+        return (self.armor.defense + self.armor.defense * self.rune_value("def_pct") // 100 + self.temp_def + self.bonus_def
+                + get_archive_bonus("def", PROFILE_MANAGER._data))
     
     def get_dodge(self): 
-        dodge = self.base_dodge + self.temp_dodge + getattr(self.armor, "dodge_bonus", 0)
+        dodge = self.base_dodge + self.temp_dodge + getattr(self.armor, "dodge_bonus", 0) + self.rune_value("dodge_add")
         for effect in self.relic_effects: dodge += effect.get_dodge_modifier()
         if self._berserker_fury_active(): return 0
         if self.has_curse("heavy"): dodge -= 15
@@ -404,7 +436,7 @@ class Player:
 
     def gain_exp(self, amount: int):
         if self.midas: return
-        multi = self.exp_multiplier
+        multi = self.exp_multiplier + self.rune_value("exp_pct") / 100
         for effect in self.relic_effects: multi += effect.get_exp_modifier()
         amount = int(amount * multi)
         self.exp += amount
@@ -430,7 +462,7 @@ class Player:
         for r in self.relic_effects: g = r.on_gold_gain(self, g)
         g = int(g * (1 + PROFILE_MANAGER.get_perk("banca_anima_lvl", 0) * 0.05))
         g = int(g * (1 + get_archive_bonus("gold_pct", PROFILE_MANAGER._data) / 100))
-        return g
+        return g * (100 + self.rune_value("gold_pct")) // 100
 
     def take_damage(self, amount: int) -> bool:
         self.hp -= amount

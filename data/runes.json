@@ -1,0 +1,28 @@
+{
+    "rules": {
+        "sockets": {"normal": 1, "epic": 2, "boss": 3},
+        "extract_cost": [30, 5],
+        "value": [40, 8],
+        "drops": {"elite": 35, "boss": 60, "trap": 15, "mystery_hoard": 30, "mimic": 35},
+        "vendor_stock": 1
+    },
+    "runes": {
+        "eco":       {"name": "Runa dell'Eco",      "icon": "🔁", "family": "Elementale", "slot": "weapon", "weight": 10, "effects": {"mark_duration_add": 1},       "desc": "I marchi della tua arma durano 1 turno in più."},
+        "catalisi":  {"name": "Runa della Catalisi", "icon": "🌀", "family": "Elementale", "slot": "weapon", "weight": 8,  "effects": {"reaction_dmg_pct": 30},       "desc": "Le reazioni elementali infliggono il 30% di danni in più."},
+        "contrasto": {"name": "Runa del Contrasto",  "icon": "🌗", "family": "Elementale", "slot": "weapon", "weight": 10, "effects": {"super_effective_pct": 15},    "desc": "I colpi Super Efficaci infliggono il 15% di danni in più."},
+        "spina":     {"name": "Runa della Spina",    "icon": "🌹", "family": "Status",     "slot": "weapon", "weight": 10, "effects": {"bleed_on_hit": 15},           "desc": "I tuoi colpi hanno il 15% di probabilità di far sanguinare il nemico."},
+        "vipera":    {"name": "Runa della Vipera",   "icon": "🐍", "family": "Status",     "slot": "weapon", "weight": 10, "effects": {"poison_on_hit": 15},          "desc": "I tuoi colpi hanno il 15% di probabilità di avvelenare il nemico."},
+        "occhio":    {"name": "Runa dell'Occhio",    "icon": "🎯", "family": "Offensiva",  "slot": "weapon", "weight": 10, "effects": {"crit_chance_add": 5},         "desc": "+5% di probabilità di colpo critico."},
+        "forza":     {"name": "Runa della Forza",    "icon": "💪", "family": "Offensiva",  "slot": "weapon", "weight": 10, "effects": {"atk_pct": 6},                 "desc": "+6% di Attacco."},
+        "sangue":    {"name": "Runa del Sangue",     "icon": "🩸", "family": "Offensiva",  "slot": "weapon", "weight": 8,  "effects": {"lifesteal_pct": 8},           "desc": "Ti curi dell'8% dei danni che infliggi con gli attacchi."},
+        "agguato":   {"name": "Runa dell'Agguato",   "icon": "🔪", "family": "Offensiva",  "slot": "weapon", "weight": 8,  "effects": {"first_strike_pct": 50},       "desc": "Il primo attacco di ogni scontro infligge il 50% di danni in più."},
+        "pietra":    {"name": "Runa della Pietra",   "icon": "🪨", "family": "Difensiva",  "slot": "armor",  "weight": 10, "effects": {"def_pct": 8},                 "desc": "+8% di Difesa dell'armatura."},
+        "vento":     {"name": "Runa del Vento",      "icon": "🍃", "family": "Difensiva",  "slot": "armor",  "weight": 10, "effects": {"dodge_add": 4},               "desc": "+4% di Schivata."},
+        "rovo":      {"name": "Runa del Rovo",       "icon": "🌵", "family": "Difensiva",  "slot": "armor",  "weight": 8,  "effects": {"thorns_pct": 15},             "desc": "Chi ti ferisce subisce il 15% dei danni che ti ha inflitto."},
+        "quiete":    {"name": "Runa della Quiete",   "icon": "🌙", "family": "Difensiva",  "slot": "armor",  "weight": 8,  "effects": {"defend_heal_pct": 4},         "desc": "Quando ti difendi recuperi il 4% degli HP massimi."},
+        "avidita":   {"name": "Runa dell'Avidità",   "icon": "🪙", "family": "Utilità",    "slot": "any",    "weight": 8,  "effects": {"gold_pct": 10},               "desc": "+10% di Oro raccolto."},
+        "sapere":    {"name": "Runa del Sapere",     "icon": "📘", "family": "Utilità",    "slot": "any",    "weight": 8,  "effects": {"exp_pct": 10},                "desc": "+10% di EXP."},
+        "coraggio":  {"name": "Runa del Coraggio",   "icon": "🦁", "family": "Utilità",    "slot": "any",    "weight": 6,  "effects": {"audacity_start": 1},          "desc": "Ogni piano inizia con 1 punto di Audacia."},
+        "passo":     {"name": "Runa del Passo",      "icon": "👣", "family": "Utilità",    "slot": "any",    "weight": 8,  "effects": {"trap_chance_add": 10},        "desc": "+10 alle prove delle trappole."}
+    }
+}

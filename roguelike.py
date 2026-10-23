@@ -503,7 +503,7 @@ def _descent(c_choice, t_choice, active_pacts, infinite_mode, grade, daily):
         apply_biome_on_floor(player, biome)
             
         player.run_tracker["floor_attacks"] = player.run_tracker["floor_hits"] = 0
-        player.audacity = 0
+        player.audacity = player.rune_value("audacity_start")
         
         # La mappa del piano si genera all'arrivo: le reliquie possedute in quel momento ne cambiano i pesi
         weights_def = floor_room_weights(base_weights, player)

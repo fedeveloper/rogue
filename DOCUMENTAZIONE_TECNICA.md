@@ -20,6 +20,7 @@ Riferimento per chi modifica il gioco: architettura, formato dei dati, formule d
 | `floor_map.py` | Mappa del piano: file di stanze (`generate_row`), collegamenti e stanze speciali (`generate_floor_map`), percorsi (`reachable`), disegno (`render_map`) ed etichette (`room_label`). |
 | `rooms.py` | `CombatSession` (turni, danni, status, Risonanze, fine scontro) e le stanze: mercante, falò, forziere, trappola, mistero. |
 | `modes.py` | Modalità: regole della discesa in corso (`RUN`, `rule`, `combine`, `start_run`/`end_run`), gradi di Ascensione (`max_grade`, `ascension_rules`, `ascension_essence_mult`, `record_ascension_win`) e Sfida del Giorno (`daily_setup`, `daily_rules`, `daily_score`, `record_daily`, `daily_streak`). |
+| `runes.py` | Rune e Incastoni: chiavi degli effetti (`RUNE_EFFECT_KEYS`), dati delle rune (`rune`, `fits`, `random_rune_id`), probabilità di drop (`roll_drop`), costo di estrazione, etichetta degli incastoni sul nome (`socket_tag`). |
 | `camp.py` | Il Fuoco del Campo: personaggi presenti, frasi e doni (`talk`), strutture (`build`, `built`), dono dello Scrittoio a inizio run (`start_of_run_boon`). |
 | `endings.py` | Finali: disponibili (`available_endings`), scelta e premio (`choose_ending`), registro in `profile.story.endings`. |
 | `codex.py` | Il Codice del Labirinto: registra nemici visti e sconfitti, fasi dei boss, lettere e reliquie (`record_*`), calcola il completamento e mostra le pagine (`show_codex`). |
@@ -64,6 +65,7 @@ Un test controlla che ogni oggetto sbloccabile abbia davvero una di queste strad
 | `story.json` | Elementi della storia | `quest_items` (oggetti chiave: `name`, `desc`), `npcs` (nomi degli artigiani), `characters` (personaggi ricorrenti: vedi sotto), `camp` (Fuoco del Campo), `endings` (finali) |
 | `modes.json` | Modalità | `ascension` (`max`, `grades`: `name`, `desc`, `essence_bonus`, `effects`), `daily` (`maluses`, `first_attempt_essence_mult`, `history`, `score`, `boons`: `name`, `desc`, `effects`): vedi [Modalità](#modalità) |
 | `phases.json` | Fasi dei boss | `bosses[nome] = [{at_pct, name, text, element, atk_mult, heal_pct, shield_pct, ward, status_inflict, moves}]`: vedi [Intenti e reazioni](#intenti-e-reazioni) |
+| `runes.json` | Rune | `rules` (`sockets` per `normal`/`epic`/`boss`, `extract_cost` e `value` come [base, per piano], `drops` per fonte in %, `vendor_stock`); `runes[id] = {name, icon, family, slot (weapon/armor/any), weight, effects, desc}` |
 | `lore.json` | Frasi d'atmosfera | `combat`, `boss`, `vendor`, `treasure`, `trap`, `campfire`, `letters`, `mystery` |
 
 ### Maestrie
@@ -286,6 +288,24 @@ Il profilo del giocatore non viene mai toccato (il caricamento lo riscrive solo 
 
 **README.** `README.md` si genera con `python tools/genera_readme.py`: il testo è nello script, tabelle e numeri vengono da `data/`. `tests/test_docs.py` fallisce se il README non è aggiornato, quindi va rigenerato in ogni PR che cambia i dati.
 
+### Rune e Incastoni
+
+`Weapon` e `Armor` hanno `sockets` (incastoni) e `runes` (id incastonati); il nome mostra `⟨icone◇⟩` (`runes.socket_tag`). I generatori danno `normal` incastoni, gli epici `epic` (`set_sockets`), il drop leggendario dei boss `boss`. Le rune nello zaino sono oggetti `Rune` (`type = "rune"`), create da `generate_rune`. `Player.rune_value(chiave)` somma un effetto sulle rune dell'arma e dell'armatura **equipaggiate**:
+
+| Effetto | Dove agisce |
+|---|---|
+| `atk_pct`, `def_pct` | `get_total_atk` (% dell'ATK dell'arma), `get_total_def` (% della DIF dell'armatura) |
+| `crit_chance_add`, `dodge_add` | `get_crit_chance`, `get_dodge` |
+| `gold_pct`, `exp_pct` | `calculate_gold_gain`, `gain_exp` |
+| `mark_duration_add`, `reaction_dmg_pct` | `apply_element`, `_trigger_reaction` |
+| `super_effective_pct`, `first_strike_pct`, `lifesteal_pct`, `bleed_on_hit`, `poison_on_hit` | `execute_player_attack` (primo attacco dello scontro, colpi a segno; gli status durano 3 turni) |
+| `thorns_pct` | `_enemy_attack`, insieme al riflesso dei monili |
+| `defend_heal_pct` | `execute_player_defense` |
+| `trap_chance_add` | `rooms.trap_chances` |
+| `audacity_start` | Audacia all'inizio di ogni piano (`roguelike`) |
+
+Il Falò ha `rune_workshop` (`RUNE_WORKSHOP`): incastonare (gratis, nell'arma o nell'armatura con un incastone libero adatto allo `slot`) ed estrarre (`extract_cost`); non spegne il falò. `rune_drop(player, piano, fonte)` lascia una runa con la probabilità di `drops[fonte]` (Élite, boss, trappola, tesoro del Mistero, Mimic) e la registra nel Codice (`record_rune`, pagina *Rune*). La fusione dell'Altare tiene le rune della base e rimette nello zaino quelle del sacrificio.
+
 ### Modalità
 
 `modes.py` e `data/modes.json`. Ascensione e Sfida del Giorno cambiano una discesa con gli stessi **effetti**: `combine()` li somma in un dizionario di regole, `start_run()` lo rende attivo in `modes.RUN` e `modes.rule(chiave)` lo legge dove serve. Fuori da una discesa (e nei test) le regole sono neutre; `play_game` chiama sempre `end_run()` alla fine, anche se la discesa si interrompe con un errore.
@@ -421,7 +441,7 @@ Il salvataggio si crea al primo avvio e **non va committato** (è in `.gitignore
 | `completed_feats` | Imprese completate |
 | `perks` | Livelli dei potenziamenti del Fuoco dell'Anima |
 | `story` | Memoria del Labirinto: `flags` (anche strutture `camp_<id>` e doni `camp_dono_<id>`), `counters`, `seen_events` (incontri per evento), `endings` (finali visti) |
-| `codex` | Codice: `enemies` (`seen`/`killed` per nome, `phases` per i boss: fasi viste), `letters` (indici), `relics` (id), `reactions` (chiavi `"A+B"`) |
+| `codex` | Codice: `enemies` (`seen`/`killed` per nome, `phases` per i boss: fasi viste), `letters` (indici), `relics` (id), `reactions` (chiavi `"A+B"`), `runes` (id) |
 | `npc_unlocked` | Artigiani liberati |
 | `starting_consumables` / `_weapons` / `_armors` / `_accessories` | Oggetti comprati nelle botteghe per la prossima discesa. Vengono svuotati all'inizio della partita, anche se un oggetto non si può costruire, così un dato difettoso non blocca le partite successive |
 | `settings.text_speed` | `lenta`, `normale`, `veloce`, `istantanea` |
@@ -453,6 +473,7 @@ La CI (`.github/workflows/tests.yml`) li esegue su Python 3.9 e sull'ultima 3.x;
 |---|---|
 | `test_data.py` | Coerenza dei JSON |
 | `test_entities.py` | Generazione di oggetti, eroi, nemici; reliquie registrate |
+| `test_runes.py` | Rune: dati, un contratto per ogni effetto, incastoni per rarità ed equipaggiamento iniziale, nome, drop dei boss, solo l'equipaggiamento conta; laboratorio del Falò (incastonare gratis e nello slot giusto, oggetto pieno, estrarre a pagamento, falò acceso); fusione; drop per fonte; Mercante; Codice |
 | `test_boss_phases.py` | Fasi dei boss: dati di tutti i boss, contratto di ogni effetto (soglia e unicità, elemento e contro-elemento, cura, scudo, Scaglie e reazione, status, mosse, annuncio), turno di trasformazione, Codice, soglie multiple, colpo letale, nemici senza fasi |
 | `test_modes.py` | Modalità: contratto e testo di ogni effetto, gradi cumulativi e sblocco, menu del grado, Essenza, regole nella vera discesa e pulizia; Sfida del Giorno (stessa sfida nello stesso giorno, regole, primo tentativo, storico e serie, Essenza, mappe uguali qualunque strada, schermata, statistiche) |
 | `test_docs.py` | Il Manuale elenca gradi di Ascensione e doni della Sfida come nei dati |

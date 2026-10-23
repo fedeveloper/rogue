@@ -139,6 +139,7 @@ def show_inventory_menu(player, in_combat=False) -> str:
                 elif item.type == "armor": options.append(f"[Armatura] {item.display_name} (+{item.defense}) - Lv.{item.level}")
                 elif item.type == "accessory": options.append(f"[Monile] {item.display_name} ({item.desc})")
                 elif item.type == "consumable": options.append(f"[Oggetto] {item.display_name}{count_str}")
+                elif item.type == "rune": options.append(f"[Runa] {item.display_name} ({item.desc})")
                     
         options.append("Chiudi Zaino")
         
@@ -152,6 +153,10 @@ def show_inventory_menu(player, in_combat=False) -> str:
             if item.type == "consumable":
                 res = _use_consumable(player, item, real_idx, in_combat)
                 if res: return res
+
+            elif item.type == "rune":
+                display_msg(f"\n{Colors.CYAN}Le rune si incastonano al Falò, in un'arma o in un'armatura con un incastone libero (◇).{Colors.RESET}")
+                wait_enter("Premi INVIO...")
             
             elif item.type == "weapon":
                 old_w = player.weapon

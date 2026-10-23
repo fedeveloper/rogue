@@ -105,7 +105,7 @@ In ogni piano una stanza della mappa, segnata con l'icona del bioma, è una dell
 | 👹 **Scontro** | Un nemico adatto al piano. La mappa mostra quanta EXP vale; vincendo ottieni anche Oro e a volte una pozione. |
 | 👺 **Élite** | Dal piano 2. Un campione più duro (HP ×1,6, ATK ×1,3) che vale il doppio di EXP e Oro e lascia sempre una **reliquia o un pezzo d'equipaggiamento**, a volte epico. |
 | 💰 **Mercante** | Compra armi, armature, monili e pozioni; vendi ciò che non ti serve. Dopo ogni acquisto il resto della merce rincara del 10%. |
-| 🔥 **Falò** | *Riposa* (50% degli HP) **oppure** *affila l'arma* (+3 ATK per 50 Oro): una delle due, poi il falò si spegne. Prima puoi usare l'**Altare dell'Evoluzione** e la **purificazione** quante volte vuoi. |
+| 🔥 **Falò** | *Riposa* (50% degli HP) **oppure** *affila l'arma* (+3 ATK per 50 Oro): una delle due, poi il falò si spegne. Prima puoi usare l'**Altare dell'Evoluzione**, la **purificazione** e le **Rune e Incastoni** quante volte vuoi. |
 | 💎 **Forziere** | Oro, a volte un monile, una pozione o una reliquia. Dal piano 3 può essere **chiuso a chiave** (lo forzi pagando l'8% degli HP massimi, in cambio di un bottino garantito) o un **Mimic**: un mostro che, sconfitto, restituisce il doppio. La mappa mostra la probabilità del rischio, che cresce con la profondità. A volte il coperchio sembra respirare: può essere un Mimic, ma anche no. |
 | 💀 **Trappola** | Custodisce sempre un oggetto. Scegli come affrontarla: **disinnescarla** (prova di Precisione, se riesce recuperi anche dell'Oro), **attraversarla di corsa** (prova di Schivata) o **tornare indietro** senza danni e senza bottino. Il menu mostra le probabilità e i danni in caso di fallimento; chi la affronta prende il bottino anche se la prova fallisce. |
 | 🎭 **Evento** | Una piccola storia con bivi, a volte in più scene: vedi *Gli eventi* qui sotto. Alcuni nascondono un artigiano prigioniero da liberare. |
@@ -255,7 +255,36 @@ L'enciclopedia nel [README](README.md) le elenca tutte.
 
 - **Reliquie.** Artefatti passivi trovati sconfiggendo i boss, nei forzieri o negli eventi. Ne porti al massimo **4**: trovandone una quinta, scegli quale sacrificare.
 - **Livelli.** Con l'EXP sali di livello: +15 HP massimi, cura completa, +2% di precisione e di schivata.
-- **Altare dell'Evoluzione.** Al Falò, fondi due armi (o due armature) dello zaino: la prima assorbe metà delle statistiche della seconda e sale di livello.
+- **Altare dell'Evoluzione.** Al Falò, fondi due armi (o due armature) dello zaino: la prima assorbe metà delle statistiche della seconda e sale di livello. Le rune della prima restano; quelle della seconda tornano nello zaino.
+
+### Rune e Incastoni
+
+Armi e armature hanno degli **incastoni** (◇ accanto al nome): 1 per gli oggetti comuni, 2 per gli epici, 3 per i premi dei boss. Anche l'equipaggiamento iniziale ne ha uno.
+
+- **Dove si trovano le rune.** Le lasciano le Élite (35%), i boss (60%), le trappole affrontate (15%), i tesori del Mistero (30%) e i Mimic (35%); il Mercante ne vende 1.
+- **Incastonare.** Al Falò, voce *Rune e Incastoni*: incastonare è gratis e il falò resta acceso. Ogni runa va su un'arma, su un'armatura o su entrambe.
+- **Estrarre.** Costa 30 Oro più 5 per piano, e la runa torna nello zaino. Cambiando arma le rune restano su quella vecchia: spostarle è una scelta.
+- **Contano solo le rune dell'arma e dell'armatura equipaggiate.** Quelle che trovi finiscono nel Codice, alla pagina *Rune*.
+
+| Runa | Famiglia | Dove | Effetto |
+|---|---|---|---|
+| 🔁 Runa dell'Eco | Elementale | Arma | I marchi della tua arma durano 1 turno in più. |
+| 🌀 Runa della Catalisi | Elementale | Arma | Le reazioni elementali infliggono il 30% di danni in più. |
+| 🌗 Runa del Contrasto | Elementale | Arma | I colpi Super Efficaci infliggono il 15% di danni in più. |
+| 🌹 Runa della Spina | Status | Arma | I tuoi colpi hanno il 15% di probabilità di far sanguinare il nemico. |
+| 🐍 Runa della Vipera | Status | Arma | I tuoi colpi hanno il 15% di probabilità di avvelenare il nemico. |
+| 🎯 Runa dell'Occhio | Offensiva | Arma | +5% di probabilità di colpo critico. |
+| 💪 Runa della Forza | Offensiva | Arma | +6% di Attacco. |
+| 🩸 Runa del Sangue | Offensiva | Arma | Ti curi dell'8% dei danni che infliggi con gli attacchi. |
+| 🔪 Runa dell'Agguato | Offensiva | Arma | Il primo attacco di ogni scontro infligge il 50% di danni in più. |
+| 🪨 Runa della Pietra | Difensiva | Armatura | +8% di Difesa dell'armatura. |
+| 🍃 Runa del Vento | Difensiva | Armatura | +4% di Schivata. |
+| 🌵 Runa del Rovo | Difensiva | Armatura | Chi ti ferisce subisce il 15% dei danni che ti ha inflitto. |
+| 🌙 Runa della Quiete | Difensiva | Armatura | Quando ti difendi recuperi il 4% degli HP massimi. |
+| 🪙 Runa dell'Avidità | Utilità | Arma o armatura | +10% di Oro raccolto. |
+| 📘 Runa del Sapere | Utilità | Arma o armatura | +10% di EXP. |
+| 🦁 Runa del Coraggio | Utilità | Arma o armatura | Ogni piano inizia con 1 punto di Audacia. |
+| 👣 Runa del Passo | Utilità | Arma o armatura | +10 alle prove delle trappole. |
 
 ---
 
