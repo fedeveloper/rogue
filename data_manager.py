@@ -26,7 +26,7 @@ class ProfileManager:
             "unlocked_ids":[], "class_xp": {}, "class_lvl": {},
             "stats": {"total_deaths": 0, "total_gold": 0, "total_bosses": 0}, "completed_feats":[],
             "story": {"flags": {}, "counters": {}, "seen_events": {}},
-            "codex": {"enemies": {}, "letters": [], "relics": [], "reactions": [], "runes": []},
+            "codex": {"enemies": {}, "letters": [], "relics": [], "reactions": [], "runes": [], "runewords": []},
             "settings": {"text_speed": DEFAULT_TEXT_SPEED},
             "ascension": {"best_win": 0}, "daily": {},
             "perks": {

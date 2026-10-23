@@ -36,6 +36,11 @@ def record_rune(rune_id: str):
     if rune_id not in found: found.append(rune_id)
 
 
+def record_runeword(word_id: str):
+    found = PROFILE_MANAGER.codex.setdefault("runewords", [])
+    if word_id not in found: found.append(word_id)
+
+
 def record_letter(index: int):
     if index not in PROFILE_MANAGER.codex["letters"]: PROFILE_MANAGER.codex["letters"].append(index)
 
@@ -71,6 +76,7 @@ def sections() -> List[Tuple[str, int, int]]:
         ("Reliquie", len(set(PROFILE_MANAGER.codex["relics"]) & {r["id"] for r in RAW_DATA["relics"]}), len(RAW_DATA["relics"])),
         ("Finali", len(set(PROFILE_MANAGER.story.get("endings", {})) & {e["id"] for e in GAME_DATA["story"]["endings"]}), len(GAME_DATA["story"]["endings"])),
         ("Rune", len(set(PROFILE_MANAGER.codex.get("runes", [])) & set(GAME_DATA["runes"]["runes"])), len(GAME_DATA["runes"]["runes"])),
+        ("Parole runiche", len(set(PROFILE_MANAGER.codex.get("runewords", [])) & set(GAME_DATA["runes"]["words"])), len(GAME_DATA["runes"]["words"])),
         ("Fasi dei boss", sum(min(enemies.get(n, {}).get("phases", 0), len(ph)) for n, ph in GAME_DATA["phases"].items()), sum(len(ph) for ph in GAME_DATA["phases"].values())),
         ("Reazioni elementali", len(set(PROFILE_MANAGER.codex.get("reactions", [])) & set(GAME_DATA["elements"]["reactions"])), len(GAME_DATA["elements"]["reactions"])),
     ]
@@ -106,6 +112,22 @@ def runes_page() -> List[str]:
     for rid, r in GAME_DATA["runes"]["runes"].items():
         if rid in found: lines.append(f"  {r['icon']} {Colors.BOLD}{r['name']}{Colors.RESET} [{r['family']}] — {r['desc']}")
         else: lines.append(f"  {UNKNOWN} [{r['family']}]")
+    return lines
+
+
+def runewords_page() -> List[str]:
+    """Le parole runiche scoperte; di quelle ignote si vede quante rune servono e, se l'hai già trovata, la prima."""
+    found, known_runes = PROFILE_MANAGER.codex.get("runewords", []), PROFILE_MANAGER.codex.get("runes", [])
+    runes = GAME_DATA["runes"]["runes"]
+    lines = []
+    for wid, w in GAME_DATA["runes"]["words"].items():
+        icons = "".join(runes[r]["icon"] for r in w["runes"])
+        if wid in found:
+            lines.append(f"  {Colors.BOLD}«{w['name']}»{Colors.RESET} {icons} — {w['desc']}")
+            lines.append(f"    {Colors.CYAN}{' + '.join(runes[r]['name'] for r in w['runes'])}{Colors.RESET}")
+        else:
+            hint = f", fra cui {runes[w['runes'][0]]['name']}" if w["runes"][0] in known_runes else ""
+            lines.append(f"  {UNKNOWN} — {len(w['runes'])} rune{hint}")
     return lines
 
 
@@ -190,7 +212,7 @@ def endings_page() -> List[str]:
 
 PAGES = {"Bestiario": bestiary_page, "Personaggi": characters_page, "Eventi": events_page,
          "Lettere insanguinate": letters_page, "Reliquie": relics_page, "Finali": endings_page,
-         "Rune": runes_page, "Fasi dei boss": phases_page, "Reazioni elementali": reactions_page}
+         "Rune": runes_page, "Parole runiche": runewords_page, "Fasi dei boss": phases_page, "Reazioni elementali": reactions_page}
 
 
 def show_codex():

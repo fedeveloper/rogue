@@ -76,12 +76,13 @@ cons_table = table(["Consumabile", "Effetto", "Come ottenerlo"],
     [(f"**{c['name']}**", c.get("desc") or f"Cura {c['base_heal']} HP (di più ai piani profondi)", how(c)) for c in cons])
 
 slot_names = {"weapon": "Arma", "armor": "Armatura", "any": "Arma o armatura"}
+words_table = table(["Parola", "Rune", "Effetto in più"], [(f"**«{w['name']}»**", " + ".join(runes_data["runes"][r]["name"] for r in w["runes"]), w["desc"]) for w in runes_data["words"].values()])
 runes_table = table(["Runa", "Famiglia", "Dove", "Effetto"], [(f"{r['icon']} **{r['name']}**", r["family"], slot_names[r["slot"]], r["desc"]) for r in runes_data["runes"].values()])
 count = lambda xs: f"{len(xs)} ({sum(1 for x in xs if not x.get('unlock_id'))} subito, {sum(1 for x in xs if x.get('unlock_id'))} da sbloccare)"
 numbers = table(["Contenuto", "Quantità"], [
     ("Classi giocabili", len(classes)), ("Tratti di partenza", len(meta["traits"])), ("Gradi di Ascensione", len(grades)), ("Doni della Sfida del Giorno", len(daily["boons"])),
     ("Armi", count(weapons)), ("Armature", count(armors)), ("Monili", count(accs)), ("Consumabili", count(cons)), ("Reliquie", count(relics)),
-    ("Nemici comuni", len(enemies["enemies"])), ("Boss", len(enemies["bosses"])), ("Fasi dei boss", sum(len(p) for p in phases.values())), ("Rune", len(runes_data["runes"])), ("Eventi narrativi", len(events)),
+    ("Nemici comuni", len(enemies["enemies"])), ("Boss", len(enemies["bosses"])), ("Fasi dei boss", sum(len(p) for p in phases.values())), ("Rune / parole runiche", f"{len(runes_data['runes'])} / {len(runes_data['words'])}"), ("Eventi narrativi", len(events)),
     ("Imprese", len(meta["feats"])), ("Tomi dell'Archivio", len(books)), ("Potenziamenti permanenti", 14),
     ("Elementi / Risonanze", f"{len(elements['list'])} / {len(elements['resonance'])}"),
     ("Combinazioni di partenza (modalità × classe × tratto × grado)", start_combos)])
@@ -144,7 +145,7 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 - 📅 **Sfida del Giorno.** Una discesa al giorno uguale per tutti: eroe, tratto, malus e dono assegnati, la stessa mappa a ogni piano. Conta il primo tentativo; punteggio, serie di giorni e record restano nel profilo.
 - 📖 **Eventi che ricordano.** {len(events)} storie a scene con opzioni che esistono solo per la tua classe, il tuo tratto o le tue reliquie: `[Mago]`, `[Tocco di Mida]`, `[Chiave Arrugginita]`. Il Labirinto ricorda chi hai aiutato e chi hai derubato, e certe scelte tornano a bussare qualche piano dopo.
 - 🗝️ **Personaggi che ritornano.** *Sir Alaric*, il Primo Paladino, e *Silas*, il Cercatore, hanno storie in tre capitoli che proseguono di run in run. Le tue scelte decidono come finiscono, e se liberi Alaric il Cavaliere Oscuro non tornerà più.
-- 🔷 **Rune e Incastoni.** {len(runes_data['runes'])} rune da incastonare al Falò in armi e armature: allungano i marchi, potenziano le reazioni, fanno sanguinare, rubano vita, riflettono i colpi. Restano sull'oggetto finché non le estrai, quindi ogni cambio d'arma è una scelta.
+- 🔷 **Rune e Incastoni.** {len(runes_data['runes'])} rune da incastonare al Falò in armi e armature: allungano i marchi, potenziano le reazioni, fanno sanguinare, rubano vita, riflettono i colpi. Restano sull'oggetto finché non le estrai, quindi ogni cambio d'arma è una scelta. Le combinazioni giuste formano {len(runes_data['words'])} **parole runiche** da scoprire.
 - 👑 **Boss che cambiano.** A metà della vita ogni boss entra in una nuova fase con un nome, mosse nuove e regole proprie: il Re dei Goblin chiama le guardie, il Drago di Zaffiro si copre di Scaglie che solo una reazione elementale infrange, la Badessa ti sigilla la difesa. Il DIO ANTICO ha tre fasi, e nella seconda diventa l'elemento che ti ferisce di più.
 - 🩸 **Corruzione.** Le scelte oscure danno potere e opzioni proibite, ma il Labirinto comincia a nasconderti le cose: gli effetti delle scelte, le mosse dei nemici.
 - 🏁 **{len(d('story')['endings'])} finali.** Uccidere il Dio, prenderne il posto, risvegliare Aethelgard… e un finale segreto per chi legge davvero il Labirinto.
@@ -267,6 +268,10 @@ L'ATK reale cresce con il piano in cui l'arma viene trovata; le armi di elemento
 Si incastonano al Falò in armi e armature: {runes_data['rules']['sockets']['normal']} incastone per gli oggetti comuni, {runes_data['rules']['sockets']['epic']} per gli epici, {runes_data['rules']['sockets']['boss']} per i premi dei boss.
 
 {runes_table}
+
+Certe combinazioni sullo stesso oggetto formano una **parola runica**, con un effetto in più:
+
+{words_table}
 
 </details>
 

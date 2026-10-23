@@ -43,6 +43,9 @@ class ManualFollowsTheDataTest(unittest.TestCase):
         slot = {"weapon": "Arma", "armor": "Armatura", "any": "Arma o armatura"}
         for r in GAME_DATA["runes"]["runes"].values():
             self.assertIn(f"| {r['icon']} {r['name']} | {r['family']} | {slot[r['slot']]} | {r['desc']} |", self.manual)
+        runes = GAME_DATA["runes"]["runes"]
+        for w in GAME_DATA["runes"]["words"].values():
+            self.assertIn(f"| «{w['name']}» | {' + '.join(runes[r]['name'] for r in w['runes'])} | {w['desc']} |", self.manual)
         rules = GAME_DATA["runes"]["rules"]
         for source, pct in rules["drops"].items(): self.assertIn(f"({pct}%)", self.manual)
         self.assertIn(f"Costa {rules['extract_cost'][0]} Oro più {rules['extract_cost'][1]} per piano", self.manual)
