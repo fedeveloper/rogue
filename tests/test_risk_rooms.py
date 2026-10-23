@@ -203,7 +203,7 @@ class EliteTest(Sandbox):
 class AudacityTest(Sandbox):
     def test_risky_rooms_build_audacity(self):
         p = self.hero()
-        for rt in ("combat", "elite", "trap", "mystery", "treasure", "event"): rooms.gain_audacity(p, rt)
+        for rt in ("combat", "elite", "nemesis", "trap", "mystery", "treasure", "event"): rooms.gain_audacity(p, rt)
         self.assertEqual(p.audacity, sum(RULES["audacity"]["points"].values()))
 
     def test_the_boss_pays_for_the_risks_taken(self):

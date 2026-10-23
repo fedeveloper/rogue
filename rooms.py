@@ -8,6 +8,7 @@ from codex import record_enemy_killed, record_enemy_seen, record_letter, record_
 from constants import CAMPFIRE_REST_PCT, BASE_HIT_CHANCE, BLOOD_LETTER_CHANCE, CURSE_HP_DRAIN_PCT, MIN_DAMAGE_PCT, POISON_MIN, POISON_PCT, RECOVERY_HEAL_PCT
 from entities import STATUS_NAMES, Player, Enemy, generate_weapon, generate_armor, generate_accessory, generate_potion, generate_rune, get_random_relic, set_sockets
 import runes as rune_rules
+import nemesis
 from entities import Rune
 from inventory_menu import show_inventory_menu
 import modes
@@ -112,6 +113,13 @@ class CombatSession:
             delay_print(f"{Colors.RED}!!! Incontri un {self.enemy.name.upper()}{boss_tag} [{get_element_icon(self.enemy.element)}] !!!{Colors.RESET}", 0.04)
         
         record_enemy_seen(self.enemy.base_name)
+        nem = getattr(self.enemy, "nemesis", None)
+        if nem:
+            trait = GAME_DATA["nemesis"]["traits"][nem["trait"]]
+            delay_print(f"{Colors.MAGENTA}{Colors.BOLD}{nemesis.text('returns', nem)}{Colors.RESET}")
+            display_msg(f"{Colors.MAGENTA}{trait['name']}: {trait['desc']}{Colors.RESET}")
+        elif self.enemy.is_boss and (grudge := nemesis.boss_grudge(self.enemy.base_name)):
+            display_msg(f"{Colors.RED}{grudge}{Colors.RESET}")
         # Chance to find a Bloody Letter before combat
         if not self.enemy.is_boss and random.random() < BLOOD_LETTER_CHANCE:
             idx = random.randrange(len(GAME_DATA['lore']['letters']))
@@ -153,6 +161,11 @@ class CombatSession:
 
     def _end_combat(self):
         self.player.temp_dodge = self.player.temp_def = self.player.temp_acc = 0
+        if self.player.hp <= 0:
+            # Chi ti ha ucciso: a fine discesa può diventare una Nemesi (vedi nemesis.on_death)
+            self.player.run_tracker["killer"] = {"name": self.enemy.base_name, "is_boss": self.enemy.is_boss,
+                                                 "nemesis_id": (getattr(self.enemy, "nemesis", None) or {}).get("id"),
+                                                 "player_element": self.player.weapon.element}
         # Gli status sono effetti di combattimento: svaniscono a fine scontro
         if self.player.hp > 0 and self.player.statuses:
             names = ", ".join(STATUS_NAMES.get(s, s) for s in self.player.statuses)
@@ -223,6 +236,15 @@ class CombatSession:
                 self.player.inventory.append(drop)
             audacity_reward(self.player, self.floor, self.enemy.gold_drop)
             rune_drop(self.player, self.floor, "boss")
+        elif getattr(self.enemy, "nemesis", None):
+            nem = self.enemy.nemesis
+            gold = nemesis.defeat(nem)
+            if not self.player.aristocrat: self.player.gold += gold
+            display_msg(f"\n{Colors.YELLOW}{Colors.BOLD}{nemesis.text('defeated', nem)}{Colors.RESET}")
+            trophy = generate_weapon(self.floor + 1, True) if random.random() > 0.5 else generate_armor(self.floor + 1, True)
+            trophy.name = f"Trofeo: {trophy.name}"; trophy.refresh_display_name()
+            display_msg(f"{Colors.MAGENTA}Trofeo di {nem['name']}: {trophy.display_name}!{Colors.RESET}")
+            self.player.inventory.append(trophy)
         elif self.enemy.modifier == "elite":
             rule = GAME_DATA["meta"]["rooms"]["elite"]
             relic = get_random_relic(self.player) if random.random() * 100 < rule["relic_chance"] else None
@@ -455,6 +477,10 @@ class CombatSession:
                 dmg_dealt = int(dmg_dealt * self._move("guard")["damage_taken_mult"])
                 eff += f" {Colors.BLUE}[GUARDIA]{Colors.RESET}"
             dmg_dealt, eff = self._absorb(dmg_dealt, eff)
+            nem = getattr(self.enemy, "nemesis", None)
+            if nem and nemesis.resisted(nem, self.player.weapon.element) < 1:
+                dmg_dealt = int(dmg_dealt * nemesis.resisted(nem, self.player.weapon.element))
+                eff += f" {Colors.BLUE}[RESISTE]{Colors.RESET}"
             
             self.enemy.hp -= dmg_dealt
             display_msg(f"\n-> Colpisci con {self.player.weapon.name} infliggendo {Colors.CYAN}{dmg_dealt} danni!{Colors.RESET} {eff}")

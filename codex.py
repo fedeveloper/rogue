@@ -77,14 +77,20 @@ def sections() -> List[Tuple[str, int, int]]:
         ("Finali", len(set(PROFILE_MANAGER.story.get("endings", {})) & {e["id"] for e in GAME_DATA["story"]["endings"]}), len(GAME_DATA["story"]["endings"])),
         ("Rune", len(set(PROFILE_MANAGER.codex.get("runes", [])) & set(GAME_DATA["runes"]["runes"])), len(GAME_DATA["runes"]["runes"])),
         ("Parole runiche", len(set(PROFILE_MANAGER.codex.get("runewords", [])) & set(GAME_DATA["runes"]["words"])), len(GAME_DATA["runes"]["words"])),
+        ("Nemesi", len(PROFILE_MANAGER._data.get("nemeses_fallen", [])), len(PROFILE_MANAGER._data.get("nemeses_fallen", [])) + len(PROFILE_MANAGER._data.get("nemeses", []))),
         ("Fasi dei boss", sum(min(enemies.get(n, {}).get("phases", 0), len(ph)) for n, ph in GAME_DATA["phases"].items()), sum(len(ph) for ph in GAME_DATA["phases"].values())),
         ("Reazioni elementali", len(set(PROFILE_MANAGER.codex.get("reactions", [])) & set(GAME_DATA["elements"]["reactions"])), len(GAME_DATA["elements"]["reactions"])),
     ]
 
 
+# Sezioni che raccontano la tua storia invece di elencare scoperte: non contano nel completamento
+UNCOUNTED = ("Nemesi",)
+
+
 def completion() -> int:
-    found = sum(s[1] for s in sections())
-    total = sum(s[2] for s in sections())
+    counted = [s for s in sections() if s[0] not in UNCOUNTED]
+    found = sum(s[1] for s in counted)
+    total = sum(s[2] for s in counted)
     return found * 100 // total if total else 0
 
 
@@ -128,6 +134,22 @@ def runewords_page() -> List[str]:
         else:
             hint = f", fra cui {runes[w['runes'][0]]['name']}" if w["runes"][0] in known_runes else ""
             lines.append(f"  {UNKNOWN} — {len(w['runes'])} rune{hint}")
+    return lines
+
+
+def nemeses_page() -> List[str]:
+    """Le Nemesi: chi ti ha ucciso e ti aspetta ancora, e chi hai già sconfitto."""
+    import nemesis
+    lines = [f"{Colors.YELLOW}{Colors.BOLD}TI ASPETTANO{Colors.RESET}"]
+    for nem in nemesis.active():
+        trait = GAME_DATA["nemesis"]["traits"][nem["trait"]]
+        lines.append(f"  {Colors.MAGENTA}{Colors.BOLD}{nemesis.full_name(nem)}{Colors.RESET} ({nem['enemy']}) — ti ha ucciso {nem['kills']} volte, l'ultima al piano {nem['floor']}")
+        lines.append(f"    {trait['name']}: {trait['desc']} Ha con sé {nem['gold']} Oro.")
+    if not nemesis.active(): lines.append("  Nessuno. Per ora.")
+    lines.append(f"\n{Colors.YELLOW}{Colors.BOLD}SCONFITTE{Colors.RESET}")
+    for nem in reversed(nemesis.fallen()):
+        lines.append(f"  {nem['name']} {GAME_DATA['nemesis']['ranks'][nem['rank'] - 1]} ({nem['enemy']}), che aveva ucciso {nem['kills']} volte")
+    if not nemesis.fallen(): lines.append("  Nessuna.")
     return lines
 
 
@@ -212,7 +234,7 @@ def endings_page() -> List[str]:
 
 PAGES = {"Bestiario": bestiary_page, "Personaggi": characters_page, "Eventi": events_page,
          "Lettere insanguinate": letters_page, "Reliquie": relics_page, "Finali": endings_page,
-         "Rune": runes_page, "Parole runiche": runewords_page, "Fasi dei boss": phases_page, "Reazioni elementali": reactions_page}
+         "Rune": runes_page, "Parole runiche": runewords_page, "Nemesi": nemeses_page, "Fasi dei boss": phases_page, "Reazioni elementali": reactions_page}
 
 
 def show_codex():

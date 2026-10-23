@@ -365,6 +365,8 @@ Kaelen era il miglior forgiatore del regno. Cercò di forgiare una spada capace 
 
 **La Scala dell'Ascensione.** Chi ha già ucciso il Dio una volta scopre che i Patti non si firmano più uno alla volta: si incidono su una scala di venti gradini, e chi scende un gradino accetta anche tutti quelli sopra. Ogni gradino è un giuramento in più (campioni più numerosi, braci più fredde, mercanti che fuggono) e ogni giuramento rende l'Essenza più densa. Il ventesimo gradino non chiede nulla all'eroe: sveglia il Dio un po' di più.
 
+**Chi ti ha ucciso.** Nel Labirinto anche i mostri ricordano. Chi abbatte un eroe ne beve il nome e diventa qualcuno: un goblin senza storia si ritrova un soprannome, un titolo, una tasca piena dell'oro di un altro. E sa che l'eroe tornerà, perché gli eroi tornano sempre. Lo aspetta vicino al punto in cui l'ha visto cadere, con la pazienza di chi ha già vinto una volta.
+
 **Il Giorno del Labirinto.** Una volta al giorno il Labirinto smette di cambiare forma per chi lo guarda e si mostra uguale a chiunque scenda: lo stesso eroe, le stesse due maledizioni, lo stesso dono. I Cartografi lo chiamano *il respiro trattenuto*. Le loro mappe di quel giorno valgono per tutti, ma solo la prima discesa resta scritta.
 
 ### I. Patto della Durezza: Il Cuore di Pietra
