@@ -286,7 +286,7 @@ L'enciclopedia nel [README](README.md) le elenca tutte.
 
 ### Rune e Incastoni
 
-Armi e armature hanno degli **incastoni** (◇ accanto al nome): 1 per gli oggetti comuni, 2 per gli epici, 3 per i premi dei boss. Anche l'equipaggiamento iniziale ne ha uno.
+Armi e armature hanno degli **incastoni** (accanto al nome: `[Incastoni: ◇]` per un incastone libero, `[Incastoni: 🔪◇]` con una runa incastonata e uno libero): 1 per gli oggetti comuni, 2 per gli epici, 3 per i premi dei boss. Anche l'equipaggiamento iniziale ne ha uno.
 
 - **Dove si trovano le rune.** Le lasciano le Élite (35%), i boss (60%), le trappole affrontate (15%), i tesori del Mistero (30%) e i Mimic (35%); il Mercante ne vende 1.
 - **Incastonare.** Al Falò, voce *Rune e Incastoni*: incastonare è gratis e il falò resta acceso. Ogni runa va su un'arma, su un'armatura o su entrambe.

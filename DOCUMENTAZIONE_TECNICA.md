@@ -309,7 +309,7 @@ Oltre `max_active` la più vecchia si perde. `generate_floor_map` mette al posto
 
 ### Rune e Incastoni
 
-`Weapon` e `Armor` hanno `sockets` (incastoni) e `runes` (id incastonati); il nome mostra `⟨icone◇⟩` (`runes.socket_tag`). I generatori danno `normal` incastoni, gli epici `epic` (`set_sockets`), il drop leggendario dei boss `boss`. Le rune nello zaino sono oggetti `Rune` (`type = "rune"`), create da `generate_rune`. `Player.rune_value(chiave)` somma un effetto sulle rune dell'arma e dell'armatura **equipaggiate**:
+`Weapon` e `Armor` hanno `sockets` (incastoni) e `runes` (id incastonati); il nome mostra `[Incastoni: icone◇]` (le icone delle rune incastonate, un ◇ per ogni incastone libero) (`runes.socket_tag`). I generatori danno `normal` incastoni, gli epici `epic` (`set_sockets`), il drop leggendario dei boss `boss`. Le rune nello zaino sono oggetti `Rune` (`type = "rune"`), create da `generate_rune`. `Player.rune_value(chiave)` somma un effetto sulle rune dell'arma e dell'armatura **equipaggiate**:
 
 | Effetto | Dove agisce |
 |---|---|

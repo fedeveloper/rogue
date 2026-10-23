@@ -280,7 +280,7 @@ class SocketTest(Sandbox):
 
     def test_the_name_shows_runes_and_free_sockets(self):
         w = Weapon("Spada", 1, 10, "Normale", 1); w.sockets = 2; w.runes = ["forza"]; w.refresh_display_name()
-        self.assertTrue(w.display_name.endswith(f" ⟨{RUNES['forza']['icon']}◇⟩"))
+        self.assertTrue(w.display_name.endswith(f" [Incastoni: {RUNES['forza']['icon']}◇]"))
 
     def test_boss_gear_drops_with_three_sockets(self):
         p = self.hero()

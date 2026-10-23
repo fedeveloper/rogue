@@ -67,12 +67,12 @@ def item_effects(item) -> list:
 
 
 def socket_tag(item) -> str:
-    """⟨🔪◇⟩ «Parola»: le rune incastonate, gli incastoni liberi e le parole runiche di un'arma o di un'armatura."""
+    """[Incastoni: 🔪◇] «Parola»: le rune incastonate, gli incastoni liberi e le parole runiche di un'arma o di un'armatura."""
     sockets = getattr(item, "sockets", 0)
     if not sockets: return ""
     runes = getattr(item, "runes", [])
     words = "".join(f" «{word(w)['name']}»" for w in active_words(item))
-    return " ⟨" + "".join(rune(r)["icon"] for r in runes) + "◇" * (sockets - len(runes)) + "⟩" + words
+    return " [Incastoni: " + "".join(rune(r)["icon"] for r in runes) + "◇" * (sockets - len(runes)) + "]" + words
 
 
 def free_sockets(item) -> int:
