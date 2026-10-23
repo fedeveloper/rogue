@@ -29,8 +29,15 @@ def plain(text):
     return ANSI.sub("", text)
 
 
-def rune_with(key):
-    return next(rid for rid, r in RUNES.items() if key in r["effects"])
+WORDS = GAME_DATA["runes"]["words"]
+
+
+def source_of(key):
+    """(rune da incastonare, valore) per provare un effetto: una runa che lo ha, o le rune di una parola runica."""
+    rid = next((rid for rid, r in RUNES.items() if key in r["effects"]), None)
+    if rid: return [rid], RUNES[rid]["effects"][key]
+    w = next(w for w in WORDS.values() if key in w["effects"])
+    return list(w["runes"]), w["effects"][key]
 
 
 class Sandbox(unittest.TestCase):
@@ -81,7 +88,7 @@ class RuneDataTest(unittest.TestCase):
                 self.assertTrue(all(ord(c) != 0xFE0F for c in r["icon"]), "niente selettori di variante: rompono gli allineamenti")
 
     def test_every_effect_key_is_used_and_has_a_contract(self):
-        used = {k for r in RUNES.values() for k in r["effects"]}
+        used = {k for r in list(RUNES.values()) + list(WORDS.values()) for k in r["effects"]}
         self.assertEqual(used, set(runes.RUNE_EFFECT_KEYS))
         self.assertEqual(set(EffectContractTest.CHECKS), set(runes.RUNE_EFFECT_KEYS))
 
@@ -89,9 +96,20 @@ class RuneDataTest(unittest.TestCase):
 class EffectContractTest(Sandbox):
     def test_every_effect_does_what_it_says(self):
         for key in runes.RUNE_EFFECT_KEYS:
-            rid = rune_with(key)
-            with self.subTest(rune=rid, key=key):
-                self.CHECKS[key](self, rid, RUNES[rid]["effects"][key])
+            ids, value = source_of(key)
+            if len(ids) > 1: continue  # gli effetti che esistono solo nelle parole runiche hanno il loro test qui sotto
+            with self.subTest(rune=ids[0], key=key):
+                self.CHECKS[key](self, ids[0], value)
+
+    def test_effects_only_in_runewords(self):
+        for key in ("scorch_on_hit", "stun_on_hit"):
+            ids, v = source_of(key)
+            status = {"scorch_on_hit": "scorch", "stun_on_hit": "stun"}[key]
+            with self.subTest(key=key):
+                s, _ = self.attack(self.hero(*ids), rolls=v)
+                self.assertIn(status, s.enemy.statuses)
+                s, _ = self.attack(self.hero(*ids), rolls=v + 1)
+                self.assertNotIn(status, s.enemy.statuses)
 
     def attack(self, p, multiplier=1.0, rolls=1):
         s = self.session(p)
@@ -200,7 +218,55 @@ class EffectContractTest(Sandbox):
         "crit_chance_add": _crit, "atk_pct": _atk, "lifesteal_pct": _lifesteal, "first_strike_pct": _first_strike,
         "def_pct": _def, "dodge_add": _dodge, "thorns_pct": _thorns, "defend_heal_pct": _defend_heal,
         "gold_pct": _gold, "exp_pct": _exp, "audacity_start": _audacity, "trap_chance_add": _trap,
+        "scorch_on_hit": None, "stun_on_hit": None,  # solo nelle parole runiche: test_effects_only_in_runewords
     }
+
+
+class RunewordTest(Sandbox):
+    def test_every_word_is_well_formed(self):
+        combos = set()
+        for wid, w in WORDS.items():
+            with self.subTest(word=wid):
+                self.assertTrue(2 <= len(w["runes"]) <= RULES["sockets"]["boss"])
+                self.assertLessEqual(set(w["runes"]), set(RUNES))
+                slots = {RUNES[r]["slot"] for r in w["runes"]} - {"any"}
+                self.assertLessEqual(len(slots), 1, "tutte le rune di una parola stanno sullo stesso oggetto")
+                self.assertLessEqual(set(w["effects"]), set(runes.RUNE_EFFECT_KEYS))
+                for v in w["effects"].values(): self.assertIn(str(v), w["desc"])
+                combos.add(tuple(sorted(w["runes"])))
+        self.assertEqual(len(combos), len(WORDS), "ogni parola ha una combinazione diversa")
+
+    def test_a_word_needs_all_its_runes_on_the_same_item(self):
+        w = WORDS["boia"]
+        p = self.hero(*w["runes"])
+        self.assertEqual(runes.active_words(p.weapon), ["boia"])
+        self.assertEqual(p.get_crit_chance(), self.hero().get_crit_chance() + RUNES["occhio"]["effects"]["crit_chance_add"] + w["effects"]["crit_chance_add"])
+        p = self.hero("forza")
+        self.assertEqual(runes.active_words(p.weapon), [])
+        p = self.hero(*w["runes"]); p.weapon.refresh_display_name()
+        self.assertIn("«Colpo del Boia»", p.weapon.display_name)
+
+    def test_longer_words_win_and_each_rune_counts_once(self):
+        p = self.hero("eco", "catalisi", "contrasto")
+        self.assertEqual(runes.active_words(p.weapon), ["prisma"], "Prisma usa Catalisi e Contrasto: niente Tempesta in più")
+        p = self.hero("pietra", "vento", "quiete")
+        self.assertEqual(runes.active_words(p.armor), ["egida"])
+        p = self.hero("pietra", "rovo")
+        self.assertEqual(runes.active_words(p.armor), ["fortezza"])
+
+    def test_socketing_the_last_rune_announces_and_records_the_word(self):
+        PROFILE_MANAGER.codex["runewords"] = []
+        p = self.hero("forza"); p.weapon.sockets = 2
+        p.inventory = [Rune("occhio")]
+        out = io.StringIO()
+        picks = iter([0, 0, 0, -1])
+        with redirect_stdout(out), mock.patch("rooms.interactive_menu", side_effect=lambda *a, **k: next(picks)):
+            rooms.rune_workshop(p, 5)
+        self.assertIn("PAROLA RUNICA «Colpo del Boia»", plain(out.getvalue()))
+        self.assertEqual(PROFILE_MANAGER.codex["runewords"], ["boia"])
+        page = "\n".join(plain(l) for l in codex.runewords_page())
+        self.assertIn("«Colpo del Boia»", page)
+        self.assertIn("??? — 2 rune", page)
 
 
 class SocketTest(Sandbox):

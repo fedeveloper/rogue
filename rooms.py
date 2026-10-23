@@ -4,7 +4,7 @@ from typing import List
 from ui import Colors, delay_print, clear_screen, interactive_menu, display_msg, wait_enter
 from data_manager import GAME_DATA, PROFILE_MANAGER, MULTIPLIERS, get_biome, get_element_icon
 from archive import get_archive_bonus
-from codex import record_enemy_killed, record_enemy_seen, record_letter, record_phase, record_reaction, record_rune
+from codex import record_enemy_killed, record_enemy_seen, record_letter, record_phase, record_reaction, record_rune, record_runeword
 from constants import CAMPFIRE_REST_PCT, BASE_HIT_CHANCE, BLOOD_LETTER_CHANCE, CURSE_HP_DRAIN_PCT, MIN_DAMAGE_PCT, POISON_MIN, POISON_PCT, RECOVERY_HEAL_PCT
 from entities import STATUS_NAMES, Player, Enemy, generate_weapon, generate_armor, generate_accessory, generate_potion, generate_rune, get_random_relic, set_sockets
 import runes as rune_rules
@@ -471,10 +471,10 @@ class CombatSession:
             if self.resonance == "Fuoco":
                 self.burn_dmg += int(self._resonance_value("Fuoco"))
 
-            for s_type, key in (("bleed", "bleed_on_hit"), ("poison", "poison_on_hit")):
+            for s_type, key, turns in rune_rules.ON_HIT_STATUSES:
                 chance = self.player.rune_value(key)
                 if chance and self.enemy.hp > 0 and random.randint(1, 100) <= chance:
-                    self.enemy.statuses[s_type] = max(self.enemy.statuses.get(s_type, 0), 3)
+                    self.enemy.statuses[s_type] = max(self.enemy.statuses.get(s_type, 0), turns)
                     display_msg(f"{Colors.MAGENTA}La runa colpisce: {self.enemy.name} è afflitto da {STATUS_NAMES[s_type].upper()}!{Colors.RESET}")
             s_data = self.player.weapon.status_inflict
             if s_data and self.enemy.hp > 0 and random.randint(1, 100) <= s_data.get("chance", 100):
@@ -922,10 +922,17 @@ def rune_workshop(player: Player, floor: int):
             t_idx = interactive_menu([f"{it.display_name} ({where})" for it, where in targets], f"\nIn quale oggetto incastonare {rune.display_name}?", cancellable=True)
             if t_idx == -1: continue
             item = targets[t_idx][0]
+            before = rune_rules.active_words(item)
             player.inventory.remove(rune)
             item.runes.append(rune.rune_id)
             item.refresh_display_name()
-            display_msg(f"{Colors.GREEN}La runa si fonde con il metallo: {item.display_name}.{Colors.RESET}"); wait_enter()
+            display_msg(f"{Colors.GREEN}La runa si fonde con il metallo: {item.display_name}.{Colors.RESET}")
+            for wid in rune_rules.active_words(item):
+                if wid in before: continue
+                record_runeword(wid)
+                w = rune_rules.word(wid)
+                display_msg(f"{Colors.MAGENTA}{Colors.BOLD}✨ Le rune si accordano: PAROLA RUNICA «{w['name']}»!{Colors.RESET} {w['desc']}")
+            wait_enter()
         else:
             holders = [(it, where) for it, where in _socketable(player) if it.runes]
             if not holders:

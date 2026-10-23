@@ -12,8 +12,10 @@ from data_manager import GAME_DATA
 RUNE_EFFECT_KEYS = (
     "mark_duration_add", "reaction_dmg_pct", "super_effective_pct", "bleed_on_hit", "poison_on_hit", "crit_chance_add",
     "atk_pct", "lifesteal_pct", "first_strike_pct", "def_pct", "dodge_add", "thorns_pct", "defend_heal_pct",
-    "gold_pct", "exp_pct", "audacity_start", "trap_chance_add",
+    "gold_pct", "exp_pct", "audacity_start", "trap_chance_add", "scorch_on_hit", "stun_on_hit",
 )
+# Status che le rune (e le parole runiche) possono infliggere a ogni colpo: (status, chiave, turni)
+ON_HIT_STATUSES = (("bleed", "bleed_on_hit", 3), ("poison", "poison_on_hit", 3), ("scorch", "scorch_on_hit", 3), ("stun", "stun_on_hit", 1))
 SLOT_NAMES = {"weapon": "arma", "armor": "armatura", "any": "arma o armatura"}
 
 
@@ -43,12 +45,34 @@ def extract_cost(floor: int) -> int:
     return base + per_floor * floor
 
 
+def word(word_id: str) -> dict:
+    return GAME_DATA["runes"]["words"][word_id]
+
+
+def active_words(item) -> list:
+    """Le parole runiche che le rune di un oggetto compongono. Ogni runa vale per una sola parola:
+    prima le parole più lunghe, poi nell'ordine dei dati."""
+    left = list(getattr(item, "runes", []))
+    found = []
+    for wid, w in sorted(GAME_DATA["runes"]["words"].items(), key=lambda kv: -len(kv[1]["runes"])):
+        if all(left.count(r) >= w["runes"].count(r) for r in set(w["runes"])):
+            for r in w["runes"]: left.remove(r)
+            found.append(wid)
+    return found
+
+
+def item_effects(item) -> list:
+    """Gli effetti delle rune e delle parole runiche di un oggetto."""
+    return [rune(r)["effects"] for r in getattr(item, "runes", [])] + [word(w)["effects"] for w in active_words(item)]
+
+
 def socket_tag(item) -> str:
-    """⟨🔪◇⟩: le rune incastonate e gli incastoni liberi di un'arma o di un'armatura."""
+    """⟨🔪◇⟩ «Parola»: le rune incastonate, gli incastoni liberi e le parole runiche di un'arma o di un'armatura."""
     sockets = getattr(item, "sockets", 0)
     if not sockets: return ""
     runes = getattr(item, "runes", [])
-    return " ⟨" + "".join(rune(r)["icon"] for r in runes) + "◇" * (sockets - len(runes)) + "⟩"
+    words = "".join(f" «{word(w)['name']}»" for w in active_words(item))
+    return " ⟨" + "".join(rune(r)["icon"] for r in runes) + "◇" * (sockets - len(runes)) + "⟩" + words
 
 
 def free_sockets(item) -> int:

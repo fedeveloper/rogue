@@ -384,11 +384,8 @@ class Player:
         return self.corruption // 10 * GAME_DATA["meta"]["corruption"]["atk_per_10"]
 
     def rune_value(self, key: str):
-        """Somma di un effetto delle rune incastonate nell'arma e nell'armatura equipaggiate."""
-        total = 0
-        for item in (self.weapon, self.armor):
-            for rid in getattr(item, "runes", []): total += rune_rules.rune(rid)["effects"].get(key, 0)
-        return total
+        """Somma di un effetto delle rune (e delle parole runiche) dell'arma e dell'armatura equipaggiate."""
+        return sum(effects.get(key, 0) for item in (self.weapon, self.armor) for effects in rune_rules.item_effects(item))
 
     def get_total_atk(self):
         atk = self.weapon.atk + self.bonus_atk_relic + self.weapon.get_gold_atk_bonus(self.gold) + self.corruption_atk()

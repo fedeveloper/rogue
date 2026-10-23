@@ -286,6 +286,23 @@ Armi e armature hanno degli **incastoni** (◇ accanto al nome): 1 per gli ogget
 | 🦁 Runa del Coraggio | Utilità | Arma o armatura | Ogni piano inizia con 1 punto di Audacia. |
 | 👣 Runa del Passo | Utilità | Arma o armatura | +10 alle prove delle trappole. |
 
+### Parole runiche
+
+Certe combinazioni di rune **sullo stesso oggetto** formano una **parola runica**: oltre agli effetti delle singole rune ne aggiungono uno proprio, e il nome dell'oggetto la mostra fra «». Ogni runa vale per una sola parola; le parole di tre rune hanno la precedenza (servono un oggetto epico o un premio di boss). La prima volta che ne componi una al Falò viene annunciata e finisce nel Codice, alla pagina *Parole runiche*: di quelle che non conosci vedi quante rune servono e, se l'hai già trovata, la prima.
+
+| Parola | Rune | Effetto in più |
+|---|---|---|
+| «Tempesta Elementale» | Runa della Catalisi + Runa del Contrasto | Le reazioni infliggono il 30% di danni in più e i colpi Super Efficaci il 10% in più. |
+| «Veleno di Spine» | Runa della Spina + Runa della Vipera | I tuoi colpi hanno anche il 10% di probabilità di bruciare il nemico con il Magma. |
+| «Colpo del Boia» | Runa della Forza + Runa dell'Occhio | +8% di probabilità di colpo critico. |
+| «Bacio del Vampiro» | Runa del Sangue + Runa dell'Agguato | Ti curi di un altro 5% dei danni inflitti e il primo attacco di ogni scontro fa il 25% di danni in più. |
+| «Prisma» | Runa dell'Eco + Runa della Catalisi + Runa del Contrasto | I tuoi colpi hanno l'8% di probabilità di congelare il nemico e i marchi durano 1 turno in più. |
+| «Fortezza di Spine» | Runa della Pietra + Runa del Rovo | Chi ti ferisce subisce un altro 6% dei danni e la Difesa dell'armatura sale del 5%. |
+| «Passo del Monaco» | Runa del Vento + Runa della Quiete | +4% di Schivata e difendendoti recuperi un altro 1% degli HP massimi. |
+| «Patto del Mercante» | Runa dell'Avidità + Runa del Sapere | +10% di Oro e +10% di EXP. |
+| «Cuore Temerario» | Runa del Coraggio + Runa del Passo | Ogni piano inizia con 1 punto di Audacia in più e +10 alle prove delle trappole. |
+| «Egida Silente» | Runa della Pietra + Runa del Vento + Runa della Quiete | +6% di Difesa dell'armatura e +3% di Schivata. |
+
 ---
 
 ## 🧬 Gli eroi

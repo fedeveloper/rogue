@@ -24,5 +24,17 @@
         "sapere":    {"name": "Runa del Sapere",     "icon": "📘", "family": "Utilità",    "slot": "any",    "weight": 8,  "effects": {"exp_pct": 10},                "desc": "+10% di EXP."},
         "coraggio":  {"name": "Runa del Coraggio",   "icon": "🦁", "family": "Utilità",    "slot": "any",    "weight": 3,  "effects": {"audacity_start": 1},          "desc": "Ogni piano inizia con 1 punto di Audacia."},
         "passo":     {"name": "Runa del Passo",      "icon": "👣", "family": "Utilità",    "slot": "any",    "weight": 8,  "effects": {"trap_chance_add": 10},        "desc": "+10 alle prove delle trappole."}
+    },
+    "words": {
+        "tempesta":  {"name": "Tempesta Elementale", "runes": ["catalisi", "contrasto"],       "effects": {"reaction_dmg_pct": 30, "super_effective_pct": 10}, "desc": "Le reazioni infliggono il 30% di danni in più e i colpi Super Efficaci il 10% in più."},
+        "veleno":    {"name": "Veleno di Spine",     "runes": ["spina", "vipera"],             "effects": {"scorch_on_hit": 10},                               "desc": "I tuoi colpi hanno anche il 10% di probabilità di bruciare il nemico con il Magma."},
+        "boia":      {"name": "Colpo del Boia",      "runes": ["forza", "occhio"],             "effects": {"crit_chance_add": 8},                              "desc": "+8% di probabilità di colpo critico."},
+        "vampiro":   {"name": "Bacio del Vampiro",   "runes": ["sangue", "agguato"],           "effects": {"lifesteal_pct": 5, "first_strike_pct": 25},        "desc": "Ti curi di un altro 5% dei danni inflitti e il primo attacco di ogni scontro fa il 25% di danni in più."},
+        "prisma":    {"name": "Prisma",              "runes": ["eco", "catalisi", "contrasto"], "effects": {"stun_on_hit": 8, "mark_duration_add": 1},         "desc": "I tuoi colpi hanno l'8% di probabilità di congelare il nemico e i marchi durano 1 turno in più."},
+        "fortezza":  {"name": "Fortezza di Spine",   "runes": ["pietra", "rovo"],              "effects": {"thorns_pct": 6, "def_pct": 5},                     "desc": "Chi ti ferisce subisce un altro 6% dei danni e la Difesa dell'armatura sale del 5%."},
+        "monaco":    {"name": "Passo del Monaco",    "runes": ["vento", "quiete"],             "effects": {"dodge_add": 4, "defend_heal_pct": 1},              "desc": "+4% di Schivata e difendendoti recuperi un altro 1% degli HP massimi."},
+        "mercante":  {"name": "Patto del Mercante",  "runes": ["avidita", "sapere"],           "effects": {"gold_pct": 10, "exp_pct": 10},                     "desc": "+10% di Oro e +10% di EXP."},
+        "temerario": {"name": "Cuore Temerario",     "runes": ["coraggio", "passo"],           "effects": {"audacity_start": 1, "trap_chance_add": 10},        "desc": "Ogni piano inizia con 1 punto di Audacia in più e +10 alle prove delle trappole."},
+        "egida":     {"name": "Egida Silente",       "runes": ["pietra", "vento", "quiete"],   "effects": {"def_pct": 6, "dodge_add": 3},                      "desc": "+6% di Difesa dell'armatura e +3% di Schivata."}
     }
 }
