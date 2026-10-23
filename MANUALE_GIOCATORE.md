@@ -87,39 +87,39 @@ Il Labirinto cambia mentre scendi: ogni cinque piani entri in un **bioma** diver
 
 **📿 I Chiostri del Rimpianto (piani 1–5).** Le rovine di un'accademia della Luce Calma.
 - **Più eventi, meno trappole.** E più creature di Luce e di Tenebra.
-- **Nativi.** L'*Eco del Rimpianto*, la *Statua di Sale* e un boss, *La Badessa del Silenzio*, vivono solo qui.
-- **Pericolo: Nostalgia Letale.** In ogni piano una stanza, segnata con 📿, ospita un'eco del passato: *La Voce Cara*, *La Statua di Sale* o *La Biblioteca di Cenere*. Fermarsi ad ascoltare può guarirti… o trasformarti in sale, e il Labirinto se ne ricorderà.
+- **Nativi.** L'*Eco del Rimpianto*, la *Statua di Sale*, la *Novizia del Silenzio* (che sigilla la tua difesa) e un boss, *La Badessa del Silenzio*, vivono solo qui.
+- **Pericolo: Nostalgia Letale.** In ogni piano una stanza, segnata con 📿, ospita un'eco del passato: *La Voce Cara*, *La Statua di Sale*, *La Biblioteca di Cenere*, *Il Coro Spento* o *Il Lavabo dei Ricordi*. Fermarsi ad ascoltare può guarirti… o trasformarti in sale, e il Labirinto se ne ricorderà.
 - **Segreto.** Al piano 3, sotto il marmo, si dice riposi la *Prima Pietra* posata dagli Architetti.
 
 **🦇 Le Miniere della Testardaggine (piani 6–10).** Basalto, olio nero e ingranaggi che girano a vuoto.
 - **Più forzieri, meno falò.** E più creature di Terra.
-- **Nativi.** Il *Minatore Svuotato* e l'*Ingranaggio Senziente*, che si ripara spesso.
+- **Nativi.** Il *Minatore Svuotato*, l'*Ingranaggio Senziente*, che si ripara spesso, e la *Talpa Esplosiva*, che carica il colpo.
 - **Pericolo: Gas del Silenzio.** In ogni scontro c'è il 35% di probabilità che il gas riempia la stanza. La tua Difesa dimezza ancora i danni, ma perde la tecnica della classe (contrattacco, concentrazione o riparo).
-- **Stanze speciali:** *La Galleria del Gas*, *L'Ingranaggio Fermo*.
+- **Stanze speciali:** *La Galleria del Gas*, *L'Ingranaggio Fermo*, *Il Carrello Abbandonato*, *Il Minatore Cieco*.
 
 **🌀 Le Guglie del Vento Urlante (piani 11–15).** Ponti sospesi su nubi elettriche.
 - **Più trappole, meno mercanti.** E più creature di Vento.
-- **Nativi.** La *Sentinella di Nube* e il *Falco Astrale*, difficilissimi da colpire.
+- **Nativi.** La *Sentinella di Nube* e il *Falco Astrale*, difficilissimi da colpire, e il *Corvo del Tuono*, che raccoglie il fulmine.
 - **Pericolo: Caduta Astrale.** Sui ponti sospesi puoi perdere l'equilibrio. Precipiti al piano successivo, senza riposo e senza il boss, e perdi il 40% dell'Oro. Puoi anche lasciarti cadere di proposito: un modo rischioso per saltare un boss.
-- **Stanze speciali:** *Il Ponte Sospeso*, *Il Nido della Tempesta*.
+- **Stanze speciali:** *Il Ponte Sospeso*, *Il Nido della Tempesta*, *L'Osservatorio del Vento*, *Il Fabbro del Cielo*.
 
 **🌊 Il Ventre della Memoria (piani 16–20).** Pareti di membrana con dentro i volti dei morti.
 - **Più eventi e misteri.** E più creature d'Acqua e di Tenebra.
-- **Nativi.** Il *Ricordo Annegato*, che si rigenera, e il *Volto nella Membrana*, che fa sanguinare.
+- **Nativi.** Il *Ricordo Annegato*, che si rigenera, il *Volto nella Membrana*, che fa sanguinare, e la *Sanguisuga Madre*, che ti prosciuga.
 - **Pericolo: Dissoluzione dell'Io.** A ogni piano del Ventre perdi il 4% degli HP massimi. Li ritrovi tutti quando ne esci.
-- **Stanze speciali:** *Il Volto nella Membrana*, *Il Giardino Appassito*.
+- **Stanze speciali:** *Il Volto nella Membrana*, *Il Giardino Appassito*, *Il Nido delle Sanguisughe*, *L'Eco della Madre*.
 
 **🌋 La Forgia del Caos (piani 21–25).** Lava bianca, fumi neri, martelli ciclopici.
 - **Più mercanti, meno falò.** E più creature di Fuoco.
-- **Nativi.** Il *Golem di Scorie* e il *Martello Errante*, che ama i colpi pesanti.
+- **Nativi.** Il *Golem di Scorie*, il *Martello Errante*, che ama i colpi pesanti, e lo *Scudiero di Scoria*, che alza barriere.
 - **Pericolo: Ebollizione Astrale.** Ogni colpo che subisci ha il 25% di probabilità di far bollire il 5% del tuo Oro.
-- **Stanze speciali:** *L'Incudine Cosmica*, *La Colata d'Oro*.
+- **Stanze speciali:** *L'Incudine Cosmica*, *La Colata d'Oro*, *Il Crogiolo delle Rune*, *Il Forgiatore Incatenato*.
 
 **🌌 La Soglia del Dio Antico (piani 26–30).** Piattaforme di pura volontà nel vuoto.
 - **Più misteri e forzieri.** E creature di Luce e di Tenebra.
-- **Nativi.** Il *Frammento di Galassia* e l'*Eco del Dio Antico*.
+- **Nativi.** Il *Frammento di Galassia*, l'*Eco del Dio Antico* e il *Frammento del Prima*, che sigilla e prosciuga.
 - **Pericolo: Paradosso Temporale.** Dopo ogni tuo turno c'è il 10% di probabilità che tu agisca di nuovo; dopo ogni turno nemico, il 15% che il nemico agisca due volte (con una mossa non annunciata).
-- **Stanze speciali:** *L'Occhio Chiuso*, *L'Eco del Tempo*.
+- **Stanze speciali:** *L'Occhio Chiuso*, *L'Eco del Tempo*, *La Biblioteca del Vuoto*, *La Porta del Ritorno*.
 
 In ogni piano una stanza della mappa, segnata con l'icona del bioma, è una delle sue stanze speciali.
 

@@ -135,6 +135,7 @@ Una scelta che costa oro è grigia, con "(Oro insufficiente)", se non puoi pagar
 | `relic` | `Reliquia` | `random` o un id; se le possiedi tutte, +50 Oro |
 | `weapon`, `armor` | `Arma Epica`, `Armatura` | `epic`/`normal`; `level` aggiunge piani al livello |
 | `accessory`, `potion` | `Monile`, `N Pozioni` | |
+| `rune` | `Runa` / `Runa: …` | `random` o l'id di una runa; finisce nello zaino e nel Codice |
 | `fight` | `Combatti…` | `normal`, `hard`, `elite`. Gli effetti successivi arrivano solo se vinci; se fuggi l'evento finisce |
 | `quest_item`, `take_quest_item` | `Oggetto chiave: …`, `Consuma: …` | Gli id stanno in `story.json` |
 | `unlock_npc` | `Libera …` | Artigiano al Campo Base |

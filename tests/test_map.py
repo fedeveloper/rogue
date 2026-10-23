@@ -213,9 +213,10 @@ class BiomeTest(Sandbox):
 
     def test_special_rooms_rotate_within_a_run(self):
         p = self.hero()
-        p.seen_events = {"voce_cara", "statua_sale"}
+        *seen, fresh = get_biome(2)["signature_events"]
+        p.seen_events = set(seen)
         rows = self.make(2, player=p)
-        self.assertEqual([d["event_id"] for row in rows for d in row if d.get("signature")], ["biblioteca_cenere"])
+        self.assertEqual([d["event_id"] for row in rows for d in row if d.get("signature")], [fresh])
 
     def test_the_first_stone_is_on_floor_three_and_remembered(self):
         self.assertTrue(events.is_available("prima_pietra", 3))

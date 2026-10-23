@@ -576,6 +576,7 @@ class EventContractTest(Sandbox):
             elif key == "relic": e["relics"] += 1
             elif key in ("weapon", "armor", "accessory"): e["items"] += 1
             elif key == "potion": e["items"] += v
+            elif key == "rune": e["items"] += 1
             elif key == "quest_item": e["quest"] = sorted(set(e["quest"]) | {v})
             elif key == "take_quest_item": e["quest"] = sorted(set(e["quest"]) - {v})
             elif key == "unlock_npc": e["npcs"][v] = True
