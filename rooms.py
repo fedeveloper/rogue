@@ -5,9 +5,10 @@ from ui import Colors, delay_print, clear_screen, interactive_menu, display_msg,
 from data_manager import GAME_DATA, PROFILE_MANAGER, MULTIPLIERS, get_biome, get_element_icon
 from archive import get_archive_bonus
 from codex import record_enemy_killed, record_enemy_seen, record_letter, record_reaction
-from constants import BASE_HIT_CHANCE, BLOOD_LETTER_CHANCE, CURSE_HP_DRAIN_PCT, MIN_DAMAGE_PCT, POISON_MIN, POISON_PCT, RECOVERY_HEAL_PCT
+from constants import CAMPFIRE_REST_PCT, BASE_HIT_CHANCE, BLOOD_LETTER_CHANCE, CURSE_HP_DRAIN_PCT, MIN_DAMAGE_PCT, POISON_MIN, POISON_PCT, RECOVERY_HEAL_PCT
 from entities import STATUS_NAMES, Player, Enemy, generate_weapon, generate_armor, generate_accessory, generate_potion, get_random_relic
 from inventory_menu import show_inventory_menu
+import modes
 
 # Effetti di controllo delle reazioni: scadono alla fine del turno del nemico, non all'inizio
 CONTROL_STATUSES = ("stun", "blind", "slow")
@@ -768,8 +769,9 @@ def campfire_room(player: Player, floor: int):
     while True:
         clear_screen()
         prompt = f"\n{Colors.YELLOW}[ 🔥 FALÒ E FORGIA ] | Tuo Oro: {player.gold} | HP: {player.hp}/{player.max_hp}{Colors.RESET}\n"
+        rest_pct = round(CAMPFIRE_REST_PCT * modes.rule("campfire_heal_mult"))
         options = [
-            "Riposa (Recupera 50% HP, il falò si spegnerà)",
+            f"Riposa (Recupera {rest_pct}% HP, il falò si spegnerà)",
             f"Affila Arma Base (Paga {Colors.YELLOW}50 Oro{Colors.RESET} per +3 ATK, il falò si spegnerà)",
             f"{Colors.MAGENTA}Altare dell'Evoluzione{Colors.RESET} (Fondi due armi/armature per potenziarle)"
         ]
@@ -785,7 +787,7 @@ def campfire_room(player: Player, floor: int):
         if options[idx] == "Prosegui": break
         elif idx == 0:
             player.run_tracker["rested"] = True
-            player.heal(player.max_hp // 2)
+            player.heal(player.max_hp * rest_pct // 100)
             display_msg(f"{Colors.GREEN}Ti riposi profondamente!{Colors.RESET}"); wait_enter("\nPremi INVIO..."); break
         elif idx == 1:
             if player.gold >= 50:
@@ -872,8 +874,9 @@ def _gain_item(player: Player, drop, text: str = "C'era anche"):
 
 def chest_risks(floor: int) -> dict:
     """Probabilità (in %) che un forziere del piano sia un Mimic o sia chiuso a chiave: crescono con la profondità."""
-    rules = GAME_DATA["meta"]["rooms"]["treasure"]
-    return {k: max(0.0, min(r["max"], (floor - r["from_floor"] + 1) * r["pct_per_floor"])) if floor >= r["from_floor"] else 0.0
+    rules, mult = GAME_DATA["meta"]["rooms"]["treasure"], modes.rule("chest_risk_mult")
+    # Il moltiplicatore dell'Ascensione vale anche sul tetto, ma un forziere su due resta un forziere vero
+    return {k: min(50.0, mult * max(0.0, min(r["max"], (floor - r["from_floor"] + 1) * r["pct_per_floor"]))) if floor >= r["from_floor"] else 0.0
             for k, r in rules.items() if k in ("mimic", "locked")}
 
 

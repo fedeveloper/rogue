@@ -11,7 +11,12 @@ Questo repository è mantenuto in buona parte con assistenti IA. Queste regole v
 ## Branch
 
 - `main` è la versione stabile, sempre giocabile, e contiene la v2 (lore, eventi a scene, personaggi ricorrenti, mappa, biomi, finali).
-- Apri le PR verso `main`. Per uno sviluppo che stravolge il gioco si può usare di nuovo un branch di lungo periodo, come è stato `v2`.
+- La v3 (modalità e profondità: Ascensione, Sfida del Giorno e ciò che segue) si sviluppa su `v3`. Apri verso `v3` le PR che la riguardano; `v3` confluirà in `main` quando sarà stabile.
+- Le correzioni alla versione stabile vanno verso `main`.
+
+## Documenti
+
+- `README.md` si genera con `python tools/genera_readme.py` (i test falliscono se non è aggiornato). Il Manuale del Giocatore e la Documentazione Tecnica vanno aggiornati nella stessa PR che cambia regole, dati o codice.
 
 ## Dipendenze
 

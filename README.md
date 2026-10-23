@@ -14,7 +14,7 @@
 
 ---
 
-Sotto le rovine di Aethelgard si apre un labirinto che cambia forma a ogni passo. Scegli un eroe, un tratto e — se hai il coraggio — un patto con il Caos. Poi scendi: **30 piani** di mostri, trappole, mercanti, falò ed eventi che ti costringono a scegliere. In fondo ti aspetta il **DIO ANTICO**.
+Sotto le rovine di Aethelgard si apre un labirinto che cambia forma a ogni passo. Scegli un eroe, un tratto e — se hai il coraggio — un grado di Ascensione. Poi scendi: **30 piani** di mostri, trappole, mercanti, falò ed eventi che ti costringono a scegliere. In fondo ti aspetta il **DIO ANTICO**.
 
 Morirai. Spesso. Ma l'**Essenza Astrale** che riporti indietro resta: con essa sblocchi nuovi eroi, armi leggendarie, reliquie e potenziamenti permanenti. Ogni discesa ti avvicina un po' di più al fondo.
 
@@ -50,7 +50,8 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 - 🌍 **Sei biomi, sei regole.** Ogni cinque piani il Labirinto cambia volto e legge: la *Nostalgia Letale* dei Chiostri, il *Gas del Silenzio* delle Miniere, la *Caduta Astrale* delle Guglie, la *Dissoluzione dell'Io* del Ventre, l'*Ebollizione Astrale* della Forgia e il *Paradosso Temporale* della Soglia. Ogni bioma ha i suoi nemici nativi e le sue stanze speciali.
 - 🔥 **Combattimento tattico.** Il nemico **annuncia la sua mossa**, colpo pesante, guardia, rigenerazione o colpo infetto, e tu decidi se attaccare o difenderti. Sette elementi, vantaggi e svantaggi, **Risonanze** quando arma e armatura condividono l'elemento e **7 reazioni** (Vapore, Gelo, Eclissi…) quando li combini.
 - 🧬 **8 classi** con alberi di Maestria a 5 livelli che sbloccano bonus, oggetti, reliquie e altre classi.
-- 🎭 **7 tratti** e **5 Patti del Caos**: 3,584 combinazioni di partenza diverse.
+- 🎭 **7 tratti** e **20 gradi di Ascensione**: 2.352 combinazioni di partenza diverse.
+- 📅 **Sfida del Giorno.** Una discesa al giorno uguale per tutti: eroe, tratto, malus e dono assegnati, la stessa mappa a ogni piano. Conta il primo tentativo; punteggio, serie di giorni e record restano nel profilo.
 - 📖 **Eventi che ricordano.** 46 storie a scene con opzioni che esistono solo per la tua classe, il tuo tratto o le tue reliquie: `[Mago]`, `[Tocco di Mida]`, `[Chiave Arrugginita]`. Il Labirinto ricorda chi hai aiutato e chi hai derubato, e certe scelte tornano a bussare qualche piano dopo.
 - 🗝️ **Personaggi che ritornano.** *Sir Alaric*, il Primo Paladino, e *Silas*, il Cercatore, hanno storie in tre capitoli che proseguono di run in run. Le tue scelte decidono come finiscono, e se liberi Alaric il Cavaliere Oscuro non tornerà più.
 - 🩸 **Corruzione.** Le scelte oscure danno potere e opzioni proibite, ma il Labirinto comincia a nasconderti le cose: gli effetti delle scelte, le mosse dei nemici.
@@ -75,7 +76,7 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 
 Ogni classe ha un **albero di Maestria** a 5 livelli. Si sale giocando con quella classe. Il **Lv.4** dà un bonus permanente a *tutti* gli eroi; il **Lv.5** sblocca una classe, un tratto o una reliquia. Assassino e Negromante, per esempio, si conquistano portando al massimo Ladro e Mago.
 
-## 🎭 Tratti e Patti
+## 🎭 Tratti
 
 All'inizio di ogni discesa scegli un **tratto**, che cambia le regole per tutta la partita:
 
@@ -89,15 +90,47 @@ All'inizio di ogni discesa scegli un **tratto**, che cambia le regole per tutta 
 | **Titano** | +100 HP Max. Precisione e Schivata dimezzate. | Impresa «Furia Cieca» |
 | **Benedetto** | Inizi con una Reliquia difensiva e resisti al primo colpo letale. | Maestria Paladino Lv.5 |
 
-Dopo la prima vittoria si sbloccano i **Patti del Caos**: maledizioni da attivare a piacere, una per una, in cambio di più Essenza. Con tutti e cinque il moltiplicatore arriva a **×2,25**.
+## 🎮 Modalità
 
-| Patto | Effetto | Essenza |
-|---|---|---|
-| **Durezza** | HP di tutti i Nemici +30% | +25% |
-| **Furia** | Attacco di tutti i Nemici +30% | +25% |
-| **Carestia** | Le pozioni curano la metà | +25% |
-| **Inflazione** | I prezzi del Mercante sono Raddoppiati | +25% |
-| **Labirinto Mortale** | Le Trappole infliggono danni Doppi | +25% |
+### Ascensione
+
+Dopo la prima vittoria, a ogni partenza scegli un **grado di Ascensione**: ogni grado aggiunge una regola a quelle dei gradi precedenti e moltiplica l'Essenza. Vincendo al grado più alto sblocchi il successivo, fino al 20. I vecchi **Patti del Caos** sono diventati gradi.
+
+| Grado | Nome | Regola che si aggiunge | Essenza |
+|---|---|---|---|
+| 1 | **Campioni** | Gli scontri d'Élite compaiono il doppio delle volte. | ×1,15 |
+| 2 | **Scale Fredde** | Il riposo prima delle scale cura la metà. | ×1,3 |
+| 3 | **Labirinto Mortale** | Le trappole infliggono danni doppi. | ×1,55 |
+| 4 | **Forzieri Avidi** | Forzieri chiusi e Mimic sono il doppio più probabili (fino a uno su due). | ×1,7 |
+| 5 | **Boss Feroci** | I boss hanno il 15% di HP in più. | ×1,85 |
+| 6 | **Inflazione** | I prezzi del Mercante sono raddoppiati. | ×2,1 |
+| 7 | **Borsa Vuota** | Parti con metà dell'Oro. | ×2,25 |
+| 8 | **Braci Deboli** | Riposare al Falò cura il 30% degli HP invece del 50%. | ×2,4 |
+| 9 | **Occhi nel Buio** | I nemici hanno +5 di Precisione. | ×2,55 |
+| 10 | **Campioni Temprati** | Gli scontri d'Élite hanno il 20% di HP in più. | ×2,7 |
+| 11 | **Oggetti Inquieti** | Gli oggetti maledetti compaiono il doppio delle volte. | ×2,85 |
+| 12 | **Avarizia** | I nemici lasciano il 25% di Oro in meno. | ×3 |
+| 13 | **Carestia** | Le pozioni curano la metà. | ×3,25 |
+| 14 | **Macchia** | Inizi la discesa con 20 di Corruzione. | ×3,4 |
+| 15 | **Durezza** | I nemici e i boss hanno il 15% di HP in più. | ×3,65 |
+| 16 | **Mercanti in Fuga** | I Mercanti compaiono la metà delle volte. | ×3,8 |
+| 17 | **Boss Implacabili** | I boss hanno il 10% di ATK in più. | ×3,95 |
+| 18 | **Nemici Coriacei** | I nemici comuni hanno il 10% di HP in più. | ×4,1 |
+| 19 | **Furia** | I nemici e i boss hanno il 10% di ATK in più. | ×4,35 |
+| 20 | **Il Dio si Sveglia** | Il DIO ANTICO ha il 30% di HP in più. | ×4,65 |
+
+### 📅 Sfida del Giorno
+
+Sempre disponibile dal menu principale. Ogni giorno la stessa discesa per chiunque: eroe e tratto assegnati (anche non ancora sbloccati), 2 malus presi dai gradi di Ascensione e un dono. Ogni piano nasce dallo stesso seme, quindi la sua mappa non dipende dalla strada fatta prima. Conta il primo tentativo, che vale Essenza ×1,5: 100 punti per piano, 250 per boss, 2000 per la vittoria e uno ogni 10 Oro.
+
+| Dono | Effetto |
+|---|---|
+| **Borsa Piena** | Parti con 150 Oro in più. |
+| **Dono Antico** | Parti con una Reliquia casuale. |
+| **Scorte** | Parti con 2 pozioni in più. |
+| **Nebbie Generose** | Le Stanze del Mistero compaiono il doppio delle volte. |
+| **Taglie** | I nemici lasciano il 50% di Oro in più. |
+| **Scale Calde** | Il riposo prima delle scale cura il 50% in più. |
 
 ## ⚔️ Il combattimento
 
@@ -145,7 +178,7 @@ E in **Impostazioni** scegli la velocità del testo: lenta, normale, veloce o is
 | 🏃 Fuga dal labirinto | 100% dell'Oro posseduto |
 | 🏆 Vittoria al piano 30 | 100% dell'Oro + 1.000 |
 
-A questo si aggiungono **50 Essenza per ogni boss** sconfitto, il moltiplicatore dei **Patti** e, oltre il piano 30 in Modalità Infinita, un ulteriore **×1,5**.
+A questo si aggiungono **50 Essenza per ogni boss** sconfitto, il moltiplicatore del grado di **Ascensione** (o del primo tentativo della **Sfida del Giorno**) e, oltre il piano 30 in Modalità Infinita, un ulteriore **×1,5**.
 
 ## 📚 Enciclopedia
 
@@ -324,7 +357,8 @@ Ogni scelta mostra i suoi effetti reali, molte opzioni esistono solo per certe c
 |---|---|
 | Classi giocabili | 8 |
 | Tratti di partenza | 7 |
-| Patti del Caos | 5 |
+| Gradi di Ascensione | 20 |
+| Doni della Sfida del Giorno | 6 |
 | Armi | 24 (8 subito, 16 da sbloccare) |
 | Armature | 10 (7 subito, 3 da sbloccare) |
 | Monili | 16 (8 subito, 8 da sbloccare) |
@@ -337,7 +371,7 @@ Ogni scelta mostra i suoi effetti reali, molte opzioni esistono solo per certe c
 | Tomi dell'Archivio | 3 |
 | Potenziamenti permanenti | 14 |
 | Elementi / Risonanze | 7 / 6 |
-| Combinazioni di partenza (modalità × classe × tratto × patti) | 3584 |
+| Combinazioni di partenza (modalità × classe × tratto × grado) | 2352 |
 
 ## 🛠️ Per chi sviluppa
 
@@ -356,10 +390,12 @@ rogue/
 ├── camp.py            # Il Fuoco del Campo: personaggi e strutture
 ├── endings.py         # I finali multipli
 ├── codex.py           # Il Codice del Labirinto: ciò che hai scoperto fra le run
+├── modes.py           # Ascensione e Sfida del Giorno: le regole della discesa
 ├── data_manager.py    # Caricamento dei dati e salvataggio del profilo
 ├── ui.py              # Terminale: colori, menu a frecce, output centralizzato
 ├── constants.py       # Costanti di bilanciamento
 ├── data/              # Tutti i contenuti del gioco in JSON
+├── tools/             # Bilanciamento (simulatore di run) e generatore di questo README
 └── tests/             # Test automatici (unittest)
 ```
 
@@ -367,7 +403,7 @@ rogue/
 python -m unittest discover -s tests   # esegue i test, gli stessi della CI
 ```
 
-I **test di contratto** (`tests/test_contracts.py`) verificano che ogni reliquia, monile, arma, armatura, consumabile, evento, tratto, patto, potenziamento, Maestria e impresa faccia esattamente ciò che dice la sua descrizione: un contenuto nuovo senza il suo contratto fa fallire i test.
+I **test di contratto** (`tests/test_contracts.py`, `tests/test_modes.py`) verificano che ogni reliquia, monile, arma, armatura, consumabile, evento, tratto, patto, grado di Ascensione, dono della Sfida del Giorno, potenziamento, Maestria e impresa faccia esattamente ciò che dice la sua descrizione: un contenuto nuovo senza il suo contratto fa fallire i test.
 
 - 📖 [**Manuale del Giocatore**](MANUALE_GIOCATORE.md) — strategie e regole in dettaglio.
 - 🔧 [**Documentazione Tecnica**](DOCUMENTAZIONE_TECNICA.md) — architettura, formato dei dati, formule e come aggiungere contenuti.
@@ -387,6 +423,8 @@ I **test di contratto** (`tests/test_contracts.py`) verificano che ogni reliquia
 - [x] Mappa dei piani e primo bioma (I Chiostri del Rimpianto)
 - [x] Regole per tutti e sei i biomi
 - [x] Hub fra le run, finali multipli e Corruzione
+- [x] Stanze a rischio e ricompensa (trappole con bottino, Mimic, Élite, Audacia)
+- [x] Gradi di Ascensione e Sfida del Giorno
 
 ---
 

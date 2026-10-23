@@ -5,6 +5,7 @@ from data_manager import GAME_DATA, RAW_DATA, PROFILE_MANAGER, ELEMENTS, MULTIPL
 from relic_effects import create_relic_effect
 from archive import get_archive_bonus
 from codex import record_relic
+import modes
 from constants import BASE_HIT_CHANCE, ENEMY_DEPTH_WINDOW, BOSS_DEPTH_WINDOW, INFINITE_MODE_THRESHOLD, CURSE_CHANCE, CURSE_STAT_MULTIPLIER, BOSS_HP_MULT, BOSS_ATK_MULT, ENEMY_HP_PER_FLOOR, ENEMY_ATK_PER_FLOOR, RECOVERY_HEAL_PCT, BULWARK_HEAL_PCT, WEAPON_TARGET_HITS, ARMOR_TARGET_ABSORB, WEAPON_QUALITY, ARMOR_QUALITY, NORMAL_ELEMENT_BONUS, EPIC_MULTIPLIER
 
 class Item:
@@ -113,7 +114,7 @@ def generate_weapon(level: int, is_epic: bool = False) -> Weapon:
     element = w_data.get("element") or generate_random_element()
     
     is_cursed, curse_effect = False, ""
-    if not is_epic and random.random() < CURSE_CHANCE:
+    if not is_epic and random.random() < CURSE_CHANCE * modes.rule("curse_chance_mult"):
         is_cursed = True
         curse_effect = random.choice(["hp_drain", "gold_drain"])
         power *= CURSE_STAT_MULTIPLIER
@@ -131,7 +132,7 @@ def generate_armor(level: int, is_epic: bool = False) -> Armor:
     element = a_data.get("element") or generate_random_element()
     
     is_cursed, curse_effect = False, ""
-    if not is_epic and random.random() < CURSE_CHANCE:
+    if not is_epic and random.random() < CURSE_CHANCE * modes.rule("curse_chance_mult"):
         is_cursed = True
         curse_effect = random.choice(["hp_drain", "gold_drain", "heavy"])
         power *= CURSE_STAT_MULTIPLIER
@@ -146,7 +147,7 @@ def generate_accessory(level: int) -> Accessory:
     is_cursed, curse_effect = False, ""
     bonus_val = a_data["bonus_value"]
     desc = a_data["desc"]
-    if random.random() < CURSE_CHANCE:
+    if random.random() < CURSE_CHANCE * modes.rule("curse_chance_mult"):
         is_cursed = True
         curse_effect = random.choice(["hp_drain", "gold_drain"])
         bonus_val = int(bonus_val * 2)
@@ -240,6 +241,7 @@ class Player:
         self.level, self.exp, self.max_exp = 1, 0, 100
         self.escaped = False
         self.won = False
+        self.ascension, self.daily = 0, None  # grado di Ascensione e Sfida del Giorno della discesa (vedi modes)
         self.run_tracker = {"escapes": 0, "fusions": 0, "no_hit_boss_done": False, "kill_1_hp_done": False, "floor_attacks": 0, "floor_hits": 0}
         self.essence_gathered, self.bosses_killed = 0, 0
         
@@ -542,8 +544,15 @@ class Enemy:
             self.atk = int(self.atk * 0.6)
             self.name += f"{Colors.CYAN} (Debilitato){Colors.RESET}"
             
-        if "durezza" in active_pacts: self.hp = int(self.hp * 1.3)
-        if "furia" in active_pacts: self.atk = int(self.atk * 1.3)
+        # Gradi di Ascensione e modificatori della Sfida del Giorno
+        self.atk = int(self.atk * modes.rule("enemy_atk_mult"))
+        if is_boss:
+            self.hp = int(self.hp * modes.rule("boss_hp_mult") * (modes.rule("final_boss_hp_mult") if data.get("final_boss") else 1.0))
+            self.atk = int(self.atk * modes.rule("boss_atk_mult"))
+        else:
+            self.hp = int(self.hp * modes.rule("enemy_hp_mult") * (modes.rule("elite_hp_mult") if modifier == "elite" else 1.0))
+        self.base_acc += modes.rule("enemy_acc_add")
+        self.gold_drop = int(self.gold_drop * modes.rule("enemy_gold_mult"))
         self.max_hp = self.hp
 
         # Mosse annunciate in anticipo (intenti): pesi del nemico o quelli predefiniti della sua categoria

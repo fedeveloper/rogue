@@ -5,6 +5,7 @@ Uso, dalla radice del repository:
     python tools/bilanciamento.py oggetti             # ogni arma e armatura: colpi per abbattere un nemico, % del colpo assorbita
     python tools/bilanciamento.py run [N] [profilo]   # N run per classe (predefinito 50); profilo: nuovo (predefinito) o completo
     python tools/bilanciamento.py strategie [N] [profilo]  # le stesse run con diversi modi di scegliere le stanze
+    python tools/bilanciamento.py ascensione [N] [gradi]   # profilo completo, N run per classe a ogni grado (es. 0,5,10,15,20)
 
 Il profilo del giocatore non viene mai letto per le statistiche né salvato: ogni simulazione parte da un profilo
 costruito in memoria ("nuovo": nulla di sbloccato; "completo": tutto sbloccato, potenziamenti e Maestrie al massimo).
@@ -48,6 +49,7 @@ def profile(kind: str) -> dict:
         data["perks"] = {key: (True if boolean else top) for key, _, _, top, _, boolean in roguelike.PERK_DEFS}
         data["class_lvl"] = {c: 5 for c in GAME_DATA["classes"]}
         data["won_normal"] = True
+        data["ascension"] = {"best_win": GAME_DATA["modes"]["ascension"]["max"]}
     else:
         data["unlocked_ids"], data["class_lvl"] = [], {}
         data["perks"] = {k: (False if isinstance(v, bool) else 0) for k, v in data["perks"].items()}
@@ -116,8 +118,8 @@ STRATEGIES = {
 
 
 class Bot:
-    def __init__(self, cls, strategy="adattiva"):
-        self.cls, self.player, self.calls, self.state, self.order = cls, None, 0, {}, STRATEGIES[strategy]
+    def __init__(self, cls, strategy="adattiva", grade=0):
+        self.cls, self.player, self.calls, self.state, self.order, self.grade = cls, None, 0, {}, STRATEGIES[strategy], grade
 
     def equip(self):
         p = self.player
@@ -138,7 +140,7 @@ class Bot:
         find = lambda *ws: next((i for i, o in enumerate(opts) if any(w in o for w in ws)), None)
         if "Scegli il tuo Eroe" in pr: return find(GAME_DATA["classes"][self.cls]["role"].upper())
         if "Scegli un Tratto" in pr: return find("Nessun Tratto") or 0
-        if "Attivare '" in pr: return find("No")
+        if "ASCENSIONE" in pr: return self.grade
         if "Scrittoio di Silas" in pr or "Quale reliquia vuoi scartare" in pr: return len(opts) - 1
         if "Il Dio Antico è caduto" in pr: return 0
         if "Scegli dove proseguire" in pr:
@@ -186,11 +188,11 @@ class Bot:
         return -1 if cancellable else 0
 
 
-def play(cls, seed, base, strategy="adattiva"):
+def play(cls, seed, base, strategy="adattiva", grade=0):
     import camp, endings, entities, events, inventory_menu, roguelike, rooms
     random.seed(seed)
     use_profile(base)
-    bot, log = Bot(cls, strategy), {"cls": cls, "hits": 0, "zero": 0, "bosses": [], "killer": None}
+    bot, log = Bot(cls, strategy, grade), {"cls": cls, "hits": 0, "zero": 0, "bosses": [], "killer": None}
     real_player, real_damage, real_start, real_evaluate = entities.Player, rooms.CombatSession._calc_enemy_damage, rooms.CombatSession.start, roguelike.evaluate_run
 
     def make_player(*a):
@@ -264,10 +266,21 @@ def cmd_strategie(n, kind):
               f"{st.median(l['level'] for l in logs):>15}")
 
 
+def cmd_ascensione(n, grades):
+    base = profile("completo")
+    use_profile(base)
+    print(f"profilo completo: {n} run per classe e per grado")
+    print(f"{'grado':>5} {'vittorie':>8} {'piano mediano':>13}")
+    for g in grades:
+        logs = [play(c, int(c) * 100003 + i * 7919, base, grade=g) for c in GAME_DATA["classes"] for i in range(n)]
+        print(f"{g:>5} {sum(l['won'] for l in logs) / len(logs) * 100:>7.0f}% {st.median(l['floor'] for l in logs):>13}")
+
+
 if __name__ == "__main__":
     args = sys.argv[1:] or ["curve"]
     if args[0] == "curve": cmd_curve()
     elif args[0] == "oggetti": cmd_oggetti()
     elif args[0] == "run": cmd_run(int(args[1]) if len(args) > 1 else 50, args[2] if len(args) > 2 else "nuovo")
+    elif args[0] == "ascensione": cmd_ascensione(int(args[1]) if len(args) > 1 else 20, [int(g) for g in (args[2] if len(args) > 2 else "0,5,10,15,20").split(",")])
     elif args[0] == "strategie": cmd_strategie(int(args[1]) if len(args) > 1 else 30, args[2] if len(args) > 2 else "nuovo")
     else: print(__doc__)

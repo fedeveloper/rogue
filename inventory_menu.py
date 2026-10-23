@@ -193,6 +193,15 @@ def show_inventory_menu(player, in_combat=False) -> str:
                 if in_combat: return "turn_used"
 
 
+def mode_rule_lines(player) -> list:
+    """Le regole della discesa in corso: i gradi di Ascensione, o i modificatori della Sfida del Giorno."""
+    grades = GAME_DATA["modes"]["ascension"]["grades"]
+    if player.daily:
+        boon = GAME_DATA["modes"]["daily"]["boons"][player.daily["boon"]]
+        return [f"{grades[i]['name']}: {grades[i]['desc']}" for i in player.daily["maluses"]] + [f"{boon['name']} (dono): {boon['desc']}"]
+    return [f"{g['name']}: {g['desc']}" for g in grades[:player.ascension]]
+
+
 def show_player_stats(player, session=None):
     clear_screen()
     display_msg(f"\n{Colors.CYAN}{Colors.BOLD}--- STATISTICHE DELL'EROE ---{Colors.RESET}")
@@ -227,10 +236,10 @@ def show_player_stats(player, session=None):
     display_msg(f"Armatura: {player.armor.display_name}")
     display_msg(f"Monile: {player.accessory.display_name if player.accessory else 'Nessuno'}")
     
-    if player.active_pacts:
-        display_msg(f"\n{Colors.RED}{Colors.BOLD}--- PATTI DEL CAOS ---{Colors.RESET}")
-        for p in player.active_pacts:
-            display_msg(f" - {p.upper()}")
+    mode_rules = mode_rule_lines(player)
+    if mode_rules:
+        display_msg(f"\n{Colors.RED}{Colors.BOLD}--- {'SFIDA DEL GIORNO' if player.daily else f'ASCENSIONE {player.ascension}'} ---{Colors.RESET}")
+        for line in mode_rules: display_msg(f" - {line}")
             
     if player.relics:
         display_msg(f"\n{Colors.YELLOW}{Colors.BOLD}--- RELIQUIE ATTIVE ---{Colors.RESET}")
