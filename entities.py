@@ -265,6 +265,7 @@ class Player:
         self.level, self.exp, self.max_exp = 1, 0, 100
         self.escaped = False
         self.won = False
+        self.nemeses_met = set()  # Nemesi già comparse in questa discesa
         self.ascension, self.daily = 0, None  # grado di Ascensione e Sfida del Giorno della discesa (vedi modes)
         self.run_tracker = {"escapes": 0, "fusions": 0, "no_hit_boss_done": False, "kill_1_hp_done": False, "floor_attacks": 0, "floor_hits": 0}
         self.essence_gathered, self.bosses_killed = 0, 0

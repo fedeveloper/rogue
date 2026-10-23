@@ -77,8 +77,10 @@ class RecordingTest(Sandbox):
 
 class PagesTest(Sandbox):
     def test_unknown_entries_are_hidden(self):
-        for page in codex.PAGES.values():
+        for name, page in codex.PAGES.items():
             lines = plain(page())
+            # La pagina delle Nemesi racconta la tua storia: non ha voci da scoprire, e all'inizio è vuota
+            if name in codex.UNCOUNTED: self.assertTrue(any("Nessun" in l for l in lines)); continue
             self.assertTrue(any("???" in l for l in lines))
         self.assertEqual(codex.completion(), 0)
 
@@ -103,7 +105,7 @@ class PagesTest(Sandbox):
         codex.record_relic("tasca_dorata")
         codex.record_letter(0)
         codex.record_reaction("Fuoco+Acqua")
-        self.assertEqual([s[1] for s in codex.sections()], [0, 0, 0, 1, 1, 0, 0, 0, 0, 1])
+        self.assertEqual([s[1] for s in codex.sections()], [0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1])
         self.assertEqual(codex.completion(), 3 * 100 // total)
 
     def test_characters_page_follows_the_arc(self):

@@ -52,6 +52,25 @@ La Corruzione va da 0 a 100 e vale per la sola discesa:
 
 La vedi accanto agli HP sulla mappa e nelle Statistiche. Arrivare in fondo con il cuore nero apre un finale che gli altri non vedranno mai.
 
+### 😈 La Nemesi
+
+Il nemico comune o l'Élite che ti uccide **se ne ricorda**: diventa una **Nemesi**, con un nome, un rango e un tratto imparato da te, e si prende il 50% dell'Oro che avevi.
+
+- **Torna a cercarti.** Nelle discese successive compare una volta, in una stanza 😈 della mappa, fra 1 piano prima e 2 dopo quello in cui ti ha ucciso. L'etichetta dice chi è e quanto Oro ha con sé.
+- **Cresce.** Ha il 10% di HP e Attacco in più per ogni rango. Se ti uccide di nuovo sale di rango (fino a 5: il Fortunato, il Persecutore, il Flagello, l'Incubo, la Fine) e aggiunge il tuo Oro al suo.
+- **Si vendica di te.** Ognuna ha uno di questi tratti:
+
+| Tratto | Effetto |
+|---|---|
+| Ha imparato a resistere | I colpi dell'elemento con cui ti ha ucciso gli fanno il 40% di danni in meno. |
+| Più grosso di come lo ricordi | Ha il 20% di HP in più. |
+| Conosce i tuoi movimenti | Ha +15 di Precisione. |
+| Affamato di vendetta | Ha il 15% di Attacco in più. |
+
+- **Sconfiggerla** restituisce tutto l'Oro che aveva e lascia un **trofeo**, un pezzo d'equipaggiamento epico. Vale 2 punti di Audacia, come un'Élite.
+- Le Nemesi attive sono al massimo 3: una nuova scaccia la più vecchia. I **boss** non diventano Nemesi, ma ti riconoscono la volta dopo.
+- Nel Codice, alla pagina *Nemesi*, trovi chi ti aspetta e chi hai già sconfitto.
+
 ### 🏁 I finali
 
 Sconfitto il Dio Antico, scegli come finisce la tua storia fra i finali che ti sei guadagnato. Il primo è sempre disponibile; gli altri dipendono da quello che hai fatto in questa discesa e in quelle passate: i personaggi che hai liberato, le verità che hai ascoltato, le lettere che hai raccolto, la tua Corruzione. Ogni finale nuovo dà un premio in Essenza e finisce nel Codice. Nel Codice i finali che non hai ancora visto mostrano un indizio.

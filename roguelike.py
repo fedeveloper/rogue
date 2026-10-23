@@ -15,6 +15,7 @@ from codex import show_codex
 from camp import show_camp_fire, start_of_run_boon
 from endings import choose_ending
 import modes
+import nemesis
 from constants import TEXT_SPEEDS, SPERANZA_LUCE_PCT_PER_LVL, RATIO_GOLD_TO_ESSENCE_ON_DEATH, BOSS_ESSENCE_BONUS, XP_PER_FLOOR, XP_PER_BOSS, INFINITE_MODE_THRESHOLD, INFINITE_MODE_ESSENCE_MULTIPLIER, BLIND_FURY_MIN_ATTACKS
 
 def _update_class_mastery(player: Player, floor: int):
@@ -69,6 +70,8 @@ def evaluate_run(player: Player, floor: int, infinite: bool):
     if player.hp <= 0:
         delay_print(f"{Colors.RED}S E I   M O R T O.{Colors.RESET}")
         player.essence_gathered += int(player.gold * RATIO_GOLD_TO_ESSENCE_ON_DEATH); PROFILE_MANAGER.stats["total_deaths"] += 1
+        story = nemesis.on_death(player, floor)
+        if story: display_msg(f"{Colors.MAGENTA}{Colors.BOLD}✦ {story}{Colors.RESET}")
     elif player.escaped:
         delay_print(f"{Colors.GREEN}S E I   F U G G I T O.{Colors.RESET}"); player.essence_gathered += player.gold
     elif player.won:
@@ -547,8 +550,8 @@ def _descent(c_choice, t_choice, active_pacts, infinite_mode, grade, daily):
             
             rt = chosen_door["type"]
             # L'Audacia premia chi entra nel rischio; la trappola conta solo se la si affronta
-            if rt in ("combat", "elite", "mystery"): gain_audacity(player, rt)
-            if rt in ("combat", "elite", "boss"): combat_room(player, floor, chosen_door["enemy"])
+            if rt in ("combat", "elite", "nemesis", "mystery"): gain_audacity(player, rt)
+            if rt in ("combat", "elite", "nemesis", "boss"): combat_room(player, floor, chosen_door["enemy"])
             elif rt == "vendor": vendor_room(player, floor)
             elif rt == "treasure": treasure_room(player, floor)
             elif rt == "trap":
