@@ -85,7 +85,120 @@ class RelicContractTest(Sandbox):
             "contratto_demoniaco": self.c_contratto, "pozione_infinita": self.c_pozione, "bussola_dimensionale": self.c_dimensionale,
             "cuore_drago": self.c_drago, "sigillo_elementale": self.c_sigillo, "spirito_spada": self.c_spirito,
             "maschera_antigas": self.c_maschera, "teschio_sangue": self.c_teschio, "pietra_filosofale": self.c_filosofale,
+            "ago_untore": self.c_ago, "fiala_cremisi": self.c_fiala_cremisi, "spora_nera": self.c_spora,
+            "bilancia_mercante": self.c_bilancia, "moneta_traghettatore": self.c_moneta, "dente_oro": self.c_dente,
+            "catalizzatore": self.c_rune_bonus("catalizzatore", "reaction_dmg_pct", 50),
+            "cristallo_marea": self.c_marea, "specchio_elementi": self.c_rune_bonus("specchio_elementi", "mark_duration_add", 2),
+            "piastra_custode": self.c_rune_bonus("piastra_custode", "def_pct", 10), "corno_bastione": self.c_corno,
+            "rovo_antico": self.c_rune_bonus("rovo_antico", "thorns_pct", 20),
+            "amuleto_quiete": self.c_rune_bonus("amuleto_quiete", "defend_heal_pct", 5),
+            "cristallo_runico": self.c_cristallo_runico, "martello_lapicida": self.c_martello, "pietra_parlante": self.c_parlante,
+            "marchio_cacciatore": self.c_marchio, "stendardo_audacia": self.c_stendardo, "teschio_rivale": self.c_rivale,
+            "lanterna_cartografo": self.c_lanterna,
         }
+
+    # --------------------------------------------------------- reliquie degli archetipi della v3
+    def desc(self, rid):
+        return next(r for r in RAW_DATA["relics"] if r["id"] == rid)["desc"]
+
+    def c_rune_bonus(self, rid, key, value):
+        def check():
+            self.assertIn(str(value), self.desc(rid))
+            p = self.hero(); before = p.rune_value(key); self.relic(p, rid)
+            self.assertEqual(p.rune_value(key), before + value, "vale come una runa con lo stesso effetto (vedi test_runes)")
+        return check
+
+    def c_ago(self):
+        p = self.hero(); s = self.session(p); s.enemy.hp = s.enemy.max_hp = 1000
+        s.enemy.statuses = {"poison": 3}
+        with quiet(): s.process_statuses_and_curses(is_player_turn=False)
+        plain = 1000 - s.enemy.hp
+        p = self.hero(); self.relic(p, "ago_untore"); s = self.session(p); s.enemy.hp = s.enemy.max_hp = 1000
+        s.enemy.statuses = {"poison": 3}
+        with quiet(): s.process_statuses_and_curses(is_player_turn=False)
+        self.assertEqual(1000 - s.enemy.hp, plain * 2)
+        self.assertIn("doppi", self.desc("ago_untore"))
+
+    def c_fiala_cremisi(self):
+        p = self.hero(); e = self.relic(p, "fiala_cremisi"); s = self.session(p)
+        with quiet(), mock.patch("relic_effects.random.randint", return_value=20): e.on_attack_landed(s, 1.0)
+        self.assertIn("bleed", s.enemy.statuses)
+        s = self.session(p)
+        with quiet(), mock.patch("relic_effects.random.randint", return_value=21): e.on_attack_landed(s, 1.0)
+        self.assertNotIn("bleed", s.enemy.statuses)
+
+    def c_spora(self):
+        p = self.hero(); self.relic(p, "spora_nera"); s = self.session(p)
+        self.assertEqual(s.enemy.statuses.get("poison"), 3)
+
+    def c_bilancia(self):
+        p = self.hero(); p.gold = 0; plain = p.get_total_atk(); self.relic(p, "bilancia_mercante")
+        p.gold = 350; self.assertEqual(p.get_total_atk(), plain + 3)
+        p.gold = 10 ** 6; self.assertEqual(p.get_total_atk(), plain + 10)
+
+    def c_moneta(self):
+        p = self.hero(); e = self.relic(p, "moneta_traghettatore"); p.gold = 0
+        with quiet(): e.on_enemy_death(self.session(p, boss=True))
+        self.assertEqual(p.gold, 100)
+        with quiet(): e.on_enemy_death(self.session(p))
+        self.assertEqual(p.gold, 100, "solo i boss")
+
+    def c_dente(self):
+        p = self.hero(); self.relic(p, "dente_oro"); self.assertEqual(p.calculate_gold_gain(100), 115)
+        self.assertEqual(p.relic_effects[-1].get_exp_modifier(), 0.05)
+
+    def c_marea(self):
+        p = self.hero(); p.max_hp, p.hp = 1000, 1; self.relic(p, "cristallo_marea"); s = self.session(p)
+        with quiet(): s._trigger_reaction(next(iter(GAME_DATA["elements"]["reactions"])))
+        self.assertEqual(p.hp, 1 + 50)
+
+    def c_corno(self):
+        p = self.hero(); e = self.relic(p, "corno_bastione"); s = self.session(p)
+        s.is_defending = True; self.assertEqual(e.on_take_damage(s, 40, 1.0), 20)
+        s.is_defending = False; self.assertEqual(e.on_take_damage(s, 40, 1.0), 40)
+
+    def c_cristallo_runico(self):
+        p = self.hero(); p.weapon.sockets = 1; p.weapon.runes = ["forza"]
+        before = p.rune_value("atk_pct"); self.relic(p, "cristallo_runico")
+        self.assertEqual(p.rune_value("atk_pct"), int(before * 1.5))
+
+    def c_martello(self):
+        p = self.hero(); self.relic(p, "martello_lapicida"); p.weapon.sockets, p.weapon.runes = 1, ["forza"]; p.gold = 0
+        picks = iter([1, 0, 0, -1])
+        with quiet(), mock.patch("rooms.interactive_menu", side_effect=lambda *a, **k: next(picks)), mock.patch("rooms.wait_enter"), mock.patch("rooms.clear_screen"):
+            rooms.rune_workshop(p, 10)
+        self.assertEqual((p.weapon.runes, p.gold), ([], 0))
+
+    def c_parlante(self):
+        p = self.hero(); self.relic(p, "pietra_parlante"); p.inventory = []
+        with quiet(), mock.patch("runes.random.random", return_value=0.999): rooms.rune_drop(p, 5, "elite")
+        self.assertEqual(len(p.inventory), 1)
+        with quiet(), mock.patch("runes.random.random", return_value=0.999): rooms.rune_drop(p, 5, "trap")
+        self.assertEqual(len(p.inventory), 1, "solo le Élite")
+
+    def c_marchio(self):
+        p = self.hero(); e = self.relic(p, "marchio_cacciatore")
+        with quiet(): s = CombatSession(p, 5, Enemy(5, False, [], modifier="elite"))
+        self.assertEqual(e.on_attack(s, 100, 1.0, "")[0], 130)
+        self.assertEqual(e.on_attack(self.session(p), 100, 1.0, "")[0], 100)
+
+    def c_stendardo(self):
+        p = self.hero(); self.relic(p, "stendardo_audacia")
+        self.assertEqual(rooms.gain_audacity(p, "combat"), GAME_DATA["meta"]["rooms"]["audacity"]["points"]["combat"] + 1)
+        self.assertEqual(rooms.gain_audacity(p, "treasure"), 0, "solo le stanze rischiose")
+
+    def c_rivale(self):
+        p = self.hero(); e = self.relic(p, "teschio_rivale"); before = p.max_hp
+        s = self.session(p); s.enemy.nemesis = {"id": "x"}
+        with quiet(): e.on_enemy_death(s)
+        self.assertEqual(p.max_hp, before + 20)
+        with quiet(): e.on_enemy_death(self.session(p))
+        self.assertEqual(p.max_hp, before + 20)
+
+    def c_lanterna(self):
+        w = {"event": 10.0, "mystery": 10.0, "combat": 60.0}
+        e = self.relic(self.hero(), "lanterna_cartografo"); e.modify_room_weights(w)
+        self.assertEqual(w, {"event": 20.0, "mystery": 20.0, "combat": 60.0})
 
     def test_every_relic_has_a_contract(self):
         self.assertEqual(set(self.contracts()), {r["id"] for r in RAW_DATA["relics"]})
