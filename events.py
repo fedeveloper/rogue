@@ -169,6 +169,15 @@ def _equipment(generator, epic_arg=True):
     return apply
 
 
+def _rune(p, v, eff, floor):
+    from entities import generate_rune
+    from codex import record_rune
+    item = generate_rune(floor, "" if v == "random" else v)
+    record_rune(item.rune_id)
+    p.inventory.append(item)
+    display_msg(f"{Colors.MAGENTA}Ottieni: {item.display_name}! (Si incastona al Falò){Colors.RESET}")
+
+
 def _potion(p, v, eff, floor):
     for _ in range(v):
         item = generate_potion(floor)
@@ -247,6 +256,7 @@ EFFECTS: Dict[str, tuple] = {
     "armor": (_equipment(generate_armor), lambda v, e: "Armatura Epica" if v == "epic" else "Armatura"),
     "accessory": (_equipment(generate_accessory, epic_arg=False), lambda v, e: "Monile"),
     "potion": (_potion, lambda v, e: _plural(v, "Pozione", "Pozioni")),
+    "rune": (_rune, lambda v, e: "Runa" if v == "random" else f"Runa: {GAME_DATA['runes']['runes'][v]['name']}"),
     "fight": (_fight, lambda v, e: FIGHTS[v][0]),
     "quest_item": (_quest_item, lambda v, e: f"Oggetto chiave: {item_name(v)}"),
     "take_quest_item": (_take_quest_item, lambda v, e: f"Consuma: {item_name(v)}"),

@@ -867,5 +867,645 @@
         ]
       }
     }
+  },
+  "coro_spento": {
+    "title": "Il Coro Spento",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Dodici scranni di legno, e su ognuno una tonaca vuota piegata con cura. Dal pulpito una voce intona l'inizio di un inno e si interrompe, ogni volta alla stessa nota.",
+        "choices": [
+          {
+            "text": "Completa l'inno",
+            "chance": 50,
+            "success": [
+              {
+                "heal_pct": 40
+              },
+              {
+                "exp": 80
+              }
+            ],
+            "msg": "La tua voce trova la nota che mancava. Le tonache si sollevano appena, come in un respiro.",
+            "fail_msg": "Stoni. Le tonache si voltano tutte verso di te.",
+            "fail_effects": [
+              {
+                "fight": "normal"
+              }
+            ]
+          },
+          {
+            "text": "Fruga fra le tonache",
+            "msg": "In una tasca c'è una pietra incisa, tiepida come una mano.",
+            "effects": [
+              {
+                "rune": "random"
+              },
+              {
+                "corruption": 5
+              }
+            ]
+          },
+          {
+            "text": "Esci senza fare rumore",
+            "msg": "L'inno ricomincia alle tue spalle. Si ferma alla stessa nota."
+          }
+        ]
+      }
+    }
+  },
+  "lavabo_ricordi": {
+    "title": "Il Lavabo dei Ricordi",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Una vasca di pietra piena d'acqua ferma. Chi si specchia vede un giorno felice, e per un momento lo rivive. Sul bordo, graffiato: «Non più di un sorso».",
+        "choices": [
+          {
+            "text": "Bevi un sorso",
+            "msg": "Ricordi un pomeriggio di sole. Torni con le mani più ferme.",
+            "effects": [
+              {
+                "heal_pct": 30
+              }
+            ]
+          },
+          {
+            "text": "Bevi finché puoi",
+            "chance": 40,
+            "success": [
+              {
+                "max_hp": 20
+              },
+              {
+                "heal_pct": 100
+              }
+            ],
+            "msg": "Il ricordo ti riempie fino all'orlo. Ne esci intero, e più grande.",
+            "fail_msg": "Il ricordo non finisce. Quando riemergi non sai più da quanto sei lì.",
+            "fail_effects": [
+              {
+                "max_hp": -10
+              },
+              {
+                "corruption": 10
+              }
+            ]
+          },
+          {
+            "text": "[Paladino] Benedici l'acqua",
+            "requires": {
+              "class": "4"
+            },
+            "msg": "L'acqua si fa limpida e smette di mentire. Ne prendi una fiala.",
+            "effects": [
+              {
+                "potion": 2
+              },
+              {
+                "exp": 50
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "carrello_abbandonato": {
+    "title": "Il Carrello Abbandonato",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Un carrello da miniera fermo su un binario che scende nel buio. È pieno di minerale e di qualcosa che luccica. Dalla discesa sale un rumore di ingranaggi.",
+        "choices": [
+          {
+            "text": "Salta sul carrello e scendi",
+            "chance": 55,
+            "success": [
+              {
+                "gold": 150
+              }
+            ],
+            "msg": "La corsa è folle, il minerale vale una fortuna.",
+            "fail_msg": "Il carrello deraglia in curva.",
+            "fail_effects": [
+              {
+                "damage": 30
+              },
+              {
+                "gold": 40
+              }
+            ]
+          },
+          {
+            "text": "Svuotalo con calma",
+            "msg": "Sotto il minerale c'è una runa avvolta in uno straccio. Mentre scavi, qualcosa sale dal buio.",
+            "effects": [
+              {
+                "rune": "random"
+              },
+              {
+                "fight": "normal"
+              }
+            ]
+          },
+          {
+            "text": "Spingilo giù vuoto",
+            "msg": "Il carrello sparisce. Un minuto dopo, uno schianto lontano e poi silenzio. Qualcuno ti doveva un favore.",
+            "effects": [
+              {
+                "exp": 60
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "minatore_cieco": {
+    "title": "Il Minatore Cieco",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Un vecchio con gli occhi bendati batte la roccia con un piccone d'osso, ascoltando l'eco. «Qui sotto c'è una vena», dice senza voltarsi. «Ma per sentirla serve silenzio, e tu respiri troppo forte.»",
+        "choices": [
+          {
+            "text": "Trattieni il fiato e ascolta con lui",
+            "chance": 50,
+            "success": [
+              {
+                "armor": "epic",
+                "level": 1
+              }
+            ],
+            "msg": "Senti la vena. Lui sorride e ti regala la corazza che non può più vedere.",
+            "fail_msg": "Tossisci. Il vecchio sospira e torna al suo lavoro.",
+            "fail_effects": [
+              {
+                "damage": 10
+              }
+            ]
+          },
+          {
+            "text": "Pagalo per scavare",
+            "requires": {
+              "gold": 100
+            },
+            "msg": "Scava per ore. Alla fine ti porge una pietra incisa e conta le monete a tatto.",
+            "effects": [
+              {
+                "gold": -100
+              },
+              {
+                "rune": "random"
+              }
+            ]
+          },
+          {
+            "text": "[Ladro] Rubagli il piccone",
+            "requires": {
+              "class": "2"
+            },
+            "msg": "Il piccone d'osso è un'arma terribile. Il vecchio non se ne accorge. O fa finta.",
+            "effects": [
+              {
+                "weapon": "normal",
+                "level": 1
+              },
+              {
+                "corruption": 10
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "osservatorio_vento": {
+    "title": "L'Osservatorio del Vento",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "In cima alla guglia, un telescopio d'ottone punta verso un cielo che non c'è. Le lenti sono rotte, ma il vento che entra dall'oculare porta voci da molto lontano.",
+        "choices": [
+          {
+            "text": "Ascolta le voci",
+            "msg": "Parlano di te, di quello che hai fatto e di quello che farai. Impari qualcosa.",
+            "effects": [
+              {
+                "exp": 120
+              }
+            ]
+          },
+          {
+            "text": "Smonta le lenti di ottone",
+            "msg": "Valgono parecchio. Il vento smette di parlare.",
+            "effects": [
+              {
+                "gold": 120
+              }
+            ]
+          },
+          {
+            "text": "Guarda dentro l'oculare",
+            "chance": 35,
+            "success": [
+              {
+                "relic": "random"
+              }
+            ],
+            "msg": "Per un istante vedi una stanza piena di tesori. Quando abbassi lo sguardo, uno è ai tuoi piedi.",
+            "fail_msg": "Il vento ti strappa via il fiato e ti lascia stordito.",
+            "fail_effects": [
+              {
+                "damage": 25
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "fabbro_cielo": {
+    "title": "Il Fabbro del Cielo",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Su una piattaforma sospesa nel vuoto, un fabbro senza ombra batte il metallo su un'incudine di nuvola. «Porto le rune dove nessuno le cerca», dice. «Mi serve solo un po' del tuo sangue per temprarle.»",
+        "choices": [
+          {
+            "text": "Offri il tuo sangue",
+            "msg": "Il fabbro immerge la runa nel tuo sangue e te la porge, ancora fumante.",
+            "effects": [
+              {
+                "max_hp": -10
+              },
+              {
+                "rune": "random"
+              },
+              {
+                "rune": "random"
+              }
+            ]
+          },
+          {
+            "text": "Pagalo in Oro",
+            "requires": {
+              "gold": 150
+            },
+            "msg": "Sbuffa, ma accetta. L'Oro non tempra niente, dice.",
+            "effects": [
+              {
+                "gold": -150
+              },
+              {
+                "rune": "random"
+              }
+            ]
+          },
+          {
+            "text": "Spingilo giù dalla piattaforma",
+            "chance": 50,
+            "success": [
+              {
+                "weapon": "epic",
+                "level": 2
+              }
+            ],
+            "msg": "Cade senza un grido. La sua ultima lama resta sull'incudine.",
+            "fail_msg": "Il fabbro si scansa e ti colpisce con il martello.",
+            "fail_effects": [
+              {
+                "fight": "hard"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "nido_sanguisughe": {
+    "title": "Il Nido delle Sanguisughe",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Le pareti del Ventre pulsano di piccole bocche. In mezzo, incastrato nella carne, un baule di ferro. Per arrivarci bisogna lasciarsi mordere.",
+        "choices": [
+          {
+            "text": "Avanza e prendi il baule",
+            "msg": "Ogni passo costa sangue. Il baule vale ogni goccia.",
+            "effects": [
+              {
+                "damage": 35
+              },
+              {
+                "gold": 180
+              },
+              {
+                "accessory": "normal"
+              }
+            ]
+          },
+          {
+            "text": "Brucia le pareti",
+            "chance": 60,
+            "success": [
+              {
+                "gold": 100
+              }
+            ],
+            "msg": "La carne si ritrae urlando e ti lascia passare.",
+            "fail_msg": "Il fuoco sveglia qualcosa di più grande.",
+            "fail_effects": [
+              {
+                "fight": "hard"
+              }
+            ]
+          },
+          {
+            "text": "[Negromante] Ordina loro di nutrirti",
+            "requires": {
+              "class": "8"
+            },
+            "msg": "Le sanguisughe obbediscono e ti restituiscono la vita che hanno rubato ad altri.",
+            "effects": [
+              {
+                "heal_pct": 60
+              },
+              {
+                "max_hp": 10
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "eco_madre": {
+    "title": "L'Eco della Madre",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Una voce ti chiama per nome dal fondo di un cunicolo carnoso. È la voce di tua madre, e ti dice che è stanca, che vuole solo che tu ti fermi un po'.",
+        "choices": [
+          {
+            "text": "Fermati",
+            "msg": "Ti addormenti contro la parete tiepida. Ti svegli riposato, e con qualcosa di meno dentro.",
+            "effects": [
+              {
+                "heal_pct": 100
+              },
+              {
+                "corruption": 15
+              }
+            ]
+          },
+          {
+            "text": "Rispondile",
+            "chance": 50,
+            "success": [
+              {
+                "exp": 150
+              },
+              {
+                "essence": 40
+              }
+            ],
+            "msg": "La voce tace, sorpresa. Poi ride, piano, e ti lascia andare.",
+            "fail_msg": "La voce smette di essere quella di tua madre.",
+            "fail_effects": [
+              {
+                "fight": "hard"
+              }
+            ]
+          },
+          {
+            "text": "Tappati le orecchie e prosegui",
+            "msg": "La voce ti segue per un po'. Poi si stanca."
+          }
+        ]
+      }
+    }
+  },
+  "crogiolo_rune": {
+    "title": "Il Crogiolo delle Rune",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Un crogiolo grande come una stanza ribolle di metallo liquido. Sul fondo, attraverso il bagliore, si vedono rune che nessuno ha mai pescato.",
+        "choices": [
+          {
+            "text": "Infila il braccio",
+            "chance": 50,
+            "success": [
+              {
+                "rune": "random"
+              },
+              {
+                "rune": "random"
+              }
+            ],
+            "msg": "Il dolore è insopportabile per un istante, poi stringi due rune.",
+            "fail_msg": "Ritrai il braccio a mani vuote, ustionato fino al gomito.",
+            "fail_effects": [
+              {
+                "damage": 40
+              }
+            ]
+          },
+          {
+            "text": "Usa un'arma come mestolo",
+            "msg": "La lama si scioglie, ma una runa resta impigliata nell'elsa.",
+            "effects": [
+              {
+                "atk": -2
+              },
+              {
+                "rune": "random"
+              }
+            ]
+          },
+          {
+            "text": "[Alchimista] Raffredda il metallo",
+            "requires": {
+              "class": "6"
+            },
+            "msg": "Con un reagente il crogiolo si rapprende. Le rune vengono su da sole.",
+            "effects": [
+              {
+                "rune": "random"
+              },
+              {
+                "rune": "random"
+              },
+              {
+                "exp": 60
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "forgiatore_incatenato": {
+    "title": "Il Forgiatore Incatenato",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Un gigante di scoria è incatenato alla propria incudine. Batte, batte, batte. Quando ti vede si ferma: «Liberami e ti forgio qualunque cosa. Oppure prendi il martello e forgia tu.»",
+        "choices": [
+          {
+            "text": "Spezza le catene",
+            "chance": 40,
+            "success": [
+              {
+                "weapon": "epic",
+                "level": 3
+              }
+            ],
+            "msg": "Il gigante ti ringrazia con l'arma più bella che tu abbia mai visto, poi si sbriciola.",
+            "fail_msg": "Le catene reggono. Il gigante, deluso, ti scaglia contro l'incudine.",
+            "fail_effects": [
+              {
+                "damage": 30
+              }
+            ]
+          },
+          {
+            "text": "Prendi il martello",
+            "msg": "Batti finché le braccia reggono. La tua arma ne esce più forte.",
+            "effects": [
+              {
+                "atk": 4
+              },
+              {
+                "damage": 15
+              }
+            ]
+          },
+          {
+            "text": "Lascialo alla sua condanna",
+            "msg": "Il martello riprende. Batte, batte, batte."
+          }
+        ]
+      }
+    }
+  },
+  "biblioteca_vuoto": {
+    "title": "La Biblioteca del Vuoto",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Scaffali che salgono fino a perdersi. Ogni libro ha il tuo nome sul dorso, e ogni libro racconta una discesa diversa. Alcuni finiscono bene.",
+        "choices": [
+          {
+            "text": "Leggi quello che finisce meglio",
+            "msg": "Impari da te stesso. Fa male, ma impari.",
+            "effects": [
+              {
+                "exp": 200
+              }
+            ]
+          },
+          {
+            "text": "Strappa le pagine della tua morte",
+            "chance": 50,
+            "success": [
+              {
+                "max_hp": 25
+              }
+            ],
+            "msg": "Le pagine bruciano fra le dita. Ti senti più difficile da uccidere.",
+            "fail_msg": "Le pagine si riscrivono da sole, con più dettagli.",
+            "fail_effects": [
+              {
+                "corruption": 15
+              },
+              {
+                "damage": 20
+              }
+            ]
+          },
+          {
+            "text": "Prendi un libro ancora bianco",
+            "msg": "È pesante. Dentro, al posto delle pagine, una runa e una reliquia.",
+            "effects": [
+              {
+                "rune": "random"
+              },
+              {
+                "relic": "random"
+              },
+              {
+                "corruption": 10
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "porta_ritorno": {
+    "title": "La Porta del Ritorno",
+    "scripted": true,
+    "start": "inizio",
+    "scenes": {
+      "inizio": {
+        "text": "Una porta di legno qualunque, con una maniglia di ottone consumata. Dall'altra parte senti l'odore di casa. Sul legno qualcuno ha inciso: «Una volta sola».",
+        "choices": [
+          {
+            "text": "Aprila",
+            "msg": "Dall'altra parte c'è solo un'altra stanza del Labirinto. Ma ci hai creduto, e questo ti ha guarito.",
+            "effects": [
+              {
+                "heal_pct": 70
+              }
+            ]
+          },
+          {
+            "text": "Incidi il tuo nome sotto gli altri",
+            "msg": "Fra i nomi ne riconosci alcuni: eroi del Codice, Nemesi, amici. Il Labirinto ti premia per la memoria.",
+            "effects": [
+              {
+                "essence": 60
+              },
+              {
+                "exp": 100
+              }
+            ]
+          },
+          {
+            "text": "Scardinala e portala con te",
+            "chance": 30,
+            "success": [
+              {
+                "relic": "random"
+              },
+              {
+                "gold": 100
+              }
+            ],
+            "msg": "La porta si rimpicciolisce fra le tue mani e diventa un piccolo amuleto.",
+            "fail_msg": "La porta non si stacca. Il Labirinto non ama i ladri di ritorni.",
+            "fail_effects": [
+              {
+                "fight": "elite"
+              }
+            ]
+          }
+        ]
+      }
+    }
   }
 }
