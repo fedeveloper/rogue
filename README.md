@@ -332,16 +332,16 @@ Si incastonano al Falò in armi e armature: 1 incastone per gli oggetti comuni, 
 | 🔁 **Runa dell'Eco** | Elementale | Arma | I marchi della tua arma durano 1 turno in più. |
 | 🌀 **Runa della Catalisi** | Elementale | Arma | Le reazioni elementali infliggono il 30% di danni in più. |
 | 🌗 **Runa del Contrasto** | Elementale | Arma | I colpi Super Efficaci infliggono il 15% di danni in più. |
-| 🌹 **Runa della Spina** | Status | Arma | I tuoi colpi hanno il 15% di probabilità di far sanguinare il nemico. |
-| 🐍 **Runa della Vipera** | Status | Arma | I tuoi colpi hanno il 15% di probabilità di avvelenare il nemico. |
+| 🌹 **Runa della Spina** | Status | Arma | I tuoi colpi hanno il 10% di probabilità di far sanguinare il nemico. |
+| 🐍 **Runa della Vipera** | Status | Arma | I tuoi colpi hanno il 10% di probabilità di avvelenare il nemico. |
 | 🎯 **Runa dell'Occhio** | Offensiva | Arma | +5% di probabilità di colpo critico. |
 | 💪 **Runa della Forza** | Offensiva | Arma | +6% di Attacco. |
-| 🩸 **Runa del Sangue** | Offensiva | Arma | Ti curi dell'8% dei danni che infliggi con gli attacchi. |
+| 🩸 **Runa del Sangue** | Offensiva | Arma | Ti curi del 5% dei danni che infliggi con gli attacchi. |
 | 🔪 **Runa dell'Agguato** | Offensiva | Arma | Il primo attacco di ogni scontro infligge il 50% di danni in più. |
 | 🪨 **Runa della Pietra** | Difensiva | Armatura | +8% di Difesa dell'armatura. |
 | 🍃 **Runa del Vento** | Difensiva | Armatura | +4% di Schivata. |
-| 🌵 **Runa del Rovo** | Difensiva | Armatura | Chi ti ferisce subisce il 15% dei danni che ti ha inflitto. |
-| 🌙 **Runa della Quiete** | Difensiva | Armatura | Quando ti difendi recuperi il 4% degli HP massimi. |
+| 🌵 **Runa del Rovo** | Difensiva | Armatura | Chi ti ferisce subisce l'8% dei danni che ti ha inflitto. |
+| 🌙 **Runa della Quiete** | Difensiva | Armatura | Quando ti difendi recuperi il 2% degli HP massimi. |
 | 🪙 **Runa dell'Avidità** | Utilità | Arma o armatura | +10% di Oro raccolto. |
 | 📘 **Runa del Sapere** | Utilità | Arma o armatura | +10% di EXP. |
 | 🦁 **Runa del Coraggio** | Utilità | Arma o armatura | Ogni piano inizia con 1 punto di Audacia. |
