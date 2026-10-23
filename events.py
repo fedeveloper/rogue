@@ -394,6 +394,7 @@ def _header(ev: dict, player: Player) -> str:
 def event_room(player: Player, event_id: str, floor: int):
     ev = GAME_DATA["events"][event_id]
     player.seen_events.add(event_id)
+    player.chronicle.append({"kind": "event", "title": ev["title"]})
     seen = _story()["seen_events"]
     seen[event_id] = seen.get(event_id, 0) + 1
     scene_id = ev["start"]

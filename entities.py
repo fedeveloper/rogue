@@ -201,6 +201,7 @@ def get_random_relic(player):
 # --- CLASSI E PLAYER ---
 class Player:
     def __init__(self, class_id: str, trait_id: str, active_pacts: List[str]):
+        self.chronicle = []  # momenti chiave della discesa, per l'Epitaffio (vedi epitaph.note)
         self.class_id = class_id
         data = RAW_DATA["classes"][class_id]
         
@@ -364,6 +365,7 @@ class Player:
         self.relics.append(relic)
         self.relic_ids.append(relic["id"])
         record_relic(relic["id"])
+        self.chronicle.append({"kind": "relic", "name": relic["name"]})
         effect = create_relic_effect(relic["id"])
         self.relic_effects.append(effect)
         effect.on_equip(self)

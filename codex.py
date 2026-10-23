@@ -78,13 +78,14 @@ def sections() -> List[Tuple[str, int, int]]:
         ("Rune", len(set(PROFILE_MANAGER.codex.get("runes", [])) & set(GAME_DATA["runes"]["runes"])), len(GAME_DATA["runes"]["runes"])),
         ("Parole runiche", len(set(PROFILE_MANAGER.codex.get("runewords", [])) & set(GAME_DATA["runes"]["words"])), len(GAME_DATA["runes"]["words"])),
         ("Nemesi", len(PROFILE_MANAGER._data.get("nemeses_fallen", [])), len(PROFILE_MANAGER._data.get("nemeses_fallen", [])) + len(PROFILE_MANAGER._data.get("nemeses", []))),
+        ("Cimitero", len(PROFILE_MANAGER._data.get("cemetery", [])), len(PROFILE_MANAGER._data.get("cemetery", []))),
         ("Fasi dei boss", sum(min(enemies.get(n, {}).get("phases", 0), len(ph)) for n, ph in GAME_DATA["phases"].items()), sum(len(ph) for ph in GAME_DATA["phases"].values())),
         ("Reazioni elementali", len(set(PROFILE_MANAGER.codex.get("reactions", [])) & set(GAME_DATA["elements"]["reactions"])), len(GAME_DATA["elements"]["reactions"])),
     ]
 
 
 # Sezioni che raccontano la tua storia invece di elencare scoperte: non contano nel completamento
-UNCOUNTED = ("Nemesi",)
+UNCOUNTED = ("Nemesi", "Cimitero")
 
 
 def completion() -> int:
@@ -150,6 +151,21 @@ def nemeses_page() -> List[str]:
     for nem in reversed(nemesis.fallen()):
         lines.append(f"  {nem['name']} {GAME_DATA['nemesis']['ranks'][nem['rank'] - 1]} ({nem['enemy']}), che aveva ucciso {nem['kills']} volte")
     if not nemesis.fallen(): lines.append("  Nessuna.")
+    return lines
+
+
+CEMETERY_PAGE = 10
+OUTCOME_ICONS = {"death": "🪦", "escape": "🏃", "victory": "🏆"}
+
+
+def cemetery_page() -> List[str]:
+    """Gli epitaffi delle ultime discese, dalla più recente."""
+    graves = PROFILE_MANAGER._data.get("cemetery", [])
+    if not graves: return ["  Nessuno. Il Labirinto non ha ancora storie da raccontare su di te."]
+    lines = []
+    for g in reversed(graves[-CEMETERY_PAGE:]):
+        lines.append(f"  {OUTCOME_ICONS.get(g['outcome'], '')} {Colors.BOLD}{g['date']} · {g['class']} · piano {g['floor']}{Colors.RESET}")
+        lines.append(f"    {Colors.CYAN}{' '.join(g['epitaph'])}{Colors.RESET}")
     return lines
 
 
@@ -234,7 +250,7 @@ def endings_page() -> List[str]:
 
 PAGES = {"Bestiario": bestiary_page, "Personaggi": characters_page, "Eventi": events_page,
          "Lettere insanguinate": letters_page, "Reliquie": relics_page, "Finali": endings_page,
-         "Rune": runes_page, "Parole runiche": runewords_page, "Nemesi": nemeses_page, "Fasi dei boss": phases_page, "Reazioni elementali": reactions_page}
+         "Rune": runes_page, "Parole runiche": runewords_page, "Nemesi": nemeses_page, "Cimitero": cemetery_page, "Fasi dei boss": phases_page, "Reazioni elementali": reactions_page}
 
 
 def show_codex():

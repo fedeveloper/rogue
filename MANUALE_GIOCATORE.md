@@ -71,6 +71,12 @@ Il nemico comune o l'Élite che ti uccide **se ne ricorda**: diventa una **Nemes
 - Le Nemesi attive sono al massimo 3: una nuova scaccia la più vecchia. I **boss** non diventano Nemesi, ma ti riconoscono la volta dopo.
 - Nel Codice, alla pagina *Nemesi*, trovi chi ti aspetta e chi hai già sconfitto.
 
+### 🪦 L'Epitaffio e il Cimitero
+
+Durante la discesa il gioco annota i momenti che contano: i biomi attraversati, gli eventi, le reliquie trovate, i boss abbattuti, le parole runiche composte, le Nemesi sconfitte, il finale scelto e come è finita. A fine partita ne fa un **epitaffio** di poche frasi: come è finita, fino a 3 fatti della discesa (prima il grado di Ascensione o la Sfida del Giorno, poi le Nemesi sconfitte, i boss, le parole runiche, le reliquie, l'ultimo evento, i biomi, la Corruzione alta) e chi o cosa ti ha ucciso. La stessa discesa dà sempre lo stesso epitaffio.
+
+Gli epitaffi delle ultime 50 discese restano nel **Cimitero**, una pagina del Codice: lì leggi anche quale Nemesi è nata da quale morte.
+
 ### 🏁 I finali
 
 Sconfitto il Dio Antico, scegli come finisce la tua storia fra i finali che ti sei guadagnato. Il primo è sempre disponibile; gli altri dipendono da quello che hai fatto in questa discesa e in quelle passate: i personaggi che hai liberato, le verità che hai ascoltato, le lettere che hai raccolto, la tua Corruzione. Ogni finale nuovo dà un premio in Essenza e finisce nel Codice. Nel Codice i finali che non hai ancora visto mostrano un indizio.

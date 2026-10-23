@@ -16,6 +16,7 @@ from camp import show_camp_fire, start_of_run_boon
 from endings import choose_ending
 import modes
 import nemesis
+import epitaph
 from constants import TEXT_SPEEDS, SPERANZA_LUCE_PCT_PER_LVL, RATIO_GOLD_TO_ESSENCE_ON_DEATH, BOSS_ESSENCE_BONUS, XP_PER_FLOOR, XP_PER_BOSS, INFINITE_MODE_THRESHOLD, INFINITE_MODE_ESSENCE_MULTIPLIER, BLIND_FURY_MIN_ATTACKS
 
 def _update_class_mastery(player: Player, floor: int):
@@ -67,11 +68,14 @@ def _check_feats(player: Player, floor: int, infinite: bool):
 
 def evaluate_run(player: Player, floor: int, infinite: bool):
     display_msg("\n" + ("="*50))
+    born = None  # la Nemesi nata da questa morte, per l'Epitaffio
     if player.hp <= 0:
         delay_print(f"{Colors.RED}S E I   M O R T O.{Colors.RESET}")
         player.essence_gathered += int(player.gold * RATIO_GOLD_TO_ESSENCE_ON_DEATH); PROFILE_MANAGER.stats["total_deaths"] += 1
+        killer = player.run_tracker.get("killer") or {}
         story = nemesis.on_death(player, floor)
         if story: display_msg(f"{Colors.MAGENTA}{Colors.BOLD}✦ {story}{Colors.RESET}")
+        born = nemesis.full_name(nemesis.active()[-1]) if story and not killer.get("nemesis_id") else None
     elif player.escaped:
         delay_print(f"{Colors.GREEN}S E I   F U G G I T O.{Colors.RESET}"); player.essence_gathered += player.gold
     elif player.won:
@@ -101,6 +105,10 @@ def evaluate_run(player: Player, floor: int, infinite: bool):
         display_msg(f"Ascensione {player.ascension}: Essenza ×{essence_multi:g}")
     display_msg(f"Essenza Astrale ottenuta: {Colors.CYAN}✨ {final_essence}{Colors.RESET}")
     
+    lines = epitaph.compose(player, floor, born)
+    epitaph.record(player, floor, lines)
+    display_msg(f"\n{Colors.YELLOW}🪦 {' '.join(lines)}{Colors.RESET}")
+
     _update_class_mastery(player, floor)
     _check_feats(player, floor, infinite)
 
@@ -485,7 +493,8 @@ def _descent(c_choice, t_choice, active_pacts, infinite_mode, grade, daily):
             PROFILE_MANAGER.won_normal = True; player.won = True; player.essence_gathered += 1000
             if not daily and modes.record_ascension_win(grade):
                 display_msg(f"{Colors.RED}{Colors.BOLD}Nuovo grado di Ascensione sbloccato: {modes.max_grade()}!{Colors.RESET}")
-            choose_ending(player)
+            ending = choose_ending(player)
+            if isinstance(ending, dict): epitaph.note(player, "ending", title=ending["title"])
             _grant_victory_rewards()
             break
 
@@ -503,6 +512,8 @@ def _descent(c_choice, t_choice, active_pacts, infinite_mode, grade, daily):
             wait_enter("\nPremi INVIO per entrare...")
         
         _apply_floor_regen(player)
+        if biome and not any(e["kind"] == "biome" and e["name"] == biome["name"] for e in player.chronicle):
+            epitaph.note(player, "biome", name=biome["name"])
         apply_biome_on_floor(player, biome)
             
         player.run_tracker["floor_attacks"] = player.run_tracker["floor_hits"] = 0
