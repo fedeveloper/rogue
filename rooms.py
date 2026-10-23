@@ -4,9 +4,11 @@ from typing import List
 from ui import Colors, delay_print, clear_screen, interactive_menu, display_msg, wait_enter
 from data_manager import GAME_DATA, PROFILE_MANAGER, MULTIPLIERS, get_biome, get_element_icon
 from archive import get_archive_bonus
-from codex import record_enemy_killed, record_enemy_seen, record_letter, record_phase, record_reaction
+from codex import record_enemy_killed, record_enemy_seen, record_letter, record_phase, record_reaction, record_rune
 from constants import CAMPFIRE_REST_PCT, BASE_HIT_CHANCE, BLOOD_LETTER_CHANCE, CURSE_HP_DRAIN_PCT, MIN_DAMAGE_PCT, POISON_MIN, POISON_PCT, RECOVERY_HEAL_PCT
-from entities import STATUS_NAMES, Player, Enemy, generate_weapon, generate_armor, generate_accessory, generate_potion, get_random_relic
+from entities import STATUS_NAMES, Player, Enemy, generate_weapon, generate_armor, generate_accessory, generate_potion, generate_rune, get_random_relic, set_sockets
+import runes as rune_rules
+from entities import Rune
 from inventory_menu import show_inventory_menu
 import modes
 
@@ -215,11 +217,12 @@ class CombatSession:
             relic = get_random_relic(self.player)
             if relic: self.player.add_relic(relic)
             else:
-                drop = generate_weapon(self.floor + 2, True) if random.random() > 0.5 else generate_armor(self.floor + 2, True)
+                drop = set_sockets(generate_weapon(self.floor + 2, True) if random.random() > 0.5 else generate_armor(self.floor + 2, True), "boss")
                 display_msg(f"\n{Colors.MAGENTA}DROP LEGGENDARIO: {drop.display_name}!{Colors.RESET}")
                 if drop.flavor: display_msg(f"{Colors.YELLOW}Flavor: {drop.flavor}{Colors.RESET}")
                 self.player.inventory.append(drop)
             audacity_reward(self.player, self.floor, self.enemy.gold_drop)
+            rune_drop(self.player, self.floor, "boss")
         elif self.enemy.modifier == "elite":
             rule = GAME_DATA["meta"]["rooms"]["elite"]
             relic = get_random_relic(self.player) if random.random() * 100 < rule["relic_chance"] else None
@@ -229,6 +232,7 @@ class CombatSession:
                 drop = generate_weapon(level, epic) if random.random() > 0.5 else generate_armor(level, epic)
                 display_msg(f"\n{Colors.MAGENTA}Il campione lascia cadere: {drop.display_name}!{Colors.RESET}")
                 self.player.inventory.append(drop)
+            rune_drop(self.player, self.floor, "elite")
         elif self.enemy.modifier == "hard":
             drop = generate_weapon(self.floor, False) if random.random() > 0.5 else generate_armor(self.floor, False)
             display_msg(f"\n{Colors.MAGENTA}Il nemico lascia cadere: {drop.display_name}!{Colors.RESET}")
@@ -256,7 +260,7 @@ class CombatSession:
             return
         if not mark or mark[0] != element:
             display_msg(f"{Colors.CYAN}{self.enemy.name} porta il marchio {get_element_icon(element)}.{Colors.RESET}")
-        self.enemy.mark = [element, GAME_DATA["elements"]["marks"]["duration"]]
+        self.enemy.mark = [element, GAME_DATA["elements"]["marks"]["duration"] + self.player.rune_value("mark_duration_add")]
 
     def _trigger_reaction(self, key: str):
         r = GAME_DATA["elements"]["reactions"][key]
@@ -268,7 +272,7 @@ class CombatSession:
         self.player.run_tracker["reactions"] = self.player.run_tracker.get("reactions", 0) + 1
         msg = f"{Colors.MAGENTA}{Colors.BOLD}⚡ REAZIONE: {r['icon']} {r['name'].upper()}!{Colors.RESET}"
         if r.get("bonus_pct"):
-            dmg = self.player.get_total_atk() * r["bonus_pct"] // 100
+            dmg = self.player.get_total_atk() * r["bonus_pct"] // 100 * (100 + self.player.rune_value("reaction_dmg_pct")) // 100
             self.enemy.hp -= dmg
             msg += f" {Colors.CYAN}{dmg} danni extra.{Colors.RESET}"
         if r.get("status"):
@@ -421,6 +425,7 @@ class CombatSession:
         # Imboscata (Assassino): il primo attacco di ogni scontro, anche se manca, consuma il bonus.
         # Non si somma all'attacco concentrato, che è già un critico garantito.
         ambush = self.player.assassin_ambush and self.first_player_attack and not was_focused
+        first_strike = self.first_player_attack and self.player.rune_value("first_strike_pct")
         self.first_player_attack = False
         if ambush:
             dmg_dealt *= 2
@@ -430,6 +435,12 @@ class CombatSession:
         if random.randint(1, 100) <= hit_chance:
             self.player.run_tracker["floor_hits"] += 1
             dmg_dealt = int(dmg_dealt * self.player.get_class_damage_multiplier())
+            # Rune dell'arma: Contrasto sui colpi Super Efficaci, Agguato sul primo attacco dello scontro
+            if multiplier > 1.0 and self.player.rune_value("super_effective_pct"):
+                dmg_dealt = dmg_dealt * (100 + self.player.rune_value("super_effective_pct")) // 100
+            if first_strike:
+                dmg_dealt = dmg_dealt * (100 + first_strike) // 100
+                eff += f" {Colors.MAGENTA}[AGGUATO]{Colors.RESET}"
             if multiplier > 1.0 and self.enemy.is_boss:
                 if "super_effective_hits" not in self.player.run_tracker: self.player.run_tracker["super_effective_hits"] = 0
                 self.player.run_tracker["super_effective_hits"] += 1
@@ -451,7 +462,7 @@ class CombatSession:
             
             for r in self.player.relic_effects: r.on_attack_landed(self, multiplier)
 
-            ls = self.player.get_lifesteal()
+            ls = self.player.get_lifesteal() + dmg_dealt * self.player.rune_value("lifesteal_pct") // 100
             stolen = self.player.heal(ls) if ls > 0 else 0
             if stolen > 0: display_msg(f"{Colors.RED}Rubavita: assorbi {stolen} HP!{Colors.RESET}")
             if self.resonance == "Luce":
@@ -460,6 +471,11 @@ class CombatSession:
             if self.resonance == "Fuoco":
                 self.burn_dmg += int(self._resonance_value("Fuoco"))
 
+            for s_type, key in (("bleed", "bleed_on_hit"), ("poison", "poison_on_hit")):
+                chance = self.player.rune_value(key)
+                if chance and self.enemy.hp > 0 and random.randint(1, 100) <= chance:
+                    self.enemy.statuses[s_type] = max(self.enemy.statuses.get(s_type, 0), 3)
+                    display_msg(f"{Colors.MAGENTA}La runa colpisce: {self.enemy.name} è afflitto da {STATUS_NAMES[s_type].upper()}!{Colors.RESET}")
             s_data = self.player.weapon.status_inflict
             if s_data and self.enemy.hp > 0 and random.randint(1, 100) <= s_data.get("chance", 100):
                 s_type = s_data["type"]
@@ -478,6 +494,9 @@ class CombatSession:
     def execute_player_defense(self):
         self.is_defending = True
         self.player.on_defense_started()
+        if self.player.rune_value("defend_heal_pct"):
+            healed = self.player.heal(max(1, self.player.max_hp * self.player.rune_value("defend_heal_pct") // 100))
+            if healed: display_msg(f"{Colors.GREEN}Runa della Quiete: recuperi {healed} HP.{Colors.RESET}")
         if self.def_type == "silenced":
             display_msg(f"\n{Colors.BLUE}-> Ti ripari come puoi: nel gas la tecnica non ti riesce.{Colors.RESET}")
         elif self.def_type == "counter":
@@ -685,7 +704,7 @@ class CombatSession:
                         self.player.statuses[s_type] = max(self.player.statuses.get(s_type, 0), s_data["duration"])
                         display_msg(f"{Colors.MAGENTA}Sei stato afflitto da {STATUS_NAMES.get(s_type, s_type).upper()}!{Colors.RESET}")
                 
-                reflect_total = 0
+                reflect_total = dmg_taken * self.player.rune_value("thorns_pct") // 100
                 if self.player.accessory and self.player.accessory.bonus_type == "reflect": reflect_total += self.player.accessory.bonus_value
                 if reflect_total > 0:
                     self.enemy.hp -= reflect_total
@@ -802,6 +821,7 @@ def mystery_room(player: Player, floor: int, active_pacts: List[str]):
         rule = GAME_DATA["meta"]["rooms"]["mystery"]
         _gain_gold(player, int(rule["hoard_gold_mult"] * _chest_gold(floor)))
         _gain_item(player, generate_accessory(floor))
+        rune_drop(player, floor, "mystery_hoard")
         wait_enter("\nPremi INVIO per proseguire...")
     elif outcome == "relic":
         display_msg(f"\n{Colors.MAGENTA}Al centro della stanza, sospesa nel nulla, pulsa una reliquia.{Colors.RESET}")
@@ -814,6 +834,7 @@ def mystery_room(player: Player, floor: int, active_pacts: List[str]):
 def vendor_room(player: Player, floor: int):
     delay_print(f"\n{random.choice(GAME_DATA['lore']['vendor'])}")
     items_for_sale =[generate_weapon(floor + 1), generate_armor(floor + 1), generate_accessory(floor), generate_potion(floor), generate_potion(floor)]
+    items_for_sale += [generate_rune(floor) for _ in range(rune_rules.rules()["vendor_stock"])]
     discount = 1.0 - (PROFILE_MANAGER.get_perk("discount_lvl", 0) * 0.10)
     for i in items_for_sale: 
         i.value = max(1, int(i.value * discount))
@@ -833,7 +854,7 @@ def vendor_room(player: Player, floor: int):
                 prompt_compra = f"\n{Colors.CYAN}--- NEGOZIO (COMPRA) --- Tuo Oro: {player.gold}{Colors.RESET}\nScegli cosa comprare:"
                 options_compra = []
                 for i, item in enumerate(items_for_sale):
-                    tipo = "Arma" if item.type=="weapon" else "Armatura" if item.type=="armor" else "Monile" if item.type=="accessory" else "Pozione"
+                    tipo = {"weapon": "Arma", "armor": "Armatura", "accessory": "Monile", "rune": "Runa"}.get(item.type, "Pozione")
                     options_compra.append(f"[{tipo}] {item.display_name} - Prezzo: {Colors.YELLOW}{item.value} Oro{Colors.RESET}")
                 idx_compra = interactive_menu(options_compra, prompt_compra, cancellable=True)
                 if idx_compra == -1: break
@@ -842,6 +863,7 @@ def vendor_room(player: Player, floor: int):
                     item = items_for_sale[idx_compra]
                     if player.gold >= item.value:
                         player.gold -= item.value; player.inventory.append(item)
+                        if item.type == "rune": record_rune(item.rune_id)
                         if "gold_spent" not in player.run_tracker: player.run_tracker["gold_spent"] = 0
                         player.run_tracker["gold_spent"] += item.value
                         display_msg(f"{Colors.GREEN}Hai comprato {item.name}!{Colors.RESET}"); items_for_sale.pop(idx_compra); time.sleep(1)
@@ -866,6 +888,62 @@ def vendor_room(player: Player, floor: int):
                     player.gold += gain; display_msg(f"{Colors.GREEN}Hai venduto {item.name} per {gain} oro!{Colors.RESET}"); time.sleep(1)
         elif idx == 2: break
 
+RUNE_WORKSHOP = f"{Colors.CYAN}🔷 Rune e Incastoni{Colors.RESET} (incastonare è gratis; il falò resta acceso)"
+
+
+def _socketable(player: Player) -> list:
+    """Armi e armature dell'eroe, equipaggiate per prime: (oggetto, etichetta)."""
+    out = [(player.weapon, "equipaggiata"), (player.armor, "equipaggiata")]
+    out += [(i, "nello zaino") for i in player.inventory if i.type in ("weapon", "armor")]
+    return out
+
+
+def rune_workshop(player: Player, floor: int):
+    """Al Falò: incastonare una runa (gratis) o estrarla (Oro), così le rune passano da un oggetto all'altro."""
+    cost = rune_rules.extract_cost(floor)
+    while True:
+        clear_screen()
+        bag = [i for i in player.inventory if i.type == "rune"]
+        lines = [f"\n{Colors.CYAN}--- 🔷 RUNE E INCASTONI ---{Colors.RESET} | Oro: {player.gold}",
+                 f"Arma: {player.weapon.display_name}", f"Armatura: {player.armor.display_name}",
+                 "Rune nello zaino: " + (", ".join(r.display_name for r in bag) if bag else "nessuna")]
+        options = [f"Incastona una runa", f"Estrai una runa ({cost} Oro: torna nello zaino)"]
+        idx = interactive_menu(options, "\n".join(lines), cancellable=True)
+        if idx == -1: return
+        if idx == 0:
+            if not bag:
+                display_msg(f"{Colors.RED}Non hai rune nello zaino.{Colors.RESET}"); wait_enter(); continue
+            r_idx = interactive_menu([rune_rules.describe(r.rune_id) for r in bag], "\nQuale runa?", cancellable=True)
+            if r_idx == -1: continue
+            rune = bag[r_idx]
+            targets = [(it, where) for it, where in _socketable(player) if rune_rules.free_sockets(it) > 0 and rune_rules.fits(rune.rune_id, it.type)]
+            if not targets:
+                display_msg(f"{Colors.RED}Nessun oggetto adatto ha un incastone libero ({rune_rules.SLOT_NAMES[rune_rules.rune(rune.rune_id)['slot']]}).{Colors.RESET}"); wait_enter(); continue
+            t_idx = interactive_menu([f"{it.display_name} ({where})" for it, where in targets], f"\nIn quale oggetto incastonare {rune.display_name}?", cancellable=True)
+            if t_idx == -1: continue
+            item = targets[t_idx][0]
+            player.inventory.remove(rune)
+            item.runes.append(rune.rune_id)
+            item.refresh_display_name()
+            display_msg(f"{Colors.GREEN}La runa si fonde con il metallo: {item.display_name}.{Colors.RESET}"); wait_enter()
+        else:
+            holders = [(it, where) for it, where in _socketable(player) if it.runes]
+            if not holders:
+                display_msg(f"{Colors.RED}Nessun oggetto ha rune incastonate.{Colors.RESET}"); wait_enter(); continue
+            if player.gold < cost:
+                display_msg(f"{Colors.RED}Oro insufficiente: estrarre una runa costa {cost} Oro.{Colors.RESET}"); wait_enter(); continue
+            h_idx = interactive_menu([f"{it.display_name} ({where})" for it, where in holders], "\nDa quale oggetto?", cancellable=True)
+            if h_idx == -1: continue
+            item = holders[h_idx][0]
+            k = interactive_menu([rune_rules.describe(rid) for rid in item.runes], "\nQuale runa estrarre?", cancellable=True)
+            if k == -1: continue
+            rid = item.runes.pop(k)
+            item.refresh_display_name()
+            player.gold -= cost
+            player.inventory.append(Rune(rid, floor))
+            display_msg(f"{Colors.GREEN}Hai estratto {rune_rules.rune(rid)['name']} (-{cost} Oro).{Colors.RESET}"); wait_enter()
+
+
 def campfire_room(player: Player, floor: int):
     delay_print(f"\n{Colors.YELLOW}{random.choice(GAME_DATA['lore']['campfire'])}{Colors.RESET}")
     while True:
@@ -882,11 +960,13 @@ def campfire_room(player: Player, floor: int):
         if has_cursed:
             options.append(f"{Colors.CYAN}Purifica Maledizione{Colors.RESET} (Paga {Colors.YELLOW}100 Oro{Colors.RESET} per rimuovere il malus da un pezzo equipaggiato)")
             
+        options.append(RUNE_WORKSHOP)
         options.append("Prosegui")
         
         idx = interactive_menu(options, prompt)
         
         if options[idx] == "Prosegui": break
+        elif options[idx] == RUNE_WORKSHOP: rune_workshop(player, floor)
         elif idx == 0:
             player.run_tracker["rested"] = True
             player.heal(player.max_hp * rest_pct // 100)
@@ -918,6 +998,8 @@ def campfire_room(player: Player, floor: int):
                     it1, it2 = equips[i1], equips[i2]
                     if it1.type == it2.type:
                         player.inventory.remove(it2)
+                        # Le rune dell'oggetto sacrificato tornano nello zaino; quelle della base restano incastonate
+                        player.inventory.extend(Rune(rid, floor) for rid in getattr(it2, "runes", []))
                         if it1.type == "weapon": it1.atk += max(1, it2.atk // 2)
                         else: it1.defense += max(1, it2.defense // 2)
                         it1.level += 1
@@ -954,6 +1036,15 @@ def campfire_room(player: Player, floor: int):
                         display_msg(f"{Colors.GREEN}Il rituale ha successo! La maledizione è spezzata.{Colors.RESET}")
                         wait_enter("\nPremi INVIO...")
                         break
+
+def rune_drop(player: Player, floor: int, source: str):
+    """Una runa con la probabilità della fonte (`runes.json`, `rules.drops`)."""
+    if rune_rules.roll_drop(source):
+        r = generate_rune(floor)
+        record_rune(r.rune_id)
+        display_msg(f"{Colors.CYAN}Trovi una runa: {r.display_name}! (Si incastona al Falò){Colors.RESET}")
+        player.inventory.append(r)
+
 
 def _chest_gold(floor: int) -> int:
     return random.randint(30, 60) + (floor * 10)
@@ -1023,6 +1114,7 @@ def treasure_room(player: Player, floor: int):
             display_msg(f"\n{Colors.YELLOW}Nel ventre del Mimic c'è il bottino di chi lo ha aperto prima di te.{Colors.RESET}")
             _gain_gold(player, 2 * _chest_gold(floor))
             _gain_item(player, _gear(floor + rules["loot_floor_bonus"]), "Hai trovato")
+            rune_drop(player, floor, "mimic")
             wait_enter("\nPremi INVIO per continuare...")
         return
 
@@ -1042,7 +1134,8 @@ def trap_chances(player: Player) -> dict:
     rules = GAME_DATA["meta"]["rooms"]["trap"]
     precision = player.base_acc + player.temp_acc + player.weapon.get_hit_chance_modifier() + sum(r.get_acc_modifier() for r in player.relic_effects)
     stats = {"disarm": precision, "dash": player.get_dodge()}
-    return {k: int(max(rules["min_chance"], min(rules["max_chance"], rules[k]["base"] + stats[k] * rules[k]["per_point"]))) for k in stats}
+    bonus = player.rune_value("trap_chance_add")
+    return {k: int(max(rules["min_chance"], min(rules["max_chance"], rules[k]["base"] + stats[k] * rules[k]["per_point"] + bonus))) for k in stats}
 
 
 def trap_damage(player: Player, floor: int, active_pacts: List[str], base: int) -> int:
@@ -1089,5 +1182,6 @@ def trap_room(player: Player, floor: int, active_pacts: List[str]) -> bool:
     epic = random.random() * 100 < rules["epic_chance"]
     loot = _gear(floor + rules["loot_floor_bonus"], epic) if random.random() * 100 < rules["gear_chance"] else generate_accessory(floor)
     _gain_item(player, loot, f"{Colors.MAGENTA}Il bottino della trappola è tuo{Colors.RESET}")
+    rune_drop(player, floor, "trap")
     wait_enter("\nPremi INVIO per continuare...")
     return True

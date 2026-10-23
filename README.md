@@ -54,6 +54,7 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 - 📅 **Sfida del Giorno.** Una discesa al giorno uguale per tutti: eroe, tratto, malus e dono assegnati, la stessa mappa a ogni piano. Conta il primo tentativo; punteggio, serie di giorni e record restano nel profilo.
 - 📖 **Eventi che ricordano.** 46 storie a scene con opzioni che esistono solo per la tua classe, il tuo tratto o le tue reliquie: `[Mago]`, `[Tocco di Mida]`, `[Chiave Arrugginita]`. Il Labirinto ricorda chi hai aiutato e chi hai derubato, e certe scelte tornano a bussare qualche piano dopo.
 - 🗝️ **Personaggi che ritornano.** *Sir Alaric*, il Primo Paladino, e *Silas*, il Cercatore, hanno storie in tre capitoli che proseguono di run in run. Le tue scelte decidono come finiscono, e se liberi Alaric il Cavaliere Oscuro non tornerà più.
+- 🔷 **Rune e Incastoni.** 17 rune da incastonare al Falò in armi e armature: allungano i marchi, potenziano le reazioni, fanno sanguinare, rubano vita, riflettono i colpi. Restano sull'oggetto finché non le estrai, quindi ogni cambio d'arma è una scelta.
 - 👑 **Boss che cambiano.** A metà della vita ogni boss entra in una nuova fase con un nome, mosse nuove e regole proprie: il Re dei Goblin chiama le guardie, il Drago di Zaffiro si copre di Scaglie che solo una reazione elementale infrange, la Badessa ti sigilla la difesa. Il DIO ANTICO ha tre fasi, e nella seconda diventa l'elemento che ti ferisce di più.
 - 🩸 **Corruzione.** Le scelte oscure danno potere e opzioni proibite, ma il Labirinto comincia a nasconderti le cose: gli effetti delle scelte, le mosse dei nemici.
 - 🏁 **5 finali.** Uccidere il Dio, prenderne il posto, risvegliare Aethelgard… e un finale segreto per chi legge davvero il Labirinto.
@@ -322,6 +323,33 @@ L'ATK reale cresce con il piano in cui l'arma viene trovata; le armi di elemento
 </details>
 
 <details>
+<summary>🔷 Le 17 rune</summary>
+
+Si incastonano al Falò in armi e armature: 1 incastone per gli oggetti comuni, 2 per gli epici, 3 per i premi dei boss.
+
+| Runa | Famiglia | Dove | Effetto |
+|---|---|---|---|
+| 🔁 **Runa dell'Eco** | Elementale | Arma | I marchi della tua arma durano 1 turno in più. |
+| 🌀 **Runa della Catalisi** | Elementale | Arma | Le reazioni elementali infliggono il 30% di danni in più. |
+| 🌗 **Runa del Contrasto** | Elementale | Arma | I colpi Super Efficaci infliggono il 15% di danni in più. |
+| 🌹 **Runa della Spina** | Status | Arma | I tuoi colpi hanno il 10% di probabilità di far sanguinare il nemico. |
+| 🐍 **Runa della Vipera** | Status | Arma | I tuoi colpi hanno il 10% di probabilità di avvelenare il nemico. |
+| 🎯 **Runa dell'Occhio** | Offensiva | Arma | +5% di probabilità di colpo critico. |
+| 💪 **Runa della Forza** | Offensiva | Arma | +6% di Attacco. |
+| 🩸 **Runa del Sangue** | Offensiva | Arma | Ti curi del 5% dei danni che infliggi con gli attacchi. |
+| 🔪 **Runa dell'Agguato** | Offensiva | Arma | Il primo attacco di ogni scontro infligge il 50% di danni in più. |
+| 🪨 **Runa della Pietra** | Difensiva | Armatura | +8% di Difesa dell'armatura. |
+| 🍃 **Runa del Vento** | Difensiva | Armatura | +4% di Schivata. |
+| 🌵 **Runa del Rovo** | Difensiva | Armatura | Chi ti ferisce subisce l'8% dei danni che ti ha inflitto. |
+| 🌙 **Runa della Quiete** | Difensiva | Armatura | Quando ti difendi recuperi il 2% degli HP massimi. |
+| 🪙 **Runa dell'Avidità** | Utilità | Arma o armatura | +10% di Oro raccolto. |
+| 📘 **Runa del Sapere** | Utilità | Arma o armatura | +10% di EXP. |
+| 🦁 **Runa del Coraggio** | Utilità | Arma o armatura | Ogni piano inizia con 1 punto di Audacia. |
+| 👣 **Runa del Passo** | Utilità | Arma o armatura | +10 alle prove delle trappole. |
+
+</details>
+
+<details>
 <summary>🏆 Le 14 imprese</summary>
 
 | Impresa | Obiettivo | Ricompensa |
@@ -368,6 +396,7 @@ Ogni scelta mostra i suoi effetti reali, molte opzioni esistono solo per certe c
 | Nemici comuni | 38 |
 | Boss | 21 |
 | Fasi dei boss | 22 |
+| Rune | 17 |
 | Eventi narrativi | 46 |
 | Imprese | 14 |
 | Tomi dell'Archivio | 3 |
@@ -392,6 +421,7 @@ rogue/
 ├── camp.py            # Il Fuoco del Campo: personaggi e strutture
 ├── endings.py         # I finali multipli
 ├── codex.py           # Il Codice del Labirinto: ciò che hai scoperto fra le run
+├── runes.py           # Rune e Incastoni: effetti, drop, etichette
 ├── modes.py           # Ascensione e Sfida del Giorno: le regole della discesa
 ├── data_manager.py    # Caricamento dei dati e salvataggio del profilo
 ├── ui.py              # Terminale: colori, menu a frecce, output centralizzato
@@ -417,7 +447,7 @@ I **test di contratto** (`tests/test_contracts.py`, `tests/test_modes.py`) verif
 - [x] Classi **Assassino** e **Negromante**
 - [x] Nemici e boss legati alla profondità
 - [x] Impostazioni (velocità del testo)
-- [ ] Sistema di Rune/Incastoni per armi e armature
+- [x] Rune e Incastoni per armi e armature
 - [x] Nemici che annunciano la mossa e reazioni elementali
 - [x] Boss con fasi: soglie di HP, mosse nuove (Sigillo, Carica, Prosciugamento, Barriera), scudi e Scaglie
 - [x] Eventi a scene, opzioni per classe e tratto, memoria fra le run

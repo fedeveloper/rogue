@@ -31,6 +31,11 @@ def record_phase(name: str, phase: int):
     rec["phases"] = max(rec.get("phases", 0), phase)
 
 
+def record_rune(rune_id: str):
+    found = PROFILE_MANAGER.codex.setdefault("runes", [])
+    if rune_id not in found: found.append(rune_id)
+
+
 def record_letter(index: int):
     if index not in PROFILE_MANAGER.codex["letters"]: PROFILE_MANAGER.codex["letters"].append(index)
 
@@ -65,6 +70,7 @@ def sections() -> List[Tuple[str, int, int]]:
         ("Lettere insanguinate", len(set(PROFILE_MANAGER.codex["letters"]) & set(range(len(GAME_DATA["lore"]["letters"])))), len(GAME_DATA["lore"]["letters"])),
         ("Reliquie", len(set(PROFILE_MANAGER.codex["relics"]) & {r["id"] for r in RAW_DATA["relics"]}), len(RAW_DATA["relics"])),
         ("Finali", len(set(PROFILE_MANAGER.story.get("endings", {})) & {e["id"] for e in GAME_DATA["story"]["endings"]}), len(GAME_DATA["story"]["endings"])),
+        ("Rune", len(set(PROFILE_MANAGER.codex.get("runes", [])) & set(GAME_DATA["runes"]["runes"])), len(GAME_DATA["runes"]["runes"])),
         ("Fasi dei boss", sum(min(enemies.get(n, {}).get("phases", 0), len(ph)) for n, ph in GAME_DATA["phases"].items()), sum(len(ph) for ph in GAME_DATA["phases"].values())),
         ("Reazioni elementali", len(set(PROFILE_MANAGER.codex.get("reactions", [])) & set(GAME_DATA["elements"]["reactions"])), len(GAME_DATA["elements"]["reactions"])),
     ]
@@ -91,6 +97,15 @@ def bestiary_page() -> List[str]:
             lines.append(f"{head} [{get_element_icon(data['element'])}]  incontri {rec['seen']} · sconfitti {rec['killed']}")
             if rec["killed"] and data.get("lore"): lines.append(f"    {Colors.CYAN}{data['lore']}{Colors.RESET}")
             elif not rec["killed"]: lines.append(f"    {Colors.RED}Sconfiggilo per conoscerne la storia.{Colors.RESET}")
+    return lines
+
+
+def runes_page() -> List[str]:
+    found = PROFILE_MANAGER.codex.get("runes", [])
+    lines = []
+    for rid, r in GAME_DATA["runes"]["runes"].items():
+        if rid in found: lines.append(f"  {r['icon']} {Colors.BOLD}{r['name']}{Colors.RESET} [{r['family']}] — {r['desc']}")
+        else: lines.append(f"  {UNKNOWN} [{r['family']}]")
     return lines
 
 
@@ -175,7 +190,7 @@ def endings_page() -> List[str]:
 
 PAGES = {"Bestiario": bestiary_page, "Personaggi": characters_page, "Eventi": events_page,
          "Lettere insanguinate": letters_page, "Reliquie": relics_page, "Finali": endings_page,
-         "Fasi dei boss": phases_page, "Reazioni elementali": reactions_page}
+         "Rune": runes_page, "Fasi dei boss": phases_page, "Reazioni elementali": reactions_page}
 
 
 def show_codex():

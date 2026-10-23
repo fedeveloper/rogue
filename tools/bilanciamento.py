@@ -32,6 +32,7 @@ os.chdir(ROOT)
 # Il caricamento riscrive profile.json solo se va migrato da una versione precedente (come all'avvio del gioco);
 # da qui in poi nessun salvataggio arriva al file
 from data_manager import GAME_DATA, PROFILE_MANAGER, RAW_DATA, get_biome, update_game_data
+import runes
 
 ANSI = re.compile(r"\x1b\[[0-9;?]*[A-Za-z]")
 FLOORS = (1, 5, 10, 15, 20, 25, 30)
@@ -130,8 +131,13 @@ class Bot:
         if p.accessory is None:
             acc = next((i for i in p.inventory if i.type == "accessory"), None)
             if acc: p.inventory.remove(acc); p.accessory = acc
-        gear = [i for i in p.inventory if i.type != "consumable"]
-        p.inventory = [i for i in p.inventory if i.type == "consumable"] + gear[:4]
+        # Rune: le incastona dove c'è posto (come al Falò, ma senza passare dal menu)
+        for r in [i for i in p.inventory if i.type == "rune"]:
+            target = next((it for it in (p.weapon, p.armor) if runes.free_sockets(it) > 0 and runes.fits(r.rune_id, it.type)), None)
+            if target:
+                p.inventory.remove(r); target.runes.append(r.rune_id); target.refresh_display_name()
+        gear = [i for i in p.inventory if i.type in ("weapon", "armor", "accessory")]
+        p.inventory = [i for i in p.inventory if i.type in ("consumable", "rune")] + gear[:4]
 
     def menu(self, options, prompt="", cancellable=False, initial=0):
         self.calls += 1

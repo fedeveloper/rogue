@@ -39,6 +39,14 @@ class ManualFollowsTheDataTest(unittest.TestCase):
             with self.subTest(grade=i):
                 self.assertEqual((int(n), name, desc, essence), (i, g["name"], g["desc"], it(mult)))
 
+    def test_the_rune_table_lists_every_rune(self):
+        slot = {"weapon": "Arma", "armor": "Armatura", "any": "Arma o armatura"}
+        for r in GAME_DATA["runes"]["runes"].values():
+            self.assertIn(f"| {r['icon']} {r['name']} | {r['family']} | {slot[r['slot']]} | {r['desc']} |", self.manual)
+        rules = GAME_DATA["runes"]["rules"]
+        for source, pct in rules["drops"].items(): self.assertIn(f"({pct}%)", self.manual)
+        self.assertIn(f"Costa {rules['extract_cost'][0]} Oro più {rules['extract_cost'][1]} per piano", self.manual)
+
     def test_the_daily_section_lists_every_boon_and_rule(self):
         daily = GAME_DATA["modes"]["daily"]
         for b in daily["boons"]:
