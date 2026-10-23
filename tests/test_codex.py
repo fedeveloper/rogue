@@ -105,7 +105,7 @@ class PagesTest(Sandbox):
         codex.record_relic("tasca_dorata")
         codex.record_letter(0)
         codex.record_reaction("Fuoco+Acqua")
-        self.assertEqual([s[1] for s in codex.sections()], [0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1])
+        self.assertEqual([s[1] for s in codex.sections()], [0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1])
         self.assertEqual(codex.completion(), 3 * 100 // total)
 
     def test_characters_page_follows_the_arc(self):

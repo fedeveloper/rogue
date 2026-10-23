@@ -22,6 +22,7 @@ Riferimento per chi modifica il gioco: architettura, formato dei dati, formule d
 | `modes.py` | Modalità: regole della discesa in corso (`RUN`, `rule`, `combine`, `start_run`/`end_run`), gradi di Ascensione (`max_grade`, `ascension_rules`, `ascension_essence_mult`, `record_ascension_win`) e Sfida del Giorno (`daily_setup`, `daily_rules`, `daily_score`, `record_daily`, `daily_streak`). |
 | `runes.py` | Rune e Incastoni: chiavi degli effetti (`RUNE_EFFECT_KEYS`), dati delle rune (`rune`, `fits`, `random_rune_id`), probabilità di drop (`roll_drop`), costo di estrazione, etichetta degli incastoni sul nome (`socket_tag`). |
 | `nemesis.py` | La Nemesi: nascita e rango (`on_death`), comparsa sulla mappa (`waiting_on`), nemico (`build_enemy`), tratto che resiste (`resisted`), sconfitta (`defeat`), boss che ti riconoscono (`boss_grudge`). |
+| `epitaph.py` | L'Epitaffio: cronaca della discesa (`note`, in `Player.chronicle`), composizione dai modelli (`compose`), Cimitero (`record`, `cemetery`). |
 | `camp.py` | Il Fuoco del Campo: personaggi presenti, frasi e doni (`talk`), strutture (`build`, `built`), dono dello Scrittoio a inizio run (`start_of_run_boon`). |
 | `endings.py` | Finali: disponibili (`available_endings`), scelta e premio (`choose_ending`), registro in `profile.story.endings`. |
 | `codex.py` | Il Codice del Labirinto: registra nemici visti e sconfitti, fasi dei boss, lettere e reliquie (`record_*`), calcola il completamento e mostra le pagine (`show_codex`). |
@@ -68,6 +69,7 @@ Un test controlla che ogni oggetto sbloccabile abbia davvero una di queste strad
 | `phases.json` | Fasi dei boss | `bosses[nome] = [{at_pct, name, text, element, atk_mult, heal_pct, shield_pct, ward, status_inflict, moves}]`: vedi [Intenti e reazioni](#intenti-e-reazioni) |
 | `runes.json` | Rune e parole runiche | `rules` (`sockets` per `normal`/`epic`/`boss`, `extract_cost` e `value` come [base, per piano], `drops` per fonte in %, `vendor_stock`); `runes[id] = {name, icon, family, slot (weapon/armor/any), weight, effects, desc}`; `words[id] = {name, runes, effects, desc}` |
 | `nemesis.json` | Nemesi | `rules` (`max_active`, `max_rank`, `stats_pct_per_rank`, `gold_taken_pct`, `floor_window` [da, a] rispetto al piano della morte), `names`, `ranks`, `traits[id] = {name, desc, value}`, `text` (frasi con `{name}`, `{rank}`, `{floor}`, `{gold}`, `{boss}`) |
+| `epitaph.json` | Epitaffio | `cemetery_size`, `max_middle`, `opening` (varianti per `death`/`escape`/`victory`), `middle` (una frase per fatto), `priority` (ordine dei fatti), `cause` (`nemesis`, `boss`, `enemy`, `trap`, `other`), `born`, `ending` |
 | `lore.json` | Frasi d'atmosfera | `combat`, `boss`, `vendor`, `treasure`, `trap`, `campfire`, `letters`, `mystery` |
 
 ### Maestrie
@@ -300,6 +302,10 @@ Il profilo del giocatore non viene mai toccato (il caricamento lo riscrive solo 
 
 Oltre `max_active` la più vecchia si perde. `generate_floor_map` mette al posto di una stanza delle file centrali (mai una stanza speciale o richiamata) il tipo `nemesis` se `waiting_on(piano, player.nemeses_met)` trova una Nemesi nella finestra di piani; una volta per discesa. `build_enemy` crea il nemico del piano (`Enemy(..., name=...)`) con HP e ATK × (1 + `stats_pct_per_rank`·rango/100) e il tratto (`hp_bonus_pct`, `atk_bonus_pct`, `acc_add`, `resist_element`: i colpi dell'elemento salvato fanno × (1 − valore/100)). Sconfitta (`on_enemy_death`): `defeat` la sposta in `profile.nemeses_fallen` (ultime 20) e restituisce l'Oro; il trofeo è un pezzo epico. Il Codice ha la pagina *Nemesi*, esclusa dal completamento (`codex.UNCOUNTED`). La stanza vale `audacity.points.nemesis`.
 
+### Epitaffio e Cimitero
+
+`Player.chronicle` raccoglie dizionari `{"kind": ..., ...}`: `relic` (`add_relic`), `boss` e `nemesis_defeated` (`on_enemy_death`), `runeword` (laboratorio del Falò), `event` (`event_room`), `biome` (primo piano di ogni bioma), `ending` (`choose_ending`). La causa della morte viene da `run_tracker["killer"]` (con `display`, il nome da raccontare) o da `run_tracker["death_cause"] = "trap"`. `epitaph.compose(player, piano, nemesi_nata)` sceglie l'apertura per esito, le frasi di mezzo dei fatti presenti nell'ordine di `priority` (al massimo `max_middle`), il finale e la causa; le varianti si scelgono con un `random.Random` seminato dai fatti della discesa, quindi lo stesso racconto dà lo stesso testo. `evaluate_run` lo mostra e lo salva con `record` in `profile.cemetery`. Il Codice ha la pagina *Cimitero*, esclusa dal completamento come *Nemesi*.
+
 ### Rune e Incastoni
 
 `Weapon` e `Armor` hanno `sockets` (incastoni) e `runes` (id incastonati); il nome mostra `⟨icone◇⟩` (`runes.socket_tag`). I generatori danno `normal` incastoni, gli epici `epic` (`set_sockets`), il drop leggendario dei boss `boss`. Le rune nello zaino sono oggetti `Rune` (`type = "rune"`), create da `generate_rune`. `Player.rune_value(chiave)` somma un effetto sulle rune dell'arma e dell'armatura **equipaggiate**:
@@ -447,6 +453,7 @@ Il salvataggio si crea al primo avvio e **non va committato** (è in `.gitignore
 | Chiave | Contenuto |
 |---|---|
 | `essence`, `max_floor`, `won_normal` | Essenza, piano più profondo raggiunto, vittoria standard ottenuta (sblocca Ascensione e Modalità Infinita) |
+| `cemetery` | Gli epitaffi delle ultime discese: `date`, `class`, `floor`, `outcome`, `epitaph` (frasi) |
 | `nemeses`, `nemeses_fallen`, `boss_grudges` | Nemesi attive e sconfitte; quante volte ogni boss ti ha ucciso |
 | `ascension` | `best_win`: il grado più alto vinto; è disponibile fino a `best_win + 1` (massimo 20) |
 | `daily` | Sfide del Giorno registrate, per data ISO: `score`, `floor`, `won`, `class` (solo il primo tentativo; ultime `history` date) |
@@ -488,6 +495,7 @@ La CI (`.github/workflows/tests.yml`) li esegue su Python 3.9 e sull'ultima 3.x;
 |---|---|
 | `test_data.py` | Coerenza dei JSON |
 | `test_entities.py` | Generazione di oggetti, eroi, nemici; reliquie registrate |
+| `test_epitaph.py` | Epitaffio: modelli, apertura e causa, ogni causa di morte, priorità e limite dei fatti, vittoria e fuga, stesso racconto stesso testo, Nemesi nata, cronaca della discesa, fine partita, Cimitero e Codice |
 | `test_nemesis.py` | Nemesi: dati, nascita e Oro, boss e Mimic, morte fuori dal combattimento, rango, limite delle attive, finestra di piani, posto sulla mappa una volta per discesa, rango e tratti, resistenza, assassino annotato, sconfitta e trofeo, fine partita, Codice |
 | `test_runes.py` | Rune e parole runiche (dati, stesso oggetto, precedenza delle parole lunghe, annuncio e Codice, effetti solo delle parole): dati, un contratto per ogni effetto, incastoni per rarità ed equipaggiamento iniziale, nome, drop dei boss, solo l'equipaggiamento conta; laboratorio del Falò (incastonare gratis e nello slot giusto, oggetto pieno, estrarre a pagamento, falò acceso); fusione; drop per fonte; Mercante; Codice |
 | `test_boss_phases.py` | Fasi dei boss: dati di tutti i boss, contratto di ogni effetto (soglia e unicità, elemento e contro-elemento, cura, scudo, Scaglie e reazione, status, mosse, annuncio), turno di trasformazione, Codice, soglie multiple, colpo letale, nemici senza fasi |

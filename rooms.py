@@ -9,6 +9,7 @@ from constants import CAMPFIRE_REST_PCT, BASE_HIT_CHANCE, BLOOD_LETTER_CHANCE, C
 from entities import STATUS_NAMES, Player, Enemy, generate_weapon, generate_armor, generate_accessory, generate_potion, generate_rune, get_random_relic, set_sockets
 import runes as rune_rules
 import nemesis
+from epitaph import note
 from entities import Rune
 from inventory_menu import show_inventory_menu
 import modes
@@ -163,7 +164,9 @@ class CombatSession:
         self.player.temp_dodge = self.player.temp_def = self.player.temp_acc = 0
         if self.player.hp <= 0:
             # Chi ti ha ucciso: a fine discesa può diventare una Nemesi (vedi nemesis.on_death)
+            nem = getattr(self.enemy, "nemesis", None)
             self.player.run_tracker["killer"] = {"name": self.enemy.base_name, "is_boss": self.enemy.is_boss,
+                                                 "display": nemesis.full_name(nem) if nem else self.enemy.base_name,
                                                  "nemesis_id": (getattr(self.enemy, "nemesis", None) or {}).get("id"),
                                                  "player_element": self.player.weapon.element}
         # Gli status sono effetti di combattimento: svaniscono a fine scontro
@@ -227,6 +230,7 @@ class CombatSession:
         
         if self.enemy.is_boss:
             self.player.bosses_killed += 1
+            note(self.player, "boss", name=self.enemy.base_name)
             relic = get_random_relic(self.player)
             if relic: self.player.add_relic(relic)
             else:
@@ -238,6 +242,7 @@ class CombatSession:
             rune_drop(self.player, self.floor, "boss")
         elif getattr(self.enemy, "nemesis", None):
             nem = self.enemy.nemesis
+            note(self.player, "nemesis_defeated", name=nemesis.full_name(nem))
             gold = nemesis.defeat(nem)
             if not self.player.aristocrat: self.player.gold += gold
             display_msg(f"\n{Colors.YELLOW}{Colors.BOLD}{nemesis.text('defeated', nem)}{Colors.RESET}")
@@ -957,6 +962,7 @@ def rune_workshop(player: Player, floor: int):
                 if wid in before: continue
                 record_runeword(wid)
                 w = rune_rules.word(wid)
+                note(player, "runeword", name=w["name"])
                 display_msg(f"{Colors.MAGENTA}{Colors.BOLD}✨ Le rune si accordano: PAROLA RUNICA «{w['name']}»!{Colors.RESET} {w['desc']}")
             wait_enter()
         else:
@@ -1208,6 +1214,7 @@ def trap_room(player: Player, floor: int, active_pacts: List[str]) -> bool:
         alive = player.take_damage(dmg)
         display_msg(f"(HP: {player.hp}/{player.max_hp})")
         if not alive:
+            player.run_tracker["death_cause"] = "trap"
             display_msg(f"\n{Colors.RED}{Colors.BOLD}La trappola ti è stata fatale...{Colors.RESET}")
             wait_enter("\nPremi INVIO per continuare...")
             return True
