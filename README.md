@@ -54,6 +54,7 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 - 📅 **Sfida del Giorno.** Una discesa al giorno uguale per tutti: eroe, tratto, malus e dono assegnati, la stessa mappa a ogni piano. Conta il primo tentativo; punteggio, serie di giorni e record restano nel profilo.
 - 📖 **Eventi che ricordano.** 46 storie a scene con opzioni che esistono solo per la tua classe, il tuo tratto o le tue reliquie: `[Mago]`, `[Tocco di Mida]`, `[Chiave Arrugginita]`. Il Labirinto ricorda chi hai aiutato e chi hai derubato, e certe scelte tornano a bussare qualche piano dopo.
 - 🗝️ **Personaggi che ritornano.** *Sir Alaric*, il Primo Paladino, e *Silas*, il Cercatore, hanno storie in tre capitoli che proseguono di run in run. Le tue scelte decidono come finiscono, e se liberi Alaric il Cavaliere Oscuro non tornerà più.
+- 👑 **Boss che cambiano.** A metà della vita ogni boss entra in una nuova fase con un nome, mosse nuove e regole proprie: il Re dei Goblin chiama le guardie, il Drago di Zaffiro si copre di Scaglie che solo una reazione elementale infrange, la Badessa ti sigilla la difesa. Il DIO ANTICO ha tre fasi, e nella seconda diventa l'elemento che ti ferisce di più.
 - 🩸 **Corruzione.** Le scelte oscure danno potere e opzioni proibite, ma il Labirinto comincia a nasconderti le cose: gli effetti delle scelte, le mosse dei nemici.
 - 🏁 **5 finali.** Uccidere il Dio, prenderne il posto, risvegliare Aethelgard… e un finale segreto per chi legge davvero il Labirinto.
 - 🔥 **Un campo che ricorda.** Chi salvi nel Labirinto viene a scaldarsi al tuo fuoco, ti parla di ciò che hai fatto e ti aiuta a costruire.
@@ -165,7 +166,7 @@ Fra una discesa e l'altra spendi l'**Essenza Astrale**:
 - 🍺 **La Taverna** — le classi da conquistare e come ottenerle.
 - 📜 **Grimorio e Imprese** — le sfide completate e i progressi di Maestria.
 - 📚 **L'Archivio di Aethelgard** — 3 tomi di storia da sbloccare, ognuno con un bonus permanente.
-- 📖 **Il Codice del Labirinto** — bestiario, personaggi, eventi, lettere insanguinate e reliquie scoperti fra una run e l'altra, con la percentuale di completamento. Ciò che manca è un `???` da riempire.
+- 📖 **Il Codice del Labirinto** — bestiario, fasi dei boss, personaggi, eventi, lettere insanguinate e reliquie scoperti fra una run e l'altra, con la percentuale di completamento. Ciò che manca è un `???` da riempire.
 - 🧑‍🔧 **Gli artigiani** — salva lo *Speziale*, *Borek*, *Elara* e *Valerius* dagli eventi del labirinto: apriranno una bottega dove comprare consumabili, armi, armature e monili con cui iniziare la discesa successiva.
 
 E in **Impostazioni** scegli la velocità del testo: lenta, normale, veloce o istantanea.
@@ -366,6 +367,7 @@ Ogni scelta mostra i suoi effetti reali, molte opzioni esistono solo per certe c
 | Reliquie | 30 (14 subito, 16 da sbloccare) |
 | Nemici comuni | 38 |
 | Boss | 21 |
+| Fasi dei boss | 22 |
 | Eventi narrativi | 46 |
 | Imprese | 14 |
 | Tomi dell'Archivio | 3 |
@@ -417,7 +419,7 @@ I **test di contratto** (`tests/test_contracts.py`, `tests/test_modes.py`) verif
 - [x] Impostazioni (velocità del testo)
 - [ ] Sistema di Rune/Incastoni per armi e armature
 - [x] Nemici che annunciano la mossa e reazioni elementali
-- [ ] Boss con meccaniche speciali (fasi, immunità)
+- [x] Boss con fasi: soglie di HP, mosse nuove (Sigillo, Carica, Prosciugamento, Barriera), scudi e Scaglie
 - [x] Eventi a scene, opzioni per classe e tratto, memoria fra le run
 - [x] Personaggi ricorrenti (Sir Alaric, Silas) e il Codice del Labirinto
 - [x] Mappa dei piani e primo bioma (I Chiostri del Rimpianto)

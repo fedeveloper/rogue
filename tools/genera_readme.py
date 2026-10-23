@@ -10,7 +10,7 @@ d = lambda f: json.load(open(f"{ROOT}/data/{f}.json", encoding="utf-8"))
 weapons, armors, accs = d("weapons")["weapons"], d("armors")["armors"], d("accessories")["accessories"]
 cons, relics, enemies, events = d("consumables")["consumables"], d("relics")["relics"], d("enemies"), d("events")
 meta, classes, elements, books = d("meta"), d("classes"), d("elements"), d("books")["books"]
-modes = d("modes")
+modes, phases = d("modes"), d("phases")["bosses"]
 grades, daily = modes["ascension"]["grades"], modes["daily"]
 icon = elements["icons"]
 
@@ -79,7 +79,7 @@ count = lambda xs: f"{len(xs)} ({sum(1 for x in xs if not x.get('unlock_id'))} s
 numbers = table(["Contenuto", "Quantità"], [
     ("Classi giocabili", len(classes)), ("Tratti di partenza", len(meta["traits"])), ("Gradi di Ascensione", len(grades)), ("Doni della Sfida del Giorno", len(daily["boons"])),
     ("Armi", count(weapons)), ("Armature", count(armors)), ("Monili", count(accs)), ("Consumabili", count(cons)), ("Reliquie", count(relics)),
-    ("Nemici comuni", len(enemies["enemies"])), ("Boss", len(enemies["bosses"])), ("Eventi narrativi", len(events)),
+    ("Nemici comuni", len(enemies["enemies"])), ("Boss", len(enemies["bosses"])), ("Fasi dei boss", sum(len(p) for p in phases.values())), ("Eventi narrativi", len(events)),
     ("Imprese", len(meta["feats"])), ("Tomi dell'Archivio", len(books)), ("Potenziamenti permanenti", 14),
     ("Elementi / Risonanze", f"{len(elements['list'])} / {len(elements['resonance'])}"),
     ("Combinazioni di partenza (modalità × classe × tratto × grado)", start_combos)])
@@ -142,6 +142,7 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 - 📅 **Sfida del Giorno.** Una discesa al giorno uguale per tutti: eroe, tratto, malus e dono assegnati, la stessa mappa a ogni piano. Conta il primo tentativo; punteggio, serie di giorni e record restano nel profilo.
 - 📖 **Eventi che ricordano.** {len(events)} storie a scene con opzioni che esistono solo per la tua classe, il tuo tratto o le tue reliquie: `[Mago]`, `[Tocco di Mida]`, `[Chiave Arrugginita]`. Il Labirinto ricorda chi hai aiutato e chi hai derubato, e certe scelte tornano a bussare qualche piano dopo.
 - 🗝️ **Personaggi che ritornano.** *Sir Alaric*, il Primo Paladino, e *Silas*, il Cercatore, hanno storie in tre capitoli che proseguono di run in run. Le tue scelte decidono come finiscono, e se liberi Alaric il Cavaliere Oscuro non tornerà più.
+- 👑 **Boss che cambiano.** A metà della vita ogni boss entra in una nuova fase con un nome, mosse nuove e regole proprie: il Re dei Goblin chiama le guardie, il Drago di Zaffiro si copre di Scaglie che solo una reazione elementale infrange, la Badessa ti sigilla la difesa. Il DIO ANTICO ha tre fasi, e nella seconda diventa l'elemento che ti ferisce di più.
 - 🩸 **Corruzione.** Le scelte oscure danno potere e opzioni proibite, ma il Labirinto comincia a nasconderti le cose: gli effetti delle scelte, le mosse dei nemici.
 - 🏁 **{len(d('story')['endings'])} finali.** Uccidere il Dio, prenderne il posto, risvegliare Aethelgard… e un finale segreto per chi legge davvero il Labirinto.
 - 🔥 **Un campo che ricorda.** Chi salvi nel Labirinto viene a scaldarsi al tuo fuoco, ti parla di ciò che hai fatto e ti aiuta a costruire.
@@ -201,7 +202,7 @@ Fra una discesa e l'altra spendi l'**Essenza Astrale**:
 - 🍺 **La Taverna** — le classi da conquistare e come ottenerle.
 - 📜 **Grimorio e Imprese** — le sfide completate e i progressi di Maestria.
 - 📚 **L'Archivio di Aethelgard** — {len(books)} tomi di storia da sbloccare, ognuno con un bonus permanente.
-- 📖 **Il Codice del Labirinto** — bestiario, personaggi, eventi, lettere insanguinate e reliquie scoperti fra una run e l'altra, con la percentuale di completamento. Ciò che manca è un `???` da riempire.
+- 📖 **Il Codice del Labirinto** — bestiario, fasi dei boss, personaggi, eventi, lettere insanguinate e reliquie scoperti fra una run e l'altra, con la percentuale di completamento. Ciò che manca è un `???` da riempire.
 - 🧑‍🔧 **Gli artigiani** — salva lo *Speziale*, *Borek*, *Elara* e *Valerius* dagli eventi del labirinto: apriranno una bottega dove comprare consumabili, armi, armature e monili con cui iniziare la discesa successiva.
 
 E in **Impostazioni** scegli la velocità del testo: lenta, normale, veloce o istantanea.
@@ -321,7 +322,7 @@ I **test di contratto** (`tests/test_contracts.py`, `tests/test_modes.py`) verif
 - [x] Impostazioni (velocità del testo)
 - [ ] Sistema di Rune/Incastoni per armi e armature
 - [x] Nemici che annunciano la mossa e reazioni elementali
-- [ ] Boss con meccaniche speciali (fasi, immunità)
+- [x] Boss con fasi: soglie di HP, mosse nuove (Sigillo, Carica, Prosciugamento, Barriera), scudi e Scaglie
 - [x] Eventi a scene, opzioni per classe e tratto, memoria fra le run
 - [x] Personaggi ricorrenti (Sir Alaric, Silas) e il Codice del Labirinto
 - [x] Mappa dei piani e primo bioma (I Chiostri del Rimpianto)

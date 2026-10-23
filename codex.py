@@ -25,6 +25,12 @@ def record_enemy_killed(name: str):
     _enemy(name)["killed"] += 1
 
 
+def record_phase(name: str, phase: int):
+    """Il boss `name` è entrato nella sua fase numero `phase` (da 1)."""
+    rec = _enemy(name)
+    rec["phases"] = max(rec.get("phases", 0), phase)
+
+
 def record_letter(index: int):
     if index not in PROFILE_MANAGER.codex["letters"]: PROFILE_MANAGER.codex["letters"].append(index)
 
@@ -59,6 +65,7 @@ def sections() -> List[Tuple[str, int, int]]:
         ("Lettere insanguinate", len(set(PROFILE_MANAGER.codex["letters"]) & set(range(len(GAME_DATA["lore"]["letters"])))), len(GAME_DATA["lore"]["letters"])),
         ("Reliquie", len(set(PROFILE_MANAGER.codex["relics"]) & {r["id"] for r in RAW_DATA["relics"]}), len(RAW_DATA["relics"])),
         ("Finali", len(set(PROFILE_MANAGER.story.get("endings", {})) & {e["id"] for e in GAME_DATA["story"]["endings"]}), len(GAME_DATA["story"]["endings"])),
+        ("Fasi dei boss", sum(min(enemies.get(n, {}).get("phases", 0), len(ph)) for n, ph in GAME_DATA["phases"].items()), sum(len(ph) for ph in GAME_DATA["phases"].values())),
         ("Reazioni elementali", len(set(PROFILE_MANAGER.codex.get("reactions", [])) & set(GAME_DATA["elements"]["reactions"])), len(GAME_DATA["elements"]["reactions"])),
     ]
 
@@ -84,6 +91,19 @@ def bestiary_page() -> List[str]:
             lines.append(f"{head} [{get_element_icon(data['element'])}]  incontri {rec['seen']} · sconfitti {rec['killed']}")
             if rec["killed"] and data.get("lore"): lines.append(f"    {Colors.CYAN}{data['lore']}{Colors.RESET}")
             elif not rec["killed"]: lines.append(f"    {Colors.RED}Sconfiggilo per conoscerne la storia.{Colors.RESET}")
+    return lines
+
+
+def phases_page() -> List[str]:
+    """Le fasi dei boss che hai visto: ogni boss cambia a una soglia di HP, e lo scopri solo portandolo fin lì."""
+    lines, known = [], PROFILE_MANAGER.codex["enemies"]
+    for name, data in sorted(RAW_DATA["bosses"].items(), key=lambda kv: kv[1]["base_hp"] * kv[1]["base_atk"]):
+        phases, seen = GAME_DATA["phases"].get(name, []), known.get(name, {}).get("phases", 0)
+        if not phases: continue
+        lines.append(f"  {Colors.BOLD}{name if known.get(name, {}).get('seen') else UNKNOWN}{Colors.RESET}")
+        for i, ph in enumerate(phases):
+            if i < seen: lines.append(f"    {ph['at_pct']}% HP — {Colors.MAGENTA}{ph['name']}{Colors.RESET}: {Colors.CYAN}{ph['text']}{Colors.RESET}")
+            else: lines.append(f"    {ph['at_pct']}% HP — {UNKNOWN}")
     return lines
 
 
@@ -154,7 +174,8 @@ def endings_page() -> List[str]:
 
 
 PAGES = {"Bestiario": bestiary_page, "Personaggi": characters_page, "Eventi": events_page,
-         "Lettere insanguinate": letters_page, "Reliquie": relics_page, "Finali": endings_page, "Reazioni elementali": reactions_page}
+         "Lettere insanguinate": letters_page, "Reliquie": relics_page, "Finali": endings_page,
+         "Fasi dei boss": phases_page, "Reazioni elementali": reactions_page}
 
 
 def show_codex():
