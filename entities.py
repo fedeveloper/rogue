@@ -24,7 +24,7 @@ class Item:
 STATUS_NAMES = {"poison": "Veleno", "bleed": "Sanguinamento", "stun": "Gelo", "blind": "Accecato", "slow": "Impantanato", "scorch": "Magma"}
 
 # Proprietà speciali di un'arma che weapons.json può definire
-WEAPON_TRAIT_KEYS = ("hit_modifier", "crit_chance", "gold_atk_per", "gold_atk_max")
+WEAPON_TRAIT_KEYS = ("hit_modifier", "crit_chance", "gold_atk_per", "gold_atk_max", "dodge_bonus", "guard_break", "shield_mult")
 
 class Weapon(Item):
     def __init__(self, name: str, value: int, atk: int, element: str, level: int, flavor: str = "", is_cursed: bool = False, curse_effect: str = "", status_inflict: dict = None, traits: dict = None):
@@ -43,6 +43,18 @@ class Weapon(Item):
         per = self.traits.get("gold_atk_per")
         if not per: return 0
         return min(self.traits.get("gold_atk_max", 999), max(0, gold) // per)
+
+    def trait_text(self) -> str:
+        """Le proprietà speciali dell'arma in breve, per lo zaino e le statistiche ("" se non ne ha)."""
+        t, parts = self.traits, []
+        if t.get("hit_modifier"): parts.append(f"{t['hit_modifier']:+d}% Precisione")
+        if t.get("crit_chance"): parts.append(f"{t['crit_chance']}% critico")
+        if t.get("dodge_bonus"): parts.append(f"{t['dodge_bonus']:+d}% Schivata")
+        if t.get("guard_break"): parts.append("sfonda la Guardia")
+        if t.get("shield_mult"): parts.append(f"scudi ×{t['shield_mult']}")
+        if self.status_inflict: parts.append(f"{self.status_inflict['chance']}% {STATUS_NAMES[self.status_inflict['type']]}")
+        if t.get("gold_atk_per"): parts.append(f"+1 ATK ogni {t['gold_atk_per']} Oro")
+        return ", ".join(parts)
 
     def on_attack(self, dmg_dealt: int, eff: str) -> tuple[int, str]:
         crit = self.traits.get("crit_chance", 0)
@@ -434,7 +446,7 @@ class Player:
                 + get_archive_bonus("def", PROFILE_MANAGER._data))
     
     def get_dodge(self): 
-        dodge = self.base_dodge + self.temp_dodge + getattr(self.armor, "dodge_bonus", 0) + self.rune_value("dodge_add")
+        dodge = self.base_dodge + self.temp_dodge + getattr(self.armor, "dodge_bonus", 0) + self.weapon.traits.get("dodge_bonus", 0) + self.rune_value("dodge_add")
         for effect in self.relic_effects: dodge += effect.get_dodge_modifier()
         if self._berserker_fury_active(): return 0
         if self.has_curse("heavy"): dodge -= 15

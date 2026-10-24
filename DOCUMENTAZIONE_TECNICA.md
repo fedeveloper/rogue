@@ -47,13 +47,13 @@ Un campo `"unlock_id"` assente o `null` significa **disponibile da subito**. Un 
 
 Un test controlla che ogni oggetto sbloccabile abbia davvero una di queste strade.
 
-**Le descrizioni sono un contratto.** Ogni numero o effetto scritto in `desc`/`text` deve corrispondere a ciò che il gioco fa, e `tests/test_contracts.py` lo verifica. Le proprietà speciali di armi e armature (`hit_modifier`, `crit_chance`, `gold_atk_*`, `dodge_bonus`, `element`, `sockets`) si dichiarano nei dati; la descrizione le racconta con gli stessi numeri.
+**Le descrizioni sono un contratto.** Ogni numero o effetto scritto in `desc`/`text` deve corrispondere a ciò che il gioco fa, e `tests/test_contracts.py` lo verifica. Le proprietà speciali di armi e armature (`hit_modifier`, `crit_chance`, `gold_atk_*`, `dodge_bonus`, `guard_break`, `shield_mult`, `element`, `sockets`) si dichiarano nei dati; la descrizione le racconta con gli stessi numeri.
 
 | File | Contenuto | Campi principali |
 |---|---|---|
 | `classes.json` | Le classi, per id (`"1"`…`"8"`) | `role`, `defense` (id in `defenses.json`), `max_hp`, `gold`, `acc`, `dodge`, `crit` (opz.), `weapon`/`armor` iniziali (`name`, `value`, `atk`/`def`, `element`), `potions`, `unlocked_by_default`, `mastery` |
 | `enemies.json` | `enemies` e `bosses`, per nome | `element`, `base_hp`, `base_atk`, `base_dodge`, `base_acc`, `title`/`lore` (boss), `status_inflict` (opz.), `final_boss` (solo DIO ANTICO), `retired_by_flag` (opz.: il boss non compare più quando il flag del profilo è vero), `moves` (opz.: pesi delle mosse al posto di quelli predefiniti) o `profile` (opz.: uno stile di `moves.json → profiles`), `biome` (opz.: nativo di un bioma) |
-| `weapons.json` | Armi | `name`, `base_atk`, `val_base` (opz.), `element` (opz., altrimenti casuale), `status_inflict` (opz.), `hit_modifier`, `crit_chance`, `gold_atk_per`/`gold_atk_max` (opz.), `unlock_id`, `unlock_cost`, `desc`, `flavor` |
+| `weapons.json` | Armi | `name`, `base_atk`, `val_base` (opz.), `element` (opz., altrimenti casuale), `status_inflict` (opz.), `hit_modifier`, `crit_chance`, `dodge_bonus` (± schivata dell'eroe), `guard_break` (la Guardia del nemico non dimezza i colpi), `shield_mult` (ogni punto di danno consuma tanti punti di scudo), `gold_atk_per`/`gold_atk_max` (opz.: tutti in `Weapon.traits`, e `Weapon.trait_text()` li riassume nello zaino), `unlock_id`, `unlock_cost`, `desc`, `flavor` |
 | `armors.json` | Armature | `name`, `base_def`, `element` (opz.), `dodge_bonus` (opz., anche negativo), `sockets` (opz.: incastoni minimi), `unlock_id`, `unlock_cost`, `desc`, `flavor` |
 | `accessories.json` | Monili | `name`, `bonus_type` (`crit_chance`, `lifesteal`, `max_hp`, `dodge`, `acc`, `reflect`), `bonus_value`, `base_val`, `desc`, `lore`, `unlock_id`, `unlock_cost` |
 | `consumables.json` | Consumabili | `name`, `category` (`heal`, `antidote`, `smoke_bomb`, `chaos_tome`, `chaos_vial`, `holy_water`, `whetstone`, `accuracy_potion`, `rune_solvent`: estrae gratis una runa dall'equipaggiamento, `socket_chisel`: +1 incastone fino a `sockets.boss`; senza un bersaglio valido non si consumano), `base_heal`, `val_base`, `desc`, `unlock_id` |

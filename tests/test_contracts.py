@@ -360,12 +360,19 @@ class EquipmentContractTest(Sandbox):
     def test_numbers_in_weapon_descriptions_come_from_the_data(self):
         for w in RAW_DATA["weapons"]:
             st = w.get("status_inflict") or {}
-            allowed = {st.get("chance"), -w.get("hit_modifier", 0), w.get("crit_chance"), w.get("gold_atk_per"), w.get("gold_atk_max")}
+            allowed = {st.get("chance"), abs(w.get("hit_modifier", 0)), w.get("crit_chance"), w.get("gold_atk_per"), w.get("gold_atk_max"), abs(w.get("dodge_bonus", 0))}
             if w.get("gold_atk_per"): allowed.add(1)  # "+1 ATK ogni ... Oro"
             with self.subTest(weapon=w["name"]):
                 for n in NUM.findall(w.get("desc", "")):
                     self.assertIn(int(n), allowed, f"numero {n} nella descrizione senza un effetto corrispondente")
                 if w.get("element"): self.assertIn(w["element"], w["desc"])
+                # ogni proprietà speciale è raccontata, con il suo segno
+                if w.get("hit_modifier"): self.assertIn(f"{w['hit_modifier']:+d}% Precisione", w["desc"])
+                if w.get("dodge_bonus"): self.assertIn(f"{w['dodge_bonus']:+d}% Schivata", w["desc"])
+                if w.get("crit_chance"): self.assertIn(f"{w['crit_chance']}%", w["desc"]); self.assertIn("critico", w["desc"])
+                if w.get("guard_break"): self.assertIn("Guardia", w["desc"])
+                if w.get("shield_mult"): self.assertEqual(w["shield_mult"], 2); self.assertIn("doppio dello scudo", w["desc"])
+                if st: self.assertIn(f"{st['chance']}%", w["desc"])
 
     def test_weapon_traits_behave_as_described(self):
         p = self.hero()
@@ -387,6 +394,37 @@ class EquipmentContractTest(Sandbox):
                     p.gold = w["gold_atk_per"] * 3; self.assertEqual(p.get_total_atk(), plain + 3)
                     p.gold = 10 ** 9; self.assertEqual(p.get_total_atk(), plain + w["gold_atk_max"])
                     p.gold = 0
+                p.base_dodge = 40  # sopra lo zero anche con i malus, che altrimenti si fermerebbero a 0
+                p.weapon = Weapon("Senza", 1, 1, "Normale", 1); plain_dodge = p.get_dodge(); p.weapon = weapon
+                self.assertEqual(p.get_dodge(), plain_dodge + w.get("dodge_bonus", 0))
+
+    def _strike(self, weapon, intent=None, shield=0):
+        p = self.hero(); p.weapon = weapon; p.base_acc = 1000
+        s = self.session(p, 5)
+        s.enemy.hp = s.enemy.max_hp = 10 ** 6
+        s.enemy.element, s.enemy.base_dodge, s.enemy.shield, s.intent = "Normale", 0, shield, intent
+        p.weapon.element = "Normale"
+        with quiet(), mock.patch("rooms.random.randint", return_value=50), mock.patch("entities.random.randint", return_value=100):
+            s.execute_player_attack()
+        return 10 ** 6 - s.enemy.hp, s.enemy.shield
+
+    def test_guard_break_and_shield_mult(self):
+        plain, breaker, piercer = (Weapon("Arma", 1, 40, "Normale", 1, traits=t) for t in ({}, {"guard_break": True}, {"shield_mult": 2}))
+        full = self._strike(plain)[0]
+        self.assertLess(self._strike(plain, "guard")[0], full, "la Guardia dimezza i colpi")
+        self.assertEqual(self._strike(breaker, "guard")[0], full, "sfonda la Guardia")
+        dealt, left = self._strike(plain, shield=full * 3)
+        self.assertEqual((dealt, left), (0, full * 2))
+        dealt, left = self._strike(piercer, shield=full * 3)
+        self.assertEqual((dealt, left), (0, full), "consuma il doppio dello scudo")
+        dealt, left = self._strike(piercer, shield=full)
+        self.assertEqual((dealt, left), (full - full // 2, 0), "metà del colpo infrange lo scudo, il resto passa")
+
+    def test_the_backpack_shows_the_weapon_traits(self):
+        w = Weapon("Ascia", 1, 9, "Normale", 1, status_inflict={"type": "bleed", "chance": 20, "duration": 2},
+                   traits={"crit_chance": 10, "hit_modifier": -5, "dodge_bonus": -10, "guard_break": True, "shield_mult": 2})
+        self.assertEqual(w.trait_text(), "-5% Precisione, 10% critico, -10% Schivata, sfonda la Guardia, scudi ×2, 20% Sanguinamento")
+        self.assertEqual(Weapon("Spada", 1, 9, "Normale", 1).trait_text(), "")
 
     def test_numbers_in_armor_descriptions_come_from_the_data(self):
         for a in RAW_DATA["armors"]:

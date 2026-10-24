@@ -253,14 +253,14 @@ L'ATK reale cresce con il piano in cui l'arma viene trovata; le armi di elemento
 
 | Arma | ATK base | Elemento | Caratteristiche | Come ottenerla |
 |---|---|---|---|---|
-| **Spada Corta** | 3 | Casuale | — | Disponibile da subito |
-| **Ascia da Battaglia** | 4 | Casuale | — | Disponibile da subito |
-| **Alabarda della Guardia** | 5 | Casuale | — | Disponibile da subito |
-| **Spadone a Due Mani** | 6 | Casuale | — | Disponibile da subito |
-| **Martello da Guerra** | 6 | Casuale | — | Disponibile da subito |
-| **Katana Affilata** | 8 | Casuale | — | Disponibile da subito |
-| **Lancia Perforante** | 9 | Casuale | — | Disponibile da subito |
-| **Meteora Chiodata** | 11 | Casuale | — | Disponibile da subito |
+| **Spada Corta** | 3 | Casuale | Leggera e maneggevole: +5% Precisione e +5% Schivata. | Disponibile da subito |
+| **Ascia da Battaglia** | 4 | Casuale | Colpi pesanti e imprecisi: 10% di colpo critico (danni doppi), ma -5% Precisione. | Disponibile da subito |
+| **Alabarda della Guardia** | 5 | Casuale | Lunga e paziente: quando il nemico è in Guardia i tuoi colpi non vengono dimezzati. | Disponibile da subito |
+| **Spadone a Due Mani** | 6 | Casuale | Spezza le difese: contro la Barriera i tuoi colpi consumano il doppio dello scudo, ma -5% Schivata. | Disponibile da subito |
+| **Martello da Guerra** | 6 | Casuale | Sfonda la Guardia del nemico: i tuoi colpi non vengono dimezzati, ma -5% Precisione. | Disponibile da subito |
+| **Katana Affilata** | 8 | Casuale | Affilatissima: 10% di colpo critico (danni doppi). | Disponibile da subito |
+| **Lancia Perforante** | 9 | Casuale | Perforante: contro la Barriera i tuoi colpi consumano il doppio dello scudo. | Disponibile da subito |
+| **Meteora Chiodata** | 11 | Casuale | Chiodi crudeli: 20% di infliggere Sanguinamento, ma -5% Precisione. | Disponibile da subito |
 | **Spada del Carnefice** | 15 | Casuale | Arma devastante ma sbilanciata: -10% Precisione. | Forgia (✨250) |
 | **Falce Divora-Anime** | 18 | Casuale | Danni base spaventosi per le run più profonde. | Forgia (✨500) |
 | **Spadone Infranto** | 25 | Casuale | Leggendario, ottenuto tramite Imprese. | Impresa «Fabbro Folle» |
@@ -268,13 +268,13 @@ L'ATK reale cresce con il piano in cui l'arma viene trovata; le armi di elemento
 | **Zweihander d'Oro** | 25 | Casuale | Arma massiccia d'oro puro. Più oro hai, più fa male: +1 ATK ogni 100 Oro posseduto (fino a +30). | Impresa «Mani Bucate» |
 | **Ascia del Boia** | 25 | Casuale | Lenta ma letale: -15% Precisione, ma 35% di probabilità di colpo critico (danni doppi). | Maestria Berserker Lv.3 |
 | **Falce del Mietitore** | 22 | 🌑 Tenebra | Estremamente letale. La lama è intrisa di buio. 20% di infliggere Sanguinamento. Sempre di elemento Tenebra. | Forgia (✨650) |
-| **Spadone del Re Caduto** | 20 | Casuale | Un'arma colossale e inarrestabile. | Forgia (✨400) |
-| **Lancia di Ghiaccio Eterno** | 16 | 💧 Acqua | Arma lunga con un nucleo gelido. Sempre di elemento Acqua. | Forgia (✨300) |
+| **Spadone del Re Caduto** | 20 | Casuale | Un'arma colossale e inarrestabile: sfonda la Guardia e contro la Barriera consuma il doppio dello scudo, ma -5% Schivata. | Forgia (✨400) |
+| **Lancia di Ghiaccio Eterno** | 16 | 💧 Acqua | Arma lunga con un nucleo gelido: contro la Barriera consuma il doppio dello scudo. Sempre di elemento Acqua. | Forgia (✨300) |
 | **Frusta di Spine Corrotte** | 14 | Casuale | Attacchi veloci e crudeli. 30% di infliggere Sanguinamento. | Forgia (✨250) |
-| **Martello Meteoritico** | 24 | 🔥 Fuoco | Massa enorme incandescente. Sempre di elemento Fuoco. | Forgia (✨700) |
+| **Martello Meteoritico** | 24 | 🔥 Fuoco | Massa enorme incandescente: sfonda la Guardia del nemico, ma -5% Schivata. Sempre di elemento Fuoco. | Forgia (✨700) |
 | **Pugnali del Vento Tagliente** | 12 | 🌪️ Vento | Due lame invisibili e rapidissime. 25% di infliggere Sanguinamento. Sempre di elemento Vento. | Forgia (✨200) |
-| **Bastone dell'Alba** | 17 | ✨ Luce | Canalizza la luce divina. Sempre di elemento Luce. | Forgia (✨450) |
-| **Ascia del Minotauro** | 26 | Casuale | Un'arma mostruosa a doppia lama. | Forgia (✨800) |
+| **Bastone dell'Alba** | 17 | ✨ Luce | Canalizza la luce divina, che guida ogni colpo: +10% Precisione. Sempre di elemento Luce. | Forgia (✨450) |
+| **Ascia del Minotauro** | 26 | Casuale | Un'arma mostruosa a doppia lama: 15% di colpo critico (danni doppi), ma -5% Schivata. | Forgia (✨800) |
 | **Balestra Gnomica a Ripetizione** | 19 | Casuale | Ingegneria avanzata, scocca raffiche di dardi. Dardi avvelenati: 30% di infliggere Veleno. | Forgia (✨550) |
 | **Tridente Oceanico** | 21 | 💧 Acqua | Arma letale associata alle maree. 20% di infliggere Veleno. Sempre di elemento Acqua. | Forgia (✨600) |
 
@@ -524,6 +524,7 @@ I **test di contratto** (`tests/test_contracts.py`, `tests/test_modes.py`) verif
 - [x] Stili dei nemici, un boss per ogni bioma, una difesa per ogni classe
 - [x] Sei nemici nativi per ogni bioma
 - [x] Il Ciclo del Labirinto: biomi che tornano in Eco sempre più dure oltre il piano 30
+- [x] Armi con carattere: precisione, critico, schivata, Guardia e scudi
 
 ---
 

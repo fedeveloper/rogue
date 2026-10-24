@@ -376,9 +376,11 @@ class CombatSession:
             dmg = int(dmg * self.enemy.ward)
             eff += f" {Colors.BLUE}[SCAGLIE]{Colors.RESET}"
         if self.enemy.shield > 0:
-            taken = min(self.enemy.shield, dmg)
+            # Le armi con shield_mult consumano lo scudo più in fretta: ogni punto di danno ne toglie shield_mult
+            mult = self.player.weapon.traits.get("shield_mult", 1)
+            taken = min(self.enemy.shield, dmg * mult)
             self.enemy.shield -= taken
-            dmg -= taken
+            dmg -= -(-taken // mult)
             eff += f" {Colors.BLUE}[SCUDO -{taken}{', infranto' if not self.enemy.shield else ''}]{Colors.RESET}"
         return dmg, eff
 
@@ -484,8 +486,11 @@ class CombatSession:
                 dmg_dealt += int(self._resonance_value("Tenebra"))
                 eff += f" {Colors.MAGENTA}[TENEBRA]{Colors.RESET}"
             if self.intent == "guard":
-                dmg_dealt = int(dmg_dealt * self._move("guard")["damage_taken_mult"])
-                eff += f" {Colors.BLUE}[GUARDIA]{Colors.RESET}"
+                if self.player.weapon.traits.get("guard_break"):
+                    eff += f" {Colors.YELLOW}[SFONDI LA GUARDIA]{Colors.RESET}"
+                else:
+                    dmg_dealt = int(dmg_dealt * self._move("guard")["damage_taken_mult"])
+                    eff += f" {Colors.BLUE}[GUARDIA]{Colors.RESET}"
             dmg_dealt, eff = self._absorb(dmg_dealt, eff)
             nem = getattr(self.enemy, "nemesis", None)
             if nem and nemesis.resisted(nem, self.player.weapon.element) < 1:
