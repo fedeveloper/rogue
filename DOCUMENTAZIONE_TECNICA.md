@@ -419,7 +419,8 @@ La Maledizione blocca le cure, non il danno del `siphon`. Se la tecnica abbatte 
 |---|---|---|
 | `max_hp` | Vitalità | Aggiunta agli HP massimi e attuali quando si spende il punto (`raise_attribute`), tolta da `reset` |
 | `weapon_dmg_pct` | Forza | `CombatSession.execute_player_attack`, dopo il moltiplicatore di classe |
-| `acc`, `crit` | Destrezza | `Player.get_hit_chance`, `Player.get_crit_chance` |
+| `elemental_dmg_pct` | Arcano | Lo stesso punto, solo se l'arma ha un elemento diverso da Normale |
+| `acc`, `crit` | Destrezza (e Fortuna per `crit`) | `Player.get_hit_chance`, `Player.get_crit_chance` |
 | `dodge`, `escape` | Agilità | `Player.get_dodge`, `CombatSession._calc_escape_chance` |
 | `reaction_dmg_pct` | Arcano | `CombatSession._trigger_reaction`, insieme alla runa della Catalisi |
 | `gold_pct`, `rune_drop_add` | Fortuna | `Player.calculate_gold_gain`; `runes.roll_drop(fonte, bonus)` (solo per le fonti che hanno già una probabilità) |

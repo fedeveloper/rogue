@@ -135,8 +135,8 @@ class EffectTest(Sandbox):
         self.assertEqual(escape[1] - escape[0], 2 * self.per("agilita", "escape") + 2 * self.per("agilita", "dodge"),
                          "la fuga cresce con la Schivata e, in più, con l'Agilità")
 
-    def strike(self, p):
-        p.weapon = Weapon("Lama", 1, 100, "Normale", 1); p.base_acc = 1000
+    def strike(self, p, element="Normale"):
+        p.weapon = Weapon("Lama", 1, 100, element, 1); p.base_acc = 1000
         with quiet(): s = CombatSession(p, 3, Enemy(3, False, [], name="Goblin"))
         s.enemy.hp = s.enemy.max_hp = 10 ** 6; s.enemy.element, s.enemy.base_dodge, s.intent = "Normale", 0, "attack"
         with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: b if b == 100 else 0), mock.patch("entities.random.randint", return_value=100):
@@ -146,6 +146,12 @@ class EffectTest(Sandbox):
     def test_strength_makes_weapons_hit_harder(self):
         plain, strong = self.strike(self.hero()), self.strike(self.hero(forza=3))
         self.assertEqual(strong, plain * (100 + 3 * self.per("forza", "weapon_dmg_pct")) // 100)
+
+    def test_arcane_powers_elemental_weapons_only(self):
+        for element, gain in (("Fuoco", 2 * self.per("arcano", "elemental_dmg_pct")), ("Normale", 0)):
+            with self.subTest(element=element):
+                plain, arcane = self.strike(self.hero(), element), self.strike(self.hero(arcano=2), element)
+                self.assertEqual(arcane, plain * (100 + gain) // 100)
 
     def test_arcane_makes_reactions_hit_harder(self):
         dealt = []
@@ -159,6 +165,7 @@ class EffectTest(Sandbox):
 
     def test_luck_brings_gold_and_runes(self):
         base, lucky = self.hero(), self.hero(fortuna=2)
+        self.assertEqual(lucky.get_crit_chance() - base.get_crit_chance(), 2 * self.per("fortuna", "crit"))
         self.assertEqual(lucky.calculate_gold_gain(1000), base.calculate_gold_gain(1000) * (100 + 2 * self.per("fortuna", "gold_pct")) // 100)
         chance = GAME_DATA["runes"]["rules"]["drops"]["elite"]
         bonus = 2 * self.per("fortuna", "rune_drop_add")

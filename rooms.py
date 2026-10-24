@@ -470,7 +470,9 @@ class CombatSession:
         if random.randint(1, 100) <= hit_chance:
             self.player.run_tracker["floor_hits"] += 1
             dmg_dealt = int(dmg_dealt * self.player.get_class_damage_multiplier())
-            dmg_dealt = dmg_dealt * (100 + attributes.value(self.player, "weapon_dmg_pct")) // 100  # Forza
+            # Forza per ogni arma; Arcano in più se l'arma ha un elemento
+            elemental = attributes.value(self.player, "elemental_dmg_pct") if self.player.weapon.element != "Normale" else 0
+            dmg_dealt = dmg_dealt * (100 + attributes.value(self.player, "weapon_dmg_pct") + elemental) // 100
             # Rune dell'arma: Contrasto sui colpi Super Efficaci, Agguato sul primo attacco dello scontro
             if multiplier > 1.0 and self.player.rune_value("super_effective_pct"):
                 dmg_dealt = dmg_dealt * (100 + self.player.rune_value("super_effective_pct")) // 100
