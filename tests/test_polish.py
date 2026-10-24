@@ -113,3 +113,20 @@ class SoulFireTest(Sandbox):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class InventoryLabelTest(Sandbox):
+    def test_the_level_shows_once(self):
+        import inventory_menu
+        from entities import generate_armor, generate_weapon
+        self.player.inventory = [generate_weapon(3), generate_armor(3), Weapon("Spada Antica", 10, 7, "Normale", 2)]
+        seen = []
+        with redirect_stdout(io.StringIO()), mock.patch("inventory_menu.clear_screen"), \
+             mock.patch("inventory_menu.interactive_menu", side_effect=lambda o, *a, **k: seen.append(o) or len(o) - 1):
+            inventory_menu.show_inventory_menu(self.player)
+        items = [o for o in seen[0] if o.startswith(("[Arma]", "[Armatura]"))]
+        self.assertEqual(len(items), 3)
+        for o in items:
+            with self.subTest(option=o):
+                self.assertEqual(o.lower().count("lv."), 1)
+        self.assertTrue(any(o.endswith("(+7 ATK) - Lv.2") for o in items), "senza il livello nel nome, lo aggiunge l'etichetta")

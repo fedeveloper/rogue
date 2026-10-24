@@ -157,8 +157,10 @@ def show_inventory_menu(player, in_combat=False) -> str:
             
             for disp_idx, (real_idx, item, count) in enumerate(display_items):
                 count_str = f" {Colors.YELLOW}[x{count}]{Colors.RESET}" if count > 1 else ""
-                if item.type == "weapon": options.append(f"[Arma] {item.display_name} (+{item.atk}) - Lv.{item.level}")
-                elif item.type == "armor": options.append(f"[Armatura] {item.display_name} (+{item.defense}) - Lv.{item.level}")
+                # Il livello compare una volta sola: i generatori lo mettono già nel nome, "(lv.2)"
+                lvl = "" if "(lv." in item.name else f" - Lv.{item.level}"
+                if item.type == "weapon": options.append(f"[Arma] {item.display_name} (+{item.atk} ATK){lvl}")
+                elif item.type == "armor": options.append(f"[Armatura] {item.display_name} (+{item.defense} DEF){lvl}")
                 elif item.type == "accessory": options.append(f"[Monile] {item.display_name} ({item.desc})")
                 elif item.type == "consumable": options.append(f"[Oggetto] {item.display_name}{count_str}")
                 elif item.type == "rune": options.append(f"[Runa] {item.display_name} ({item.desc})")
