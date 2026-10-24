@@ -5,7 +5,7 @@
         "attributes": {"vitalita": 1, "forza": 2},
         "ether": 6,
         "spells": ["frana"],
-        "max_hp": 130,
+        "max_hp": 140,
         "gold": 20,
         "acc": 5,
         "dodge": 5,
@@ -57,7 +57,7 @@
         "attributes": {"destrezza": 1, "agilita": 1, "fortuna": 1},
         "ether": 8,
         "spells": ["raffica"],
-        "max_hp": 105,
+        "max_hp": 115,
         "gold": 100,
         "acc": 10,
         "dodge": 15,
@@ -328,7 +328,7 @@
         "max_hp": 75,
         "gold": 30,
         "acc": 20,
-        "dodge": 15,
+        "dodge": 10,
         "crit": 8,
         "weapon": {
             "name": "Pugnale Ricurvo",
@@ -380,7 +380,7 @@
         "attributes": {"arcano": 2, "vitalita": 1},
         "ether": 12,
         "spells": ["sifone_ombra", "detonazione"],
-        "max_hp": 85,
+        "max_hp": 75,
         "gold": 20,
         "acc": 10,
         "dodge": 5,
@@ -389,8 +389,7 @@
             "value": 50,
             "atk": 11,
             "element": "Tenebra",
-            "scaling": "arcano",
-            "spell_pct": 5
+            "scaling": "arcano"
         },
         "armor": {
             "name": "Sudario Funebre",
