@@ -381,7 +381,7 @@ Ogni eroe parte con un equipaggiamento che ha già un'idea di gioco. Cinque clas
 
 ### Livelli e attributi
 
-A ogni livello l'eroe recupera tutti gli HP, ottiene +9 HP massimi, +1% Precisione e +1% Schivata, e 1 punto da spendere negli attributi. Ogni attributo arriva al massimo a 10 punti. Gli attributi valgono per una sola discesa.
+A ogni livello l'eroe recupera tutti gli HP, ottiene +7 HP massimi, +1% Precisione e +1% Schivata, e 1 punto da spendere negli attributi. Ogni attributo arriva al massimo a 10 punti. Gli attributi valgono per una sola discesa.
 
 Quando sali di livello, alla fine della stanza ti viene chiesto dove mettere il punto. Puoi anche rimandare: i punti restano, e li spendi quando vuoi con la voce *Distribuisci i punti abilità* della mappa. Le *Statistiche* mostrano i tuoi attributi.
 
