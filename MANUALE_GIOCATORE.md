@@ -335,6 +335,8 @@ La Risonanza si ricalcola subito se cambi equipaggiamento durante lo scontro. Il
 
 Molte armi hanno un elemento casuale, ma quelle a tema hanno sempre il loro: il *Bastone dell'Alba* è di Luce, il *Tridente Oceanico* d'Acqua, e così via.
 
+**Ogni arma scala con un attributo**, scritto accanto all'ATK (`scala con 💪 Forza`): le armi pesanti con la **Forza**, quelle leggere e da tiro con la **Destrezza**, bastoni e focus con l'**Arcano**. Ogni punto di quell'attributo dà +4% di danni con l'arma, mentre gli altri attributi non la rendono più forte. Scegliere un'arma vuol dire anche scegliere dove mettere i punti. I **focus** arcani potenziano anche gli incantesimi: la *Bacchetta di Frassino* (+10%), il *Tomo Fluttuante* (+15%), il *Bastone dell'Alba* (+15%), lo *Scettro dell'Arcimago* (+25%, dalla Forgia); il Mago e il Negromante partono con un bastone da +10%.
+
 Quasi ogni arma ha anche un **carattere**, scritto nello zaino e nelle Statistiche accanto all'ATK (per esempio `· 10% critico, -5% Precisione`). Ogni proprietà risponde a uno stile dei nemici:
 
 | Proprietà | Cosa fa | Contro chi conta | Per esempio |
@@ -435,10 +437,10 @@ Quando sali di livello, alla fine della stanza ti viene chiesto dove mettere il 
 | Attributo | Per ogni punto |
 |---|---|
 | ❤️ **Vitalità** | +12 HP massimi (e altrettanti HP), per punto. |
-| 💪 **Forza** | +4% danni con le armi, per punto. |
-| 🎯 **Destrezza** | +3% Precisione e +2% probabilità di critico, per punto. |
+| 💪 **Forza** | +4% danni con le armi che scalano con la Forza, per punto. |
+| 🎯 **Destrezza** | +3% Precisione, +2% probabilità di critico e +4% danni con le armi che scalano con la Destrezza, per punto. |
 | 🌪️ **Agilità** | +2% Schivata e +3% probabilità di fuga, per punto. |
-| 🔮 **Arcano** | +2 Etere massimo, +6% potenza degli incantesimi, +2% danni con le armi di un elemento (non Normale) e +10% danni delle reazioni elementali, per punto. |
+| 🔮 **Arcano** | +2 Etere massimo, +6% potenza degli incantesimi, +10% danni delle reazioni elementali e +4% danni con le armi che scalano con l'Arcano, per punto. |
 | 🍀 **Fortuna** | +8% Oro trovato, +3% probabilità di trovare una runa e +2% probabilità di critico, per punto. |
 
 Ogni classe parte con 3 punti già distribuiti secondo il suo stile:

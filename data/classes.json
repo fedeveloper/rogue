@@ -13,7 +13,8 @@
             "name": "Spada di Ferro",
             "value": 20,
             "atk": 5,
-            "element": "Terra"
+            "element": "Terra",
+            "scaling": "forza"
         },
         "armor": {
             "name": "Cotta di Maglia",
@@ -63,7 +64,8 @@
             "name": "Pugnali Gemelli",
             "value": 30,
             "atk": 7,
-            "element": "Vento"
+            "element": "Vento",
+            "scaling": "destrezza"
         },
         "armor": {
             "name": "Cuoio Leggero",
@@ -113,7 +115,9 @@
             "name": "Bastone Infernale",
             "value": 50,
             "atk": 11,
-            "element": "Fuoco"
+            "element": "Fuoco",
+            "scaling": "arcano",
+            "spell_pct": 10
         },
         "armor": {
             "name": "Vesti di Seta",
@@ -163,7 +167,8 @@
             "name": "Martello della Luce",
             "value": 40,
             "atk": 8,
-            "element": "Luce"
+            "element": "Luce",
+            "scaling": "forza"
         },
         "armor": {
             "name": "Armatura Benedetta",
@@ -215,7 +220,8 @@
             "name": "Ascia Sanguinaria",
             "value": 60,
             "atk": 16,
-            "element": "Tenebra"
+            "element": "Tenebra",
+            "scaling": "forza"
         },
         "armor": {
             "name": "Petto Nudo",
@@ -267,7 +273,8 @@
             "name": "Lanciabombe",
             "value": 25,
             "atk": 6,
-            "element": "Fuoco"
+            "element": "Fuoco",
+            "scaling": "arcano"
         },
         "armor": {
             "name": "Grembiule in Pelle",
@@ -321,7 +328,8 @@
             "name": "Pugnale Ricurvo",
             "value": 50,
             "atk": 12,
-            "element": "Vento"
+            "element": "Vento",
+            "scaling": "destrezza"
         },
         "armor": {
             "name": "Mantello d'Ombra",
@@ -373,7 +381,9 @@
             "name": "Bastone d'Ossa",
             "value": 50,
             "atk": 13,
-            "element": "Tenebra"
+            "element": "Tenebra",
+            "scaling": "arcano",
+            "spell_pct": 10
         },
         "armor": {
             "name": "Sudario Funebre",

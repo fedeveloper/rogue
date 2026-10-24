@@ -176,9 +176,11 @@ class Bot:
 
     def equip(self):
         p = self.player
-        for kind, stat, slot in (("weapon", "atk", "weapon"), ("armor", "defense", "armor")):
-            best = max((i for i in p.inventory if i.type == kind), key=lambda i: getattr(i, stat), default=None)
-            if best and getattr(best, stat) > getattr(getattr(p, slot), stat):
+        # Le armi valgono il loro ATK più il bonus dell'attributo con cui scalano
+        scaled = lambda w: w.atk * (100 + p.attributes.get(w.scaling, 0) * GAME_DATA["attributes"]["attributes"][w.scaling]["per_point"].get("scaled_dmg_pct", 0))
+        for kind, value, slot in (("weapon", scaled, "weapon"), ("armor", lambda a: a.defense, "armor")):
+            best = max((i for i in p.inventory if i.type == kind), key=value, default=None)
+            if best and value(best) > value(getattr(p, slot)):
                 p.inventory.remove(best); p.inventory.append(getattr(p, slot)); setattr(p, slot, best)
         if p.accessory is None:
             acc = next((i for i in p.inventory if i.type == "accessory"), None)

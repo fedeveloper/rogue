@@ -68,8 +68,9 @@ feats_table = table(["Impresa", "Obiettivo", "Ricompensa"],
     [(f"**{f['name']}**", f["desc"], f"{reward[f['reward_type']]}: {names.get(f['reward_id'], f['reward_id'])}") for f in meta["feats"].values()])
 def special(w):
     return w.get("desc") or "—"
-weapons_table = table(["Arma", "ATK base", "Elemento", "Caratteristiche", "Come ottenerla"],
-    [(f"**{w['name']}**", w["base_atk"], f"{icon[w['element']]} {w['element']}" if w.get("element") else "Casuale", special(w), how(w)) for w in weapons])
+attr_names = {k: f"{a['icon']} {a['name']}" for k, a in d('attributes')['attributes'].items()}
+weapons_table = table(["Arma", "ATK base", "Elemento", "Scala con", "Caratteristiche", "Come ottenerla"],
+    [(f"**{w['name']}**", w["base_atk"], f"{icon[w['element']]} {w['element']}" if w.get("element") else "Casuale", attr_names[w["scaling"]], special(w), how(w)) for w in weapons])
 armors_table = table(["Armatura", "DEF base", "Caratteristiche", "Come ottenerla"],
     [(f"**{a['name']}**", a["base_def"], a.get("desc") or "—", how(a)) for a in armors])
 cons_table = table(["Consumabile", "Effetto", "Come ottenerlo"],
@@ -363,6 +364,7 @@ I **test di contratto** (`tests/test_contracts.py`, `tests/test_modes.py`) verif
 - [x] Livelli e attributi: un punto a ogni livello fra Vitalità, Forza, Destrezza, Agilità, Arcano e Fortuna
 - [x] La magia: l'Etere e i primi incantesimi, che compongono le reazioni elementali
 - [x] Grimori: pergamene, tre posti per gli incantesimi, cure fuori dal combattimento, Medita al Falò
+- [x] Armi e attributi: ogni arma scala con Forza, Destrezza o Arcano; bastoni e focus potenziano gli incantesimi
 
 ---
 

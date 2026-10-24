@@ -5,46 +5,53 @@
             "base_atk": 3,
             "hit_modifier": 5,
             "dodge_bonus": 5,
-            "desc": "Leggera e maneggevole: +5% Precisione e +5% Schivata."
+            "desc": "Leggera e maneggevole: +5% Precisione e +5% Schivata.",
+            "scaling": "destrezza"
         },
         {
             "name": "Ascia da Battaglia",
             "base_atk": 4,
             "crit_chance": 10,
             "hit_modifier": -5,
-            "desc": "Colpi pesanti e imprecisi: 10% di colpo critico (danni doppi), ma -5% Precisione."
+            "desc": "Colpi pesanti e imprecisi: 10% di colpo critico (danni doppi), ma -5% Precisione.",
+            "scaling": "forza"
         },
         {
             "name": "Alabarda della Guardia",
             "base_atk": 5,
             "guard_break": true,
-            "desc": "Lunga e paziente: quando il nemico è in Guardia i tuoi colpi non vengono dimezzati."
+            "desc": "Lunga e paziente: quando il nemico è in Guardia i tuoi colpi non vengono dimezzati.",
+            "scaling": "forza"
         },
         {
             "name": "Spadone a Due Mani",
             "base_atk": 6,
             "shield_mult": 2,
             "dodge_bonus": -5,
-            "desc": "Spezza le difese: contro la Barriera i tuoi colpi consumano il doppio dello scudo, ma -5% Schivata."
+            "desc": "Spezza le difese: contro la Barriera i tuoi colpi consumano il doppio dello scudo, ma -5% Schivata.",
+            "scaling": "forza"
         },
         {
             "name": "Martello da Guerra",
             "base_atk": 6,
             "guard_break": true,
             "hit_modifier": -5,
-            "desc": "Sfonda la Guardia del nemico: i tuoi colpi non vengono dimezzati, ma -5% Precisione."
+            "desc": "Sfonda la Guardia del nemico: i tuoi colpi non vengono dimezzati, ma -5% Precisione.",
+            "scaling": "forza"
         },
         {
             "name": "Katana Affilata",
             "base_atk": 8,
             "crit_chance": 10,
-            "desc": "Affilatissima: 10% di colpo critico (danni doppi)."
+            "desc": "Affilatissima: 10% di colpo critico (danni doppi).",
+            "scaling": "destrezza"
         },
         {
             "name": "Lancia Perforante",
             "base_atk": 9,
             "shield_mult": 2,
-            "desc": "Perforante: contro la Barriera i tuoi colpi consumano il doppio dello scudo."
+            "desc": "Perforante: contro la Barriera i tuoi colpi consumano il doppio dello scudo.",
+            "scaling": "destrezza"
         },
         {
             "name": "Meteora Chiodata",
@@ -55,7 +62,8 @@
                 "duration": 2
             },
             "hit_modifier": -5,
-            "desc": "Chiodi crudeli: 20% di infliggere Sanguinamento, ma -5% Precisione."
+            "desc": "Chiodi crudeli: 20% di infliggere Sanguinamento, ma -5% Precisione.",
+            "scaling": "forza"
         },
         {
             "name": "Spada del Carnefice",
@@ -63,14 +71,16 @@
             "unlock_id": "spada_carnefice",
             "unlock_cost": 250,
             "desc": "Arma devastante ma sbilanciata: -10% Precisione.",
-            "hit_modifier": -10
+            "hit_modifier": -10,
+            "scaling": "forza"
         },
         {
             "name": "Falce Divora-Anime",
             "base_atk": 18,
             "unlock_id": "falce_anime",
             "unlock_cost": 500,
-            "desc": "Danni base spaventosi per le run più profonde."
+            "desc": "Danni base spaventosi per le run più profonde.",
+            "scaling": "forza"
         },
         {
             "name": "Spadone Infranto",
@@ -78,16 +88,19 @@
             "unlock_id": "spadone_infranto",
             "unlock_cost": 0,
             "desc": "Leggendario, ottenuto tramite Imprese.",
-            "flavor": "Un'arma che ha smesso di tagliare la carne per tagliare la realtà."
+            "flavor": "Un'arma che ha smesso di tagliare la carne per tagliare la realtà.",
+            "scaling": "forza"
         },
         {
             "name": "Lama del Creatore",
-            "desc": "Un'arma leggendaria infusa con gli elementi primordiali. Si ottiene sconfiggendo il DIO ANTICO, il boss finale.",
+            "desc": "Un'arma leggendaria infusa con gli elementi primordiali: +10% potenza degli incantesimi. Si ottiene sconfiggendo il DIO ANTICO, il boss finale.",
             "flavor": "L'unico oggetto che il Dio Antico non ha mai rinnegato.",
             "base_atk": 30,
             "val_base": 150,
             "unlock_cost": 0,
-            "unlock_id": "lama_creatore"
+            "unlock_id": "lama_creatore",
+            "scaling": "arcano",
+            "spell_pct": 10
         },
         {
             "name": "Zweihander d'Oro",
@@ -98,7 +111,8 @@
             "unlock_cost": 0,
             "unlock_id": "zweihander_oro",
             "gold_atk_per": 100,
-            "gold_atk_max": 30
+            "gold_atk_max": 30,
+            "scaling": "forza"
         },
         {
             "name": "Ascia del Boia",
@@ -109,7 +123,8 @@
             "unlock_cost": 0,
             "unlock_id": "ascia_boia",
             "hit_modifier": -15,
-            "crit_chance": 35
+            "crit_chance": 35,
+            "scaling": "forza"
         },
         {
             "name": "Falce del Mietitore",
@@ -123,7 +138,8 @@
                 "chance": 20,
                 "duration": 3
             },
-            "element": "Tenebra"
+            "element": "Tenebra",
+            "scaling": "arcano"
         },
         {
             "name": "Spadone del Re Caduto",
@@ -134,7 +150,8 @@
             "unlock_cost": 400,
             "guard_break": true,
             "shield_mult": 2,
-            "dodge_bonus": -5
+            "dodge_bonus": -5,
+            "scaling": "forza"
         },
         {
             "name": "Lancia di Ghiaccio Eterno",
@@ -144,7 +161,8 @@
             "unlock_id": "lancia_ghiaccio",
             "unlock_cost": 300,
             "element": "Acqua",
-            "shield_mult": 2
+            "shield_mult": 2,
+            "scaling": "destrezza"
         },
         {
             "name": "Frusta di Spine Corrotte",
@@ -157,7 +175,8 @@
                 "type": "bleed",
                 "chance": 30,
                 "duration": 3
-            }
+            },
+            "scaling": "destrezza"
         },
         {
             "name": "Martello Meteoritico",
@@ -168,7 +187,8 @@
             "unlock_cost": 700,
             "element": "Fuoco",
             "guard_break": true,
-            "dodge_bonus": -5
+            "dodge_bonus": -5,
+            "scaling": "forza"
         },
         {
             "name": "Pugnali del Vento Tagliente",
@@ -182,17 +202,20 @@
                 "chance": 25,
                 "duration": 2
             },
-            "element": "Vento"
+            "element": "Vento",
+            "scaling": "destrezza"
         },
         {
             "name": "Bastone dell'Alba",
-            "desc": "Canalizza la luce divina, che guida ogni colpo: +10% Precisione. Sempre di elemento Luce.",
+            "desc": "Canalizza la luce divina, che guida ogni colpo e ogni incantesimo: +10% Precisione e +15% potenza degli incantesimi. Sempre di elemento Luce.",
             "flavor": "Scaccia le ombre con un bagliore accecante. Dono dell'alto clero.",
             "base_atk": 17,
             "unlock_id": "bastone_alba",
             "unlock_cost": 450,
             "element": "Luce",
-            "hit_modifier": 10
+            "hit_modifier": 10,
+            "scaling": "arcano",
+            "spell_pct": 15
         },
         {
             "name": "Ascia del Minotauro",
@@ -202,7 +225,8 @@
             "unlock_id": "ascia_minotauro",
             "unlock_cost": 800,
             "crit_chance": 15,
-            "dodge_bonus": -5
+            "dodge_bonus": -5,
+            "scaling": "forza"
         },
         {
             "name": "Balestra Gnomica a Ripetizione",
@@ -215,7 +239,8 @@
                 "type": "poison",
                 "chance": 30,
                 "duration": 3
-            }
+            },
+            "scaling": "destrezza"
         },
         {
             "name": "Tridente Oceanico",
@@ -229,7 +254,32 @@
                 "chance": 20,
                 "duration": 3
             },
-            "element": "Acqua"
+            "element": "Acqua",
+            "scaling": "destrezza"
+        },
+        {
+            "name": "Bacchetta di Frassino",
+            "base_atk": 4,
+            "scaling": "arcano",
+            "spell_pct": 10,
+            "desc": "Un focus leggero per chi combatte con la magia: +10% potenza degli incantesimi."
+        },
+        {
+            "name": "Tomo Fluttuante",
+            "base_atk": 7,
+            "scaling": "arcano",
+            "spell_pct": 15,
+            "hit_modifier": -5,
+            "desc": "Un libro che ti gira attorno e colpisce da solo: +15% potenza degli incantesimi, ma -5% Precisione."
+        },
+        {
+            "name": "Scettro dell'Arcimago",
+            "base_atk": 18,
+            "scaling": "arcano",
+            "spell_pct": 25,
+            "unlock_id": "scettro_arcimago",
+            "unlock_cost": 600,
+            "desc": "Lo scettro di chi guidava l'accademia della Luce Calma: +25% potenza degli incantesimi."
         }
     ]
 }
