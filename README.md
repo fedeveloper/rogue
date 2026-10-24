@@ -73,11 +73,11 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 | Classe | HP | Stile | Maestria Lv.2 | Sblocco |
 |---|---|---|---|---|
 | ⚔️ **Guerriero** | 140 | Tank bilanciato, contrattacca quando si difende | Mano Pesante | Iniziale |
-| 🗡️ **Ladro** | 100 | Agile e ricco, critico garantito dopo la Concentrazione | Tasche Nascoste | Iniziale |
+| 🗡️ **Ladro** | 90 | Agile e ricco, critico garantito dopo la Concentrazione | Tasche Nascoste | Iniziale |
 | 🔮 **Mago** | 90 | Arma di Fuoco potente e mira eccellente, ma fragile; si cura difendendosi | Sintonia | Iniziale |
-| 🛡️ **Paladino** | 180 | Ultra-tank con Risonanza di Luce; difendendosi si purifica | Baluardo della Fede | Maestria Guerriero Lv.5 |
+| 🛡️ **Paladino** | 195 | Ultra-tank con Risonanza di Luce; difendendosi si purifica | Baluardo della Fede | Maestria Guerriero Lv.5 |
 | 🪓 **Berserker** | 110 | Glass cannon: l'ascia più forte, nessuna armatura | Furia Sanguinaria | Impresa «Danza con la Morte» |
-| 🧪 **Alchimista** | 95 | Quattro pozioni iniziali e bombe di Fuoco; difendendosi prepara le reazioni | Metabolismo Alterato | Impresa «Genio Elementale» |
+| 🧪 **Alchimista** | 85 | Quattro pozioni iniziali e bombe di Fuoco; difendendosi prepara le reazioni | Metabolismo Alterato | Impresa «Genio Elementale» |
 | 🥷 **Assassino** | 75 | 15% di critico innato e schivata alta, ma fragile | Imboscata | Maestria Ladro Lv.5 |
 | 💀 **Negromante** | 75 | Risonanza di Tenebra; difendendosi ruba vita | Raccolto d'Anime | Maestria Mago Lv.5 |
 
