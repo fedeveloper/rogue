@@ -6,7 +6,6 @@ della Risonanza costano `resonance_discount` in meno. Gli effetti si applicano i
 """
 import random
 
-import attributes
 from data_manager import GAME_DATA
 
 SPELL_EFFECT_KEYS = ("damage_pct", "heal_pct", "drain_pct", "status", "dispel", "detonate_pct", "cleanse", "def_pct", "escape", "weaken_pct")
@@ -21,17 +20,17 @@ def spell(spell_id: str) -> dict:
 
 
 def cost(player, spell_id: str) -> int:
-    """L'Etere che costa l'incantesimo all'eroe: meno se è dell'elemento della sua Risonanza o con il talento
-    Parsimonia Arcana (mai sotto 1)."""
+    """L'Etere che costa l'incantesimo all'eroe: meno se è dell'elemento della sua Risonanza o con uno sconto
+    (talento Parsimonia Arcana, parola runica, reliquia: `spell_discount`), mai sotto 1."""
     s = spell(spell_id)
     discount = rules()["resonance_discount"] if s["element"] == player._get_resonance_element() else 0
-    return max(1, s["cost"] - discount - attributes.value(player, "spell_discount"))
+    return max(1, s["cost"] - discount - player.magic_value("spell_discount"))
 
 
 def label(player, spell_id: str) -> str:
     """La voce del menu degli incantesimi: nome, costo, descrizione, e se manca l'Etere."""
     s, c = spell(spell_id), cost(player, spell_id)
-    why = [w for w, on in (("Risonanza", s["element"] == player._get_resonance_element()), ("talento", attributes.value(player, "spell_discount"))) if on]
+    why = [w for w, on in (("Risonanza", s["element"] == player._get_resonance_element()), ("sconto", player.magic_value("spell_discount"))) if on]
     note = f" ({' e '.join(why)}: era {s['cost']})" if c < s["cost"] else ""
     short = "" if player.ether >= c else " [Etere insufficiente]"
     return f"{s['icon']} {s['name']}: {c} Etere{note}. {s['desc']}{short}"

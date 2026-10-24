@@ -66,6 +66,7 @@ Il nemico comune o l'Élite che ti uccide **se ne ricorda**: diventa una **Nemes
 | Più grosso di come lo ricordi | Ha il 20% di HP in più. |
 | Conosce i tuoi movimenti | Ha +15 di Precisione. |
 | Affamato di vendetta | Ha il 15% di Attacco in più. |
+| Ha imparato a zittirti | I tuoi incantesimi gli fanno il 40% di danni in meno, e ti combatte con il Silenzio e il Risucchio d'Etere. Lo impara solo da chi conosceva incantesimi. |
 
 - **Sconfiggerla** restituisce tutto l'Oro che aveva e lascia un **trofeo**, un pezzo d'equipaggiamento epico. Vale 2 punti di Audacia, come un'Élite.
 - Le Nemesi attive sono al massimo 3: una nuova scaccia la più vecchia. I **boss** non diventano Nemesi, ma ti riconoscono la volta dopo.
@@ -94,7 +95,7 @@ Il Labirinto cambia mentre scendi: ogni cinque piani entri in un **bioma** diver
 **🦇 Le Miniere della Testardaggine (piani 6–10).** Basalto, olio nero e ingranaggi che girano a vuoto.
 - **Più forzieri, meno falò.** E più creature di Terra.
 - **Nativi.** Il *Minatore Svuotato*, l'*Ingranaggio Senziente*, che si ripara spesso, la *Talpa Esplosiva* e il *Carrello Posseduto*, che caricano il colpo, la *Lucciola del Grisù*, imprevedibile, e il *Guardiano di Basalto*, che alza barriere. Il boss è *Il Caposquadra Sepolto*: carica i colpi e, quando la galleria crolla, si ripara dietro una barriera.
-- **Pericolo: Gas del Silenzio.** In ogni scontro c'è il 35% di probabilità che il gas riempia la stanza. La tua Difesa dimezza ancora i danni, ma perde la tecnica della classe.
+- **Pericolo: Gas del Silenzio.** In ogni scontro c'è il 35% di probabilità che il gas riempia la stanza. La tua Difesa dimezza ancora i danni, ma perde la tecnica della classe, e non riesci a lanciare incantesimi.
 - **Stanze speciali:** *La Galleria del Gas*, *L'Ingranaggio Fermo*, *Il Carrello Abbandonato*, *Il Minatore Cieco*.
 
 **🌀 Le Guglie del Vento Urlante (piani 11–15).** Ponti sospesi su nubi elettriche.
@@ -240,8 +241,11 @@ Intento del nemico: 💢 Colpo pesante (≈24 danni) — difenditi!
 | ⏳ Carica | Non attacca; il turno dopo arriva il **Colpo caricato** (l'intento mostra già i danni) | Preparati: il turno dopo difenditi |
 | 💥 Colpo caricato | Arriva sempre dopo la Carica: la sua forza triplica prima della tua difesa | **Difenditi**, o abbattilo prima |
 | 💠 Barriera | Non attacca; riporta il suo scudo al 20% degli HP massimi (non si somma a quello che ha già), e lo scudo assorbe i danni dei tuoi attacchi | Lo scudo si consuma colpendo: conviene continuare ad attaccare |
+| 🤫 Silenzio | Non attacca; per i tuoi prossimi 2 turni non puoi lanciare incantesimi (la voce resta nel menu, ma non costa il turno) | Attacca o difenditi: l'Etere ti aspetta |
+| 🌀 Risucchio d'Etere | Un attacco che, se ti ferisce, ti toglie anche 4 Etere | Spendi l'Etere prima, o difenditi |
+| 🔮 Incantesimo | Lo lanciano alcuni boss: la sua forza cresce della metà (×1.5) e la tua Difesa ne ferma solo il 50% | **Difenditi**: dimezzi il colpo |
 
-Colpo pesante, Guardia, Sigillo, Carica e Barriera non si ripetono mai due volte di fila. I boss si rigenerano più spesso.
+Colpo pesante, Guardia, Sigillo, Carica, Barriera, Silenzio e Incantesimo non si ripetono mai due volte di fila. I boss si rigenerano più spesso.
 
 Quasi ogni nemico ha uno **stile**, che decide quali mosse preferisce. Dopo averlo sconfitto lo trovi scritto nel *Bestiario*:
 
@@ -254,8 +258,9 @@ Quasi ogni nemico ha uno **stile**, che decide quali mosse preferisce. Dopo aver
 | **Infetto** | Colpi infetti | Melma Acida, Manticora Infetta, Volto nella Membrana |
 | **Mistico** | Sigillo e Rigenerazione | Chierico Corrotto, Cultista Cieco, Eco del Rimpianto |
 | **Furia** | Colpi pesanti e cariche | Elementale del Fuoco, Spirito della Tempesta |
+| **Arcanista** | Silenzio e Risucchio d'Etere | Cacciatore di Streghe |
 
-Goblin, Scheletri e Banditi, i primi nemici che incontri, combattono senza uno stile preciso. Alcuni nativi dei biomi e i Vampiri hanno mosse tutte loro.
+Goblin, Scheletri e Banditi, i primi nemici che incontri, combattono senza uno stile preciso. Alcuni nativi dei biomi e i Vampiri hanno mosse tutte loro: la Novizia del Silenzio ti ammutolisce, il Bibliotecario di Cenere ti risucchia l'Etere.
 
 ### Le fasi dei boss
 
@@ -268,7 +273,7 @@ Una fase può:
 - dargli uno **scudo**, che assorbe i danni dei tuoi attacchi finché non lo consumi;
 - coprirlo di **Scaglie**: i tuoi attacchi fanno metà dei danni finché una **reazione elementale** non le infrange;
 - rendere i suoi colpi **infetti** (sanguinamento più probabile);
-- cambiargli le **mosse**: Sigillo, Carica, Prosciugamento, Barriera.
+- cambiargli le **mosse**: Sigillo, Carica, Prosciugamento, Barriera, e per alcuni boss la magia (Incantesimo, Silenzio, Risucchio d'Etere): la Badessa del Silenzio, l'Astronoma delle Guglie, il Custode della Soglia, il Negromante Supremo, i due Lich e il DIO ANTICO.
 
 Le fasi che hai visto finiscono nel Codice, alla pagina *Fasi dei boss*; quelle che non hai ancora visto restano "???".
 
@@ -393,6 +398,9 @@ Armi e armature hanno degli **incastoni** (accanto al nome: `[Incastoni: ◇]` p
 | 📘 Runa del Sapere | Utilità | Arma o armatura | +10% di EXP. |
 | 🦁 Runa del Coraggio | Utilità | Arma o armatura | Ogni piano inizia con 1 punto di Audacia. |
 | 👣 Runa del Passo | Utilità | Arma o armatura | +10 alle prove delle trappole. |
+| 💧 Runa del Flusso | Arcana | Arma | Ogni colpo a segno ti dà 1 Etere in più. |
+| 📘 Runa della Sapienza | Arcana | Arma | +12% potenza degli incantesimi. |
+| 🏺 Runa del Pozzo | Arcana | Armatura | +4 Etere massimo. |
 
 ### Parole runiche
 
@@ -410,6 +418,7 @@ Certe combinazioni di rune **sullo stesso oggetto** formano una **parola runica*
 | «Patto del Mercante» | Runa dell'Avidità + Runa del Sapere | +10% di Oro e +10% di EXP. |
 | «Cuore Temerario» | Runa del Coraggio + Runa del Passo | Ogni piano inizia con 1 punto di Audacia in più e +10 alle prove delle trappole. |
 | «Egida Silente» | Runa della Pietra + Runa del Vento + Runa della Quiete | +6% di Difesa dell'armatura e +3% di Schivata. |
+| «Mente Arcana» | Runa del Flusso + Runa della Sapienza | Ogni incantesimo costa 1 Etere in meno (mai meno di 1). |
 
 ---
 
@@ -484,12 +493,21 @@ La scelta arriva alla fine della stanza in cui sei salito di livello, prima dei 
 
 ### La Maestria
 
-Ogni eroe ha un albero di **Maestria** a 5 livelli, che sale con l'esperienza accumulata nelle sue discese:
+Ogni eroe ha un albero di **Maestria** a 6 livelli, che sale con l'esperienza accumulata nelle sue discese:
 
 - **Lv.2** — un bonus personale (es. *Imboscata* dell'Assassino: il primo attacco di ogni scontro fa danni doppi).
 - **Lv.3** — sblocca un oggetto (es. la *Bomba Fumogena* per il Ladro).
 - **Lv.4** — un'**Eredità**: un bonus permanente per **tutti** gli eroi.
 - **Lv.5** — sblocca una nuova classe, un tratto o una reliquia.
+- **Lv.6** — un dono **arcano** dell'eroe, che vale solo per lui (2000 XP di Maestria):
+  - **Guerriero**: *Lama Incantata*: +3 Etere massimo e +1 Etere a ogni colpo a segno.
+  - **Ladro**: *Mani Leste*: ogni incantesimo costa 1 Etere in meno (mai meno di 1).
+  - **Mago**: *Arcimago*: +20% potenza degli incantesimi e +4 Etere massimo.
+  - **Paladino**: *Preghiera Costante*: +6 Etere massimo.
+  - **Berserker**: *Furia Arcana*: +1 Etere a ogni colpo a segno.
+  - **Alchimista**: *Distillato d'Etere*: +15% potenza degli incantesimi.
+  - **Assassino**: *Ombra Silente*: +1 Etere a ogni colpo a segno.
+  - **Negromante**: *Patto d'Ossa*: +15% potenza degli incantesimi e +4 Etere massimo.
 
 ---
 
@@ -525,6 +543,7 @@ Superata la Soglia, il Paradosso Temporale ti rimanda indietro: il Labirinto ric
 - **Ogni ciclo è un'Eco.** Il piano 31 apre l'**Eco II**, il 61 l'**Eco III**. Il nome dell'Eco è in cima alla mappa.
 - **I pericoli si inaspriscono.** In ogni Eco i pericoli con una regola numerica crescono del 25% (fino al doppio, e le probabilità al massimo al 90%): più gas nelle Miniere, più HP persi nel Ventre, più Oro che bolle nella Forgia, un tempo più lacerato sulla Soglia. La descrizione del pericolo mostra i numeri nuovi. Nostalgia Letale e Caduta Astrale restano come sono.
 - **I nativi tornano forti.** Nelle Eco i nativi di ogni bioma sono forti, rispetto ai nemici più profondi, quanto lo erano rispetto ai nemici dei loro piani.
+- **I nemici combattono la magia.** Nelle Eco tutti i nemici, boss compresi, possono usare il Risucchio d'Etere e il Silenzio.
 - **Il DIO ANTICO ritorna** alla fine di ogni ciclo, al piano 60, 90 e così via, con il nome della sua Eco.
 - **Essenza.** Oltre il piano 30 l'Essenza finale vale ×1,5, e il 25% in più per ogni Eco oltre la seconda (Eco III ×1,875).
 - **Memoria.** La tua Eco più profonda resta nel Codice e nel menu principale. L'Epitaffio ricorda fino a quale Eco ti sei spinto, e l'impresa *L'Eco Infinita* (raggiungi l'Eco III) vale 1.500 Essenza.
@@ -538,7 +557,7 @@ I cinque **Patti del Caos** delle versioni precedenti sono diventati gradi: *Lab
 | Grado | Nome | Regola che si aggiunge | Essenza |
 |---|---|---|---|
 | 1 | Campioni | Gli scontri d'Élite compaiono il doppio delle volte. | ×1,15 |
-| 2 | Scale Fredde | Il riposo prima delle scale cura la metà. | ×1,3 |
+| 2 | Scale Fredde | Il riposo prima delle scale cura la metà e restituisce la metà dell'Etere. | ×1,3 |
 | 3 | Labirinto Mortale | Le trappole infliggono danni doppi. | ×1,55 |
 | 4 | Forzieri Avidi | Forzieri chiusi e Mimic sono il doppio più probabili (fino a uno su due). | ×1,7 |
 | 5 | Boss Feroci | I boss hanno il 15% di HP in più. | ×1,85 |
@@ -554,7 +573,7 @@ I cinque **Patti del Caos** delle versioni precedenti sono diventati gradi: *Lab
 | 15 | Durezza | I nemici e i boss hanno il 15% di HP in più. | ×3,65 |
 | 16 | Mercanti in Fuga | I Mercanti compaiono la metà delle volte. | ×3,8 |
 | 17 | Boss Implacabili | I boss hanno il 10% di ATK in più. | ×3,95 |
-| 18 | Nemici Coriacei | I nemici comuni hanno il 10% di HP in più. | ×4,1 |
+| 18 | Voci Spente | I nemici comuni hanno il 10% di HP in più e possono ammutolirti con il Silenzio. | ×4,1 |
 | 19 | Furia | I nemici e i boss hanno il 10% di ATK in più. | ×4,35 |
 | 20 | Il Dio si Sveglia | Il DIO ANTICO ha il 30% di HP in più. | ×4,65 |
 
@@ -573,6 +592,7 @@ Una discesa al giorno, **uguale per chiunque la giochi quel giorno**:
 | Nebbie Generose | Le Stanze del Mistero compaiono il doppio delle volte. |
 | Taglie | I nemici lasciano il 50% di Oro in più. |
 | Scale Calde | Il riposo prima delle scale cura il 50% in più. |
+| Pozzo Profondo | Parti con 10 Etere massimo in più. |
 
 - ogni piano nasce dallo stesso seme: la mappa di un piano è la stessa qualunque strada tu abbia preso prima;
 - conta solo il **primo tentativo** del giorno, che vale anche Essenza ×1,5; i tentativi successivi sono allenamento;

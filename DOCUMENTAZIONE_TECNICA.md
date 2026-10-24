@@ -24,7 +24,7 @@ Riferimento per chi modifica il gioco: architettura, formato dei dati, formule d
 | `talents.py` | Talenti: ogni `rules.every` livelli (`earned`) un talento fra `rules.offered` proposti a caso (`offer`, `choose`), effetti sommati da `value` e aggiunti da `attributes.value`, HP massimi aggiunti alla scelta (`take`), riga delle Statistiche (`summary`). |
 | `attributes.py` | Attributi dell'eroe: valori per classe (`starting`), somma degli effetti (`value`, che aggiunge quelli dei talenti), spesa e limiti (`raise_attribute`), Tomo dell'Oblio (`reset`), menu dei punti (`spend_points`), riga delle Statistiche (`summary`). |
 | `runes.py` | Rune e Incastoni: chiavi degli effetti (`RUNE_EFFECT_KEYS`), dati delle rune (`rune`, `fits`, `random_rune_id`), probabilità di drop (`roll_drop`), costo di estrazione, etichetta degli incastoni sul nome (`socket_tag`). |
-| `nemesis.py` | La Nemesi: nascita e rango (`on_death`), comparsa sulla mappa (`waiting_on`), nemico (`build_enemy`), tratto che resiste (`resisted`), sconfitta (`defeat`), boss che ti riconoscono (`boss_grudge`). |
+| `nemesis.py` | La Nemesi: nascita e rango (`on_death`), comparsa sulla mappa (`waiting_on`), nemico (`build_enemy`), tratti che può imparare (`traits_for`), tratto che resiste (`resisted`, e `spell_resisted` per gli incantesimi: elemento dell'uccisione e Antimagia), sconfitta (`defeat`), boss che ti riconoscono (`boss_grudge`). |
 | `epitaph.py` | L'Epitaffio: cronaca della discesa (`note`, in `Player.chronicle`), composizione dai modelli (`compose`), Cimitero (`record`, `cemetery`). |
 | `camp.py` | Il Fuoco del Campo: personaggi presenti, frasi e doni (`talk`), strutture (`build`, `built`), dono dello Scrittoio a inizio run (`start_of_run_boon`). |
 | `endings.py` | Finali: disponibili (`available_endings`), scelta e premio (`choose_ending`), registro in `profile.story.endings`. |
@@ -63,10 +63,10 @@ Un test controlla che ogni oggetto sbloccabile abbia davvero una di queste strad
 | `relics.json` | Reliquie | `id`, `name`, `desc`, `lore`, `unlock_id`, `unlock_cost` |
 | `elements.json` | Sistema elementale | `list`, `icons`, `multipliers[attaccante][difensore]`, `resonance[elemento] = {value, desc, announce}`, `marks.duration`, `conditions` (`blind`, `slow`, `scorch_pct`), `reactions["A+B"] = {name, icon, desc, bonus_pct, status: {type, duration}}` |
 | `books.json` | Tomi dell'Archivio | `title`, `unlock_condition` (testo), `unlock = {type: max_floor\|total_bosses\|won_normal, value}`, `bonus = {gold_pct, escape, boss_dmg_pct, def}`, `bonus_desc`, `chapters` |
-| `meta.json` | Regole di contorno | `traits`, `pacts` (`name`, `desc`: gli effetti dei gradi di Ascensione con `pact`), `feats` (`target`, `reward_type`: `unlock`, `class`, `perk`, `trait` o `essence`, `reward_id`), `mastery_xp_requirements`, `rooms.weights`/`rooms.cooldowns`, `corruption` (`max`, `atk_per_10`, `veil`, `voice`, `desc`), `cycle` (`hazard_pct_per_cycle`, `hazard_max_mult`, `chance_cap`, `essence_pct_per_cycle`, `intro`, `desc`: vedi [Il Ciclo del Labirinto](#il-ciclo-del-labirinto)) |
+| `meta.json` | Regole di contorno | `traits`, `pacts` (`name`, `desc`: gli effetti dei gradi di Ascensione con `pact`), `feats` (`target`, `reward_type`: `unlock`, `class`, `perk`, `trait` o `essence`, `reward_id`), `mastery_xp_requirements`, `rooms.weights`/`rooms.cooldowns`, `corruption` (`max`, `atk_per_10`, `veil`, `voice`, `desc`), `cycle` (`hazard_pct_per_cycle`, `hazard_max_mult`, `chance_cap`, `essence_pct_per_cycle`, `arcane_moves` (pesi delle mosse aggiunti a ogni nemico nelle Eco, anche dopo le fasi dei boss: `Enemy.extra_moves`), `intro`, `desc`: vedi [Il Ciclo del Labirinto](#il-ciclo-del-labirinto)) |
 | `biomes.json` | Biomi | `id`, `name`, `icon`, `floors`, `intro`, `hazard`, `room_weights`, `enemy_elements`, `signature_events` (opzionali gli ultimi quattro) |
 | `events.json` | Eventi narrativi | `title`, `start`, `scenes`, `requires` (opz.), `scripted` (opz.), `weight` (opz.): vedi [Eventi narrativi](#eventi-narrativi) |
-| `moves.json` | Mosse dei nemici (intenti) | `moves` (`name`, `icon`, `desc`, `damage_mult`, `damage_taken_mult`, `heal_pct`), `profiles[id] = {name, desc, moves}` (stili condivisi da più nemici, mostrati nel Bestiario), `defaults` (pesi di `enemy`, `boss`, `with_status`), `rules` (`heal_below_pct`, `max_heals`, `no_repeat`) |
+| `moves.json` | Mosse dei nemici (intenti) | `moves` (`name`, `icon`, `desc`, `damage_mult`, `damage_taken_mult`, `heal_pct`, `silence_turns`, `ether_drain`, `pierce_pct`), `profiles[id] = {name, desc, moves}` (stili condivisi da più nemici, mostrati nel Bestiario), `defaults` (pesi di `enemy`, `boss`, `with_status`), `rules` (`heal_below_pct`, `max_heals`, `no_repeat`) |
 | `attributes.json` | Attributi e livelli | `rules` (`points_per_level`, `max_points`, `per_level` con `max_hp`/`acc`/`dodge`, `desc`); `attributes[id] = {name, icon, per_point, desc}`: vedi [Formule di combattimento](#5-formule-di-combattimento) |
 | `talents.json` | Talenti | `rules` (`every`: ogni quanti livelli, `offered`: quanti proposti, `desc`); `talents[id] = {name, icon, effects, desc}`, con `effects` fra le chiavi degli attributi e quelle di `talents.TALENT_EFFECT_KEYS`: vedi [Formule di combattimento](#5-formule-di-combattimento) |
 | `spells.json` | Incantesimi ed Etere | `rules` (`gain`: `hit`, `defend`, `reaction`, `floor_pct`; `resonance_discount`; `slots`; `drops` per fonte in %; `vendor_stock`; `scroll_value` [base, per piano]; `desc`, `scroll_desc`); `spells[id] = {name, icon, element, cost, effects, desc, outside, unlock_id, unlock_cost}`, con `effects` fra `damage_pct`, `heal_pct`, `drain_pct`, `status`, `dispel`, `detonate_pct`, `cleanse`, `def_pct`, `escape`, `weaken_pct`: vedi [La magia](#la-magia) |
@@ -75,13 +75,13 @@ Un test controlla che ogni oggetto sbloccabile abbia davvero una di queste strad
 | `modes.json` | Modalità | `ascension` (`max`, `grades`: `name`, `desc`, `essence_bonus`, `effects`), `daily` (`maluses`, `first_attempt_essence_mult`, `history`, `score`, `boons`: `name`, `desc`, `effects`): vedi [Modalità](#modalità) |
 | `phases.json` | Fasi dei boss | `bosses[nome] = [{at_pct, name, text, element, atk_mult, heal_pct, shield_pct, ward, status_inflict, moves}]`: vedi [Intenti e reazioni](#intenti-e-reazioni) |
 | `runes.json` | Rune e parole runiche | `rules` (`sockets` per `normal`/`epic`/`boss`, `extract_cost` e `value` come [base, per piano], `drops` per fonte in %, `vendor_stock`); `runes[id] = {name, icon, family, slot (weapon/armor/any), weight, effects, desc}`; `words[id] = {name, runes, effects, desc}` |
-| `nemesis.json` | Nemesi | `rules` (`max_active`, `max_rank`, `stats_pct_per_rank`, `gold_taken_pct`, `floor_window` [da, a] rispetto al piano della morte), `names`, `ranks`, `traits[id] = {name, desc, value}`, `text` (frasi con `{name}`, `{rank}`, `{floor}`, `{gold}`, `{boss}`) |
+| `nemesis.json` | Nemesi | `rules` (`max_active`, `max_rank`, `stats_pct_per_rank`, `gold_taken_pct`, `floor_window` [da, a] rispetto al piano della morte), `names`, `ranks`, `traits[id] = {name, desc, value, requires_spells, moves}` (gli ultimi due opz.: il tratto si impara solo da un eroe con incantesimi, e aggiunge pesi alle mosse), `text` (frasi con `{name}`, `{rank}`, `{floor}`, `{gold}`, `{boss}`) |
 | `epitaph.json` | Epitaffio | `cemetery_size`, `max_middle`, `opening` (varianti per `death`/`escape`/`victory`), `middle` (una frase per fatto), `priority` (ordine dei fatti), `cause` (`nemesis`, `boss`, `enemy`, `trap`, `other`), `born`, `ending` |
 | `lore.json` | Frasi d'atmosfera | `combat`, `boss`, `vendor`, `treasure`, `trap`, `campfire`, `letters`, `mystery` |
 
 ### Maestrie
 
-`classes.json → mastery` ha i livelli `"2"`…`"5"`. Ogni livello ha un `type`:
+`classes.json → mastery` ha i livelli `"2"`…`"6"` (le soglie di XP in `meta.json → mastery_xp_requirements`; `_update_class_mastery` sale finché ce n'è una). Ogni livello ha un `type`:
 
 | `type` | Livello | Campi | Effetto |
 |---|---|---|---|
@@ -89,6 +89,7 @@ Un test controlla che ogni oggetto sbloccabile abbia davvero una di queste strad
 | `unlock` | 3, 5 | `id` | Aggiunge `id` a `unlocked_ids` (oggetto, reliquia, tratto) |
 | `global` | 4 | `bonus = {stat, value}` | Bonus a **tutti** gli eroi. Valori di `stat`: `def`, `dodge`, `exp`, `max_hp`, `weapon_atk`, `acc`, `crit`, `lifesteal` |
 | `class` | 5 | `id` | Sblocca la classe con quell'id |
+| `magic` | 6 | `bonus = {chiave: valore}` | Effetti magici della sola classe (`ether_max`, `spell_pct`, `ether_on_hit`, `spell_discount`), in `Player.mastery_magic` e sommati da `Player.magic_value` |
 
 Gli sblocchi dei livelli già raggiunti vengono riconcessi all'avvio (`_grant_retroactive_mastery_unlocks`). Così contenuti aggiunti più tardi arrivano anche a chi aveva già il livello.
 
@@ -128,7 +129,7 @@ Un evento è una piccola storia a **scene**. `start` indica la prima; ogni scena
 
 Una scelta che costa oro è grigia, con "(Oro insufficiente)", se non puoi pagarla.
 
-**Condizioni** (`requires`, tutte in AND): `class`/`not_class` (id o lista), `trait`, `relic`, `quest_item`, `pact`, `gold`, `level`, `atk`, `dodge` (soglie minime), `hp_pct_below`, `min_floor`/`max_floor`, `flag`/`not_flag` (profilo), `run_flag`/`not_run_flag` (run), `counter` (`{"nome": soglia}`, almeno) e `counter_below` (`{"nome": soglia}`, meno di), `npc`/`not_npc`, `biome` (id del bioma del piano), `flags`/`any_flags` (liste di flag: tutti / almeno uno), `letters_complete`, `corruption` (almeno; etichetta `[Corruzione N+]`) e `corruption_below`. A livello di evento decidono se l'evento può uscire in una porta; vengono valutate anche senza l'eroe, contando solo piano e profilo.
+**Condizioni** (`requires`, tutte in AND): `class`/`not_class` (id o lista), `trait`, `relic`, `quest_item`, `pact`, `gold`, `level`, `atk`, `dodge` (soglie minime), `hp_pct_below`, `min_floor`/`max_floor`, `flag`/`not_flag` (profilo), `run_flag`/`not_run_flag` (run), `counter` (`{"nome": soglia}`, almeno) e `counter_below` (`{"nome": soglia}`, meno di), `npc`/`not_npc`, `biome` (id del bioma del piano), `flags`/`any_flags` (liste di flag: tutti / almeno uno), `letters_complete`, `corruption` (almeno; etichetta `[Corruzione N+]`) e `corruption_below`, `attribute` (`{"forza": 4}`: punti minimi negli attributi; etichetta `[💪 Forza 4+]`) e `spells` (`true`: l'eroe conosce incantesimi; etichetta `[Incantesimi]`). A livello di evento decidono se l'evento può uscire in una porta; vengono valutate anche senza l'eroe, contando solo piano e profilo.
 
 **Effetti** (una chiave per voce, più eventuali parametri `level`, `floors`, `value`, `add`, `death_msg`, `gold_pct`):
 
@@ -138,6 +139,8 @@ Una scelta che costa oro è grigia, con "(Oro insufficiente)", se non puoi pagar
 | `damage` | `-N HP` | Può uccidere; `death_msg` personalizza il messaggio |
 | `heal`, `heal_pct` | `Cura N HP`, `Cura N% HP` | Bloccate da *Patto del Sangue* |
 | `max_hp` | `±N HP Max` | |
+| `scroll` | `Pergamena` | Una pergamena a caso fra gli incantesimi disponibili (`generate_scroll`) |
+| `ether` | `+N Etere` / `Tutto l'Etere` (`"full"`) | `Player.gain_ether`, fino al massimo |
 | `atk`, `def` | `±N ATK`, `±N DIF` | Per il resto della discesa |
 | `relic` | `Reliquia` | `random` o un id; se le possiedi tutte, +50 Oro |
 | `weapon`, `armor` | `Arma Epica`, `Armatura` | `epic`/`normal`; `level` aggiunge piani al livello |
@@ -253,7 +256,7 @@ Il **Mimic** (`enemies.json`) ha `"lair": "treasure"`: non entra mai nelle scelt
 
 | Regola | Parametri | Dove agisce |
 |---|---|---|
-| `silence` (Miniere) | `chance` | All'inizio di uno scontro (`CombatSession.silenced`): la Difesa diventa `def_type = "silenced"`, dimezza i danni senza la tecnica della classe |
+| `silence` (Miniere) | `chance` | All'inizio di uno scontro (`CombatSession.silenced`): la Difesa diventa `def_type = "silenced"`, dimezza i danni senza la tecnica della classe, e non si lanciano incantesimi (`spells_muted`) |
 | `dissolve` (Ventre) | `max_hp_pct` | All'arrivo su ogni piano (`floor_map.apply_biome_on_floor`): toglie HP massimi e li accumula in `Player.dissolved`, che si restituisce quando cambia il bioma |
 | `boil` (Forgia) | `chance`, `gold_pct` | Dopo ogni colpo subito con danni (`_enemy_attack`) |
 | `paradox` (Soglia) | `player_repeat`, `enemy_double` | In `_combat_loop`: un turno in più al giocatore, o una seconda mossa (non annunciata) al nemico |
@@ -344,10 +347,11 @@ Oltre `max_active` la più vecchia si perde. `generate_floor_map` mette al posto
 | `defend_heal_pct` | `execute_player_defense` |
 | `trap_chance_add` | `rooms.trap_chances` |
 | `audacity_start` | Audacia all'inizio di ogni piano (`roguelike`) |
+| `ether_max`, `spell_pct`, `ether_on_hit`, `spell_discount` | Magia (famiglia *Arcana*): `Player.magic_value(chiave)` le somma ad attributi, talenti e Maestria Lv.6, e la leggono `max_ether`, `spell_damage`, il colpo a segno di `execute_player_attack` e `magic.cost`. `spell_discount` esiste solo nella parola *Mente Arcana* |
 
 Il Falò ha `rune_workshop` (`RUNE_WORKSHOP`): incastonare (gratis, nell'arma o nell'armatura con un incastone libero adatto allo `slot`) ed estrarre (`extract_cost`); non spegne il falò. `rune_drop(player, piano, fonte)` lascia una runa con la probabilità di `drops[fonte]` (Élite, boss, trappola, tesoro del Mistero, Mimic) e la registra nel Codice (`record_rune`, pagina *Rune*). La fusione dell'Altare tiene le rune della base e rimette nello zaino quelle del sacrificio.
 
-**Parole runiche** (`runes.json`, `words[id] = {name, runes, effects, desc}`). `runes.active_words(oggetto)` trova le parole composte dalle rune di un oggetto: prima le più lunghe, poi nell'ordine dei dati, e ogni runa vale per una sola parola. `runes.item_effects` restituisce gli effetti delle rune più quelli delle parole, e `Player.rune_value` li somma, quindi una parola usa le stesse chiavi delle rune. Due chiavi esistono solo nelle parole: `scorch_on_hit` e `stun_on_hit` (con `bleed_on_hit` e `poison_on_hit` in `ON_HIT_STATUSES`: status, chiave, turni). Il nome dell'oggetto mostra le parole fra «». Il laboratorio del Falò annuncia una parola appena composta e la registra nel Codice (`record_runeword`, pagina *Parole runiche*).
+**Parole runiche** (`runes.json`, `words[id] = {name, runes, effects, desc}`). `runes.active_words(oggetto)` trova le parole composte dalle rune di un oggetto: prima le più lunghe, poi nell'ordine dei dati, e ogni runa vale per una sola parola. `runes.item_effects` restituisce gli effetti delle rune più quelli delle parole, e `Player.rune_value` li somma, quindi una parola usa le stesse chiavi delle rune. Tre chiavi esistono solo nelle parole: `spell_discount`, `scorch_on_hit` e `stun_on_hit` (con `bleed_on_hit` e `poison_on_hit` in `ON_HIT_STATUSES`: status, chiave, turni). Il nome dell'oggetto mostra le parole fra «». Il laboratorio del Falò annuncia una parola appena composta e la registra nel Codice (`record_runeword`, pagina *Parole runiche*).
 
 ### Modalità
 
@@ -365,7 +369,9 @@ Il Falò ha `rune_workshop` (`RUNE_WORKSHOP`): incastonare (gratis, nell'arma o 
 | `enemy_gold_mult` | × | `Enemy.gold_drop` |
 | `chest_risk_mult` | × | `rooms.chest_risks`, con un tetto del 50% per tipo |
 | `curse_chance_mult` | × | `CURSE_CHANCE` dei generatori di armi, armature e monili |
-| `start_gold_mult`, `start_gold_add`, `start_corruption`, `start_relic`, `start_potions_add` | ×, + | `roguelike._apply_mode_start`, a inizio discesa |
+| `start_gold_mult`, `start_gold_add`, `start_corruption`, `start_relic`, `start_potions_add`, `start_ether_add` | ×, + | `roguelike._apply_mode_start`, a inizio discesa (l'ultimo alza l'Etere di base e quello attuale) |
+| `floor_ether_mult` | × | `roguelike.rest_ether`, l'Etere del riposo prima delle scale |
+| `enemy_moves` | pesi che si sommano | `Enemy`, solo i nemici comuni: mosse in più (es. `silence`) |
 | `pact` | id di un patto | aggiunto a `active_pacts` (effetti già esistenti: `carestia`, `inflazione`, `trappole`) |
 
 **Ascensione.** I gradi sono cumulativi: `ascension_rules(n)` combina gli effetti dei primi `n`. L'Essenza finale è moltiplicata per `1 + Σ essence_bonus`. `max_grade()` è 0 senza vittorie, poi `profile.ascension.best_win + 1`; una vittoria della discesa standard (non della Sfida) chiama `record_ascension_win(grado)`. I vecchi patti `durezza` e `furia` non esistono più: sono diventati gli effetti `enemy_hp_mult`/`boss_hp_mult` ed `enemy_atk_mult` dei gradi omonimi, con valori più leggeri perché si sommano agli altri gradi. La curva dei gradi si misura con `tools/bilanciamento.py ascensione`.
@@ -481,6 +487,9 @@ La scelta dei punti (`attributes.spend_points`) arriva alla fine della stanza in
   - `drain` è un attacco che poi cura il nemico di `heal_ratio` × i danni inflitti;
   - `seal` imposta `CombatSession.sealed`: al turno seguente la Difesa è sigillata (sceglierla non consuma il turno), poi `_combat_loop` lo azzera;
   - `charge` imposta `Enemy.charged`: la prossima `choose_move()` restituisce sempre `unleash` (`damage_mult` 3), che non compare mai nei pesi;
+  - `silence` imposta `CombatSession.mute_turns = silence_turns`: finché è positivo `spells_muted()` spiega perché la voce *Lancia un incantesimo* non si può usare (sceglierla non consuma il turno); `_combat_loop` lo scala di 1 dopo ogni turno dell'eroe. Anche il Gas del Silenzio (`silenced`) rende muti gli incantesimi; la reliquia `velo_silenzio` (`RelicEffect.ignore_silence`) li libera entrambi;
+  - `ether_drain` è un attacco che, se ferisce, toglie `ether_drain` Etere (mai sotto zero);
+  - `spellcast` è un attacco (`damage_mult` 1.5) di cui la Difesa ferma solo `100 - pierce_pct`%: `_player_defense(pierce_pct)` vale per il colpo vero (`_calc_enemy_damage`) e per la stima dell'intento;
   - `shield` porta `Enemy.shield` ad almeno `shield_pct` degli HP massimi, senza sommarsi: una Barriera dopo l'altra non può far crescere lo scudo più in fretta dei colpi dell'eroe (le fasi con `shield_pct` invece si sommano, una volta sola); lo scudo assorbe i danni degli attacchi dell'eroe (`_absorb`), non quelli di status, reazioni o riflessi.
 - Senza intento (es. nei test) il nemico attacca.
 
@@ -604,6 +613,7 @@ La CI (`.github/workflows/tests.yml`) li esegue su Python 3.9 e sull'ultima 3.x;
 | `test_enemy_identity.py` | Stili dei nemici (dati, uso, Colpo infetto, Bestiario), boss nativi (uno per bioma, solo nel suo bioma), sei nativi per bioma (stile, forza rispetto ai generici, quota degli scontri), difese delle classi (dati e numeri dei testi, ogni tecnica, Maledizione, colpo finale) |
 | `test_talents.py` | Talenti: dati e testi (ogni numero degli effetti è nella descrizione), un talento ogni `every` livelli, proposta senza doppioni, scelta e HP massimi, effetto di ogni chiave propria, Tomo dell'Oblio che non li tocca, scelta a fine stanza prima dei punti, Statistiche |
 | `test_attributes.py` | Attributi: dati e testi, attributi di ogni classe, punti a ogni livello e crescita automatica, limiti, menu e rinvio, Tomo dell'Oblio, effetto di ogni attributo (Vitalità, Destrezza, Agilità e fuga, ogni arma con il suo attributo, focus e armi iniziali, Arcano sulle reazioni, Fortuna), Statistiche |
+| `test_magic_world.py` | Magia nel mondo: stile Arcanista e nativi, boss che lanciano incantesimi nelle fasi, mosse delle Eco (anche dopo una fase), Nemesi Antimagia (solo da chi conosce incantesimi, resistenza e mosse) e resistenza elementale sugli incantesimi, scelte degli eventi per ogni attributo e per chi conosce incantesimi, Maestria Lv.6 (dati, solo per la sua classe, salita), `magic_value` da tutte le fonti, Etere pieno all'inizio anche con una reliquia |
 | `test_magic.py` | Magia: dati e testi degli incantesimi, Etere e incantesimi di ogni classe, testo delle regole; Etere iniziale e Arcano, guadagni (colpo, difesa, reazione, massimo); lancio (danni, marchio, Codice), elemento del nemico e Arcano, reazione composta con l'arma, Guardia, scudo e Dissolvi, cura, Sifone, status, Detonazione con e senza marchio, sconto della Risonanza, colpo finale; menu (terza azione, Indietro gratis, Etere insufficiente, eroe senza incantesimi); Statistiche e Codice |
 | `test_grimoires.py` | Grimori: testo delle regole, incantesimi da sbloccare (né in pergamena né alla Forgia prima dello sblocco), drop per fonte, Mercante, imparare (posto libero, già noto, posti pieni, tenere per dopo), niente lettura in combattimento, cure dallo zaino (solo fuori dal combattimento, cura, purificazione, Etere insufficiente), Medita al Falò, Pelle di Pietra, Maledizione una volta sola, Passo del Vento (anche contro i boss), Morsa di Ghiaccio, Vampa, Marea Curativa |
 | `test_cycle.py` | Ciclo del Labirinto: cicli ed Eco, primo ciclo intatto, ogni bioma una volta per ciclo con la Soglia in fondo, ordine dal seme, dati intatti, pericoli più duri fino al limite e descrizioni con i numeri nuovi, regola usata nello scontro, nativi rinforzati, DIO ANTICO a ogni fine ciclo, annuncio e record, Epitaffio, Essenza, Codice, testo delle regole |

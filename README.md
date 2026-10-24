@@ -57,14 +57,14 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 - 📅 **Sfida del Giorno.** Una discesa al giorno uguale per tutti: eroe, tratto, malus e dono assegnati, la stessa mappa a ogni piano. Conta il primo tentativo; punteggio, serie di giorni e record restano nel profilo.
 - 📖 **Eventi che ricordano.** 58 storie a scene con opzioni che esistono solo per la tua classe, il tuo tratto o le tue reliquie: `[Mago]`, `[Tocco di Mida]`, `[Chiave Arrugginita]`. Il Labirinto ricorda chi hai aiutato e chi hai derubato, e certe scelte tornano a bussare qualche piano dopo.
 - 🗝️ **Personaggi che ritornano.** *Sir Alaric*, il Primo Paladino, e *Silas*, il Cercatore, hanno storie in tre capitoli che proseguono di run in run. Le tue scelte decidono come finiscono, e se liberi Alaric il Cavaliere Oscuro non tornerà più.
-- 🔷 **Rune e Incastoni.** 17 rune da incastonare al Falò in armi e armature: allungano i marchi, potenziano le reazioni, fanno sanguinare, rubano vita, riflettono i colpi. Restano sull'oggetto finché non le estrai, quindi ogni cambio d'arma è una scelta. Le combinazioni giuste formano 10 **parole runiche** da scoprire.
+- 🔷 **Rune e Incastoni.** 20 rune da incastonare al Falò in armi e armature: allungano i marchi, potenziano le reazioni, fanno sanguinare, rubano vita, riflettono i colpi. Restano sull'oggetto finché non le estrai, quindi ogni cambio d'arma è una scelta. Le combinazioni giuste formano 11 **parole runiche** da scoprire.
 - 👑 **Boss che cambiano.** A metà della vita ogni boss entra in una nuova fase con un nome, mosse nuove e regole proprie: il Re dei Goblin chiama le guardie, il Drago di Zaffiro si copre di Scaglie che solo una reazione elementale infrange, la Badessa ti sigilla la difesa. Il DIO ANTICO ha tre fasi, e nella seconda diventa l'elemento che ti ferisce di più. Ogni bioma ha il suo boss nativo, dalla Badessa dei Chiostri al Custode della Soglia.
 - 😈 **La Nemesi.** Il nemico che ti uccide se ne ricorda: prende un nome, un rango e il tuo Oro, impara qualcosa da te e torna a cercarti vicino al piano della tua morte. Sconfiggilo e ti riprendi tutto, con un trofeo.
 - 🪦 **Un epitaffio per ogni discesa.** A fine partita poche frasi raccontano chi eri, cosa hai attraversato e chi ti ha ucciso; il Cimitero del Codice conserva le ultime cinquanta.
 - 🩸 **Corruzione.** Le scelte oscure danno potere e opzioni proibite, ma il Labirinto comincia a nasconderti le cose: gli effetti delle scelte, le mosse dei nemici.
 - 🏁 **5 finali.** Uccidere il Dio, prenderne il posto, risvegliare Aethelgard… e un finale segreto per chi legge davvero il Labirinto.
 - 🔥 **Un campo che ricorda.** Chi salvi nel Labirinto viene a scaldarsi al tuo fuoco, ti parla di ciò che hai fatto e ti aiuta a costruire.
-- 🌟 **50 reliquie** che piegano le regole: danni raddoppiati, scudi, vampirismo, oro moltiplicato.
+- 🌟 **55 reliquie** che piegano le regole: danni raddoppiati, scudi, vampirismo, oro moltiplicato.
 - 🏕️ **Meta-progressione profonda**: potenziamenti permanenti, una Forgia per sbloccare equipaggiamento, artigiani da liberare, un Archivio di lore con bonus, imprese da completare.
 - ♾️ **Modalità Infinita** dopo la prima vittoria: oltre il piano 30 inizia il **Ciclo del Labirinto**. I sei biomi tornano in un ordine nuovo a ogni ciclo, ogni ciclo è un'Eco più dura (Eco II, Eco III…) e alla fine di ognuno ti attende di nuovo il DIO ANTICO.
 
@@ -106,7 +106,7 @@ Dopo la prima vittoria, a ogni partenza scegli un **grado di Ascensione**: ogni 
 | Grado | Nome | Regola che si aggiunge | Essenza |
 |---|---|---|---|
 | 1 | **Campioni** | Gli scontri d'Élite compaiono il doppio delle volte. | ×1,15 |
-| 2 | **Scale Fredde** | Il riposo prima delle scale cura la metà. | ×1,3 |
+| 2 | **Scale Fredde** | Il riposo prima delle scale cura la metà e restituisce la metà dell'Etere. | ×1,3 |
 | 3 | **Labirinto Mortale** | Le trappole infliggono danni doppi. | ×1,55 |
 | 4 | **Forzieri Avidi** | Forzieri chiusi e Mimic sono il doppio più probabili (fino a uno su due). | ×1,7 |
 | 5 | **Boss Feroci** | I boss hanno il 15% di HP in più. | ×1,85 |
@@ -122,7 +122,7 @@ Dopo la prima vittoria, a ogni partenza scegli un **grado di Ascensione**: ogni 
 | 15 | **Durezza** | I nemici e i boss hanno il 15% di HP in più. | ×3,65 |
 | 16 | **Mercanti in Fuga** | I Mercanti compaiono la metà delle volte. | ×3,8 |
 | 17 | **Boss Implacabili** | I boss hanno il 10% di ATK in più. | ×3,95 |
-| 18 | **Nemici Coriacei** | I nemici comuni hanno il 10% di HP in più. | ×4,1 |
+| 18 | **Voci Spente** | I nemici comuni hanno il 10% di HP in più e possono ammutolirti con il Silenzio. | ×4,1 |
 | 19 | **Furia** | I nemici e i boss hanno il 10% di ATK in più. | ×4,35 |
 | 20 | **Il Dio si Sveglia** | Il DIO ANTICO ha il 30% di HP in più. | ×4,65 |
 
@@ -138,6 +138,7 @@ Sempre disponibile dal menu principale. Ogni giorno la stessa discesa per chiunq
 | **Nebbie Generose** | Le Stanze del Mistero compaiono il doppio delle volte. |
 | **Taglie** | I nemici lasciano il 50% di Oro in più. |
 | **Scale Calde** | Il riposo prima delle scale cura il 50% in più. |
+| **Pozzo Profondo** | Parti con 10 Etere massimo in più. |
 
 ## ⚔️ Il combattimento
 
@@ -190,7 +191,7 @@ A questo si aggiungono **50 Essenza per ogni boss** sconfitto, il moltiplicatore
 ## 📚 Enciclopedia
 
 <details>
-<summary>🌟 Le 50 reliquie</summary>
+<summary>🌟 Le 55 reliquie</summary>
 
 Si tengono al massimo 4 reliquie alla volta: trovandone un'altra scegli quale sacrificare.
 
@@ -246,6 +247,11 @@ Si tengono al massimo 4 reliquie alla volta: trovandone un'altra scegli quale sa
 | **Stendardo dell'Audacia** | Ogni stanza rischiosa ti dà 1 punto di Audacia in più. | Forgia (✨350) |
 | **Teschio del Rivale** | Ogni Nemesi sconfitta ti dà +20 HP massimi. | Boss, forzieri, eventi |
 | **Lanterna del Cartografo** | Gli Eventi e le Stanze del Mistero compaiono più spesso. | Boss, forzieri, eventi |
+| **Cristallo d'Etere** | +6 Etere massimo. | Boss, forzieri, eventi |
+| **Anello dell'Arcimago** | +20% potenza degli incantesimi. | Boss, forzieri, eventi |
+| **Calamaio Eterno** | Ogni incantesimo costa 1 Etere in meno (mai meno di 1). | Boss, forzieri, eventi |
+| **Cuore Risonante** | Ogni nemico sconfitto ti restituisce 3 Etere. | Boss, forzieri, eventi |
+| **Velo del Silenzio** | Né il Silenzio dei nemici né il Gas del Silenzio ti impediscono di lanciare incantesimi. | Boss, forzieri, eventi |
 
 </details>
 
@@ -377,7 +383,7 @@ L'ATK reale cresce con il piano in cui l'arma viene trovata; le armi di elemento
 </details>
 
 <details>
-<summary>🔷 Le 17 rune</summary>
+<summary>🔷 Le 20 rune</summary>
 
 Si incastonano al Falò in armi e armature: 1 incastone per gli oggetti comuni, 2 per gli epici, 3 per i premi dei boss.
 
@@ -400,6 +406,9 @@ Si incastonano al Falò in armi e armature: 1 incastone per gli oggetti comuni, 
 | 📘 **Runa del Sapere** | Utilità | Arma o armatura | +10% di EXP. |
 | 🦁 **Runa del Coraggio** | Utilità | Arma o armatura | Ogni piano inizia con 1 punto di Audacia. |
 | 👣 **Runa del Passo** | Utilità | Arma o armatura | +10 alle prove delle trappole. |
+| 💧 **Runa del Flusso** | Arcana | Arma | Ogni colpo a segno ti dà 1 Etere in più. |
+| 📘 **Runa della Sapienza** | Arcana | Arma | +12% potenza degli incantesimi. |
+| 🏺 **Runa del Pozzo** | Arcana | Armatura | +4 Etere massimo. |
 
 Certe combinazioni sullo stesso oggetto formano una **parola runica**, con un effetto in più:
 
@@ -415,6 +424,7 @@ Certe combinazioni sullo stesso oggetto formano una **parola runica**, con un ef
 | **«Patto del Mercante»** | Runa dell'Avidità + Runa del Sapere | +10% di Oro e +10% di EXP. |
 | **«Cuore Temerario»** | Runa del Coraggio + Runa del Passo | Ogni piano inizia con 1 punto di Audacia in più e +10 alle prove delle trappole. |
 | **«Egida Silente»** | Runa della Pietra + Runa del Vento + Runa della Quiete | +6% di Difesa dell'armatura e +3% di Schivata. |
+| **«Mente Arcana»** | Runa del Flusso + Runa della Sapienza | Ogni incantesimo costa 1 Etere in meno (mai meno di 1). |
 
 </details>
 
@@ -457,16 +467,16 @@ Ogni scelta mostra i suoi effetti reali, molte opzioni esistono solo per certe c
 | Classi giocabili | 8 |
 | Tratti di partenza | 7 |
 | Gradi di Ascensione | 20 |
-| Doni della Sfida del Giorno | 6 |
+| Doni della Sfida del Giorno | 7 |
 | Armi | 27 (10 subito, 17 da sbloccare) |
 | Armature | 20 (12 subito, 8 da sbloccare) |
 | Monili | 24 (13 subito, 11 da sbloccare) |
 | Consumabili | 22 (12 subito, 10 da sbloccare) |
-| Reliquie | 50 (29 subito, 21 da sbloccare) |
+| Reliquie | 55 (34 subito, 21 da sbloccare) |
 | Nemici comuni | 62 |
 | Boss | 26 |
 | Fasi dei boss | 27 |
-| Rune / parole runiche | 17 / 10 |
+| Rune / parole runiche | 20 / 11 |
 | Eventi narrativi | 58 |
 | Imprese | 15 |
 | Tomi dell'Archivio | 3 |
@@ -541,6 +551,7 @@ I **test di contratto** (`tests/test_contracts.py`, `tests/test_modes.py`) verif
 - [x] Grimori: pergamene, tre posti per gli incantesimi, cure fuori dal combattimento, Medita al Falò
 - [x] Armi e attributi: ogni arma scala con Forza, Destrezza o Arcano; bastoni e focus potenziano gli incantesimi
 - [x] Talenti: ogni 5 livelli un talento fra tre proposti
+- [x] La magia nel mondo: Silenzio, Risucchio d'Etere e boss che lanciano incantesimi; rune, reliquie, eventi, Maestrie, Ascensione e Nemesi
 
 ---
 

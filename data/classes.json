@@ -47,7 +47,8 @@
                 "desc": "Sblocca Classe: Paladino",
                 "type": "class",
                 "id": "4"
-            }
+            },
+            "6": {"desc": "Lama Incantata: +3 Etere massimo e +1 Etere a ogni colpo a segno.", "type": "magic", "bonus": {"ether_max": 3, "ether_on_hit": 1}}
         }
     },
     "2": {
@@ -98,7 +99,8 @@
                 "desc": "Sblocca Classe: Assassino",
                 "type": "class",
                 "id": "7"
-            }
+            },
+            "6": {"desc": "Mani Leste: ogni incantesimo costa 1 Etere in meno (mai meno di 1).", "type": "magic", "bonus": {"spell_discount": 1}}
         }
     },
     "3": {
@@ -150,7 +152,8 @@
                 "desc": "Sblocca Classe: Negromante",
                 "type": "class",
                 "id": "8"
-            }
+            },
+            "6": {"desc": "Arcimago: +20% potenza degli incantesimi e +4 Etere massimo.", "type": "magic", "bonus": {"spell_pct": 20, "ether_max": 4}}
         }
     },
     "4": {
@@ -203,7 +206,8 @@
                 "desc": "Sblocca Tratto: Benedetto",
                 "type": "unlock",
                 "id": "benedetto"
-            }
+            },
+            "6": {"desc": "Preghiera Costante: +6 Etere massimo.", "type": "magic", "bonus": {"ether_max": 6}}
         }
     },
     "5": {
@@ -256,7 +260,8 @@
                 "desc": "Sblocca Reliquia: Teschio di Sangue",
                 "type": "unlock",
                 "id": "teschio_sangue"
-            }
+            },
+            "6": {"desc": "Furia Arcana: +1 Etere a ogni colpo a segno.", "type": "magic", "bonus": {"ether_on_hit": 1}}
         }
     },
     "6": {
@@ -310,7 +315,8 @@
                 "desc": "Sblocca Reliquia: Pietra Filosofale",
                 "type": "unlock",
                 "id": "pietra_filosofale"
-            }
+            },
+            "6": {"desc": "Distillato d'Etere: +15% potenza degli incantesimi.", "type": "magic", "bonus": {"spell_pct": 15}}
         }
     },
     "7": {
@@ -364,7 +370,8 @@
                 "desc": "Sblocca Reliquia: Clessidra del Destino",
                 "type": "unlock",
                 "id": "clessidra_destino"
-            }
+            },
+            "6": {"desc": "Ombra Silente: +1 Etere a ogni colpo a segno.", "type": "magic", "bonus": {"ether_on_hit": 1}}
         }
     },
     "8": {
@@ -418,7 +425,8 @@
                 "desc": "Sblocca Reliquia: Contratto Demoniaco",
                 "type": "unlock",
                 "id": "contratto_demoniaco"
-            }
+            },
+            "6": {"desc": "Patto d'Ossa: +15% potenza degli incantesimi e +4 Etere massimo.", "type": "magic", "bonus": {"spell_pct": 15, "ether_max": 4}}
         }
     }
 }

@@ -337,6 +337,11 @@
             "name": "Lanterna del Cartografo",
             "desc": "Gli Eventi e le Stanze del Mistero compaiono più spesso.",
             "lore": "La Cartografa la lasciò accesa su un tavolo. Illumina solo le strade che vale la pena prendere."
-        }
+        },
+        {"id": "cristallo_etere", "name": "Cristallo d'Etere", "desc": "+6 Etere massimo.", "lore": "Una goccia della Prima Luce rimasta solida. Dentro, qualcosa respira ancora."},
+        {"id": "anello_arcimago", "name": "Anello dell'Arcimago", "desc": "+20% potenza degli incantesimi.", "lore": "L'Arcimago lo portò fino al piano trenta. Il dito è rimasto con l'anello."},
+        {"id": "calamaio_eterno", "name": "Calamaio Eterno", "desc": "Ogni incantesimo costa 1 Etere in meno (mai meno di 1).", "lore": "Non si svuota mai. I Bibliotecari di Cenere lo cercano da secoli."},
+        {"id": "cuore_risonante", "name": "Cuore Risonante", "desc": "Ogni nemico sconfitto ti restituisce 3 Etere.", "lore": "Batte quando qualcosa muore vicino a te, e ti passa ciò che resta."},
+        {"id": "velo_silenzio", "name": "Velo del Silenzio", "desc": "Né il Silenzio dei nemici né il Gas del Silenzio ti impediscono di lanciare incantesimi.", "lore": "Tessuto dalla Badessa per l'unica novizia che non volle tacere."}
     ]
 }

@@ -9,7 +9,8 @@
           {"text": "Bevi profondamente", "msg": "L'acqua magica rigenera le tue ferite e purifica il tuo corpo!", "effects": [{"max_hp": 10}, {"heal_pct": 100}, {"corruption": -10}]},
           {"text": "Lancia una moneta", "effects": [{"gold": -20}], "chance": 50, "success": [{"relic": "random"}],
            "msg": "La moneta brilla sul fondo... un potere ti avvolge!", "fail_msg": "La moneta affonda e scompare nel nulla. Nessuna reazione."},
-          {"text": "Ignora e prosegui", "msg": "Ti allontani dalla fontana in silenzio."}
+          {"text": "Bevi la luce, non l'acqua", "requires": {"spells": true}, "msg": "L'Etere della fonte ti scorre nelle vene come un fiume in piena.", "effects": [{"ether": "full"}]},
+{"text": "Ignora e prosegui", "msg": "Ti allontani dalla fontana in silenzio."}
         ]
       }
     }
@@ -67,7 +68,7 @@
         "choices": [
           {"text": "Punta sul tavolo", "effects": [{"gold": -20}], "chance": 50, "success": [{"relic": "random"}],
            "msg": "I Goblin imprecano! Vinci la scommessa e rubi la posta dal tavolo!", "fail_msg": "I dadi rotolano contro di te. I goblin sghignazzano e intascano i soldi."},
-          {"text": "Sguaina l'arma e ruba il banco!", "msg": "I goblin fuggono gridando e chiamano il loro gigantesco Boss!", "effects": [{"fight": "elite"}]},
+          {"text": "Siediti al tavolo e fidati della sorte", "requires": {"attribute": {"fortuna": 4}}, "msg": "I dadi cadono sempre dalla tua parte. I Goblin ti guardano con sospetto, poi con rispetto, poi ti pagano per andartene.", "effects": [{"gold": 120}]}, {"text": "Sguaina l'arma e ruba il banco!", "msg": "I goblin fuggono gridando e chiamano il loro gigantesco Boss!", "effects": [{"fight": "elite"}]},
           {"text": "Allontanati senza fare rumore", "msg": "Eviti problemi e te la svigni furtivamente."}
         ]
       }
@@ -154,7 +155,7 @@
           {"text": "Apri la porta", "requires": {"quest_item": "chiave_arrugginita"}, "show_locked": true, "locked_hint": "Ti serve una chiave",
            "msg": "La chiave gira a fatica. La porta si apre su un'antica armeria!", "effects": [{"weapon": "epic", "level": 3}, {"gold": 200}]},
           {"text": "Cerca di sfondarla", "msg": "Ti lussi una spalla contro il metallo senza alcun risultato... la frustrazione è palpabile.", "effects": [{"damage": 40}]},
-          {"text": "Ignora la porta", "msg": "Non hai tempo da perdere. Tiri dritto."}
+          {"text": "Sfonda la porta a spallate", "requires": {"attribute": {"forza": 4}}, "msg": "Al terzo colpo i cardini cedono con un urlo di metallo. Dietro, un'armeria che nessuno apriva da secoli.", "effects": [{"damage": 15}, {"weapon": "epic", "level": 2}]}, {"text": "Ignora la porta", "msg": "Non hai tempo da perdere. Tiri dritto."}
         ]
       }
     }
@@ -671,7 +672,7 @@
         "choices": [
           {"text": "Cerca un tomo ancora intatto", "chance": 50, "success": [{"exp": 90}], "msg": "Tra mille ceneri, un libro resiste. Parla degli Architetti, e di un'ottava pietra mai posata.", "fail_msg": "Uno scaffale crolla e ti seppellisce sotto secoli di cenere.", "fail_effects": [{"damage": 15}]},
           {"text": "Ricomponi le pagine con un incantesimo", "requires": {"class": "3"}, "msg": "Le ceneri si riordinano tra le tue dita. Una pagina nasconde un sigillo, e il sigillo nasconde un oggetto.", "effects": [{"damage": 20}, {"relic": "random"}]},
-          {"text": "Accendi un fuoco con le pagine bruciate", "msg": "È un sacrilegio, ma il calore è vero. La voce smette di leggere.", "effects": [{"heal_pct": 30}]},
+          {"text": "Leggi la cenere con l'Arcano", "requires": {"attribute": {"arcano": 4}}, "msg": "La cenere ricorda ciò che era scritto. Una formula si ricompone sotto i tuoi occhi, abbastanza a lungo da copiarla.", "effects": [{"scroll": "random"}, {"exp": 40}]}, {"text": "Accendi un fuoco con le pagine bruciate", "msg": "È un sacrilegio, ma il calore è vero. La voce smette di leggere.", "effects": [{"heal_pct": 30}]},
           {"text": "Esci in silenzio", "msg": "La voce riprende a leggere da dove si era interrotta."}
         ]
       }
@@ -710,7 +711,7 @@
         "choices": [
           {"text": "Trattieni il respiro e corri", "chance": 60, "success": [{"gold": 80}], "msg": "Arrivi alla vena con i polmoni in fiamme e la scavi a mani nude.", "fail_msg": "A metà strada respiri. Il silenzio ti entra dentro come acqua gelida.", "fail_effects": [{"damage": 25}]},
           {"text": "Distilla il gas in una fiala", "requires": {"class": "6"}, "msg": "Il silenzio, imbottigliato, è un ottimo veleno. E anche un ottimo rimedio.", "effects": [{"potion": 2}]},
-          {"text": "Torna indietro", "msg": "L'argento resterà lì. Il gas anche."}
+          {"text": "Attraversala a passo lento", "requires": {"attribute": {"vitalita": 4}}, "msg": "Il gas ti brucia in gola, ma i tuoi polmoni reggono. Scavi la vena senza fretta.", "effects": [{"damage": 10}, {"gold": 100}]}, {"text": "Torna indietro", "msg": "L'argento resterà lì. Il gas anche."}
         ]
       }
     }
@@ -726,7 +727,7 @@
         "choices": [
           {"text": "Libera la mano", "msg": "Il metallo ti graffia fino all'osso, ma la mano si apre: dentro c'è un anello.", "effects": [{"damage": 20}, {"accessory": true}]},
           {"text": "Fai ripartire l'ingranaggio a forza", "requires": {"atk": 30}, "msg": "Con un gemito l'ingranaggio riparte, e un'intera parete scivola di lato: dietro c'è il tesoro di un caposquadra.", "effects": [{"gold": 120}, {"exp": 60}]},
-          {"text": "Lascia stare", "msg": "Certe macchine è meglio non svegliarle."}
+          {"text": "Sfila l'anello senza toccare i denti", "requires": {"attribute": {"destrezza": 4}}, "msg": "Le dita passano fra il ferro come fra le corde di un'arpa. L'anello è tuo, e non hai un graffio.", "effects": [{"accessory": true}]}, {"text": "Lascia stare", "msg": "Certe macchine è meglio non svegliarle."}
         ]
       }
     }
@@ -742,7 +743,7 @@
         "choices": [
           {"text": "Attraversa con calma", "chance": 75, "success": [{"exp": 50}], "msg": "Un passo alla volta, senza guardare giù. Arrivi dall'altra parte con le gambe che tremano.", "fail_msg": "Un'asse si spezza sotto il tuo piede. Il vento ti strappa dal ponte.", "fail_effects": [{"fall": true, "gold_pct": 40}]},
           {"text": "Corri sulle corde", "requires": {"class": ["2", "7"]}, "msg": "Salti da una corda all'altra come se il vuoto non esistesse. A metà ponte, un nido abbandonato pieno di monete.", "effects": [{"gold": 100}]},
-          {"text": "Lasciati cadere", "msg": "Fai un passo nel vuoto, di proposito. Le nubi ti inghiottono.", "effects": [{"fall": true, "gold_pct": 40}]},
+          {"text": "Danza sulle assi marce", "requires": {"attribute": {"agilita": 4}}, "msg": "Ogni asse che si spezza è già alle tue spalle. Dall'altra parte trovi la borsa di chi non ce l'ha fatta.", "effects": [{"gold": 80}, {"exp": 40}]}, {"text": "Lasciati cadere", "msg": "Fai un passo nel vuoto, di proposito. Le nubi ti inghiottono.", "effects": [{"fall": true, "gold_pct": 40}]},
           {"text": "Torna indietro", "msg": "Il ponte continua a oscillare, vuoto."}
         ]
       }
@@ -1437,7 +1438,8 @@
               }
             ]
           },
-          {
+          {"text": "Cerca il libro in cui hai imparato la magia", "requires": {"spells": true}, "msg": "Lo trovi subito: è l'unico che brilla. Fra le pagine è rimasta una formula che non hai ancora usato.", "effects": [{"scroll": "random"}]},
+{
             "text": "Prendi un libro ancora bianco",
             "msg": "È pesante. Dentro, al posto delle pagine, una runa e una reliquia.",
             "effects": [

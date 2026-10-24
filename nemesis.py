@@ -67,11 +67,16 @@ def on_death(player, floor: int) -> Optional[str]:
     names = [n for n in GAME_DATA["nemesis"]["names"] if n not in used] or GAME_DATA["nemesis"]["names"]
     nem = {"id": f"nem{PROFILE_MANAGER.stats.get('total_deaths', 0)}_{rng.randrange(10 ** 6)}", "enemy": killer["name"],
            "name": rng.choice(names), "rank": 1, "kills": 1, "gold": gold, "floor": floor,
-           "trait": rng.choice(sorted(GAME_DATA["nemesis"]["traits"])), "element": killer.get("player_element", "Normale"),
+           "trait": rng.choice(traits_for(player)), "element": killer.get("player_element", "Normale"),
            "class": player.role}
     active().append(nem)
     if len(active()) > rules()["max_active"]: active().pop(0)  # la più vecchia si perde nel Labirinto
     return text("born", nem)
+
+
+def traits_for(player) -> list:
+    """I tratti che una Nemesi può imparare da questo eroe: l'Antimagia solo da chi conosceva incantesimi."""
+    return sorted(t for t, d in GAME_DATA["nemesis"]["traits"].items() if not d.get("requires_spells") or player.spells)
 
 
 def waiting_on(floor: int, met: set) -> Optional[dict]:
@@ -92,6 +97,7 @@ def build_enemy(nem: dict, floor: int, active_pacts: list):
     e.hp = int(e.hp * mult * (1 + trait["value"] / 100 if nem["trait"] == "hp_bonus_pct" else 1))
     e.atk = int(e.atk * mult * (1 + trait["value"] / 100 if nem["trait"] == "atk_bonus_pct" else 1))
     if nem["trait"] == "acc_add": e.base_acc += trait["value"]
+    for move, w in trait.get("moves", {}).items(): e.moves[move] = e.moves.get(move, 0) + w
     e.max_hp = e.hp
     e.nemesis = nem
     e.name = f"{nem['name']} {rank_name(nem)}{Colors.MAGENTA} (Nemesi ✦){Colors.RESET}"
@@ -103,6 +109,14 @@ def resisted(nem: dict, element: str) -> float:
     if nem["trait"] == "resist_element" and element == nem["element"] and element != "Normale":
         return 1 - GAME_DATA["nemesis"]["traits"]["resist_element"]["value"] / 100
     return 1.0
+
+
+def spell_resisted(nem: dict, element: str) -> float:
+    """Moltiplicatore dei danni degli incantesimi contro la Nemesi: resiste all'elemento che l'ha uccisa,
+    e con l'Antimagia a tutti gli incantesimi."""
+    mult = resisted(nem, element)
+    if nem["trait"] == "antimagia": mult *= 1 - GAME_DATA["nemesis"]["traits"]["antimagia"]["value"] / 100
+    return mult
 
 
 def defeat(nem: dict) -> int:

@@ -11,8 +11,8 @@ from data_manager import GAME_DATA, PROFILE_MANAGER
 
 # Come si combinano gli effetti di più gradi: moltiplicatori, somme, pesi delle stanze e patti
 MULT_KEYS = ("rest_heal_mult", "campfire_heal_mult", "boss_hp_mult", "boss_atk_mult", "elite_hp_mult", "enemy_hp_mult", "enemy_atk_mult",
-             "enemy_gold_mult", "chest_risk_mult", "curse_chance_mult", "start_gold_mult", "final_boss_hp_mult")
-ADD_KEYS = ("enemy_acc_add", "start_corruption", "start_gold_add", "start_relic", "start_potions_add")
+             "enemy_gold_mult", "chest_risk_mult", "curse_chance_mult", "start_gold_mult", "final_boss_hp_mult", "floor_ether_mult")
+ADD_KEYS = ("enemy_acc_add", "start_corruption", "start_gold_add", "start_relic", "start_potions_add", "start_ether_add")
 
 RUN = {}
 
@@ -20,7 +20,7 @@ RUN = {}
 def combine(effect_lists: List[dict]) -> dict:
     rules = {k: 1.0 for k in MULT_KEYS}
     rules.update({k: 0 for k in ADD_KEYS})
-    rules.update(room_weights={}, pacts=[])
+    rules.update(room_weights={}, pacts=[], enemy_moves={})
     for effects in effect_lists:
         for key, value in effects.items():
             if key in MULT_KEYS: rules[key] *= value
@@ -28,6 +28,8 @@ def combine(effect_lists: List[dict]) -> dict:
             elif key == "room_weights":
                 for room, mult in value.items(): rules["room_weights"][room] = rules["room_weights"].get(room, 1.0) * mult
             elif key == "pact": rules["pacts"].append(value)
+            elif key == "enemy_moves":  # mosse in più per i nemici comuni: i pesi si sommano
+                for move, w in value.items(): rules["enemy_moves"][move] = rules["enemy_moves"].get(move, 0) + w
             else: raise KeyError(f"effetto di modalità sconosciuto: {key}")
     return rules
 

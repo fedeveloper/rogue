@@ -31,7 +31,7 @@ def _update_class_mastery(player: Player, floor: int):
     
     display_msg(f"\n{Colors.MAGENTA}[ Maestria {player.role} ] +{xp_gained} XP (Totale: {curr_xp}){Colors.RESET}")
     reqs = GAME_DATA["meta"]["mastery_xp_requirements"]
-    while curr_lvl < 5 and curr_xp >= reqs[str(curr_lvl + 1)]:
+    while str(curr_lvl + 1) in reqs and curr_xp >= reqs[str(curr_lvl + 1)]:
         curr_lvl += 1; PROFILE_MANAGER.set_class_lvl(c_id, curr_lvl)
         display_msg(f"{Colors.YELLOW}*** MAESTRIA SALITA AL LIVELLO {curr_lvl}! ***{Colors.RESET}")
         reward = GAME_DATA["classes"][c_id]["mastery"].get(str(curr_lvl), {"desc": "Nessun bonus disponibile (In Sviluppo).", "type": "null", "id": "null"})
@@ -455,6 +455,11 @@ def _apply_mode_start(player: Player):
         relic = get_random_relic(player)
         if relic: player.add_relic(relic)
     player.inventory.extend(generate_potion(1) for _ in range(modes.rule("start_potions_add")))
+    player.base_ether += modes.rule("start_ether_add"); player.ether += modes.rule("start_ether_add")
+
+def rest_ether(player: Player) -> int:
+    """L'Etere che restituisce il riposo prima delle scale (una parte del massimo; l'Ascensione può ridurla)."""
+    return player.gain_ether(int(player.max_ether() * magic.rules()["gain"]["floor_pct"] // 100 * modes.rule("floor_ether_mult")))
 
 def _apply_floor_regen(player: Player) -> int:
     sp_lvl = PROFILE_MANAGER.get_perk("speranza_luce_lvl", 0)
@@ -630,7 +635,7 @@ def _descent(c_choice, t_choice, active_pacts, infinite_mode, grade, daily):
             if attacks >= BLIND_FURY_MIN_ATTACKS and hits * 2 < attacks: player.run_tracker["blind_fury_done"] = True
             heal = rest_heal(floor)
             player.heal(heal)
-            ether = player.gain_ether(player.max_ether() * magic.rules()["gain"]["floor_pct"] // 100)
+            ether = rest_ether(player)
             display_msg(f"Ti riposi prima delle scale. (HP: {player.hp}/{player.max_hp})"
                         + (f" {Colors.CYAN}+{ether} Etere ({player.ether}/{player.max_ether()}).{Colors.RESET}" if ether else ""))
             floor += 1
