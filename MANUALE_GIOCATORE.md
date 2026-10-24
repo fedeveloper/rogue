@@ -466,21 +466,21 @@ La scelta arriva alla fine della stanza in cui sei salito di livello, prima dei 
 
 | Talento | Effetto |
 |---|---|
-| ⚔️ **Lama Affilata** | +12% danni con qualunque arma. |
-| 🦅 **Occhio di Falco** | +10% Precisione e +6% probabilità di critico. |
-| 🛡️ **Pelle di Ferro** | +25% Difesa dell'armatura. |
-| ❤️ **Cuore Saldo** | +45 HP massimi (e altrettanti HP). |
-| 🩸 **Sete di Sangue** | Rubi 4 HP a ogni colpo a segno. |
-| 💀 **Raccolto** | Recuperi il 12% degli HP massimi a ogni nemico sconfitto. |
-| 👤 **Passo d'Ombra** | +8% Schivata e +20% probabilità di fuga. |
-| 💧 **Pozzo d'Etere** | +8 Etere massimo. |
-| 🔮 **Mente Affilata** | +20% potenza degli incantesimi. |
+| ⚔️ **Lama Affilata** | +8% danni con qualunque arma. |
+| 🦅 **Occhio di Falco** | +6% Precisione e +4% probabilità di critico. |
+| 🛡️ **Pelle di Ferro** | +15% Difesa dell'armatura. |
+| ❤️ **Cuore Saldo** | +30 HP massimi (e altrettanti HP). |
+| 🩸 **Sete di Sangue** | Rubi 2 HP a ogni colpo a segno. |
+| 💀 **Raccolto** | Recuperi il 6% degli HP massimi a ogni nemico sconfitto. |
+| 👤 **Passo d'Ombra** | +5% Schivata e +15% probabilità di fuga. |
+| 💧 **Pozzo d'Etere** | +6 Etere massimo. |
+| 🔮 **Mente Affilata** | +15% potenza degli incantesimi. |
 | 📜 **Parsimonia Arcana** | Ogni incantesimo costa 1 Etere in meno (mai meno di 1). |
 | 🌊 **Flusso** | +1 Etere in più a ogni colpo a segno. |
-| ⚗️ **Catalizzatore** | +40% danni delle reazioni elementali. |
-| 🌿 **Erborista** | Le pozioni curative curano il 40% in più. |
-| 💰 **Mano d'Oro** | +30% Oro trovato e +8% probabilità di trovare una runa. |
-| 📖 **Studioso** | +20% EXP guadagnata. |
+| ⚗️ **Catalizzatore** | +30% danni delle reazioni elementali. |
+| 🌿 **Erborista** | Le pozioni curative curano il 25% in più. |
+| 💰 **Mano d'Oro** | +25% Oro trovato e +6% probabilità di trovare una runa. |
+| 📖 **Studioso** | +15% EXP guadagnata. |
 
 ### La Maestria
 
