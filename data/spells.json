@@ -1,0 +1,17 @@
+{
+    "rules": {
+        "gain": {"hit": 1, "defend": 2, "reaction": 2, "floor_pct": 25},
+        "resonance_discount": 1,
+        "desc": "L'Etere resta da uno scontro all'altro. Si guadagna agendo: +1 a ogni colpo a segno, +2 quando ti difendi, +2 a ogni reazione elementale, e il 25% del massimo a ogni piano superato. All'inizio della discesa è pieno. Un incantesimo dell'elemento della tua Risonanza costa 1 Etere in meno."
+    },
+    "spells": {
+        "dardo_fuoco": {"name": "Dardo di Fuoco", "icon": "🔥", "element": "Fuoco", "cost": 3, "effects": {"damage_pct": 100}, "desc": "Danni pari al 100% del tuo ATK e marchio di Fuoco."},
+        "lama_acqua": {"name": "Lama d'Acqua", "icon": "💧", "element": "Acqua", "cost": 3, "effects": {"damage_pct": 90}, "desc": "Danni pari al 90% del tuo ATK e marchio d'Acqua."},
+        "frana": {"name": "Frana", "icon": "🪨", "element": "Terra", "cost": 4, "effects": {"damage_pct": 70, "status": {"type": "slow", "duration": 2}}, "desc": "Danni pari al 70% del tuo ATK, marchio di Terra e nemico Impantanato per 2 turni."},
+        "raffica": {"name": "Raffica", "icon": "🌪️", "element": "Vento", "cost": 2, "effects": {"damage_pct": 70}, "desc": "Danni pari al 70% del tuo ATK e marchio di Vento."},
+        "luce_guaritrice": {"name": "Luce Guaritrice", "icon": "✨", "element": "Luce", "cost": 4, "effects": {"heal_pct": 25}, "desc": "Ti cura del 25% degli HP massimi."},
+        "sifone_ombra": {"name": "Sifone d'Ombra", "icon": "🌑", "element": "Tenebra", "cost": 4, "effects": {"damage_pct": 70, "drain_pct": 50}, "desc": "Danni pari al 70% del tuo ATK, marchio di Tenebra, e ti cura della metà (50%) dei danni inflitti."},
+        "dissolvi": {"name": "Dissolvi", "icon": "🔷", "element": "Normale", "cost": 3, "effects": {"damage_pct": 50, "dispel": true}, "desc": "Infrange lo scudo della Barriera e le Scaglie del nemico, poi infligge danni pari al 50% del tuo ATK."},
+        "detonazione": {"name": "Detonazione", "icon": "💥", "element": "Normale", "cost": 5, "effects": {"damage_pct": 50, "detonate_pct": 150}, "desc": "Fa esplodere il marchio che il nemico porta: danni pari al 150% del tuo ATK (50% se non ha un marchio)."}
+    }
+}

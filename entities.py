@@ -242,6 +242,9 @@ class Player:
         self.attributes = attributes.starting(class_id)
         self.unspent_points, self.points_offered = 0, True
         self.max_hp += attributes.value(self, "max_hp")
+        # Magia (magic.py): gli incantesimi della classe e l'Etere, pieno all'inizio della discesa
+        self.base_ether, self.spells = data.get("ether", 0), list(data.get("spells", []))
+        self.ether = self.max_ether()
         self.hp = self.max_hp
         self.gold = data["gold"] + (PROFILE_MANAGER.get_perk("gold_lvl", 0) * 20)
         self.base_acc, self.base_dodge = data["acc"], data["dodge"]
@@ -470,6 +473,15 @@ class Player:
             if item and getattr(item, 'is_cursed', False) and getattr(item, 'curse_effect', "") == curse_type:
                 return True
         return False
+
+    def max_ether(self) -> int:
+        return self.base_ether + attributes.value(self, "ether_max")
+
+    def gain_ether(self, amount: int) -> int:
+        """Aggiunge Etere fino al massimo; restituisce quanto ne è entrato davvero."""
+        gained = max(0, min(amount, self.max_ether() - self.ether))
+        self.ether += gained
+        return gained
 
     def gain_exp(self, amount: int):
         if self.midas: return

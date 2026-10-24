@@ -18,6 +18,7 @@ import modes
 import nemesis
 import epitaph
 import attributes
+import magic
 from constants import TEXT_SPEEDS, SPERANZA_LUCE_PCT_PER_LVL, RATIO_GOLD_TO_ESSENCE_ON_DEATH, BOSS_ESSENCE_BONUS, XP_PER_FLOOR, XP_PER_BOSS, INFINITE_MODE_THRESHOLD, INFINITE_MODE_ESSENCE_MULTIPLIER, BLIND_FURY_MIN_ATTACKS
 
 def _update_class_mastery(player: Player, floor: int):
@@ -561,7 +562,9 @@ def _descent(c_choice, t_choice, active_pacts, infinite_mode, grade, daily):
                 clear_screen()
                 prompt = "\n".join([
                     f"\n{Colors.CYAN}--- Piano {floor}{biome_title} | Esplorazione {step}/{ROWS + 1} ---{Colors.RESET}",
-                    f"❤️  HP: {Colors.GREEN}{player.hp}/{player.max_hp}{Colors.RESET} | 💰 Oro: {Colors.YELLOW}{player.gold}{Colors.RESET}"
+                    f"❤️  HP: {Colors.GREEN}{player.hp}/{player.max_hp}{Colors.RESET}"
+                    + (f" | ✨ Etere: {Colors.CYAN}{player.ether}/{player.max_ether()}{Colors.RESET}" if player.spells else "")
+                    + f" | 💰 Oro: {Colors.YELLOW}{player.gold}{Colors.RESET}"
                     + (f" | 🩸 Corruzione: {Colors.MAGENTA}{player.corruption}{Colors.RESET}" if player.corruption else "")
                     + f" | 🎲 Audacia: {Colors.RED}{player.audacity}{Colors.RESET} ({audacity_text(player.audacity)})", biome_intro,
                     *render_map(floor_map, step, path, biome, tall=shutil.get_terminal_size().lines >= TALL_MAP_ROWS), "", "Scegli dove proseguire:"])
@@ -618,7 +621,9 @@ def _descent(c_choice, t_choice, active_pacts, infinite_mode, grade, daily):
             if attacks >= BLIND_FURY_MIN_ATTACKS and hits * 2 < attacks: player.run_tracker["blind_fury_done"] = True
             heal = rest_heal(floor)
             player.heal(heal)
-            display_msg(f"Ti riposi prima delle scale. (HP: {player.hp}/{player.max_hp})")
+            ether = player.gain_ether(player.max_ether() * magic.rules()["gain"]["floor_pct"] // 100)
+            display_msg(f"Ti riposi prima delle scale. (HP: {player.hp}/{player.max_hp})"
+                        + (f" {Colors.CYAN}+{ether} Etere ({player.ether}/{player.max_ether()}).{Colors.RESET}" if ether else ""))
             floor += 1
             if floor > PROFILE_MANAGER.max_floor: PROFILE_MANAGER.max_floor = floor
             wait_enter("\nPremi INVIO per scendere...")

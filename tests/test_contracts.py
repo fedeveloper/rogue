@@ -524,7 +524,7 @@ class ConsumableContractTest(Sandbox):
         p = self.hero(); self.assertEqual(self.drink(p, item, in_combat=True), "smoke_bomb")
         self.assertIn("Boss", d["desc"])
         s = self.session(p, boss=True)
-        with quiet(), mock.patch("rooms.interactive_menu", return_value=2), mock.patch("rooms.clear_screen"), \
+        with quiet(), mock.patch("rooms.interactive_menu", return_value=3), mock.patch("rooms.clear_screen"), \
              mock.patch("rooms.show_inventory_menu", return_value="smoke_bomb"):
             self.assertTrue(s.player_turn(), "contro i Boss la fuga non riesce")
 
@@ -594,7 +594,7 @@ class ConsumableContractTest(Sandbox):
                     self.assertEqual(self.drink(p, item, in_combat=True), "fiala_caos")
                 check(p)
         p = self.hero(); s = self.session(p); s.enemy.hp = 1000
-        with quiet(), mock.patch("rooms.interactive_menu", return_value=2), mock.patch("rooms.clear_screen"), \
+        with quiet(), mock.patch("rooms.interactive_menu", return_value=3), mock.patch("rooms.clear_screen"), \
              mock.patch("rooms.show_inventory_menu", return_value="fiala_caos"), mock.patch("rooms.random.randint", return_value=37):
             s.player_turn()
         self.assertEqual(s.enemy.hp, 963)

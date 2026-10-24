@@ -43,7 +43,7 @@ class CombatLoopTest(Sandbox):
         session = CombatSession(player, 1, Enemy(1, True, []))
         session.enemy.hp, session.enemy.base_dodge = 10_000, -1000
         # Molte più aperture delle statistiche del limite di ricorsione, poi fuga dal boss, poi attacco
-        menu = [3] * 1500 + [4, 0]
+        menu = [4] * 1500 + [5, 0]  # Statistiche e Fuga vengono dopo Attacca, Difesa, Incantesimi, Inventario
         with redirect_stdout(io.StringIO()), mock.patch("rooms.interactive_menu", side_effect=menu), \
              mock.patch("rooms.clear_screen"), mock.patch("inventory_menu.show_player_stats"), \
              mock.patch("builtins.input", return_value=""):

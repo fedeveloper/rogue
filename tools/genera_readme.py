@@ -141,6 +141,7 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 - 🌍 **Sei biomi, sei regole.** Ogni cinque piani il Labirinto cambia volto e legge: la *Nostalgia Letale* dei Chiostri, il *Gas del Silenzio* delle Miniere, la *Caduta Astrale* delle Guglie, la *Dissoluzione dell'Io* del Ventre, l'*Ebollizione Astrale* della Forgia e il *Paradosso Temporale* della Soglia. Ogni bioma ha sei nemici nativi, un boss tutto suo e le sue stanze speciali.
 - 🔥 **Combattimento tattico.** Il nemico **annuncia la sua mossa**, colpo pesante, guardia, rigenerazione o colpo infetto, e tu decidi se attaccare o difenderti. Sette elementi, vantaggi e svantaggi, **Risonanze** quando arma e armatura condividono l'elemento e **{len(d('elements')['reactions'])} reazioni** (Vapore, Gelo, Eclissi…) quando li combini.
 - 🧬 **{len(classes)} classi** con alberi di Maestria a 5 livelli che sbloccano bonus, oggetti, reliquie e altre classi.
+- 🔮 **La magia.** {len(d('spells')['spells'])} incantesimi che costano **Etere**, una risorsa che resta fra uno scontro e l'altro e si guadagna colpendo, difendendosi e scatenando reazioni. Lasciano il marchio del loro elemento: con l'arma di Fuoco e *Lama d'Acqua* componi il *Vapore* senza cambiare equipaggiamento.
 - 📈 **Sei attributi da costruire.** A ogni livello un punto fra {', '.join(a['name'] for a in d('attributes')['attributes'].values())}: ogni discesa è una build diversa, e il raro *Tomo dell'Oblio* permette di ripensarla al Falò.
 - 🎭 **{len(meta['traits'])} tratti** e **{len(grades)} gradi di Ascensione**: {f'{start_combos:,}'.replace(',', '.')} combinazioni di partenza diverse.
 - 📅 **Sfida del Giorno.** Una discesa al giorno uguale per tutti: eroe, tratto, malus e dono assegnati, la stessa mappa a ogni piano. Conta il primo tentativo; punteggio, serie di giorni e record restano nel profilo.
@@ -318,6 +319,7 @@ rogue/
 ├── epitaph.py         # L'Epitaffio e il Cimitero
 ├── nemesis.py         # La Nemesi: chi ti uccide torna a cercarti
 ├── attributes.py      # Attributi dell'eroe e punti abilità
+├── magic.py           # Incantesimi ed Etere
 ├── runes.py           # Rune e Incastoni: effetti, drop, etichette
 ├── modes.py           # Ascensione e Sfida del Giorno: le regole della discesa
 ├── data_manager.py    # Caricamento dei dati e salvataggio del profilo
@@ -359,6 +361,7 @@ I **test di contratto** (`tests/test_contracts.py`, `tests/test_modes.py`) verif
 - [x] Il Ciclo del Labirinto: biomi che tornano in Eco sempre più dure oltre il piano 30
 - [x] Armi con carattere: precisione, critico, schivata, Guardia e scudi
 - [x] Livelli e attributi: un punto a ogni livello fra Vitalità, Forza, Destrezza, Agilità, Arcano e Fortuna
+- [x] La magia: l'Etere e i primi incantesimi, che compongono le reazioni elementali
 
 ---
 
