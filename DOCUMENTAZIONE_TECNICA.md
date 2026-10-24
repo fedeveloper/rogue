@@ -51,8 +51,8 @@ Un test controlla che ogni oggetto sbloccabile abbia davvero una di queste strad
 
 | File | Contenuto | Campi principali |
 |---|---|---|
-| `classes.json` | Le classi, per id (`"1"`…`"8"`) | `role`, `max_hp`, `gold`, `acc`, `dodge`, `crit` (opz.), `weapon`/`armor` iniziali (`name`, `value`, `atk`/`def`, `element`), `potions`, `unlocked_by_default`, `mastery` |
-| `enemies.json` | `enemies` e `bosses`, per nome | `element`, `base_hp`, `base_atk`, `base_dodge`, `base_acc`, `title`/`lore` (boss), `status_inflict` (opz.), `final_boss` (solo DIO ANTICO), `retired_by_flag` (opz.: il boss non compare più quando il flag del profilo è vero), `moves` (opz.: pesi delle mosse al posto di quelli predefiniti) |
+| `classes.json` | Le classi, per id (`"1"`…`"8"`) | `role`, `defense` (id in `defenses.json`), `max_hp`, `gold`, `acc`, `dodge`, `crit` (opz.), `weapon`/`armor` iniziali (`name`, `value`, `atk`/`def`, `element`), `potions`, `unlocked_by_default`, `mastery` |
+| `enemies.json` | `enemies` e `bosses`, per nome | `element`, `base_hp`, `base_atk`, `base_dodge`, `base_acc`, `title`/`lore` (boss), `status_inflict` (opz.), `final_boss` (solo DIO ANTICO), `retired_by_flag` (opz.: il boss non compare più quando il flag del profilo è vero), `moves` (opz.: pesi delle mosse al posto di quelli predefiniti) o `profile` (opz.: uno stile di `moves.json → profiles`), `biome` (opz.: nativo di un bioma) |
 | `weapons.json` | Armi | `name`, `base_atk`, `val_base` (opz.), `element` (opz., altrimenti casuale), `status_inflict` (opz.), `hit_modifier`, `crit_chance`, `gold_atk_per`/`gold_atk_max` (opz.), `unlock_id`, `unlock_cost`, `desc`, `flavor` |
 | `armors.json` | Armature | `name`, `base_def`, `element` (opz.), `dodge_bonus` (opz., anche negativo), `sockets` (opz.: incastoni minimi), `unlock_id`, `unlock_cost`, `desc`, `flavor` |
 | `accessories.json` | Monili | `name`, `bonus_type` (`crit_chance`, `lifesteal`, `max_hp`, `dodge`, `acc`, `reflect`), `bonus_value`, `base_val`, `desc`, `lore`, `unlock_id`, `unlock_cost` |
@@ -63,7 +63,8 @@ Un test controlla che ogni oggetto sbloccabile abbia davvero una di queste strad
 | `meta.json` | Regole di contorno | `traits`, `pacts` (`name`, `desc`: gli effetti dei gradi di Ascensione con `pact`), `feats` (`target`, `reward_type`, `reward_id`), `mastery_xp_requirements`, `rooms.weights`/`rooms.cooldowns`, `corruption` (`max`, `atk_per_10`, `veil`, `voice`, `desc`) |
 | `biomes.json` | Biomi | `id`, `name`, `icon`, `floors`, `intro`, `hazard`, `room_weights`, `enemy_elements`, `signature_events` (opzionali gli ultimi quattro) |
 | `events.json` | Eventi narrativi | `title`, `start`, `scenes`, `requires` (opz.), `scripted` (opz.), `weight` (opz.): vedi [Eventi narrativi](#eventi-narrativi) |
-| `moves.json` | Mosse dei nemici (intenti) | `moves` (`name`, `icon`, `desc`, `damage_mult`, `damage_taken_mult`, `heal_pct`), `defaults` (pesi di `enemy`, `boss`, `with_status`), `rules` (`heal_below_pct`, `max_heals`, `no_repeat`) |
+| `moves.json` | Mosse dei nemici (intenti) | `moves` (`name`, `icon`, `desc`, `damage_mult`, `damage_taken_mult`, `heal_pct`), `profiles[id] = {name, desc, moves}` (stili condivisi da più nemici, mostrati nel Bestiario), `defaults` (pesi di `enemy`, `boss`, `with_status`), `rules` (`heal_below_pct`, `max_heals`, `no_repeat`) |
+| `defenses.json` | Tecniche di difesa delle classi | `defenses[id] = {name, short, desc, heal_pct, drain_pct}`: `short` è il testo del menu di combattimento, `desc` la descrizione completa; vedi [Formule di combattimento](#5-formule-di-combattimento) |
 | `story.json` | Elementi della storia | `quest_items` (oggetti chiave: `name`, `desc`), `npcs` (nomi degli artigiani), `characters` (personaggi ricorrenti: vedi sotto), `camp` (Fuoco del Campo), `endings` (finali) |
 | `modes.json` | Modalità | `ascension` (`max`, `grades`: `name`, `desc`, `essence_bonus`, `effects`), `daily` (`maluses`, `first_attempt_essence_mult`, `history`, `score`, `boons`: `name`, `desc`, `effects`): vedi [Modalità](#modalità) |
 | `phases.json` | Fasi dei boss | `bosses[nome] = [{at_pct, name, text, element, atk_mult, heal_pct, shield_pct, ward, status_inflict, moves}]`: vedi [Intenti e reazioni](#intenti-e-reazioni) |
@@ -377,7 +378,17 @@ Il Falò ha `rune_workshop` (`RUNE_WORKSHOP`): incastonare (gratis, nell'arma o 
 2. dimezzati se ti stai difendendo;
 3. modificati dagli hook `on_take_damage` delle reliquie (scudi, riflessi…).
 
-**Stati e maledizioni**: veleno `max(3, 4% degli HP massimi)` a turno, per l'eroe e per i nemici; sanguinamento 5% degli HP; la maledizione che drena vita toglie `max(2, 2% degli HP massimi)` a turno. Il *Riparo Magico* cura il 10% degli HP, il *Baluardo della Fede* il 5% in più.
+**Stati e maledizioni**: veleno `max(3, 4% degli HP massimi)` a turno, per l'eroe e per i nemici; sanguinamento 5% degli HP; la maledizione che drena vita toglie `max(2, 2% degli HP massimi)` a turno. Il *Baluardo della Fede* cura il 5% in più a ogni difesa.
+
+**Difese delle classi** (`defenses.json`, `CombatSession.execute_player_defense`): ogni classe ha in `classes.json → defense` una tecnica che si aggiunge al dimezzamento dei danni:
+- `counter`: restituisce al nemico il danno subito;
+- `focus`: il colpo successivo è un critico garantito;
+- `recovery`: cura `heal_pct` degli HP massimi;
+- `cleanse`: toglie `poison` e `bleed` e cura `heal_pct`;
+- `mark`: cura `heal_pct` e marchia il nemico con l'elemento dell'arma, quindi il marchio dell'armatura che arriva quando si viene colpiti in guardia può completare una reazione;
+- `siphon`: toglie al nemico `drain_pct` dei suoi HP massimi e cura l'eroe della stessa quantità.
+
+La Maledizione blocca le cure, non il danno del `siphon`. Se la tecnica abbatte il nemico lo scontro finisce. Nel Gas del Silenzio tutte le tecniche diventano `silenced`.
 
 **Fuga**: `20 + schivata − schivata nemico + 20 (Scarpisti) + bonus dell'Archivio`, limitata fra 10 e 90; con la *Bussola Perfetta* è 100. Impossibile dai boss.
 
@@ -391,7 +402,7 @@ Il Falò ha `rune_workshop` (`RUNE_WORKSHOP`): incastonare (gratis, nell'arma o 
 
 **Intenti.**
 - *Quando si sceglie.* All'inizio del turno del giocatore `CombatSession.choose_intent()` chiede la mossa a `Enemy.choose_move()`; un nemico con lo status `stun` annuncia "Congelato". La mossa si sceglie a peso:
-  - `Enemy.moves` sono i pesi dei dati, oppure `defaults` più `with_status` se il nemico infligge uno status;
+  - `Enemy.moves` sono i pesi dei dati (`moves` del nemico, oppure quelli del suo `profile`), altrimenti `defaults` più `with_status` se il nemico infligge uno status;
   - niente `heal` sopra `heal_below_pct` degli HP o dopo `max_heals`;
   - niente `venom` senza status;
   - nessuna mossa di `no_repeat` due volte di fila.
@@ -403,7 +414,7 @@ Il Falò ha `rune_workshop` (`RUNE_WORKSHOP`): incastonare (gratis, nell'arma o 
   - `drain` è un attacco che poi cura il nemico di `heal_ratio` × i danni inflitti;
   - `seal` imposta `CombatSession.sealed`: al turno seguente la Difesa è sigillata (sceglierla non consuma il turno), poi `_combat_loop` lo azzera;
   - `charge` imposta `Enemy.charged`: la prossima `choose_move()` restituisce sempre `unleash` (`damage_mult` 3), che non compare mai nei pesi;
-  - `shield` aggiunge a `Enemy.shield` `shield_pct` degli HP massimi; lo scudo assorbe i danni degli attacchi dell'eroe (`_absorb`), non quelli di status, reazioni o riflessi.
+  - `shield` porta `Enemy.shield` ad almeno `shield_pct` degli HP massimi, senza sommarsi: una Barriera dopo l'altra non può far crescere lo scudo più in fretta dei colpi dell'eroe (le fasi con `shield_pct` invece si sommano, una volta sola); lo scudo assorbe i danni degli attacchi dell'eroe (`_absorb`), non quelli di status, reazioni o riflessi.
 - Senza intento (es. nei test) il nemico attacca.
 
 **Fasi dei boss** (`data/phases.json`, `bosses[nome] = [fase, ...]`). `Enemy.phases` sono le fasi del boss in ordine di `at_pct` decrescente; `Enemy.phase` conta quelle attraversate. `CombatSession.check_phase()` gira all'inizio di ogni giro e dopo il turno del giocatore: finché gli HP sono ≤ `at_pct`% e il boss è vivo, entra nella fase successiva, la annuncia, la registra nel Codice (`record_phase`) e ne applica gli effetti con `_apply_phase`. Se la fase scatta dopo il turno del giocatore, l'intento diventa `transform` e il boss usa il suo turno per trasformarsi. Effetti di una fase (tutti opzionali, almeno uno):
@@ -483,7 +494,8 @@ Il salvataggio si crea al primo avvio e **non va committato** (è in `.gitignore
 
 - **Un'arma, un'armatura, un monile o un consumabile.** Aggiungi l'oggetto al JSON. Per renderlo sbloccabile alla Forgia dagli un `unlock_id` e un `unlock_cost`; con `unlock_cost: 0` lo si ottiene solo da un'impresa o da una Maestria che ne citi l'`unlock_id`. Una volta sbloccato compare anche nella bottega dell'artigiano.
 - **Una reliquia.** Aggiungila a `relics.json`, scrivi la sua classe in `relic_effects.py`, registrala in `RELIC_REGISTRY` e aggiungi il suo contratto in `RelicContractTest`: un test fallisce se ne manca uno.
-- **Un nemico o un boss.** Basta `enemies.json`: la sua forza (`base_hp × base_atk`) decide a che profondità compare.
+- **Un nemico o un boss.** Basta `enemies.json`: la sua forza (`base_hp × base_atk`) decide a che profondità compare. Dagli uno stile con `profile` (o mosse proprie con `moves`; il `venom` richiede uno `status_inflict`). Un boss ha bisogno anche delle sue fasi in `phases.json`; con `biome` diventa il boss nativo di quel bioma (uno per bioma).
+- **Una tecnica di difesa.** Aggiungila a `defenses.json`, assegnala a una classe con `defense` e scrivi il suo ramo in `CombatSession.execute_player_defense`; `tests/test_enemy_identity.py` controlla che ogni numero di `short` e `desc` sia quello dei dati.
 - **Una classe.** Aggiungila a `classes.json` con le sue Maestrie e rendila sbloccabile da un'impresa o da una Maestria di tipo `class`. Gli effetti personali nuovi vanno controllati nel codice con `has_mastery_effect`.
 - **Un evento.** Aggiungilo a `events.json` con condizioni ed effetti esistenti: di solito non serve toccare il codice. Un effetto o una condizione nuovi vanno aggiunti a `EFFECTS`/`CONDITIONS` in `events.py` e al contratto in `EventContractTest`. I test controllano che ogni scena sia raggiungibile, che abbia sempre un'uscita senza requisiti, che ogni oggetto chiave serva a qualcosa e che ogni evento `scripted` venga richiamato.
 - **Una Risonanza o un tomo dell'Archivio.** Modifica `elements.json → resonance` o `books.json`.

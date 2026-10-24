@@ -163,7 +163,8 @@ RAW_DATA = {
     "story": load_json_file("story.json"),
     "biomes": load_json_file("biomes.json")["biomes"],
     "moves": load_json_file("moves.json"), "modes": load_json_file("modes.json"),
-    "phases": load_json_file("phases.json")["bosses"], "runes": load_json_file("runes.json"), "nemesis": load_json_file("nemesis.json"), "epitaph": load_json_file("epitaph.json")
+    "phases": load_json_file("phases.json")["bosses"], "runes": load_json_file("runes.json"), "nemesis": load_json_file("nemesis.json"), "epitaph": load_json_file("epitaph.json"),
+    "defenses": load_json_file("defenses.json")["defenses"]
 }
 
 def update_game_data():
@@ -171,7 +172,7 @@ def update_game_data():
     GAME_DATA.clear()
     GAME_DATA.update({
         "enemies": RAW_DATA["enemies"], "bosses": RAW_DATA["bosses"], "lore": RAW_DATA["lore"], "elements": RAW_DATA["elements"],
-        "meta": RAW_DATA["meta"], "events": RAW_DATA["events"], "classes": RAW_DATA["classes"], "story": RAW_DATA["story"], "biomes": RAW_DATA["biomes"], "moves": RAW_DATA["moves"], "modes": RAW_DATA["modes"], "phases": RAW_DATA["phases"], "runes": RAW_DATA["runes"], "nemesis": RAW_DATA["nemesis"], "epitaph": RAW_DATA["epitaph"],
+        "meta": RAW_DATA["meta"], "events": RAW_DATA["events"], "classes": RAW_DATA["classes"], "story": RAW_DATA["story"], "biomes": RAW_DATA["biomes"], "moves": RAW_DATA["moves"], "modes": RAW_DATA["modes"], "phases": RAW_DATA["phases"], "runes": RAW_DATA["runes"], "nemesis": RAW_DATA["nemesis"], "epitaph": RAW_DATA["epitaph"], "defenses": RAW_DATA["defenses"],
         "relics":[r for r in RAW_DATA["relics"] if r.get("unlock_id") is None or r["unlock_id"] in PROFILE_MANAGER.unlocked_ids],
         "weapons":[w for w in RAW_DATA["weapons"] if w.get("unlock_id") is None or w["unlock_id"] in PROFILE_MANAGER.unlocked_ids],
         "armors":[a for a in RAW_DATA["armors"] if a.get("unlock_id") is None or a["unlock_id"] in PROFILE_MANAGER.unlocked_ids],

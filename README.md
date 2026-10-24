@@ -46,7 +46,7 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 
 ## ✨ Perché giocarci
 
-- 🗺️ **Una mappa per ogni piano.** Quattro file di stanze collegate (combattimento, Élite, mercante, falò, forziere, trappola, evento o la *Stanza del Mistero*) e il boss in fondo, tutte visibili fin dall'arrivo: scegli il percorso, non solo la porta. Ogni stanza ha un prezzo e un premio: le trappole custodiscono un bottino, i forzieri profondi possono essere Mimic, e l'**Audacia** fa crescere il bottino del boss per ogni rischio corso nel piano. Nemici e boss crescono con la profondità.
+- 🗺️ **Una mappa per ogni piano.** Quattro file di stanze collegate (combattimento, Élite, mercante, falò, forziere, trappola, evento o la *Stanza del Mistero*) e il boss in fondo, tutte visibili fin dall'arrivo: scegli il percorso, non solo la porta. Ogni stanza ha un prezzo e un premio: le trappole custodiscono un bottino, i forzieri profondi possono essere Mimic, e l'**Audacia** fa crescere il bottino del boss per ogni rischio corso nel piano. Nemici e boss crescono con la profondità, e quasi ogni nemico ha uno **stile** (Bruto, Predatore, Difensore, Succhiavita, Infetto, Mistico, Furia) che decide le mosse che preferisce.
 - 🌍 **Sei biomi, sei regole.** Ogni cinque piani il Labirinto cambia volto e legge: la *Nostalgia Letale* dei Chiostri, il *Gas del Silenzio* delle Miniere, la *Caduta Astrale* delle Guglie, la *Dissoluzione dell'Io* del Ventre, l'*Ebollizione Astrale* della Forgia e il *Paradosso Temporale* della Soglia. Ogni bioma ha i suoi nemici nativi e le sue stanze speciali.
 - 🔥 **Combattimento tattico.** Il nemico **annuncia la sua mossa**, colpo pesante, guardia, rigenerazione o colpo infetto, e tu decidi se attaccare o difenderti. Sette elementi, vantaggi e svantaggi, **Risonanze** quando arma e armatura condividono l'elemento e **7 reazioni** (Vapore, Gelo, Eclissi…) quando li combini.
 - 🧬 **8 classi** con alberi di Maestria a 5 livelli che sbloccano bonus, oggetti, reliquie e altre classi.
@@ -55,7 +55,7 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 - 📖 **Eventi che ricordano.** 58 storie a scene con opzioni che esistono solo per la tua classe, il tuo tratto o le tue reliquie: `[Mago]`, `[Tocco di Mida]`, `[Chiave Arrugginita]`. Il Labirinto ricorda chi hai aiutato e chi hai derubato, e certe scelte tornano a bussare qualche piano dopo.
 - 🗝️ **Personaggi che ritornano.** *Sir Alaric*, il Primo Paladino, e *Silas*, il Cercatore, hanno storie in tre capitoli che proseguono di run in run. Le tue scelte decidono come finiscono, e se liberi Alaric il Cavaliere Oscuro non tornerà più.
 - 🔷 **Rune e Incastoni.** 17 rune da incastonare al Falò in armi e armature: allungano i marchi, potenziano le reazioni, fanno sanguinare, rubano vita, riflettono i colpi. Restano sull'oggetto finché non le estrai, quindi ogni cambio d'arma è una scelta. Le combinazioni giuste formano 10 **parole runiche** da scoprire.
-- 👑 **Boss che cambiano.** A metà della vita ogni boss entra in una nuova fase con un nome, mosse nuove e regole proprie: il Re dei Goblin chiama le guardie, il Drago di Zaffiro si copre di Scaglie che solo una reazione elementale infrange, la Badessa ti sigilla la difesa. Il DIO ANTICO ha tre fasi, e nella seconda diventa l'elemento che ti ferisce di più.
+- 👑 **Boss che cambiano.** A metà della vita ogni boss entra in una nuova fase con un nome, mosse nuove e regole proprie: il Re dei Goblin chiama le guardie, il Drago di Zaffiro si copre di Scaglie che solo una reazione elementale infrange, la Badessa ti sigilla la difesa. Il DIO ANTICO ha tre fasi, e nella seconda diventa l'elemento che ti ferisce di più. Ogni bioma ha il suo boss nativo, dalla Badessa dei Chiostri al Custode della Soglia.
 - 😈 **La Nemesi.** Il nemico che ti uccide se ne ricorda: prende un nome, un rango e il tuo Oro, impara qualcosa da te e torna a cercarti vicino al piano della tua morte. Sconfiggilo e ti riprendi tutto, con un trofeo.
 - 🪦 **Un epitaffio per ogni discesa.** A fine partita poche frasi raccontano chi eri, cosa hai attraversato e chi ti ha ucciso; il Cimitero del Codice conserva le ultime cinquanta.
 - 🩸 **Corruzione.** Le scelte oscure danno potere e opzioni proibite, ma il Labirinto comincia a nasconderti le cose: gli effetti delle scelte, le mosse dei nemici.
@@ -71,12 +71,12 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 |---|---|---|---|---|
 | ⚔️ **Guerriero** | 120 | Tank bilanciato, contrattacca quando si difende | Mano Pesante | Iniziale |
 | 🗡️ **Ladro** | 85 | Agile e ricco, critico garantito dopo la Concentrazione | Tasche Nascoste | Iniziale |
-| 🔮 **Mago** | 80 | Arma di Fuoco potente e mira eccellente, ma fragile | Sintonia | Iniziale |
-| 🛡️ **Paladino** | 180 | Ultra-tank con Risonanza di Luce fin dall'inizio | Baluardo della Fede | Maestria Guerriero Lv.5 |
+| 🔮 **Mago** | 80 | Arma di Fuoco potente e mira eccellente, ma fragile; si cura difendendosi | Sintonia | Iniziale |
+| 🛡️ **Paladino** | 180 | Ultra-tank con Risonanza di Luce; difendendosi si purifica | Baluardo della Fede | Maestria Guerriero Lv.5 |
 | 🪓 **Berserker** | 110 | Glass cannon: l'ascia più forte, nessuna armatura | Furia Sanguinaria | Impresa «Danza con la Morte» |
-| 🧪 **Alchimista** | 95 | Quattro pozioni iniziali e bombe di Fuoco | Metabolismo Alterato | Impresa «Genio Elementale» |
+| 🧪 **Alchimista** | 95 | Quattro pozioni iniziali e bombe di Fuoco; difendendosi prepara le reazioni | Metabolismo Alterato | Impresa «Genio Elementale» |
 | 🥷 **Assassino** | 75 | 15% di critico innato e schivata alta, ma fragile | Imboscata | Maestria Ladro Lv.5 |
-| 💀 **Negromante** | 85 | Risonanza di Tenebra fin dall'inizio | Raccolto d'Anime | Maestria Mago Lv.5 |
+| 💀 **Negromante** | 85 | Risonanza di Tenebra; difendendosi ruba vita | Raccolto d'Anime | Maestria Mago Lv.5 |
 
 Ogni classe ha un **albero di Maestria** a 5 livelli. Si sale giocando con quella classe. Il **Lv.4** dà un bonus permanente a *tutti* gli eroi; il **Lv.5** sblocca una classe, un tratto o una reliquia. Assassino e Negromante, per esempio, si conquistano portando al massimo Ladro e Mago.
 
@@ -138,7 +138,7 @@ Sempre disponibile dal menu principale. Ogni giorno la stessa discesa per chiunq
 
 ## ⚔️ Il combattimento
 
-A ogni turno puoi **attaccare**, **difenderti** (ogni classe ha la sua difesa: contrattacco, concentrazione o riparo magico), usare un oggetto dallo zaino, consultare le statistiche o **tentare la fuga** (impossibile contro i boss). Le statistiche mostrano la tua **probabilità reale di colpire** contro il nemico che hai davanti.
+A ogni turno puoi **attaccare**, **difenderti** (ogni classe ha la sua tecnica: contrattacco, concentrazione, riparo magico, purificazione, fiala reattiva o furto di vita), usare un oggetto dallo zaino, consultare le statistiche o **tentare la fuga** (impossibile contro i boss). Le statistiche mostrano la tua **probabilità reale di colpire** contro il nemico che hai davanti.
 
 **Elementi.** Un colpo *Super Efficace* fa il **50% di danni in più** e ha +15% di precisione; uno *Poco efficace* fa metà danni e −20% di precisione.
 
@@ -455,8 +455,8 @@ Ogni scelta mostra i suoi effetti reali, molte opzioni esistono solo per certe c
 | Consumabili | 20 (10 subito, 10 da sbloccare) |
 | Reliquie | 50 (29 subito, 21 da sbloccare) |
 | Nemici comuni | 44 |
-| Boss | 21 |
-| Fasi dei boss | 22 |
+| Boss | 26 |
+| Fasi dei boss | 27 |
 | Rune / parole runiche | 17 / 10 |
 | Eventi narrativi | 58 |
 | Imprese | 14 |
@@ -520,6 +520,7 @@ I **test di contratto** (`tests/test_contracts.py`, `tests/test_modes.py`) verif
 - [x] Hub fra le run, finali multipli e Corruzione
 - [x] Stanze a rischio e ricompensa (trappole con bottino, Mimic, Élite, Audacia)
 - [x] Gradi di Ascensione e Sfida del Giorno
+- [x] Stili dei nemici, un boss per ogni bioma, una difesa per ogni classe
 
 ---
 

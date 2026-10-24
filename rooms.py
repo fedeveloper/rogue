@@ -5,7 +5,7 @@ from ui import Colors, delay_print, clear_screen, interactive_menu, display_msg,
 from data_manager import GAME_DATA, PROFILE_MANAGER, MULTIPLIERS, get_biome, get_element_icon
 from archive import get_archive_bonus
 from codex import record_enemy_killed, record_enemy_seen, record_letter, record_phase, record_reaction, record_rune, record_runeword
-from constants import CAMPFIRE_REST_PCT, BASE_HIT_CHANCE, BLOOD_LETTER_CHANCE, CURSE_HP_DRAIN_PCT, MIN_DAMAGE_PCT, POISON_MIN, POISON_PCT, RECOVERY_HEAL_PCT
+from constants import CAMPFIRE_REST_PCT, BASE_HIT_CHANCE, BLOOD_LETTER_CHANCE, CURSE_HP_DRAIN_PCT, MIN_DAMAGE_PCT, POISON_MIN, POISON_PCT
 from entities import STATUS_NAMES, Player, Enemy, generate_weapon, generate_armor, generate_accessory, generate_potion, generate_rune, get_random_relic, set_sockets
 import runes as rune_rules
 import nemesis
@@ -527,7 +527,9 @@ class CombatSession:
             return False
         return True
 
-    def execute_player_defense(self):
+    def execute_player_defense(self) -> bool:
+        """La difesa della classe (defenses.json). False se la tecnica abbatte il nemico."""
+        defense = GAME_DATA["defenses"].get(self.def_type, {})
         self.is_defending = True
         self.player.on_defense_started()
         if self.player.rune_value("defend_heal_pct"):
@@ -544,9 +546,30 @@ class CombatSession:
             if self.player.cursed:
                 display_msg(f"\n{Colors.BLUE}-> Ti difendi, ma la Maledizione blocca il tuo recupero magico.{Colors.RESET}")
             else:
-                heal_amt = max(1, self.player.max_hp * RECOVERY_HEAL_PCT // 100)
+                heal_amt = max(1, self.player.max_hp * defense["heal_pct"] // 100)
                 self.player.heal(heal_amt)
                 display_msg(f"\n{Colors.BLUE}-> Evochi una barriera vitale. {Colors.GREEN}Recuperi {heal_amt} HP!{Colors.RESET}")
+        elif self.def_type == "cleanse":
+            purified = [STATUS_NAMES[s] for s in ("poison", "bleed") if self.player.statuses.pop(s, None)]
+            healed = self.player.heal(max(1, self.player.max_hp * defense["heal_pct"] // 100))
+            display_msg(f"\n{Colors.BLUE}-> Pronunci il Voto e alzi lo scudo."
+                        + (f" {Colors.CYAN}Ti liberi da {' e '.join(purified)}.{Colors.RESET}" if purified else "")
+                        + (f" {Colors.GREEN}Recuperi {healed} HP.{Colors.RESET}" if healed else f"{Colors.RESET}"))
+        elif self.def_type == "mark":
+            healed = self.player.heal(max(1, self.player.max_hp * defense["heal_pct"] // 100))
+            display_msg(f"\n{Colors.BLUE}-> Ti ripari, bevi un sorso e lanci una fiala contro il nemico."
+                        + (f" {Colors.GREEN}Recuperi {healed} HP.{Colors.RESET}" if healed else f"{Colors.RESET}"))
+            self.apply_element(self.player.weapon.element)
+        elif self.def_type == "siphon":
+            stolen = min(self.enemy.hp, max(1, self.enemy.max_hp * defense["drain_pct"] // 100))
+            self.enemy.hp -= stolen
+            healed = self.player.heal(stolen)
+            display_msg(f"\n{Colors.BLUE}-> Il sudario si stringe attorno al nemico: gli strappi {stolen} HP."
+                        + (f" {Colors.GREEN}Recuperi {healed} HP.{Colors.RESET}" if healed else f"{Colors.RESET}"))
+        if self.enemy.hp <= 0:
+            self.on_enemy_death()
+            return False
+        return True
 
     def player_turn(self) -> bool:
         """Turno del giocatore. Ritorna False se lo scontro finisce (fuga, morte del nemico o del giocatore).
@@ -585,8 +608,7 @@ class CombatSession:
                 if self.sealed:
                     display_msg(f"\n{Colors.RED}-> Il Sigillo ti blocca: in questo turno non puoi difenderti.{Colors.RESET}")
                     continue
-                self.execute_player_defense()
-                return True
+                return self.execute_player_defense()
 
             elif idx == 2:
                 action = show_inventory_menu(self.player, in_combat=True)
@@ -688,8 +710,9 @@ class CombatSession:
             display_msg(f"{Colors.RED}<- ⏳ {self.enemy.name} raccoglie le forze. Il prossimo colpo sarà devastante.{Colors.RESET}")
             result = True
         elif intent == "shield":
+            # Lo scudo non si somma: la Barriera lo riporta al suo valore, così colpendo si avanza sempre
             gain = self.enemy.max_hp * self._move("shield")["shield_pct"] // 100
-            self.enemy.shield += gain
+            self.enemy.shield = max(self.enemy.shield, gain)
             display_msg(f"{Colors.BLUE}<- 💠 {self.enemy.name} alza una barriera: scudo {self.enemy.shield}.{Colors.RESET}")
             result = True
         elif intent == "heal":

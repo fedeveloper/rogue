@@ -110,6 +110,8 @@ def bestiary_page() -> List[str]:
             lines.append(f"{head} [{get_element_icon(data['element'])}]  incontri {rec['seen']} · sconfitti {rec['killed']}")
             if rec["killed"] and data.get("lore"): lines.append(f"    {Colors.CYAN}{data['lore']}{Colors.RESET}")
             elif not rec["killed"]: lines.append(f"    {Colors.RED}Sconfiggilo per conoscerne la storia.{Colors.RESET}")
+            if rec["killed"] and (style := GAME_DATA["moves"]["profiles"].get(data.get("profile"))):
+                lines.append(f"    {Colors.MAGENTA}Stile: {style['name']}. {style['desc']}{Colors.RESET}")
     return lines
 
 

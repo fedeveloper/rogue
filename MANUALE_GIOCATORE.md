@@ -93,31 +93,31 @@ Il Labirinto cambia mentre scendi: ogni cinque piani entri in un **bioma** diver
 
 **🦇 Le Miniere della Testardaggine (piani 6–10).** Basalto, olio nero e ingranaggi che girano a vuoto.
 - **Più forzieri, meno falò.** E più creature di Terra.
-- **Nativi.** Il *Minatore Svuotato*, l'*Ingranaggio Senziente*, che si ripara spesso, e la *Talpa Esplosiva*, che carica il colpo.
-- **Pericolo: Gas del Silenzio.** In ogni scontro c'è il 35% di probabilità che il gas riempia la stanza. La tua Difesa dimezza ancora i danni, ma perde la tecnica della classe (contrattacco, concentrazione o riparo).
+- **Nativi.** Il *Minatore Svuotato*, l'*Ingranaggio Senziente*, che si ripara spesso, e la *Talpa Esplosiva*, che carica il colpo. Il boss è *Il Caposquadra Sepolto*: carica i colpi e, quando la galleria crolla, si ripara dietro una barriera.
+- **Pericolo: Gas del Silenzio.** In ogni scontro c'è il 35% di probabilità che il gas riempia la stanza. La tua Difesa dimezza ancora i danni, ma perde la tecnica della classe.
 - **Stanze speciali:** *La Galleria del Gas*, *L'Ingranaggio Fermo*, *Il Carrello Abbandonato*, *Il Minatore Cieco*.
 
 **🌀 Le Guglie del Vento Urlante (piani 11–15).** Ponti sospesi su nubi elettriche.
 - **Più trappole, meno mercanti.** E più creature di Vento.
-- **Nativi.** La *Sentinella di Nube* e il *Falco Astrale*, difficilissimi da colpire, e il *Corvo del Tuono*, che raccoglie il fulmine.
+- **Nativi.** La *Sentinella di Nube* e il *Falco Astrale*, difficilissimi da colpire, e il *Corvo del Tuono*, che raccoglie il fulmine. Il boss è *L'Astronoma delle Guglie*: ti sigilla la difesa e, sotto la pioggia di stelle, colpisce più forte.
 - **Pericolo: Caduta Astrale.** Sui ponti sospesi puoi perdere l'equilibrio. Precipiti al piano successivo, senza riposo e senza il boss, e perdi il 40% dell'Oro. Puoi anche lasciarti cadere di proposito: un modo rischioso per saltare un boss.
 - **Stanze speciali:** *Il Ponte Sospeso*, *Il Nido della Tempesta*, *L'Osservatorio del Vento*, *Il Fabbro del Cielo*.
 
 **🌊 Il Ventre della Memoria (piani 16–20).** Pareti di membrana con dentro i volti dei morti.
 - **Più eventi e misteri.** E più creature d'Acqua e di Tenebra.
-- **Nativi.** Il *Ricordo Annegato*, che si rigenera, il *Volto nella Membrana*, che fa sanguinare, e la *Sanguisuga Madre*, che ti prosciuga.
+- **Nativi.** Il *Ricordo Annegato*, che si rigenera, il *Volto nella Membrana*, che fa sanguinare, e la *Sanguisuga Madre*, che ti prosciuga. Il boss è *Il Cuore del Ventre*: avvelena, ti prosciuga e, quando comincia la digestione, si rigenera.
 - **Pericolo: Dissoluzione dell'Io.** A ogni piano del Ventre perdi il 4% degli HP massimi. Li ritrovi tutti quando ne esci.
 - **Stanze speciali:** *Il Volto nella Membrana*, *Il Giardino Appassito*, *Il Nido delle Sanguisughe*, *L'Eco della Madre*.
 
 **🌋 La Forgia del Caos (piani 21–25).** Lava bianca, fumi neri, martelli ciclopici.
 - **Più mercanti, meno falò.** E più creature di Fuoco.
-- **Nativi.** Il *Golem di Scorie*, il *Martello Errante*, che ama i colpi pesanti, e lo *Scudiero di Scoria*, che alza barriere.
+- **Nativi.** Il *Golem di Scorie*, il *Martello Errante*, che ama i colpi pesanti, e lo *Scudiero di Scoria*, che alza barriere. Il boss è *Il Maestro di Forgia*: picchia duro e, con la Tempra, si copre di Scaglie che solo una reazione infrange.
 - **Pericolo: Ebollizione Astrale.** Ogni colpo che subisci ha il 25% di probabilità di far bollire il 5% del tuo Oro.
 - **Stanze speciali:** *L'Incudine Cosmica*, *La Colata d'Oro*, *Il Crogiolo delle Rune*, *Il Forgiatore Incatenato*.
 
 **🌌 La Soglia del Dio Antico (piani 26–30).** Piattaforme di pura volontà nel vuoto.
 - **Più misteri e forzieri.** E creature di Luce e di Tenebra.
-- **Nativi.** Il *Frammento di Galassia*, l'*Eco del Dio Antico* e il *Frammento del Prima*, che sigilla e prosciuga.
+- **Nativi.** Il *Frammento di Galassia*, l'*Eco del Dio Antico* e il *Frammento del Prima*, che sigilla e prosciuga. Il boss è *Il Custode della Soglia*: a metà della vita la sua Luce si rovescia in Tenebra.
 - **Pericolo: Paradosso Temporale.** Dopo ogni tuo turno c'è il 10% di probabilità che tu agisca di nuovo; dopo ogni turno nemico, il 15% che il nemico agisca due volte (con una mossa non annunciata).
 - **Stanze speciali:** *L'Occhio Chiuso*, *L'Eco del Tempo*, *La Biblioteca del Vuoto*, *La Porta del Ritorno*.
 
@@ -164,7 +164,10 @@ A ogni turno scegli una di queste azioni:
 - **Difenditi.** Dimezza i danni del prossimo colpo, e ogni classe aggiunge un effetto:
   - **Difesa Aggressiva** (Guerriero, Berserker): restituisci al nemico i danni subiti;
   - **Concentrazione** (Ladro, Assassino): il colpo successivo è un critico garantito;
-  - **Riparo Magico** (le altre classi): recuperi il 10% degli HP.
+  - **Riparo Magico** (Mago): recuperi il 10% degli HP;
+  - **Voto di Protezione** (Paladino): ti liberi da Veleno e Sanguinamento e recuperi il 5% degli HP;
+  - **Mistura Reattiva** (Alchimista): recuperi il 5% degli HP e marchi il nemico con l'elemento della tua arma. Se poi ti colpisce, il marchio della tua armatura può scatenare una **reazione**, e con l'equipaggiamento iniziale (Fuoco e Terra) scatena il *Magma*;
+  - **Sudario d'Ossa** (Negromante): strappi al nemico il 4% dei suoi HP massimi e li recuperi tu. Se gli restano pochi HP, può bastare ad abbatterlo.
 - **Apri l'inventario.** Usare un oggetto o cambiare equipaggiamento **costa il turno**; chiudere lo zaino senza fare nulla no.
 - **Statistiche Eroe.** Gratis, in qualsiasi momento. Mostrano la tua **probabilità reale di colpire** contro il nemico che hai davanti.
 - **Tenta la fuga.** Riesce più spesso se sei agile. Contro i boss è impossibile.
@@ -189,9 +192,23 @@ Intento del nemico: 💢 Colpo pesante (≈24 danni) — difenditi!
 | 🔒 Sigillo | Non attacca; al tuo prossimo turno non puoi difenderti | Cùrati o attacca adesso; il Sigillo dura un turno |
 | ⏳ Carica | Non attacca; il turno dopo arriva il **Colpo caricato** (l'intento mostra già i danni) | Preparati: il turno dopo difenditi |
 | 💥 Colpo caricato | Arriva sempre dopo la Carica: la sua forza triplica prima della tua difesa | **Difenditi**, o abbattilo prima |
-| 💠 Barriera | Non attacca; si protegge con uno scudo pari al 20% degli HP massimi, che assorbe i danni dei tuoi attacchi | Lo scudo si consuma colpendo: conviene continuare ad attaccare |
+| 💠 Barriera | Non attacca; riporta il suo scudo al 20% degli HP massimi (non si somma a quello che ha già), e lo scudo assorbe i danni dei tuoi attacchi | Lo scudo si consuma colpendo: conviene continuare ad attaccare |
 
-Colpo pesante, Guardia, Sigillo, Carica e Barriera non si ripetono mai due volte di fila. I boss si rigenerano più spesso, e alcuni nemici hanno abitudini proprie: i Golem si riparano, i Vampiri si curano col sangue.
+Colpo pesante, Guardia, Sigillo, Carica e Barriera non si ripetono mai due volte di fila. I boss si rigenerano più spesso.
+
+Quasi ogni nemico ha uno **stile**, che decide quali mosse preferisce. Dopo averlo sconfitto lo trovi scritto nel *Bestiario*:
+
+| Stile | Mosse preferite | Chi lo usa, per esempio |
+|---|---|---|
+| **Bruto** | Colpi pesanti | Orco, Idra di Lava, Minatore Svuotato |
+| **Predatore** | Carica e colpi pesanti | Lupo Mannaro, Arpia del Labirinto, Falco Astrale |
+| **Difensore** | Guardia e Barriera | Gargoyle, Costrutto Magico, Paladino Corrotto |
+| **Succhiavita** | Prosciugamento | Golem di Sale, Sirena Abissale |
+| **Infetto** | Colpi infetti | Melma Acida, Manticora Infetta, Volto nella Membrana |
+| **Mistico** | Sigillo e Rigenerazione | Chierico Corrotto, Cultista Cieco, Eco del Rimpianto |
+| **Furia** | Colpi pesanti e cariche | Elementale del Fuoco, Spirito della Tempesta |
+
+Goblin, Scheletri e Banditi, i primi nemici che incontri, combattono senza uno stile preciso. Alcuni nativi dei biomi e i Vampiri hanno mosse tutte loro.
 
 ### Le fasi dei boss
 
@@ -339,12 +356,12 @@ Certe combinazioni di rune **sullo stesso oggetto** formano una **parola runica*
 |---|---|---|
 | ⚔️ **Guerriero** | 120 HP, solido, contrattacca in difesa. Spada di Terra, cotta d'Acqua: *Fango* | Subito |
 | 🗡️ **Ladro** | Schivata alta, 100 Oro iniziali, critico garantito dopo la Concentrazione. Pugnali di Vento, cuoio d'Acqua: *Gelo* | Subito |
-| 🔮 **Mago** | Bastone di Fuoco potente e mira eccellente, ma solo 80 HP. Vesti di Vento: *Incendio* | Subito |
-| 🛡️ **Paladino** | 180 HP e Risonanza di Luce fin dall'inizio | Maestria Guerriero Lv.5 |
+| 🔮 **Mago** | Bastone di Fuoco potente e mira eccellente, ma solo 80 HP; si cura quando si difende. Vesti di Vento: *Incendio* | Subito |
+| 🛡️ **Paladino** | 180 HP e Risonanza di Luce fin dall'inizio; difendendosi si libera da veleno e sanguinamento | Maestria Guerriero Lv.5 |
 | 🪓 **Berserker** | L'ascia più forte, nessuna armatura | Impresa *Danza con la Morte* |
-| 🧪 **Alchimista** | 4 pozioni iniziali e bombe di Fuoco. Grembiule di Terra: *Magma* | Impresa *Genio Elementale* |
+| 🧪 **Alchimista** | 4 pozioni iniziali e bombe di Fuoco; difendendosi lancia una fiala che prepara la reazione. Grembiule di Terra: *Magma* | Impresa *Genio Elementale* |
 | 🥷 **Assassino** | 15% di critico innato e 20% di schivata, ma solo 75 HP. Pugnale di Vento, mantello di Terra: *Tempesta di Sabbia* | Maestria Ladro Lv.5 |
-| 💀 **Negromante** | Risonanza di Tenebra fin dall'inizio | Maestria Mago Lv.5 |
+| 💀 **Negromante** | Risonanza di Tenebra fin dall'inizio; difendendosi ruba vita al nemico | Maestria Mago Lv.5 |
 
 Ogni eroe parte con un equipaggiamento che ha già un'idea di gioco. Cinque classi hanno arma e armatura di elementi che **reagiscono** fra loro: il nome della reazione è in tabella. Paladino e Negromante portano lo stesso elemento e partono con la **Risonanza**. Il Berserker combatte a petto nudo.
 

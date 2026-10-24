@@ -12,6 +12,7 @@ Questo repository è mantenuto in buona parte con assistenti IA. Queste regole v
 
 - `main` è la versione stabile, sempre giocabile, e contiene la v2 (lore, eventi a scene, personaggi ricorrenti, mappa, biomi, finali).
 - La v3 (modalità e profondità: Ascensione, Sfida del Giorno e ciò che segue) si sviluppa su `v3`. Apri verso `v3` le PR che la riguardano; `v3` confluirà in `main` quando sarà stabile.
+- La v4 (identità dei nemici, biomi più popolati, il Ciclo del Labirinto oltre il piano 30, armi con carattere) si sviluppa su `v4`, nata da `v3`. Apri verso `v4` le PR che la riguardano; le correzioni alla v3 vanno verso `v3` e poi si portano in `v4`.
 - Le correzioni alla versione stabile vanno verso `main`.
 
 ## Documenti
