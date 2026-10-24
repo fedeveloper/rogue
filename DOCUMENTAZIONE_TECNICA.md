@@ -20,6 +20,7 @@ Riferimento per chi modifica il gioco: architettura, formato dei dati, formule d
 | `floor_map.py` | Mappa del piano: file di stanze (`generate_row`), collegamenti e stanze speciali (`generate_floor_map`), percorsi (`reachable`), disegno (`render_map`) ed etichette (`room_label`). |
 | `rooms.py` | `CombatSession` (turni, danni, status, Risonanze, fine scontro) e le stanze: mercante, falò, forziere, trappola, mistero. |
 | `modes.py` | Modalità: regole della discesa in corso (`RUN`, `rule`, `combine`, `start_run`/`end_run`), gradi di Ascensione (`max_grade`, `ascension_rules`, `ascension_essence_mult`, `record_ascension_win`) e Sfida del Giorno (`daily_setup`, `daily_rules`, `daily_score`, `record_daily`, `daily_streak`). |
+| `attributes.py` | Attributi dell'eroe: valori per classe (`starting`), somma degli effetti (`value`), spesa e limiti (`raise_attribute`), Tomo dell'Oblio (`reset`), menu dei punti (`spend_points`), riga delle Statistiche (`summary`). |
 | `runes.py` | Rune e Incastoni: chiavi degli effetti (`RUNE_EFFECT_KEYS`), dati delle rune (`rune`, `fits`, `random_rune_id`), probabilità di drop (`roll_drop`), costo di estrazione, etichetta degli incastoni sul nome (`socket_tag`). |
 | `nemesis.py` | La Nemesi: nascita e rango (`on_death`), comparsa sulla mappa (`waiting_on`), nemico (`build_enemy`), tratto che resiste (`resisted`), sconfitta (`defeat`), boss che ti riconoscono (`boss_grudge`). |
 | `epitaph.py` | L'Epitaffio: cronaca della discesa (`note`, in `Player.chronicle`), composizione dai modelli (`compose`), Cimitero (`record`, `cemetery`). |
@@ -35,7 +36,7 @@ Riferimento per chi modifica il gioco: architettura, formato dei dati, formule d
 | `ui.py` | Terminale: colori ANSI, lettura dei tasti (Windows e POSIX), menu a frecce (`interactive_menu`), velocità del testo (`delay_print`, `set_text_speed`). |
 | `constants.py` | Costanti di bilanciamento (precisione base, scaling, finestre di profondità, velocità del testo…). |
 
-Dipendenze fra i moduli: `ui` ← `data_manager` ← `archive`/`relic_effects`/`codex`/`modes` ← `entities` ← `inventory_menu` ← `rooms` ← `events` ← `floor_map`/`camp`/`endings` ← `roguelike`. Nessun modulo importa da uno che sta alla sua destra.
+Dipendenze fra i moduli: `ui` ← `data_manager` ← `archive`/`relic_effects`/`codex`/`modes`/`attributes` ← `entities` ← `inventory_menu` ← `rooms` ← `events` ← `floor_map`/`camp`/`endings` ← `roguelike`. Nessun modulo importa da uno che sta alla sua destra.
 
 ---
 
@@ -51,12 +52,12 @@ Un test controlla che ogni oggetto sbloccabile abbia davvero una di queste strad
 
 | File | Contenuto | Campi principali |
 |---|---|---|
-| `classes.json` | Le classi, per id (`"1"`…`"8"`) | `role`, `defense` (id in `defenses.json`), `max_hp`, `gold`, `acc`, `dodge`, `crit` (opz.), `weapon`/`armor` iniziali (`name`, `value`, `atk`/`def`, `element`), `potions`, `unlocked_by_default`, `mastery` |
+| `classes.json` | Le classi, per id (`"1"`…`"8"`) | `role`, `defense` (id in `defenses.json`), `attributes` (attributi iniziali), `max_hp`, `gold`, `acc`, `dodge`, `crit` (opz.), `weapon`/`armor` iniziali (`name`, `value`, `atk`/`def`, `element`), `potions`, `unlocked_by_default`, `mastery` |
 | `enemies.json` | `enemies` e `bosses`, per nome | `element`, `base_hp`, `base_atk`, `base_dodge`, `base_acc`, `title`/`lore` (boss), `status_inflict` (opz.), `final_boss` (solo DIO ANTICO), `retired_by_flag` (opz.: il boss non compare più quando il flag del profilo è vero), `moves` (opz.: pesi delle mosse al posto di quelli predefiniti) o `profile` (opz.: uno stile di `moves.json → profiles`), `biome` (opz.: nativo di un bioma) |
 | `weapons.json` | Armi | `name`, `base_atk`, `val_base` (opz.), `element` (opz., altrimenti casuale), `status_inflict` (opz.), `hit_modifier`, `crit_chance`, `dodge_bonus` (± schivata dell'eroe), `guard_break` (la Guardia del nemico non dimezza i colpi), `shield_mult` (ogni punto di danno consuma tanti punti di scudo), `gold_atk_per`/`gold_atk_max` (opz.: tutti in `Weapon.traits`, e `Weapon.trait_text()` li riassume nello zaino), `unlock_id`, `unlock_cost`, `desc`, `flavor` |
 | `armors.json` | Armature | `name`, `base_def`, `element` (opz.), `dodge_bonus` (opz., anche negativo), `sockets` (opz.: incastoni minimi), `unlock_id`, `unlock_cost`, `desc`, `flavor` |
 | `accessories.json` | Monili | `name`, `bonus_type` (`crit_chance`, `lifesteal`, `max_hp`, `dodge`, `acc`, `reflect`), `bonus_value`, `base_val`, `desc`, `lore`, `unlock_id`, `unlock_cost` |
-| `consumables.json` | Consumabili | `name`, `category` (`heal`, `antidote`, `smoke_bomb`, `chaos_tome`, `chaos_vial`, `holy_water`, `whetstone`, `accuracy_potion`, `rune_solvent`: estrae gratis una runa dall'equipaggiamento, `socket_chisel`: +1 incastone fino a `sockets.boss`; senza un bersaglio valido non si consumano), `base_heal`, `val_base`, `desc`, `unlock_id` |
+| `consumables.json` | Consumabili | `name`, `category` (`heal`, `antidote`, `smoke_bomb`, `chaos_tome`, `chaos_vial`, `holy_water`, `whetstone`, `accuracy_potion`, `rune_solvent`: estrae gratis una runa dall'equipaggiamento, `socket_chisel`: +1 incastone fino a `sockets.boss`; senza un bersaglio valido non si consumano; `respec`: il Tomo dell'Oblio, si legge solo al Falò), `base_heal`, `val_base`, `weight` (opz., rarità: predefinito 10), `desc`, `unlock_id` |
 | `relics.json` | Reliquie | `id`, `name`, `desc`, `lore`, `unlock_id`, `unlock_cost` |
 | `elements.json` | Sistema elementale | `list`, `icons`, `multipliers[attaccante][difensore]`, `resonance[elemento] = {value, desc, announce}`, `marks.duration`, `conditions` (`blind`, `slow`, `scorch_pct`), `reactions["A+B"] = {name, icon, desc, bonus_pct, status: {type, duration}}` |
 | `books.json` | Tomi dell'Archivio | `title`, `unlock_condition` (testo), `unlock = {type: max_floor\|total_bosses\|won_normal, value}`, `bonus = {gold_pct, escape, boss_dmg_pct, def}`, `bonus_desc`, `chapters` |
@@ -64,6 +65,7 @@ Un test controlla che ogni oggetto sbloccabile abbia davvero una di queste strad
 | `biomes.json` | Biomi | `id`, `name`, `icon`, `floors`, `intro`, `hazard`, `room_weights`, `enemy_elements`, `signature_events` (opzionali gli ultimi quattro) |
 | `events.json` | Eventi narrativi | `title`, `start`, `scenes`, `requires` (opz.), `scripted` (opz.), `weight` (opz.): vedi [Eventi narrativi](#eventi-narrativi) |
 | `moves.json` | Mosse dei nemici (intenti) | `moves` (`name`, `icon`, `desc`, `damage_mult`, `damage_taken_mult`, `heal_pct`), `profiles[id] = {name, desc, moves}` (stili condivisi da più nemici, mostrati nel Bestiario), `defaults` (pesi di `enemy`, `boss`, `with_status`), `rules` (`heal_below_pct`, `max_heals`, `no_repeat`) |
+| `attributes.json` | Attributi e livelli | `rules` (`points_per_level`, `max_points`, `per_level` con `max_hp`/`acc`/`dodge`, `desc`); `attributes[id] = {name, icon, per_point, desc}`: vedi [Formule di combattimento](#5-formule-di-combattimento) |
 | `defenses.json` | Tecniche di difesa delle classi | `defenses[id] = {name, short, desc, heal_pct, drain_pct}`: `short` è il testo del menu di combattimento, `desc` la descrizione completa; vedi [Formule di combattimento](#5-formule-di-combattimento) |
 | `story.json` | Elementi della storia | `quest_items` (oggetti chiave: `name`, `desc`), `npcs` (nomi degli artigiani), `characters` (personaggi ricorrenti: vedi sotto), `camp` (Fuoco del Campo), `endings` (finali) |
 | `modes.json` | Modalità | `ascension` (`max`, `grades`: `name`, `desc`, `essence_bonus`, `effects`), `daily` (`maluses`, `first_attempt_essence_mult`, `history`, `score`, `boons`: `name`, `desc`, `effects`): vedi [Modalità](#modalità) |
@@ -409,7 +411,20 @@ La Maledizione blocca le cure, non il danno del `siphon`. Se la tecnica abbatte 
 
 **Elementi**: `elements.json → multipliers`; 1,5 Super Efficace, 0,5 Poco efficace, 1 altrimenti. Le reliquie possono modificarli con `modify_multiplier`.
 
-**Livello dell'eroe**: soglia iniziale 100 EXP, ×1,5 a ogni livello; a ogni livello +15 HP massimi, cura completa, +2 precisione e +2 schivata.
+**Livello dell'eroe**: soglia iniziale 100 EXP, ×1,5 a ogni livello. A ogni livello: cura completa, `attributes.json → rules.per_level` (+6 HP massimi, +1 precisione, +1 schivata) e `points_per_level` punti abilità in `Player.unspent_points` (con `points_offered = False`).
+
+**Attributi** (`attributes.py`, `data/attributes.json`). `Player.attributes` parte da `classes.json → attributes` (3 punti per classe) e ogni attributo arriva al massimo a `max_points`. `attributes.value(player, chiave)` somma un effetto di `per_point` su tutti gli attributi, e lo leggono:
+
+| Chiave | Attributo | Dove agisce |
+|---|---|---|
+| `max_hp` | Vitalità | Aggiunta agli HP massimi e attuali quando si spende il punto (`raise_attribute`), tolta da `reset` |
+| `weapon_dmg_pct` | Forza | `CombatSession.execute_player_attack`, dopo il moltiplicatore di classe |
+| `acc`, `crit` | Destrezza | `Player.get_hit_chance`, `Player.get_crit_chance` |
+| `dodge`, `escape` | Agilità | `Player.get_dodge`, `CombatSession._calc_escape_chance` |
+| `reaction_dmg_pct` | Arcano | `CombatSession._trigger_reaction`, insieme alla runa della Catalisi |
+| `gold_pct`, `rune_drop_add` | Fortuna | `Player.calculate_gold_gain`; `runes.roll_drop(fonte, bonus)` (solo per le fonti che hanno già una probabilità) |
+
+La scelta dei punti (`attributes.spend_points`) arriva alla fine della stanza in cui si è saliti di livello (`_descent`); finché restano punti, la mappa ha la voce *Distribuisci i punti abilità*. Il consumabile `respec` (*Tomo dell'Oblio*, `weight: 1`) si legge solo al Falò (`rooms.read_oblivion`): `attributes.reset` rende i punti spesi oltre quelli della classe. `generate_potion` sceglie i consumabili pesati da `weight` (predefinito `CONSUMABLE_WEIGHT = 10`).
 
 ---
 
@@ -550,6 +565,7 @@ La CI (`.github/workflows/tests.yml`) li esegue su Python 3.9 e sull'ultima 3.x;
 | `test_biomes.py` | Equipaggiamento iniziale (reazione o Risonanza), completezza dei biomi, contratti dei pericoli, Gas del Silenzio, Ebollizione, Paradosso, Dissoluzione, Caduta Astrale nel vero ciclo dei piani |
 | `test_tactics.py` | Intenti (pesi predefiniti e dei dati, regole delle mosse, prompt, Congelato) e reazioni (arma poi armatura, armatura poi arma, solo in guardia, stesso elemento, nessuna reazione, scadenza dei marchi, Codice) |
 | `test_enemy_identity.py` | Stili dei nemici (dati, uso, Colpo infetto, Bestiario), boss nativi (uno per bioma, solo nel suo bioma), sei nativi per bioma (stile, forza rispetto ai generici, quota degli scontri), difese delle classi (dati e numeri dei testi, ogni tecnica, Maledizione, colpo finale) |
+| `test_attributes.py` | Attributi: dati e testi, attributi di ogni classe, punti a ogni livello e crescita automatica, limiti, menu e rinvio, Tomo dell'Oblio, effetto di ogni attributo (Vitalità, Destrezza, Agilità e fuga, Forza, Arcano, Fortuna), Statistiche |
 | `test_cycle.py` | Ciclo del Labirinto: cicli ed Eco, primo ciclo intatto, ogni bioma una volta per ciclo con la Soglia in fondo, ordine dal seme, dati intatti, pericoli più duri fino al limite e descrizioni con i numeri nuovi, regola usata nello scontro, nativi rinforzati, DIO ANTICO a ogni fine ciclo, annuncio e record, Epitaffio, Essenza, Codice, testo delle regole |
 | `test_map.py` | Mappa (file alternate, collegamenti senza incroci né vicoli ciechi, tipi e tempi di ricarica, evento richiamato, disegno, ciclo dei piani reale) e biomi (copertura dei piani, dati, nativi, elementi, pesi delle stanze, stanza speciale per piano, Prima Pietra, annuncio del pericolo) |
 | `test_risk_rooms.py` | Stanze a rischio: trappola (ritirata, bottino garantito, prove e probabilità mostrate), forziere (rischio per piano, serratura, Mimic, Sesto Senso), Élite (piano minimo, statistiche, ricompensa, etichette), Audacia (punti, premio del boss, ciclo dei piani), Mistero (probabilità dai dati, reliquia esaurita) |

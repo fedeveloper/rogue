@@ -3,6 +3,7 @@ from ui import Colors, clear_screen, interactive_menu, display_msg, wait_enter
 from data_manager import GAME_DATA, PROFILE_MANAGER, get_element_icon
 from entities import Rune, generate_random_element
 import runes as rune_rules
+import attributes
 from archive import unlocked_archive_bonuses
 
 def _use_consumable(player, item, real_idx, in_combat) -> str:
@@ -105,6 +106,8 @@ def _use_consumable(player, item, real_idx, in_combat) -> str:
         player.inventory.append(Rune(rid))
         display_msg(f"{Colors.CYAN}\nIl solvente scioglie il castone: {rune_rules.rune(rid)['name']} torna nello zaino.{Colors.RESET}")
         res = "turn_used" if in_combat else ""
+    elif cat == "respec":
+        display_msg(f"{Colors.YELLOW}\nIl Tomo dell'Oblio si legge solo al Falò, con calma.{Colors.RESET}"); wait_enter("Premi INVIO..."); return ""
     elif cat == "socket_chisel":
         top = rune_rules.rules()["sockets"]["boss"]
         targets = [it for it in (player.weapon, player.armor) if it.sockets < top]
@@ -240,6 +243,8 @@ def show_player_stats(player, session=None):
     display_msg(f"✨ EXP: {Colors.CYAN}{player.exp}/{player.max_exp}{Colors.RESET} (Livello {player.level})\n")
     
     display_msg(f"{Colors.BOLD}--- ATTRIBUTI ---{Colors.RESET}")
+    display_msg(attributes.summary(player) + (f" | {Colors.YELLOW}Punti da spendere: {player.unspent_points} (dalla mappa){Colors.RESET}" if player.unspent_points else ""))
+    display_msg(f"\n{Colors.BOLD}--- STATISTICHE ---{Colors.RESET}")
     display_msg(f"🗡️  Attacco Totale: {player.get_total_atk()} (Base arma: {player.weapon.atk})")
     display_msg(f"🛡️  Difesa Totale: {player.get_total_def()} (Base armatura: {player.armor.defense})")
     if session:

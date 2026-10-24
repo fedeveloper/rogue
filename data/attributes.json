@@ -1,0 +1,16 @@
+{
+    "rules": {
+        "points_per_level": 1,
+        "max_points": 10,
+        "per_level": {"max_hp": 6, "acc": 1, "dodge": 1},
+        "desc": "A ogni livello l'eroe recupera tutti gli HP, ottiene +6 HP massimi, +1% Precisione e +1% Schivata, e 1 punto da spendere negli attributi. Ogni attributo arriva al massimo a 10 punti. Gli attributi valgono per una sola discesa."
+    },
+    "attributes": {
+        "vitalita": {"name": "Vitalità", "icon": "❤️", "per_point": {"max_hp": 15}, "desc": "+15 HP massimi (e altrettanti HP), per punto."},
+        "forza": {"name": "Forza", "icon": "💪", "per_point": {"weapon_dmg_pct": 5}, "desc": "+5% danni con le armi, per punto."},
+        "destrezza": {"name": "Destrezza", "icon": "🎯", "per_point": {"acc": 3, "crit": 1}, "desc": "+3% Precisione e +1% probabilità di critico, per punto."},
+        "agilita": {"name": "Agilità", "icon": "🌪️", "per_point": {"dodge": 3, "escape": 3}, "desc": "+3% Schivata e +3% probabilità di fuga, per punto."},
+        "arcano": {"name": "Arcano", "icon": "🔮", "per_point": {"reaction_dmg_pct": 6}, "desc": "+6% danni delle reazioni elementali, per punto."},
+        "fortuna": {"name": "Fortuna", "icon": "🍀", "per_point": {"gold_pct": 5, "rune_drop_add": 2}, "desc": "+5% Oro trovato e +2% probabilità di trovare una runa, per punto."}
+    }
+}

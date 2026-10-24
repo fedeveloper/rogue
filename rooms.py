@@ -8,6 +8,7 @@ from codex import record_enemy_killed, record_enemy_seen, record_letter, record_
 from constants import CAMPFIRE_REST_PCT, BASE_HIT_CHANCE, BLOOD_LETTER_CHANCE, CURSE_HP_DRAIN_PCT, MIN_DAMAGE_PCT, POISON_MIN, POISON_PCT
 from entities import STATUS_NAMES, Player, Enemy, generate_weapon, generate_armor, generate_accessory, generate_potion, generate_rune, get_random_relic, set_sockets
 import runes as rune_rules
+import attributes
 import nemesis
 from epitaph import note
 from entities import Rune
@@ -303,7 +304,7 @@ class CombatSession:
         self.player.run_tracker["reactions"] = self.player.run_tracker.get("reactions", 0) + 1
         msg = f"{Colors.MAGENTA}{Colors.BOLD}⚡ REAZIONE: {r['icon']} {r['name'].upper()}!{Colors.RESET}"
         if r.get("bonus_pct"):
-            dmg = self.player.get_total_atk() * r["bonus_pct"] // 100 * (100 + self.player.rune_value("reaction_dmg_pct")) // 100
+            dmg = self.player.get_total_atk() * r["bonus_pct"] // 100 * (100 + self.player.rune_value("reaction_dmg_pct") + attributes.value(self.player, "reaction_dmg_pct")) // 100
             self.enemy.hp -= dmg
             msg += f" {Colors.CYAN}{dmg} danni extra.{Colors.RESET}"
         if r.get("status"):
@@ -469,6 +470,7 @@ class CombatSession:
         if random.randint(1, 100) <= hit_chance:
             self.player.run_tracker["floor_hits"] += 1
             dmg_dealt = int(dmg_dealt * self.player.get_class_damage_multiplier())
+            dmg_dealt = dmg_dealt * (100 + attributes.value(self.player, "weapon_dmg_pct")) // 100  # Forza
             # Rune dell'arma: Contrasto sui colpi Super Efficaci, Agguato sul primo attacco dello scontro
             if multiplier > 1.0 and self.player.rune_value("super_effective_pct"):
                 dmg_dealt = dmg_dealt * (100 + self.player.rune_value("super_effective_pct")) // 100
@@ -655,7 +657,7 @@ class CombatSession:
 
     def _calc_escape_chance(self) -> int:
         f_chance = 20 + self.player.get_dodge() - self.enemy.base_dodge + (20 if PROFILE_MANAGER.get_perk("scarpisti", False) else 0)
-        f_chance += get_archive_bonus("escape", PROFILE_MANAGER._data)
+        f_chance += get_archive_bonus("escape", PROFILE_MANAGER._data) + attributes.value(self.player, "escape")
         f_chance = max(10, min(90, f_chance))
         for r in self.player.relic_effects:
             mod = r.get_escape_modifier()
@@ -1017,6 +1019,18 @@ def rune_workshop(player: Player, floor: int):
             display_msg(f"{Colors.GREEN}Hai estratto {rune_rules.rune(rid)['name']} (-{cost} Oro).{Colors.RESET}"); wait_enter()
 
 
+OBLIVION = f"{Colors.MAGENTA}Leggi il Tomo dell'Oblio{Colors.RESET} (redistribuisci i punti abilità; il falò resta acceso)"
+
+
+def read_oblivion(player: Player, tome):
+    """Il Tomo dell'Oblio: i punti spesi tornano da spendere e si redistribuiscono subito."""
+    player.inventory.remove(tome)
+    refunded = attributes.reset(player)
+    display_msg(f"{Colors.MAGENTA}Le pagine si svuotano mentre le leggi: dimentichi come sei cresciuto. {refunded} punti tornano da spendere.{Colors.RESET}")
+    wait_enter("\nPremi INVIO...")
+    attributes.spend_points(player)
+
+
 def campfire_room(player: Player, floor: int):
     delay_print(f"\n{Colors.YELLOW}{random.choice(GAME_DATA['lore']['campfire'])}{Colors.RESET}")
     while True:
@@ -1034,12 +1048,15 @@ def campfire_room(player: Player, floor: int):
             options.append(f"{Colors.CYAN}Purifica Maledizione{Colors.RESET} (Paga {Colors.YELLOW}100 Oro{Colors.RESET} per rimuovere il malus da un pezzo equipaggiato)")
             
         options.append(RUNE_WORKSHOP)
+        tome = next((i for i in player.inventory if i.type == "consumable" and i.category == "respec"), None)
+        if tome: options.append(OBLIVION)
         options.append("Prosegui")
         
         idx = interactive_menu(options, prompt)
         
         if options[idx] == "Prosegui": break
         elif options[idx] == RUNE_WORKSHOP: rune_workshop(player, floor)
+        elif options[idx] == OBLIVION: read_oblivion(player, tome)
         elif idx == 0:
             player.run_tracker["rested"] = True
             player.heal(player.max_hp * rest_pct // 100)
@@ -1112,7 +1129,7 @@ def campfire_room(player: Player, floor: int):
 
 def rune_drop(player: Player, floor: int, source: str):
     """Una runa con la probabilità della fonte (`runes.json`, `rules.drops`)."""
-    if rune_rules.roll_drop(source) or any(source in r.rune_drop_always for r in player.relic_effects):
+    if rune_rules.roll_drop(source, attributes.value(player, "rune_drop_add")) or any(source in r.rune_drop_always for r in player.relic_effects):
         r = generate_rune(floor)
         record_rune(r.rune_id)
         display_msg(f"{Colors.CYAN}Trovi una runa: {r.display_name}! (Si incastona al Falò){Colors.RESET}")

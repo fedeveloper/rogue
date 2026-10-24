@@ -121,7 +121,9 @@ class NewClassesTest(Sandbox):
     def test_assassin_has_innate_crit(self):
         crit = GAME_DATA["classes"]["7"]["crit"]
         self.assertGreater(crit, 0)
-        self.assertEqual(Player("7", "base", []).get_crit_chance(), crit)
+        # Al critico innato si aggiunge quello della Destrezza con cui parte la classe
+        dex = GAME_DATA["classes"]["7"]["attributes"].get("destrezza", 0) * GAME_DATA["attributes"]["attributes"]["destrezza"]["per_point"]["crit"]
+        self.assertEqual(Player("7", "base", []).get_crit_chance(), crit + dex)
 
     def test_necromancer_starts_with_dark_resonance_and_harvests_souls(self):
         PROFILE_MANAGER.set_class_lvl("8", 2)

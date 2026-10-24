@@ -312,7 +312,7 @@ L'enciclopedia nel [README](README.md) le elenca tutte.
 ### Reliquie, livelli e fusioni
 
 - **Reliquie.** Artefatti passivi trovati sconfiggendo i boss, nei forzieri o negli eventi. Ne porti al massimo **4**: trovandone una quinta, scegli quale sacrificare. Molte si combinano con una strategia: veleno e sanguinamento (l'*Ago dell'Untore* li raddoppia), oro (la *Bilancia del Mercante* trasforma l'Oro in Attacco), reazioni elementali (il *Catalizzatore Antico*), difesa (il *Corno del Bastione*), rune (il *Cristallo Runico* le potenzia del 50%), Nemesi ed Élite (il *Marchio del Cacciatore*). L'enciclopedia nel README le elenca tutte.
-- **Livelli.** Con l'EXP sali di livello: +15 HP massimi, cura completa, +2% di precisione e di schivata.
+- **Livelli.** Con l'EXP sali di livello: cura completa, una piccola crescita automatica e un **punto abilità** da spendere negli attributi (vedi *Livelli e attributi*).
 - **Altare dell'Evoluzione.** Al Falò, fondi due armi (o due armature) dello zaino: la prima assorbe metà delle statistiche della seconda e sale di livello. Le rune della prima restano; quelle della seconda tornano nello zaino.
 
 ### Rune e Incastoni
@@ -378,6 +378,36 @@ Certe combinazioni di rune **sullo stesso oggetto** formano una **parola runica*
 | 💀 **Negromante** | Risonanza di Tenebra fin dall'inizio; difendendosi ruba vita al nemico | Maestria Mago Lv.5 |
 
 Ogni eroe parte con un equipaggiamento che ha già un'idea di gioco. Cinque classi hanno arma e armatura di elementi che **reagiscono** fra loro: il nome della reazione è in tabella. Paladino e Negromante portano lo stesso elemento e partono con la **Risonanza**. Il Berserker combatte a petto nudo.
+
+### Livelli e attributi
+
+A ogni livello l'eroe recupera tutti gli HP, ottiene +6 HP massimi, +1% Precisione e +1% Schivata, e 1 punto da spendere negli attributi. Ogni attributo arriva al massimo a 10 punti. Gli attributi valgono per una sola discesa.
+
+Quando sali di livello, alla fine della stanza ti viene chiesto dove mettere il punto. Puoi anche rimandare: i punti restano, e li spendi quando vuoi con la voce *Distribuisci i punti abilità* della mappa. Le *Statistiche* mostrano i tuoi attributi.
+
+| Attributo | Per ogni punto |
+|---|---|
+| ❤️ **Vitalità** | +15 HP massimi (e altrettanti HP), per punto. |
+| 💪 **Forza** | +5% danni con le armi, per punto. |
+| 🎯 **Destrezza** | +3% Precisione e +1% probabilità di critico, per punto. |
+| 🌪️ **Agilità** | +3% Schivata e +3% probabilità di fuga, per punto. |
+| 🔮 **Arcano** | +6% danni delle reazioni elementali, per punto. |
+| 🍀 **Fortuna** | +5% Oro trovato e +2% probabilità di trovare una runa, per punto. |
+
+Ogni classe parte con 3 punti già distribuiti secondo il suo stile:
+
+| Classe | Attributi iniziali |
+|---|---|
+| Guerriero | Vitalità 1, Forza 2 |
+| Ladro | Destrezza 1, Agilità 1, Fortuna 1 |
+| Mago | Arcano 2, Destrezza 1 |
+| Paladino | Vitalità 2, Forza 1 |
+| Berserker | Forza 3 |
+| Alchimista | Arcano 1, Vitalità 1, Fortuna 1 |
+| Assassino | Destrezza 2, Agilità 1 |
+| Negromante | Arcano 2, Vitalità 1 |
+
+**Il Tomo dell'Oblio.** È un consumabile raro (meno di uno su venti). Si legge al Falò, senza spegnerlo: i punti che hai speso tornano da spendere e li redistribuisci subito. Gli attributi iniziali della classe restano.
 
 ### La Maestria
 

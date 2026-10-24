@@ -13,6 +13,7 @@ from contextlib import redirect_stdout
 from unittest import mock
 
 import events
+import entities
 import inventory_menu
 import roguelike
 import rooms
@@ -492,7 +493,7 @@ class ConsumableContractTest(Sandbox):
     def contracts(self):
         return {"heal": self.c_heal, "antidote": self.c_antidote, "whetstone": self.c_whetstone, "smoke_bomb": self.c_smoke,
                 "chaos_tome": self.c_tome, "accuracy_potion": self.c_accuracy, "holy_water": self.c_holy, "chaos_vial": self.c_vial,
-                "rune_solvent": self.c_solvent, "socket_chisel": self.c_chisel}
+                "rune_solvent": self.c_solvent, "socket_chisel": self.c_chisel, "respec": self.c_respec}
 
     def item(self, category):
         d = next(c for c in RAW_DATA["consumables"] if c.get("category", "heal") == category)
@@ -547,6 +548,22 @@ class ConsumableContractTest(Sandbox):
         p = self.hero(); p.inventory = [item]
         with quiet(), mock.patch("builtins.input", return_value=""): inventory_menu._use_consumable(p, item, 0, False)
         self.assertEqual(p.inventory, [item], "senza rune incastonate non si consuma")
+
+    def c_respec(self, d, item):
+        import attributes
+        self.assertIn("Falò", d["desc"]); self.assertIn("Raro", d["desc"])
+        pool = RAW_DATA["consumables"]
+        self.assertLess(d["weight"] * 20, sum(c.get("weight", entities.CONSUMABLE_WEIGHT) for c in pool), "raro: meno di un consumabile su venti")
+        p = self.hero(); p.inventory = [item]
+        with quiet(), mock.patch("builtins.input", return_value=""): inventory_menu._use_consumable(p, item, 0, False)
+        self.assertEqual(p.inventory, [item], "fuori dal Falò non si legge e non si consuma")
+        start = dict(p.attributes); p.unspent_points = 2
+        attributes.raise_attribute(p, "vitalita"); attributes.raise_attribute(p, "agilita")
+        hp = p.max_hp
+        with quiet(), mock.patch("rooms.wait_enter"), mock.patch("attributes.interactive_menu", return_value=-1), mock.patch("attributes.clear_screen"):
+            rooms.read_oblivion(p, item)
+        self.assertEqual((p.attributes, p.unspent_points, p.inventory), (start, 2, []))
+        self.assertEqual(p.max_hp, hp - GAME_DATA["attributes"]["attributes"]["vitalita"]["per_point"]["max_hp"])
 
     def c_chisel(self, d, item):
         top = GAME_DATA["runes"]["rules"]["sockets"]["boss"]

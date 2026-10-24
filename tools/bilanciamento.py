@@ -7,6 +7,7 @@ Uso, dalla radice del repository:
     python tools/bilanciamento.py strategie [N] [profilo]  # le stesse run con diversi modi di scegliere le stanze
     python tools/bilanciamento.py ascensione [N] [gradi]   # profilo completo, N run per classe a ogni grado (es. 0,5,10,15,20)
     python tools/bilanciamento.py infinita [N]        # profilo completo, N run per classe in Modalità Infinita: fin dove arriva nel Ciclo
+    python tools/bilanciamento.py attributi [N]       # profilo completo, N run per classe per ogni modo di spendere i punti abilità
 
 Il profilo del giocatore non viene mai letto per le statistiche né salvato: ogni simulazione parte da un profilo
 costruito in memoria ("nuovo": nulla di sbloccato; "completo": tutto sbloccato, potenziamenti e Maestrie al massimo).
@@ -119,9 +120,33 @@ STRATEGIES = {
 }
 
 
+# Come il giocatore automatico spende i punti abilità. "classe": a turno gli attributi con cui parte la classe,
+# dal più alto, e la Vitalità; "equilibrata": a turno Vitalità, Forza, Destrezza e Agilità; un nome: tutto lì
+# (finché si può, poi Vitalità).
+POINT_PLANS = ("classe", "equilibrata", "vitalita", "forza", "destrezza", "agilita", "arcano", "fortuna")
+
+
+def point_order(cls, plan):
+    if plan == "classe":
+        start = RAW_DATA["classes"][cls].get("attributes", {})
+        return sorted(start, key=lambda a: -start[a]) + ([] if "vitalita" in start else ["vitalita"])
+    if plan == "equilibrata": return ["vitalita", "forza", "destrezza", "agilita"]
+    return [plan]
+
+
 class Bot:
-    def __init__(self, cls, strategy="adattiva", grade=0):
+    def __init__(self, cls, strategy="adattiva", grade=0, points="classe"):
         self.cls, self.player, self.calls, self.state, self.order, self.grade = cls, None, 0, {}, STRATEGIES[strategy], grade
+        self.points = point_order(cls, points)
+
+    def spend_point(self, opts):
+        """Il prossimo attributo del piano che può ancora salire (altrimenti la Vitalità, poi qualunque)."""
+        p, names = self.player, list(GAME_DATA["attributes"]["attributes"])
+        k = self.state.get("point", 0)
+        self.state["point"] = k + 1
+        wanted = [self.points[(k + i) % len(self.points)] for i in range(len(self.points))] + ["vitalita"] + names
+        cap = GAME_DATA["attributes"]["rules"]["max_points"]
+        return names.index(next(a for a in wanted if p.attributes[a] < cap))
 
     def equip(self):
         p = self.player
@@ -172,6 +197,7 @@ class Bot:
             return chances.index(max(chances))
         if find("Forza la serratura") is not None: return 0 if p.hp > p.max_hp * 0.4 else 1
         if find("Aprilo comunque") is not None: return 0 if p.hp > p.max_hp * 0.6 else 1
+        if "PUNTI ABILITÀ" in pr: return self.spend_point(opts)
         if "Intento del nemico" in pr:
             potion = any(i.type == "consumable" and i.category == "heal" for i in p.inventory)
             if p.hp < p.max_hp * 0.35 and potion: self.state["potion"] = True; return 2
@@ -196,11 +222,11 @@ class Bot:
         return -1 if cancellable else 0
 
 
-def play(cls, seed, base, strategy="adattiva", grade=0, infinite=False):
-    import camp, endings, entities, events, inventory_menu, roguelike, rooms
+def play(cls, seed, base, strategy="adattiva", grade=0, infinite=False, points="classe"):
+    import attributes, camp, endings, entities, events, inventory_menu, roguelike, rooms
     random.seed(seed)
     use_profile(base)
-    bot, log = Bot(cls, strategy, grade), {"cls": cls, "hits": 0, "zero": 0, "bosses": [], "killer": None}
+    bot, log = Bot(cls, strategy, grade, points), {"cls": cls, "hits": 0, "zero": 0, "bosses": [], "killer": None}
     real_player, real_damage, real_start, real_evaluate = entities.Player, rooms.CombatSession._calc_enemy_damage, rooms.CombatSession.start, roguelike.evaluate_run
 
     def make_player(*a):
@@ -222,7 +248,7 @@ def play(cls, seed, base, strategy="adattiva", grade=0, infinite=False):
         real_evaluate(p, floor, infinite)
         log.update(floor=floor, won=p.won, essence=PROFILE_MANAGER.essence - before)
 
-    modules = ("roguelike", "rooms", "events", "entities", "inventory_menu", "camp", "endings")
+    modules = ("roguelike", "rooms", "events", "entities", "inventory_menu", "camp", "endings", "attributes")
     patches = [mock.patch(f"{m}.interactive_menu", side_effect=bot.menu) for m in modules]
     patches += [mock.patch(f"{m}.{f}") for m in modules for f in ("wait_enter", "clear_screen", "delay_print") if hasattr(sys.modules[m], f)]
     patches += [mock.patch("roguelike.Player", side_effect=make_player), mock.patch("roguelike.evaluate_run", side_effect=evaluate),
@@ -285,6 +311,16 @@ def cmd_ascensione(n, grades):
         print(f"{g:>5} {sum(l['won'] for l in logs) / len(logs) * 100:>7.0f}% {st.median(l['floor'] for l in logs):>13}")
 
 
+def cmd_attributi(n):
+    base = profile("completo")
+    use_profile(base)
+    print(f"profilo completo: {n} run per classe per ogni modo di spendere i punti")
+    print(f"{'punti':<12} {'vittorie':>8} {'piano mediano':>13} {'livello mediano':>15}")
+    for plan in POINT_PLANS:
+        logs = [play(c, int(c) * 100003 + i * 7919, base, points=plan) for c in GAME_DATA["classes"] for i in range(n)]
+        print(f"{plan:<12} {sum(l['won'] for l in logs) / len(logs) * 100:>7.0f}% {st.median(l['floor'] for l in logs):>13} {st.median(l['level'] for l in logs):>15}")
+
+
 def cmd_infinita(n):
     base = profile("completo")
     use_profile(base)
@@ -308,6 +344,7 @@ if __name__ == "__main__":
     elif args[0] == "oggetti": cmd_oggetti()
     elif args[0] == "run": cmd_run(int(args[1]) if len(args) > 1 else 50, args[2] if len(args) > 2 else "nuovo")
     elif args[0] == "ascensione": cmd_ascensione(int(args[1]) if len(args) > 1 else 20, [int(g) for g in (args[2] if len(args) > 2 else "0,5,10,15,20").split(",")])
+    elif args[0] == "attributi": cmd_attributi(int(args[1]) if len(args) > 1 else 20)
     elif args[0] == "infinita": cmd_infinita(int(args[1]) if len(args) > 1 else 20)
     elif args[0] == "strategie": cmd_strategie(int(args[1]) if len(args) > 1 else 30, args[2] if len(args) > 2 else "nuovo")
     else: print(__doc__)

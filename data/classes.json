@@ -2,6 +2,7 @@
     "1": {
         "role": "Guerriero",
         "defense": "counter",
+        "attributes": {"vitalita": 1, "forza": 2},
         "max_hp": 120,
         "gold": 20,
         "acc": 5,
@@ -49,6 +50,7 @@
     "2": {
         "role": "Ladro",
         "defense": "focus",
+        "attributes": {"destrezza": 1, "agilita": 1, "fortuna": 1},
         "max_hp": 85,
         "gold": 100,
         "acc": 10,
@@ -96,6 +98,7 @@
     "3": {
         "role": "Mago",
         "defense": "recovery",
+        "attributes": {"arcano": 2, "destrezza": 1},
         "max_hp": 80,
         "gold": 40,
         "acc": 20,
@@ -143,6 +146,7 @@
     "4": {
         "role": "Paladino",
         "defense": "cleanse",
+        "attributes": {"vitalita": 2, "forza": 1},
         "max_hp": 180,
         "gold": 10,
         "acc": 5,
@@ -192,6 +196,7 @@
     "5": {
         "role": "Berserker",
         "defense": "counter",
+        "attributes": {"forza": 3},
         "max_hp": 110,
         "gold": 0,
         "acc": 15,
@@ -241,6 +246,7 @@
     "6": {
         "role": "Alchimista",
         "defense": "mark",
+        "attributes": {"arcano": 1, "vitalita": 1, "fortuna": 1},
         "max_hp": 95,
         "gold": 30,
         "acc": 15,
@@ -291,6 +297,7 @@
     "7": {
         "role": "Assassino",
         "defense": "focus",
+        "attributes": {"destrezza": 2, "agilita": 1},
         "max_hp": 75,
         "gold": 30,
         "acc": 20,
@@ -341,6 +348,7 @@
     "8": {
         "role": "Negromante",
         "defense": "siphon",
+        "attributes": {"arcano": 2, "vitalita": 1},
         "max_hp": 85,
         "gold": 20,
         "acc": 10,

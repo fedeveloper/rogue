@@ -36,8 +36,10 @@ def random_rune_id(rng=random) -> str:
     return rng.choices(list(pool), weights=[r["weight"] for r in pool.values()])[0]
 
 
-def roll_drop(source: str) -> bool:
-    return random.random() * 100 < rules()["drops"].get(source, 0)
+def roll_drop(source: str, bonus: int = 0) -> bool:
+    """Una runa dalla fonte, con la sua probabilità in % più un bonus (la Fortuna). Una fonte senza drop resta senza."""
+    base = rules()["drops"].get(source, 0)
+    return base > 0 and random.random() * 100 < base + bonus
 
 
 def extract_cost(floor: int) -> int:

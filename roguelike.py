@@ -17,6 +17,7 @@ from endings import choose_ending
 import modes
 import nemesis
 import epitaph
+import attributes
 from constants import TEXT_SPEEDS, SPERANZA_LUCE_PCT_PER_LVL, RATIO_GOLD_TO_ESSENCE_ON_DEATH, BOSS_ESSENCE_BONUS, XP_PER_FLOOR, XP_PER_BOSS, INFINITE_MODE_THRESHOLD, INFINITE_MODE_ESSENCE_MULTIPLIER, BLIND_FURY_MIN_ATTACKS
 
 def _update_class_mastery(player: Player, floor: int):
@@ -567,12 +568,16 @@ def _descent(c_choice, t_choice, active_pacts, infinite_mode, grade, daily):
                 sixth = PROFILE_MANAGER.get_perk("sesto_senso", False)
                 options = [f"Entra: {room_label(floor_map[step - 1][i], sixth, biome)}" + (f" ({SIDES[floor_map[step - 1][i]['slot']]})" if step <= ROWS else "")
                            for i in choices]
+                points = f"{Colors.YELLOW}Distribuisci i punti abilità ({player.unspent_points}){Colors.RESET}"
+                if player.unspent_points: options.append(points)
                 options.append("Apri Inventario")
                 options.append("Statistiche Eroe")
                 options.append("Fuga dal Labirinto")
                 
                 idx = interactive_menu(options, prompt)
-                if idx == len(options) - 3:
+                if options[idx] == points:
+                    attributes.spend_points(player)
+                elif idx == len(options) - 3:
                     show_inventory_menu(player)
                 elif idx == len(options) - 2:
                     show_player_stats(player)
@@ -596,6 +601,8 @@ def _descent(c_choice, t_choice, active_pacts, infinite_mode, grade, daily):
             elif rt == "campfire": campfire_room(player, floor)
             elif rt == "event": event_room(player, chosen_door["event_id"], floor)
             elif rt == "mystery": mystery_room(player, floor, active_pacts)
+            # Un passaggio di livello durante la stanza: la scelta dei punti arriva appena finita
+            if player.hp > 0 and player.unspent_points and not player.points_offered: attributes.spend_points(player)
             if player.fallen: break
 
         if player.fallen and player.hp > 0 and not player.escaped:
