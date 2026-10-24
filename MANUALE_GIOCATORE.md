@@ -87,37 +87,37 @@ Il Labirinto cambia mentre scendi: ogni cinque piani entri in un **bioma** diver
 
 **📿 I Chiostri del Rimpianto (piani 1–5).** Le rovine di un'accademia della Luce Calma.
 - **Più eventi, meno trappole.** E più creature di Luce e di Tenebra.
-- **Nativi.** L'*Eco del Rimpianto*, la *Statua di Sale*, la *Novizia del Silenzio* (che sigilla la tua difesa) e un boss, *La Badessa del Silenzio*, vivono solo qui.
+- **Nativi.** L'*Eco del Rimpianto*, la *Statua di Sale*, la *Novizia del Silenzio* (che sigilla la tua difesa), il *Corista Spento*, che si rigenera, il *Bibliotecario di Cenere*, che carica i suoi incantesimi, l'*Ombra del Novizio*, che ti prosciuga, e un boss, *La Badessa del Silenzio*, vivono solo qui.
 - **Pericolo: Nostalgia Letale.** In ogni piano una stanza, segnata con 📿, ospita un'eco del passato: *La Voce Cara*, *La Statua di Sale*, *La Biblioteca di Cenere*, *Il Coro Spento* o *Il Lavabo dei Ricordi*. Fermarsi ad ascoltare può guarirti… o trasformarti in sale, e il Labirinto se ne ricorderà.
 - **Segreto.** Al piano 3, sotto il marmo, si dice riposi la *Prima Pietra* posata dagli Architetti.
 
 **🦇 Le Miniere della Testardaggine (piani 6–10).** Basalto, olio nero e ingranaggi che girano a vuoto.
 - **Più forzieri, meno falò.** E più creature di Terra.
-- **Nativi.** Il *Minatore Svuotato*, l'*Ingranaggio Senziente*, che si ripara spesso, e la *Talpa Esplosiva*, che carica il colpo. Il boss è *Il Caposquadra Sepolto*: carica i colpi e, quando la galleria crolla, si ripara dietro una barriera.
+- **Nativi.** Il *Minatore Svuotato*, l'*Ingranaggio Senziente*, che si ripara spesso, la *Talpa Esplosiva* e il *Carrello Posseduto*, che caricano il colpo, la *Lucciola del Grisù*, imprevedibile, e il *Guardiano di Basalto*, che alza barriere. Il boss è *Il Caposquadra Sepolto*: carica i colpi e, quando la galleria crolla, si ripara dietro una barriera.
 - **Pericolo: Gas del Silenzio.** In ogni scontro c'è il 35% di probabilità che il gas riempia la stanza. La tua Difesa dimezza ancora i danni, ma perde la tecnica della classe.
 - **Stanze speciali:** *La Galleria del Gas*, *L'Ingranaggio Fermo*, *Il Carrello Abbandonato*, *Il Minatore Cieco*.
 
 **🌀 Le Guglie del Vento Urlante (piani 11–15).** Ponti sospesi su nubi elettriche.
 - **Più trappole, meno mercanti.** E più creature di Vento.
-- **Nativi.** La *Sentinella di Nube* e il *Falco Astrale*, difficilissimi da colpire, e il *Corvo del Tuono*, che raccoglie il fulmine. Il boss è *L'Astronoma delle Guglie*: ti sigilla la difesa e, sotto la pioggia di stelle, colpisce più forte.
+- **Nativi.** La *Sentinella di Nube*, il *Falco Astrale* e l'*Aquila di Tempesta*, difficilissimi da colpire, il *Corvo del Tuono*, che raccoglie il fulmine, lo *Spirito del Ponte*, che ti sigilla la difesa, e l'*Astronomo Caduto*. Il boss è *L'Astronoma delle Guglie*: ti sigilla la difesa e, sotto la pioggia di stelle, colpisce più forte.
 - **Pericolo: Caduta Astrale.** Sui ponti sospesi puoi perdere l'equilibrio. Precipiti al piano successivo, senza riposo e senza il boss, e perdi il 40% dell'Oro. Puoi anche lasciarti cadere di proposito: un modo rischioso per saltare un boss.
 - **Stanze speciali:** *Il Ponte Sospeso*, *Il Nido della Tempesta*, *L'Osservatorio del Vento*, *Il Fabbro del Cielo*.
 
 **🌊 Il Ventre della Memoria (piani 16–20).** Pareti di membrana con dentro i volti dei morti.
 - **Più eventi e misteri.** E più creature d'Acqua e di Tenebra.
-- **Nativi.** Il *Ricordo Annegato*, che si rigenera, il *Volto nella Membrana*, che fa sanguinare, e la *Sanguisuga Madre*, che ti prosciuga. Il boss è *Il Cuore del Ventre*: avvelena, ti prosciuga e, quando comincia la digestione, si rigenera.
+- **Nativi.** Il *Ricordo Annegato*, che si rigenera, il *Volto nella Membrana*, che fa sanguinare, la *Medusa della Memoria*, che avvelena, la *Sanguisuga Madre* e la *Lacrima Vivente*, che ti prosciugano, e la *Bambola di Ricordi*, che sigilla la difesa. Il boss è *Il Cuore del Ventre*: avvelena, ti prosciuga e, quando comincia la digestione, si rigenera.
 - **Pericolo: Dissoluzione dell'Io.** A ogni piano del Ventre perdi il 4% degli HP massimi. Li ritrovi tutti quando ne esci.
 - **Stanze speciali:** *Il Volto nella Membrana*, *Il Giardino Appassito*, *Il Nido delle Sanguisughe*, *L'Eco della Madre*.
 
 **🌋 La Forgia del Caos (piani 21–25).** Lava bianca, fumi neri, martelli ciclopici.
 - **Più mercanti, meno falò.** E più creature di Fuoco.
-- **Nativi.** Il *Golem di Scorie*, il *Martello Errante*, che ama i colpi pesanti, e lo *Scudiero di Scoria*, che alza barriere. Il boss è *Il Maestro di Forgia*: picchia duro e, con la Tempra, si copre di Scaglie che solo una reazione infrange.
+- **Nativi.** Il *Golem di Scorie*, il *Martello Errante* e l'*Apprendista di Scoria*, che amano i colpi pesanti, lo *Scudiero di Scoria*, che alza barriere, la *Scintilla Ribelle*, imprevedibile, e il *Crogiolo Ambulante*, che si rifonde. Il boss è *Il Maestro di Forgia*: picchia duro e, con la Tempra, si copre di Scaglie che solo una reazione infrange.
 - **Pericolo: Ebollizione Astrale.** Ogni colpo che subisci ha il 25% di probabilità di far bollire il 5% del tuo Oro.
 - **Stanze speciali:** *L'Incudine Cosmica*, *La Colata d'Oro*, *Il Crogiolo delle Rune*, *Il Forgiatore Incatenato*.
 
 **🌌 La Soglia del Dio Antico (piani 26–30).** Piattaforme di pura volontà nel vuoto.
 - **Più misteri e forzieri.** E creature di Luce e di Tenebra.
-- **Nativi.** Il *Frammento di Galassia*, l'*Eco del Dio Antico* e il *Frammento del Prima*, che sigilla e prosciuga. Il boss è *Il Custode della Soglia*: a metà della vita la sua Luce si rovescia in Tenebra.
+- **Nativi.** Il *Frammento di Galassia*, l'*Eco del Dio Antico* e il *Frammento del Prima*, che sigilla e prosciuga, il *Riflesso Futuro*, che carica il colpo, il *Vuoto Affamato*, che ti divora, e la *Clessidra Infranta*, che si ripara. Il boss è *Il Custode della Soglia*: a metà della vita la sua Luce si rovescia in Tenebra.
 - **Pericolo: Paradosso Temporale.** Dopo ogni tuo turno c'è il 10% di probabilità che tu agisca di nuovo; dopo ogni turno nemico, il 15% che il nemico agisca due volte (con una mossa non annunciata).
 - **Stanze speciali:** *L'Occhio Chiuso*, *L'Eco del Tempo*, *La Biblioteca del Vuoto*, *La Porta del Ritorno*.
 

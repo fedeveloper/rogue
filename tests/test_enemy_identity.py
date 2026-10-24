@@ -173,3 +173,43 @@ class DefenseTest(Sandbox):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class BiomeNativesTest(Sandbox):
+    def generic_mean(self, floor):
+        from constants import ENEMY_DEPTH_WINDOW, INFINITE_MODE_THRESHOLD
+        pool = {n: d for n, d in RAW_DATA["enemies"].items() if "biome" not in d and "lair" not in d}
+        ranked = sorted(pool, key=lambda n: pool[n]["base_hp"] * pool[n]["base_atk"])
+        progress = min(1.0, (floor - 1) / (INFINITE_MODE_THRESHOLD - 1))
+        lo = max(0, min(round(progress * (len(ranked) - 1) - (ENEMY_DEPTH_WINDOW - 1) / 2), len(ranked) - ENEMY_DEPTH_WINDOW))
+        names = ranked[lo:lo + ENEMY_DEPTH_WINDOW]
+        return (sum(pool[n]["base_hp"] for n in names) / len(names), sum(pool[n]["base_atk"] for n in names) / len(names))
+
+    def test_every_biome_has_six_natives_with_a_style(self):
+        for b in GAME_DATA["biomes"]:
+            natives = {n: d for n, d in RAW_DATA["enemies"].items() if d.get("biome") == b["id"]}
+            with self.subTest(biome=b["id"]):
+                self.assertEqual(len(natives), 6, sorted(natives))
+                for n, d in natives.items():
+                    self.assertTrue(d.get("profile") or d.get("moves"), n)
+                    self.assertTrue(d.get("lore"), n)
+
+    def test_natives_are_as_strong_as_the_generics_of_their_floors(self):
+        for b in GAME_DATA["biomes"]:
+            lo, hi = b["floors"]
+            hp, atk = (sum(v) / 2 for v in zip(self.generic_mean(lo), self.generic_mean(hi)))
+            for n, d in RAW_DATA["enemies"].items():
+                if d.get("biome") != b["id"]: continue
+                with self.subTest(enemy=n):
+                    # la stessa misura con cui pick_enemy_name ordina i nemici: HP × ATK
+                    ratio = d["base_hp"] * d["base_atk"] / (hp * atk)
+                    self.assertTrue(0.5 <= ratio <= 1.8, f"forza {ratio:.2f} volte quella dei generici")
+
+    def test_natives_fill_the_fights_of_their_biome(self):
+        for b in GAME_DATA["biomes"]:
+            natives = {n for n, d in RAW_DATA["enemies"].items() if d.get("biome") == b["id"]}
+            with self.subTest(biome=b["id"]):
+                picks = [pick_enemy_name(f, False) for f in range(b["floors"][0], b["floors"][1] + 1) for _ in range(200)]
+                self.assertEqual(natives - set(picks), set(), "ogni nativo si incontra")
+                share = sum(p in natives for p in picks) / len(picks)
+                self.assertTrue(0.3 <= share <= 0.7, f"{share:.0%} degli scontri con un nativo")
