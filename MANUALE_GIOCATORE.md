@@ -294,7 +294,7 @@ Quasi ogni arma ha anche un **carattere**, scritto nello zaino e nelle Statistic
 |---|---|---|---|
 | **Precisione** ± | Cambia la probabilità di colpire | Nemici agili (Falchi, Sentinelle) | *Spada Corta* +5%, *Bastone dell'Alba* +10% |
 | **Critico** | Probabilità di colpo critico (danni doppi) | Tutti | *Katana Affilata* 10%, *Ascia del Minotauro* 15% |
-| **Schivata** ± | Le armi leggere aiutano a schivare, quelle pesanti no | Bruti e Predatori | *Spada Corta* +5%, *Spadone del Re Caduto* −10% |
+| **Schivata** ± | Le armi leggere aiutano a schivare, quelle pesanti no | Bruti e Predatori | *Spada Corta* +5%, *Ascia del Minotauro* −5% |
 | **Sfonda la Guardia** | Quando il nemico è in Guardia i tuoi colpi non vengono dimezzati | Difensori, Golem, Costrutti | *Alabarda della Guardia*, *Martello da Guerra* |
 | **Scudi ×2** | Contro la Barriera ogni colpo consuma il doppio dello scudo | Difensori e boss con scudo | *Lancia Perforante*, *Spadone a Due Mani* |
 | **Status** | Probabilità di infliggere Veleno o Sanguinamento | Nemici con molti HP | *Meteora Chiodata* 20% Sanguinamento |

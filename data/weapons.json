@@ -127,14 +127,14 @@
         },
         {
             "name": "Spadone del Re Caduto",
-            "desc": "Un'arma colossale e inarrestabile: sfonda la Guardia e contro la Barriera consuma il doppio dello scudo, ma -10% Schivata.",
+            "desc": "Un'arma colossale e inarrestabile: sfonda la Guardia e contro la Barriera consuma il doppio dello scudo, ma -5% Schivata.",
             "flavor": "Un tempo simbolo di giustizia, ora è solo metallo arrugginito e pesante.",
             "base_atk": 20,
             "unlock_id": "spadone_re",
             "unlock_cost": 400,
             "guard_break": true,
             "shield_mult": 2,
-            "dodge_bonus": -10
+            "dodge_bonus": -5
         },
         {
             "name": "Lancia di Ghiaccio Eterno",
@@ -196,13 +196,13 @@
         },
         {
             "name": "Ascia del Minotauro",
-            "desc": "Un'arma mostruosa a doppia lama: 15% di colpo critico (danni doppi), ma -10% Schivata.",
+            "desc": "Un'arma mostruosa a doppia lama: 15% di colpo critico (danni doppi), ma -5% Schivata.",
             "flavor": "Richiede una forza disumana solo per essere sollevata dal suolo.",
             "base_atk": 26,
             "unlock_id": "ascia_minotauro",
             "unlock_cost": 800,
             "crit_chance": 15,
-            "dodge_bonus": -10
+            "dodge_bonus": -5
         },
         {
             "name": "Balestra Gnomica a Ripetizione",

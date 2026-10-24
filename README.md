@@ -268,13 +268,13 @@ L'ATK reale cresce con il piano in cui l'arma viene trovata; le armi di elemento
 | **Zweihander d'Oro** | 25 | Casuale | Arma massiccia d'oro puro. Più oro hai, più fa male: +1 ATK ogni 100 Oro posseduto (fino a +30). | Impresa «Mani Bucate» |
 | **Ascia del Boia** | 25 | Casuale | Lenta ma letale: -15% Precisione, ma 35% di probabilità di colpo critico (danni doppi). | Maestria Berserker Lv.3 |
 | **Falce del Mietitore** | 22 | 🌑 Tenebra | Estremamente letale. La lama è intrisa di buio. 20% di infliggere Sanguinamento. Sempre di elemento Tenebra. | Forgia (✨650) |
-| **Spadone del Re Caduto** | 20 | Casuale | Un'arma colossale e inarrestabile: sfonda la Guardia e contro la Barriera consuma il doppio dello scudo, ma -10% Schivata. | Forgia (✨400) |
+| **Spadone del Re Caduto** | 20 | Casuale | Un'arma colossale e inarrestabile: sfonda la Guardia e contro la Barriera consuma il doppio dello scudo, ma -5% Schivata. | Forgia (✨400) |
 | **Lancia di Ghiaccio Eterno** | 16 | 💧 Acqua | Arma lunga con un nucleo gelido: contro la Barriera consuma il doppio dello scudo. Sempre di elemento Acqua. | Forgia (✨300) |
 | **Frusta di Spine Corrotte** | 14 | Casuale | Attacchi veloci e crudeli. 30% di infliggere Sanguinamento. | Forgia (✨250) |
 | **Martello Meteoritico** | 24 | 🔥 Fuoco | Massa enorme incandescente: sfonda la Guardia del nemico, ma -5% Schivata. Sempre di elemento Fuoco. | Forgia (✨700) |
 | **Pugnali del Vento Tagliente** | 12 | 🌪️ Vento | Due lame invisibili e rapidissime. 25% di infliggere Sanguinamento. Sempre di elemento Vento. | Forgia (✨200) |
 | **Bastone dell'Alba** | 17 | ✨ Luce | Canalizza la luce divina, che guida ogni colpo: +10% Precisione. Sempre di elemento Luce. | Forgia (✨450) |
-| **Ascia del Minotauro** | 26 | Casuale | Un'arma mostruosa a doppia lama: 15% di colpo critico (danni doppi), ma -10% Schivata. | Forgia (✨800) |
+| **Ascia del Minotauro** | 26 | Casuale | Un'arma mostruosa a doppia lama: 15% di colpo critico (danni doppi), ma -5% Schivata. | Forgia (✨800) |
 | **Balestra Gnomica a Ripetizione** | 19 | Casuale | Ingegneria avanzata, scocca raffiche di dardi. Dardi avvelenati: 30% di infliggere Veleno. | Forgia (✨550) |
 | **Tridente Oceanico** | 21 | 💧 Acqua | Arma letale associata alle maree. 20% di infliggere Veleno. Sempre di elemento Acqua. | Forgia (✨600) |
 
