@@ -151,6 +151,14 @@
             "unlock_cost": 300,
             "desc": "Aggiunge un incastone all'arma o all'armatura equipaggiata (al massimo 3).",
             "category": "socket_chisel"
+        },
+        {
+            "name": "Tomo dell'Oblio",
+            "base_heal": 0,
+            "val_base": 200,
+            "weight": 1,
+            "category": "respec",
+            "desc": "Raro. Si legge al Falò: i punti abilità che hai speso tornano da spendere, gli attributi della tua classe restano."
         }
     ]
 }

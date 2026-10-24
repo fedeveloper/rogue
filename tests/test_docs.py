@@ -50,6 +50,15 @@ class ManualFollowsTheDataTest(unittest.TestCase):
         for source, pct in rules["drops"].items(): self.assertIn(f"({pct}%)", self.manual)
         self.assertIn(f"Costa {rules['extract_cost'][0]} Oro più {rules['extract_cost'][1]} per piano", self.manual)
 
+    def test_the_attribute_tables_match_the_data(self):
+        attrs = GAME_DATA["attributes"]
+        self.assertIn(attrs["rules"]["desc"], self.manual)
+        for a in attrs["attributes"].values():
+            self.assertIn(f"| {a['icon']} **{a['name']}** | {a['desc']} |", self.manual)
+        for c in GAME_DATA["classes"].values():
+            start = ", ".join(f"{attrs['attributes'][k]['name']} {v}" for k, v in c["attributes"].items())
+            self.assertIn(f"| {c['role']} | {start} |", self.manual)
+
     def test_the_daily_section_lists_every_boon_and_rule(self):
         daily = GAME_DATA["modes"]["daily"]
         for b in daily["boons"]:

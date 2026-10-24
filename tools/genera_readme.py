@@ -141,6 +141,7 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 - 🌍 **Sei biomi, sei regole.** Ogni cinque piani il Labirinto cambia volto e legge: la *Nostalgia Letale* dei Chiostri, il *Gas del Silenzio* delle Miniere, la *Caduta Astrale* delle Guglie, la *Dissoluzione dell'Io* del Ventre, l'*Ebollizione Astrale* della Forgia e il *Paradosso Temporale* della Soglia. Ogni bioma ha sei nemici nativi, un boss tutto suo e le sue stanze speciali.
 - 🔥 **Combattimento tattico.** Il nemico **annuncia la sua mossa**, colpo pesante, guardia, rigenerazione o colpo infetto, e tu decidi se attaccare o difenderti. Sette elementi, vantaggi e svantaggi, **Risonanze** quando arma e armatura condividono l'elemento e **{len(d('elements')['reactions'])} reazioni** (Vapore, Gelo, Eclissi…) quando li combini.
 - 🧬 **{len(classes)} classi** con alberi di Maestria a 5 livelli che sbloccano bonus, oggetti, reliquie e altre classi.
+- 📈 **Sei attributi da costruire.** A ogni livello un punto fra {', '.join(a['name'] for a in d('attributes')['attributes'].values())}: ogni discesa è una build diversa, e il raro *Tomo dell'Oblio* permette di ripensarla al Falò.
 - 🎭 **{len(meta['traits'])} tratti** e **{len(grades)} gradi di Ascensione**: {f'{start_combos:,}'.replace(',', '.')} combinazioni di partenza diverse.
 - 📅 **Sfida del Giorno.** Una discesa al giorno uguale per tutti: eroe, tratto, malus e dono assegnati, la stessa mappa a ogni piano. Conta il primo tentativo; punteggio, serie di giorni e record restano nel profilo.
 - 📖 **Eventi che ricordano.** {len(events)} storie a scene con opzioni che esistono solo per la tua classe, il tuo tratto o le tue reliquie: `[Mago]`, `[Tocco di Mida]`, `[Chiave Arrugginita]`. Il Labirinto ricorda chi hai aiutato e chi hai derubato, e certe scelte tornano a bussare qualche piano dopo.
@@ -316,6 +317,7 @@ rogue/
 ├── codex.py           # Il Codice del Labirinto: ciò che hai scoperto fra le run
 ├── epitaph.py         # L'Epitaffio e il Cimitero
 ├── nemesis.py         # La Nemesi: chi ti uccide torna a cercarti
+├── attributes.py      # Attributi dell'eroe e punti abilità
 ├── runes.py           # Rune e Incastoni: effetti, drop, etichette
 ├── modes.py           # Ascensione e Sfida del Giorno: le regole della discesa
 ├── data_manager.py    # Caricamento dei dati e salvataggio del profilo
@@ -356,6 +358,7 @@ I **test di contratto** (`tests/test_contracts.py`, `tests/test_modes.py`) verif
 - [x] Sei nemici nativi per ogni bioma
 - [x] Il Ciclo del Labirinto: biomi che tornano in Eco sempre più dure oltre il piano 30
 - [x] Armi con carattere: precisione, critico, schivata, Guardia e scudi
+- [x] Livelli e attributi: un punto a ogni livello fra Vitalità, Forza, Destrezza, Agilità, Arcano e Fortuna
 
 ---
 

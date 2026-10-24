@@ -7,6 +7,7 @@ from archive import get_archive_bonus
 from codex import record_relic
 import modes
 import runes as rune_rules
+import attributes
 from constants import BASE_HIT_CHANCE, ENEMY_DEPTH_WINDOW, BOSS_DEPTH_WINDOW, INFINITE_MODE_THRESHOLD, CURSE_CHANCE, CURSE_STAT_MULTIPLIER, BOSS_HP_MULT, BOSS_ATK_MULT, ENEMY_HP_PER_FLOOR, ENEMY_ATK_PER_FLOOR, BULWARK_HEAL_PCT, WEAPON_TARGET_HITS, ARMOR_TARGET_ABSORB, WEAPON_QUALITY, ARMOR_QUALITY, NORMAL_ELEMENT_BONUS, EPIC_MULTIPLIER
 
 class Item:
@@ -211,8 +212,11 @@ HEALING_CATEGORIES = ("heal", "antidote")
 def consumable_name(name: str, heal: int, category: str) -> str:
     return f"{name} (Cura {heal})" if heal > 0 and category in HEALING_CATEGORIES else name
 
+CONSUMABLE_WEIGHT = 10  # peso di un consumabile senza "weight" nei dati: il Tomo dell'Oblio ha 1, quindi è raro
+
 def generate_potion(level: int) -> Consumable:
-    c_data = random.choice(GAME_DATA["consumables"])
+    pool = GAME_DATA["consumables"]
+    c_data = random.choices(pool, weights=[c.get("weight", CONSUMABLE_WEIGHT) for c in pool])[0]
     cat = c_data.get("category", "heal")
     heal = c_data["base_heal"] + (level * 5) if cat in HEALING_CATEGORIES else 0
     val = c_data["val_base"] + (level * 15)
@@ -234,6 +238,10 @@ class Player:
         self.role = data["role"]
         self.defense = data["defense"]  # la tecnica di difesa della classe (defenses.json)
         self.max_hp = data["max_hp"] + (PROFILE_MANAGER.get_perk("hp_lvl", 0) * 15)
+        # Attributi (attributes.py): quelli della classe, e i punti da spendere che arrivano a ogni livello
+        self.attributes = attributes.starting(class_id)
+        self.unspent_points, self.points_offered = 0, True
+        self.max_hp += attributes.value(self, "max_hp")
         self.hp = self.max_hp
         self.gold = data["gold"] + (PROFILE_MANAGER.get_perk("gold_lvl", 0) * 20)
         self.base_acc, self.base_dodge = data["acc"], data["dodge"]
@@ -425,7 +433,7 @@ class Player:
         return atk + self.weapon.atk * self.rune_value("atk_pct") // 100
 
     def get_crit_chance(self) -> int:
-        crit = self.base_crit + self.rune_value("crit_chance_add")
+        crit = self.base_crit + self.rune_value("crit_chance_add") + attributes.value(self, "crit")
         if self.accessory and self.accessory.bonus_type == "crit_chance": crit += self.accessory.bonus_value
         return min(100, crit)
 
@@ -436,7 +444,7 @@ class Player:
 
     def get_hit_chance(self, enemy_dodge: int = 0, multiplier: float = 1.0) -> int:
         """Probabilità reale di colpire (in %), la stessa usata in combattimento."""
-        hit = BASE_HIT_CHANCE + self.base_acc + self.temp_acc - enemy_dodge + (15 if multiplier > 1.0 else -20 if multiplier < 1.0 else 0)
+        hit = BASE_HIT_CHANCE + self.base_acc + attributes.value(self, "acc") + self.temp_acc - enemy_dodge + (15 if multiplier > 1.0 else -20 if multiplier < 1.0 else 0)
         hit += self.weapon.get_hit_chance_modifier()
         for r in self.relic_effects: hit += r.get_acc_modifier()
         return max(10, min(100, hit))
@@ -446,7 +454,7 @@ class Player:
                 + get_archive_bonus("def", PROFILE_MANAGER._data))
     
     def get_dodge(self): 
-        dodge = self.base_dodge + self.temp_dodge + getattr(self.armor, "dodge_bonus", 0) + self.weapon.traits.get("dodge_bonus", 0) + self.rune_value("dodge_add")
+        dodge = self.base_dodge + attributes.value(self, "dodge") + self.temp_dodge + getattr(self.armor, "dodge_bonus", 0) + self.weapon.traits.get("dodge_bonus", 0) + self.rune_value("dodge_add")
         for effect in self.relic_effects: dodge += effect.get_dodge_modifier()
         if self._berserker_fury_active(): return 0
         if self.has_curse("heavy"): dodge -= 15
@@ -473,10 +481,14 @@ class Player:
         while self.exp >= self.max_exp:
             self.exp -= self.max_exp
             self.level += 1; self.max_exp = int(self.max_exp * 1.5)
-            self.max_hp += 15
+            growth = attributes.rules()["per_level"]
+            self.max_hp += growth["max_hp"]
             self.heal(self.max_hp)
-            self.base_acc += 2; self.base_dodge += 2
-            display_msg(f"\n{Colors.YELLOW}{Colors.BOLD}*** LEVEL UP! Sei salito al livello {self.level}! ***{Colors.RESET}")
+            self.base_acc += growth["acc"]; self.base_dodge += growth["dodge"]
+            self.unspent_points += attributes.rules()["points_per_level"]
+            self.points_offered = False
+            display_msg(f"\n{Colors.YELLOW}{Colors.BOLD}*** LEVEL UP! Sei salito al livello {self.level}! ***{Colors.RESET}"
+                        f"\n{Colors.YELLOW}Hai {self.unspent_points} punti abilità da spendere negli attributi.{Colors.RESET}")
 
     def heal(self, amount: int) -> int:
         if self.cursed:
@@ -491,7 +503,7 @@ class Player:
         for r in self.relic_effects: g = r.on_gold_gain(self, g)
         g = int(g * (1 + PROFILE_MANAGER.get_perk("banca_anima_lvl", 0) * 0.05))
         g = int(g * (1 + get_archive_bonus("gold_pct", PROFILE_MANAGER._data) / 100))
-        return g * (100 + self.rune_value("gold_pct")) // 100
+        return g * (100 + self.rune_value("gold_pct") + attributes.value(self, "gold_pct")) // 100
 
     def take_damage(self, amount: int) -> bool:
         self.hp -= amount

@@ -50,6 +50,7 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 - 🌍 **Sei biomi, sei regole.** Ogni cinque piani il Labirinto cambia volto e legge: la *Nostalgia Letale* dei Chiostri, il *Gas del Silenzio* delle Miniere, la *Caduta Astrale* delle Guglie, la *Dissoluzione dell'Io* del Ventre, l'*Ebollizione Astrale* della Forgia e il *Paradosso Temporale* della Soglia. Ogni bioma ha sei nemici nativi, un boss tutto suo e le sue stanze speciali.
 - 🔥 **Combattimento tattico.** Il nemico **annuncia la sua mossa**, colpo pesante, guardia, rigenerazione o colpo infetto, e tu decidi se attaccare o difenderti. Sette elementi, vantaggi e svantaggi, **Risonanze** quando arma e armatura condividono l'elemento e **7 reazioni** (Vapore, Gelo, Eclissi…) quando li combini.
 - 🧬 **8 classi** con alberi di Maestria a 5 livelli che sbloccano bonus, oggetti, reliquie e altre classi.
+- 📈 **Sei attributi da costruire.** A ogni livello un punto fra Vitalità, Forza, Destrezza, Agilità, Arcano, Fortuna: ogni discesa è una build diversa, e il raro *Tomo dell'Oblio* permette di ripensarla al Falò.
 - 🎭 **7 tratti** e **20 gradi di Ascensione**: 2.352 combinazioni di partenza diverse.
 - 📅 **Sfida del Giorno.** Una discesa al giorno uguale per tutti: eroe, tratto, malus e dono assegnati, la stessa mappa a ogni piano. Conta il primo tentativo; punteggio, serie di giorni e record restano nel profilo.
 - 📖 **Eventi che ricordano.** 58 storie a scene con opzioni che esistono solo per la tua classe, il tuo tratto o le tue reliquie: `[Mago]`, `[Tocco di Mida]`, `[Chiave Arrugginita]`. Il Labirinto ricorda chi hai aiutato e chi hai derubato, e certe scelte tornano a bussare qualche piano dopo.
@@ -341,7 +342,7 @@ L'ATK reale cresce con il piano in cui l'arma viene trovata; le armi di elemento
 </details>
 
 <details>
-<summary>🧪 I 20 consumabili</summary>
+<summary>🧪 I 21 consumabili</summary>
 
 | Consumabile | Effetto | Come ottenerlo |
 |---|---|---|
@@ -365,6 +366,7 @@ L'ATK reale cresce con il piano in cui l'arma viene trovata; le armi di elemento
 | **Siero Purificante** | Cura tutti gli stati alterati (Veleno, Sanguinamento) e qualche ferita. | Forgia (✨120) |
 | **Solvente Runico** | Estrae gratis una runa dall'arma o dall'armatura equipaggiata e la rimette nello zaino. | Disponibile da subito |
 | **Scalpello Runico** | Aggiunge un incastone all'arma o all'armatura equipaggiata (al massimo 3). | Forgia (✨300) |
+| **Tomo dell'Oblio** | Raro. Si legge al Falò: i punti abilità che hai speso tornano da spendere, gli attributi della tua classe restano. | Disponibile da subito |
 
 </details>
 
@@ -453,7 +455,7 @@ Ogni scelta mostra i suoi effetti reali, molte opzioni esistono solo per certe c
 | Armi | 24 (8 subito, 16 da sbloccare) |
 | Armature | 20 (12 subito, 8 da sbloccare) |
 | Monili | 24 (13 subito, 11 da sbloccare) |
-| Consumabili | 20 (10 subito, 10 da sbloccare) |
+| Consumabili | 21 (11 subito, 10 da sbloccare) |
 | Reliquie | 50 (29 subito, 21 da sbloccare) |
 | Nemici comuni | 62 |
 | Boss | 26 |
@@ -485,6 +487,7 @@ rogue/
 ├── codex.py           # Il Codice del Labirinto: ciò che hai scoperto fra le run
 ├── epitaph.py         # L'Epitaffio e il Cimitero
 ├── nemesis.py         # La Nemesi: chi ti uccide torna a cercarti
+├── attributes.py      # Attributi dell'eroe e punti abilità
 ├── runes.py           # Rune e Incastoni: effetti, drop, etichette
 ├── modes.py           # Ascensione e Sfida del Giorno: le regole della discesa
 ├── data_manager.py    # Caricamento dei dati e salvataggio del profilo
@@ -525,6 +528,7 @@ I **test di contratto** (`tests/test_contracts.py`, `tests/test_modes.py`) verif
 - [x] Sei nemici nativi per ogni bioma
 - [x] Il Ciclo del Labirinto: biomi che tornano in Eco sempre più dure oltre il piano 30
 - [x] Armi con carattere: precisione, critico, schivata, Guardia e scudi
+- [x] Livelli e attributi: un punto a ogni livello fra Vitalità, Forza, Destrezza, Agilità, Arcano e Fortuna
 
 ---
 
