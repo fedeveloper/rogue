@@ -60,14 +60,16 @@ class KitTest(Sandbox):
 
 
 class DefenseTest(Sandbox):
-    def test_the_prism_halves_and_gives_ether(self):
+    def test_the_prism_halves_heals_and_gives_ether(self):
         self.assertIn(f"{PRISM['ether_gain']} Etere", PRISM["desc"])
-        p = self.hero(); s = self.session(p)
+        self.assertIn(f"{PRISM['heal_pct']}% degli HP", PRISM["desc"])
+        p = self.hero(); s = self.session(p); p.hp = 1
         s.def_type, _ = p.get_defense_action()
         self.assertEqual(s.def_type, "prism")
         with quiet(): s.execute_player_defense()
         self.assertTrue(s.is_defending)
         self.assertEqual(p.ether, GAME_DATA["spells"]["rules"]["gain"]["defend"] + PRISM["ether_gain"])
+        self.assertEqual(p.hp, 1 + max(1, p.max_hp * PRISM["heal_pct"] // 100))
 
 
 class MasteryTest(Sandbox):

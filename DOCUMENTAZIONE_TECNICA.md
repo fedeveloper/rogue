@@ -416,7 +416,7 @@ Il Falò ha `rune_workshop` (`RUNE_WORKSHOP`): incastonare (gratis, nell'arma o 
 - `cleanse`: toglie `poison` e `bleed` e cura `heal_pct`;
 - `mark`: cura `heal_pct` e marchia il nemico con l'elemento dell'arma, quindi il marchio dell'armatura che arriva quando si viene colpiti in guardia può completare una reazione;
 - `siphon`: toglie al nemico `drain_pct` dei suoi HP massimi e cura l'eroe della stessa quantità.
-- `prism` (Elementalista): `ether_gain` Etere in più, oltre a `spells.json → rules.gain.defend`. La sua Maestria Lv.2 (`elemental_chain`) aggiunge `ELEMENTAL_CHAIN_ETHER` Etere a ogni reazione, in `_trigger_reaction`.
+- `prism` (Elementalista): cura `heal_pct` degli HP massimi e dà `ether_gain` Etere in più, oltre a `spells.json → rules.gain.defend`. La sua Maestria Lv.2 (`elemental_chain`) aggiunge `ELEMENTAL_CHAIN_ETHER` Etere a ogni reazione, in `_trigger_reaction`.
 
 La Maledizione blocca le cure, non il danno del `siphon`. Se la tecnica abbatte il nemico lo scontro finisce. Nel Gas del Silenzio tutte le tecniche diventano `silenced`.
 

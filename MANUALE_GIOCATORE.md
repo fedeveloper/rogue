@@ -169,7 +169,7 @@ A ogni turno scegli una di queste azioni:
   - **Voto di Protezione** (Paladino): ti liberi da Veleno e Sanguinamento e recuperi il 5% degli HP;
   - **Mistura Reattiva** (Alchimista): recuperi il 5% degli HP e marchi il nemico con l'elemento della tua arma. Se poi ti colpisce, il marchio della tua armatura può scatenare una **reazione**, e con l'equipaggiamento iniziale (Fuoco e Terra) scatena il *Magma*;
   - **Sudario d'Ossa** (Negromante): strappi al nemico il 4% dei suoi HP massimi e li recuperi tu. Se gli restano pochi HP, può bastare ad abbatterlo.
-  - **Prisma Elementale** (Elementalista): recuperi 3 Etere in più, oltre a quello che dà ogni difesa.
+  - **Prisma Elementale** (Elementalista): recuperi il 5% degli HP e 3 Etere in più, oltre a quello che dà ogni difesa.
 - **Lancia un incantesimo.** Costa il turno e l'Etere dell'incantesimo (vedi *La magia e l'Etere*). Tornare indietro dal menu degli incantesimi non costa nulla.
 - **Apri l'inventario.** Usare un oggetto o cambiare equipaggiamento **costa il turno**; chiudere lo zaino senza fare nulla no.
 - **Statistiche Eroe.** Gratis, in qualsiasi momento. Mostrano la tua **probabilità reale di colpire** contro il nemico che hai davanti.

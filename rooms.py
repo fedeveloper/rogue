@@ -590,7 +590,9 @@ class CombatSession:
             self.apply_element(self.player.weapon.element)
         elif self.def_type == "prism":
             gained = self.player.gain_ether(defense["ether_gain"])
+            healed = self.player.heal(max(1, self.player.max_hp * defense["heal_pct"] // 100))
             display_msg(f"\n{Colors.BLUE}-> Gli elementi ti girano attorno come un prisma."
+                        + (f" {Colors.GREEN}Recuperi {healed} HP.{Colors.RESET}" if healed else "")
                         + (f" {Colors.CYAN}+{gained} Etere ({self.player.ether}/{self.player.max_ether()}).{Colors.RESET}" if gained else f"{Colors.RESET}"))
         elif self.def_type == "siphon":
             stolen = min(self.enemy.hp, max(1, self.enemy.max_hp * defense["drain_pct"] // 100))

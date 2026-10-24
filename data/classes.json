@@ -474,11 +474,11 @@
                 "id": "pergamena_tempesta"
             },
             "4": {
-                "desc": "Eredità: +10 HP Max per TUTTI gli eroi.",
+                "desc": "Eredità: +5 HP Max per TUTTI gli eroi.",
                 "type": "global",
                 "bonus": {
                     "stat": "max_hp",
-                    "value": 10
+                    "value": 5
                 }
             },
             "5": {
