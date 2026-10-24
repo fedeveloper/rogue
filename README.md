@@ -73,7 +73,7 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 | Classe | HP | Stile | Maestria Lv.2 | Sblocco |
 |---|---|---|---|---|
 | ⚔️ **Guerriero** | 140 | Tank bilanciato, contrattacca quando si difende | Mano Pesante | Iniziale |
-| 🗡️ **Ladro** | 115 | Agile e ricco, critico garantito dopo la Concentrazione | Tasche Nascoste | Iniziale |
+| 🗡️ **Ladro** | 100 | Agile e ricco, critico garantito dopo la Concentrazione | Tasche Nascoste | Iniziale |
 | 🔮 **Mago** | 90 | Arma di Fuoco potente e mira eccellente, ma fragile; si cura difendendosi | Sintonia | Iniziale |
 | 🛡️ **Paladino** | 180 | Ultra-tank con Risonanza di Luce; difendendosi si purifica | Baluardo della Fede | Maestria Guerriero Lv.5 |
 | 🪓 **Berserker** | 110 | Glass cannon: l'ascia più forte, nessuna armatura | Furia Sanguinaria | Impresa «Danza con la Morte» |

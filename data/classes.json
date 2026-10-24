@@ -57,7 +57,7 @@
         "attributes": {"destrezza": 1, "agilita": 1, "fortuna": 1},
         "ether": 8,
         "spells": ["raffica"],
-        "max_hp": 115,
+        "max_hp": 100,
         "gold": 100,
         "acc": 10,
         "dodge": 15,
@@ -287,7 +287,7 @@
             "def": 3,
             "element": "Terra"
         },
-        "potions": 3,
+        "potions": 2,
         "unlocked_by_default": false,
         "unlock_cost": 0,
         "desc": "Sbloccato fondendo un'arma fino al Livello 5.",
