@@ -431,7 +431,7 @@ Certe combinazioni di rune **sullo stesso oggetto** formano una **parola runica*
 | 🔮 **Mago** | Bastone di Fuoco potente e mira eccellente, ma solo 80 HP; si cura quando si difende. Vesti di Vento: *Incendio* | Subito |
 | 🛡️ **Paladino** | 180 HP e Risonanza di Luce fin dall'inizio; difendendosi si libera da veleno e sanguinamento | Maestria Guerriero Lv.5 |
 | 🪓 **Berserker** | L'ascia più forte, nessuna armatura | Impresa *Danza con la Morte* |
-| 🧪 **Alchimista** | 4 pozioni iniziali e bombe di Fuoco; difendendosi lancia una fiala che prepara la reazione. Grembiule di Terra: *Magma* | Impresa *Genio Elementale* |
+| 🧪 **Alchimista** | 3 pozioni iniziali e bombe di Fuoco; difendendosi lancia una fiala che prepara la reazione. Grembiule di Terra: *Magma* | Impresa *Genio Elementale* |
 | 🥷 **Assassino** | 15% di critico innato e 20% di schivata, ma solo 75 HP. Pugnale di Vento, mantello di Terra: *Tempesta di Sabbia* | Maestria Ladro Lv.5 |
 | 💀 **Negromante** | Risonanza di Tenebra fin dall'inizio; difendendosi ruba vita al nemico | Maestria Mago Lv.5 |
 
@@ -507,7 +507,7 @@ Ogni eroe ha un albero di **Maestria** a 6 livelli, che sale con l'esperienza ac
   - **Berserker**: *Furia Arcana*: +1 Etere a ogni colpo a segno.
   - **Alchimista**: *Distillato d'Etere*: +15% potenza degli incantesimi.
   - **Assassino**: *Ombra Silente*: +1 Etere a ogni colpo a segno.
-  - **Negromante**: *Patto d'Ossa*: +15% potenza degli incantesimi e +4 Etere massimo.
+  - **Negromante**: *Patto d'Ossa*: +10% potenza degli incantesimi e +4 Etere massimo.
 
 ---
 

@@ -57,7 +57,7 @@
         "attributes": {"destrezza": 1, "agilita": 1, "fortuna": 1},
         "ether": 8,
         "spells": ["raffica"],
-        "max_hp": 85,
+        "max_hp": 95,
         "gold": 100,
         "acc": 10,
         "dodge": 15,
@@ -287,7 +287,7 @@
             "def": 3,
             "element": "Terra"
         },
-        "potions": 4,
+        "potions": 3,
         "unlocked_by_default": false,
         "unlock_cost": 0,
         "desc": "Sbloccato fondendo un'arma fino al Livello 5.",
@@ -333,7 +333,7 @@
         "weapon": {
             "name": "Pugnale Ricurvo",
             "value": 50,
-            "atk": 12,
+            "atk": 10,
             "element": "Vento",
             "scaling": "destrezza"
         },
@@ -387,7 +387,7 @@
         "weapon": {
             "name": "Bastone d'Ossa",
             "value": 50,
-            "atk": 13,
+            "atk": 11,
             "element": "Tenebra",
             "scaling": "arcano",
             "spell_pct": 10
@@ -426,7 +426,7 @@
                 "type": "unlock",
                 "id": "contratto_demoniaco"
             },
-            "6": {"desc": "Patto d'Ossa: +15% potenza degli incantesimi e +4 Etere massimo.", "type": "magic", "bonus": {"spell_pct": 15, "ether_max": 4}}
+            "6": {"desc": "Patto d'Ossa: +10% potenza degli incantesimi e +4 Etere massimo.", "type": "magic", "bonus": {"spell_pct": 10, "ether_max": 4}}
         }
     }
 }
