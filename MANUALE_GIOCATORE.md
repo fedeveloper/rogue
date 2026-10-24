@@ -286,9 +286,23 @@ La Risonanza si ricalcola subito se cambi equipaggiamento durante lo scontro. Il
 
 ### Armi e armature speciali
 
-Molte armi hanno un elemento casuale, ma quelle a tema hanno sempre il loro: il *Bastone dell'Alba* è di Luce, il *Tridente Oceanico* d'Acqua, e così via. Alcune hanno proprietà proprie, scritte nella loro descrizione:
+Molte armi hanno un elemento casuale, ma quelle a tema hanno sempre il loro: il *Bastone dell'Alba* è di Luce, il *Tridente Oceanico* d'Acqua, e così via.
+
+Quasi ogni arma ha anche un **carattere**, scritto nello zaino e nelle Statistiche accanto all'ATK (per esempio `· 10% critico, -5% Precisione`). Ogni proprietà risponde a uno stile dei nemici:
+
+| Proprietà | Cosa fa | Contro chi conta | Per esempio |
+|---|---|---|---|
+| **Precisione** ± | Cambia la probabilità di colpire | Nemici agili (Falchi, Sentinelle) | *Spada Corta* +5%, *Bastone dell'Alba* +10% |
+| **Critico** | Probabilità di colpo critico (danni doppi) | Tutti | *Katana Affilata* 10%, *Ascia del Minotauro* 15% |
+| **Schivata** ± | Le armi leggere aiutano a schivare, quelle pesanti no | Bruti e Predatori | *Spada Corta* +5%, *Spadone del Re Caduto* −10% |
+| **Sfonda la Guardia** | Quando il nemico è in Guardia i tuoi colpi non vengono dimezzati | Difensori, Golem, Costrutti | *Alabarda della Guardia*, *Martello da Guerra* |
+| **Scudi ×2** | Contro la Barriera ogni colpo consuma il doppio dello scudo | Difensori e boss con scudo | *Lancia Perforante*, *Spadone a Due Mani* |
+| **Status** | Probabilità di infliggere Veleno o Sanguinamento | Nemici con molti HP | *Meteora Chiodata* 20% Sanguinamento |
+
+Il prezzo di queste proprietà è spesso un malus: meno precisione per le armi pesanti, meno schivata per quelle enormi. Altre armi speciali:
 - l'*Ascia del Boia*: −15% di precisione, ma 35% di critico;
 - lo *Zweihander d'Oro*: più ATK quanto più oro porti;
+- la *Falce Divora-Anime*, lo *Spadone Infranto* e la *Lama del Creatore* puntano tutto sui danni di base;
 - la *Veste Eterea*: +20% di schivata;
 - le armature elementali, come le *Vesti di Brace* (Fuoco) o il *Giaco del Vento* (Vento, +8% di schivata): sempre del loro elemento, quindi utili per cercare una Risonanza o una reazione;
 - le armature pesanti, come la *Corazza del Penitente*: tanta difesa, meno schivata.

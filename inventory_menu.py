@@ -132,7 +132,8 @@ def show_inventory_menu(player, in_combat=False) -> str:
         prompt = ""
         prompt += f"\n{Colors.MAGENTA}{Colors.BOLD}--- ZAINO E INVENTARIO ---{Colors.RESET}\n"
         prompt += f"❤️  HP: {Colors.GREEN}{player.hp}/{player.max_hp}{Colors.RESET} | 💰 Oro: {Colors.YELLOW}{player.gold}{Colors.RESET}\n"
-        prompt += f"⚔️  Arma: {player.weapon.display_name} (+{player.get_total_atk()} ATK)\n"
+        traits = player.weapon.trait_text()
+        prompt += f"⚔️  Arma: {player.weapon.display_name} (+{player.get_total_atk()} ATK)" + (f" · {traits}" if traits else "") + "\n"
         prompt += f"🛡️  Armatura: {player.armor.display_name} (+{player.armor.defense} DEF)\n"
         acc_txt = f"{player.accessory.display_name} ({player.accessory.desc})" if player.accessory else "Nessuno"
         prompt += f"💍 Monile: {acc_txt}\n"
@@ -159,7 +160,7 @@ def show_inventory_menu(player, in_combat=False) -> str:
                 count_str = f" {Colors.YELLOW}[x{count}]{Colors.RESET}" if count > 1 else ""
                 # Il livello compare una volta sola: i generatori lo mettono già nel nome, "(lv.2)"
                 lvl = "" if "(lv." in item.name else f" - Lv.{item.level}"
-                if item.type == "weapon": options.append(f"[Arma] {item.display_name} (+{item.atk} ATK){lvl}")
+                if item.type == "weapon": options.append(f"[Arma] {item.display_name} (+{item.atk} ATK){lvl}" + (f" · {item.trait_text()}" if item.trait_text() else ""))
                 elif item.type == "armor": options.append(f"[Armatura] {item.display_name} (+{item.defense} DEF){lvl}")
                 elif item.type == "accessory": options.append(f"[Monile] {item.display_name} ({item.desc})")
                 elif item.type == "consumable": options.append(f"[Oggetto] {item.display_name}{count_str}")
@@ -261,7 +262,7 @@ def show_player_stats(player, session=None):
         display_msg(f"🔮 Risonanza Elementale: {Colors.CYAN}Attiva ({get_element_icon(res_el)} {res_el}) - {res_desc}{Colors.RESET}")
         
     display_msg(f"\n{Colors.BOLD}--- EQUIPAGGIAMENTO ---{Colors.RESET}")
-    display_msg(f"Arma: {player.weapon.display_name}")
+    display_msg(f"Arma: {player.weapon.display_name}" + (f" · {player.weapon.trait_text()}" if player.weapon.trait_text() else ""))
     display_msg(f"Armatura: {player.armor.display_name}")
     display_msg(f"Monile: {player.accessory.display_name if player.accessory else 'Nessuno'}")
     

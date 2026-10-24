@@ -2,35 +2,60 @@
     "weapons": [
         {
             "name": "Spada Corta",
-            "base_atk": 3
+            "base_atk": 3,
+            "hit_modifier": 5,
+            "dodge_bonus": 5,
+            "desc": "Leggera e maneggevole: +5% Precisione e +5% Schivata."
         },
         {
             "name": "Ascia da Battaglia",
-            "base_atk": 4
+            "base_atk": 4,
+            "crit_chance": 10,
+            "hit_modifier": -5,
+            "desc": "Colpi pesanti e imprecisi: 10% di colpo critico (danni doppi), ma -5% Precisione."
         },
         {
             "name": "Alabarda della Guardia",
-            "base_atk": 5
+            "base_atk": 5,
+            "guard_break": true,
+            "desc": "Lunga e paziente: quando il nemico è in Guardia i tuoi colpi non vengono dimezzati."
         },
         {
             "name": "Spadone a Due Mani",
-            "base_atk": 6
+            "base_atk": 6,
+            "shield_mult": 2,
+            "dodge_bonus": -5,
+            "desc": "Spezza le difese: contro la Barriera i tuoi colpi consumano il doppio dello scudo, ma -5% Schivata."
         },
         {
             "name": "Martello da Guerra",
-            "base_atk": 6
+            "base_atk": 6,
+            "guard_break": true,
+            "hit_modifier": -5,
+            "desc": "Sfonda la Guardia del nemico: i tuoi colpi non vengono dimezzati, ma -5% Precisione."
         },
         {
             "name": "Katana Affilata",
-            "base_atk": 8
+            "base_atk": 8,
+            "crit_chance": 10,
+            "desc": "Affilatissima: 10% di colpo critico (danni doppi)."
         },
         {
             "name": "Lancia Perforante",
-            "base_atk": 9
+            "base_atk": 9,
+            "shield_mult": 2,
+            "desc": "Perforante: contro la Barriera i tuoi colpi consumano il doppio dello scudo."
         },
         {
             "name": "Meteora Chiodata",
-            "base_atk": 11
+            "base_atk": 11,
+            "status_inflict": {
+                "type": "bleed",
+                "chance": 20,
+                "duration": 2
+            },
+            "hit_modifier": -5,
+            "desc": "Chiodi crudeli: 20% di infliggere Sanguinamento, ma -5% Precisione."
         },
         {
             "name": "Spada del Carnefice",
@@ -102,20 +127,24 @@
         },
         {
             "name": "Spadone del Re Caduto",
-            "desc": "Un'arma colossale e inarrestabile.",
+            "desc": "Un'arma colossale e inarrestabile: sfonda la Guardia e contro la Barriera consuma il doppio dello scudo, ma -10% Schivata.",
             "flavor": "Un tempo simbolo di giustizia, ora è solo metallo arrugginito e pesante.",
             "base_atk": 20,
             "unlock_id": "spadone_re",
-            "unlock_cost": 400
+            "unlock_cost": 400,
+            "guard_break": true,
+            "shield_mult": 2,
+            "dodge_bonus": -10
         },
         {
             "name": "Lancia di Ghiaccio Eterno",
-            "desc": "Arma lunga con un nucleo gelido. Sempre di elemento Acqua.",
+            "desc": "Arma lunga con un nucleo gelido: contro la Barriera consuma il doppio dello scudo. Sempre di elemento Acqua.",
             "flavor": "Così fredda che congela il sangue sulle mani di chi la impugna.",
             "base_atk": 16,
             "unlock_id": "lancia_ghiaccio",
             "unlock_cost": 300,
-            "element": "Acqua"
+            "element": "Acqua",
+            "shield_mult": 2
         },
         {
             "name": "Frusta di Spine Corrotte",
@@ -132,12 +161,14 @@
         },
         {
             "name": "Martello Meteoritico",
-            "desc": "Massa enorme incandescente. Sempre di elemento Fuoco.",
+            "desc": "Massa enorme incandescente: sfonda la Guardia del nemico, ma -5% Schivata. Sempre di elemento Fuoco.",
             "flavor": "Custodisce il calore di una stella cadente. Il manico brucia dolcemente.",
             "base_atk": 24,
             "unlock_id": "martello_meteora",
             "unlock_cost": 700,
-            "element": "Fuoco"
+            "element": "Fuoco",
+            "guard_break": true,
+            "dodge_bonus": -5
         },
         {
             "name": "Pugnali del Vento Tagliente",
@@ -155,20 +186,23 @@
         },
         {
             "name": "Bastone dell'Alba",
-            "desc": "Canalizza la luce divina. Sempre di elemento Luce.",
+            "desc": "Canalizza la luce divina, che guida ogni colpo: +10% Precisione. Sempre di elemento Luce.",
             "flavor": "Scaccia le ombre con un bagliore accecante. Dono dell'alto clero.",
             "base_atk": 17,
             "unlock_id": "bastone_alba",
             "unlock_cost": 450,
-            "element": "Luce"
+            "element": "Luce",
+            "hit_modifier": 10
         },
         {
             "name": "Ascia del Minotauro",
-            "desc": "Un'arma mostruosa a doppia lama.",
+            "desc": "Un'arma mostruosa a doppia lama: 15% di colpo critico (danni doppi), ma -10% Schivata.",
             "flavor": "Richiede una forza disumana solo per essere sollevata dal suolo.",
             "base_atk": 26,
             "unlock_id": "ascia_minotauro",
-            "unlock_cost": 800
+            "unlock_cost": 800,
+            "crit_chance": 15,
+            "dodge_bonus": -10
         },
         {
             "name": "Balestra Gnomica a Ripetizione",

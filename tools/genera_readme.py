@@ -355,6 +355,7 @@ I **test di contratto** (`tests/test_contracts.py`, `tests/test_modes.py`) verif
 - [x] Stili dei nemici, un boss per ogni bioma, una difesa per ogni classe
 - [x] Sei nemici nativi per ogni bioma
 - [x] Il Ciclo del Labirinto: biomi che tornano in Eco sempre più dure oltre il piano 30
+- [x] Armi con carattere: precisione, critico, schivata, Guardia e scudi
 
 ---
 
