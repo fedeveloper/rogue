@@ -129,4 +129,4 @@ class InventoryLabelTest(Sandbox):
         for o in items:
             with self.subTest(option=o):
                 self.assertEqual(o.lower().count("lv."), 1)
-        self.assertTrue(any(o.endswith("(+7 ATK) - Lv.2") for o in items), "senza il livello nel nome, lo aggiunge l'etichetta")
+        self.assertTrue(any("(+7 ATK) - Lv.2" in o for o in items), "senza il livello nel nome, lo aggiunge l'etichetta")

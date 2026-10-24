@@ -135,23 +135,38 @@ class EffectTest(Sandbox):
         self.assertEqual(escape[1] - escape[0], 2 * self.per("agilita", "escape") + 2 * self.per("agilita", "dodge"),
                          "la fuga cresce con la Schivata e, in più, con l'Agilità")
 
-    def strike(self, p, element="Normale"):
-        p.weapon = Weapon("Lama", 1, 100, element, 1); p.base_acc = 1000
+    def strike(self, p, element="Normale", scaling="forza"):
+        p.weapon = Weapon("Lama", 1, 100, element, 1, traits={"scaling": scaling}); p.base_acc = 1000
         with quiet(): s = CombatSession(p, 3, Enemy(3, False, [], name="Goblin"))
         s.enemy.hp = s.enemy.max_hp = 10 ** 6; s.enemy.element, s.enemy.base_dodge, s.intent = "Normale", 0, "attack"
         with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: b if b == 100 else 0), mock.patch("entities.random.randint", return_value=100):
             s.execute_player_attack()
         return 10 ** 6 - s.enemy.hp
 
-    def test_strength_makes_weapons_hit_harder(self):
-        plain, strong = self.strike(self.hero()), self.strike(self.hero(forza=3))
-        self.assertEqual(strong, plain * (100 + 3 * self.per("forza", "weapon_dmg_pct")) // 100)
+    def test_each_weapon_grows_with_its_own_attribute(self):
+        for attr in ("forza", "destrezza", "arcano"):
+            with self.subTest(attribute=attr):
+                plain = self.strike(self.hero(), scaling=attr)
+                self.assertEqual(self.strike(self.hero(**{attr: 3}), scaling=attr), plain * (100 + 3 * self.per(attr, "scaled_dmg_pct")) // 100)
+                other = next(a for a in ("forza", "destrezza", "arcano") if a != attr)
+                self.assertEqual(self.strike(self.hero(**{other: 3}), scaling=attr), plain, "un altro attributo non aiuta quest'arma")
 
-    def test_arcane_powers_elemental_weapons_only(self):
-        for element, gain in (("Fuoco", 2 * self.per("arcano", "elemental_dmg_pct")), ("Normale", 0)):
-            with self.subTest(element=element):
-                plain, arcane = self.strike(self.hero(), element), self.strike(self.hero(arcano=2), element)
-                self.assertEqual(arcane, plain * (100 + gain) // 100)
+    def test_a_focus_powers_spells_and_its_starting_classes(self):
+        from rooms import CombatSession as CS
+        dealt = []
+        for traits in ({"scaling": "arcano"}, {"scaling": "arcano", "spell_pct": 15}):
+            p = self.hero(); p.spells, p.base_ether, p.ether = ["dardo_fuoco"], 50, 50
+            p.weapon = Weapon("Bastone", 1, 100, "Normale", 1, traits=traits)
+            with quiet(): s = CS(p, 3, Enemy(3, False, [], name="Goblin"))
+            s.enemy.hp = s.enemy.max_hp = 10 ** 6; s.enemy.element = "Normale"
+            with quiet(): s.cast_spell("dardo_fuoco")
+            dealt.append(10 ** 6 - s.enemy.hp)
+        self.assertEqual(dealt[1], dealt[0] * 115 // 100)
+        for cid, c in RAW_DATA["classes"].items():
+            with self.subTest(cls=c["role"]), quiet():
+                p = Player(cid, "base", [])
+            self.assertEqual(p.weapon.scaling, c["weapon"]["scaling"])
+            self.assertEqual(p.weapon.traits.get("spell_pct", 0), c["weapon"].get("spell_pct", 0))
 
     def test_arcane_makes_reactions_hit_harder(self):
         dealt = []

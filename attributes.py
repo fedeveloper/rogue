@@ -26,9 +26,15 @@ def starting(class_id: str) -> dict:
 
 
 def value(player, key: str) -> int:
-    """La somma di un effetto (es. "acc", "weapon_dmg_pct") su tutti gli attributi dell'eroe."""
+    """La somma di un effetto (es. "acc", "spell_pct") su tutti gli attributi dell'eroe."""
     attrs = getattr(player, "attributes", {})
     return sum(points * definitions()[a]["per_point"].get(key, 0) for a, points in attrs.items())
+
+
+def weapon_bonus(player) -> int:
+    """I danni in più (in %) dell'arma impugnata: i punti dell'attributo con cui scala × il suo scaled_dmg_pct."""
+    attr = player.weapon.scaling
+    return player.attributes.get(attr, 0) * definitions()[attr]["per_point"].get("scaled_dmg_pct", 0)
 
 
 def can_raise(player, attr: str) -> bool:

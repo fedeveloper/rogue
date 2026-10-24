@@ -7,10 +7,10 @@
     },
     "attributes": {
         "vitalita": {"name": "Vitalità", "icon": "❤️", "per_point": {"max_hp": 12}, "desc": "+12 HP massimi (e altrettanti HP), per punto."},
-        "forza": {"name": "Forza", "icon": "💪", "per_point": {"weapon_dmg_pct": 4}, "desc": "+4% danni con le armi, per punto."},
-        "destrezza": {"name": "Destrezza", "icon": "🎯", "per_point": {"acc": 3, "crit": 2}, "desc": "+3% Precisione e +2% probabilità di critico, per punto."},
+        "forza": {"name": "Forza", "icon": "💪", "per_point": {"scaled_dmg_pct": 4}, "desc": "+4% danni con le armi che scalano con la Forza, per punto."},
+        "destrezza": {"name": "Destrezza", "icon": "🎯", "per_point": {"acc": 3, "crit": 2, "scaled_dmg_pct": 4}, "desc": "+3% Precisione, +2% probabilità di critico e +4% danni con le armi che scalano con la Destrezza, per punto."},
         "agilita": {"name": "Agilità", "icon": "🌪️", "per_point": {"dodge": 2, "escape": 3}, "desc": "+2% Schivata e +3% probabilità di fuga, per punto."},
-        "arcano": {"name": "Arcano", "icon": "🔮", "per_point": {"ether_max": 2, "spell_pct": 6, "elemental_dmg_pct": 2, "reaction_dmg_pct": 10}, "desc": "+2 Etere massimo, +6% potenza degli incantesimi, +2% danni con le armi di un elemento (non Normale) e +10% danni delle reazioni elementali, per punto."},
+        "arcano": {"name": "Arcano", "icon": "🔮", "per_point": {"ether_max": 2, "spell_pct": 6, "reaction_dmg_pct": 10, "scaled_dmg_pct": 4}, "desc": "+2 Etere massimo, +6% potenza degli incantesimi, +10% danni delle reazioni elementali e +4% danni con le armi che scalano con l'Arcano, per punto."},
         "fortuna": {"name": "Fortuna", "icon": "🍀", "per_point": {"gold_pct": 8, "rune_drop_add": 3, "crit": 2}, "desc": "+8% Oro trovato, +3% probabilità di trovare una runa e +2% probabilità di critico, per punto."}
     }
 }

@@ -26,7 +26,7 @@ class Item:
 STATUS_NAMES = {"poison": "Veleno", "bleed": "Sanguinamento", "stun": "Gelo", "blind": "Accecato", "slow": "Impantanato", "scorch": "Magma"}
 
 # Proprietà speciali di un'arma che weapons.json può definire
-WEAPON_TRAIT_KEYS = ("hit_modifier", "crit_chance", "gold_atk_per", "gold_atk_max", "dodge_bonus", "guard_break", "shield_mult")
+WEAPON_TRAIT_KEYS = ("hit_modifier", "crit_chance", "gold_atk_per", "gold_atk_max", "dodge_bonus", "guard_break", "shield_mult", "scaling", "spell_pct")
 
 class Weapon(Item):
     def __init__(self, name: str, value: int, atk: int, element: str, level: int, flavor: str = "", is_cursed: bool = False, curse_effect: str = "", status_inflict: dict = None, traits: dict = None):
@@ -39,6 +39,11 @@ class Weapon(Item):
 
     def get_hit_chance_modifier(self) -> int:
         return self.traits.get("hit_modifier", 0)
+
+    @property
+    def scaling(self) -> str:
+        """L'attributo con cui l'arma scala: le sue armi danno +scaled_dmg_pct per punto (attributes.json)."""
+        return self.traits.get("scaling", "forza")
 
     def get_gold_atk_bonus(self, gold: int) -> int:
         """Armi come lo Zweihander d'Oro: +1 ATK ogni gold_atk_per Oro posseduto, fino a gold_atk_max."""
@@ -56,6 +61,9 @@ class Weapon(Item):
         if t.get("shield_mult"): parts.append(f"scudi ×{t['shield_mult']}")
         if self.status_inflict: parts.append(f"{self.status_inflict['chance']}% {STATUS_NAMES[self.status_inflict['type']]}")
         if t.get("gold_atk_per"): parts.append(f"+1 ATK ogni {t['gold_atk_per']} Oro")
+        if t.get("spell_pct"): parts.append(f"+{t['spell_pct']}% incantesimi")
+        scale = GAME_DATA["attributes"]["attributes"][self.scaling]
+        parts.append(f"scala con {scale['icon']} {scale['name']}")
         return ", ".join(parts)
 
     def on_attack(self, dmg_dealt: int, eff: str) -> tuple[int, str]:
@@ -323,7 +331,7 @@ class Player:
         self.essence_gathered, self.bosses_killed = 0, 0
         
         w_data = data["weapon"]
-        self.weapon = Weapon(w_data["name"], w_data["value"], w_data["atk"], w_data.get("element", "Normale"), 1) if start_weapon_lv == 1 else generate_weapon(2)
+        self.weapon = Weapon(w_data["name"], w_data["value"], w_data["atk"], w_data.get("element", "Normale"), 1, traits=w_data) if start_weapon_lv == 1 else generate_weapon(2)
         self.weapon.atk += PROFILE_MANAGER.get_perk("artigiano_lvl", 0) + (50 if self.cursed else 0)
         self.weapon.atk += global_bonus.get("weapon_atk", 0)
         self.temp_dodge = 0

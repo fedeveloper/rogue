@@ -361,7 +361,7 @@ class EquipmentContractTest(Sandbox):
     def test_numbers_in_weapon_descriptions_come_from_the_data(self):
         for w in RAW_DATA["weapons"]:
             st = w.get("status_inflict") or {}
-            allowed = {st.get("chance"), abs(w.get("hit_modifier", 0)), w.get("crit_chance"), w.get("gold_atk_per"), w.get("gold_atk_max"), abs(w.get("dodge_bonus", 0))}
+            allowed = {st.get("chance"), abs(w.get("hit_modifier", 0)), w.get("crit_chance"), w.get("gold_atk_per"), w.get("gold_atk_max"), abs(w.get("dodge_bonus", 0)), w.get("spell_pct")}
             if w.get("gold_atk_per"): allowed.add(1)  # "+1 ATK ogni ... Oro"
             with self.subTest(weapon=w["name"]):
                 for n in NUM.findall(w.get("desc", "")):
@@ -374,6 +374,9 @@ class EquipmentContractTest(Sandbox):
                 if w.get("guard_break"): self.assertIn("Guardia", w["desc"])
                 if w.get("shield_mult"): self.assertEqual(w["shield_mult"], 2); self.assertIn("doppio dello scudo", w["desc"])
                 if st: self.assertIn(f"{st['chance']}%", w["desc"])
+                if w.get("spell_pct"): self.assertIn(f"+{w['spell_pct']}% potenza degli incantesimi", w["desc"])
+                self.assertIn(w["scaling"], ("forza", "destrezza", "arcano"), "ogni arma scala con un attributo")
+                if w.get("spell_pct"): self.assertEqual(w["scaling"], "arcano", "solo i focus arcani potenziano gli incantesimi")
 
     def test_weapon_traits_behave_as_described(self):
         p = self.hero()
@@ -425,8 +428,10 @@ class EquipmentContractTest(Sandbox):
     def test_the_backpack_shows_the_weapon_traits(self):
         w = Weapon("Ascia", 1, 9, "Normale", 1, status_inflict={"type": "bleed", "chance": 20, "duration": 2},
                    traits={"crit_chance": 10, "hit_modifier": -5, "dodge_bonus": -10, "guard_break": True, "shield_mult": 2})
-        self.assertEqual(w.trait_text(), "-5% Precisione, 10% critico, -10% Schivata, sfonda la Guardia, scudi ×2, 20% Sanguinamento")
-        self.assertEqual(Weapon("Spada", 1, 9, "Normale", 1).trait_text(), "")
+        self.assertEqual(w.trait_text(), "-5% Precisione, 10% critico, -10% Schivata, sfonda la Guardia, scudi ×2, 20% Sanguinamento, scala con 💪 Forza")
+        self.assertEqual(Weapon("Spada", 1, 9, "Normale", 1).trait_text(), "scala con 💪 Forza", "ogni arma dice con che attributo scala")
+        focus = Weapon("Bacchetta", 1, 4, "Normale", 1, traits={"scaling": "arcano", "spell_pct": 10})
+        self.assertEqual(focus.trait_text(), "+10% incantesimi, scala con 🔮 Arcano")
 
     def test_numbers_in_armor_descriptions_come_from_the_data(self):
         for a in RAW_DATA["armors"]:

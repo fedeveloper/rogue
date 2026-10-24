@@ -475,9 +475,8 @@ class CombatSession:
             self.player.run_tracker["floor_hits"] += 1
             self.player.gain_ether(magic.rules()["gain"]["hit"])
             dmg_dealt = int(dmg_dealt * self.player.get_class_damage_multiplier())
-            # Forza per ogni arma; Arcano in più se l'arma ha un elemento
-            elemental = attributes.value(self.player, "elemental_dmg_pct") if self.player.weapon.element != "Normale" else 0
-            dmg_dealt = dmg_dealt * (100 + attributes.value(self.player, "weapon_dmg_pct") + elemental) // 100
+            # L'attributo con cui scala l'arma (Forza, Destrezza o Arcano)
+            dmg_dealt = dmg_dealt * (100 + attributes.weapon_bonus(self.player)) // 100
             # Rune dell'arma: Contrasto sui colpi Super Efficaci, Agguato sul primo attacco dello scontro
             if multiplier > 1.0 and self.player.rune_value("super_effective_pct"):
                 dmg_dealt = dmg_dealt * (100 + self.player.rune_value("super_effective_pct")) // 100
@@ -691,7 +690,7 @@ class CombatSession:
         """Danni di un incantesimo: ATK × pct, elemento contro il nemico, Arcano (prima di Guardia, Scaglie e scudo)."""
         element = magic.spell(spell_id)["element"]
         mult = MULTIPLIERS.get(element, {}).get(self.enemy.element, 1.0)
-        power = 100 + attributes.value(self.player, "spell_pct")
+        power = 100 + attributes.value(self.player, "spell_pct") + self.player.weapon.traits.get("spell_pct", 0)
         return max(1, int(self.player.get_total_atk() * pct / 100 * mult) * power // 100)
 
     def cast_spell(self, spell_id: str) -> bool:
