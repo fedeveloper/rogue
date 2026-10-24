@@ -21,7 +21,8 @@ Riferimento per chi modifica il gioco: architettura, formato dei dati, formule d
 | `rooms.py` | `CombatSession` (turni, danni, status, Risonanze, fine scontro) e le stanze: mercante, falò, forziere, trappola, mistero. |
 | `modes.py` | Modalità: regole della discesa in corso (`RUN`, `rule`, `combine`, `start_run`/`end_run`), gradi di Ascensione (`max_grade`, `ascension_rules`, `ascension_essence_mult`, `record_ascension_win`) e Sfida del Giorno (`daily_setup`, `daily_rules`, `daily_score`, `record_daily`, `daily_streak`). |
 | `magic.py` | Incantesimi ed Etere: dati (`spell`, `rules`), costo con lo sconto della Risonanza (`cost`), voce del menu (`label`), chiavi degli effetti (`SPELL_EFFECT_KEYS`). Il lancio è `CombatSession.cast_spell`. |
-| `attributes.py` | Attributi dell'eroe: valori per classe (`starting`), somma degli effetti (`value`), spesa e limiti (`raise_attribute`), Tomo dell'Oblio (`reset`), menu dei punti (`spend_points`), riga delle Statistiche (`summary`). |
+| `talents.py` | Talenti: ogni `rules.every` livelli (`earned`) un talento fra `rules.offered` proposti a caso (`offer`, `choose`), effetti sommati da `value` e aggiunti da `attributes.value`, HP massimi aggiunti alla scelta (`take`), riga delle Statistiche (`summary`). |
+| `attributes.py` | Attributi dell'eroe: valori per classe (`starting`), somma degli effetti (`value`, che aggiunge quelli dei talenti), spesa e limiti (`raise_attribute`), Tomo dell'Oblio (`reset`), menu dei punti (`spend_points`), riga delle Statistiche (`summary`). |
 | `runes.py` | Rune e Incastoni: chiavi degli effetti (`RUNE_EFFECT_KEYS`), dati delle rune (`rune`, `fits`, `random_rune_id`), probabilità di drop (`roll_drop`), costo di estrazione, etichetta degli incastoni sul nome (`socket_tag`). |
 | `nemesis.py` | La Nemesi: nascita e rango (`on_death`), comparsa sulla mappa (`waiting_on`), nemico (`build_enemy`), tratto che resiste (`resisted`), sconfitta (`defeat`), boss che ti riconoscono (`boss_grudge`). |
 | `epitaph.py` | L'Epitaffio: cronaca della discesa (`note`, in `Player.chronicle`), composizione dai modelli (`compose`), Cimitero (`record`, `cemetery`). |
@@ -37,7 +38,7 @@ Riferimento per chi modifica il gioco: architettura, formato dei dati, formule d
 | `ui.py` | Terminale: colori ANSI, lettura dei tasti (Windows e POSIX), menu a frecce (`interactive_menu`), velocità del testo (`delay_print`, `set_text_speed`). |
 | `constants.py` | Costanti di bilanciamento (precisione base, scaling, finestre di profondità, velocità del testo…). |
 
-Dipendenze fra i moduli: `ui` ← `data_manager` ← `archive`/`relic_effects`/`codex`/`modes`/`attributes`/`magic` ← `entities` ← `inventory_menu` ← `rooms` ← `events` ← `floor_map`/`camp`/`endings` ← `roguelike`. Nessun modulo importa da uno che sta alla sua destra.
+Dipendenze fra i moduli: `ui` ← `data_manager` ← `archive`/`relic_effects`/`codex`/`modes`/`talents`/`attributes`/`magic` ← `entities` ← `inventory_menu` ← `rooms` ← `events` ← `floor_map`/`camp`/`endings` ← `roguelike`. Nessun modulo importa da uno che sta alla sua destra.
 
 ---
 
@@ -67,6 +68,7 @@ Un test controlla che ogni oggetto sbloccabile abbia davvero una di queste strad
 | `events.json` | Eventi narrativi | `title`, `start`, `scenes`, `requires` (opz.), `scripted` (opz.), `weight` (opz.): vedi [Eventi narrativi](#eventi-narrativi) |
 | `moves.json` | Mosse dei nemici (intenti) | `moves` (`name`, `icon`, `desc`, `damage_mult`, `damage_taken_mult`, `heal_pct`), `profiles[id] = {name, desc, moves}` (stili condivisi da più nemici, mostrati nel Bestiario), `defaults` (pesi di `enemy`, `boss`, `with_status`), `rules` (`heal_below_pct`, `max_heals`, `no_repeat`) |
 | `attributes.json` | Attributi e livelli | `rules` (`points_per_level`, `max_points`, `per_level` con `max_hp`/`acc`/`dodge`, `desc`); `attributes[id] = {name, icon, per_point, desc}`: vedi [Formule di combattimento](#5-formule-di-combattimento) |
+| `talents.json` | Talenti | `rules` (`every`: ogni quanti livelli, `offered`: quanti proposti, `desc`); `talents[id] = {name, icon, effects, desc}`, con `effects` fra le chiavi degli attributi e quelle di `talents.TALENT_EFFECT_KEYS`: vedi [Formule di combattimento](#5-formule-di-combattimento) |
 | `spells.json` | Incantesimi ed Etere | `rules` (`gain`: `hit`, `defend`, `reaction`, `floor_pct`; `resonance_discount`; `slots`; `drops` per fonte in %; `vendor_stock`; `scroll_value` [base, per piano]; `desc`, `scroll_desc`); `spells[id] = {name, icon, element, cost, effects, desc, outside, unlock_id, unlock_cost}`, con `effects` fra `damage_pct`, `heal_pct`, `drain_pct`, `status`, `dispel`, `detonate_pct`, `cleanse`, `def_pct`, `escape`, `weaken_pct`: vedi [La magia](#la-magia) |
 | `defenses.json` | Tecniche di difesa delle classi | `defenses[id] = {name, short, desc, heal_pct, drain_pct}`: `short` è il testo del menu di combattimento, `desc` la descrizione completa; vedi [Formule di combattimento](#5-formule-di-combattimento) |
 | `story.json` | Elementi della storia | `quest_items` (oggetti chiave: `name`, `desc`), `npcs` (nomi degli artigiani), `characters` (personaggi ricorrenti: vedi sotto), `camp` (Fuoco del Campo), `endings` (finali) |
@@ -448,6 +450,19 @@ La Maledizione blocca le cure, non il danno del `siphon`. Se la tecnica abbatte 
 
 La scelta dei punti (`attributes.spend_points`) arriva alla fine della stanza in cui si è saliti di livello (`_descent`); finché restano punti, la mappa ha la voce *Distribuisci i punti abilità*. Il consumabile `respec` (*Tomo dell'Oblio*, `weight: 1`) si legge solo al Falò (`rooms.read_oblivion`): `attributes.reset` rende i punti spesi oltre quelli della classe. `generate_potion` sceglie i consumabili pesati da `weight` (predefinito `CONSUMABLE_WEIGHT = 10`).
 
+**Talenti** (`talents.py`, `data/talents.json`). In `Player.gain_exp`, ogni livello multiplo di `rules.every` (`talents.earned`) aggiunge 1 a `Player.pending_talents`; alla fine della stanza `_descent` chiama `talents.choose`, prima dei punti abilità, che propone `rules.offered` talenti a caso fra quelli che l'eroe non ha (`offer`) e non si rimanda. I talenti scelti stanno in `Player.talents`. `talents.value` somma un effetto sui talenti e `attributes.value` lo aggiunge a quello degli attributi, quindi le chiavi degli attributi (`acc`, `crit`, `dodge`, `escape`, `ether_max`, `spell_pct`, `reaction_dmg_pct`, `gold_pct`, `rune_drop_add`) agiscono negli stessi punti della tabella sopra; `max_hp` si aggiunge alla scelta (`take`). Il Tomo dell'Oblio non tocca i talenti. Le chiavi proprie (`TALENT_EFFECT_KEYS`):
+
+| Chiave | Dove agisce |
+|---|---|
+| `dmg_pct` | `CombatSession.execute_player_attack`, sommata a `attributes.weapon_bonus` (vale per ogni arma) |
+| `def_pct` | `Player.get_total_def`, sommata alla runa `def_pct` sulla Difesa dell'armatura |
+| `lifesteal` | `Player.get_lifesteal` (HP rubati a ogni colpo a segno) |
+| `kill_heal_pct` | `CombatSession.on_enemy_death`: cura una parte degli HP massimi |
+| `spell_discount` | `magic.cost`, insieme allo sconto della Risonanza (mai sotto 1) |
+| `ether_on_hit` | Etere in più a ogni colpo a segno, oltre a `spells.json → rules.gain.hit` |
+| `potion_pct` | `inventory_menu._use_consumable`: cure delle pozioni `heal` |
+| `exp_pct` | `Player.gain_exp`, insieme alla runa `exp_pct` |
+
 ---
 
 ### Intenti e reazioni
@@ -587,6 +602,7 @@ La CI (`.github/workflows/tests.yml`) li esegue su Python 3.9 e sull'ultima 3.x;
 | `test_biomes.py` | Equipaggiamento iniziale (reazione o Risonanza), completezza dei biomi, contratti dei pericoli, Gas del Silenzio, Ebollizione, Paradosso, Dissoluzione, Caduta Astrale nel vero ciclo dei piani |
 | `test_tactics.py` | Intenti (pesi predefiniti e dei dati, regole delle mosse, prompt, Congelato) e reazioni (arma poi armatura, armatura poi arma, solo in guardia, stesso elemento, nessuna reazione, scadenza dei marchi, Codice) |
 | `test_enemy_identity.py` | Stili dei nemici (dati, uso, Colpo infetto, Bestiario), boss nativi (uno per bioma, solo nel suo bioma), sei nativi per bioma (stile, forza rispetto ai generici, quota degli scontri), difese delle classi (dati e numeri dei testi, ogni tecnica, Maledizione, colpo finale) |
+| `test_talents.py` | Talenti: dati e testi (ogni numero degli effetti è nella descrizione), un talento ogni `every` livelli, proposta senza doppioni, scelta e HP massimi, effetto di ogni chiave propria, Tomo dell'Oblio che non li tocca, scelta a fine stanza prima dei punti, Statistiche |
 | `test_attributes.py` | Attributi: dati e testi, attributi di ogni classe, punti a ogni livello e crescita automatica, limiti, menu e rinvio, Tomo dell'Oblio, effetto di ogni attributo (Vitalità, Destrezza, Agilità e fuga, ogni arma con il suo attributo, focus e armi iniziali, Arcano sulle reazioni, Fortuna), Statistiche |
 | `test_magic.py` | Magia: dati e testi degli incantesimi, Etere e incantesimi di ogni classe, testo delle regole; Etere iniziale e Arcano, guadagni (colpo, difesa, reazione, massimo); lancio (danni, marchio, Codice), elemento del nemico e Arcano, reazione composta con l'arma, Guardia, scudo e Dissolvi, cura, Sifone, status, Detonazione con e senza marchio, sconto della Risonanza, colpo finale; menu (terza azione, Indietro gratis, Etere insufficiente, eroe senza incantesimi); Statistiche e Codice |
 | `test_grimoires.py` | Grimori: testo delle regole, incantesimi da sbloccare (né in pergamena né alla Forgia prima dello sblocco), drop per fonte, Mercante, imparare (posto libero, già noto, posti pieni, tenere per dopo), niente lettura in combattimento, cure dallo zaino (solo fuori dal combattimento, cura, purificazione, Etere insufficiente), Medita al Falò, Pelle di Pietra, Maledizione una volta sola, Passo del Vento (anche contro i boss), Morsa di Ghiaccio, Vampa, Marea Curativa |

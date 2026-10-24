@@ -234,6 +234,9 @@ class CombatSession:
         if self.player.necro_harvest:
             healed = self.player.heal(max(1, self.player.max_hp // 10))
             if healed > 0: display_msg(f"{Colors.MAGENTA}Raccolto d'Anime: assorbi {healed} HP dal nemico caduto!{Colors.RESET}")
+        if attributes.value(self.player, "kill_heal_pct"):
+            healed = self.player.heal(max(1, self.player.max_hp * attributes.value(self.player, "kill_heal_pct") // 100))
+            if healed > 0: display_msg(f"{Colors.GREEN}Talento: recuperi {healed} HP.{Colors.RESET}")
         if self.enemy.exp_drop > 0: self.player.gain_exp(self.enemy.exp_drop)
         
         if self.enemy.is_boss:
@@ -473,10 +476,10 @@ class CombatSession:
         self.player.run_tracker["floor_attacks"] += 1
         if random.randint(1, 100) <= hit_chance:
             self.player.run_tracker["floor_hits"] += 1
-            self.player.gain_ether(magic.rules()["gain"]["hit"])
+            self.player.gain_ether(magic.rules()["gain"]["hit"] + attributes.value(self.player, "ether_on_hit"))
             dmg_dealt = int(dmg_dealt * self.player.get_class_damage_multiplier())
-            # L'attributo con cui scala l'arma (Forza, Destrezza o Arcano)
-            dmg_dealt = dmg_dealt * (100 + attributes.weapon_bonus(self.player)) // 100
+            # L'attributo con cui scala l'arma (Forza, Destrezza o Arcano) e i talenti che aumentano i danni
+            dmg_dealt = dmg_dealt * (100 + attributes.weapon_bonus(self.player) + attributes.value(self.player, "dmg_pct")) // 100
             # Rune dell'arma: Contrasto sui colpi Super Efficaci, Agguato sul primo attacco dello scontro
             if multiplier > 1.0 and self.player.rune_value("super_effective_pct"):
                 dmg_dealt = dmg_dealt * (100 + self.player.rune_value("super_effective_pct")) // 100

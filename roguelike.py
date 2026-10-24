@@ -19,6 +19,7 @@ import nemesis
 import epitaph
 import attributes
 import magic
+import talents
 from constants import TEXT_SPEEDS, SPERANZA_LUCE_PCT_PER_LVL, RATIO_GOLD_TO_ESSENCE_ON_DEATH, BOSS_ESSENCE_BONUS, XP_PER_FLOOR, XP_PER_BOSS, INFINITE_MODE_THRESHOLD, INFINITE_MODE_ESSENCE_MULTIPLIER, BLIND_FURY_MIN_ATTACKS
 
 def _update_class_mastery(player: Player, floor: int):
@@ -612,6 +613,7 @@ def _descent(c_choice, t_choice, active_pacts, infinite_mode, grade, daily):
             elif rt == "event": event_room(player, chosen_door["event_id"], floor)
             elif rt == "mystery": mystery_room(player, floor, active_pacts)
             # Un passaggio di livello durante la stanza: la scelta dei punti arriva appena finita
+            if player.hp > 0 and player.pending_talents: talents.choose(player)
             if player.hp > 0 and player.unspent_points and not player.points_offered: attributes.spend_points(player)
             if player.fallen: break
 

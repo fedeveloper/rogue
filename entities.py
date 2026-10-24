@@ -9,6 +9,7 @@ import modes
 import runes as rune_rules
 import attributes
 import magic
+import talents
 from constants import BASE_HIT_CHANCE, ENEMY_DEPTH_WINDOW, BOSS_DEPTH_WINDOW, INFINITE_MODE_THRESHOLD, CURSE_CHANCE, CURSE_STAT_MULTIPLIER, BOSS_HP_MULT, BOSS_ATK_MULT, ENEMY_HP_PER_FLOOR, ENEMY_ATK_PER_FLOOR, BULWARK_HEAL_PCT, WEAPON_TARGET_HITS, ARMOR_TARGET_ABSORB, WEAPON_QUALITY, ARMOR_QUALITY, NORMAL_ELEMENT_BONUS, EPIC_MULTIPLIER
 
 class Item:
@@ -262,6 +263,7 @@ class Player:
         # Attributi (attributes.py): quelli della classe, e i punti da spendere che arrivano a ogni livello
         self.attributes = attributes.starting(class_id)
         self.unspent_points, self.points_offered = 0, True
+        self.talents, self.pending_talents = [], 0  # vedi talents.py
         self.max_hp += attributes.value(self, "max_hp")
         # Magia (magic.py): gli incantesimi della classe e l'Etere, pieno all'inizio della discesa
         self.base_ether, self.spells = data.get("ether", 0), list(data.get("spells", []))
@@ -462,7 +464,7 @@ class Player:
         return min(100, crit)
 
     def get_lifesteal(self) -> int:
-        ls = self.base_lifesteal
+        ls = self.base_lifesteal + attributes.value(self, "lifesteal")
         if self.accessory and self.accessory.bonus_type == "lifesteal": ls += self.accessory.bonus_value
         return ls
 
@@ -474,7 +476,7 @@ class Player:
         return max(10, min(100, hit))
 
     def get_total_def(self) -> int:
-        return (self.armor.defense + self.armor.defense * self.rune_value("def_pct") // 100 + self.temp_def + self.bonus_def
+        return (self.armor.defense + self.armor.defense * (self.rune_value("def_pct") + attributes.value(self, "def_pct")) // 100 + self.temp_def + self.bonus_def
                 + get_archive_bonus("def", PROFILE_MANAGER._data))
     
     def get_dodge(self): 
@@ -506,7 +508,7 @@ class Player:
 
     def gain_exp(self, amount: int):
         if self.midas: return
-        multi = self.exp_multiplier + self.rune_value("exp_pct") / 100
+        multi = self.exp_multiplier + (self.rune_value("exp_pct") + attributes.value(self, "exp_pct")) / 100
         for effect in self.relic_effects: multi += effect.get_exp_modifier()
         amount = int(amount * multi)
         self.exp += amount
@@ -522,6 +524,9 @@ class Player:
             self.points_offered = False
             display_msg(f"\n{Colors.YELLOW}{Colors.BOLD}*** LEVEL UP! Sei salito al livello {self.level}! ***{Colors.RESET}"
                         f"\n{Colors.YELLOW}Hai {self.unspent_points} punti abilità da spendere negli attributi.{Colors.RESET}")
+            if talents.earned(self.level):
+                self.pending_talents += 1
+                display_msg(f"{Colors.MAGENTA}Hai guadagnato un talento: lo scegli a fine stanza.{Colors.RESET}")
 
     def heal(self, amount: int) -> int:
         if self.cursed:
