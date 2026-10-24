@@ -409,7 +409,7 @@ Il Falò ha `rune_workshop` (`RUNE_WORKSHOP`): incastonare (gratis, nell'arma o 
 
 **Difese delle classi** (`defenses.json`, `CombatSession.execute_player_defense`): ogni classe ha in `classes.json → defense` una tecnica che si aggiunge al dimezzamento dei danni:
 - `counter`: restituisce al nemico il danno subito;
-- `focus`: il colpo successivo è un critico garantito;
+- `focus`: cura `heal_pct` degli HP massimi e il colpo successivo è un critico garantito;
 - `recovery`: cura `heal_pct` degli HP massimi;
 - `cleanse`: toglie `poison` e `bleed` e cura `heal_pct`;
 - `mark`: cura `heal_pct` e marchia il nemico con l'elemento dell'arma, quindi il marchio dell'armatura che arriva quando si viene colpiti in guardia può completare una reazione;

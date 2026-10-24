@@ -564,7 +564,9 @@ class CombatSession:
             display_msg(f"\n{Colors.BLUE}-> Sollevi la guardia, pronto a sfruttare l'attacco nemico!{Colors.RESET}")
         elif self.def_type == "focus":
             self.focused_attack = True
-            display_msg(f"\n{Colors.BLUE}-> Studi il nemico nell'ombra. Il tuo prossimo attacco sarà devastante!{Colors.RESET}")
+            healed = self.player.heal(max(1, self.player.max_hp * defense["heal_pct"] // 100))
+            display_msg(f"\n{Colors.BLUE}-> Studi il nemico nell'ombra, e riprendi fiato. Il tuo prossimo attacco sarà devastante!"
+                        + (f" {Colors.GREEN}Recuperi {healed} HP.{Colors.RESET}" if healed else f"{Colors.RESET}"))
         elif self.def_type == "recovery":
             if self.player.cursed:
                 display_msg(f"\n{Colors.BLUE}-> Ti difendi, ma la Maledizione blocca il tuo recupero magico.{Colors.RESET}")

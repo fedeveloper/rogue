@@ -164,7 +164,7 @@ A ogni turno scegli una di queste azioni:
 - **Attacca.** La probabilità di colpire dipende dalla tua precisione, dalla schivata del nemico e dagli elementi.
 - **Difenditi.** Dimezza i danni del prossimo colpo, e ogni classe aggiunge un effetto:
   - **Difesa Aggressiva** (Guerriero, Berserker): restituisci al nemico i danni subiti;
-  - **Concentrazione** (Ladro, Assassino): il colpo successivo è un critico garantito;
+  - **Concentrazione** (Ladro, Assassino): recuperi il 5% degli HP e il colpo successivo è un critico garantito;
   - **Riparo Magico** (Mago): recuperi il 10% degli HP;
   - **Voto di Protezione** (Paladino): ti liberi da Veleno e Sanguinamento e recuperi il 5% degli HP;
   - **Mistura Reattiva** (Alchimista): recuperi il 5% degli HP e marchi il nemico con l'elemento della tua arma. Se poi ti colpisce, il marchio della tua armatura può scatenare una **reazione**, e con l'equipaggiamento iniziale (Fuoco e Terra) scatena il *Magma*;
