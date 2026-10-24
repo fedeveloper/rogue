@@ -28,10 +28,10 @@ def starting(class_id: str) -> dict:
 
 def value(player, key: str) -> int:
     """La somma di un effetto (es. "acc", "spell_pct") su tutti gli attributi dell'eroe, più quella dei suoi talenti
-    e del suo tratto (`meta.json → traits[id].effects`)."""
+    e del suo tratto (`meta.json → traits[id].effects`) e delle strutture del Campo (`camp_rules`)."""
     attrs = getattr(player, "attributes", {})
     return (sum(points * definitions()[a]["per_point"].get(key, 0) for a, points in attrs.items()) + talents.value(player, key)
-            + getattr(player, "trait_effects", {}).get(key, 0))
+            + getattr(player, "trait_effects", {}).get(key, 0) + getattr(player, "camp_effects", {}).get(key, 0))
 
 
 def weapon_bonus(player) -> int:

@@ -8,6 +8,7 @@ from codex import record_relic
 import modes
 import runes as rune_rules
 import attributes
+import camp_rules
 import magic
 import talents
 from constants import BERSERKER_FURY_PCT, BASE_HIT_CHANCE, ENEMY_DEPTH_WINDOW, BOSS_DEPTH_WINDOW, INFINITE_MODE_THRESHOLD, CURSE_CHANCE, CURSE_STAT_MULTIPLIER, BOSS_HP_MULT, BOSS_ATK_MULT, ENEMY_HP_PER_FLOOR, ENEMY_ATK_PER_FLOOR, BULWARK_HEAL_PCT, WEAPON_TARGET_HITS, ARMOR_TARGET_ABSORB, WEAPON_QUALITY, ARMOR_QUALITY, NORMAL_ELEMENT_BONUS, EPIC_MULTIPLIER
@@ -265,6 +266,7 @@ class Player:
         self.unspent_points, self.points_offered = 0, True
         self.talents, self.pending_talents = [], 0  # vedi talents.py
         self.trait_effects, self.arcane_deaf, self.talent_every, self.trait_hp_per_level = {}, False, None, 0  # tratti v5
+        self.camp_effects = camp_rules.total("effects")  # strutture del Campo (Biblioteca dell'Arcano, Sala d'Armi)
         self.max_hp += attributes.value(self, "max_hp")
         # Magia (magic.py): gli incantesimi della classe e l'Etere, pieno all'inizio della discesa (riempito in fondo,
         # quando arma, armatura e reliquie che lo cambiano ci sono già)

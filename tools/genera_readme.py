@@ -317,6 +317,7 @@ rogue/
 ├── inventory_menu.py  # Zaino, consumabili e schermata delle statistiche
 ├── archive.py         # Archivio di Aethelgard e relativi bonus
 ├── camp.py            # Il Fuoco del Campo: personaggi e strutture
+├── camp_rules.py      # Livelli ed effetti delle strutture del Campo
 ├── endings.py         # I finali multipli
 ├── codex.py           # Il Codice del Labirinto: ciò che hai scoperto fra le run
 ├── epitaph.py         # L'Epitaffio e il Cimitero
@@ -371,6 +372,9 @@ I **test di contratto** (`tests/test_contracts.py`, `tests/test_modes.py`) verif
 - [x] Talenti: ogni 5 livelli un talento fra tre proposti
 - [x] La magia nel mondo: Silenzio, Risucchio d'Etere e boss che lanciano incantesimi; rune, reliquie, eventi, Maestrie, Ascensione e Nemesi
 - [x] Grande ribilanciamento: classi più vicine fra loro, nemici un po' più duri
+- [x] Contenuti: esiti del Mistero, tomi dell'Archivio, imprese e tratti legati alla magia
+- [x] L'Elementalista, la nona classe
+- [x] Il Campo cresce: strutture a più livelli, Biblioteca dell'Arcano e Sala d'Armi
 
 ---
 

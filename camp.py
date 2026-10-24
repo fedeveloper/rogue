@@ -2,10 +2,12 @@
 
 I personaggi compaiono al campo quando la loro storia è andata abbastanza avanti (condizioni del profilo,
 come negli eventi); la prima frase le cui condizioni sono vere è quella che dicono, e il loro dono si riceve
-una volta sola. Le strutture costruite restano nel profilo come flag `camp_<id>`.
+una volta sola. Le strutture costruite restano nel profilo come flag `camp_<id>`; quelle a più livelli
+(vedi `camp_rules`) si costruiscono un livello alla volta.
 """
 from typing import Optional
 
+import camp_rules
 from data_manager import GAME_DATA, PROFILE_MANAGER
 from events import apply_effects, check, choice_summary
 from ui import Colors, clear_screen, delay_print, display_msg, interactive_menu, wait_enter
@@ -49,22 +51,38 @@ def built(structure_id: str) -> bool:
     return PROFILE_MANAGER.get_flag(f"camp_{structure_id}")
 
 
+def complete(s: dict) -> bool:
+    """Tutti i livelli della struttura sono costruiti."""
+    return camp_rules.level(s["id"]) >= len(camp_rules.levels(s))
+
+
+def next_level(s: dict) -> Optional[dict]:
+    return None if complete(s) else camp_rules.levels(s)[camp_rules.level(s["id"])]
+
+
 def can_build(s: dict) -> bool:
-    return not built(s["id"]) and check(None, s.get("requires"), 0)
+    return not complete(s) and check(None, s.get("requires"), 0)
 
 
 def build(s: dict) -> bool:
-    if not can_build(s) or PROFILE_MANAGER.essence < s["cost"]: return False
-    PROFILE_MANAGER.essence -= s["cost"]
-    PROFILE_MANAGER.set_flag(f"camp_{s['id']}")
+    """Costruisce la struttura, o il suo livello successivo."""
+    if not can_build(s) or PROFILE_MANAGER.essence < next_level(s)["cost"]: return False
+    PROFILE_MANAGER.essence -= next_level(s)["cost"]
+    camp_rules.set_level(s["id"], camp_rules.level(s["id"]) + 1)
     PROFILE_MANAGER.save()
     return True
 
 
 def _structure_label(s: dict) -> str:
-    if built(s["id"]): return f"{Colors.GREEN}{s['name']} [COSTRUITO]{Colors.RESET} — {s['desc']}"
+    many, lvl = len(camp_rules.levels(s)) > 1, camp_rules.level(s["id"])
+    tag = f" Lv.{lvl}/{len(camp_rules.levels(s))}" if many and lvl else ""
+    if complete(s):
+        done = " ".join(lv["desc"] for lv in camp_rules.built_levels(s))
+        return f"{Colors.GREEN}{s['name']}{tag} [COSTRUITO]{Colors.RESET} — {done}"
     if not check(None, s.get("requires"), 0): return f"{Colors.RED}??? ({s.get('locked_hint', 'Non ancora disponibile')}){Colors.RESET}"
-    return f"Costruisci: {s['name']} (✨{s['cost']}) — {s['desc']}"
+    nxt = next_level(s)
+    verb = f"Migliora: {s['name']}{tag} → Lv.{lvl + 1}" if lvl else (f"Costruisci: {s['name']}" + (" Lv.1" if many else ""))
+    return f"{verb} (✨{nxt['cost']}) — {nxt['desc']}"
 
 
 def show_camp_fire():
@@ -83,14 +101,31 @@ def show_camp_fire():
             talk(people[idx])
             continue
         s = camp()["structures"][idx - len(people)]
-        if built(s["id"]) or not check(None, s.get("requires"), 0): continue
-        if build(s): display_msg(f"\n{Colors.GREEN}Hai costruito {s['name']}!{Colors.RESET}")
+        if not can_build(s): continue
+        if build(s):
+            lvl = camp_rules.level(s["id"])
+            display_msg(f"\n{Colors.GREEN}Hai costruito {s['name']}" + (f" (Lv.{lvl})" if len(camp_rules.levels(s)) > 1 else "") + f"!{Colors.RESET}")
         else: display_msg(f"\n{Colors.RED}Essenza insufficiente.{Colors.RESET}")
         wait_enter()
 
 
 def start_of_run_boon(player):
-    """Lo Scrittoio di Silas: all'inizio della discesa si sceglie un dono dalle pagine del diario."""
+    """I doni del Campo a inizio discesa: quelli dei livelli costruiti (`start`), poi lo Scrittoio di Silas,
+    dove si sceglie un dono dalle pagine del diario."""
+    gifts = camp_rules.total("start")
+    if gifts.get("scroll"):
+        from entities import generate_scroll
+        for _ in range(gifts["scroll"]):
+            item = generate_scroll(1)
+            player.inventory.append(item)
+            display_msg(f"{Colors.CYAN}📚 Dalla Biblioteca dell'Arcano porti con te: {item.display_name}.{Colors.RESET}")
+    if gifts.get("points"):
+        player.unspent_points += gifts["points"]; player.points_offered = False
+        display_msg(f"{Colors.YELLOW}⚔️ Dalla Sala d'Armi: {gifts['points']} punti abilità da spendere.{Colors.RESET}")
+    if gifts.get("talents"):
+        import talents
+        player.pending_talents += gifts["talents"]
+        talents.choose(player)
     s = structure("scrittoio_silas")
     if not s or not built(s["id"]): return
     boons = s["boons"]
