@@ -49,11 +49,11 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 - 🗺️ **Una mappa per ogni piano.** Quattro file di stanze collegate (combattimento, Élite, mercante, falò, forziere, trappola, evento o la *Stanza del Mistero*) e il boss in fondo, tutte visibili fin dall'arrivo: scegli il percorso, non solo la porta. Ogni stanza ha un prezzo e un premio: le trappole custodiscono un bottino, i forzieri profondi possono essere Mimic, e l'**Audacia** fa crescere il bottino del boss per ogni rischio corso nel piano. Nemici e boss crescono con la profondità, e quasi ogni nemico ha uno **stile** (Bruto, Predatore, Difensore, Succhiavita, Infetto, Mistico, Furia) che decide le mosse che preferisce.
 - 🌍 **Sei biomi, sei regole.** Ogni cinque piani il Labirinto cambia volto e legge: la *Nostalgia Letale* dei Chiostri, il *Gas del Silenzio* delle Miniere, la *Caduta Astrale* delle Guglie, la *Dissoluzione dell'Io* del Ventre, l'*Ebollizione Astrale* della Forgia e il *Paradosso Temporale* della Soglia. Ogni bioma ha sei nemici nativi, un boss tutto suo e le sue stanze speciali.
 - 🔥 **Combattimento tattico.** Il nemico **annuncia la sua mossa**, colpo pesante, guardia, rigenerazione o colpo infetto, e tu decidi se attaccare o difenderti. Sette elementi, vantaggi e svantaggi, **Risonanze** quando arma e armatura condividono l'elemento e **7 reazioni** (Vapore, Gelo, Eclissi…) quando li combini.
-- 🧬 **8 classi** con alberi di Maestria a 5 livelli che sbloccano bonus, oggetti, reliquie e altre classi.
+- 🧬 **9 classi** con alberi di Maestria a 5 livelli che sbloccano bonus, oggetti, reliquie e altre classi.
 - 🔮 **La magia.** 18 incantesimi che costano **Etere**, una risorsa che resta fra uno scontro e l'altro e si guadagna colpendo, difendendosi e scatenando reazioni. Lasciano il marchio del loro elemento: con l'arma di Fuoco e *Lama d'Acqua* componi il *Vapore* senza cambiare equipaggiamento.
 - 📈 **Sei attributi da costruire.** A ogni livello un punto fra Vitalità, Forza, Destrezza, Agilità, Arcano, Fortuna: ogni discesa è una build diversa, e il raro *Tomo dell'Oblio* permette di ripensarla al Falò.
 - 🌟 **Talenti.** Ogni 5 livelli scegli uno dei 15 talenti fra 3 proposti a caso: danni, difesa, Etere, cure, fortuna.
-- 🎭 **10 tratti** e **20 gradi di Ascensione**: 3.360 combinazioni di partenza diverse.
+- 🎭 **10 tratti** e **20 gradi di Ascensione**: 3.780 combinazioni di partenza diverse.
 - 📅 **Sfida del Giorno.** Una discesa al giorno uguale per tutti: eroe, tratto, malus e dono assegnati, la stessa mappa a ogni piano. Conta il primo tentativo; punteggio, serie di giorni e record restano nel profilo.
 - 📖 **Eventi che ricordano.** 58 storie a scene con opzioni che esistono solo per la tua classe, il tuo tratto o le tue reliquie: `[Mago]`, `[Tocco di Mida]`, `[Chiave Arrugginita]`. Il Labirinto ricorda chi hai aiutato e chi hai derubato, e certe scelte tornano a bussare qualche piano dopo.
 - 🗝️ **Personaggi che ritornano.** *Sir Alaric*, il Primo Paladino, e *Silas*, il Cercatore, hanno storie in tre capitoli che proseguono di run in run. Le tue scelte decidono come finiscono, e se liberi Alaric il Cavaliere Oscuro non tornerà più.
@@ -77,9 +77,10 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 | 🔮 **Mago** | 90 | Arma di Fuoco potente e mira eccellente, ma fragile; si cura difendendosi | Sintonia | Iniziale |
 | 🛡️ **Paladino** | 195 | Ultra-tank con Risonanza di Luce; difendendosi si purifica | Baluardo della Fede | Maestria Guerriero Lv.5 |
 | 🪓 **Berserker** | 110 | Glass cannon: l'ascia più forte, nessuna armatura | Furia Sanguinaria | Impresa «Danza con la Morte» |
-| 🧪 **Alchimista** | 85 | Quattro pozioni iniziali e bombe di Fuoco; difendendosi prepara le reazioni | Metabolismo Alterato | Impresa «Genio Elementale» |
-| 🥷 **Assassino** | 75 | 15% di critico innato e schivata alta, ma fragile | Imboscata | Maestria Ladro Lv.5 |
+| 🧪 **Alchimista** | 85 | Due pozioni iniziali e bombe di Fuoco; difendendosi prepara le reazioni | Metabolismo Alterato | Impresa «Genio Elementale» |
+| 🥷 **Assassino** | 75 | Critico innato e schivata alta, ma fragile | Imboscata | Maestria Ladro Lv.5 |
 | 💀 **Negromante** | 75 | Risonanza di Tenebra; difendendosi ruba vita | Raccolto d'Anime | Maestria Mago Lv.5 |
+| 🌈 **Elementalista** | 85 | Maestro delle reazioni: Etere abbondante, incantesimi di Vento e Acqua su una verga di Terra | Catena Elementale | Impresa «Alchimia degli Elementi» |
 
 Ogni classe ha un **albero di Maestria** a 5 livelli. Si sale giocando con quella classe. Il **Lv.4** dà un bonus permanente a *tutti* gli eroi; il **Lv.5** sblocca una classe, un tratto o una reliquia. Assassino e Negromante, per esempio, si conquistano portando al massimo Ladro e Mago.
 
@@ -452,7 +453,7 @@ Certe combinazioni sullo stesso oggetto formano una **parola runica**, con un ef
 | **Assaggiatore di Veleni** | Sopravvivi a un danno letale rimanendo a 1 HP (es. Benedizione o Fiala del Caos). | Sblocco: Maschera Antigas |
 | **L'Eco Infinita** | Raggiungi l'Eco III della Modalità Infinita (piano 61). | Essenza: 1500 |
 | **L'Arcimago** | Lancia 25 incantesimi in una singola run. | Tratto: Erudito |
-| **Alchimia degli Elementi** | Scatena 12 reazioni elementali in una singola run. | Essenza: 500 |
+| **Alchimia degli Elementi** | Scatena 12 reazioni elementali in una singola run. | Classe: Elementalista |
 | **Voce nel Silenzio** | Sconfiggi un nemico mentre non puoi lanciare incantesimi (Silenzio o Gas). | Essenza: 400 |
 | **Pieno di Talento** | Ottieni 3 talenti in una singola run. | Tratto: Talento Naturale |
 | **Lo Specialista** | Porta un attributo a 10 punti. | Essenza: 400 |
@@ -473,7 +474,7 @@ Ogni scelta mostra i suoi effetti reali, molte opzioni esistono solo per certe c
 
 | Contenuto | Quantità |
 |---|---|
-| Classi giocabili | 8 |
+| Classi giocabili | 9 |
 | Tratti di partenza | 10 |
 | Gradi di Ascensione | 20 |
 | Doni della Sfida del Giorno | 7 |
@@ -491,7 +492,7 @@ Ogni scelta mostra i suoi effetti reali, molte opzioni esistono solo per certe c
 | Tomi dell'Archivio | 6 |
 | Potenziamenti permanenti | 14 |
 | Elementi / Risonanze | 7 / 6 |
-| Combinazioni di partenza (modalità × classe × tratto × grado) | 3360 |
+| Combinazioni di partenza (modalità × classe × tratto × grado) | 3780 |
 
 ## 🛠️ Per chi sviluppa
 

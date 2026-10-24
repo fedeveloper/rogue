@@ -5,7 +5,7 @@ from ui import Colors, delay_print, clear_screen, interactive_menu, display_msg,
 from data_manager import GAME_DATA, PROFILE_MANAGER, MULTIPLIERS, get_biome, get_element_icon
 from archive import get_archive_bonus
 from codex import record_enemy_killed, record_enemy_seen, record_letter, record_phase, record_reaction, record_rune, record_runeword, record_spell
-from constants import AMBUSH_DMG_PCT, NECRO_HARVEST_PCT, CAMPFIRE_REST_PCT, BASE_HIT_CHANCE, BLOOD_LETTER_CHANCE, CURSE_HP_DRAIN_PCT, MIN_DAMAGE_PCT, POISON_MIN, POISON_PCT
+from constants import AMBUSH_DMG_PCT, ELEMENTAL_CHAIN_ETHER, NECRO_HARVEST_PCT, CAMPFIRE_REST_PCT, BASE_HIT_CHANCE, BLOOD_LETTER_CHANCE, CURSE_HP_DRAIN_PCT, MIN_DAMAGE_PCT, POISON_MIN, POISON_PCT
 from entities import STATUS_NAMES, Player, Enemy, generate_weapon, generate_armor, generate_accessory, generate_potion, generate_rune, generate_scroll, get_random_relic, set_sockets
 import runes as rune_rules
 import attributes
@@ -312,6 +312,8 @@ class CombatSession:
         record_reaction(key)
         self.player.run_tracker["reactions"] = self.player.run_tracker.get("reactions", 0) + 1
         self.player.gain_ether(magic.rules()["gain"]["reaction"])
+        if self.player.has_mastery_effect("elemental_chain"):
+            self.player.gain_ether(ELEMENTAL_CHAIN_ETHER)
         msg = f"{Colors.MAGENTA}{Colors.BOLD}⚡ REAZIONE: {r['icon']} {r['name'].upper()}!{Colors.RESET}"
         if r.get("bonus_pct"):
             dmg = self.player.get_total_atk() * r["bonus_pct"] // 100 * (100 + self.player.rune_value("reaction_dmg_pct") + attributes.value(self.player, "reaction_dmg_pct")) // 100
@@ -586,6 +588,12 @@ class CombatSession:
             display_msg(f"\n{Colors.BLUE}-> Ti ripari, bevi un sorso e lanci una fiala contro il nemico."
                         + (f" {Colors.GREEN}Recuperi {healed} HP.{Colors.RESET}" if healed else f"{Colors.RESET}"))
             self.apply_element(self.player.weapon.element)
+        elif self.def_type == "prism":
+            gained = self.player.gain_ether(defense["ether_gain"])
+            healed = self.player.heal(max(1, self.player.max_hp * defense["heal_pct"] // 100))
+            display_msg(f"\n{Colors.BLUE}-> Gli elementi ti girano attorno come un prisma."
+                        + (f" {Colors.GREEN}Recuperi {healed} HP.{Colors.RESET}" if healed else "")
+                        + (f" {Colors.CYAN}+{gained} Etere ({self.player.ether}/{self.player.max_ether()}).{Colors.RESET}" if gained else f"{Colors.RESET}"))
         elif self.def_type == "siphon":
             stolen = min(self.enemy.hp, max(1, self.enemy.max_hp * defense["drain_pct"] // 100))
             self.enemy.hp -= stolen
