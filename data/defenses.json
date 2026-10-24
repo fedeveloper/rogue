@@ -5,6 +5,7 @@
         "recovery": {"name": "Riparo Magico", "short": "Dimezza danni e Cura 10% HP", "heal_pct": 10, "desc": "Dimezza i danni e ti cura del 10% degli HP massimi."},
         "cleanse": {"name": "Voto di Protezione", "short": "Dimezza danni, purifica Veleno e Sanguinamento, Cura 5% HP", "heal_pct": 5, "desc": "Dimezza i danni, ti libera da Veleno e Sanguinamento e ti cura del 5% degli HP massimi."},
         "mark": {"name": "Mistura Reattiva", "short": "Dimezza danni, marchia con l'elemento dell'arma, Cura 5% HP", "heal_pct": 5, "desc": "Dimezza i danni, ti cura del 5% degli HP massimi e lancia una fiala che marchia il nemico con l'elemento della tua arma: se ti colpisce, il marchio della tua armatura può scatenare una reazione."},
-        "siphon": {"name": "Sudario d'Ossa", "short": "Dimezza danni e ruba il 4% degli HP Max del nemico", "drain_pct": 4, "desc": "Dimezza i danni e strappa al nemico il 4% dei suoi HP massimi, che recuperi tu."}
+        "siphon": {"name": "Sudario d'Ossa", "short": "Dimezza danni e ruba il 4% degli HP Max del nemico", "drain_pct": 4, "desc": "Dimezza i danni e strappa al nemico il 4% dei suoi HP massimi, che recuperi tu."},
+        "prism": {"name": "Prisma Elementale", "short": "Dimezza danni e recuperi 3 Etere in più", "ether_gain": 3, "desc": "Dimezza i danni e raccoglie l'energia degli elementi attorno a te: recuperi 3 Etere in più."}
     }
 }

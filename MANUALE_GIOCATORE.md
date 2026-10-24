@@ -169,6 +169,7 @@ A ogni turno scegli una di queste azioni:
   - **Voto di Protezione** (Paladino): ti liberi da Veleno e Sanguinamento e recuperi il 5% degli HP;
   - **Mistura Reattiva** (Alchimista): recuperi il 5% degli HP e marchi il nemico con l'elemento della tua arma. Se poi ti colpisce, il marchio della tua armatura può scatenare una **reazione**, e con l'equipaggiamento iniziale (Fuoco e Terra) scatena il *Magma*;
   - **Sudario d'Ossa** (Negromante): strappi al nemico il 4% dei suoi HP massimi e li recuperi tu. Se gli restano pochi HP, può bastare ad abbatterlo.
+  - **Prisma Elementale** (Elementalista): recuperi 3 Etere in più, oltre a quello che dà ogni difesa.
 - **Lancia un incantesimo.** Costa il turno e l'Etere dell'incantesimo (vedi *La magia e l'Etere*). Tornare indietro dal menu degli incantesimi non costa nulla.
 - **Apri l'inventario.** Usare un oggetto o cambiare equipaggiamento **costa il turno**; chiudere lo zaino senza fare nulla no.
 - **Statistiche Eroe.** Gratis, in qualsiasi momento. Mostrano la tua **probabilità reale di colpire** contro il nemico che hai davanti.
@@ -213,6 +214,7 @@ Un incantesimo d'attacco colpisce sempre (non si schiva). I suoi danni sono una 
 | Alchimista | 10 | Lama d'Acqua, Dissolvi |
 | Assassino | 8 | Raffica |
 | Negromante | 12 | Sifone d'Ombra, Detonazione |
+| Elementalista | 14 | Raffica, Lama d'Acqua |
 
 All'Etere iniziale si aggiungono 2 punti per ogni punto di **Arcano** (il Mago, con Arcano 2, parte con 20). Gli incantesimi lanciati almeno una volta compaiono nel Codice, alla pagina *Incantesimi*.
 
@@ -434,6 +436,7 @@ Certe combinazioni di rune **sullo stesso oggetto** formano una **parola runica*
 | 🧪 **Alchimista** | 2 pozioni iniziali e bombe di Fuoco; difendendosi lancia una fiala che prepara la reazione. Grembiule di Terra: *Magma* | Impresa *Genio Elementale* |
 | 🥷 **Assassino** | 8% di critico innato e 10% di schivata, ma solo 75 HP. Pugnale di Vento, mantello di Terra: *Tempesta di Sabbia* | Maestria Ladro Lv.5 |
 | 💀 **Negromante** | Risonanza di Tenebra fin dall'inizio; difendendosi ruba vita al nemico | Maestria Mago Lv.5 |
+| 🌈 **Elementalista** | Il maestro delle reazioni: molto Etere, e ogni reazione gliene restituisce di più (Maestria Lv.2). Verga di Terra, mantello di Vento: *Tempesta di Sabbia*; i suoi incantesimi di Vento e d'Acqua reagiscono con il marchio di Terra della verga | Impresa *Alchimia degli Elementi* |
 
 Ogni eroe parte con un equipaggiamento che ha già un'idea di gioco. Cinque classi hanno arma e armatura di elementi che **reagiscono** fra loro: il nome della reazione è in tabella. Paladino e Negromante portano lo stesso elemento e partono con la **Risonanza**. Il Berserker combatte a petto nudo.
 
@@ -464,6 +467,7 @@ Ogni classe parte con 3 punti già distribuiti secondo il suo stile:
 | Alchimista | Arcano 1, Vitalità 1, Fortuna 1 |
 | Assassino | Destrezza 2, Agilità 1 |
 | Negromante | Arcano 2, Vitalità 1 |
+| Elementalista | Arcano 2, Agilità 1 |
 
 **Il Tomo dell'Oblio.** È un consumabile raro (meno di uno su venti). Si legge al Falò, senza spegnerlo: i punti che hai speso tornano da spendere e li redistribuisci subito. Gli attributi iniziali della classe restano.
 
@@ -508,6 +512,7 @@ Ogni eroe ha un albero di **Maestria** a 6 livelli, che sale con l'esperienza ac
   - **Alchimista**: *Distillato d'Etere*: +15% potenza degli incantesimi.
   - **Assassino**: *Ombra Silente*: +1 Etere a ogni colpo a segno.
   - **Negromante**: *Patto d'Ossa*: +4 Etere massimo.
+  - **Elementalista**: *Armonia*: +10% potenza degli incantesimi.
 
 ---
 
@@ -636,7 +641,7 @@ Tra una discesa e l'altra spendi l'**Essenza Astrale**:
 | Assaggiatore di Veleni | Sopravvivi a un danno letale rimanendo a 1 HP (es. Benedizione o Fiala del Caos). | Maschera Antigas |
 | L'Eco Infinita | Raggiungi l'Eco III della Modalità Infinita (piano 61). | 1500 Essenza |
 | L'Arcimago | Lancia 25 incantesimi in una singola run. | Tratto: Erudito |
-| Alchimia degli Elementi | Scatena 12 reazioni elementali in una singola run. | 500 Essenza |
+| Alchimia degli Elementi | Scatena 12 reazioni elementali in una singola run. | Classe: Elementalista |
 | Voce nel Silenzio | Sconfiggi un nemico mentre non puoi lanciare incantesimi (Silenzio o Gas). | 400 Essenza |
 | Pieno di Talento | Ottieni 3 talenti in una singola run. | Tratto: Talento Naturale |
 | Lo Specialista | Porta un attributo a 10 punti. | 400 Essenza |

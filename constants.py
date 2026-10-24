@@ -33,6 +33,7 @@ CURSE_HP_DRAIN_PCT = 2    # la maledizione che drena vita toglie questa % degli 
 CAMPFIRE_REST_PCT = 50  # cura del riposo al Falò, in % degli HP massimi
 AMBUSH_DMG_PCT = 150       # Imboscata (Assassino, Maestria Lv.2): danni del primo attacco di ogni scontro, in %
 BERSERKER_FURY_PCT = 35    # Furia Sanguinaria (Berserker, Maestria Lv.2): ATK in più sotto il 30% degli HP
+ELEMENTAL_CHAIN_ETHER = 2  # Catena Elementale (Elementalista, Maestria Lv.2): Etere in più a ogni reazione
 NECRO_HARVEST_PCT = 6     # Raccolto d'Anime (Negromante, Maestria Lv.2): cura a ogni nemico sconfitto, in % degli HP massimi
 BULWARK_HEAL_PCT = 5      # Baluardo della Fede (Paladino, Maestria Lv.2): cura extra in difesa, in % degli HP massimi
 POISON_PCT, POISON_MIN = 4, 3  # il veleno toglie il 4% degli HP massimi a ogni turno, almeno 3 (come il sanguinamento, scala con la vittima)

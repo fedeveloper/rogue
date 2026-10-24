@@ -427,5 +427,72 @@
             },
             "6": {"desc": "Patto d'Ossa: +4 Etere massimo.", "type": "magic", "bonus": {"ether_max": 4}}
         }
+    },
+    "9": {
+        "role": "Elementalista",
+        "defense": "prism",
+        "attributes": {
+            "arcano": 2,
+            "agilita": 1
+        },
+        "ether": 14,
+        "spells": [
+            "raffica",
+            "lama_acqua"
+        ],
+        "max_hp": 85,
+        "gold": 30,
+        "acc": 15,
+        "dodge": 10,
+        "weapon": {
+            "name": "Verga di Quarzo",
+            "value": 40,
+            "atk": 9,
+            "element": "Terra",
+            "scaling": "arcano"
+        },
+        "armor": {
+            "name": "Mantello dei Venti",
+            "value": 20,
+            "def": 2,
+            "element": "Vento"
+        },
+        "potions": 1,
+        "unlocked_by_default": false,
+        "unlock_cost": 0,
+        "desc": "Sbloccato scatenando 12 reazioni elementali in una sola run.",
+        "unlock_id": "9",
+        "mastery": {
+            "2": {
+                "desc": "Catena Elementale: ogni reazione elementale ti restituisce 2 Etere in più.",
+                "type": "personal",
+                "effect": "elemental_chain"
+            },
+            "3": {
+                "desc": "Sblocca Pergamena: Tempesta",
+                "type": "unlock",
+                "id": "pergamena_tempesta"
+            },
+            "4": {
+                "desc": "Eredità: +10 HP Max per TUTTI gli eroi.",
+                "type": "global",
+                "bonus": {
+                    "stat": "max_hp",
+                    "value": 10
+                }
+            },
+            "5": {
+                "desc": "Sblocca Pergamena: Esplosione Arcana",
+                "type": "unlock",
+                "id": "pergamena_esplosione"
+            },
+            "6": {
+                "desc": "Armonia: +10% potenza degli incantesimi.",
+                "type": "magic",
+                "bonus": {
+                    "spell_pct": 10
+                }
+            }
+        }
     }
 }

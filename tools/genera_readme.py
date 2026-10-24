@@ -40,9 +40,10 @@ for f in meta["feats"].values():
     if f["reward_type"] == "class": class_unlock[f["reward_id"]] = f"Impresa «{f['name']}»"
 style = {"1": "Tank bilanciato, contrattacca quando si difende", "2": "Agile e ricco, critico garantito dopo la Concentrazione",
          "3": "Arma di Fuoco potente e mira eccellente, ma fragile; si cura difendendosi", "4": "Ultra-tank con Risonanza di Luce; difendendosi si purifica",
-         "5": "Glass cannon: l'ascia più forte, nessuna armatura", "6": "Quattro pozioni iniziali e bombe di Fuoco; difendendosi prepara le reazioni",
-         "7": "15% di critico innato e schivata alta, ma fragile", "8": "Risonanza di Tenebra; difendendosi ruba vita"}
-emoji = {"1": "⚔️", "2": "🗡️", "3": "🔮", "4": "🛡️", "5": "🪓", "6": "🧪", "7": "🥷", "8": "💀"}
+         "5": "Glass cannon: l'ascia più forte, nessuna armatura", "6": "Due pozioni iniziali e bombe di Fuoco; difendendosi prepara le reazioni",
+         "7": "Critico innato e schivata alta, ma fragile", "8": "Risonanza di Tenebra; difendendosi ruba vita",
+         "9": "Maestro delle reazioni: Etere abbondante, incantesimi di Vento e Acqua su una verga di Terra"}
+emoji = {"1": "⚔️", "2": "🗡️", "3": "🔮", "4": "🛡️", "5": "🪓", "6": "🧪", "7": "🥷", "8": "💀", "9": "🌈"}
 classes_table = table(["Classe", "HP", "Stile", "Maestria Lv.2", "Sblocco"],
     [(f"{emoji[k]} **{c['role']}**", c["max_hp"], style[k], c["mastery"]["2"]["desc"].split(":")[0], class_unlock.get(k, "—")) for k, c in classes.items()])
 

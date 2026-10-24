@@ -85,7 +85,7 @@ class DataDrivenBonusTest(Sandbox):
         self.assertEqual(boosted.bonus_def - base.bonus_def, 5)
         self.assertEqual(boosted.base_dodge - base.base_dodge, 10)
         self.assertAlmostEqual(boosted.exp_multiplier - base.exp_multiplier, 0.15)
-        self.assertEqual(boosted.max_hp - base.max_hp, 15)
+        self.assertEqual(boosted.max_hp - base.max_hp, 15 + 10)  # Paladino ed Elementalista
         self.assertEqual(boosted.base_acc - base.base_acc, 5)
         self.assertEqual(boosted.base_crit - base.base_crit, 5)
         self.assertEqual(boosted.base_lifesteal - base.base_lifesteal, 1)
