@@ -63,7 +63,7 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 - 🔥 **Un campo che ricorda.** Chi salvi nel Labirinto viene a scaldarsi al tuo fuoco, ti parla di ciò che hai fatto e ti aiuta a costruire.
 - 🌟 **50 reliquie** che piegano le regole: danni raddoppiati, scudi, vampirismo, oro moltiplicato.
 - 🏕️ **Meta-progressione profonda**: potenziamenti permanenti, una Forgia per sbloccare equipaggiamento, artigiani da liberare, un Archivio di lore con bonus, imprese da completare.
-- ♾️ **Modalità Infinita** dopo la prima vittoria, per chi vuole spingersi oltre il piano 30.
+- ♾️ **Modalità Infinita** dopo la prima vittoria: oltre il piano 30 inizia il **Ciclo del Labirinto**. I sei biomi tornano in un ordine nuovo a ogni ciclo, ogni ciclo è un'Eco più dura (Eco II, Eco III…) e alla fine di ognuno ti attende di nuovo il DIO ANTICO.
 
 ## 🧬 Gli eroi
 
@@ -182,7 +182,7 @@ E in **Impostazioni** scegli la velocità del testo: lenta, normale, veloce o is
 | 🏃 Fuga dal labirinto | 100% dell'Oro posseduto |
 | 🏆 Vittoria al piano 30 | 100% dell'Oro + 1.000 |
 
-A questo si aggiungono **50 Essenza per ogni boss** sconfitto, il moltiplicatore del grado di **Ascensione** (o del primo tentativo della **Sfida del Giorno**) e, oltre il piano 30 in Modalità Infinita, un ulteriore **×1,5**.
+A questo si aggiungono **50 Essenza per ogni boss** sconfitto, il moltiplicatore del grado di **Ascensione** (o del primo tentativo della **Sfida del Giorno**) e, oltre il piano 30 in Modalità Infinita, un ulteriore **×1,5**, che cresce del 25% per ogni Eco oltre la seconda.
 
 ## 📚 Enciclopedia
 
@@ -411,7 +411,7 @@ Certe combinazioni sullo stesso oggetto formano una **parola runica**, con un ef
 </details>
 
 <details>
-<summary>🏆 Le 14 imprese</summary>
+<summary>🏆 Le 15 imprese</summary>
 
 | Impresa | Obiettivo | Ricompensa |
 |---|---|---|
@@ -429,6 +429,7 @@ Certe combinazioni sullo stesso oggetto formano una **parola runica**, con un ef
 | **Furia Cieca** | Supera un piano mancando più della metà dei tuoi attacchi (almeno 6 attacchi). | Tratto: Titano |
 | **Tiratore Scelto** | Infliggi 5 colpi Super Efficaci ai Boss in una singola run. | Sblocco: Filtro Preciso |
 | **Assaggiatore di Veleni** | Sopravvivi a un danno letale rimanendo a 1 HP (es. Benedizione o Fiala del Caos). | Sblocco: Maschera Antigas |
+| **L'Eco Infinita** | Raggiungi l'Eco III della Modalità Infinita (piano 61). | Essenza: 1500 |
 
 </details>
 
@@ -459,7 +460,7 @@ Ogni scelta mostra i suoi effetti reali, molte opzioni esistono solo per certe c
 | Fasi dei boss | 27 |
 | Rune / parole runiche | 17 / 10 |
 | Eventi narrativi | 58 |
-| Imprese | 14 |
+| Imprese | 15 |
 | Tomi dell'Archivio | 3 |
 | Potenziamenti permanenti | 14 |
 | Elementi / Risonanze | 7 / 6 |
@@ -522,6 +523,7 @@ I **test di contratto** (`tests/test_contracts.py`, `tests/test_modes.py`) verif
 - [x] Gradi di Ascensione e Sfida del Giorno
 - [x] Stili dei nemici, un boss per ogni bioma, una difesa per ogni classe
 - [x] Sei nemici nativi per ogni bioma
+- [x] Il Ciclo del Labirinto: biomi che tornano in Eco sempre più dure oltre il piano 30
 
 ---
 

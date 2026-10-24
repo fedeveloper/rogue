@@ -4,7 +4,7 @@ import sys
 import time
 import traceback
 from ui import Colors, clear_screen, delay_print, interactive_menu, display_msg, wait_enter
-from data_manager import PROFILE_MANAGER, GAME_DATA, RAW_DATA, get_biome, update_game_data
+from data_manager import PROFILE_MANAGER, GAME_DATA, RAW_DATA, cycle_of, echo_name, get_biome, set_cycle_seed, update_game_data
 from entities import Player, generate_potion, get_random_relic
 from rooms import audacity_text, combat_room, gain_audacity, mystery_room, vendor_room, campfire_room, treasure_room, trap_room
 from events import event_room
@@ -55,7 +55,8 @@ def _check_feats(player: Player, floor: int, infinite: bool):
         "feat_lama_cristallo": 1 if floor >= 15 and not player.run_tracker.get("weapon_changed") else 0,
         "feat_furia_cieca": 1 if player.run_tracker.get("blind_fury_done") else 0,
         "feat_tiratore_scelto": player.run_tracker.get("super_effective_hits", 0),
-        "feat_assaggiatore": 1 if player.run_tracker.get("1_hp_survive") else 0
+        "feat_assaggiatore": 1 if player.run_tracker.get("1_hp_survive") else 0,
+        "feat_eco": cycle_of(floor) + 1 if infinite else 0
     }
 
     for f_id, f_data in GAME_DATA["meta"]["feats"].items():
@@ -65,6 +66,15 @@ def _check_feats(player: Player, floor: int, infinite: bool):
             if f_data["reward_type"] in ["unlock", "class"] and f_data["reward_id"] not in PROFILE_MANAGER.unlocked_ids: PROFILE_MANAGER.unlocked_ids.append(f_data["reward_id"])
             elif f_data["reward_type"] == "perk": PROFILE_MANAGER.set_perk(f_data["reward_id"], True)
             elif f_data["reward_type"] == "trait": display_msg(f"Nuovo Tratto Sbloccato: {f_data['name']}")
+            elif f_data["reward_type"] == "essence":
+                PROFILE_MANAGER.essence += f_data["reward_id"]
+                display_msg(f"{Colors.CYAN}+{f_data['reward_id']} Essenza Astrale.{Colors.RESET}")
+
+def cycle_essence_mult(floor: int) -> float:
+    """Il moltiplicatore dell'Essenza oltre il piano 30: ×1,5 nell'Eco II, e una quota in più per ogni Eco successiva."""
+    extra = GAME_DATA["meta"]["cycle"]["essence_pct_per_cycle"] * max(0, cycle_of(floor) - 1) / 100
+    return INFINITE_MODE_ESSENCE_MULTIPLIER * (1 + extra)
+
 
 def evaluate_run(player: Player, floor: int, infinite: bool):
     display_msg("\n" + ("="*50))
@@ -92,7 +102,7 @@ def evaluate_run(player: Player, floor: int, infinite: bool):
     else:
         essence_multi = modes.ascension_essence_mult(player.ascension)
     final_essence = int(player.essence_gathered * essence_multi)
-    if infinite and floor > INFINITE_MODE_THRESHOLD: final_essence = int(final_essence * INFINITE_MODE_ESSENCE_MULTIPLIER)
+    if infinite and floor > INFINITE_MODE_THRESHOLD: final_essence = int(final_essence * cycle_essence_mult(floor))
     
     PROFILE_MANAGER.essence += final_essence
     PROFILE_MANAGER.stats["total_gold"] += player.gold
@@ -474,9 +484,24 @@ def play_game(infinite_mode=False, daily=None):
         modes.end_run()
 
 
+def enter_cycle(player: Player, floor: int) -> bool:
+    """Al primo piano di un nuovo ciclo del Labirinto (31, 61…): lo annuncia, lo annota per l'Epitaffio e aggiorna il record."""
+    cycle = cycle_of(floor)
+    if not cycle or floor != cycle * INFINITE_MODE_THRESHOLD + 1: return False
+    echo = echo_name(cycle)
+    delay_print(f"\n{Colors.MAGENTA}{Colors.BOLD}⏳ {echo.upper()}{Colors.RESET}", 0.05)
+    display_msg(f"{Colors.MAGENTA}{GAME_DATA['meta']['cycle']['intro'].format(echo=echo)}{Colors.RESET}")
+    epitaph.note(player, "echo", echo=echo)
+    # best_echo è il numero dell'Eco (2 per l'Eco II); 0 finché non si è mai superato il piano 30
+    if cycle + 1 > PROFILE_MANAGER._data.get("best_echo", 0): PROFILE_MANAGER._data["best_echo"] = cycle + 1
+    return True
+
+
 def _descent(c_choice, t_choice, active_pacts, infinite_mode, grade, daily):
     player = Player(c_choice, t_choice, active_pacts)
     player.ascension, player.daily = grade, daily
+    # L'ordine dei biomi nei cicli oltre il piano 30 nasce dal caso della discesa (dal seme del giorno nella Sfida)
+    set_cycle_seed(random.randrange(1 << 30))
     _apply_mode_start(player)
     start_of_run_boon(player)
     delay_print(f"\nLe porte si chiudono alle tue spalle, {player.role}.", 0.03); time.sleep(1)
@@ -501,10 +526,11 @@ def _descent(c_choice, t_choice, active_pacts, infinite_mode, grade, daily):
         clear_screen()
         delay_print(f"\n{Colors.MAGENTA}{Colors.BOLD}==== PIANO {floor} ===={Colors.RESET}", 0.05)
         biome = get_biome(floor)
-        biome_title = f" · {biome['icon']} {biome['name']}" if biome else ""
+        biome_title = f" · {biome['icon']} {biome['name']}" + (f" · {Colors.MAGENTA}{biome['echo']}{Colors.CYAN}" if biome.get("echo") else "") if biome else ""
         biome_title += " · 📅 Sfida del Giorno" if daily else (f" · {Colors.RED}Ascensione {grade}{Colors.CYAN}" if grade else "")
         # L'atmosfera del bioma resta sopra la mappa per tutto il piano; entrando in un bioma nuovo se ne legge il pericolo
         biome_intro = f"{Colors.CYAN}{random.choice(biome['intro'])}{Colors.RESET}\n" if biome else ""
+        enter_cycle(player, floor)
         if biome and floor == biome["floors"][0]:
             delay_print(f"\n{Colors.MAGENTA}{Colors.BOLD}{biome['icon']}  {biome['name'].upper()}{Colors.RESET}", 0.03)
             delay_print(biome_intro, 0.03)
@@ -668,7 +694,9 @@ def main():
                        ("📅 Sfida del Giorno", daily_menu),
                        ("Campo Base (Potenziamenti, Forgia, Taverna)", base_camp)]
             if PROFILE_MANAGER.won_normal:
-                actions.append((f"{Colors.RED}Inizia Run Infinita (Oltre i {INFINITE_MODE_THRESHOLD} Piani){Colors.RESET}", lambda: play_game(infinite_mode=True)))
+                best = PROFILE_MANAGER._data.get("best_echo", 0)
+                record = f" · record: {echo_name(best - 1)}" if best >= 2 else ""
+                actions.append((f"{Colors.RED}Inizia Run Infinita (Oltre i {INFINITE_MODE_THRESHOLD} Piani){record}{Colors.RESET}", lambda: play_game(infinite_mode=True)))
             actions.append(("Impostazioni", settings_menu))
             actions.append(("Esci dal gioco", None))
             

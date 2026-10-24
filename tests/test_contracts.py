@@ -787,10 +787,11 @@ class RulesContractTest(Sandbox):
             PROFILE_MANAGER._data["stats"]["total_bosses"] = 0
             p = self.hero(); p.run_tracker = {"escapes": 0, "fusions": 0}; p.escaped = False
             setup(p)
-            with quiet(): roguelike._check_feats(p, getattr(p, "_floor", floor), False)
+            with quiet(): roguelike._check_feats(p, getattr(p, "_floor", floor), getattr(p, "_infinite", False))
             return PROFILE_MANAGER._data["completed_feats"]
         def tr(**kv): return lambda p: p.run_tracker.update(kv)
         def at_floor(n, **kv): return lambda p: (setattr(p, "_floor", n), p.run_tracker.update(kv))
+        def infinite_at(n): return lambda p: (setattr(p, "_floor", n), setattr(p, "_infinite", True))
         def escaped_with(gold): return lambda p: (setattr(p, "escaped", True), setattr(p, "gold", gold))
         def bosses(n): return lambda p: (PROFILE_MANAGER._data["stats"].update(total_bosses=n - 1), setattr(p, "bosses_killed", 1))
         def elements(w, a): return lambda p: (setattr(p, "escaped", True), setattr(p.weapon, "element", w), setattr(p.armor, "element", a))
@@ -809,6 +810,7 @@ class RulesContractTest(Sandbox):
             "feat_furia_cieca": (None, tr(blind_fury_done=True), tr()),
             "feat_tiratore_scelto": (5, tr(super_effective_hits=5), tr(super_effective_hits=4)),
             "feat_assaggiatore": (1, tr(**{"1_hp_survive": True}), tr()),
+            "feat_eco": (61, infinite_at(61), infinite_at(60)),
         }
         self.assertEqual(set(table), set(GAME_DATA["meta"]["feats"]))
         for fid, (number, done, below) in table.items():

@@ -154,6 +154,13 @@
             "target": 1,
             "reward_type": "unlock",
             "reward_id": "maschera_antigas"
+        },
+        "feat_eco": {
+            "name": "L'Eco Infinita",
+            "desc": "Raggiungi l'Eco III della Modalità Infinita (piano 61).",
+            "target": 3,
+            "reward_type": "essence",
+            "reward_id": 1500
         }
     },
     "rooms": {
@@ -198,5 +205,10 @@
         "veil": {"threshold": 50, "chance": 25},
         "voice": {"threshold": 75, "chance": 30},
         "desc": "Cresce con le scelte oscure e cala con quelle pure, e vale per la sola discesa. Ogni 10 punti danno +2 ATK. Da 50 il Labirinto ti offusca la vista: il 25% delle volte non vedi gli effetti di una scelta. Da 75 ti nasconde il nemico: il 30% delle volte non vedi la mossa che prepara."
+    },
+    "cycle": {
+        "hazard_pct_per_cycle": 25, "hazard_max_mult": 2.0, "chance_cap": 90, "essence_pct_per_cycle": 25,
+        "intro": "Il Paradosso Temporale della Soglia ti rimanda indietro. Il Labirinto ricomincia, ma non è più lo stesso: è la sua {echo}, e ogni pericolo è più duro.",
+        "desc": "Oltre il piano 30 i sei biomi tornano, ogni 30 piani, in un ordine nuovo (la Soglia resta l'ultima). Ogni ciclo è un'Eco: i pericoli che hanno una regola numerica crescono del 25% a ciclo, fino al doppio (le probabilità al massimo al 90%); i nativi tornano forti quanto i nemici più profondi; al piano 60, 90 e così via ti attende di nuovo il DIO ANTICO. L'Essenza oltre il 30 vale ×1,5, e il 25% in più per ogni Eco oltre la seconda."
     }
 }

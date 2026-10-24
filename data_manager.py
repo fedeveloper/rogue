@@ -1,9 +1,12 @@
+import copy
 import os
+import random
+import re
 import sys
 import json
 from typing import Dict, Any
 from ui import Colors, set_text_speed
-from constants import TEXT_SPEEDS, DEFAULT_TEXT_SPEED
+from constants import TEXT_SPEEDS, DEFAULT_TEXT_SPEED, INFINITE_MODE_THRESHOLD
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -28,7 +31,7 @@ class ProfileManager:
             "story": {"flags": {}, "counters": {}, "seen_events": {}},
             "codex": {"enemies": {}, "letters": [], "relics": [], "reactions": [], "runes": [], "runewords": []},
             "settings": {"text_speed": DEFAULT_TEXT_SPEED},
-            "ascension": {"best_win": 0}, "daily": {}, "nemeses": [], "nemeses_fallen": [], "boss_grudges": {}, "cemetery": [],
+            "ascension": {"best_win": 0}, "best_echo": 0, "daily": {}, "nemeses": [], "nemeses_fallen": [], "boss_grudges": {}, "cemetery": [],
             "perks": {
                 "hp_lvl": 0, "gold_lvl": 0, "discount_lvl": 0, "sesto_senso": False, "scarpisti": False,
                 "dodge_lvl": 0, "acc_lvl": 0, "exp_lvl": 0, "farmacista": False, "altare_benedizione": False,
@@ -196,9 +199,78 @@ MULTIPLIERS = {}
 
 update_game_data()
 
+# ------------------------------------------------------------------ il Ciclo del Labirinto
+# Oltre il piano 30 (Modalità Infinita) i biomi tornano in cicli di 30 piani, in un ordine mescolato a ogni ciclo
+# (la Soglia resta l'ultima). Ogni ciclo è un'Eco: i pericoli del bioma si inaspriscono (meta.json → cycle).
+CYCLE = {"seed": 0}
+_CYCLE_CACHE = {}
+
+
+def set_cycle_seed(seed: int):
+    """Il seme della discesa: decide l'ordine dei biomi in ogni ciclo."""
+    CYCLE["seed"] = seed
+    _CYCLE_CACHE.clear()
+
+
+def cycle_of(floor: int) -> int:
+    """0 per i piani 1–30, 1 per i piani 31–60 (Eco II), e così via."""
+    return max(0, (floor - 1) // INFINITE_MODE_THRESHOLD)
+
+
+def echo_name(cycle: int) -> str:
+    """Il nome dell'Eco di un ciclo: "Eco II" per il primo ciclo oltre il 30. Vuoto per la discesa normale."""
+    if cycle <= 0: return ""
+    n, out = cycle + 1, ""
+    for value, digit in ((1000, "M"), (900, "CM"), (500, "D"), (400, "CD"), (100, "C"), (90, "XC"), (50, "L"), (40, "XL"), (10, "X"), (9, "IX"), (5, "V"), (4, "IV"), (1, "I")):
+        while n >= value: out, n = out + digit, n - value
+    return f"Eco {out}"
+
+
+def cycle_order(cycle: int) -> list:
+    """Gli id dei biomi nell'ordine del ciclo: quello dei dati per il primo, mescolato per gli altri, con l'ultimo bioma sempre in fondo."""
+    ids = [b["id"] for b in sorted(GAME_DATA["biomes"], key=lambda b: b["floors"][0])]
+    if cycle <= 0: return ids
+    middle = ids[:-1]
+    random.Random(f"{CYCLE['seed']}-{cycle}").shuffle(middle)
+    return middle + ids[-1:]
+
+
+def hazard_mult(cycle: int) -> float:
+    rule = GAME_DATA["meta"]["cycle"]
+    return min(rule["hazard_max_mult"], 1 + rule["hazard_pct_per_cycle"] * cycle / 100)
+
+
+def _echo_biome(base: dict, cycle: int, first_floor: int) -> dict:
+    """Il bioma come torna in un'Eco: piani spostati, regole del pericolo più dure e descrizione con i numeri nuovi."""
+    b = copy.deepcopy(base)
+    span = base["floors"][1] - base["floors"][0]
+    b["floors"] = [first_floor, first_floor + span]
+    b["cycle"], b["echo"] = cycle, echo_name(cycle)
+    mult, cap = hazard_mult(cycle), GAME_DATA["meta"]["cycle"]["chance_cap"]
+    changed = {}
+    for params in b.get("rules", {}).values():
+        for key, old in params.items():
+            params[key] = changed[old] = min(cap, round(old * mult))
+    # La descrizione riporta i valori delle regole come "N%": si aggiornano tutti insieme, in un solo passaggio
+    if "hazard" in b:
+        b["hazard"]["desc"] = re.sub(r"(?<![\d,])(\d+)%", lambda m: f"{changed.get(int(m[1]), m[1])}%", b["hazard"]["desc"])
+    return b
+
+
 def get_biome(floor: int):
-    """Il bioma del piano, o None oltre l'ultimo (Modalità Infinita)."""
-    return next((b for b in GAME_DATA["biomes"] if b["floors"][0] <= floor <= b["floors"][1]), None)
+    """Il bioma del piano. Oltre il piano 30 è il bioma del ciclo, con il nome della sua Eco e le regole inasprite."""
+    cycle = cycle_of(floor)
+    if cycle == 0:
+        return next((b for b in GAME_DATA["biomes"] if b["floors"][0] <= floor <= b["floors"][1]), None)
+    key = (CYCLE["seed"], cycle)
+    if key not in _CYCLE_CACHE:
+        by_id = {b["id"]: b for b in GAME_DATA["biomes"]}
+        start, echoes = cycle * INFINITE_MODE_THRESHOLD + 1, []
+        for bid in cycle_order(cycle):
+            echoes.append(_echo_biome(by_id[bid], cycle, start))
+            start = echoes[-1]["floors"][1] + 1
+        _CYCLE_CACHE[key] = echoes
+    return next((b for b in _CYCLE_CACHE[key] if b["floors"][0] <= floor <= b["floors"][1]), None)
 
 def get_element_icon(el_name: str) -> str: 
     return f"{E_ICONS.get(el_name, '')} {el_name}"

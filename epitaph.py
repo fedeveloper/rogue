@@ -42,6 +42,7 @@ def compose(player, floor: int, born_nemesis: Optional[str] = None) -> List[str]
     facts = {
         "ascension": {"grade": player.ascension} if player.ascension else None,
         "daily": {"date": player.daily["date"]} if player.daily else None,
+        "echo": {"echo": _last(player, "echo")["echo"]} if _last(player, "echo") else None,
         "nemesis": {"nemesis": _last(player, "nemesis_defeated")["name"]} if _last(player, "nemesis_defeated") else None,
         "bosses": {"bosses": len(bosses), "last_boss": bosses[-1]["name"]} if bosses else None,
         "runeword": {"runeword": _last(player, "runeword")["name"]} if _last(player, "runeword") else None,

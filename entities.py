@@ -1,7 +1,7 @@
 import random
 from typing import List, Dict
 from ui import Colors, delay_print, clear_screen, display_msg, interactive_menu
-from data_manager import GAME_DATA, RAW_DATA, PROFILE_MANAGER, ELEMENTS, MULTIPLIERS, get_biome, get_element_icon
+from data_manager import GAME_DATA, RAW_DATA, PROFILE_MANAGER, ELEMENTS, MULTIPLIERS, cycle_of, echo_name, get_biome, get_element_icon
 from relic_effects import create_relic_effect
 from archive import get_archive_bonus
 from codex import record_relic
@@ -99,20 +99,34 @@ def floor_multiplier(floor: int) -> float:
 
 _TYPICAL = {}
 
+def generic_base(floor: int) -> tuple:
+    """(HP, ATK) di base medi dei nemici generici nella finestra di profondità del piano, senza crescita."""
+    pool = {n: d for n, d in RAW_DATA["enemies"].items() if "biome" not in d and "lair" not in d}
+    ranked = sorted(pool, key=lambda n: pool[n]["base_hp"] * pool[n]["base_atk"])
+    window = min(len(ranked), ENEMY_DEPTH_WINDOW)
+    progress = min(1.0, (max(1, floor) - 1) / (INFINITE_MODE_THRESHOLD - 1))
+    lo = max(0, min(round(progress * (len(ranked) - 1) - (window - 1) / 2), len(ranked) - window))
+    names = ranked[lo:lo + window]
+    return sum(pool[n]["base_hp"] for n in names) / window, sum(pool[n]["base_atk"] for n in names) / window
+
 def typical_enemy(floor: int) -> tuple:
     """(HP, ATK) attesi di un nemico normale al piano: media della finestra di profondità, crescita e salti di piano."""
     floor = max(1, floor)
     if floor not in _TYPICAL:
-        pool = {n: d for n, d in RAW_DATA["enemies"].items() if "biome" not in d and "lair" not in d}
-        ranked = sorted(pool, key=lambda n: pool[n]["base_hp"] * pool[n]["base_atk"])
-        window = min(len(ranked), ENEMY_DEPTH_WINDOW)
-        progress = min(1.0, (floor - 1) / (INFINITE_MODE_THRESHOLD - 1))
-        lo = max(0, min(round(progress * (len(ranked) - 1) - (window - 1) / 2), len(ranked) - window))
-        names = ranked[lo:lo + window]
-        hp = (sum(pool[n]["base_hp"] for n in names) / window + int((floor - 1) * ENEMY_HP_PER_FLOOR)) * floor_multiplier(floor)
-        atk = (sum(pool[n]["base_atk"] for n in names) / window + int((floor - 1) * ENEMY_ATK_PER_FLOOR) + 0.5) * floor_multiplier(floor)
+        base_hp, base_atk = generic_base(floor)
+        hp = (base_hp + int((floor - 1) * ENEMY_HP_PER_FLOOR)) * floor_multiplier(floor)
+        atk = (base_atk + int((floor - 1) * ENEMY_ATK_PER_FLOOR) + 0.5) * floor_multiplier(floor)
         _TYPICAL[floor] = (hp, atk)
     return _TYPICAL[floor]
+
+def echo_native_base(data: dict) -> tuple:
+    """Le statistiche di base di un nativo quando il suo bioma torna in un'Eco: forte, rispetto ai nemici più profondi,
+    quanto lo era rispetto ai generici dei piani del suo bioma."""
+    lo, hi = next(b["floors"] for b in RAW_DATA["biomes"] if b["id"] == data["biome"])
+    home = [generic_base(lo), generic_base(hi)]
+    home_hp, home_atk = sum(h for h, _ in home) / 2, sum(a for _, a in home) / 2
+    deep_hp, deep_atk = generic_base(INFINITE_MODE_THRESHOLD)
+    return round(data["base_hp"] * deep_hp / home_hp), round(data["base_atk"] * deep_atk / home_atk)
 
 
 def boss_quality(data: dict) -> tuple:
@@ -549,8 +563,10 @@ class Enemy:
             self.atk = int(atk * data["atk_mult"] / floor_multiplier(floor)) + random.randint(0, 1)
             self.gold_drop, self.exp_drop = max(5, 5 + int(floor * 3.5)), 30 + (floor * 10)
         else:
-            self.hp = data["base_hp"] + int(lvl_scale * ENEMY_HP_PER_FLOOR) + random.randint(-5, 5)
-            self.atk = data["base_atk"] + int(lvl_scale * ENEMY_ATK_PER_FLOOR) + random.randint(0, 1)
+            # Nelle Eco oltre il piano 30 i nativi tornano forti quanto i nemici più profondi
+            base_hp, base_atk = echo_native_base(data) if data.get("biome") and cycle_of(floor) else (data["base_hp"], data["base_atk"])
+            self.hp = base_hp + int(lvl_scale * ENEMY_HP_PER_FLOOR) + random.randint(-5, 5)
+            self.atk = base_atk + int(lvl_scale * ENEMY_ATK_PER_FLOOR) + random.randint(0, 1)
             self.gold_drop, self.exp_drop = max(5, 5 + int(floor * 3.5)), 30 + (floor * 10)
             
         if floor >= 10:
@@ -574,6 +590,8 @@ class Enemy:
             self.hp = int(self.hp * 0.6)
             self.atk = int(self.atk * 0.6)
             self.name += f"{Colors.CYAN} (Debilitato){Colors.RESET}"
+        # Il DIO ANTICO che attende alla fine di ogni ciclo porta il nome della sua Eco
+        if data.get("final_boss") and cycle_of(floor): self.name += f"{Colors.MAGENTA} ({echo_name(cycle_of(floor))}){Colors.RESET}"
             
         # Gradi di Ascensione e modificatori della Sfida del Giorno
         self.atk = int(self.atk * modes.rule("enemy_atk_mult"))

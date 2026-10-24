@@ -6,7 +6,7 @@ Ciò che non hai ancora scoperto compare come "???".
 """
 from typing import List, Tuple
 
-from data_manager import GAME_DATA, PROFILE_MANAGER, RAW_DATA, get_element_icon
+from data_manager import GAME_DATA, PROFILE_MANAGER, RAW_DATA, echo_name, get_element_icon
 from ui import Colors, clear_screen, display_msg, interactive_menu, wait_enter
 
 UNKNOWN = f"{Colors.RED}???{Colors.RESET}"
@@ -261,7 +261,8 @@ def show_codex():
         stats = sections()
         options = [f"{name} ({found}/{total})" for name, found, total in stats]
         prompt = (f"{Colors.MAGENTA}{Colors.BOLD}=== 📖 IL CODICE DEL LABIRINTO ==={Colors.RESET}\n"
-                  f"Completato al {Colors.CYAN}{completion()}%{Colors.RESET}. Ciò che non hai ancora scoperto è segnato con ???")
+                  f"Completato al {Colors.CYAN}{completion()}%{Colors.RESET}. Ciò che non hai ancora scoperto è segnato con ???"
+                  + (f"\nNel Ciclo del Labirinto sei arrivato fino all'{Colors.MAGENTA}{echo_name(best - 1)}{Colors.RESET}." if (best := PROFILE_MANAGER._data.get("best_echo", 0)) >= 2 else ""))
         idx = interactive_menu(options, prompt, cancellable=True)
         if idx == -1: break  # "Indietro", aggiunto dal menu
         name = stats[idx][0]

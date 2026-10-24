@@ -160,7 +160,9 @@ class BiomeTest(Sandbox):
         ids = [get_biome(f)["id"] for f in range(1, 31)]
         self.assertEqual(ids[:5], ["chiostri"] * 5)
         self.assertEqual(len(set(ids)), len(GAME_DATA["biomes"]))
-        self.assertIsNone(get_biome(31))
+        # oltre il 30 non si esce dai biomi: ricominciano nel Ciclo del Labirinto (test_cycle.py)
+        self.assertEqual(get_biome(31)["cycle"], 1)
+        self.assertNotIn("cycle", get_biome(30))
 
     def test_biome_data_is_consistent(self):
         biome_ids = {b["id"] for b in GAME_DATA["biomes"]}
@@ -209,7 +211,8 @@ class BiomeTest(Sandbox):
                 self.assertIn(r, (1, 2, 3))
                 self.assertIn(d["event_id"], biome["signature_events"])
                 self.assertIn(biome["hazard"]["name"], floor_map.room_label(d, biome=biome))
-        self.assertFalse(any(d.get("signature") for row in self.make(31) for d in row))
+        # anche nelle Eco oltre il piano 30 ogni piano ha la sua stanza speciale
+        self.assertEqual(sum(1 for row in self.make(31, player=self.hero()) for d in row if d.get("signature")), 1)
 
     def test_special_rooms_rotate_within_a_run(self):
         p = self.hero()
