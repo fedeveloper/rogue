@@ -130,7 +130,7 @@ In ogni piano una stanza della mappa, segnata con l'icona del bioma, è una dell
 | 👹 **Scontro** | Un nemico adatto al piano. La mappa mostra quanta EXP vale; vincendo ottieni anche Oro e a volte una pozione. |
 | 👺 **Élite** | Dal piano 2. Un campione più duro (HP ×1,6, ATK ×1,3) che vale il doppio di EXP e Oro e lascia sempre una **reliquia o un pezzo d'equipaggiamento**, a volte epico. |
 | 💰 **Mercante** | Compra armi, armature, monili e pozioni; vendi ciò che non ti serve. Dopo ogni acquisto il resto della merce rincara del 10%. |
-| 🔥 **Falò** | *Riposa* (50% degli HP) **oppure** *affila l'arma* (+3 ATK per 50 Oro): una delle due, poi il falò si spegne. Prima puoi usare l'**Altare dell'Evoluzione**, la **purificazione** e le **Rune e Incastoni** quante volte vuoi. |
+| 🔥 **Falò** | *Riposa* (50% degli HP) **oppure** *affila l'arma* (+3 ATK per 50 Oro) **oppure** *medita* (tutto l'Etere): una delle tre, poi il falò si spegne. Prima puoi usare l'**Altare dell'Evoluzione**, la **purificazione** e le **Rune e Incastoni** quante volte vuoi. |
 | 💎 **Forziere** | Oro, a volte un monile, una pozione o una reliquia. Dal piano 3 può essere **chiuso a chiave** (lo forzi pagando l'8% degli HP massimi, in cambio di un bottino garantito) o un **Mimic**: un mostro che, sconfitto, restituisce il doppio. La mappa mostra la probabilità del rischio, che cresce con la profondità. A volte il coperchio sembra respirare: può essere un Mimic, ma anche no. |
 | 💀 **Trappola** | Custodisce sempre un oggetto. Scegli come affrontarla: **disinnescarla** (prova di Precisione, se riesce recuperi anche dell'Oro), **attraversarla di corsa** (prova di Schivata) o **tornare indietro** senza danni e senza bottino. Il menu mostra le probabilità e i danni in caso di fallimento; chi la affronta prende il bottino anche se la prova fallisce. |
 | 🎭 **Evento** | Una piccola storia con bivi, a volte in più scene: vedi *Gli eventi* qui sotto. Alcuni nascondono un artigiano prigioniero da liberare. |
@@ -191,6 +191,16 @@ Un incantesimo d'attacco colpisce sempre (non si schiva). I suoi danni sono una 
 | 🌑 **Sifone d'Ombra** | 🌑 Tenebra | 4 | Danni pari al 70% del tuo ATK, marchio di Tenebra, e ti cura della metà (50%) dei danni inflitti. |
 | 🔷 **Dissolvi** | ⚪ Normale | 3 | Infrange lo scudo della Barriera e le Scaglie del nemico, poi infligge danni pari al 50% del tuo ATK. |
 | 💥 **Detonazione** | ⚪ Normale | 5 | Fa esplodere il marchio che il nemico porta: danni pari al 150% del tuo ATK (50% se non ha un marchio). |
+| 🌋 **Vampa** | 🔥 Fuoco | 4 | Danni pari al 60% del tuo ATK, marchio di Fuoco, e il nemico brucia di Magma per 3 turni. |
+| 🌊 **Marea Curativa** | 💧 Acqua | 5 | Ti cura del 20% degli HP massimi e ti libera da Veleno e Sanguinamento. |
+| 🛡️ **Pelle di Pietra** | 🪨 Terra | 3 | Per il resto dello scontro la tua Difesa cresce del 50% di quella dell'armatura. |
+| 💨 **Passo del Vento** | 🌪️ Vento | 3 | Fuggi di sicuro dallo scontro (non dai boss). |
+| 🔆 **Lancia di Luce** | ✨ Luce | 4 | Danni pari al 110% del tuo ATK e marchio di Luce. |
+| 🕯️ **Maledizione** | 🌑 Tenebra | 3 | Per il resto dello scontro l'ATK del nemico scende del 25% (una volta sola per nemico). |
+| 🧊 **Morsa di Ghiaccio** | 💧 Acqua | 5 | Danni pari al 60% del tuo ATK, marchio d'Acqua, e il nemico è congelato: perde il suo prossimo turno. |
+| ⛈️ **Tempesta** | 🌪️ Vento | 5 | Danni pari al 130% del tuo ATK e marchio di Vento. |
+| 🕊️ **Purificazione** | ✨ Luce | 3 | Ti libera da Veleno e Sanguinamento e ti cura del 10% degli HP massimi. |
+| 🌟 **Esplosione Arcana** | ⚪ Normale | 6 | Danni pari al 160% del tuo ATK, senza elemento. |
 
 | Classe | Etere iniziale | Incantesimi |
 |---|---|---|
@@ -204,6 +214,10 @@ Un incantesimo d'attacco colpisce sempre (non si schiva). I suoi danni sono una 
 | Negromante | 14 | Sifone d'Ombra, Detonazione |
 
 All'Etere iniziale si aggiungono 2 punti per ogni punto di **Arcano** (il Mago, con Arcano 2, parte con 20). Gli incantesimi lanciati almeno una volta compaiono nel Codice, alla pagina *Incantesimi*.
+
+**Pergamene e posti.** Leggendo una pergamena impari il suo incantesimo. Ne tieni a mente al massimo 3: se non c'è posto, scegli quale dimenticare. Le pergamene si trovano nei forzieri del boss (35%), dalle Élite (20%), nei Mimic (30%), nei depositi del Mistero (25%), nelle trappole (10%) e dal Mercante. Alcuni incantesimi (*Marea Curativa*, *Morsa di Ghiaccio*, *Tempesta*, *Esplosione Arcana*) si trovano in pergamena solo dopo averli sbloccati alla **Forgia**, nella categoria *Pergamene*. Le pergamene si leggono dallo zaino, fuori dal combattimento.
+
+**Magia fuori dal combattimento.** Le cure (*Luce Guaritrice*, *Marea Curativa*, *Purificazione*) si lanciano anche dallo zaino, spendendo Etere: è il modo di curarsi fra uno scontro e l'altro, ma l'Etere che usi ora non ti servirà nello scontro dopo. Al Falò puoi **Meditare** (tutto l'Etere torna, il falò si spegne) e la *Fiala d'Etere* ti restituisce metà dell'Etere massimo.
 
 ### Gli intenti dei nemici
 

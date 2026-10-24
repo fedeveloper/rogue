@@ -107,6 +107,13 @@ def _use_consumable(player, item, real_idx, in_combat) -> str:
         player.inventory.append(Rune(rid))
         display_msg(f"{Colors.CYAN}\nIl solvente scioglie il castone: {rune_rules.rune(rid)['name']} torna nello zaino.{Colors.RESET}")
         res = "turn_used" if in_combat else ""
+    elif cat == "ether":
+        if not player.spells or player.ether >= player.max_ether():
+            display_msg(f"{Colors.YELLOW}\nIl tuo Etere è già al massimo.{Colors.RESET}"); wait_enter("Premi INVIO..."); return ""
+        pct = next(c for c in GAME_DATA["consumables"] if c.get("category") == "ether")["ether_pct"]
+        gained = player.gain_ether(player.max_ether() * pct // 100)
+        display_msg(f"{Colors.CYAN}\nL'Etere ti scorre nelle vene: +{gained} ({player.ether}/{player.max_ether()}).{Colors.RESET}")
+        res = "turn_used" if in_combat else ""
     elif cat == "respec":
         display_msg(f"{Colors.YELLOW}\nIl Tomo dell'Oblio si legge solo al Falò, con calma.{Colors.RESET}"); wait_enter("Premi INVIO..."); return ""
     elif cat == "socket_chisel":
@@ -129,6 +136,24 @@ def _use_consumable(player, item, real_idx, in_combat) -> str:
     if consume_item: player.inventory.pop(real_idx)
     wait_enter("Premi INVIO...")
     return res
+
+def learn_scroll(player, scroll):
+    """Legge una pergamena: impara l'incantesimo, se serve dimenticandone uno (al massimo `slots`)."""
+    sid, s = scroll.spell_id, magic.spell(scroll.spell_id)
+    if sid in player.spells:
+        display_msg(f"\n{Colors.YELLOW}Conosci già {s['name']}: la pergamena si può vendere.{Colors.RESET}"); wait_enter("Premi INVIO..."); return
+    if len(player.spells) >= magic.rules()["slots"]:
+        options = [f"Dimentica {magic.spell(k)['name']}" for k in player.spells] + ["Tieni la pergamena per dopo"]
+        idx = interactive_menu(options, f"\n{Colors.CYAN}Ricordi già {len(player.spells)} incantesimi. Per imparare {s['name']} devi dimenticarne uno:{Colors.RESET}")
+        if not 0 <= idx < len(player.spells): return
+        display_msg(f"{Colors.MAGENTA}{magic.spell(player.spells[idx])['name']} svanisce dalla tua memoria.{Colors.RESET}")
+        player.spells[idx] = sid
+    else:
+        player.spells.append(sid)
+    player.inventory.remove(scroll)
+    display_msg(f"\n{Colors.CYAN}Le parole della pergamena si accendono e poi si spengono: ora conosci {s['icon']} {s['name']}.{Colors.RESET}")
+    wait_enter("Premi INVIO...")
+
 
 def show_inventory_menu(player, in_combat=False) -> str:
     while True:
@@ -169,12 +194,20 @@ def show_inventory_menu(player, in_combat=False) -> str:
                 elif item.type == "accessory": options.append(f"[Monile] {item.display_name} ({item.desc})")
                 elif item.type == "consumable": options.append(f"[Oggetto] {item.display_name}{count_str}")
                 elif item.type == "rune": options.append(f"[Runa] {item.display_name} ({item.desc})")
-                    
+                elif item.type == "scroll": options.append(f"[Pergamena] {item.display_name} ({item.desc})")
+        # Fuori dal combattimento si possono lanciare le cure che l'eroe conosce
+        outside = [] if in_combat else magic.castable_outside(player)
+        options += [f"[Incantesimo] {magic.label(player, sid)}" for sid in outside]
         options.append("Chiudi Zaino")
         
         idx = interactive_menu(options, prompt)
         
         if idx == len(options) - 1: return "closed"
+        spell_at = idx - (len(options) - 1 - len(outside))
+        if 0 <= spell_at < len(outside):
+            display_msg(f"\n{Colors.CYAN}{magic.cast_outside(player, outside[spell_at])}{Colors.RESET}")
+            wait_enter("Premi INVIO...")
+            continue
         
         if player.inventory and 0 <= idx < len(display_items):
             real_idx, item, _ = display_items[idx]
@@ -182,6 +215,11 @@ def show_inventory_menu(player, in_combat=False) -> str:
             if item.type == "consumable":
                 res = _use_consumable(player, item, real_idx, in_combat)
                 if res: return res
+
+            elif item.type == "scroll":
+                if in_combat:
+                    display_msg(f"\n{Colors.YELLOW}Le pergamene si leggono con calma, fuori dal combattimento.{Colors.RESET}"); wait_enter("Premi INVIO...")
+                else: learn_scroll(player, item)
 
             elif item.type == "rune":
                 display_msg(f"\n{Colors.CYAN}Le rune si incastonano al Falò, in un'arma o in un'armatura con un incastone libero (◇).{Colors.RESET}")

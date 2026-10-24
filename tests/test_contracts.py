@@ -494,7 +494,7 @@ class ConsumableContractTest(Sandbox):
     def contracts(self):
         return {"heal": self.c_heal, "antidote": self.c_antidote, "whetstone": self.c_whetstone, "smoke_bomb": self.c_smoke,
                 "chaos_tome": self.c_tome, "accuracy_potion": self.c_accuracy, "holy_water": self.c_holy, "chaos_vial": self.c_vial,
-                "rune_solvent": self.c_solvent, "socket_chisel": self.c_chisel, "respec": self.c_respec}
+                "rune_solvent": self.c_solvent, "socket_chisel": self.c_chisel, "respec": self.c_respec, "ether": self.c_ether}
 
     def item(self, category):
         d = next(c for c in RAW_DATA["consumables"] if c.get("category", "heal") == category)
@@ -565,6 +565,15 @@ class ConsumableContractTest(Sandbox):
             rooms.read_oblivion(p, item)
         self.assertEqual((p.attributes, p.unspent_points, p.inventory), (start, 2, []))
         self.assertEqual(p.max_hp, hp - GAME_DATA["attributes"]["attributes"]["vitalita"]["per_point"]["max_hp"])
+
+    def c_ether(self, d, item):
+        self.assertIn(f"{d['ether_pct']}% dell'Etere massimo", d["desc"]); self.assertIn("costa il turno", d["desc"])
+        p = self.hero(); p.ether = 0; p.inventory = [item]
+        self.assertEqual(self.drink(p, item, in_combat=True), "turn_used")
+        self.assertEqual(p.ether, p.max_ether() * d["ether_pct"] // 100)
+        p = self.hero(); p.inventory = [item]
+        with quiet(), mock.patch("builtins.input", return_value=""): inventory_menu._use_consumable(p, item, 0, False)
+        self.assertEqual(p.inventory, [item], "a Etere pieno non si consuma")
 
     def c_chisel(self, d, item):
         top = GAME_DATA["runes"]["rules"]["sockets"]["boss"]

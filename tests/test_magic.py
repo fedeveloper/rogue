@@ -63,9 +63,15 @@ class DataTest(Sandbox):
                 self.assertIn(sp["element"], GAME_DATA["elements"]["list"])
                 self.assertTrue(2 <= sp["cost"] <= 6)
                 self.assertLessEqual(set(sp["effects"]), set(magic.SPELL_EFFECT_KEYS))
-                for key in ("damage_pct", "heal_pct", "drain_pct", "detonate_pct"):
+                for key in ("damage_pct", "heal_pct", "drain_pct", "detonate_pct", "def_pct", "weaken_pct"):
                     if key in sp["effects"]: self.assertIn(f"{sp['effects'][key]}%", sp["desc"])
-                if "status" in sp["effects"]: self.assertIn(f"{sp['effects']['status']['duration']} turni", sp["desc"])
+                if "status" in sp["effects"]:
+                    turns = sp["effects"]["status"]["duration"]
+                    self.assertIn("prossimo turno" if turns == 1 else f"{turns} turni", sp["desc"])
+                if sp["effects"].get("cleanse"): self.assertIn("Veleno e Sanguinamento", sp["desc"])
+                if sp["effects"].get("escape"): self.assertIn("non dai boss", sp["desc"])
+                if sp.get("outside"): self.assertTrue(set(sp["effects"]) <= {"heal_pct", "cleanse"}, "fuori dal combattimento solo cure")
+                if sp.get("unlock_id"): self.assertGreater(sp["unlock_cost"], 0)
                 if "damage_pct" in sp["effects"] and sp["element"] != "Normale": self.assertIn("marchio", sp["desc"])
 
     def test_every_class_has_ether_and_known_spells(self):
@@ -76,8 +82,11 @@ class DataTest(Sandbox):
                 self.assertTrue(c["spells"])
                 self.assertLessEqual(set(c["spells"]), set(SPELLS))
                 for sid in c["spells"]: self.assertLessEqual(SPELLS[sid]["cost"], c["ether"], "deve poterlo lanciare a Etere pieno")
+                for sid in c["spells"]: self.assertNotIn("unlock_id", SPELLS[sid], "gli incantesimi iniziali non vanno sbloccati")
                 used |= set(c["spells"])
-        self.assertEqual(used, set(SPELLS), "ogni incantesimo ha almeno una classe")
+        # gli altri si trovano in pergamena (subito, o dopo lo sblocco alla Forgia)
+        self.assertTrue(set(SPELLS) - used)
+        self.assertTrue(all(len(c["spells"]) <= RULES["slots"] for c in RAW_DATA["classes"].values()))
         mage = RAW_DATA["classes"]["3"]
         self.assertEqual(max(c["ether"] for c in RAW_DATA["classes"].values()), mage["ether"], "il Mago ha più Etere di tutti")
 

@@ -50,7 +50,7 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 - 🌍 **Sei biomi, sei regole.** Ogni cinque piani il Labirinto cambia volto e legge: la *Nostalgia Letale* dei Chiostri, il *Gas del Silenzio* delle Miniere, la *Caduta Astrale* delle Guglie, la *Dissoluzione dell'Io* del Ventre, l'*Ebollizione Astrale* della Forgia e il *Paradosso Temporale* della Soglia. Ogni bioma ha sei nemici nativi, un boss tutto suo e le sue stanze speciali.
 - 🔥 **Combattimento tattico.** Il nemico **annuncia la sua mossa**, colpo pesante, guardia, rigenerazione o colpo infetto, e tu decidi se attaccare o difenderti. Sette elementi, vantaggi e svantaggi, **Risonanze** quando arma e armatura condividono l'elemento e **7 reazioni** (Vapore, Gelo, Eclissi…) quando li combini.
 - 🧬 **8 classi** con alberi di Maestria a 5 livelli che sbloccano bonus, oggetti, reliquie e altre classi.
-- 🔮 **La magia.** 8 incantesimi che costano **Etere**, una risorsa che resta fra uno scontro e l'altro e si guadagna colpendo, difendendosi e scatenando reazioni. Lasciano il marchio del loro elemento: con l'arma di Fuoco e *Lama d'Acqua* componi il *Vapore* senza cambiare equipaggiamento.
+- 🔮 **La magia.** 18 incantesimi che costano **Etere**, una risorsa che resta fra uno scontro e l'altro e si guadagna colpendo, difendendosi e scatenando reazioni. Lasciano il marchio del loro elemento: con l'arma di Fuoco e *Lama d'Acqua* componi il *Vapore* senza cambiare equipaggiamento.
 - 📈 **Sei attributi da costruire.** A ogni livello un punto fra Vitalità, Forza, Destrezza, Agilità, Arcano, Fortuna: ogni discesa è una build diversa, e il raro *Tomo dell'Oblio* permette di ripensarla al Falò.
 - 🎭 **7 tratti** e **20 gradi di Ascensione**: 2.352 combinazioni di partenza diverse.
 - 📅 **Sfida del Giorno.** Una discesa al giorno uguale per tutti: eroe, tratto, malus e dono assegnati, la stessa mappa a ogni piano. Conta il primo tentativo; punteggio, serie di giorni e record restano nel profilo.
@@ -343,7 +343,7 @@ L'ATK reale cresce con il piano in cui l'arma viene trovata; le armi di elemento
 </details>
 
 <details>
-<summary>🧪 I 21 consumabili</summary>
+<summary>🧪 I 22 consumabili</summary>
 
 | Consumabile | Effetto | Come ottenerlo |
 |---|---|---|
@@ -368,6 +368,7 @@ L'ATK reale cresce con il piano in cui l'arma viene trovata; le armi di elemento
 | **Solvente Runico** | Estrae gratis una runa dall'arma o dall'armatura equipaggiata e la rimette nello zaino. | Disponibile da subito |
 | **Scalpello Runico** | Aggiunge un incastone all'arma o all'armatura equipaggiata (al massimo 3). | Forgia (✨300) |
 | **Tomo dell'Oblio** | Raro. Si legge al Falò: i punti abilità che hai speso tornano da spendere, gli attributi della tua classe restano. | Disponibile da subito |
+| **Fiala d'Etere** | Ti restituisce il 50% dell'Etere massimo. In combattimento costa il turno. | Disponibile da subito |
 
 </details>
 
@@ -456,7 +457,7 @@ Ogni scelta mostra i suoi effetti reali, molte opzioni esistono solo per certe c
 | Armi | 24 (8 subito, 16 da sbloccare) |
 | Armature | 20 (12 subito, 8 da sbloccare) |
 | Monili | 24 (13 subito, 11 da sbloccare) |
-| Consumabili | 21 (11 subito, 10 da sbloccare) |
+| Consumabili | 22 (12 subito, 10 da sbloccare) |
 | Reliquie | 50 (29 subito, 21 da sbloccare) |
 | Nemici comuni | 62 |
 | Boss | 26 |
@@ -532,6 +533,7 @@ I **test di contratto** (`tests/test_contracts.py`, `tests/test_modes.py`) verif
 - [x] Armi con carattere: precisione, critico, schivata, Guardia e scudi
 - [x] Livelli e attributi: un punto a ogni livello fra Vitalità, Forza, Destrezza, Agilità, Arcano e Fortuna
 - [x] La magia: l'Etere e i primi incantesimi, che compongono le reazioni elementali
+- [x] Grimori: pergamene, tre posti per gli incantesimi, cure fuori dal combattimento, Medita al Falò
 
 ---
 

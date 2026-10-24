@@ -362,6 +362,7 @@ I **test di contratto** (`tests/test_contracts.py`, `tests/test_modes.py`) verif
 - [x] Armi con carattere: precisione, critico, schivata, Guardia e scudi
 - [x] Livelli e attributi: un punto a ogni livello fra Vitalità, Forza, Destrezza, Agilità, Arcano e Fortuna
 - [x] La magia: l'Etere e i primi incantesimi, che compongono le reazioni elementali
+- [x] Grimori: pergamene, tre posti per gli incantesimi, cure fuori dal combattimento, Medita al Falò
 
 ---
 
