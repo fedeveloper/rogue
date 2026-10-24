@@ -556,7 +556,9 @@ class CombatSession:
                         + (f" {Colors.CYAN}Ti liberi da {' e '.join(purified)}.{Colors.RESET}" if purified else "")
                         + (f" {Colors.GREEN}Recuperi {healed} HP.{Colors.RESET}" if healed else f"{Colors.RESET}"))
         elif self.def_type == "mark":
-            display_msg(f"\n{Colors.BLUE}-> Ti ripari e lanci una fiala contro il nemico.{Colors.RESET}")
+            healed = self.player.heal(max(1, self.player.max_hp * defense["heal_pct"] // 100))
+            display_msg(f"\n{Colors.BLUE}-> Ti ripari, bevi un sorso e lanci una fiala contro il nemico."
+                        + (f" {Colors.GREEN}Recuperi {healed} HP.{Colors.RESET}" if healed else f"{Colors.RESET}"))
             self.apply_element(self.player.weapon.element)
         elif self.def_type == "siphon":
             stolen = min(self.enemy.hp, max(1, self.enemy.max_hp * defense["drain_pct"] // 100))
@@ -708,8 +710,9 @@ class CombatSession:
             display_msg(f"{Colors.RED}<- ⏳ {self.enemy.name} raccoglie le forze. Il prossimo colpo sarà devastante.{Colors.RESET}")
             result = True
         elif intent == "shield":
+            # Lo scudo non si somma: la Barriera lo riporta al suo valore, così colpendo si avanza sempre
             gain = self.enemy.max_hp * self._move("shield")["shield_pct"] // 100
-            self.enemy.shield += gain
+            self.enemy.shield = max(self.enemy.shield, gain)
             display_msg(f"{Colors.BLUE}<- 💠 {self.enemy.name} alza una barriera: scudo {self.enemy.shield}.{Colors.RESET}")
             result = True
         elif intent == "heal":

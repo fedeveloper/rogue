@@ -892,6 +892,12 @@ class MoveContractTest(Sandbox):
         p, s = self.enemy_hit("shield")
         self.assertEqual(p.hp, 1000)
         self.assertEqual(s.enemy.shield, 500 * m["shield_pct"] // 100)
+        self.assertIn("non si somma", m["desc"])
+        for before in (10, 400):
+            p, s = self.setup_fight("shield"); s.enemy.shield = before
+            with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: a), mock.patch("rooms.wait_enter"):
+                s.enemy_turn()
+            self.assertEqual(s.enemy.shield, max(before, s.enemy.max_hp * m["shield_pct"] // 100), "la Barriera non si somma")
         dealt = {}
         for shield in (0, 30):
             p, s = self.setup_fight("attack"); s.enemy.shield = shield

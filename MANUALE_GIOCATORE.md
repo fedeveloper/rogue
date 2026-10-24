@@ -166,8 +166,8 @@ A ogni turno scegli una di queste azioni:
   - **Concentrazione** (Ladro, Assassino): il colpo successivo è un critico garantito;
   - **Riparo Magico** (Mago): recuperi il 10% degli HP;
   - **Voto di Protezione** (Paladino): ti liberi da Veleno e Sanguinamento e recuperi il 5% degli HP;
-  - **Mistura Reattiva** (Alchimista): marchi il nemico con l'elemento della tua arma. Se poi ti colpisce, il marchio della tua armatura può scatenare una **reazione**, e con l'equipaggiamento iniziale (Fuoco e Terra) scatena il *Magma*;
-  - **Sudario d'Ossa** (Negromante): strappi al nemico il 5% dei suoi HP massimi e li recuperi tu. Se gli restano pochi HP, può bastare ad abbatterlo.
+  - **Mistura Reattiva** (Alchimista): recuperi il 5% degli HP e marchi il nemico con l'elemento della tua arma. Se poi ti colpisce, il marchio della tua armatura può scatenare una **reazione**, e con l'equipaggiamento iniziale (Fuoco e Terra) scatena il *Magma*;
+  - **Sudario d'Ossa** (Negromante): strappi al nemico il 4% dei suoi HP massimi e li recuperi tu. Se gli restano pochi HP, può bastare ad abbatterlo.
 - **Apri l'inventario.** Usare un oggetto o cambiare equipaggiamento **costa il turno**; chiudere lo zaino senza fare nulla no.
 - **Statistiche Eroe.** Gratis, in qualsiasi momento. Mostrano la tua **probabilità reale di colpire** contro il nemico che hai davanti.
 - **Tenta la fuga.** Riesce più spesso se sei agile. Contro i boss è impossibile.
@@ -192,7 +192,7 @@ Intento del nemico: 💢 Colpo pesante (≈24 danni) — difenditi!
 | 🔒 Sigillo | Non attacca; al tuo prossimo turno non puoi difenderti | Cùrati o attacca adesso; il Sigillo dura un turno |
 | ⏳ Carica | Non attacca; il turno dopo arriva il **Colpo caricato** (l'intento mostra già i danni) | Preparati: il turno dopo difenditi |
 | 💥 Colpo caricato | Arriva sempre dopo la Carica: la sua forza triplica prima della tua difesa | **Difenditi**, o abbattilo prima |
-| 💠 Barriera | Non attacca; si protegge con uno scudo pari al 20% degli HP massimi, che assorbe i danni dei tuoi attacchi | Lo scudo si consuma colpendo: conviene continuare ad attaccare |
+| 💠 Barriera | Non attacca; riporta il suo scudo al 20% degli HP massimi (non si somma a quello che ha già), e lo scudo assorbe i danni dei tuoi attacchi | Lo scudo si consuma colpendo: conviene continuare ad attaccare |
 
 Colpo pesante, Guardia, Sigillo, Carica e Barriera non si ripetono mai due volte di fila. I boss si rigenerano più spesso.
 

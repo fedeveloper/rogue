@@ -9,7 +9,7 @@
     "seal": {"name": "Sigillo", "icon": "🔒", "desc": "Non attacca. Al tuo prossimo turno non potrai difenderti."},
     "charge": {"name": "Carica", "icon": "⏳", "desc": "Non attacca. Il turno dopo scatena il Colpo caricato."},
     "unleash": {"name": "Colpo caricato", "icon": "💥", "damage_mult": 3, "desc": "Arriva sempre dopo la Carica: la sua forza triplica (×3) prima che la tua difesa la riduca. Difenditi per dimezzare il colpo."},
-    "shield": {"name": "Barriera", "icon": "💠", "shield_pct": 20, "desc": "Non attacca. Si protegge con uno scudo pari al 20% degli HP massimi, che assorbe i danni dei tuoi attacchi."}
+    "shield": {"name": "Barriera", "icon": "💠", "shield_pct": 20, "desc": "Non attacca. Riporta il suo scudo al 20% degli HP massimi (non si somma a quello che ha già): lo scudo assorbe i danni dei tuoi attacchi."}
   },
   "profiles": {
     "bruto": {"name": "Bruto", "desc": "Picchia duro: molti colpi pesanti.", "moves": {"attack": 55, "heavy": 35, "guard": 10}},

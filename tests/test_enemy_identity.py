@@ -146,6 +146,7 @@ class DefenseTest(Sandbox):
         p, s = self.fight("6", weapon="Fuoco", armor="Terra")
         with quiet(): s.execute_player_defense()
         self.assertEqual(s.enemy.mark[0], "Fuoco")
+        self.assertEqual(p.hp, 500 + 1000 * DEFENSES["mark"]["heal_pct"] // 100)
         s.intent = "attack"
         with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: a), mock.patch("rooms.wait_enter"):
             s.enemy_turn()

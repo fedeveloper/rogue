@@ -385,7 +385,7 @@ Il Falò ha `rune_workshop` (`RUNE_WORKSHOP`): incastonare (gratis, nell'arma o 
 - `focus`: il colpo successivo è un critico garantito;
 - `recovery`: cura `heal_pct` degli HP massimi;
 - `cleanse`: toglie `poison` e `bleed` e cura `heal_pct`;
-- `mark`: marchia il nemico con l'elemento dell'arma, quindi il marchio dell'armatura che arriva quando si viene colpiti in guardia può completare una reazione;
+- `mark`: cura `heal_pct` e marchia il nemico con l'elemento dell'arma, quindi il marchio dell'armatura che arriva quando si viene colpiti in guardia può completare una reazione;
 - `siphon`: toglie al nemico `drain_pct` dei suoi HP massimi e cura l'eroe della stessa quantità.
 
 La Maledizione blocca le cure, non il danno del `siphon`. Se la tecnica abbatte il nemico lo scontro finisce. Nel Gas del Silenzio tutte le tecniche diventano `silenced`.
@@ -414,7 +414,7 @@ La Maledizione blocca le cure, non il danno del `siphon`. Se la tecnica abbatte 
   - `drain` è un attacco che poi cura il nemico di `heal_ratio` × i danni inflitti;
   - `seal` imposta `CombatSession.sealed`: al turno seguente la Difesa è sigillata (sceglierla non consuma il turno), poi `_combat_loop` lo azzera;
   - `charge` imposta `Enemy.charged`: la prossima `choose_move()` restituisce sempre `unleash` (`damage_mult` 3), che non compare mai nei pesi;
-  - `shield` aggiunge a `Enemy.shield` `shield_pct` degli HP massimi; lo scudo assorbe i danni degli attacchi dell'eroe (`_absorb`), non quelli di status, reazioni o riflessi.
+  - `shield` porta `Enemy.shield` ad almeno `shield_pct` degli HP massimi, senza sommarsi: una Barriera dopo l'altra non può far crescere lo scudo più in fretta dei colpi dell'eroe (le fasi con `shield_pct` invece si sommano, una volta sola); lo scudo assorbe i danni degli attacchi dell'eroe (`_absorb`), non quelli di status, reazioni o riflessi.
 - Senza intento (es. nei test) il nemico attacca.
 
 **Fasi dei boss** (`data/phases.json`, `bosses[nome] = [fase, ...]`). `Enemy.phases` sono le fasi del boss in ordine di `at_pct` decrescente; `Enemy.phase` conta quelle attraversate. `CombatSession.check_phase()` gira all'inizio di ogni giro e dopo il turno del giocatore: finché gli HP sono ≤ `at_pct`% e il boss è vivo, entra nella fase successiva, la annuncia, la registra nel Codice (`record_phase`) e ne applica gli effetti con `_apply_phase`. Se la fase scatta dopo il turno del giocatore, l'intento diventa `transform` e il boss usa il suo turno per trasformarsi. Effetti di una fase (tutti opzionali, almeno uno):
