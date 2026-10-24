@@ -381,18 +381,18 @@ Ogni eroe parte con un equipaggiamento che ha già un'idea di gioco. Cinque clas
 
 ### Livelli e attributi
 
-A ogni livello l'eroe recupera tutti gli HP, ottiene +6 HP massimi, +1% Precisione e +1% Schivata, e 1 punto da spendere negli attributi. Ogni attributo arriva al massimo a 10 punti. Gli attributi valgono per una sola discesa.
+A ogni livello l'eroe recupera tutti gli HP, ottiene +9 HP massimi, +1% Precisione e +1% Schivata, e 1 punto da spendere negli attributi. Ogni attributo arriva al massimo a 10 punti. Gli attributi valgono per una sola discesa.
 
 Quando sali di livello, alla fine della stanza ti viene chiesto dove mettere il punto. Puoi anche rimandare: i punti restano, e li spendi quando vuoi con la voce *Distribuisci i punti abilità* della mappa. Le *Statistiche* mostrano i tuoi attributi.
 
 | Attributo | Per ogni punto |
 |---|---|
-| ❤️ **Vitalità** | +15 HP massimi (e altrettanti HP), per punto. |
-| 💪 **Forza** | +5% danni con le armi, per punto. |
-| 🎯 **Destrezza** | +3% Precisione e +1% probabilità di critico, per punto. |
-| 🌪️ **Agilità** | +3% Schivata e +3% probabilità di fuga, per punto. |
-| 🔮 **Arcano** | +6% danni delle reazioni elementali, per punto. |
-| 🍀 **Fortuna** | +5% Oro trovato e +2% probabilità di trovare una runa, per punto. |
+| ❤️ **Vitalità** | +12 HP massimi (e altrettanti HP), per punto. |
+| 💪 **Forza** | +4% danni con le armi, per punto. |
+| 🎯 **Destrezza** | +3% Precisione e +2% probabilità di critico, per punto. |
+| 🌪️ **Agilità** | +2% Schivata e +3% probabilità di fuga, per punto. |
+| 🔮 **Arcano** | +4% danni con le armi di un elemento (non Normale) e +10% danni delle reazioni elementali, per punto. |
+| 🍀 **Fortuna** | +8% Oro trovato, +3% probabilità di trovare una runa e +2% probabilità di critico, per punto. |
 
 Ogni classe parte con 3 punti già distribuiti secondo il suo stile:
 
