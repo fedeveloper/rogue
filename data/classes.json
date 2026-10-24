@@ -5,7 +5,7 @@
         "attributes": {"vitalita": 1, "forza": 2},
         "ether": 6,
         "spells": ["frana"],
-        "max_hp": 120,
+        "max_hp": 130,
         "gold": 20,
         "acc": 5,
         "dodge": 5,
@@ -57,7 +57,7 @@
         "attributes": {"destrezza": 1, "agilita": 1, "fortuna": 1},
         "ether": 8,
         "spells": ["raffica"],
-        "max_hp": 95,
+        "max_hp": 105,
         "gold": 100,
         "acc": 10,
         "dodge": 15,
@@ -109,7 +109,7 @@
         "attributes": {"arcano": 2, "destrezza": 1},
         "ether": 16,
         "spells": ["dardo_fuoco", "lama_acqua"],
-        "max_hp": 80,
+        "max_hp": 90,
         "gold": 40,
         "acc": 20,
         "dodge": 0,
@@ -390,7 +390,7 @@
             "atk": 11,
             "element": "Tenebra",
             "scaling": "arcano",
-            "spell_pct": 10
+            "spell_pct": 5
         },
         "armor": {
             "name": "Sudario Funebre",
@@ -426,7 +426,7 @@
                 "type": "unlock",
                 "id": "contratto_demoniaco"
             },
-            "6": {"desc": "Patto d'Ossa: +10% potenza degli incantesimi e +4 Etere massimo.", "type": "magic", "bonus": {"spell_pct": 10, "ether_max": 4}}
+            "6": {"desc": "Patto d'Ossa: +4 Etere massimo.", "type": "magic", "bonus": {"ether_max": 4}}
         }
     }
 }

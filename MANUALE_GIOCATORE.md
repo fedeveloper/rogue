@@ -426,9 +426,9 @@ Certe combinazioni di rune **sullo stesso oggetto** formano una **parola runica*
 
 | Eroe | Punti di forza | Come si sblocca |
 |---|---|---|
-| ⚔️ **Guerriero** | 120 HP, solido, contrattacca in difesa. Spada di Terra, cotta d'Acqua: *Fango* | Subito |
+| ⚔️ **Guerriero** | 130 HP, solido, contrattacca in difesa. Spada di Terra, cotta d'Acqua: *Fango* | Subito |
 | 🗡️ **Ladro** | Schivata alta, 100 Oro iniziali, critico garantito dopo la Concentrazione. Pugnali di Vento, cuoio d'Acqua: *Gelo* | Subito |
-| 🔮 **Mago** | Bastone di Fuoco potente e mira eccellente, ma solo 80 HP; si cura quando si difende. Vesti di Vento: *Incendio* | Subito |
+| 🔮 **Mago** | Bastone di Fuoco potente e mira eccellente, ma solo 90 HP; si cura quando si difende. Vesti di Vento: *Incendio* | Subito |
 | 🛡️ **Paladino** | 180 HP e Risonanza di Luce fin dall'inizio; difendendosi si libera da veleno e sanguinamento | Maestria Guerriero Lv.5 |
 | 🪓 **Berserker** | L'ascia più forte, nessuna armatura | Impresa *Danza con la Morte* |
 | 🧪 **Alchimista** | 3 pozioni iniziali e bombe di Fuoco; difendendosi lancia una fiala che prepara la reazione. Grembiule di Terra: *Magma* | Impresa *Genio Elementale* |
@@ -507,7 +507,7 @@ Ogni eroe ha un albero di **Maestria** a 6 livelli, che sale con l'esperienza ac
   - **Berserker**: *Furia Arcana*: +1 Etere a ogni colpo a segno.
   - **Alchimista**: *Distillato d'Etere*: +15% potenza degli incantesimi.
   - **Assassino**: *Ombra Silente*: +1 Etere a ogni colpo a segno.
-  - **Negromante**: *Patto d'Ossa*: +10% potenza degli incantesimi e +4 Etere massimo.
+  - **Negromante**: *Patto d'Ossa*: +4 Etere massimo.
 
 ---
 
