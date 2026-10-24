@@ -310,11 +310,13 @@ Un'arma tipica abbatte un nemico tipico in circa 3 colpi e un'armatura tipica ne
 **Strumenti di bilanciamento** (`tools/bilanciamento.py`):
 - `curve`: oggetti generabili contro nemici, piano per piano;
 - `oggetti`: ogni arma e armatura a ogni piano;
-- `run N nuovo|completo`: N run per classe con il codice vero e un giocatore automatico, con vittorie, piano raggiunto, Essenza, colpi annullati, morti per bioma e letalità dei boss;
+- `run N nuovo|completo [scarto]`: N run per classe (lo `scarto` sposta i seed: un altro gruppo di run) con il codice vero e un giocatore automatico, con vittorie, piano raggiunto, Essenza, colpi annullati, morti per bioma e letalità dei boss;
 - `ascensione N gradi`: profilo completo, N run per classe a ogni grado (es. `0,5,10,15,20`), con vittorie e piano mediano;
 - `strategie N nuovo|completo`: le stesse run con diversi modi di scegliere le stanze (adattiva in base agli HP, prudente, aggressiva, trappole per prime). Serve a verificare che nessun ordine fisso domini: è la prova che la scelta della stanza è una decisione.
 
 Il profilo del giocatore non viene mai toccato (il caricamento lo riscrive solo se va migrato da una versione precedente).
+
+**Quante run servono.** L'errore sulla percentuale di vittorie di una classe è circa ±(50/√N) punti con N run: ±9 con 30, ±6 con 60, ±3 con 300. Per i controlli rapidi di una PR bastano 30 run; per decidere una correzione su una classe ne servono almeno 300, ripetute con un altro `scarto`, perché ogni cambiamento rimescola gli esiti delle singole run. Il ribilanciamento della v5 è stato misurato così: obiettivo circa il 28% di vittorie medie con il profilo completo, nessuna classe lontana dalla media.
 
 **README.** `README.md` si genera con `python tools/genera_readme.py`: il testo è nello script, tabelle e numeri vengono da `data/`. `tests/test_docs.py` fallisce se il README non è aggiornato, quindi va rigenerato in ogni PR che cambia i dati.
 
@@ -395,7 +397,7 @@ Il Falò ha `rune_workshop` (`RUNE_WORKSHOP`): incastonare (gratis, nell'arma o 
 2. effetto dell'arma (es. il critico dell'Ascia del Boia);
 3. +bonus dell'Archivio contro i boss;
 4. critico (classe + monile, ×2);
-5. *Imboscata* (×2);
+5. *Imboscata* (`AMBUSH_DMG_PCT`, ×1,5);
 6. se il colpo va a segno: moltiplicatore di classe, hook `on_attack` delle reliquie, +Tenebra.
 
 **Precisione del nemico**: `85 + precisione nemico − schivata eroe ± elemento`, limitata fra 10 e 100. Il primo attacco di ogni scontro manca sempre con il *Cacciatore Etereo*.
@@ -409,7 +411,7 @@ Il Falò ha `rune_workshop` (`RUNE_WORKSHOP`): incastonare (gratis, nell'arma o 
 
 **Difese delle classi** (`defenses.json`, `CombatSession.execute_player_defense`): ogni classe ha in `classes.json → defense` una tecnica che si aggiunge al dimezzamento dei danni:
 - `counter`: restituisce al nemico il danno subito;
-- `focus`: il colpo successivo è un critico garantito;
+- `focus`: cura `heal_pct` degli HP massimi e il colpo successivo è un critico garantito;
 - `recovery`: cura `heal_pct` degli HP massimi;
 - `cleanse`: toglie `poison` e `bleed` e cura `heal_pct`;
 - `mark`: cura `heal_pct` e marchia il nemico con l'elemento dell'arma, quindi il marchio dell'armatura che arriva quando si viene colpiti in guardia può completare una reazione;

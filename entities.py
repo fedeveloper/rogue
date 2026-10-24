@@ -10,7 +10,7 @@ import runes as rune_rules
 import attributes
 import magic
 import talents
-from constants import BASE_HIT_CHANCE, ENEMY_DEPTH_WINDOW, BOSS_DEPTH_WINDOW, INFINITE_MODE_THRESHOLD, CURSE_CHANCE, CURSE_STAT_MULTIPLIER, BOSS_HP_MULT, BOSS_ATK_MULT, ENEMY_HP_PER_FLOOR, ENEMY_ATK_PER_FLOOR, BULWARK_HEAL_PCT, WEAPON_TARGET_HITS, ARMOR_TARGET_ABSORB, WEAPON_QUALITY, ARMOR_QUALITY, NORMAL_ELEMENT_BONUS, EPIC_MULTIPLIER
+from constants import BERSERKER_FURY_PCT, BASE_HIT_CHANCE, ENEMY_DEPTH_WINDOW, BOSS_DEPTH_WINDOW, INFINITE_MODE_THRESHOLD, CURSE_CHANCE, CURSE_STAT_MULTIPLIER, BOSS_HP_MULT, BOSS_ATK_MULT, ENEMY_HP_PER_FLOOR, ENEMY_ATK_PER_FLOOR, BULWARK_HEAL_PCT, WEAPON_TARGET_HITS, ARMOR_TARGET_ABSORB, WEAPON_QUALITY, ARMOR_QUALITY, NORMAL_ELEMENT_BONUS, EPIC_MULTIPLIER
 
 class Item:
     def __init__(self, name: str, value: int, item_type: str, level: int = 1, flavor: str = "", is_cursed: bool = False, curse_effect: str = "", element: str = "Normale"):
@@ -569,7 +569,7 @@ class Player:
         return self.hp > 0
 
     def get_class_damage_multiplier(self) -> float:
-        return 1.5 if self._berserker_fury_active() else 1.0
+        return 1 + BERSERKER_FURY_PCT / 100 if self._berserker_fury_active() else 1.0
 
     def _berserker_fury_active(self) -> bool:
         return self.has_mastery_effect("berserker_fury") and self.hp < self.max_hp * 0.3

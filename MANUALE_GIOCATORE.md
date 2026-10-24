@@ -164,7 +164,7 @@ A ogni turno scegli una di queste azioni:
 - **Attacca.** La probabilità di colpire dipende dalla tua precisione, dalla schivata del nemico e dagli elementi.
 - **Difenditi.** Dimezza i danni del prossimo colpo, e ogni classe aggiunge un effetto:
   - **Difesa Aggressiva** (Guerriero, Berserker): restituisci al nemico i danni subiti;
-  - **Concentrazione** (Ladro, Assassino): il colpo successivo è un critico garantito;
+  - **Concentrazione** (Ladro, Assassino): recuperi il 5% degli HP e il colpo successivo è un critico garantito;
   - **Riparo Magico** (Mago): recuperi il 10% degli HP;
   - **Voto di Protezione** (Paladino): ti liberi da Veleno e Sanguinamento e recuperi il 5% degli HP;
   - **Mistura Reattiva** (Alchimista): recuperi il 5% degli HP e marchi il nemico con l'elemento della tua arma. Se poi ti colpisce, il marchio della tua armatura può scatenare una **reazione**, e con l'equipaggiamento iniziale (Fuoco e Terra) scatena il *Magma*;
@@ -212,7 +212,7 @@ Un incantesimo d'attacco colpisce sempre (non si schiva). I suoi danni sono una 
 | Berserker | 4 | Sifone d'Ombra |
 | Alchimista | 10 | Lama d'Acqua, Dissolvi |
 | Assassino | 8 | Raffica |
-| Negromante | 14 | Sifone d'Ombra, Detonazione |
+| Negromante | 12 | Sifone d'Ombra, Detonazione |
 
 All'Etere iniziale si aggiungono 2 punti per ogni punto di **Arcano** (il Mago, con Arcano 2, parte con 20). Gli incantesimi lanciati almeno una volta compaiono nel Codice, alla pagina *Incantesimi*.
 
@@ -340,7 +340,7 @@ La Risonanza si ricalcola subito se cambi equipaggiamento durante lo scontro. Il
 
 Molte armi hanno un elemento casuale, ma quelle a tema hanno sempre il loro: il *Bastone dell'Alba* è di Luce, il *Tridente Oceanico* d'Acqua, e così via.
 
-**Ogni arma scala con un attributo**, scritto accanto all'ATK (`scala con 💪 Forza`): le armi pesanti con la **Forza**, quelle leggere e da tiro con la **Destrezza**, bastoni e focus con l'**Arcano**. Ogni punto di quell'attributo dà +4% di danni con l'arma, mentre gli altri attributi non la rendono più forte. Scegliere un'arma vuol dire anche scegliere dove mettere i punti. I **focus** arcani potenziano anche gli incantesimi: la *Bacchetta di Frassino* (+10%), il *Tomo Fluttuante* (+15%), il *Bastone dell'Alba* (+15%), lo *Scettro dell'Arcimago* (+25%, dalla Forgia); il Mago e il Negromante partono con un bastone da +10%.
+**Ogni arma scala con un attributo**, scritto accanto all'ATK (`scala con 💪 Forza`): le armi pesanti con la **Forza**, quelle leggere e da tiro con la **Destrezza**, bastoni e focus con l'**Arcano**. Ogni punto di quell'attributo dà +4% di danni con l'arma, mentre gli altri attributi non la rendono più forte. Scegliere un'arma vuol dire anche scegliere dove mettere i punti. I **focus** arcani potenziano anche gli incantesimi: la *Bacchetta di Frassino* (+10%), il *Tomo Fluttuante* (+15%), il *Bastone dell'Alba* (+15%), lo *Scettro dell'Arcimago* (+25%, dalla Forgia); il Mago parte con un bastone da +10%.
 
 Quasi ogni arma ha anche un **carattere**, scritto nello zaino e nelle Statistiche accanto all'ATK (per esempio `· 10% critico, -5% Precisione`). Ogni proprietà risponde a uno stile dei nemici:
 
@@ -426,13 +426,13 @@ Certe combinazioni di rune **sullo stesso oggetto** formano una **parola runica*
 
 | Eroe | Punti di forza | Come si sblocca |
 |---|---|---|
-| ⚔️ **Guerriero** | 120 HP, solido, contrattacca in difesa. Spada di Terra, cotta d'Acqua: *Fango* | Subito |
+| ⚔️ **Guerriero** | 140 HP, solido, contrattacca in difesa. Spada di Terra, cotta d'Acqua: *Fango* | Subito |
 | 🗡️ **Ladro** | Schivata alta, 100 Oro iniziali, critico garantito dopo la Concentrazione. Pugnali di Vento, cuoio d'Acqua: *Gelo* | Subito |
-| 🔮 **Mago** | Bastone di Fuoco potente e mira eccellente, ma solo 80 HP; si cura quando si difende. Vesti di Vento: *Incendio* | Subito |
-| 🛡️ **Paladino** | 180 HP e Risonanza di Luce fin dall'inizio; difendendosi si libera da veleno e sanguinamento | Maestria Guerriero Lv.5 |
+| 🔮 **Mago** | Bastone di Fuoco potente e mira eccellente, ma solo 90 HP; si cura quando si difende. Vesti di Vento: *Incendio* | Subito |
+| 🛡️ **Paladino** | 195 HP e Risonanza di Luce fin dall'inizio; difendendosi si libera da veleno e sanguinamento | Maestria Guerriero Lv.5 |
 | 🪓 **Berserker** | L'ascia più forte, nessuna armatura | Impresa *Danza con la Morte* |
-| 🧪 **Alchimista** | 4 pozioni iniziali e bombe di Fuoco; difendendosi lancia una fiala che prepara la reazione. Grembiule di Terra: *Magma* | Impresa *Genio Elementale* |
-| 🥷 **Assassino** | 15% di critico innato e 20% di schivata, ma solo 75 HP. Pugnale di Vento, mantello di Terra: *Tempesta di Sabbia* | Maestria Ladro Lv.5 |
+| 🧪 **Alchimista** | 2 pozioni iniziali e bombe di Fuoco; difendendosi lancia una fiala che prepara la reazione. Grembiule di Terra: *Magma* | Impresa *Genio Elementale* |
+| 🥷 **Assassino** | 8% di critico innato e 10% di schivata, ma solo 75 HP. Pugnale di Vento, mantello di Terra: *Tempesta di Sabbia* | Maestria Ladro Lv.5 |
 | 💀 **Negromante** | Risonanza di Tenebra fin dall'inizio; difendendosi ruba vita al nemico | Maestria Mago Lv.5 |
 
 Ogni eroe parte con un equipaggiamento che ha già un'idea di gioco. Cinque classi hanno arma e armatura di elementi che **reagiscono** fra loro: il nome della reazione è in tabella. Paladino e Negromante portano lo stesso elemento e partono con la **Risonanza**. Il Berserker combatte a petto nudo.
@@ -495,7 +495,7 @@ La scelta arriva alla fine della stanza in cui sei salito di livello, prima dei 
 
 Ogni eroe ha un albero di **Maestria** a 6 livelli, che sale con l'esperienza accumulata nelle sue discese:
 
-- **Lv.2** — un bonus personale (es. *Imboscata* dell'Assassino: il primo attacco di ogni scontro fa danni doppi).
+- **Lv.2** — un bonus personale (es. *Imboscata* dell'Assassino: il primo attacco di ogni scontro fa il 50% di danni in più).
 - **Lv.3** — sblocca un oggetto (es. la *Bomba Fumogena* per il Ladro).
 - **Lv.4** — un'**Eredità**: un bonus permanente per **tutti** gli eroi.
 - **Lv.5** — sblocca una nuova classe, un tratto o una reliquia.
@@ -507,7 +507,7 @@ Ogni eroe ha un albero di **Maestria** a 6 livelli, che sale con l'esperienza ac
   - **Berserker**: *Furia Arcana*: +1 Etere a ogni colpo a segno.
   - **Alchimista**: *Distillato d'Etere*: +15% potenza degli incantesimi.
   - **Assassino**: *Ombra Silente*: +1 Etere a ogni colpo a segno.
-  - **Negromante**: *Patto d'Ossa*: +15% potenza degli incantesimi e +4 Etere massimo.
+  - **Negromante**: *Patto d'Ossa*: +4 Etere massimo.
 
 ---
 

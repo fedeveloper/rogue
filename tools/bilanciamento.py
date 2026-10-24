@@ -3,7 +3,8 @@
 Uso, dalla radice del repository:
     python tools/bilanciamento.py curve               # difesa e attacco degli oggetti generabili contro i nemici, piano per piano
     python tools/bilanciamento.py oggetti             # ogni arma e armatura: colpi per abbattere un nemico, % del colpo assorbita
-    python tools/bilanciamento.py run [N] [profilo]   # N run per classe (predefinito 50); profilo: nuovo (predefinito) o completo
+    python tools/bilanciamento.py run [N] [profilo] [scarto]  # N run per classe (predefinito 50); profilo: nuovo (predefinito)
+                                                      # o completo; scarto: sposta i seed per un altro gruppo di run
     python tools/bilanciamento.py strategie [N] [profilo]  # le stesse run con diversi modi di scegliere le stanze
     python tools/bilanciamento.py ascensione [N] [gradi]   # profilo completo, N run per classe a ogni grado (es. 0,5,10,15,20)
     python tools/bilanciamento.py infinita [N]        # profilo completo, N run per classe in Modalità Infinita: fin dove arriva nel Ciclo
@@ -16,6 +17,9 @@ riposa ai falò sotto il 70%, equipaggia l'arma e l'armatura con la statistica p
 Sulla mappa sceglie la stanza in base agli HP (strategia "adattiva"); `strategie` lo confronta con chi segue sempre
 lo stesso ordine di preferenza. Un buon bilanciamento non premia molto nessun ordine fisso rispetto agli altri.
 I risultati vanno letti come confronto fra versioni del gioco, non come la difficoltà vissuta da una persona.
+Con N run per classe l'errore sulla percentuale di vittorie è circa ±(50/√N) punti: ±9 con 30 run, ±3 con 300. Per decidere
+su una classe servono centinaia di run, e conviene ripetere la misura con un altro `scarto`: un cambiamento qualunque
+rimescola gli esiti, e un gruppo di seed può essere fortunato per una classe.
 """
 import contextlib
 import copy
@@ -314,11 +318,11 @@ def play(cls, seed, base, strategy="adattiva", grade=0, infinite=False, points="
     return log
 
 
-def cmd_run(n, kind):
+def cmd_run(n, kind, offset=0):
     base = profile(kind)
     use_profile(base)
     classes = list(GAME_DATA["classes"]) if kind == "completo" else [c for c, d in RAW_DATA["classes"].items() if d.get("unlocked_by_default", True)]
-    logs = [play(c, int(c) * 100003 + i * 7919, base) for c in classes for i in range(n)]
+    logs = [play(c, int(c) * 100003 + i * 7919 + offset, base) for c in classes for i in range(n)]
     print(f"profilo {kind}: {len(logs)} run")
     print(f"{'classe':<11} {'vittorie':>8} {'piano mediano':>13} {'Essenza mediana':>15}")
     for c in classes:
@@ -387,7 +391,7 @@ if __name__ == "__main__":
     args = sys.argv[1:] or ["curve"]
     if args[0] == "curve": cmd_curve()
     elif args[0] == "oggetti": cmd_oggetti()
-    elif args[0] == "run": cmd_run(int(args[1]) if len(args) > 1 else 50, args[2] if len(args) > 2 else "nuovo")
+    elif args[0] == "run": cmd_run(int(args[1]) if len(args) > 1 else 50, args[2] if len(args) > 2 else "nuovo", int(args[3]) if len(args) > 3 else 0)
     elif args[0] == "ascensione": cmd_ascensione(int(args[1]) if len(args) > 1 else 20, [int(g) for g in (args[2] if len(args) > 2 else "0,5,10,15,20").split(",")])
     elif args[0] == "attributi": cmd_attributi(int(args[1]) if len(args) > 1 else 20)
     elif args[0] == "infinita": cmd_infinita(int(args[1]) if len(args) > 1 else 20)

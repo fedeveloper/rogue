@@ -5,7 +5,7 @@ from ui import Colors, delay_print, clear_screen, interactive_menu, display_msg,
 from data_manager import GAME_DATA, PROFILE_MANAGER, MULTIPLIERS, get_biome, get_element_icon
 from archive import get_archive_bonus
 from codex import record_enemy_killed, record_enemy_seen, record_letter, record_phase, record_reaction, record_rune, record_runeword, record_spell
-from constants import CAMPFIRE_REST_PCT, BASE_HIT_CHANCE, BLOOD_LETTER_CHANCE, CURSE_HP_DRAIN_PCT, MIN_DAMAGE_PCT, POISON_MIN, POISON_PCT
+from constants import AMBUSH_DMG_PCT, NECRO_HARVEST_PCT, CAMPFIRE_REST_PCT, BASE_HIT_CHANCE, BLOOD_LETTER_CHANCE, CURSE_HP_DRAIN_PCT, MIN_DAMAGE_PCT, POISON_MIN, POISON_PCT
 from entities import STATUS_NAMES, Player, Enemy, generate_weapon, generate_armor, generate_accessory, generate_potion, generate_rune, generate_scroll, get_random_relic, set_sockets
 import runes as rune_rules
 import attributes
@@ -234,7 +234,7 @@ class CombatSession:
         # Le reliquie agiscono prima dell'EXP (es. la Pietra Filosofale converte l'EXP in Oro)
         for r in self.player.relic_effects: r.on_enemy_death(self)
         if self.player.necro_harvest:
-            healed = self.player.heal(max(1, self.player.max_hp // 10))
+            healed = self.player.heal(max(1, self.player.max_hp * NECRO_HARVEST_PCT // 100))
             if healed > 0: display_msg(f"{Colors.MAGENTA}Raccolto d'Anime: assorbi {healed} HP dal nemico caduto!{Colors.RESET}")
         if attributes.value(self.player, "kill_heal_pct"):
             healed = self.player.heal(max(1, self.player.max_hp * attributes.value(self.player, "kill_heal_pct") // 100))
@@ -476,7 +476,7 @@ class CombatSession:
         first_strike = self.first_player_attack and self.player.rune_value("first_strike_pct")
         self.first_player_attack = False
         if ambush:
-            dmg_dealt *= 2
+            dmg_dealt = dmg_dealt * AMBUSH_DMG_PCT // 100
             eff += f" {Colors.MAGENTA}[IMBOSCATA!]{Colors.RESET}"
 
         self.player.run_tracker["floor_attacks"] += 1
@@ -564,7 +564,9 @@ class CombatSession:
             display_msg(f"\n{Colors.BLUE}-> Sollevi la guardia, pronto a sfruttare l'attacco nemico!{Colors.RESET}")
         elif self.def_type == "focus":
             self.focused_attack = True
-            display_msg(f"\n{Colors.BLUE}-> Studi il nemico nell'ombra. Il tuo prossimo attacco sarà devastante!{Colors.RESET}")
+            healed = self.player.heal(max(1, self.player.max_hp * defense["heal_pct"] // 100))
+            display_msg(f"\n{Colors.BLUE}-> Studi il nemico nell'ombra, e riprendi fiato. Il tuo prossimo attacco sarà devastante!"
+                        + (f" {Colors.GREEN}Recuperi {healed} HP.{Colors.RESET}" if healed else f"{Colors.RESET}"))
         elif self.def_type == "recovery":
             if self.player.cursed:
                 display_msg(f"\n{Colors.BLUE}-> Ti difendi, ma la Maledizione blocca il tuo recupero magico.{Colors.RESET}")

@@ -5,7 +5,7 @@
         "attributes": {"vitalita": 1, "forza": 2},
         "ether": 6,
         "spells": ["frana"],
-        "max_hp": 120,
+        "max_hp": 140,
         "gold": 20,
         "acc": 5,
         "dodge": 5,
@@ -57,14 +57,14 @@
         "attributes": {"destrezza": 1, "agilita": 1, "fortuna": 1},
         "ether": 8,
         "spells": ["raffica"],
-        "max_hp": 85,
+        "max_hp": 90,
         "gold": 100,
         "acc": 10,
         "dodge": 15,
         "weapon": {
             "name": "Pugnali Gemelli",
             "value": 30,
-            "atk": 7,
+            "atk": 9,
             "element": "Vento",
             "scaling": "destrezza"
         },
@@ -109,7 +109,7 @@
         "attributes": {"arcano": 2, "destrezza": 1},
         "ether": 16,
         "spells": ["dardo_fuoco", "lama_acqua"],
-        "max_hp": 80,
+        "max_hp": 90,
         "gold": 40,
         "acc": 20,
         "dodge": 0,
@@ -162,7 +162,7 @@
         "attributes": {"vitalita": 2, "forza": 1},
         "ether": 10,
         "spells": ["luce_guaritrice"],
-        "max_hp": 180,
+        "max_hp": 195,
         "gold": 10,
         "acc": 5,
         "dodge": -5,
@@ -239,7 +239,7 @@
         "desc": "Sbloccato completando l'Impresa 'Danza con la Morte'.",
         "mastery": {
             "2": {
-                "desc": "Furia Sanguinaria: +50% ATK quando gli HP sono sotto il 30%, ma in quello stato la Schivata scende a 0.",
+                "desc": "Furia Sanguinaria: +35% ATK quando gli HP sono sotto il 30%, ma in quello stato la Schivata scende a 0.",
                 "type": "personal",
                 "effect": "berserker_fury"
             },
@@ -270,7 +270,7 @@
         "attributes": {"arcano": 1, "vitalita": 1, "fortuna": 1},
         "ether": 10,
         "spells": ["lama_acqua", "dissolvi"],
-        "max_hp": 95,
+        "max_hp": 85,
         "gold": 30,
         "acc": 15,
         "dodge": 10,
@@ -287,7 +287,7 @@
             "def": 3,
             "element": "Terra"
         },
-        "potions": 4,
+        "potions": 2,
         "unlocked_by_default": false,
         "unlock_cost": 0,
         "desc": "Sbloccato fondendo un'arma fino al Livello 5.",
@@ -328,8 +328,8 @@
         "max_hp": 75,
         "gold": 30,
         "acc": 20,
-        "dodge": 20,
-        "crit": 15,
+        "dodge": 10,
+        "crit": 8,
         "weapon": {
             "name": "Pugnale Ricurvo",
             "value": 50,
@@ -349,7 +349,7 @@
         "desc": "Sbloccato raggiungendo la Maestria Ladro Lv.5.",
         "mastery": {
             "2": {
-                "desc": "Imboscata: il primo attacco di ogni scontro infligge danni doppi.",
+                "desc": "Imboscata: il primo attacco di ogni scontro infligge il 50% di danni in più.",
                 "type": "personal",
                 "effect": "assassin_ambush"
             },
@@ -378,19 +378,18 @@
         "role": "Negromante",
         "defense": "siphon",
         "attributes": {"arcano": 2, "vitalita": 1},
-        "ether": 14,
+        "ether": 12,
         "spells": ["sifone_ombra", "detonazione"],
-        "max_hp": 85,
+        "max_hp": 75,
         "gold": 20,
         "acc": 10,
         "dodge": 5,
         "weapon": {
             "name": "Bastone d'Ossa",
             "value": 50,
-            "atk": 13,
+            "atk": 11,
             "element": "Tenebra",
-            "scaling": "arcano",
-            "spell_pct": 10
+            "scaling": "arcano"
         },
         "armor": {
             "name": "Sudario Funebre",
@@ -404,7 +403,7 @@
         "desc": "Sbloccato raggiungendo la Maestria Mago Lv.5.",
         "mastery": {
             "2": {
-                "desc": "Raccolto d'Anime: ogni nemico sconfitto ti cura del 10% degli HP Max.",
+                "desc": "Raccolto d'Anime: ogni nemico sconfitto ti cura del 6% degli HP Max.",
                 "type": "personal",
                 "effect": "necro_harvest"
             },
@@ -426,7 +425,7 @@
                 "type": "unlock",
                 "id": "contratto_demoniaco"
             },
-            "6": {"desc": "Patto d'Ossa: +15% potenza degli incantesimi e +4 Etere massimo.", "type": "magic", "bonus": {"spell_pct": 15, "ether_max": 4}}
+            "6": {"desc": "Patto d'Ossa: +4 Etere massimo.", "type": "magic", "bonus": {"ether_max": 4}}
         }
     }
 }
