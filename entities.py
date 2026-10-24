@@ -8,6 +8,7 @@ from codex import record_relic
 import modes
 import runes as rune_rules
 import attributes
+import magic
 from constants import BASE_HIT_CHANCE, ENEMY_DEPTH_WINDOW, BOSS_DEPTH_WINDOW, INFINITE_MODE_THRESHOLD, CURSE_CHANCE, CURSE_STAT_MULTIPLIER, BOSS_HP_MULT, BOSS_ATK_MULT, ENEMY_HP_PER_FLOOR, ENEMY_ATK_PER_FLOOR, BULWARK_HEAL_PCT, WEAPON_TARGET_HITS, ARMOR_TARGET_ABSORB, WEAPON_QUALITY, ARMOR_QUALITY, NORMAL_ELEMENT_BONUS, EPIC_MULTIPLIER
 
 class Item:
@@ -81,6 +82,18 @@ class Rune(Item):
         data = rune_rules.rune(rune_id)
         super().__init__(f"{data['icon']} {data['name']}", rune_rules.item_value(rune_id, floor), "rune")
         self.rune_id, self.desc = rune_id, data["desc"]
+
+
+class Scroll(Item):
+    """Una pergamena nello zaino: leggendola si impara il suo incantesimo (vedi magic.py)."""
+    def __init__(self, spell_id: str, floor: int = 1):
+        data = magic.spell(spell_id)
+        super().__init__(f"📜 Pergamena: {data['name']}", magic.scroll_value(floor), "scroll")
+        self.spell_id, self.desc = spell_id, data["desc"]
+
+
+def generate_scroll(floor: int, spell_id: str = "") -> "Scroll":
+    return Scroll(spell_id or random.choice(magic.available()), floor)
 
 
 def generate_rune(floor: int, rune_id: str = "") -> "Rune":

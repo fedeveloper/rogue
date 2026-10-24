@@ -205,6 +205,8 @@ def base_camp_forge():
         if has_valerius:
             options.append("Monili")
             valid_cats.append("accessories")
+        options.append("Pergamene")
+        valid_cats.append("spells")
             
         prompt = f"{Colors.CYAN}--- FORGIA DIMENSIONALE --- Essenza: ✨{PROFILE_MANAGER.essence}{Colors.RESET}\nCosa desideri forgiare?"
         idx = interactive_menu(options, prompt, cancellable=True)
@@ -215,9 +217,14 @@ def base_camp_forge():
         cat_name = options[idx]
         base_camp_forge_category(cat, cat_name)
 
+def forge_pool(cat) -> list:
+    """Gli oggetti di una categoria della Forgia; per le pergamene, gli incantesimi (con il loro sblocco)."""
+    if cat == "spells": return list(RAW_DATA["spells"]["spells"].values())
+    return RAW_DATA[cat]
+
 def locked_forge_items(cat) -> list:
     """Oggetti ancora da sbloccare: "unlock_id": null indica un oggetto disponibile fin dall'inizio."""
-    return [i for i in RAW_DATA[cat] if i.get("unlock_id") and i["unlock_id"] not in PROFILE_MANAGER.unlocked_ids]
+    return [i for i in forge_pool(cat) if i.get("unlock_id") and i["unlock_id"] not in PROFILE_MANAGER.unlocked_ids]
 
 def base_camp_forge_category(cat, cat_name):
     while True:

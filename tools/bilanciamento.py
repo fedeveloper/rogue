@@ -188,6 +188,14 @@ class Bot:
             target = next((it for it in (p.weapon, p.armor) if runes.free_sockets(it) > 0 and runes.fits(r.rune_id, it.type)), None)
             if target:
                 p.inventory.remove(r); target.runes.append(r.rune_id); target.refresh_display_name()
+        # Pergamene: impara l'incantesimo se c'è posto, altrimenti sostituisce il primo d'attacco più debole
+        for sc in [i for i in p.inventory if i.type == "scroll"]:
+            p.inventory.remove(sc)
+            if sc.spell_id in p.spells: continue
+            if len(p.spells) < magic.rules()["slots"]: p.spells.append(sc.spell_id); continue
+            power = lambda sid: magic.spell(sid)["effects"].get("damage_pct", 0)
+            weakest = min(range(len(p.spells)), key=lambda k: (bool(magic.spell(p.spells[k]).get("outside")), power(p.spells[k])))
+            if power(sc.spell_id) > power(p.spells[weakest]): p.spells[weakest] = sc.spell_id
         gear = [i for i in p.inventory if i.type in ("weapon", "armor", "accessory")]
         p.inventory = [i for i in p.inventory if i.type in ("consumable", "rune")] + gear[:4]
 
@@ -242,6 +250,7 @@ class Bot:
             return len(opts) - 1
         if "FALÒ" in pr:
             if p.hp < p.max_hp * 0.7 and find("Riposa") is not None: return find("Riposa")
+            if p.spells and p.ether < p.max_ether() // 2 and find("Medita") is not None: return find("Medita")
             if p.gold >= 50 and find("Affila") is not None: return find("Affila")
             return find("Prosegui")
         if find("Guarda Merce") is not None:

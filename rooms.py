@@ -6,7 +6,7 @@ from data_manager import GAME_DATA, PROFILE_MANAGER, MULTIPLIERS, get_biome, get
 from archive import get_archive_bonus
 from codex import record_enemy_killed, record_enemy_seen, record_letter, record_phase, record_reaction, record_rune, record_runeword, record_spell
 from constants import CAMPFIRE_REST_PCT, BASE_HIT_CHANCE, BLOOD_LETTER_CHANCE, CURSE_HP_DRAIN_PCT, MIN_DAMAGE_PCT, POISON_MIN, POISON_PCT
-from entities import STATUS_NAMES, Player, Enemy, generate_weapon, generate_armor, generate_accessory, generate_potion, generate_rune, get_random_relic, set_sockets
+from entities import STATUS_NAMES, Player, Enemy, generate_weapon, generate_armor, generate_accessory, generate_potion, generate_rune, generate_scroll, get_random_relic, set_sockets
 import runes as rune_rules
 import attributes
 import magic
@@ -36,6 +36,8 @@ class CombatSession:
         self.floor = floor
         self.enemy = enemy
         self.boss_hit_taken = False
+        self.spell_def = 0       # Pelle di Pietra: Difesa in più per il resto dello scontro
+        self.weakened = False    # Maledizione: si lancia una volta sola per nemico
         self.focused_attack = False
         self.resonance = player._get_resonance_element()
         self.burn_dmg = 0
@@ -673,8 +675,15 @@ class CombatSession:
         clear_screen()
         if not 0 <= idx < len(self.player.spells): return None
         sid = self.player.spells[idx]
+        fx = magic.spell(sid)["effects"]
         if self.player.ether < magic.cost(self.player, sid):
             display_msg(f"\n{Colors.RED}-> Non hai abbastanza Etere per {magic.spell(sid)['name']}.{Colors.RESET}")
+            return None
+        if fx.get("escape") and self.enemy.is_boss:
+            display_msg(f"\n{Colors.RED}-> Dai boss non si fugge, nemmeno con il vento.{Colors.RESET}")
+            return None
+        if fx.get("weaken_pct") and self.weakened:
+            display_msg(f"\n{Colors.RED}-> {self.enemy.name} porta già la tua Maledizione.{Colors.RESET}")
             return None
         return sid
 
@@ -691,9 +700,24 @@ class CombatSession:
         self.player.ether -= magic.cost(self.player, spell_id)
         record_spell(spell_id)
         display_msg(f"\n{Colors.CYAN}-> {s['icon']} Lanci {s['name']}!{Colors.RESET}")
+        if fx.get("cleanse"):
+            removed = [STATUS_NAMES[k] for k in ("poison", "bleed") if self.player.statuses.pop(k, None)]
+            if removed: display_msg(f"{Colors.CYAN}Ti liberi da {' e '.join(removed)}.{Colors.RESET}")
         if "heal_pct" in fx:
             healed = self.player.heal(self.player.max_hp * fx["heal_pct"] // 100)
             display_msg(f"{Colors.GREEN}Recuperi {healed} HP. ({self.player.hp}/{self.player.max_hp}){Colors.RESET}")
+        if "def_pct" in fx:
+            self.spell_def += self.player.armor.defense * fx["def_pct"] // 100
+            display_msg(f"{Colors.CYAN}La pelle ti si indurisce: +{self.spell_def} Difesa per il resto dello scontro.{Colors.RESET}")
+        if "weaken_pct" in fx:
+            self.weakened = True
+            self.enemy.atk = max(1, self.enemy.atk * (100 - fx["weaken_pct"]) // 100)
+            display_msg(f"{Colors.MAGENTA}{self.enemy.name} si indebolisce: ATK {self.enemy.atk}.{Colors.RESET}")
+        if fx.get("escape"):
+            self.player.run_tracker["escapes"] += 1
+            display_msg(f"{Colors.YELLOW}Il vento ti solleva e ti porta lontano dallo scontro.{Colors.RESET}")
+            wait_enter("\nPremi INVIO...")
+            return False
         if fx.get("dispel") and (self.enemy.shield or self.enemy.ward is not None):
             self.enemy.shield, self.enemy.ward = 0, None
             display_msg(f"{Colors.YELLOW}Lo scudo e le Scaglie di {self.enemy.name} si dissolvono!{Colors.RESET}")
@@ -750,12 +774,12 @@ class CombatSession:
 
     def estimate_enemy_damage(self, move_mult: float = 1.0) -> int:
         """Danno atteso dell'attacco annunciato, senza difesa attiva né effetti casuali (per l'intento)."""
-        defense = self.player.get_total_def() + sum(r.get_def_modifier(self) for r in self.player.relic_effects)
+        defense = self.player.get_total_def() + self.spell_def + sum(r.get_def_modifier(self) for r in self.player.relic_effects)
         raw = max(1, int(self._enemy_attack_power() * self._enemy_multiplier() * move_mult))
         return max(raw - defense, -(-raw * MIN_DAMAGE_PCT // 100))
 
     def _calc_enemy_damage(self, en_multiplier: float, move_mult: float = 1.0) -> int:
-        defense = self.player.get_total_def() + sum(r.get_def_modifier(self) for r in self.player.relic_effects)
+        defense = self.player.get_total_def() + self.spell_def + sum(r.get_def_modifier(self) for r in self.player.relic_effects)
         en_atk = self._enemy_attack_power()
         raw = max(1, int((en_atk + random.randint(-1, 2)) * en_multiplier * move_mult))
         # La difesa riduce il colpo, ma non lo annulla mai: resta almeno MIN_DAMAGE_PCT del danno grezzo
@@ -974,6 +998,7 @@ def vendor_room(player: Player, floor: int):
     delay_print(f"\n{random.choice(GAME_DATA['lore']['vendor'])}")
     items_for_sale =[generate_weapon(floor + 1), generate_armor(floor + 1), generate_accessory(floor), generate_potion(floor), generate_potion(floor)]
     items_for_sale += [generate_rune(floor) for _ in range(rune_rules.rules()["vendor_stock"])]
+    if magic.available(): items_for_sale += [generate_scroll(floor) for _ in range(magic.rules()["vendor_stock"])]
     discount = 1.0 - (PROFILE_MANAGER.get_perk("discount_lvl", 0) * 0.10)
     for i in items_for_sale: 
         i.value = max(1, int(i.value * discount))
@@ -1091,6 +1116,7 @@ def rune_workshop(player: Player, floor: int):
             display_msg(f"{Colors.GREEN}Hai estratto {rune_rules.rune(rid)['name']} (-{cost} Oro).{Colors.RESET}"); wait_enter()
 
 
+MEDITATE = f"{Colors.CYAN}Medita{Colors.RESET} (recuperi tutto l'Etere, il falò si spegnerà)"
 OBLIVION = f"{Colors.MAGENTA}Leggi il Tomo dell'Oblio{Colors.RESET} (redistribuisci i punti abilità; il falò resta acceso)"
 
 
@@ -1119,6 +1145,7 @@ def campfire_room(player: Player, floor: int):
         if has_cursed:
             options.append(f"{Colors.CYAN}Purifica Maledizione{Colors.RESET} (Paga {Colors.YELLOW}100 Oro{Colors.RESET} per rimuovere il malus da un pezzo equipaggiato)")
             
+        if player.spells: options.append(MEDITATE)
         options.append(RUNE_WORKSHOP)
         tome = next((i for i in player.inventory if i.type == "consumable" and i.category == "respec"), None)
         if tome: options.append(OBLIVION)
@@ -1129,6 +1156,10 @@ def campfire_room(player: Player, floor: int):
         if options[idx] == "Prosegui": break
         elif options[idx] == RUNE_WORKSHOP: rune_workshop(player, floor)
         elif options[idx] == OBLIVION: read_oblivion(player, tome)
+        elif options[idx] == MEDITATE:
+            gained = player.gain_ether(player.max_ether())
+            display_msg(f"{Colors.CYAN}Chiudi gli occhi davanti al fuoco e lasci che l'Etere torni: +{gained} ({player.ether}/{player.max_ether()}).{Colors.RESET}")
+            wait_enter("\nPremi INVIO..."); break
         elif idx == 0:
             player.run_tracker["rested"] = True
             player.heal(player.max_hp * rest_pct // 100)
@@ -1199,6 +1230,14 @@ def campfire_room(player: Player, floor: int):
                         wait_enter("\nPremi INVIO...")
                         break
 
+def scroll_drop(player: Player, floor: int, source: str):
+    """Una pergamena con la probabilità della fonte (`spells.json`, `rules.drops`)."""
+    if magic.roll_drop(source) and magic.available():
+        s = generate_scroll(floor)
+        display_msg(f"{Colors.CYAN}Trovi una pergamena: {s.display_name}! (Si legge dallo zaino){Colors.RESET}")
+        player.inventory.append(s)
+
+
 def rune_drop(player: Player, floor: int, source: str):
     """Una runa con la probabilità della fonte (`runes.json`, `rules.drops`)."""
     if rune_rules.roll_drop(source, attributes.value(player, "rune_drop_add")) or any(source in r.rune_drop_always for r in player.relic_effects):
@@ -1206,6 +1245,7 @@ def rune_drop(player: Player, floor: int, source: str):
         record_rune(r.rune_id)
         display_msg(f"{Colors.CYAN}Trovi una runa: {r.display_name}! (Si incastona al Falò){Colors.RESET}")
         player.inventory.append(r)
+    scroll_drop(player, floor, source)  # le stesse fonti possono custodire anche una pergamena
 
 
 def _chest_gold(floor: int) -> int:
