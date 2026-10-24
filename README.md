@@ -552,6 +552,7 @@ I **test di contratto** (`tests/test_contracts.py`, `tests/test_modes.py`) verif
 - [x] Armi e attributi: ogni arma scala con Forza, Destrezza o Arcano; bastoni e focus potenziano gli incantesimi
 - [x] Talenti: ogni 5 livelli un talento fra tre proposti
 - [x] La magia nel mondo: Silenzio, Risucchio d'Etere e boss che lanciano incantesimi; rune, reliquie, eventi, Maestrie, Ascensione e Nemesi
+- [x] Grande ribilanciamento: classi più vicine fra loro, nemici un po' più duri
 
 ---
 
