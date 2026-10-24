@@ -411,7 +411,7 @@ La Maledizione blocca le cure, non il danno del `siphon`. Se la tecnica abbatte 
 
 **Elementi**: `elements.json → multipliers`; 1,5 Super Efficace, 0,5 Poco efficace, 1 altrimenti. Le reliquie possono modificarli con `modify_multiplier`.
 
-**Livello dell'eroe**: soglia iniziale 100 EXP, ×1,5 a ogni livello. A ogni livello: cura completa, `attributes.json → rules.per_level` (+6 HP massimi, +1 precisione, +1 schivata) e `points_per_level` punti abilità in `Player.unspent_points` (con `points_offered = False`).
+**Livello dell'eroe**: soglia iniziale 100 EXP, ×1,5 a ogni livello. A ogni livello: cura completa, `attributes.json → rules.per_level` (+9 HP massimi, +1 precisione, +1 schivata) e `points_per_level` punti abilità in `Player.unspent_points` (con `points_offered = False`).
 
 **Attributi** (`attributes.py`, `data/attributes.json`). `Player.attributes` parte da `classes.json → attributes` (3 punti per classe) e ogni attributo arriva al massimo a `max_points`. `attributes.value(player, chiave)` somma un effetto di `per_point` su tutti gli attributi, e lo leggono:
 

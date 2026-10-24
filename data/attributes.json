@@ -2,8 +2,8 @@
     "rules": {
         "points_per_level": 1,
         "max_points": 10,
-        "per_level": {"max_hp": 6, "acc": 1, "dodge": 1},
-        "desc": "A ogni livello l'eroe recupera tutti gli HP, ottiene +6 HP massimi, +1% Precisione e +1% Schivata, e 1 punto da spendere negli attributi. Ogni attributo arriva al massimo a 10 punti. Gli attributi valgono per una sola discesa."
+        "per_level": {"max_hp": 9, "acc": 1, "dodge": 1},
+        "desc": "A ogni livello l'eroe recupera tutti gli HP, ottiene +9 HP massimi, +1% Precisione e +1% Schivata, e 1 punto da spendere negli attributi. Ogni attributo arriva al massimo a 10 punti. Gli attributi valgono per una sola discesa."
     },
     "attributes": {
         "vitalita": {"name": "Vitalità", "icon": "❤️", "per_point": {"max_hp": 12}, "desc": "+12 HP massimi (e altrettanti HP), per punto."},
