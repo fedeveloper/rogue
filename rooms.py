@@ -5,7 +5,7 @@ from ui import Colors, delay_print, clear_screen, interactive_menu, display_msg,
 from data_manager import GAME_DATA, PROFILE_MANAGER, MULTIPLIERS, get_biome, get_element_icon
 from archive import get_archive_bonus
 from codex import record_enemy_killed, record_enemy_seen, record_letter, record_phase, record_reaction, record_rune, record_runeword, record_spell
-from constants import NECRO_HARVEST_PCT, CAMPFIRE_REST_PCT, BASE_HIT_CHANCE, BLOOD_LETTER_CHANCE, CURSE_HP_DRAIN_PCT, MIN_DAMAGE_PCT, POISON_MIN, POISON_PCT
+from constants import AMBUSH_DMG_PCT, NECRO_HARVEST_PCT, CAMPFIRE_REST_PCT, BASE_HIT_CHANCE, BLOOD_LETTER_CHANCE, CURSE_HP_DRAIN_PCT, MIN_DAMAGE_PCT, POISON_MIN, POISON_PCT
 from entities import STATUS_NAMES, Player, Enemy, generate_weapon, generate_armor, generate_accessory, generate_potion, generate_rune, generate_scroll, get_random_relic, set_sockets
 import runes as rune_rules
 import attributes
@@ -476,7 +476,7 @@ class CombatSession:
         first_strike = self.first_player_attack and self.player.rune_value("first_strike_pct")
         self.first_player_attack = False
         if ambush:
-            dmg_dealt *= 2
+            dmg_dealt = dmg_dealt * AMBUSH_DMG_PCT // 100
             eff += f" {Colors.MAGENTA}[IMBOSCATA!]{Colors.RESET}"
 
         self.player.run_tracker["floor_attacks"] += 1

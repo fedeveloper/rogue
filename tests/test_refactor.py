@@ -17,6 +17,7 @@ from archive import get_archive_bonus
 from data_manager import GAME_DATA, PROFILE_MANAGER
 from entities import Enemy, Player
 from rooms import CombatSession
+from constants import BERSERKER_FURY_PCT
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -96,7 +97,7 @@ class DataDrivenBonusTest(Sandbox):
         berserker = Player("5", "base", [])
         berserker.hp = 1
         self.assertEqual(berserker.get_dodge(), 0)
-        self.assertEqual(berserker.get_class_damage_multiplier(), 1.5)
+        self.assertEqual(berserker.get_class_damage_multiplier(), 1 + BERSERKER_FURY_PCT / 100)
         self.assertFalse(Player("1", "base", []).has_mastery_effect("berserker_fury"))
 
     def test_resonance_defined_for_every_element(self):

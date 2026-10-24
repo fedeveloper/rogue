@@ -20,6 +20,7 @@ import rooms
 from data_manager import GAME_DATA, PROFILE_MANAGER, RAW_DATA, update_game_data
 from entities import Accessory, Armor, Consumable, Enemy, Player, Weapon, generate_accessory, generate_armor, generate_weapon
 from rooms import CombatSession
+from constants import AMBUSH_DMG_PCT, BERSERKER_FURY_PCT, NECRO_HARVEST_PCT
 
 ALL_UNLOCKS = sorted({i["unlock_id"] for cat in ("weapons", "armors", "accessories", "consumables", "relics")
                       for i in RAW_DATA[cat] if i.get("unlock_id")})
@@ -867,8 +868,11 @@ class RulesContractTest(Sandbox):
         PROFILE_MANAGER.set_class_lvl("5", 2)
         with quiet(): berserker = Player("5", "base", [])
         berserker.base_dodge = 50; berserker.hp = 1
-        self.assertEqual((berserker.get_dodge(), berserker.get_class_damage_multiplier()), (0, 1.5))
+        self.assertEqual((berserker.get_dodge(), berserker.get_class_damage_multiplier()), (0, 1 + BERSERKER_FURY_PCT / 100))
         self.assertIn("Schivata scende a 0", GAME_DATA["classes"]["5"]["mastery"]["2"]["desc"])
+        self.assertIn(f"+{BERSERKER_FURY_PCT}% ATK", GAME_DATA["classes"]["5"]["mastery"]["2"]["desc"])
+        self.assertIn(f"{AMBUSH_DMG_PCT - 100}% di danni in più", GAME_DATA["classes"]["7"]["mastery"]["2"]["desc"])
+        self.assertIn(f"{NECRO_HARVEST_PCT}% degli HP Max", GAME_DATA["classes"]["8"]["mastery"]["2"]["desc"])
 
     def test_every_feat_has_the_threshold_its_text_says(self):
         def run(setup, floor=5):

@@ -13,7 +13,7 @@ from unittest import mock
 
 import roguelike
 import ui
-from constants import NECRO_HARVEST_PCT, TEXT_SPEEDS
+from constants import AMBUSH_DMG_PCT, NECRO_HARVEST_PCT, TEXT_SPEEDS
 from data_manager import GAME_DATA, PROFILE_MANAGER, RAW_DATA, update_game_data
 from entities import Enemy, Player
 from inventory_menu import show_player_stats
@@ -100,14 +100,14 @@ class NewClassesTest(Sandbox):
                     with self.subTest(class_id=c_id, level=lvl):
                         self.assertIn(reward["id"], classes)
 
-    def test_assassin_ambush_doubles_only_the_first_attack(self):
+    def test_assassin_ambush_boosts_only_the_first_attack(self):
         PROFILE_MANAGER.set_class_lvl("7", 2)
         player = Player("7", "base", [])
         player.attributes = dict.fromkeys(player.attributes, 0)  # solo l'Imboscata: gli attributi hanno i loro test
         session = CombatSession(player, 1, Enemy(1, False, []))
         session.enemy.hp, session.enemy.base_dodge = 10_000, -1000
         first, second = self.attack(session), self.attack(session)
-        self.assertEqual(first, 2 * second)
+        self.assertEqual(first, second * AMBUSH_DMG_PCT // 100)
 
     def test_ambush_does_not_stack_with_focused_attack(self):
         PROFILE_MANAGER.set_class_lvl("7", 2)

@@ -395,7 +395,7 @@ Il Falò ha `rune_workshop` (`RUNE_WORKSHOP`): incastonare (gratis, nell'arma o 
 2. effetto dell'arma (es. il critico dell'Ascia del Boia);
 3. +bonus dell'Archivio contro i boss;
 4. critico (classe + monile, ×2);
-5. *Imboscata* (×2);
+5. *Imboscata* (`AMBUSH_DMG_PCT`, ×1,5);
 6. se il colpo va a segno: moltiplicatore di classe, hook `on_attack` delle reliquie, +Tenebra.
 
 **Precisione del nemico**: `85 + precisione nemico − schivata eroe ± elemento`, limitata fra 10 e 100. Il primo attacco di ogni scontro manca sempre con il *Cacciatore Etereo*.

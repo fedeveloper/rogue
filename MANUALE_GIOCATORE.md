@@ -212,7 +212,7 @@ Un incantesimo d'attacco colpisce sempre (non si schiva). I suoi danni sono una 
 | Berserker | 4 | Sifone d'Ombra |
 | Alchimista | 10 | Lama d'Acqua, Dissolvi |
 | Assassino | 8 | Raffica |
-| Negromante | 14 | Sifone d'Ombra, Detonazione |
+| Negromante | 12 | Sifone d'Ombra, Detonazione |
 
 All'Etere iniziale si aggiungono 2 punti per ogni punto di **Arcano** (il Mago, con Arcano 2, parte con 20). Gli incantesimi lanciati almeno una volta compaiono nel Codice, alla pagina *Incantesimi*.
 
@@ -495,7 +495,7 @@ La scelta arriva alla fine della stanza in cui sei salito di livello, prima dei 
 
 Ogni eroe ha un albero di **Maestria** a 6 livelli, che sale con l'esperienza accumulata nelle sue discese:
 
-- **Lv.2** — un bonus personale (es. *Imboscata* dell'Assassino: il primo attacco di ogni scontro fa danni doppi).
+- **Lv.2** — un bonus personale (es. *Imboscata* dell'Assassino: il primo attacco di ogni scontro fa il 50% di danni in più).
 - **Lv.3** — sblocca un oggetto (es. la *Bomba Fumogena* per il Ladro).
 - **Lv.4** — un'**Eredità**: un bonus permanente per **tutti** gli eroi.
 - **Lv.5** — sblocca una nuova classe, un tratto o una reliquia.
