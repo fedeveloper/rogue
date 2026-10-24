@@ -36,6 +36,86 @@
                 {"title": "La Grande Discordia", "text": "L'ambizione di Re Galdor ha lacerato il velo. Il Caos è entrato dalla ferita."},
                 {"title": "Il Futuro", "text": "Il Labirinto è il guscio di un mondo che aspetta di nascere o di essere perdonato."}
             ]
+        },
+        "grimorio_valerius": {
+            "title": "Il Grimorio di Valerius",
+            "unlock_condition": "Scopri 10 incantesimi",
+            "unlock": {
+                "type": "spells_seen",
+                "value": 10
+            },
+            "bonus": {
+                "ether_max": 2
+            },
+            "bonus_desc": "+2 Etere massimo",
+            "chapters": [
+                {
+                    "title": "Prima pagina",
+                    "text": "L'Etere non si crea e non si spreca: si presta. Ogni incantesimo è un debito con la Prima Luce, e la Prima Luce non dimentica i debitori."
+                },
+                {
+                    "title": "Sul Silenzio",
+                    "text": "La Badessa crede che il silenzio sia una preghiera. Si sbaglia: è una gabbia. Chi tace troppo a lungo smette di ricordare le parole."
+                },
+                {
+                    "title": "Ultima annotazione",
+                    "text": "Mi hanno rinchiuso perché ho scritto queste pagine. Se le stai leggendo, allora la gabbia non era abbastanza stretta."
+                }
+            ]
+        },
+        "cronache_ascesa": {
+            "title": "Le Cronache dell'Ascesa",
+            "unlock_condition": "Vinci al grado 5 di Ascensione",
+            "unlock": {
+                "type": "ascension",
+                "value": 5
+            },
+            "bonus": {
+                "boss_dmg_pct": 5,
+                "gold_pct": 5
+            },
+            "bonus_desc": "+5% Danni contro i Boss e +5% Oro trovato",
+            "chapters": [
+                {
+                    "title": "Il primo gradino",
+                    "text": "Gli Architetti misuravano il valore di un'anima dal peso che sapeva portare. Il Labirinto ha imparato da loro."
+                },
+                {
+                    "title": "I Patti",
+                    "text": "Ogni grado è un patto firmato senza inchiostro. Chi scende di nuovo accetta un mondo un po' più crudele, e torna un po' più forte."
+                },
+                {
+                    "title": "L'ultimo gradino",
+                    "text": "Nessuno sa cosa ci sia oltre il ventesimo. Chi lo ha superato non è tornato a raccontarlo, o forse non ha voluto."
+                }
+            ]
+        },
+        "canto_eco": {
+            "title": "Il Canto delle Eco",
+            "unlock_condition": "Raggiungi l'Eco II della Modalità Infinita",
+            "unlock": {
+                "type": "best_echo",
+                "value": 2
+            },
+            "bonus": {
+                "def": 3,
+                "escape": 5
+            },
+            "bonus_desc": "+3 Difesa fissa globale e +5% Probabilità di Fuga",
+            "chapters": [
+                {
+                    "title": "La prima Eco",
+                    "text": "Oltre la Soglia il tempo si piega su sé stesso. I Chiostri tornano, ma le loro voci ora cantano il tuo nome."
+                },
+                {
+                    "title": "Il ritornello",
+                    "text": "Ogni ciclo è la stessa canzone, suonata più forte. Chi si ferma ad ascoltarla non riesce più a smettere di scendere."
+                },
+                {
+                    "title": "L'ultima strofa",
+                    "text": "Se il Labirinto è una canzone, il Dio Antico è il silenzio fra due note. E il silenzio, prima o poi, finisce."
+                }
+            ]
         }
     }
 }

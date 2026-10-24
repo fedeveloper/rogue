@@ -20,11 +20,14 @@ def is_book_unlocked(b_id: str, profile: dict) -> bool:
         "max_floor": profile.get("max_floor", 0),
         "total_bosses": profile.get("stats", {}).get("total_bosses", 0),
         "won_normal": 1 if profile.get("won_normal", False) else 0,
+        "spells_seen": len(profile.get("codex", {}).get("spells", [])),
+        "ascension": profile.get("ascension", {}).get("best_win", 0),
+        "best_echo": profile.get("best_echo", 0),
     }
     return progress.get(unlock["type"], 0) >= unlock["value"]
 
 def get_archive_bonus(stat: str, profile: dict) -> float:
-    """Somma un bonus (es. "def", "gold_pct", "escape", "boss_dmg_pct") su tutti i tomi sbloccati."""
+    """Somma un bonus (es. "def", "gold_pct", "escape", "boss_dmg_pct", "ether_max", "spell_pct") su tutti i tomi sbloccati."""
     return sum(b.get("bonus", {}).get(stat, 0) for b_id, b in BOOKS.items() if is_book_unlocked(b_id, profile))
 
 def unlocked_archive_bonuses(profile: dict) -> list:

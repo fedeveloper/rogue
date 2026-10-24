@@ -59,6 +59,15 @@ class ManualFollowsTheDataTest(unittest.TestCase):
             start = ", ".join(f"{attrs['attributes'][k]['name']} {v}" for k, v in c["attributes"].items())
             self.assertIn(f"| {c['role']} | {start} |", self.manual)
 
+    def test_traits_feats_and_books_are_all_listed(self):
+        for t in GAME_DATA["meta"]["traits"].values():
+            with self.subTest(trait=t["name"]): self.assertIn(f"| {t['name']} |", self.manual)
+        for f in GAME_DATA["meta"]["feats"].values():
+            with self.subTest(feat=f["name"]): self.assertIn(f"| {f['name']} | {f['desc']} |", self.manual)
+        import archive
+        for b in archive.BOOKS.values():
+            with self.subTest(book=b["title"]): self.assertIn(f"| {b['title']} | {b['unlock_condition']} | {b['bonus_desc']} |", self.manual)
+
     def test_the_talent_table_matches_the_data(self):
         t = GAME_DATA["talents"]
         self.assertIn(t["rules"]["desc"], self.manual)

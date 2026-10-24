@@ -21,6 +21,8 @@ from data_manager import GAME_DATA, PROFILE_MANAGER, RAW_DATA, update_game_data
 from entities import Accessory, Armor, Consumable, Enemy, Player, Weapon, generate_accessory, generate_armor, generate_weapon
 from rooms import CombatSession
 from constants import AMBUSH_DMG_PCT, BERSERKER_FURY_PCT, NECRO_HARVEST_PCT
+import attributes
+import talents
 
 ALL_UNLOCKS = sorted({i["unlock_id"] for cat in ("weapons", "armors", "accessories", "consumables", "relics")
                       for i in RAW_DATA[cat] if i.get("unlock_id")})
@@ -765,6 +767,11 @@ class RulesContractTest(Sandbox):
             "cacciatore_etereo": lambda p: self.assertEqual(p.base_dodge, base.base_dodge - 20),
             "titano": lambda p: self.assertEqual((p.max_hp, p.base_acc, p.base_dodge), (base.max_hp + 100, base.base_acc // 2, base.base_dodge // 2)),
             "benedetto": lambda p: (self.assertIn("scudo_cristallo", p.relic_ids), self.assertTrue(p.take_damage(10 ** 6)), self.assertEqual(p.hp, 1)),
+            "sordo_arcano": lambda p: (self.assertEqual((p.spells, p.max_ether(), p.max_hp), ([], 0, base.max_hp + 30)),
+                                       self.assertEqual(attributes.value(p, "dmg_pct") - attributes.value(base, "dmg_pct"), 25)),
+            "erudito": lambda p: self.assertEqual((len(p.spells), p.base_ether, p.max_hp), (len(base.spells) + 1, base.base_ether + 4, base.max_hp - 15)),
+            "talento_naturale": lambda p: (self.assertEqual(self.growth(p) - self.growth(base), -4), self.assertTrue(talents.earned(4, p.talent_every)),
+                                           self.assertFalse(talents.earned(5, p.talent_every))),
         }
         self.assertEqual(set(checks), set(GAME_DATA["meta"]["traits"]))
         for tid, check in checks.items():
@@ -772,6 +779,12 @@ class RulesContractTest(Sandbox):
                 with quiet(): p = Player("1", tid, [])
                 check(p)
         self.assertIn("dimezzati", GAME_DATA["meta"]["traits"]["maledetto"]["desc"])
+
+    def growth(self, p):
+        """Gli HP massimi che dà un livello."""
+        before = p.max_hp
+        with quiet(): p.gain_exp(p.max_exp - p.exp)
+        return p.max_hp - before
 
     def exp_after(self, p, amount):
         p.exp = 0
@@ -904,6 +917,12 @@ class RulesContractTest(Sandbox):
             "feat_tiratore_scelto": (5, tr(super_effective_hits=5), tr(super_effective_hits=4)),
             "feat_assaggiatore": (1, tr(**{"1_hp_survive": True}), tr()),
             "feat_eco": (61, infinite_at(61), infinite_at(60)),
+            "feat_arcimago": (25, tr(spells_cast=25), tr(spells_cast=24)),
+            "feat_alchimia": (12, tr(reactions=12), tr(reactions=11)),
+            "feat_voce_silenzio": (None, tr(kill_muted_done=True), tr()),
+            "feat_talenti": (3, lambda p: setattr(p, "talents", ["flusso", "raccolto", "studioso"]), lambda p: setattr(p, "talents", ["flusso", "raccolto"])),
+            "feat_specialista": (10, lambda p: p.attributes.update(forza=10), lambda p: p.attributes.update(forza=9)),
+            "feat_asceta": (None, lambda p: setattr(p, "won", True), lambda p: (setattr(p, "won", True), p.run_tracker.update(spells_cast=1))),
         }
         self.assertEqual(set(table), set(GAME_DATA["meta"]["feats"]))
         for fid, (number, done, below) in table.items():

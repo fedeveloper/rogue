@@ -53,7 +53,7 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 - 🔮 **La magia.** 18 incantesimi che costano **Etere**, una risorsa che resta fra uno scontro e l'altro e si guadagna colpendo, difendendosi e scatenando reazioni. Lasciano il marchio del loro elemento: con l'arma di Fuoco e *Lama d'Acqua* componi il *Vapore* senza cambiare equipaggiamento.
 - 📈 **Sei attributi da costruire.** A ogni livello un punto fra Vitalità, Forza, Destrezza, Agilità, Arcano, Fortuna: ogni discesa è una build diversa, e il raro *Tomo dell'Oblio* permette di ripensarla al Falò.
 - 🌟 **Talenti.** Ogni 5 livelli scegli uno dei 15 talenti fra 3 proposti a caso: danni, difesa, Etere, cure, fortuna.
-- 🎭 **7 tratti** e **20 gradi di Ascensione**: 2.352 combinazioni di partenza diverse.
+- 🎭 **10 tratti** e **20 gradi di Ascensione**: 3.360 combinazioni di partenza diverse.
 - 📅 **Sfida del Giorno.** Una discesa al giorno uguale per tutti: eroe, tratto, malus e dono assegnati, la stessa mappa a ogni piano. Conta il primo tentativo; punteggio, serie di giorni e record restano nel profilo.
 - 📖 **Eventi che ricordano.** 58 storie a scene con opzioni che esistono solo per la tua classe, il tuo tratto o le tue reliquie: `[Mago]`, `[Tocco di Mida]`, `[Chiave Arrugginita]`. Il Labirinto ricorda chi hai aiutato e chi hai derubato, e certe scelte tornano a bussare qualche piano dopo.
 - 🗝️ **Personaggi che ritornano.** *Sir Alaric*, il Primo Paladino, e *Silas*, il Cercatore, hanno storie in tre capitoli che proseguono di run in run. Le tue scelte decidono come finiscono, e se liberi Alaric il Cavaliere Oscuro non tornerà più.
@@ -96,6 +96,9 @@ All'inizio di ogni discesa scegli un **tratto**, che cambia le regole per tutta 
 | **Cacciatore Etereo** | Primo colpo nemico manca sempre al 100%. -20% Schivata totale. | Impresa «Epuratore di Demoni» |
 | **Titano** | +100 HP Max. Precisione e Schivata dimezzate. | Impresa «Furia Cieca» |
 | **Benedetto** | Inizi con una Reliquia difensiva e resisti al primo colpo letale. | Maestria Paladino Lv.5 |
+| **Sordo all'Arcano** | Non conosci e non impari incantesimi e non hai Etere, ma +25% danni con le armi e +30 HP Max. | Impresa «L'Asceta» |
+| **Erudito** | Parti con un incantesimo in più (a caso) e +4 Etere massimo, ma -15 HP Max. | Impresa «L'Arcimago» |
+| **Talento Naturale** | Un talento ogni 4 livelli invece di 5, ma ogni livello dà 4 HP Max in meno. | Impresa «Pieno di Talento» |
 
 ## 🎮 Modalità
 
@@ -172,7 +175,7 @@ Fra una discesa e l'altra spendi l'**Essenza Astrale**:
 - ⚒️ **La Forgia Dimensionale** — sblocca armi, armature, monili, consumabili e reliquie.
 - 🍺 **La Taverna** — le classi da conquistare e come ottenerle.
 - 📜 **Grimorio e Imprese** — le sfide completate e i progressi di Maestria.
-- 📚 **L'Archivio di Aethelgard** — 3 tomi di storia da sbloccare, ognuno con un bonus permanente.
+- 📚 **L'Archivio di Aethelgard** — 6 tomi di storia da sbloccare, ognuno con un bonus permanente.
 - 📖 **Il Codice del Labirinto** — bestiario, fasi dei boss, personaggi, eventi, lettere insanguinate e reliquie scoperti fra una run e l'altra, con la percentuale di completamento. Ciò che manca è un `???` da riempire.
 - 🧑‍🔧 **Gli artigiani** — salva lo *Speziale*, *Borek*, *Elara* e *Valerius* dagli eventi del labirinto: apriranno una bottega dove comprare consumabili, armi, armature e monili con cui iniziare la discesa successiva.
 
@@ -429,7 +432,7 @@ Certe combinazioni sullo stesso oggetto formano una **parola runica**, con un ef
 </details>
 
 <details>
-<summary>🏆 Le 15 imprese</summary>
+<summary>🏆 Le 21 imprese</summary>
 
 | Impresa | Obiettivo | Ricompensa |
 |---|---|---|
@@ -448,6 +451,12 @@ Certe combinazioni sullo stesso oggetto formano una **parola runica**, con un ef
 | **Tiratore Scelto** | Infliggi 5 colpi Super Efficaci ai Boss in una singola run. | Sblocco: Filtro Preciso |
 | **Assaggiatore di Veleni** | Sopravvivi a un danno letale rimanendo a 1 HP (es. Benedizione o Fiala del Caos). | Sblocco: Maschera Antigas |
 | **L'Eco Infinita** | Raggiungi l'Eco III della Modalità Infinita (piano 61). | Essenza: 1500 |
+| **L'Arcimago** | Lancia 25 incantesimi in una singola run. | Tratto: Erudito |
+| **Alchimia degli Elementi** | Scatena 12 reazioni elementali in una singola run. | Essenza: 500 |
+| **Voce nel Silenzio** | Sconfiggi un nemico mentre non puoi lanciare incantesimi (Silenzio o Gas). | Essenza: 400 |
+| **Pieno di Talento** | Ottieni 3 talenti in una singola run. | Tratto: Talento Naturale |
+| **Lo Specialista** | Porta un attributo a 10 punti. | Essenza: 400 |
+| **L'Asceta** | Vinci una discesa senza lanciare un solo incantesimo. | Tratto: Sordo all'Arcano |
 
 </details>
 
@@ -465,7 +474,7 @@ Ogni scelta mostra i suoi effetti reali, molte opzioni esistono solo per certe c
 | Contenuto | Quantità |
 |---|---|
 | Classi giocabili | 8 |
-| Tratti di partenza | 7 |
+| Tratti di partenza | 10 |
 | Gradi di Ascensione | 20 |
 | Doni della Sfida del Giorno | 7 |
 | Armi | 27 (10 subito, 17 da sbloccare) |
@@ -478,11 +487,11 @@ Ogni scelta mostra i suoi effetti reali, molte opzioni esistono solo per certe c
 | Fasi dei boss | 27 |
 | Rune / parole runiche | 20 / 11 |
 | Eventi narrativi | 58 |
-| Imprese | 15 |
-| Tomi dell'Archivio | 3 |
+| Imprese | 21 |
+| Tomi dell'Archivio | 6 |
 | Potenziamenti permanenti | 14 |
 | Elementi / Risonanze | 7 / 6 |
-| Combinazioni di partenza (modalità × classe × tratto × grado) | 2352 |
+| Combinazioni di partenza (modalità × classe × tratto × grado) | 3360 |
 
 ## 🛠️ Per chi sviluppa
 

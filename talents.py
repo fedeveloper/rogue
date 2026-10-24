@@ -27,9 +27,9 @@ def value(player, key: str) -> int:
     return sum(definitions()[t]["effects"].get(key, 0) for t in getattr(player, "talents", []))
 
 
-def earned(level: int) -> bool:
-    """Se raggiungere questo livello fa guadagnare un talento."""
-    return level % rules()["every"] == 0
+def earned(level: int, every: int = None) -> bool:
+    """Se raggiungere questo livello fa guadagnare un talento (ogni `every` livelli: il tratto Talento Naturale lo cambia)."""
+    return level % (every or rules()["every"]) == 0
 
 
 def offer(player) -> list:

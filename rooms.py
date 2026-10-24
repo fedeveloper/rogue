@@ -225,6 +225,7 @@ class CombatSession:
         display_msg(f"\n{Colors.YELLOW}{Colors.BOLD}*** Hai sconfitto {self.enemy.name}! ***{Colors.RESET}")
         record_enemy_killed(self.enemy.base_name)
         if self.player.hp == 1: self.player.run_tracker["kill_1_hp_done"] = True
+        if self.player.spells and (self.mute_turns or self.silenced): self.player.run_tracker["kill_muted_done"] = True
         if self.enemy.is_boss and not self.boss_hit_taken: self.player.run_tracker["no_hit_boss_done"] = True
         
         g_drop = 0 if self.player.aristocrat else self.player.calculate_gold_gain(self.enemy.gold_drop)
@@ -722,6 +723,7 @@ class CombatSession:
         """Lancia un incantesimo: costa il turno e il suo Etere. False se il nemico muore."""
         s, fx = magic.spell(spell_id), magic.spell(spell_id)["effects"]
         self.player.ether -= magic.cost(self.player, spell_id)
+        self.player.run_tracker["spells_cast"] = self.player.run_tracker.get("spells_cast", 0) + 1
         record_spell(spell_id)
         display_msg(f"\n{Colors.CYAN}-> {s['icon']} Lanci {s['name']}!{Colors.RESET}")
         if fx.get("cleanse"):
@@ -992,7 +994,8 @@ def mystery_odds() -> dict:
     return {k: round(w * 100 / total) for k, w in outcomes.items()}
 
 
-MYSTERY_NAMES = {"hoard": "Tesoro", "relic": "Reliquia", "hard": "Mostro", "easy": "Preda", "trap": "Trappola", "empty": "Vuoto"}
+MYSTERY_NAMES = {"hoard": "Tesoro", "relic": "Reliquia", "hard": "Mostro", "easy": "Preda", "trap": "Trappola", "spring": "Fonte",
+                 "scroll": "Pergamena", "rune": "Runa", "empty": "Vuoto"}
 
 
 def mystery_room(player: Player, floor: int, active_pacts: List[str]):
@@ -1026,6 +1029,25 @@ def mystery_room(player: Player, floor: int, active_pacts: List[str]):
     elif outcome == "relic":
         display_msg(f"\n{Colors.MAGENTA}Al centro della stanza, sospesa nel nulla, pulsa una reliquia.{Colors.RESET}")
         player.add_relic(relic)
+        wait_enter("\nPremi INVIO per proseguire...")
+    elif outcome == "spring":
+        # Fonte d'Etere: tutto l'Etere a chi conosce incantesimi, una cura a chi non ne conosce
+        if player.spells:
+            gained = player.gain_ether(player.max_ether())
+            display_msg(f"\n{Colors.CYAN}Una fonte di luce liquida sgorga dal pavimento. Ne bevi: +{gained} Etere ({player.ether}/{player.max_ether()}).{Colors.RESET}")
+        else:
+            healed = player.heal(player.max_hp * GAME_DATA["meta"]["rooms"]["mystery"]["spring_heal_pct"] // 100)
+            display_msg(f"\n{Colors.CYAN}Una fonte di luce liquida sgorga dal pavimento. Non sai cosa farne, ma l'acqua è fresca: +{healed} HP.{Colors.RESET}")
+        wait_enter("\nPremi INVIO per proseguire...")
+    elif outcome == "scroll":
+        display_msg(f"\n{Colors.MAGENTA}Su un leggio di pietra, una pergamena che nessuno ha mai letto.{Colors.RESET}")
+        _gain_item(player, generate_scroll(floor), "La prendi")
+        wait_enter("\nPremi INVIO per proseguire...")
+    elif outcome == "rune":
+        display_msg(f"\n{Colors.MAGENTA}Nella nebbia brilla un segno inciso nell'aria, che si condensa in una pietra.{Colors.RESET}")
+        rune = generate_rune(floor)
+        record_rune(rune.rune_id)
+        _gain_item(player, rune, "La prendi")
         wait_enter("\nPremi INVIO per proseguire...")
     else:
         display_msg(f"\n{Colors.GREEN}La nebbia si dirada. La stanza è vuota. Tiri un sospiro di sollievo.{Colors.RESET}")

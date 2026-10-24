@@ -264,6 +264,7 @@ class Player:
         self.attributes = attributes.starting(class_id)
         self.unspent_points, self.points_offered = 0, True
         self.talents, self.pending_talents = [], 0  # vedi talents.py
+        self.trait_effects, self.arcane_deaf, self.talent_every, self.trait_hp_per_level = {}, False, None, 0  # tratti v5
         self.max_hp += attributes.value(self, "max_hp")
         # Magia (magic.py): gli incantesimi della classe e l'Etere, pieno all'inizio della discesa (riempito in fondo,
         # quando arma, armatura e reliquie che lo cambiano ci sono già)
@@ -393,9 +394,22 @@ class Player:
             r = next((x for x in GAME_DATA["relics"] if x["id"] == "scudo_cristallo"), None)
             if r: self.add_relic(r)
         
+        def _sordo():
+            self.arcane_deaf, self.spells, self.base_ether = True, [], 0
+            self.trait_effects = dict(self.trait["effects"])
+            self.max_hp += self.trait["max_hp"]; self.hp = self.max_hp
+        def _erudito():
+            known = [s for s in magic.available() if s not in self.spells]
+            if known and len(self.spells) < magic.rules()["slots"]: self.spells.append(random.choice(known))
+            self.base_ether += self.trait["ether"]
+            self.max_hp += self.trait["max_hp"]; self.hp = self.max_hp
+        def _talento():
+            self.talent_every, self.trait_hp_per_level = self.trait["talent_every"], self.trait["hp_per_level"]
+
         traits_map = {
             "maledetto": _maledetto, "midas": _midas, "aristocratico": _aristocratico,
-            "cacciatore_etereo": _cacciatore, "titano": _titano, "benedetto": _benedetto
+            "cacciatore_etereo": _cacciatore, "titano": _titano, "benedetto": _benedetto,
+            "sordo_arcano": _sordo, "erudito": _erudito, "talento_naturale": _talento,
         }
         if trait_id in traits_map: traits_map[trait_id]()
 
@@ -466,8 +480,9 @@ class Player:
 
     def magic_value(self, key: str) -> int:
         """Un effetto magico (ether_max, spell_pct, ether_on_hit, spell_discount): attributi e talenti, rune e reliquie,
-        Maestria Lv.6."""
-        return attributes.value(self, key) + self.rune_value(key) + getattr(self, "mastery_magic", {}).get(key, 0)
+        Maestria Lv.6, libri dell'Archivio."""
+        return (attributes.value(self, key) + self.rune_value(key) + getattr(self, "mastery_magic", {}).get(key, 0)
+                + int(get_archive_bonus(key, PROFILE_MANAGER._data)))
 
     def get_total_atk(self):
         atk = self.weapon.atk + self.bonus_atk_relic + self.weapon.get_gold_atk_bonus(self.gold) + self.corruption_atk()
@@ -514,6 +529,7 @@ class Player:
         return False
 
     def max_ether(self) -> int:
+        if self.arcane_deaf: return 0
         return self.base_ether + self.magic_value("ether_max")
 
     def gain_ether(self, amount: int) -> int:
@@ -533,14 +549,14 @@ class Player:
             self.exp -= self.max_exp
             self.level += 1; self.max_exp = int(self.max_exp * 1.5)
             growth = attributes.rules()["per_level"]
-            self.max_hp += growth["max_hp"]
+            self.max_hp += growth["max_hp"] + self.trait_hp_per_level
             self.heal(self.max_hp)
             self.base_acc += growth["acc"]; self.base_dodge += growth["dodge"]
             self.unspent_points += attributes.rules()["points_per_level"]
             self.points_offered = False
             display_msg(f"\n{Colors.YELLOW}{Colors.BOLD}*** LEVEL UP! Sei salito al livello {self.level}! ***{Colors.RESET}"
                         f"\n{Colors.YELLOW}Hai {self.unspent_points} punti abilità da spendere negli attributi.{Colors.RESET}")
-            if talents.earned(self.level):
+            if talents.earned(self.level, self.talent_every):
                 self.pending_talents += 1
                 display_msg(f"{Colors.MAGENTA}Hai guadagnato un talento: lo scegli a fine stanza.{Colors.RESET}")
 
