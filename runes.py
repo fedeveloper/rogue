@@ -13,6 +13,7 @@ RUNE_EFFECT_KEYS = (
     "mark_duration_add", "reaction_dmg_pct", "super_effective_pct", "bleed_on_hit", "poison_on_hit", "crit_chance_add",
     "atk_pct", "lifesteal_pct", "first_strike_pct", "def_pct", "dodge_add", "thorns_pct", "defend_heal_pct",
     "gold_pct", "exp_pct", "audacity_start", "trap_chance_add", "scorch_on_hit", "stun_on_hit",
+    "ether_max", "spell_pct", "ether_on_hit", "spell_discount",  # magia: sommate ad attributi e talenti (Player.magic_value)
 )
 # Status che le rune (e le parole runiche) possono infliggere a ogni colpo: (status, chiave, turni)
 ON_HIT_STATUSES = (("bleed", "bleed_on_hit", 3), ("poison", "poison_on_hit", 3), ("scorch", "scorch_on_hit", 3), ("stun", "stun_on_hit", 1))

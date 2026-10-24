@@ -92,6 +92,7 @@ class RelicEffect:
 
     # Regole che altri sistemi leggono dalla presenza della reliquia
     free_rune_extraction = False
+    ignore_silence = False  # né il Silenzio né il Gas del Silenzio impediscono gli incantesimi
     rune_drop_always = ()
 
 # --- IMPLEMENTAZIONI ---
@@ -412,6 +413,29 @@ RELIC_REGISTRY = {
     "marchio_cacciatore": MarchioCacciatore, "stendardo_audacia": StendardoAudacia, "teschio_rivale": TeschioRivale,
     "lanterna_cartografo": LanternaCartografo,
 }
+
+class CristalloEtere(RuneBonus):
+    BONUS = {"ether_max": 6}
+
+class AnelloArcimago(RuneBonus):
+    BONUS = {"spell_pct": 20}
+
+class CalamaioEterno(RuneBonus):
+    BONUS = {"spell_discount": 1}
+
+class CuoreRisonante(RelicEffect):
+    def on_enemy_death(self, session):
+        gained = session.player.gain_ether(3)
+        if gained: display_msg(f"{Colors.CYAN}Cuore Risonante: +{gained} Etere.{Colors.RESET}")
+
+class VeloSilenzio(RelicEffect):
+    ignore_silence = True
+
+RELIC_REGISTRY["cristallo_etere"] = CristalloEtere
+RELIC_REGISTRY["anello_arcimago"] = AnelloArcimago
+RELIC_REGISTRY["calamaio_eterno"] = CalamaioEterno
+RELIC_REGISTRY["cuore_risonante"] = CuoreRisonante
+RELIC_REGISTRY["velo_silenzio"] = VeloSilenzio
 
 def create_relic_effect(relic_id: str) -> RelicEffect:
     if relic_id in RELIC_REGISTRY:

@@ -19,7 +19,7 @@ import modes
 # Effetti di controllo delle reazioni: scadono alla fine del turno del nemico, non all'inizio
 CONTROL_STATUSES = ("stun", "blind", "slow")
 # Mosse del nemico che sono attacchi
-ATTACK_MOVES = ("attack", "heavy", "venom", "drain", "unleash")
+ATTACK_MOVES = ("attack", "heavy", "venom", "drain", "unleash", "ether_drain", "spellcast")
 # Attacchi da cui conviene difendersi: l'intento lo dice
 HEAVY_MOVES = ("heavy", "unleash")
 
@@ -49,6 +49,7 @@ class CombatSession:
         self.first_player_attack = True
         self.intent = None  # la mossa che il nemico ha annunciato per il suo prossimo turno
         self.sealed = False  # Sigillo: al prossimo turno l'eroe non può difendersi
+        self.mute_turns = 0  # Silenzio: per quanti turni dell'eroe gli incantesimi restano muti
         # Le regole di combattimento del bioma (Gas del Silenzio, Ebollizione Astrale, Paradosso Temporale)
         self.biome = get_biome(floor)
         self.rules = (self.biome or {}).get("rules", {})
@@ -199,6 +200,7 @@ class CombatSession:
             if not self.player_turn():
                 break
             self.sealed = False  # il Sigillo vale per un solo turno
+            if self.mute_turns: self.mute_turns -= 1
             if self.enemy.hp > 0 and self._paradox("player_repeat"):
                 display_msg(f"{Colors.MAGENTA}⏳ Il tempo si riavvolge: agisci ancora!{Colors.RESET}")
                 if not self.player_turn():
@@ -374,6 +376,7 @@ class CombatSession:
             out.append(f"I suoi colpi infliggono {STATUS_NAMES[ph['status_inflict']['type']]} ({ph['status_inflict']['chance']}%).")
         if "moves" in ph:
             e.moves = dict(ph["moves"])
+            for move, w in getattr(e, "extra_moves", {}).items(): e.moves[move] = e.moves.get(move, 0) + w
             new = [self._move(m)["name"] for m in ph["moves"] if m not in ("attack",)]
             out.append("Mosse: " + ", ".join(new) + ".")
         return out
@@ -408,13 +411,16 @@ class CombatSession:
         m = self._move(self.intent)
         text = f"{m['icon']} {Colors.BOLD}{m['name']}{Colors.RESET}"
         if self.intent in ATTACK_MOVES:
-            text += f" (≈{self.estimate_enemy_damage(m.get('damage_mult', 1))} danni)"
+            text += f" (≈{self.estimate_enemy_damage(m.get('damage_mult', 1), m.get('pierce_pct', 0))} danni)"
             if self.intent in HEAVY_MOVES: text += f" {Colors.RED}— difenditi!{Colors.RESET}"
             if self.intent == "drain": text += f" e si cura di altrettanto"
+            if self.intent == "ether_drain": text += f" e ti toglie {m['ether_drain']} Etere"
+            if self.intent == "spellcast": text += f": la tua Difesa ne ferma solo il {100 - m['pierce_pct']}%"
             if self.intent == "venom" and self.enemy.status_inflict: text += f" + {STATUS_NAMES.get(self.enemy.status_inflict['type'], '')} se ti ferisce"
         elif self.intent == "guard": text += f": i tuoi colpi faranno il {int(m['damage_taken_mult'] * 100)}% dei danni"
         elif self.intent == "heal": text += f": recupererà il {m['heal_pct']}% degli HP"
         elif self.intent == "seal": text += f": {Colors.RED}al tuo prossimo turno non potrai difenderti{Colors.RESET}"
+        elif self.intent == "silence": text += f": {Colors.RED}per {m['silence_turns']} turni non potrai lanciare incantesimi{Colors.RESET}"
         elif self.intent == "charge":
             text += f": il turno dopo arriva il Colpo caricato (≈{self.estimate_enemy_damage(self._move('unleash')['damage_mult'])} danni)"
         elif self.intent == "shield": text += f": scudo di {self.enemy.max_hp * m['shield_pct'] // 100}"
@@ -476,7 +482,7 @@ class CombatSession:
         self.player.run_tracker["floor_attacks"] += 1
         if random.randint(1, 100) <= hit_chance:
             self.player.run_tracker["floor_hits"] += 1
-            self.player.gain_ether(magic.rules()["gain"]["hit"] + attributes.value(self.player, "ether_on_hit"))
+            self.player.gain_ether(magic.rules()["gain"]["hit"] + self.player.magic_value("ether_on_hit"))
             dmg_dealt = int(dmg_dealt * self.player.get_class_damage_multiplier())
             # L'attributo con cui scala l'arma (Forza, Destrezza o Arcano) e i talenti che aumentano i danni
             dmg_dealt = dmg_dealt * (100 + attributes.weapon_bonus(self.player) + attributes.value(self.player, "dmg_pct")) // 100
@@ -610,7 +616,9 @@ class CombatSession:
                       f"Intento del nemico: {self.intent_text()}")
             # Le azioni per nome: la voce degli incantesimi c'è solo per chi ne conosce
             actions = [("attack", "Attacca"), ("defend", self.def_txt)]
-            if self.player.spells: actions.append(("spell", f"Lancia un incantesimo ({self.player.ether}/{self.player.max_ether()} Etere)"))
+            if self.player.spells:
+                muted = self.spells_muted()
+                actions.append(("spell", f"{Colors.RED}🤫 {muted}{Colors.RESET}" if muted else f"Lancia un incantesimo ({self.player.ether}/{self.player.max_ether()} Etere)"))
             actions += [("inventory", "Apri Inventario (Usa oggetto = Costa Turno)"), ("stats", "Statistiche Eroe"), ("flee", "Tenta la Fuga")]
 
             idx = interactive_menu([text for _, text in actions], prompt)
@@ -621,6 +629,9 @@ class CombatSession:
                 return self.execute_player_attack()
 
             elif action == "spell":
+                if self.spells_muted():
+                    display_msg(f"\n{Colors.RED}-> Apri la bocca, ma non esce nessuna parola: ora non puoi lanciare incantesimi.{Colors.RESET}")
+                    continue
                 spell_id = self.choose_spell()
                 if spell_id is None: continue
                 return self.cast_spell(spell_id)
@@ -670,6 +681,13 @@ class CombatSession:
                 return True
 
     # ------------------------------------------------------------- incantesimi
+    def spells_muted(self) -> str:
+        """Perché ora non si possono lanciare incantesimi (Silenzio del nemico o Gas del Silenzio), o "" se si può."""
+        if any(r.ignore_silence for r in self.player.relic_effects): return ""
+        if self.mute_turns: return f"Incantesimi ammutoliti dal Silenzio ({self.mute_turns} turni)"
+        if self.silenced: return "Incantesimi soffocati dal gas"
+        return ""
+
     def choose_spell(self):
         """Il menu degli incantesimi: quello scelto, o None per tornare indietro (non costa il turno)."""
         options = [magic.label(self.player, sid) for sid in self.player.spells] + ["Indietro"]
@@ -693,7 +711,9 @@ class CombatSession:
         """Danni di un incantesimo: ATK × pct, elemento contro il nemico, Arcano (prima di Guardia, Scaglie e scudo)."""
         element = magic.spell(spell_id)["element"]
         mult = MULTIPLIERS.get(element, {}).get(self.enemy.element, 1.0)
-        power = 100 + attributes.value(self.player, "spell_pct") + self.player.weapon.traits.get("spell_pct", 0)
+        nem = getattr(self.enemy, "nemesis", None)
+        if nem: mult *= nemesis.spell_resisted(nem, element)
+        power = 100 + self.player.magic_value("spell_pct") + self.player.weapon.traits.get("spell_pct", 0)
         return max(1, int(self.player.get_total_atk() * pct / 100 * mult) * power // 100)
 
     def cast_spell(self, spell_id: str) -> bool:
@@ -774,14 +794,19 @@ class CombatSession:
     def _enemy_attack_power(self) -> int:
         return max(1, int(self.enemy.atk * (1 - self._resonance_value("Acqua")))) if self.resonance == "Acqua" else self.enemy.atk
 
-    def estimate_enemy_damage(self, move_mult: float = 1.0) -> int:
-        """Danno atteso dell'attacco annunciato, senza difesa attiva né effetti casuali (per l'intento)."""
+    def _player_defense(self, pierce_pct: int = 0) -> int:
+        """La Difesa che riduce i colpi del nemico; un Incantesimo (pierce_pct) ne supera una parte."""
         defense = self.player.get_total_def() + self.spell_def + sum(r.get_def_modifier(self) for r in self.player.relic_effects)
+        return defense * (100 - pierce_pct) // 100
+
+    def estimate_enemy_damage(self, move_mult: float = 1.0, pierce_pct: int = 0) -> int:
+        """Danno atteso dell'attacco annunciato, senza difesa attiva né effetti casuali (per l'intento)."""
+        defense = self._player_defense(pierce_pct)
         raw = max(1, int(self._enemy_attack_power() * self._enemy_multiplier() * move_mult))
         return max(raw - defense, -(-raw * MIN_DAMAGE_PCT // 100))
 
-    def _calc_enemy_damage(self, en_multiplier: float, move_mult: float = 1.0) -> int:
-        defense = self.player.get_total_def() + self.spell_def + sum(r.get_def_modifier(self) for r in self.player.relic_effects)
+    def _calc_enemy_damage(self, en_multiplier: float, move_mult: float = 1.0, pierce_pct: int = 0) -> int:
+        defense = self._player_defense(pierce_pct)
         en_atk = self._enemy_attack_power()
         raw = max(1, int((en_atk + random.randint(-1, 2)) * en_multiplier * move_mult))
         # La difesa riduce il colpo, ma non lo annulla mai: resta almeno MIN_DAMAGE_PCT del danno grezzo
@@ -809,6 +834,10 @@ class CombatSession:
         elif intent == "seal":
             self.sealed = True
             display_msg(f"{Colors.RED}<- 🔒 {self.enemy.name} ti sigilla: al prossimo turno non potrai difenderti.{Colors.RESET}")
+            result = True
+        elif intent == "silence":
+            self.mute_turns = self._move("silence")["silence_turns"]
+            display_msg(f"{Colors.RED}<- 🤫 {self.enemy.name} ti ammutolisce: per {self.mute_turns} turni non potrai lanciare incantesimi.{Colors.RESET}")
             result = True
         elif intent == "charge":
             self.enemy.charged = True
@@ -848,7 +877,7 @@ class CombatSession:
         self.first_enemy_attack = False
 
         if random.randint(1, 100) <= en_hit_chance:
-            dmg_taken = self._calc_enemy_damage(en_multiplier, move_mult)
+            dmg_taken = self._calc_enemy_damage(en_multiplier, move_mult, self._move(move).get("pierce_pct", 0))
             if self.enemy.hp <= 0:
                 self.on_enemy_death()
                 return False
@@ -885,6 +914,10 @@ class CombatSession:
                         return False
                 
                 alive = self.player.take_damage(dmg_taken)
+                if move == "ether_drain" and self.player.ether:
+                    lost = min(self.player.ether, self._move("ether_drain")["ether_drain"])
+                    self.player.ether -= lost
+                    display_msg(f"{Colors.MAGENTA}🌀 {self.enemy.name} ti risucchia {lost} Etere. ({self.player.ether}/{self.player.max_ether()}){Colors.RESET}")
                 if move == "drain":
                     drained = min(self.enemy.max_hp - self.enemy.hp, int(dmg_taken * self._move("drain")["heal_ratio"]))
                     self.enemy.hp += drained

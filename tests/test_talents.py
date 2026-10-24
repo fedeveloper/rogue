@@ -150,7 +150,7 @@ class EffectTest(Sandbox):
             with self.subTest(spell=sid):
                 self.assertEqual(magic.cost(p, sid), max(1, s["cost"] - fx("parsimonia", "spell_discount") - (GAME_DATA["spells"]["rules"]["resonance_discount"] if s["element"] == p._get_resonance_element() else 0)))
         sid = next(sid for sid, s in GAME_DATA["spells"]["spells"].items() if s["cost"] > 2)
-        self.assertIn("talento", ANSI.sub("", magic.label(p, sid)))
+        self.assertIn("sconto", ANSI.sub("", magic.label(p, sid)))
 
     def test_harvest_heals_on_every_kill(self):
         p = self.hero("raccolto"); p.max_hp, p.hp = 1000, 100

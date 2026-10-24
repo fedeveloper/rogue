@@ -72,6 +72,7 @@ def fragment(key, value):
     if key == "start_potions_add": return f"{value} pozioni"
     if key in modes.ADD_KEYS: return str(value)
     if key == "pact": return GAME_DATA["meta"]["pacts"][value]["desc"].lower().rstrip(".")
+    if key == "enemy_moves": return GAME_DATA["moves"]["moves"][next(iter(value))]["name"]
     raise KeyError(key)
 
 
@@ -84,7 +85,7 @@ class EffectContractTest(Sandbox):
     def test_every_effect_key_has_a_contract(self):
         used = {k for _, _, effects in all_effects() for k in effects}
         self.assertLessEqual(used, set(self.CHECKS))
-        self.assertEqual(set(self.CHECKS), set(modes.MULT_KEYS) | set(modes.ADD_KEYS) | {"room_weights", "pact"})
+        self.assertEqual(set(self.CHECKS), set(modes.MULT_KEYS) | set(modes.ADD_KEYS) | {"room_weights", "pact", "enemy_moves"})
 
     def test_every_description_matches_its_numbers(self):
         for name, desc, effects in all_effects():
@@ -198,6 +199,24 @@ class EffectContractTest(Sandbox):
         before, after = self._start("start_potions_add", value, lambda p: sum(i.type == "consumable" for i in p.inventory))
         self.assertEqual(after, before + value)
 
+    def _start_ether(self, value):
+        before, after = self._start("start_ether_add", value, lambda p: (p.max_ether(), p.ether))
+        self.assertEqual(after, (before[0] + value, before[1] + value))
+
+    def _floor_ether(self, value):
+        gained = []
+        for rules in ({}, {"floor_ether_mult": value}):
+            modes.end_run(); self.with_rules(rules)
+            p = self.hero(); p.base_ether, p.ether = 100, 0
+            gained.append(roguelike.rest_ether(p))
+        self.assertEqual(gained[1], int(gained[0] * value))
+
+    def _enemy_moves(self, value):
+        b, a = self.enemy({"enemy_moves": value}, is_boss=False, active_pacts=[])
+        for move, w in value.items(): self.assertEqual(a.moves[move], b.moves.get(move, 0) + w)
+        b, a = self.enemy({"enemy_moves": value}, is_boss=True, active_pacts=[])
+        self.assertEqual(a.moves, b.moves, "i boss restano come sono")
+
     def _pact(self, value):
         self.assertIn(value, GAME_DATA["meta"]["pacts"])
         self.assertIn(value, modes.combine([{"pact": value}])["pacts"])
@@ -209,7 +228,7 @@ class EffectContractTest(Sandbox):
         "enemy_acc_add": _enemy_acc, "enemy_gold_mult": _enemy_gold, "chest_risk_mult": _chest,
         "curse_chance_mult": _curse, "start_gold_mult": _start_gold_mult, "start_gold_add": _start_gold_add,
         "start_corruption": _start_corruption, "start_relic": _start_relic, "start_potions_add": _start_potions,
-        "pact": _pact,
+        "pact": _pact, "start_ether_add": _start_ether, "floor_ether_mult": _floor_ether, "enemy_moves": _enemy_moves,
     }
 
 

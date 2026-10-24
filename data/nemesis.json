@@ -13,7 +13,8 @@
         "resist_element": {"name": "Ha imparato a resistere", "desc": "I colpi dell'elemento con cui ti ha ucciso gli fanno il 40% di danni in meno.", "value": 40},
         "hp_bonus_pct":   {"name": "Più grosso di come lo ricordi", "desc": "Ha il 20% di HP in più.", "value": 20},
         "acc_add":        {"name": "Conosce i tuoi movimenti", "desc": "Ha +15 di Precisione.", "value": 15},
-        "atk_bonus_pct":  {"name": "Affamato di vendetta", "desc": "Ha il 15% di Attacco in più.", "value": 15}
+        "atk_bonus_pct":  {"name": "Affamato di vendetta", "desc": "Ha il 15% di Attacco in più.", "value": 15},
+        "antimagia":      {"name": "Ha imparato a zittirti", "desc": "I tuoi incantesimi gli fanno il 40% di danni in meno, e ti combatte con il Silenzio e il Risucchio d'Etere. Lo impara solo da chi conosceva incantesimi.", "value": 40, "requires_spells": true, "moves": {"silence": 15, "ether_drain": 20}}
     },
     "text": {
         "born": "{name} {rank} si ricorderà di te. Ha preso {gold} Oro dal tuo corpo.",

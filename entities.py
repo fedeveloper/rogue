@@ -265,9 +265,10 @@ class Player:
         self.unspent_points, self.points_offered = 0, True
         self.talents, self.pending_talents = [], 0  # vedi talents.py
         self.max_hp += attributes.value(self, "max_hp")
-        # Magia (magic.py): gli incantesimi della classe e l'Etere, pieno all'inizio della discesa
+        # Magia (magic.py): gli incantesimi della classe e l'Etere, pieno all'inizio della discesa (riempito in fondo,
+        # quando arma, armatura e reliquie che lo cambiano ci sono già)
         self.base_ether, self.spells = data.get("ether", 0), list(data.get("spells", []))
-        self.ether = self.max_ether()
+        self.ether = 0
         self.hp = self.max_hp
         self.gold = data["gold"] + (PROFILE_MANAGER.get_perk("gold_lvl", 0) * 20)
         self.base_acc, self.base_dodge = data["acc"], data["dodge"]
@@ -294,6 +295,7 @@ class Player:
         self.base_lifesteal = 0
         # Effetti personali (Maestria della propria classe) e bonus globali (Maestrie di tutte le classi), definiti in classes.json
         self.mastery_effects = self._own_mastery_effects(class_id)
+        self.mastery_magic = self._own_mastery_magic(class_id)  # Maestria Lv.6: effetti magici della classe
         global_bonus = self._global_mastery_bonuses()
         self.bonus_def += global_bonus.get("def", 0)
         self.base_dodge += global_bonus.get("dodge", 0)
@@ -350,12 +352,21 @@ class Player:
         if PROFILE_MANAGER.get_perk("altare_benedizione", False):
             r = get_random_relic(self)
             if r: self.add_relic(r)
+        self.ether = self.max_ether()
 
     @staticmethod
     def _own_mastery_effects(class_id: str) -> set:
         lvl = PROFILE_MANAGER.get_class_lvl(class_id, 1)
         mastery = RAW_DATA["classes"][class_id].get("mastery", {})
         return {m["effect"] for m_lvl, m in mastery.items() if m.get("effect") and lvl >= int(m_lvl)}
+
+    @staticmethod
+    def _own_mastery_magic(class_id: str) -> dict:
+        lvl, totals = PROFILE_MANAGER.get_class_lvl(class_id, 1), {}
+        for m_lvl, m in RAW_DATA["classes"][class_id].get("mastery", {}).items():
+            if m.get("type") == "magic" and lvl >= int(m_lvl):
+                for key, v in m["bonus"].items(): totals[key] = totals.get(key, 0) + v
+        return totals
 
     @staticmethod
     def _global_mastery_bonuses() -> dict:
@@ -453,6 +464,11 @@ class Player:
         mult = 1 + sum(r.get_rune_multiplier() for r in self.relic_effects)
         return int(runes * mult) + sum(r.get_rune_bonus(key) for r in self.relic_effects)
 
+    def magic_value(self, key: str) -> int:
+        """Un effetto magico (ether_max, spell_pct, ether_on_hit, spell_discount): attributi e talenti, rune e reliquie,
+        Maestria Lv.6."""
+        return attributes.value(self, key) + self.rune_value(key) + getattr(self, "mastery_magic", {}).get(key, 0)
+
     def get_total_atk(self):
         atk = self.weapon.atk + self.bonus_atk_relic + self.weapon.get_gold_atk_bonus(self.gold) + self.corruption_atk()
         for r in self.relic_effects: atk += r.get_atk_modifier(self)
@@ -498,7 +514,7 @@ class Player:
         return False
 
     def max_ether(self) -> int:
-        return self.base_ether + attributes.value(self, "ether_max")
+        return self.base_ether + self.magic_value("ether_max")
 
     def gain_ether(self, amount: int) -> int:
         """Aggiunge Etere fino al massimo; restituisce quanto ne è entrato davvero."""
@@ -671,6 +687,12 @@ class Enemy:
         own = data.get("moves") or GAME_DATA["moves"]["profiles"].get(data.get("profile"), {}).get("moves")
         self.moves = dict(own or defaults["boss" if is_boss else "enemy"])
         if self.status_inflict and not own: self.moves.update(defaults["with_status"])
+        # Mosse contro la magia: tutti i nemici nelle Eco del Ciclo, i nemici comuni con l'Ascensione
+        extra = dict(GAME_DATA["meta"]["cycle"]["arcane_moves"]) if cycle_of(floor) else {}
+        if not is_boss:
+            for move, w in modes.rule("enemy_moves").items(): extra[move] = extra.get(move, 0) + w
+        for move, w in extra.items(): self.moves[move] = self.moves.get(move, 0) + w
+        self.extra_moves = extra  # restano anche quando una fase del boss cambia le mosse
         self.last_move = None
         self.heals_used = 0
         self.mark = None  # [elemento, turni]: il marchio elementale che una reazione può far esplodere

@@ -9,6 +9,9 @@
     "seal": {"name": "Sigillo", "icon": "🔒", "desc": "Non attacca. Al tuo prossimo turno non potrai difenderti."},
     "charge": {"name": "Carica", "icon": "⏳", "desc": "Non attacca. Il turno dopo scatena il Colpo caricato."},
     "unleash": {"name": "Colpo caricato", "icon": "💥", "damage_mult": 3, "desc": "Arriva sempre dopo la Carica: la sua forza triplica (×3) prima che la tua difesa la riduca. Difenditi per dimezzare il colpo."},
+    "silence": {"name": "Silenzio", "icon": "🤫", "silence_turns": 2, "desc": "Non attacca. Per i tuoi prossimi 2 turni non potrai lanciare incantesimi."},
+    "ether_drain": {"name": "Risucchio d'Etere", "icon": "🌀", "ether_drain": 4, "desc": "Attacco che, se ti ferisce, ti toglie anche 4 Etere."},
+    "spellcast": {"name": "Incantesimo", "icon": "🔮", "damage_mult": 1.5, "pierce_pct": 50, "desc": "Lancia un incantesimo: la sua forza cresce della metà (×1.5) e la tua Difesa ne ferma solo il 50%. Difenditi per dimezzarlo."},
     "shield": {"name": "Barriera", "icon": "💠", "shield_pct": 20, "desc": "Non attacca. Riporta il suo scudo al 20% degli HP massimi (non si somma a quello che ha già): lo scudo assorbe i danni dei tuoi attacchi."}
   },
   "profiles": {
@@ -18,6 +21,7 @@
     "succhiavita": {"name": "Succhiavita", "desc": "Si nutre di te: si cura dei danni che ti infligge.", "moves": {"attack": 55, "drain": 30, "guard": 15}},
     "infetto": {"name": "Infetto", "desc": "Punta a infettarti: i suoi colpi infetti infliggono sempre il suo status.", "moves": {"attack": 50, "venom": 35, "heavy": 15}},
     "mistico": {"name": "Mistico", "desc": "Ti sigilla la difesa e si rigenera.", "moves": {"attack": 55, "seal": 20, "heal": 15, "guard": 10}},
+    "arcanista": {"name": "Arcanista", "desc": "Combatte la tua magia: ti ammutolisce con il Silenzio e ti risucchia l'Etere.", "moves": {"attack": 50, "ether_drain": 25, "silence": 15, "guard": 10}},
     "furia": {"name": "Furia", "desc": "Imprevedibile: alterna colpi pesanti e cariche.", "moves": {"attack": 50, "heavy": 25, "charge": 25}}
   },
   "defaults": {
@@ -25,5 +29,5 @@
     "boss": {"attack": 50, "heavy": 25, "guard": 10, "heal": 15},
     "with_status": {"venom": 25}
   },
-  "rules": {"heal_below_pct": 60, "max_heals": 2, "no_repeat": ["heavy", "guard", "seal", "charge", "shield"]}
+  "rules": {"heal_below_pct": 60, "max_heals": 2, "no_repeat": ["heavy", "guard", "seal", "charge", "shield", "silence", "spellcast"]}
 }

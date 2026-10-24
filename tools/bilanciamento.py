@@ -57,7 +57,7 @@ def profile(kind: str) -> dict:
         data["unlocked_ids"] = sorted({i["unlock_id"] for c in ("weapons", "armors", "accessories", "consumables", "relics")
                                        for i in RAW_DATA[c] if i.get("unlock_id")} | set(GAME_DATA["classes"]) | set(GAME_DATA["meta"]["traits"]))
         data["perks"] = {key: (True if boolean else top) for key, _, _, top, _, boolean in roguelike.PERK_DEFS}
-        data["class_lvl"] = {c: 5 for c in GAME_DATA["classes"]}
+        data["class_lvl"] = {c: max(map(int, GAME_DATA["meta"]["mastery_xp_requirements"])) for c in GAME_DATA["classes"]}
         data["won_normal"] = True
         data["ascension"] = {"best_win": GAME_DATA["modes"]["ascension"]["max"]}
     else:
@@ -152,7 +152,7 @@ class Bot:
         Cura sotto il 40% degli HP; altrimenti un incantesimo che completa una reazione con il marchio del nemico,
         che lo colpisce Super Efficace, che fa esplodere un marchio o che infrange scudo e Scaglie."""
         p, s = self.player, self.state.get("session")
-        if not s or not p.spells: return None
+        if not s or not p.spells or s.spells_muted(): return None
         for i, sid in enumerate(p.spells):
             if p.ether < magic.cost(p, sid): continue
             fx, el = magic.spell(sid)["effects"], magic.spell(sid)["element"]
@@ -243,7 +243,7 @@ class Bot:
                 self.state["spell"] = spell; return find("Lancia un incantesimo")
             if p.hp < p.max_hp * 0.35 and potion: self.state["potion"] = True; return find("Apri Inventario")
             if "sigillata" in opts[1]: return 0
-            if "Colpo pesante" in pr or "Colpo caricato" in pr: return 1
+            if "Colpo pesante" in pr or "Colpo caricato" in pr or "Incantesimo (≈" in pr: return 1
             if spell is not None: self.state["spell"] = spell; return find("Lancia un incantesimo")
             return 0
         if "ZAINO E INVENTARIO" in pr:

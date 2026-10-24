@@ -9,6 +9,7 @@ from contextlib import redirect_stdout
 from unittest import mock
 
 import codex
+import magic
 import roguelike
 import rooms
 import runes
@@ -111,6 +112,13 @@ class EffectContractTest(Sandbox):
                 s, _ = self.attack(self.hero(*ids), rolls=v + 1)
                 self.assertNotIn(status, s.enemy.statuses)
 
+    def test_a_word_makes_spells_cheaper(self):
+        ids, v = source_of("spell_discount")
+        base, word = self.hero(), self.hero(*ids)
+        for sid, s in GAME_DATA["spells"]["spells"].items():
+            with self.subTest(spell=sid):
+                self.assertEqual(magic.cost(word, sid), max(1, magic.cost(base, sid) - v))
+
     def attack(self, p, multiplier=1.0, rolls=1):
         s = self.session(p)
         with quiet(), mock.patch.object(s, "attack_multiplier", return_value=multiplier), mock.patch("rooms.random.randint", return_value=rolls):
@@ -212,6 +220,25 @@ class EffectContractTest(Sandbox):
         cap = GAME_DATA["meta"]["rooms"]["trap"]["max_chance"]
         for k in base: self.assertEqual(boosted[k], min(cap, base[k] + v))
 
+    def _ether_max(self, rid, v):
+        self.assertEqual(self.hero(rid).max_ether(), self.hero().max_ether() + v)
+
+    def _spell_pct(self, rid, v):
+        dealt = []
+        for p in (self.hero(), self.hero(rid)):
+            s = self.session(p)
+            dealt.append(s.spell_damage("raffica", 100))
+        self.assertEqual(dealt[1], dealt[0] * (100 + v) // 100)
+
+    def _ether_on_hit(self, rid, v):
+        gained = []
+        for p in (self.hero(), self.hero(rid)):
+            p.base_ether, p.ether = 100, 0
+            s = self.session(p)
+            with quiet(), mock.patch("rooms.random.randint", return_value=1): s.execute_player_attack()
+            gained.append(p.ether)
+        self.assertEqual(gained[1], gained[0] + v)
+
     CHECKS = {
         "mark_duration_add": _mark, "reaction_dmg_pct": _reaction, "super_effective_pct": _super_effective,
         "bleed_on_hit": _status_on_hit(None, "bleed"), "poison_on_hit": _status_on_hit(None, "poison"),
@@ -219,6 +246,8 @@ class EffectContractTest(Sandbox):
         "def_pct": _def, "dodge_add": _dodge, "thorns_pct": _thorns, "defend_heal_pct": _defend_heal,
         "gold_pct": _gold, "exp_pct": _exp, "audacity_start": _audacity, "trap_chance_add": _trap,
         "scorch_on_hit": None, "stun_on_hit": None,  # solo nelle parole runiche: test_effects_only_in_runewords
+        "ether_max": _ether_max, "spell_pct": _spell_pct, "ether_on_hit": _ether_on_hit,
+        "spell_discount": None,  # solo nella parola Mente Arcana: test_a_word_makes_spells_cheaper
     }
 
 

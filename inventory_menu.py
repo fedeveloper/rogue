@@ -284,7 +284,7 @@ def show_player_stats(player, session=None):
     display_msg(f"✨ EXP: {Colors.CYAN}{player.exp}/{player.max_exp}{Colors.RESET} (Livello {player.level})")
     if player.spells:
         display_msg(f"🔮 Etere: {Colors.CYAN}{player.ether}/{player.max_ether()}{Colors.RESET} | Incantesimi: " + ", ".join(magic.spell(s)["name"] for s in player.spells)
-                    + (f" (potenza +{attributes.value(player, 'spell_pct')}%)" if attributes.value(player, "spell_pct") else ""))
+                    + (f" (potenza +{player.magic_value('spell_pct')}%)" if player.magic_value("spell_pct") else ""))
     display_msg("")
     
     display_msg(f"{Colors.BOLD}--- ATTRIBUTI ---{Colors.RESET}")
