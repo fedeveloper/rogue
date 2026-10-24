@@ -64,7 +64,7 @@
         "weapon": {
             "name": "Pugnali Gemelli",
             "value": 30,
-            "atk": 7,
+            "atk": 9,
             "element": "Vento",
             "scaling": "destrezza"
         },
@@ -328,12 +328,12 @@
         "max_hp": 75,
         "gold": 30,
         "acc": 20,
-        "dodge": 20,
-        "crit": 15,
+        "dodge": 15,
+        "crit": 8,
         "weapon": {
             "name": "Pugnale Ricurvo",
             "value": 50,
-            "atk": 10,
+            "atk": 12,
             "element": "Vento",
             "scaling": "destrezza"
         },
@@ -404,7 +404,7 @@
         "desc": "Sbloccato raggiungendo la Maestria Mago Lv.5.",
         "mastery": {
             "2": {
-                "desc": "Raccolto d'Anime: ogni nemico sconfitto ti cura del 10% degli HP Max.",
+                "desc": "Raccolto d'Anime: ogni nemico sconfitto ti cura del 6% degli HP Max.",
                 "type": "personal",
                 "effect": "necro_harvest"
             },

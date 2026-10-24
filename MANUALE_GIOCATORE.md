@@ -432,7 +432,7 @@ Certe combinazioni di rune **sullo stesso oggetto** formano una **parola runica*
 | 🛡️ **Paladino** | 180 HP e Risonanza di Luce fin dall'inizio; difendendosi si libera da veleno e sanguinamento | Maestria Guerriero Lv.5 |
 | 🪓 **Berserker** | L'ascia più forte, nessuna armatura | Impresa *Danza con la Morte* |
 | 🧪 **Alchimista** | 3 pozioni iniziali e bombe di Fuoco; difendendosi lancia una fiala che prepara la reazione. Grembiule di Terra: *Magma* | Impresa *Genio Elementale* |
-| 🥷 **Assassino** | 15% di critico innato e 20% di schivata, ma solo 75 HP. Pugnale di Vento, mantello di Terra: *Tempesta di Sabbia* | Maestria Ladro Lv.5 |
+| 🥷 **Assassino** | 8% di critico innato e 15% di schivata, ma solo 75 HP. Pugnale di Vento, mantello di Terra: *Tempesta di Sabbia* | Maestria Ladro Lv.5 |
 | 💀 **Negromante** | Risonanza di Tenebra fin dall'inizio; difendendosi ruba vita al nemico | Maestria Mago Lv.5 |
 
 Ogni eroe parte con un equipaggiamento che ha già un'idea di gioco. Cinque classi hanno arma e armatura di elementi che **reagiscono** fra loro: il nome della reazione è in tabella. Paladino e Negromante portano lo stesso elemento e partono con la **Risonanza**. Il Berserker combatte a petto nudo.

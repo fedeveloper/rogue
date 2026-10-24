@@ -13,7 +13,7 @@ from unittest import mock
 
 import roguelike
 import ui
-from constants import TEXT_SPEEDS
+from constants import NECRO_HARVEST_PCT, TEXT_SPEEDS
 from data_manager import GAME_DATA, PROFILE_MANAGER, RAW_DATA, update_game_data
 from entities import Enemy, Player
 from inventory_menu import show_player_stats
@@ -136,7 +136,7 @@ class NewClassesTest(Sandbox):
         session.enemy.hp = 0
         with self.quiet(), mock.patch("builtins.input", return_value=""):
             session.on_enemy_death()
-        self.assertGreaterEqual(player.hp, 1 + player.max_hp // 10)
+        self.assertGreaterEqual(player.hp, 1 + player.max_hp * NECRO_HARVEST_PCT // 100)
 
     def test_global_mastery_bonuses(self):
         PROFILE_MANAGER.set_class_lvl("7", 4)

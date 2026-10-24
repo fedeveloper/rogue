@@ -5,7 +5,7 @@ from ui import Colors, delay_print, clear_screen, interactive_menu, display_msg,
 from data_manager import GAME_DATA, PROFILE_MANAGER, MULTIPLIERS, get_biome, get_element_icon
 from archive import get_archive_bonus
 from codex import record_enemy_killed, record_enemy_seen, record_letter, record_phase, record_reaction, record_rune, record_runeword, record_spell
-from constants import CAMPFIRE_REST_PCT, BASE_HIT_CHANCE, BLOOD_LETTER_CHANCE, CURSE_HP_DRAIN_PCT, MIN_DAMAGE_PCT, POISON_MIN, POISON_PCT
+from constants import NECRO_HARVEST_PCT, CAMPFIRE_REST_PCT, BASE_HIT_CHANCE, BLOOD_LETTER_CHANCE, CURSE_HP_DRAIN_PCT, MIN_DAMAGE_PCT, POISON_MIN, POISON_PCT
 from entities import STATUS_NAMES, Player, Enemy, generate_weapon, generate_armor, generate_accessory, generate_potion, generate_rune, generate_scroll, get_random_relic, set_sockets
 import runes as rune_rules
 import attributes
@@ -234,7 +234,7 @@ class CombatSession:
         # Le reliquie agiscono prima dell'EXP (es. la Pietra Filosofale converte l'EXP in Oro)
         for r in self.player.relic_effects: r.on_enemy_death(self)
         if self.player.necro_harvest:
-            healed = self.player.heal(max(1, self.player.max_hp // 10))
+            healed = self.player.heal(max(1, self.player.max_hp * NECRO_HARVEST_PCT // 100))
             if healed > 0: display_msg(f"{Colors.MAGENTA}Raccolto d'Anime: assorbi {healed} HP dal nemico caduto!{Colors.RESET}")
         if attributes.value(self.player, "kill_heal_pct"):
             healed = self.player.heal(max(1, self.player.max_hp * attributes.value(self.player, "kill_heal_pct") // 100))
