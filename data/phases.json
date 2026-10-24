@@ -1,6 +1,11 @@
 {
     "bosses": {
         "La Badessa del Silenzio": [{"at_pct": 50, "name": "Il Voto del Silenzio", "text": "La Badessa si porta un dito alle labbra. Ogni suono nel chiostro muore.", "moves": {"attack": 45, "seal": 25, "guard": 15, "heal": 15}}],
+        "Il Caposquadra Sepolto": [{"at_pct": 50, "name": "Il Crollo", "text": "Il Caposquadra batte il piccone contro la volta: la galleria frana e lui si ripara sotto le travi.", "shield_pct": 20, "moves": {"attack": 45, "charge": 25, "shield": 15, "heavy": 15}}],
+        "L'Astronoma delle Guglie": [{"at_pct": 50, "name": "La Pioggia di Stelle", "text": "L'Astronoma apre le braccia e il cielo si squarcia: frammenti di stelle cadenti le girano attorno.", "atk_mult": 1.15, "moves": {"attack": 45, "charge": 30, "heavy": 15, "seal": 10}}],
+        "Il Cuore del Ventre": [{"at_pct": 50, "name": "La Digestione", "text": "Le membrane si stringono attorno a te: il Cuore batte più forte e comincia a sciogliere ciò che tocca.", "heal_pct": 10, "moves": {"attack": 40, "drain": 35, "venom": 25}}],
+        "Il Maestro di Forgia": [{"at_pct": 50, "name": "La Tempra", "text": "Il Maestro immerge le braccia nella lava: quando le tira fuori, sono coperte di scaglie di metallo rovente.", "ward": 0.5, "moves": {"attack": 45, "heavy": 25, "charge": 20, "guard": 10}}],
+        "Il Custode della Soglia": [{"at_pct": 50, "name": "Il Tempo Rovesciato", "text": "La luce del Custode si spegne e si rovescia: dove c'era un sole, ora c'è un pozzo nero che ti guarda.", "element": "Tenebra", "atk_mult": 1.1, "moves": {"attack": 45, "drain": 25, "charge": 20, "seal": 10}}],
         "Re dei Goblin": [{"at_pct": 50, "name": "Le Guardie Reali", "text": "Il Re fischia: dai cunicoli escono goblin con scudi di latta e si stringono attorno al trono.", "shield_pct": 25, "moves": {"attack": 50, "heavy": 20, "shield": 30}}],
         "Cavaliere Oscuro": [{"at_pct": 50, "name": "Il Sigillo Infranto", "text": "L'armatura del Cavaliere si crepa e ne esce un fumo nero. Non para più: colpisce.", "atk_mult": 1.25, "moves": {"attack": 50, "heavy": 40, "guard": 10}}],
         "Drago di Zaffiro": [{"at_pct": 50, "name": "Scaglie di Lacrime", "text": "Il Drago si avvolge nelle ali e le sue scaglie si fanno dure come ghiaccio.", "ward": 0.5, "moves": {"attack": 50, "heavy": 20, "charge": 20, "guard": 10}}],

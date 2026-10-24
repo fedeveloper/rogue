@@ -33,7 +33,7 @@
       ],
       "hazard": {
         "name": "Gas del Silenzio",
-        "desc": "In ogni scontro c'è il 35% di probabilità che il gas riempia la stanza: la tua Difesa dimezza ancora i danni, ma perde la tecnica della tua classe (contrattacco, concentrazione o riparo)."
+        "desc": "In ogni scontro c'è il 35% di probabilità che il gas riempia la stanza: la tua Difesa dimezza ancora i danni, ma perde la tecnica della tua classe."
       },
       "rules": {
         "silence": {"chance": 35}

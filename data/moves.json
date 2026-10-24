@@ -11,6 +11,15 @@
     "unleash": {"name": "Colpo caricato", "icon": "💥", "damage_mult": 3, "desc": "Arriva sempre dopo la Carica: la sua forza triplica (×3) prima che la tua difesa la riduca. Difenditi per dimezzare il colpo."},
     "shield": {"name": "Barriera", "icon": "💠", "shield_pct": 20, "desc": "Non attacca. Si protegge con uno scudo pari al 20% degli HP massimi, che assorbe i danni dei tuoi attacchi."}
   },
+  "profiles": {
+    "bruto": {"name": "Bruto", "desc": "Picchia duro: molti colpi pesanti.", "moves": {"attack": 55, "heavy": 35, "guard": 10}},
+    "predatore": {"name": "Predatore", "desc": "Prende la rincorsa: carica il colpo e poi lo scatena.", "moves": {"attack": 60, "charge": 20, "heavy": 20}},
+    "difensore": {"name": "Difensore", "desc": "Si ripara spesso, dietro la guardia o una barriera.", "moves": {"attack": 55, "guard": 20, "shield": 15, "heavy": 10}},
+    "succhiavita": {"name": "Succhiavita", "desc": "Si nutre di te: si cura dei danni che ti infligge.", "moves": {"attack": 55, "drain": 30, "guard": 15}},
+    "infetto": {"name": "Infetto", "desc": "Punta a infettarti: i suoi colpi infetti infliggono sempre il suo status.", "moves": {"attack": 50, "venom": 35, "heavy": 15}},
+    "mistico": {"name": "Mistico", "desc": "Ti sigilla la difesa e si rigenera.", "moves": {"attack": 55, "seal": 20, "heal": 15, "guard": 10}},
+    "furia": {"name": "Furia", "desc": "Imprevedibile: alterna colpi pesanti e cariche.", "moves": {"attack": 50, "heavy": 25, "charge": 25}}
+  },
   "defaults": {
     "enemy": {"attack": 70, "heavy": 20, "guard": 10},
     "boss": {"attack": 50, "heavy": 25, "guard": 10, "heal": 15},

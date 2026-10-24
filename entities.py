@@ -7,7 +7,7 @@ from archive import get_archive_bonus
 from codex import record_relic
 import modes
 import runes as rune_rules
-from constants import BASE_HIT_CHANCE, ENEMY_DEPTH_WINDOW, BOSS_DEPTH_WINDOW, INFINITE_MODE_THRESHOLD, CURSE_CHANCE, CURSE_STAT_MULTIPLIER, BOSS_HP_MULT, BOSS_ATK_MULT, ENEMY_HP_PER_FLOOR, ENEMY_ATK_PER_FLOOR, RECOVERY_HEAL_PCT, BULWARK_HEAL_PCT, WEAPON_TARGET_HITS, ARMOR_TARGET_ABSORB, WEAPON_QUALITY, ARMOR_QUALITY, NORMAL_ELEMENT_BONUS, EPIC_MULTIPLIER
+from constants import BASE_HIT_CHANCE, ENEMY_DEPTH_WINDOW, BOSS_DEPTH_WINDOW, INFINITE_MODE_THRESHOLD, CURSE_CHANCE, CURSE_STAT_MULTIPLIER, BOSS_HP_MULT, BOSS_ATK_MULT, ENEMY_HP_PER_FLOOR, ENEMY_ATK_PER_FLOOR, BULWARK_HEAL_PCT, WEAPON_TARGET_HITS, ARMOR_TARGET_ABSORB, WEAPON_QUALITY, ARMOR_QUALITY, NORMAL_ELEMENT_BONUS, EPIC_MULTIPLIER
 
 class Item:
     def __init__(self, name: str, value: int, item_type: str, level: int = 1, flavor: str = "", is_cursed: bool = False, curse_effect: str = "", element: str = "Normale"):
@@ -206,6 +206,7 @@ class Player:
         data = RAW_DATA["classes"][class_id]
         
         self.role = data["role"]
+        self.defense = data["defense"]  # la tecnica di difesa della classe (defenses.json)
         self.max_hp = data["max_hp"] + (PROFILE_MANAGER.get_perk("hp_lvl", 0) * 15)
         self.hp = self.max_hp
         self.gold = data["gold"] + (PROFILE_MANAGER.get_perk("gold_lvl", 0) * 20)
@@ -493,12 +494,8 @@ class Player:
             display_msg(f"{Colors.MAGENTA}Sintonia: Assorbi {h} HP!{Colors.RESET}")
             
     def get_defense_action(self) -> tuple[str, str]:
-        if self.role in ["Guerriero", "Berserker"]:
-            return "counter", "Difesa Aggressiva (Dimezza danni e Contrattacca)"
-        elif self.role in ["Ladro", "Assassino"]:
-            return "focus", "Concentrazione (Dimezza danni, prossimo colpo Critico 100%)"
-        else:
-            return "recovery", f"Riparo Magico (Dimezza danni e Cura {RECOVERY_HEAL_PCT}% HP)"
+        d = GAME_DATA["defenses"][self.defense]
+        return self.defense, f"{d['name']} ({d['short']})"
 
 def pick_enemy_name(floor: int, is_boss: bool, final: bool = False) -> str:
     """Sceglie un nemico adatto alla profondità: più si scende, più forti sono i candidati."""
@@ -589,10 +586,11 @@ class Enemy:
         self.gold_drop = int(self.gold_drop * modes.rule("enemy_gold_mult"))
         self.max_hp = self.hp
 
-        # Mosse annunciate in anticipo (intenti): pesi del nemico o quelli predefiniti della sua categoria
+        # Mosse annunciate in anticipo (intenti): pesi del nemico, del suo profilo o quelli predefiniti della sua categoria
         defaults = GAME_DATA["moves"]["defaults"]
-        self.moves = dict(data.get("moves") or defaults["boss" if is_boss else "enemy"])
-        if self.status_inflict and not data.get("moves"): self.moves.update(defaults["with_status"])
+        own = data.get("moves") or GAME_DATA["moves"]["profiles"].get(data.get("profile"), {}).get("moves")
+        self.moves = dict(own or defaults["boss" if is_boss else "enemy"])
+        if self.status_inflict and not own: self.moves.update(defaults["with_status"])
         self.last_move = None
         self.heals_used = 0
         self.mark = None  # [elemento, turni]: il marchio elementale che una reazione può far esplodere
