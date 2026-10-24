@@ -59,7 +59,13 @@ def _check_feats(player: Player, floor: int, infinite: bool):
         "feat_furia_cieca": 1 if player.run_tracker.get("blind_fury_done") else 0,
         "feat_tiratore_scelto": player.run_tracker.get("super_effective_hits", 0),
         "feat_assaggiatore": 1 if player.run_tracker.get("1_hp_survive") else 0,
-        "feat_eco": cycle_of(floor) + 1 if infinite else 0
+        "feat_eco": cycle_of(floor) + 1 if infinite else 0,
+        "feat_arcimago": player.run_tracker.get("spells_cast", 0),
+        "feat_alchimia": player.run_tracker.get("reactions", 0),
+        "feat_voce_silenzio": 1 if player.run_tracker.get("kill_muted_done") else 0,
+        "feat_talenti": len(player.talents),
+        "feat_specialista": max(player.attributes.values(), default=0),
+        "feat_asceta": 1 if player.won and not player.run_tracker.get("spells_cast") else 0,
     }
 
     for f_id, f_data in GAME_DATA["meta"]["feats"].items():

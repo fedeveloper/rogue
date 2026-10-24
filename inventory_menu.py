@@ -142,6 +142,8 @@ def _use_consumable(player, item, real_idx, in_combat) -> str:
 def learn_scroll(player, scroll):
     """Legge una pergamena: impara l'incantesimo, se serve dimenticandone uno (al massimo `slots`)."""
     sid, s = scroll.spell_id, magic.spell(scroll.spell_id)
+    if player.arcane_deaf:
+        display_msg(f"\n{Colors.YELLOW}Le parole della pergamena ti scivolano via: sei Sordo all'Arcano. Si può vendere.{Colors.RESET}"); wait_enter("Premi INVIO..."); return
     if sid in player.spells:
         display_msg(f"\n{Colors.YELLOW}Conosci già {s['name']}: la pergamena si può vendere.{Colors.RESET}"); wait_enter("Premi INVIO..."); return
     if len(player.spells) >= magic.rules()["slots"]:

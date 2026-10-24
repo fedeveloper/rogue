@@ -135,7 +135,7 @@ In ogni piano una stanza della mappa, segnata con l'icona del bioma, è una dell
 | 💎 **Forziere** | Oro, a volte un monile, una pozione o una reliquia. Dal piano 3 può essere **chiuso a chiave** (lo forzi pagando l'8% degli HP massimi, in cambio di un bottino garantito) o un **Mimic**: un mostro che, sconfitto, restituisce il doppio. La mappa mostra la probabilità del rischio, che cresce con la profondità. A volte il coperchio sembra respirare: può essere un Mimic, ma anche no. |
 | 💀 **Trappola** | Custodisce sempre un oggetto. Scegli come affrontarla: **disinnescarla** (prova di Precisione, se riesce recuperi anche dell'Oro), **attraversarla di corsa** (prova di Schivata) o **tornare indietro** senza danni e senza bottino. Il menu mostra le probabilità e i danni in caso di fallimento; chi la affronta prende il bottino anche se la prova fallisce. |
 | 🎭 **Evento** | Una piccola storia con bivi, a volte in più scene: vedi *Gli eventi* qui sotto. Alcuni nascondono un artigiano prigioniero da liberare. |
-| ❓ **Mistero** | Un azzardo: un tesoro nascosto (Oro e un monile), una reliquia, un nemico potenziato (che lascia un oggetto), uno debilitato, una trappola… o niente. In media rende più di un forziere. Con il *Sesto Senso* la mappa mostra le probabilità. |
+| ❓ **Mistero** | Un azzardo: un tesoro nascosto (Oro e un monile), una reliquia, un nemico potenziato (che lascia un oggetto), uno debilitato, una trappola, una *Fonte d'Etere* (tutto l'Etere, o il 25% degli HP a chi non conosce incantesimi), una pergamena, una runa… o niente. In media rende più di un forziere. Con il *Sesto Senso* la mappa mostra le probabilità. |
 
 ### L'Audacia
 
@@ -524,6 +524,11 @@ Ogni eroe ha un albero di **Maestria** a 6 livelli, che sale con l'esperienza ac
 | Cacciatore Etereo | Il primo attacco nemico di ogni scontro manca sempre, ma −20% Schivata |
 | Titano | +100 HP, ma precisione e schivata dimezzate |
 | Benedetto | Inizi con lo Scudo di Cristallo e resisti al primo colpo letale |
+| Sordo all'Arcano | Non conosci e non impari incantesimi e non hai Etere, ma +25% danni con le armi e +30 HP Max. |
+| Erudito | Parti con un incantesimo in più (a caso) e +4 Etere massimo, ma -15 HP Max. |
+| Talento Naturale | Un talento ogni 4 livelli invece di 5, ma ogni livello dà 4 HP Max in meno. |
+
+Quasi tutti i tratti si sbloccano con un'impresa: *Sordo all'Arcano* con *L'Asceta*, *Erudito* con *L'Arcimago*, *Talento Naturale* con *Pieno di Talento*.
 
 ---
 
@@ -611,8 +616,43 @@ Tra una discesa e l'altra spendi l'**Essenza Astrale**:
   - *Sesto Senso*: vedi cosa c'è dietro le porte.
 - **⚒️ Forgia Dimensionale** — sblocca armi, armature, monili, consumabili e reliquie, che da quel momento possono comparire nel labirinto. Le categorie diverse dalle reliquie si aprono liberando l'artigiano corrispondente.
 - **🍺 Taverna** — mostra le classi ancora da conquistare.
-- **📜 Grimorio** — imprese completate e livelli di Maestria.
-- **📚 Archivio di Aethelgard** — tre tomi da sbloccare scendendo nel labirinto. Ognuno dà un bonus permanente: più Oro e fuga, danni contro i boss, difesa.
+- **📜 Grimorio** — imprese completate e livelli di Maestria. Le imprese:
+
+| Impresa | Come si completa | Ricompensa |
+|---|---|---|
+| L'Ombra | Scappa da 10 combattimenti in una singola run. | +20% probabilità di fuga, per sempre |
+| Fabbro Folle | Fondi 3 oggetti all'Altare dell'Evoluzione in una run. | Spadone Infranto |
+| Cannone di Vetro | Sconfiggi un Boss senza subire alcun danno. | Veste Eterea |
+| Danza con la Morte | Sconfiggi un nemico avendo esattamente 1 HP rimanente. | Classe: Berserker |
+| L'Avaro | Esci dal labirinto con almeno 2000 Oro non speso. | Tratto: Aristocratico |
+| Genio Elementale | Fondi un'arma fino al Livello 5. | Classe: Alchimista |
+| Il Sopravvissuto | Supera il Piano 10 senza MAI usare il riposo al Falò. | Cuore di Drago |
+| Epuratore di Demoni | Sconfiggi 10 Boss in totale. | Tratto: Cacciatore Etereo |
+| Mani Bucate | Spendi almeno 2000 Oro dal Mercante in una singola run. | Zweihander d'Oro |
+| Equilibrista | Finisci una run con Arma e Armatura di elementi diversi. | Sigillo Elementale |
+| Lama di Cristallo | Arriva al piano 15 senza mai cambiare l'arma iniziale. | Spirito della Spada |
+| Furia Cieca | Supera un piano mancando più della metà dei tuoi attacchi (almeno 6 attacchi). | Tratto: Titano |
+| Tiratore Scelto | Infliggi 5 colpi Super Efficaci ai Boss in una singola run. | Filtro Preciso |
+| Assaggiatore di Veleni | Sopravvivi a un danno letale rimanendo a 1 HP (es. Benedizione o Fiala del Caos). | Maschera Antigas |
+| L'Eco Infinita | Raggiungi l'Eco III della Modalità Infinita (piano 61). | 1500 Essenza |
+| L'Arcimago | Lancia 25 incantesimi in una singola run. | Tratto: Erudito |
+| Alchimia degli Elementi | Scatena 12 reazioni elementali in una singola run. | 500 Essenza |
+| Voce nel Silenzio | Sconfiggi un nemico mentre non puoi lanciare incantesimi (Silenzio o Gas). | 400 Essenza |
+| Pieno di Talento | Ottieni 3 talenti in una singola run. | Tratto: Talento Naturale |
+| Lo Specialista | Porta un attributo a 10 punti. | 400 Essenza |
+| L'Asceta | Vinci una discesa senza lanciare un solo incantesimo. | Tratto: Sordo all'Arcano |
+
+- **📚 Archivio di Aethelgard** — sei tomi da sbloccare scendendo nel labirinto. Ognuno si legge a capitoli e dà un bonus permanente a tutti gli eroi:
+
+| Tomo | Come si sblocca | Bonus |
+|---|---|---|
+| Il Diario di Silas il Cercatore | Raggiungi il Piano 5 | +5% Probabilità di Fuga e +5% Oro trovato |
+| Bestiario dell'Abisso | Sconfiggi 5 Boss | +10% Danni inflitti contro i Boss |
+| Cronache delle Ere | Completa una Run | +5 Difesa fissa globale |
+| Il Grimorio di Valerius | Scopri 10 incantesimi | +2 Etere massimo |
+| Le Cronache dell'Ascesa | Vinci al grado 5 di Ascensione | +5% Danni contro i Boss e +5% Oro trovato |
+| Il Canto delle Eco | Raggiungi l'Eco II della Modalità Infinita | +3 Difesa fissa globale e +5% Probabilità di Fuga |
+
 - **🔥 Il Fuoco del Campo** — chi incontri nel Labirinto può venire a scaldarsi qui. *Silas*, *la Cartografa*, *il Viandante Cieco* e, se lo hai liberato, *la luce di Alaric* compaiono quando le loro storie sono andate abbastanza avanti. Ti parlano in base a ciò che hai fatto e la prima volta ti lasciano un dono (✦). Qui costruisci anche, con l'Essenza:
   - *il Tavolo della Cartografa* (aiutala nel Labirinto): sulla mappa vedi quali storie ti aspettano nelle stanze speciali e negli eventi che tornano;
   - *lo Scrittoio di Silas* (salvalo): a ogni partenza scegli un dono fra +20 HP Max, +3 ATK e +100 Oro;
