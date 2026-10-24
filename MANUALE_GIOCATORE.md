@@ -23,7 +23,7 @@ Se colori o emoji non si vedono bene, usa un terminale con codifica UTF-8 (su Wi
 4. **Superato il piano** recuperi un po' di HP (20 + 5 per piano) e scendi.
 5. In qualsiasi bivio puoi scegliere **Fuga dal Labirinto**: porti a casa tutto l'Oro, convertito in Essenza.
 
-Più scendi, più i nemici sono forti: ai primi piani incontri banditi, goblin e scheletri, verso il fondo idre di lava e leviatani. Anche i boss crescono con la profondità, e il DIO ANTICO compare **solo al piano 30**.
+Più scendi, più i nemici sono forti: ai primi piani incontri banditi, goblin e scheletri, verso il fondo idre di lava e leviatani. Anche i boss crescono con la profondità, e il DIO ANTICO compare **solo al piano 30** (in Modalità Infinita anche alla fine di ogni ciclo: piano 60, 90…).
 
 ```text
   1      🎭 Evento      ❓ Mistero      💰 Mercante
@@ -398,7 +398,19 @@ Dal menu principale:
 
 - **Discesa standard** — 30 piani fino al DIO ANTICO.
 - **📅 Sfida del Giorno** — sempre disponibile (vedi sotto).
-- **Discesa infinita** — dopo la prima vittoria: si prosegue oltre il piano 30 finché resisti; se lo superi, l'Essenza finale vale ×1,5.
+- **Discesa infinita** — dopo la prima vittoria: si prosegue oltre il piano 30 finché resisti, nel **Ciclo del Labirinto** (vedi sotto). Il menu mostra la tua Eco record.
+
+### Il Ciclo del Labirinto
+
+Superata la Soglia, il Paradosso Temporale ti rimanda indietro: il Labirinto ricomincia, ma non è più lo stesso.
+
+- **I biomi tornano.** Dal piano 31 al 60 ripercorri i sei biomi, 5 piani ciascuno, poi di nuovo dal 61 al 90, e così via. L'ordine cambia a ogni ciclo e a ogni discesa; la Soglia resta sempre l'ultima. Ogni bioma porta con sé nativi, boss, stanze speciali e pericolo.
+- **Ogni ciclo è un'Eco.** Il piano 31 apre l'**Eco II**, il 61 l'**Eco III**. Il nome dell'Eco è in cima alla mappa.
+- **I pericoli si inaspriscono.** In ogni Eco i pericoli con una regola numerica crescono del 25% (fino al doppio, e le probabilità al massimo al 90%): più gas nelle Miniere, più HP persi nel Ventre, più Oro che bolle nella Forgia, un tempo più lacerato sulla Soglia. La descrizione del pericolo mostra i numeri nuovi. Nostalgia Letale e Caduta Astrale restano come sono.
+- **I nativi tornano forti.** Nelle Eco i nativi di ogni bioma sono forti, rispetto ai nemici più profondi, quanto lo erano rispetto ai nemici dei loro piani.
+- **Il DIO ANTICO ritorna** alla fine di ogni ciclo, al piano 60, 90 e così via, con il nome della sua Eco.
+- **Essenza.** Oltre il piano 30 l'Essenza finale vale ×1,5, e il 25% in più per ogni Eco oltre la seconda (Eco III ×1,875).
+- **Memoria.** La tua Eco più profonda resta nel Codice e nel menu principale. L'Epitaffio ricorda fino a quale Eco ti sei spinto, e l'impresa *L'Eco Infinita* (raggiungi l'Eco III) vale 1.500 Essenza.
 
 ### Ascensione
 
@@ -492,7 +504,7 @@ Tra una discesa e l'altra spendi l'**Essenza Astrale**:
 | 🏃 Fuga dal labirinto | 100% dell'Oro |
 | 🏆 Vittoria al piano 30 | 100% dell'Oro + 1.000 (e la leggendaria *Lama del Creatore*) |
 
-Si aggiungono **50 Essenza per ogni boss** sconfitto; poi si applicano il moltiplicatore del grado di **Ascensione** (o ×1,5 per il primo tentativo della **Sfida del Giorno**) e, oltre il piano 30 in **Modalità Infinita**, un ulteriore ×1,5.
+Si aggiungono **50 Essenza per ogni boss** sconfitto; poi si applicano il moltiplicatore del grado di **Ascensione** (o ×1,5 per il primo tentativo della **Sfida del Giorno**) e, oltre il piano 30 in **Modalità Infinita**, un ulteriore ×1,5 che cresce del 25% per ogni Eco oltre la seconda.
 
 ---
 

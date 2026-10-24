@@ -60,7 +60,7 @@ Un test controlla che ogni oggetto sbloccabile abbia davvero una di queste strad
 | `relics.json` | Reliquie | `id`, `name`, `desc`, `lore`, `unlock_id`, `unlock_cost` |
 | `elements.json` | Sistema elementale | `list`, `icons`, `multipliers[attaccante][difensore]`, `resonance[elemento] = {value, desc, announce}`, `marks.duration`, `conditions` (`blind`, `slow`, `scorch_pct`), `reactions["A+B"] = {name, icon, desc, bonus_pct, status: {type, duration}}` |
 | `books.json` | Tomi dell'Archivio | `title`, `unlock_condition` (testo), `unlock = {type: max_floor\|total_bosses\|won_normal, value}`, `bonus = {gold_pct, escape, boss_dmg_pct, def}`, `bonus_desc`, `chapters` |
-| `meta.json` | Regole di contorno | `traits`, `pacts` (`name`, `desc`: gli effetti dei gradi di Ascensione con `pact`), `feats` (`target`, `reward_type`, `reward_id`), `mastery_xp_requirements`, `rooms.weights`/`rooms.cooldowns`, `corruption` (`max`, `atk_per_10`, `veil`, `voice`, `desc`) |
+| `meta.json` | Regole di contorno | `traits`, `pacts` (`name`, `desc`: gli effetti dei gradi di Ascensione con `pact`), `feats` (`target`, `reward_type`: `unlock`, `class`, `perk`, `trait` o `essence`, `reward_id`), `mastery_xp_requirements`, `rooms.weights`/`rooms.cooldowns`, `corruption` (`max`, `atk_per_10`, `veil`, `voice`, `desc`), `cycle` (`hazard_pct_per_cycle`, `hazard_max_mult`, `chance_cap`, `essence_pct_per_cycle`, `intro`, `desc`: vedi [Il Ciclo del Labirinto](#il-ciclo-del-labirinto)) |
 | `biomes.json` | Biomi | `id`, `name`, `icon`, `floors`, `intro`, `hazard`, `room_weights`, `enemy_elements`, `signature_events` (opzionali gli ultimi quattro) |
 | `events.json` | Eventi narrativi | `title`, `start`, `scenes`, `requires` (opz.), `scripted` (opz.), `weight` (opz.): vedi [Eventi narrativi](#eventi-narrativi) |
 | `moves.json` | Mosse dei nemici (intenti) | `moves` (`name`, `icon`, `desc`, `damage_mult`, `damage_taken_mult`, `heal_pct`), `profiles[id] = {name, desc, moves}` (stili condivisi da più nemici, mostrati nel Bestiario), `defaults` (pesi di `enemy`, `boss`, `with_status`), `rules` (`heal_below_pct`, `max_heals`, `no_repeat`) |
@@ -207,7 +207,7 @@ main() ─▶ menu principale ─▶ play_game(infinite_mode, daily)
           per ogni piano: rigenerazione (Speranza di Luce)
             generate_floor_map(): 4 file di stanze + boss, bioma, stanze speciali
             per step 1..5: render_map() ─▶ scelta fra le stanze collegate ─▶ stanza
-            (step 5 = boss; al piano 30 il boss è final_boss)
+            (step 5 = boss; al piano 30, e a ogni multiplo di 30 nell'Infinita, il boss è final_boss)
           piano superato: rest_heal() = (20+5·piano) × rest_heal_mult HP, max_floor aggiornato
                                 ▼
           evaluate_run(): Essenza, Maestria, imprese, salvataggio
@@ -255,6 +255,21 @@ Il **Mimic** (`enemies.json`) ha `"lair": "treasure"`: non entra mai nelle scelt
 La *Caduta Astrale* delle Guglie è invece un effetto degli eventi, `{"fall": true, "gold_pct": 40}`. Toglie l'Oro, imposta `Player.fallen` e chiude l'evento. `play_game` interrompe allora il piano e passa al successivo, senza boss e senza riposo; un test controlla che `fall` sia sempre l'ultimo effetto della sua lista.
 
 I nemici e i boss con `"biome": "id"` (in `enemies.json`) sono **nativi**: compaiono solo in quel bioma, e lì si aggiungono sempre ai candidati della profondità. Ogni bioma ha sei nativi comuni e un boss nativo; con la finestra di sei generici, circa metà degli scontri del bioma sono con un nativo. La forza di ogni nativo (`base_hp × base_atk`) sta fra 0,5 e 1,8 volte quella media dei generici dei piani del suo bioma, così il bioma cambia il modo di combattere più che la difficoltà. La condizione `biome` degli eventi vale nei piani del bioma. Tutti e sei i biomi hanno pericolo, stanze speciali, nativi, pesi delle stanze e affinità elementale.
+
+### Il Ciclo del Labirinto
+
+Oltre il piano 30, in Modalità Infinita, `data_manager.get_biome(floor)` non restituisce più `None`:
+- `cycle_of(floor)` vale 0 per i piani 1–30, 1 per i piani 31–60 e così via; `echo_name(cycle)` è "Eco II", "Eco III"… (vuoto per il ciclo 0).
+- `cycle_order(cycle)` è l'ordine dei biomi del ciclo: i primi cinque mescolati con `random.Random(f"{seme}-{ciclo}")`, la Soglia sempre in fondo. Il seme lo imposta `_descent` con `set_cycle_seed()` all'inizio di ogni discesa, dal generatore casuale della partita (quindi dal seme del giorno nella Sfida, e dal seme della run nel simulatore).
+- Il bioma di un'Eco è una **copia** (i dati restano intatti) con `floors` spostati ai piani veri, `cycle`, `echo` e le `rules` moltiplicate per `hazard_mult(cycle) = min(hazard_max_mult, 1 + hazard_pct_per_cycle × ciclo / 100)`, ogni valore al massimo `chance_cap`. Nella `hazard.desc` ogni "N%" che è un valore delle regole diventa il valore nuovo, in un solo passaggio. Le copie restano in cache per seme e ciclo.
+- Tutto ciò che legge il bioma (pericoli, pesi delle stanze, stanze speciali, nativi, condizione `biome` degli eventi, annuncio del bioma al primo piano) funziona quindi anche nelle Eco senza altro codice.
+
+Il resto del Ciclo:
+- **Nativi.** In un'Eco `Enemy` usa `echo_native_base(data)`: la base del nativo moltiplicata per `generic_base(30) / media di generic_base` sui piani di partenza del suo bioma. `generic_base(floor)` è la media di HP e ATK di base della finestra dei generici (la stessa di `typical_enemy`).
+- **Boss finale.** La mappa mette il `final_boss` a ogni piano multiplo di 30; oltre il 30 il nome porta la sua Eco.
+- **Annuncio.** `roguelike.enter_cycle(player, floor)` al primo piano di ogni ciclo mostra `cycle.intro`, annota `{"kind": "echo"}` nella cronaca (frase `echo` dell'Epitaffio) e aggiorna `profile.best_echo`.
+- **Essenza.** `cycle_essence_mult(floor) = INFINITE_MODE_ESSENCE_MULTIPLIER × (1 + essence_pct_per_cycle × (ciclo − 1) / 100)`.
+- **Impresa.** `feat_eco` conta il numero dell'Eco raggiunta, solo in Modalità Infinita; le imprese con `reward_type: "essence"` danno `reward_id` Essenza.
 
 **Nemici per profondità.** `pick_enemy_name()` ordina i candidati non nativi per `base_hp × base_atk` e sceglie in una finestra che sale con `(piano − 1) / 29`. La finestra è di `ENEMY_DEPTH_WINDOW` = 6 nemici e di `BOSS_DEPTH_WINDOW` = 5 boss. Vi si aggiungono i nativi del bioma; la scelta è pesata da `enemy_elements`. I boss con `final_boss` sono esclusi da questa scelta, e quelli con `retired_by_flag` spariscono quando il flag è vero.
 
@@ -473,6 +488,7 @@ Il salvataggio si crea al primo avvio e **non va committato** (è in `.gitignore
 | Chiave | Contenuto |
 |---|---|
 | `essence`, `max_floor`, `won_normal` | Essenza, piano più profondo raggiunto, vittoria standard ottenuta (sblocca Ascensione e Modalità Infinita) |
+| `best_echo` | Il numero dell'Eco più profonda raggiunta nel Ciclo del Labirinto (2 per l'Eco II; 0 se non si è mai superato il piano 30) |
 | `cemetery` | Gli epitaffi delle ultime discese: `date`, `class`, `floor`, `outcome`, `epitaph` (frasi) |
 | `nemeses`, `nemeses_fallen`, `boss_grudges` | Nemesi attive e sconfitte; quante volte ogni boss ti ha ucciso |
 | `ascension` | `best_win`: il grado più alto vinto; è disponibile fino a `best_win + 1` (massimo 20) |
@@ -533,6 +549,8 @@ La CI (`.github/workflows/tests.yml`) li esegue su Python 3.9 e sull'ultima 3.x;
 | `test_endgame.py` | Corruzione (limiti, ATK, contratto della descrizione, Sguardo Velato, Voce del Labirinto, opzioni proibite, statistiche), finali (dati, condizioni, scelta e premio, vittoria nel vero ciclo), Fuoco del Campo (dati, personaggi e doni, strutture, Tavolo, Scrittoio, Altare, menu) |
 | `test_biomes.py` | Equipaggiamento iniziale (reazione o Risonanza), completezza dei biomi, contratti dei pericoli, Gas del Silenzio, Ebollizione, Paradosso, Dissoluzione, Caduta Astrale nel vero ciclo dei piani |
 | `test_tactics.py` | Intenti (pesi predefiniti e dei dati, regole delle mosse, prompt, Congelato) e reazioni (arma poi armatura, armatura poi arma, solo in guardia, stesso elemento, nessuna reazione, scadenza dei marchi, Codice) |
+| `test_enemy_identity.py` | Stili dei nemici (dati, uso, Colpo infetto, Bestiario), boss nativi (uno per bioma, solo nel suo bioma), sei nativi per bioma (stile, forza rispetto ai generici, quota degli scontri), difese delle classi (dati e numeri dei testi, ogni tecnica, Maledizione, colpo finale) |
+| `test_cycle.py` | Ciclo del Labirinto: cicli ed Eco, primo ciclo intatto, ogni bioma una volta per ciclo con la Soglia in fondo, ordine dal seme, dati intatti, pericoli più duri fino al limite e descrizioni con i numeri nuovi, regola usata nello scontro, nativi rinforzati, DIO ANTICO a ogni fine ciclo, annuncio e record, Epitaffio, Essenza, Codice, testo delle regole |
 | `test_map.py` | Mappa (file alternate, collegamenti senza incroci né vicoli ciechi, tipi e tempi di ricarica, evento richiamato, disegno, ciclo dei piani reale) e biomi (copertura dei piani, dati, nativi, elementi, pesi delle stanze, stanza speciale per piano, Prima Pietra, annuncio del pericolo) |
 | `test_risk_rooms.py` | Stanze a rischio: trappola (ritirata, bottino garantito, prove e probabilità mostrate), forziere (rischio per piano, serratura, Mimic, Sesto Senso), Élite (piano minimo, statistiche, ricompensa, etichette), Audacia (punti, premio del boss, ciclo dei piani), Mistero (probabilità dai dati, reliquia esaurita) |
 | `test_codex.py` | Codice (registrazione, pagine, completamento, menu) e personaggi ricorrenti (catena dei capitoli, un capitolo per run, boss ritirato, indizio della lavanda) |

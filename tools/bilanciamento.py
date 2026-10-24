@@ -6,6 +6,7 @@ Uso, dalla radice del repository:
     python tools/bilanciamento.py run [N] [profilo]   # N run per classe (predefinito 50); profilo: nuovo (predefinito) o completo
     python tools/bilanciamento.py strategie [N] [profilo]  # le stesse run con diversi modi di scegliere le stanze
     python tools/bilanciamento.py ascensione [N] [gradi]   # profilo completo, N run per classe a ogni grado (es. 0,5,10,15,20)
+    python tools/bilanciamento.py infinita [N]        # profilo completo, N run per classe in Modalità Infinita: fin dove arriva nel Ciclo
 
 Il profilo del giocatore non viene mai letto per le statistiche né salvato: ogni simulazione parte da un profilo
 costruito in memoria ("nuovo": nulla di sbloccato; "completo": tutto sbloccato, potenziamenti e Maestrie al massimo).
@@ -31,7 +32,7 @@ os.chdir(ROOT)
 
 # Il caricamento riscrive profile.json solo se va migrato da una versione precedente (come all'avvio del gioco);
 # da qui in poi nessun salvataggio arriva al file
-from data_manager import GAME_DATA, PROFILE_MANAGER, RAW_DATA, get_biome, update_game_data
+from data_manager import GAME_DATA, PROFILE_MANAGER, RAW_DATA, cycle_of, echo_name, get_biome, update_game_data
 import runes
 
 ANSI = re.compile(r"\x1b\[[0-9;?]*[A-Za-z]")
@@ -195,7 +196,7 @@ class Bot:
         return -1 if cancellable else 0
 
 
-def play(cls, seed, base, strategy="adattiva", grade=0):
+def play(cls, seed, base, strategy="adattiva", grade=0, infinite=False):
     import camp, endings, entities, events, inventory_menu, roguelike, rooms
     random.seed(seed)
     use_profile(base)
@@ -231,13 +232,14 @@ def play(cls, seed, base, strategy="adattiva", grade=0):
     with contextlib.ExitStack() as stack, contextlib.redirect_stdout(open(os.devnull, "w")):
         for pt in patches: stack.enter_context(pt)
         try:
-            roguelike.play_game()
+            roguelike.play_game(infinite_mode=infinite)
         except Stuck as e:
             log.update(stuck=str(e), floor=0, won=False, essence=0)
     log["level"] = bot.player.level if bot.player else 1
     if not log["won"]:
         b = get_biome(log["floor"])
         log["biome"] = b["id"] if b else "oltre"
+        log["echo"] = cycle_of(log["floor"])
     return log
 
 
@@ -283,11 +285,29 @@ def cmd_ascensione(n, grades):
         print(f"{g:>5} {sum(l['won'] for l in logs) / len(logs) * 100:>7.0f}% {st.median(l['floor'] for l in logs):>13}")
 
 
+def cmd_infinita(n):
+    base = profile("completo")
+    use_profile(base)
+    logs = [play(c, int(c) * 100003 + i * 7919, base, infinite=True) for c in GAME_DATA["classes"] for i in range(n)]
+    print(f"profilo completo, Modalità Infinita: {len(logs)} run")
+    print(f"{'classe':<11} {'piano mediano':>13} {'oltre il 30':>11} {'oltre il 60':>11} {'piano max':>9} {'Essenza mediana':>15}")
+    for c in GAME_DATA["classes"]:
+        ls = [l for l in logs if l["cls"] == c]
+        print(f"{GAME_DATA['classes'][c]['role']:<11} {st.median(l['floor'] for l in ls):>13} {sum(l['floor'] > 30 for l in ls) / len(ls) * 100:>10.0f}% "
+              f"{sum(l['floor'] > 60 for l in ls) / len(ls) * 100:>10.0f}% {max(l['floor'] for l in ls):>9} {st.median(l['essence'] for l in ls):>15}")
+    deep = [l for l in logs if l["floor"] > 30]
+    print("morti oltre il 30 per Eco e bioma:", dict(Counter(f"{echo_name(l['echo'])} {l['biome']}" for l in deep).most_common(8)))
+    print("chi uccide oltre il 30:", dict(Counter(l["killer"] for l in deep).most_common(6)))
+    stuck = [l for l in logs if l.get("stuck")]
+    if stuck: print(f"ATTENZIONE: {len(stuck)} run bloccate, es.: {stuck[0]['stuck'][:300]}")
+
+
 if __name__ == "__main__":
     args = sys.argv[1:] or ["curve"]
     if args[0] == "curve": cmd_curve()
     elif args[0] == "oggetti": cmd_oggetti()
     elif args[0] == "run": cmd_run(int(args[1]) if len(args) > 1 else 50, args[2] if len(args) > 2 else "nuovo")
     elif args[0] == "ascensione": cmd_ascensione(int(args[1]) if len(args) > 1 else 20, [int(g) for g in (args[2] if len(args) > 2 else "0,5,10,15,20").split(",")])
+    elif args[0] == "infinita": cmd_infinita(int(args[1]) if len(args) > 1 else 20)
     elif args[0] == "strategie": cmd_strategie(int(args[1]) if len(args) > 1 else 30, args[2] if len(args) > 2 else "nuovo")
     else: print(__doc__)

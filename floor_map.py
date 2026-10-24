@@ -38,8 +38,8 @@ def generate_row(floor: int, step: int, weights_def: dict, cooldowns_def: dict, 
         if room_cooldowns[k] > 0: room_cooldowns[k] -= 1
 
     if step == ROWS + 1:
-        # Il boss finale attende solo all'ultimo piano della discesa standard
-        return [{"type": "boss", "enemy": Enemy(floor, True, active_pacts, final=floor == INFINITE_MODE_THRESHOLD)}]
+        # Il boss finale attende all'ultimo piano della discesa standard, e alla fine di ogni ciclo della Modalità Infinita
+        return [{"type": "boss", "enemy": Enemy(floor, True, active_pacts, final=floor % INFINITE_MODE_THRESHOLD == 0)}]
 
     avail = {rt: w for rt, w in weights_def.items() if room_cooldowns.get(rt, 0) <= 0 and w > 0}
     if floor < GAME_DATA["meta"]["rooms"]["elite"]["from_floor"]: avail.pop("elite", None)

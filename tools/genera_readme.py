@@ -61,7 +61,7 @@ beats = [f"{icon[a]} **{a}** batte {icon[b]} **{b}**" for a, row in elements["mu
 
 relic_table = table(["Reliquia", "Effetto", "Come ottenerla"], [(f"**{r['name']}**", r["desc"], how(r, "Boss, forzieri, eventi")) for r in relics])
 acc_table = table(["Monile", "Effetto", "Come ottenerlo"], [(f"**{a['name']}**", a["desc"].rstrip("."), how(a)) for a in accs])
-reward = {"perk": "Potenziamento", "unlock": "Sblocco", "class": "Classe", "trait": "Tratto"}
+reward = {"perk": "Potenziamento", "unlock": "Sblocco", "class": "Classe", "trait": "Tratto", "essence": "Essenza"}
 names = {x.get("unlock_id"): x["name"] for x in weapons + armors + accs + cons + relics if x.get("unlock_id")}
 names.update({k: c["role"] for k, c in classes.items()}); names.update({k: t["name"] for k, t in meta["traits"].items()}); names["scarpisti"] = "Scarpisti (+20% Fuga)"
 feats_table = table(["Impresa", "Obiettivo", "Ricompensa"],
@@ -154,7 +154,7 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 - 🔥 **Un campo che ricorda.** Chi salvi nel Labirinto viene a scaldarsi al tuo fuoco, ti parla di ciò che hai fatto e ti aiuta a costruire.
 - 🌟 **{len(relics)} reliquie** che piegano le regole: danni raddoppiati, scudi, vampirismo, oro moltiplicato.
 - 🏕️ **Meta-progressione profonda**: potenziamenti permanenti, una Forgia per sbloccare equipaggiamento, artigiani da liberare, un Archivio di lore con bonus, imprese da completare.
-- ♾️ **Modalità Infinita** dopo la prima vittoria, per chi vuole spingersi oltre il piano 30.
+- ♾️ **Modalità Infinita** dopo la prima vittoria: oltre il piano 30 inizia il **Ciclo del Labirinto**. I sei biomi tornano in un ordine nuovo a ogni ciclo, ogni ciclo è un'Eco più dura (Eco II, Eco III…) e alla fine di ognuno ti attende di nuovo il DIO ANTICO.
 
 ## 🧬 Gli eroi
 
@@ -221,7 +221,7 @@ E in **Impostazioni** scegli la velocità del testo: lenta, normale, veloce o is
 | 🏃 Fuga dal labirinto | 100% dell'Oro posseduto |
 | 🏆 Vittoria al piano 30 | 100% dell'Oro + 1.000 |
 
-A questo si aggiungono **50 Essenza per ogni boss** sconfitto, il moltiplicatore del grado di **Ascensione** (o del primo tentativo della **Sfida del Giorno**) e, oltre il piano 30 in Modalità Infinita, un ulteriore **×1,5**.
+A questo si aggiungono **50 Essenza per ogni boss** sconfitto, il moltiplicatore del grado di **Ascensione** (o del primo tentativo della **Sfida del Giorno**) e, oltre il piano 30 in Modalità Infinita, un ulteriore **×1,5**, che cresce del 25% per ogni Eco oltre la seconda.
 
 ## 📚 Enciclopedia
 
@@ -354,6 +354,7 @@ I **test di contratto** (`tests/test_contracts.py`, `tests/test_modes.py`) verif
 - [x] Gradi di Ascensione e Sfida del Giorno
 - [x] Stili dei nemici, un boss per ogni bioma, una difesa per ogni classe
 - [x] Sei nemici nativi per ogni bioma
+- [x] Il Ciclo del Labirinto: biomi che tornano in Eco sempre più dure oltre il piano 30
 
 ---
 
