@@ -59,6 +59,12 @@ class ManualFollowsTheDataTest(unittest.TestCase):
             start = ", ".join(f"{attrs['attributes'][k]['name']} {v}" for k, v in c["attributes"].items())
             self.assertIn(f"| {c['role']} | {start} |", self.manual)
 
+    def test_the_talent_table_matches_the_data(self):
+        t = GAME_DATA["talents"]
+        self.assertIn(t["rules"]["desc"], self.manual)
+        for d in t["talents"].values():
+            self.assertIn(f"| {d['icon']} **{d['name']}** | {d['desc']} |", self.manual)
+
     def test_the_magic_tables_match_the_data(self):
         spells = GAME_DATA["spells"]
         self.assertIn(spells["rules"]["desc"], self.manual)

@@ -1,0 +1,24 @@
+{
+    "rules": {
+        "every": 5,
+        "offered": 3,
+        "desc": "Ogni 5 livelli l'eroe sceglie un talento fra 3 proposti a caso, diversi da quelli che ha già. I talenti valgono per una sola discesa, si sommano agli attributi e il Tomo dell'Oblio non li fa dimenticare."
+    },
+    "talents": {
+        "lama_affilata": {"name": "Lama Affilata", "icon": "⚔️", "effects": {"dmg_pct": 12}, "desc": "+12% danni con qualunque arma."},
+        "occhio_falco": {"name": "Occhio di Falco", "icon": "🦅", "effects": {"acc": 10, "crit": 6}, "desc": "+10% Precisione e +6% probabilità di critico."},
+        "pelle_ferro": {"name": "Pelle di Ferro", "icon": "🛡️", "effects": {"def_pct": 25}, "desc": "+25% Difesa dell'armatura."},
+        "cuore_saldo": {"name": "Cuore Saldo", "icon": "❤️", "effects": {"max_hp": 45}, "desc": "+45 HP massimi (e altrettanti HP)."},
+        "sete_sangue": {"name": "Sete di Sangue", "icon": "🩸", "effects": {"lifesteal": 4}, "desc": "Rubi 4 HP a ogni colpo a segno."},
+        "raccolto": {"name": "Raccolto", "icon": "💀", "effects": {"kill_heal_pct": 12}, "desc": "Recuperi il 12% degli HP massimi a ogni nemico sconfitto."},
+        "passo_ombra": {"name": "Passo d'Ombra", "icon": "👤", "effects": {"dodge": 8, "escape": 20}, "desc": "+8% Schivata e +20% probabilità di fuga."},
+        "pozzo_etere": {"name": "Pozzo d'Etere", "icon": "💧", "effects": {"ether_max": 8}, "desc": "+8 Etere massimo."},
+        "mente_affilata": {"name": "Mente Affilata", "icon": "🔮", "effects": {"spell_pct": 20}, "desc": "+20% potenza degli incantesimi."},
+        "parsimonia": {"name": "Parsimonia Arcana", "icon": "📜", "effects": {"spell_discount": 1}, "desc": "Ogni incantesimo costa 1 Etere in meno (mai meno di 1)."},
+        "flusso": {"name": "Flusso", "icon": "🌊", "effects": {"ether_on_hit": 1}, "desc": "+1 Etere in più a ogni colpo a segno."},
+        "catalizzatore": {"name": "Catalizzatore", "icon": "⚗️", "effects": {"reaction_dmg_pct": 40}, "desc": "+40% danni delle reazioni elementali."},
+        "erborista": {"name": "Erborista", "icon": "🌿", "effects": {"potion_pct": 40}, "desc": "Le pozioni curative curano il 40% in più."},
+        "mano_oro": {"name": "Mano d'Oro", "icon": "💰", "effects": {"gold_pct": 30, "rune_drop_add": 8}, "desc": "+30% Oro trovato e +8% probabilità di trovare una runa."},
+        "studioso": {"name": "Studioso", "icon": "📖", "effects": {"exp_pct": 20}, "desc": "+20% EXP guadagnata."}
+    }
+}

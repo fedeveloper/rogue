@@ -234,6 +234,7 @@ class Bot:
         if find("Forza la serratura") is not None: return 0 if p.hp > p.max_hp * 0.4 else 1
         if find("Aprilo comunque") is not None: return 0 if p.hp > p.max_hp * 0.6 else 1
         if "PUNTI ABILITÀ" in pr: return self.spend_point(opts)
+        if "TALENTO" in pr: return 0  # i talenti sono proposti a caso: il primo è una scelta qualunque
         if "INCANTESIMI" in pr: return self.state.pop("spell", len(opts) - 1)
         if "Intento del nemico" in pr:
             potion = any(i.type == "consumable" and i.category == "heal" for i in p.inventory)
@@ -292,7 +293,7 @@ def play(cls, seed, base, strategy="adattiva", grade=0, infinite=False, points="
         real_evaluate(p, floor, infinite)
         log.update(floor=floor, won=p.won, essence=PROFILE_MANAGER.essence - before)
 
-    modules = ("roguelike", "rooms", "events", "entities", "inventory_menu", "camp", "endings", "attributes")
+    modules = ("roguelike", "rooms", "events", "entities", "inventory_menu", "camp", "endings", "attributes", "talents")
     patches = [mock.patch(f"{m}.interactive_menu", side_effect=bot.menu) for m in modules]
     patches += [mock.patch(f"{m}.{f}") for m in modules for f in ("wait_enter", "clear_screen", "delay_print") if hasattr(sys.modules[m], f)]
     patches += [mock.patch("roguelike.Player", side_effect=make_player), mock.patch("roguelike.evaluate_run", side_effect=evaluate),

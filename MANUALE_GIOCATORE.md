@@ -458,6 +458,30 @@ Ogni classe parte con 3 punti già distribuiti secondo il suo stile:
 
 **Il Tomo dell'Oblio.** È un consumabile raro (meno di uno su venti). Si legge al Falò, senza spegnerlo: i punti che hai speso tornano da spendere e li redistribuisci subito. Gli attributi iniziali della classe restano.
 
+### I talenti
+
+Ogni 5 livelli l'eroe sceglie un talento fra 3 proposti a caso, diversi da quelli che ha già. I talenti valgono per una sola discesa, si sommano agli attributi e il Tomo dell'Oblio non li fa dimenticare.
+
+La scelta arriva alla fine della stanza in cui sei salito di livello, prima dei punti abilità, e non si rimanda. Con una discesa normale si arriva in genere a due o tre talenti. Le *Statistiche* mostrano quelli che hai.
+
+| Talento | Effetto |
+|---|---|
+| ⚔️ **Lama Affilata** | +12% danni con qualunque arma. |
+| 🦅 **Occhio di Falco** | +10% Precisione e +6% probabilità di critico. |
+| 🛡️ **Pelle di Ferro** | +25% Difesa dell'armatura. |
+| ❤️ **Cuore Saldo** | +45 HP massimi (e altrettanti HP). |
+| 🩸 **Sete di Sangue** | Rubi 4 HP a ogni colpo a segno. |
+| 💀 **Raccolto** | Recuperi il 12% degli HP massimi a ogni nemico sconfitto. |
+| 👤 **Passo d'Ombra** | +8% Schivata e +20% probabilità di fuga. |
+| 💧 **Pozzo d'Etere** | +8 Etere massimo. |
+| 🔮 **Mente Affilata** | +20% potenza degli incantesimi. |
+| 📜 **Parsimonia Arcana** | Ogni incantesimo costa 1 Etere in meno (mai meno di 1). |
+| 🌊 **Flusso** | +1 Etere in più a ogni colpo a segno. |
+| ⚗️ **Catalizzatore** | +40% danni delle reazioni elementali. |
+| 🌿 **Erborista** | Le pozioni curative curano il 40% in più. |
+| 💰 **Mano d'Oro** | +30% Oro trovato e +8% probabilità di trovare una runa. |
+| 📖 **Studioso** | +20% EXP guadagnata. |
+
 ### La Maestria
 
 Ogni eroe ha un albero di **Maestria** a 5 livelli, che sale con l'esperienza accumulata nelle sue discese:

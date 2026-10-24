@@ -5,6 +5,7 @@ li somma su tutti gli attributi e li leggono il Player e il combattimento. Gli H
 quando si spende il punto (e si tolgono se si redistribuisce con il Tomo dell'Oblio); tutti gli altri effetti si calcolano
 al momento. Gli attributi iniziali vengono dalla classe (`classes.json → attributes`) e non si possono redistribuire.
 """
+import talents
 from data_manager import GAME_DATA, RAW_DATA
 from ui import Colors, clear_screen, display_msg, interactive_menu
 
@@ -26,9 +27,9 @@ def starting(class_id: str) -> dict:
 
 
 def value(player, key: str) -> int:
-    """La somma di un effetto (es. "acc", "spell_pct") su tutti gli attributi dell'eroe."""
+    """La somma di un effetto (es. "acc", "spell_pct") su tutti gli attributi dell'eroe, più quella dei suoi talenti."""
     attrs = getattr(player, "attributes", {})
-    return sum(points * definitions()[a]["per_point"].get(key, 0) for a, points in attrs.items())
+    return sum(points * definitions()[a]["per_point"].get(key, 0) for a, points in attrs.items()) + talents.value(player, key)
 
 
 def weapon_bonus(player) -> int:
