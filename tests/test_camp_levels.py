@@ -93,8 +93,7 @@ class EffectTest(Sandbox):
 
 class StartGiftTest(Sandbox):
     def start(self, p, pick=0):
-        with quiet(), mock.patch("camp.interactive_menu", return_value=pick), \
-             mock.patch("talents.interactive_menu", return_value=pick), mock.patch("talents.clear_screen"):
+        with quiet(), mock.patch("camp.interactive_menu", return_value=pick):
             camp.start_of_run_boon(p)
 
     def test_nothing_before_building(self):
@@ -102,14 +101,16 @@ class StartGiftTest(Sandbox):
         self.start(p)
         self.assertEqual((len(p.inventory), p.unspent_points, p.talents), (items, 0, []))
 
-    def test_a_scroll_a_point_and_a_talent(self):
-        self.build_to(LIB, 2); self.build_to(HALL, 3)
+    def test_a_scroll_and_the_points_of_every_level(self):
+        self.build_to(LIB, 2); self.build_to(HALL, 1)
         p = self.hero(); items = len(p.inventory)
         self.start(p)
         self.assertEqual(sum(i.type == "scroll" for i in p.inventory), 1)
         self.assertEqual(len(p.inventory), items + 1)
         self.assertEqual((p.unspent_points, p.points_offered), (1, False))
-        self.assertEqual(len(p.talents), 1)
+        self.build_to(HALL, 3)
+        p = self.hero(); self.start(p)
+        self.assertEqual(p.unspent_points, sum(lv.get("start", {}).get("points", 0) for lv in camp_rules.levels(HALL)))
 
 
 if __name__ == "__main__":

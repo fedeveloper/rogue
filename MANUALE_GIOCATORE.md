@@ -665,11 +665,11 @@ Tra una discesa e l'altra spendi l'**Essenza Astrale**:
   - *la Biblioteca dell'Arcano* (libera l'Incantatore Valerius), che si costruisce in tre livelli, uno alla volta. I livelli si sommano:
     - Lv.1 (✨400): Ogni eroe ha +2 Etere massimo.
     - Lv.2 (✨700): Ogni discesa inizia con 1 pergamena a caso nello zaino.
-    - Lv.3 (✨1000): Gli incantesimi di ogni eroe hanno +10% di potenza.
+    - Lv.3 (✨1000): Gli incantesimi di ogni eroe hanno +5% di potenza.
   - *la Sala d'Armi* (libera il Maestro d'Armi Borek), anche lei in tre livelli:
     - Lv.1 (✨400): Ogni discesa inizia con 1 punto abilità in più da spendere.
-    - Lv.2 (✨700): Ogni eroe fa +5% danni con qualunque arma.
-    - Lv.3 (✨1000): Ogni discesa inizia con 1 talento a scelta fra quelli proposti.
+    - Lv.2 (✨700): Ogni eroe fa +3% danni con qualunque arma.
+    - Lv.3 (✨1000): Ogni discesa inizia con 1 punto abilità in più da spendere, oltre a quello del primo livello.
 - **📖 Il Codice del Labirinto** — tutto ciò che hai scoperto, raccolto fra una run e l'altra, con la percentuale di completamento. Ciò che manca è segnato con ???.
   - *Reazioni elementali*: le combinazioni di elementi che hai scatenato almeno una volta.
   - *Finali*: quelli che hai visto, e un indizio per gli altri.

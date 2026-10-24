@@ -122,10 +122,6 @@ def start_of_run_boon(player):
     if gifts.get("points"):
         player.unspent_points += gifts["points"]; player.points_offered = False
         display_msg(f"{Colors.YELLOW}⚔️ Dalla Sala d'Armi: {gifts['points']} punti abilità da spendere.{Colors.RESET}")
-    if gifts.get("talents"):
-        import talents
-        player.pending_talents += gifts["talents"]
-        talents.choose(player)
     s = structure("scrittoio_silas")
     if not s or not built(s["id"]): return
     boons = s["boons"]

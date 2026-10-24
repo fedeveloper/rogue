@@ -3,7 +3,7 @@
 Una struttura ha un solo livello (`cost`, `desc`) o una lista `levels` di `{cost, desc, effects, start}`. Il livello
 costruito sta nel profilo: il flag `camp_<id>` dice che esiste (lo leggono anche le strutture di un solo livello) e il
 contatore `camp_<id>` quanti livelli ha. `effects` usa le chiavi di `attributes.value` e vale per ogni eroe
-(`Player.camp_effects`); `start` sono doni di inizio discesa (`scroll`, `points`, `talents`), dati da `camp.start_of_run_boon`.
+(`Player.camp_effects`); `start` sono doni di inizio discesa (`scroll`, `points`), dati da `camp.start_of_run_boon`.
 I livelli sono cumulativi: costruire il terzo tiene gli effetti dei primi due.
 """
 from data_manager import GAME_DATA, PROFILE_MANAGER
