@@ -419,7 +419,8 @@ class EquipmentContractTest(Sandbox):
         dealt, left = self._strike(piercer, shield=full * 3)
         self.assertEqual((dealt, left), (0, full), "consuma il doppio dello scudo")
         dealt, left = self._strike(piercer, shield=full)
-        self.assertEqual((dealt, left), (full - full // 2, 0), "metà del colpo infrange lo scudo, il resto passa")
+        # infrangere uno scudo di `full` costa full/2 di danno, arrotondato per eccesso; il resto passa
+        self.assertEqual((dealt, left), (full - -(-full // 2), 0), "metà del colpo infrange lo scudo, il resto passa")
 
     def test_the_backpack_shows_the_weapon_traits(self):
         w = Weapon("Ascia", 1, 9, "Normale", 1, status_inflict={"type": "bleed", "chance": 20, "duration": 2},
