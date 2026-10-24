@@ -59,6 +59,16 @@ class ManualFollowsTheDataTest(unittest.TestCase):
             start = ", ".join(f"{attrs['attributes'][k]['name']} {v}" for k, v in c["attributes"].items())
             self.assertIn(f"| {c['role']} | {start} |", self.manual)
 
+    def test_the_magic_tables_match_the_data(self):
+        spells = GAME_DATA["spells"]
+        self.assertIn(spells["rules"]["desc"], self.manual)
+        icons = GAME_DATA["elements"]["icons"]
+        for s in spells["spells"].values():
+            self.assertIn(f"| {s['icon']} **{s['name']}** | {icons[s['element']]} {s['element']} | {s['cost']} | {s['desc']} |", self.manual)
+        for c in GAME_DATA["classes"].values():
+            names = ", ".join(spells["spells"][x]["name"] for x in c["spells"])
+            self.assertIn(f"| {c['role']} | {c['ether']} | {names} |", self.manual)
+
     def test_the_daily_section_lists_every_boon_and_rule(self):
         daily = GAME_DATA["modes"]["daily"]
         for b in daily["boons"]:

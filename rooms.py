@@ -4,11 +4,12 @@ from typing import List
 from ui import Colors, delay_print, clear_screen, interactive_menu, display_msg, wait_enter
 from data_manager import GAME_DATA, PROFILE_MANAGER, MULTIPLIERS, get_biome, get_element_icon
 from archive import get_archive_bonus
-from codex import record_enemy_killed, record_enemy_seen, record_letter, record_phase, record_reaction, record_rune, record_runeword
+from codex import record_enemy_killed, record_enemy_seen, record_letter, record_phase, record_reaction, record_rune, record_runeword, record_spell
 from constants import CAMPFIRE_REST_PCT, BASE_HIT_CHANCE, BLOOD_LETTER_CHANCE, CURSE_HP_DRAIN_PCT, MIN_DAMAGE_PCT, POISON_MIN, POISON_PCT
 from entities import STATUS_NAMES, Player, Enemy, generate_weapon, generate_armor, generate_accessory, generate_potion, generate_rune, get_random_relic, set_sockets
 import runes as rune_rules
 import attributes
+import magic
 import nemesis
 from epitaph import note
 from entities import Rune
@@ -302,6 +303,7 @@ class CombatSession:
             display_msg(f"{Colors.YELLOW}{Colors.BOLD}La reazione infrange le Scaglie di {self.enemy.name}!{Colors.RESET}")
         record_reaction(key)
         self.player.run_tracker["reactions"] = self.player.run_tracker.get("reactions", 0) + 1
+        self.player.gain_ether(magic.rules()["gain"]["reaction"])
         msg = f"{Colors.MAGENTA}{Colors.BOLD}⚡ REAZIONE: {r['icon']} {r['name'].upper()}!{Colors.RESET}"
         if r.get("bonus_pct"):
             dmg = self.player.get_total_atk() * r["bonus_pct"] // 100 * (100 + self.player.rune_value("reaction_dmg_pct") + attributes.value(self.player, "reaction_dmg_pct")) // 100
@@ -469,6 +471,7 @@ class CombatSession:
         self.player.run_tracker["floor_attacks"] += 1
         if random.randint(1, 100) <= hit_chance:
             self.player.run_tracker["floor_hits"] += 1
+            self.player.gain_ether(magic.rules()["gain"]["hit"])
             dmg_dealt = int(dmg_dealt * self.player.get_class_damage_multiplier())
             # Forza per ogni arma; Arcano in più se l'arma ha un elemento
             elemental = attributes.value(self.player, "elemental_dmg_pct") if self.player.weapon.element != "Normale" else 0
@@ -540,6 +543,7 @@ class CombatSession:
         """La difesa della classe (defenses.json). False se la tecnica abbatte il nemico."""
         defense = GAME_DATA["defenses"].get(self.def_type, {})
         self.is_defending = True
+        self.player.gain_ether(magic.rules()["gain"]["defend"])
         self.player.on_defense_started()
         if self.player.rune_value("defend_heal_pct"):
             healed = self.player.heal(max(1, self.player.max_hp * self.player.rune_value("defend_heal_pct") // 100))
@@ -596,30 +600,34 @@ class CombatSession:
             if self.sealed: self.def_txt = f"{Colors.RED}🔒 Difesa sigillata (non puoi difenderti in questo turno){Colors.RESET}"
             if self.intent is None: self.choose_intent()
 
-            prompt = (f"\n{Colors.BOLD}--- ⚔️ IN COMBATTIMENTO ⚔️ ---{Colors.RESET}\nTu: {Colors.GREEN}{self.player.hp}/{self.player.max_hp} HP{Colors.RESET} | "
+            prompt = (f"\n{Colors.BOLD}--- ⚔️ IN COMBATTIMENTO ⚔️ ---{Colors.RESET}\nTu: {Colors.GREEN}{self.player.hp}/{self.player.max_hp} HP{Colors.RESET}"
+                      + (f" {Colors.CYAN}✨ {self.player.ether}/{self.player.max_ether()} Etere{Colors.RESET}" if self.player.spells else "") + " | "
                       f"{self.enemy.name}: {Colors.RED}{self.enemy.hp}/{self.enemy.max_hp} HP{Colors.RESET}{self.enemy_status_text()}\n"
                       f"Intento del nemico: {self.intent_text()}")
-            options = [
-                "Attacca",
-                self.def_txt,
-                "Apri Inventario (Usa oggetto = Costa Turno)",
-                "Statistiche Eroe",
-                "Tenta la Fuga"
-            ]
+            # Le azioni per nome: la voce degli incantesimi c'è solo per chi ne conosce
+            actions = [("attack", "Attacca"), ("defend", self.def_txt)]
+            if self.player.spells: actions.append(("spell", f"Lancia un incantesimo ({self.player.ether}/{self.player.max_ether()} Etere)"))
+            actions += [("inventory", "Apri Inventario (Usa oggetto = Costa Turno)"), ("stats", "Statistiche Eroe"), ("flee", "Tenta la Fuga")]
 
-            idx = interactive_menu(options, prompt)
+            idx = interactive_menu([text for _, text in actions], prompt)
             clear_screen()
+            action = actions[idx][0] if 0 <= idx < len(actions) else None
 
-            if idx == 0:
+            if action == "attack":
                 return self.execute_player_attack()
 
-            elif idx == 1:
+            elif action == "spell":
+                spell_id = self.choose_spell()
+                if spell_id is None: continue
+                return self.cast_spell(spell_id)
+
+            elif action == "defend":
                 if self.sealed:
                     display_msg(f"\n{Colors.RED}-> Il Sigillo ti blocca: in questo turno non puoi difenderti.{Colors.RESET}")
                     continue
                 return self.execute_player_defense()
 
-            elif idx == 2:
+            elif action == "inventory":
                 action = show_inventory_menu(self.player, in_combat=True)
                 self.refresh_resonance()
                 if action == "smoke_bomb":
@@ -640,11 +648,11 @@ class CombatSession:
                     clear_screen()
                     return True
 
-            elif idx == 3:
+            elif action == "stats":
                 from inventory_menu import show_player_stats
                 show_player_stats(self.player, self)
 
-            elif idx == 4:
+            elif action == "flee":
                 if self.enemy.is_boss:
                     display_msg(f"\n{Colors.RED}-> Impossibile fuggire dai Boss!{Colors.RESET}")
                     continue
@@ -656,6 +664,68 @@ class CombatSession:
                     return False
                 display_msg(f"\n{Colors.RED}-> Tentativo di fuga fallito!{Colors.RESET}")
                 return True
+
+    # ------------------------------------------------------------- incantesimi
+    def choose_spell(self):
+        """Il menu degli incantesimi: quello scelto, o None per tornare indietro (non costa il turno)."""
+        options = [magic.label(self.player, sid) for sid in self.player.spells] + ["Indietro"]
+        idx = interactive_menu(options, f"\n{Colors.CYAN}{Colors.BOLD}--- INCANTESIMI --- ✨ {self.player.ether}/{self.player.max_ether()} Etere{Colors.RESET}")
+        clear_screen()
+        if not 0 <= idx < len(self.player.spells): return None
+        sid = self.player.spells[idx]
+        if self.player.ether < magic.cost(self.player, sid):
+            display_msg(f"\n{Colors.RED}-> Non hai abbastanza Etere per {magic.spell(sid)['name']}.{Colors.RESET}")
+            return None
+        return sid
+
+    def spell_damage(self, spell_id: str, pct: int) -> int:
+        """Danni di un incantesimo: ATK × pct, elemento contro il nemico, Arcano (prima di Guardia, Scaglie e scudo)."""
+        element = magic.spell(spell_id)["element"]
+        mult = MULTIPLIERS.get(element, {}).get(self.enemy.element, 1.0)
+        power = 100 + attributes.value(self.player, "spell_pct")
+        return max(1, int(self.player.get_total_atk() * pct / 100 * mult) * power // 100)
+
+    def cast_spell(self, spell_id: str) -> bool:
+        """Lancia un incantesimo: costa il turno e il suo Etere. False se il nemico muore."""
+        s, fx = magic.spell(spell_id), magic.spell(spell_id)["effects"]
+        self.player.ether -= magic.cost(self.player, spell_id)
+        record_spell(spell_id)
+        display_msg(f"\n{Colors.CYAN}-> {s['icon']} Lanci {s['name']}!{Colors.RESET}")
+        if "heal_pct" in fx:
+            healed = self.player.heal(self.player.max_hp * fx["heal_pct"] // 100)
+            display_msg(f"{Colors.GREEN}Recuperi {healed} HP. ({self.player.hp}/{self.player.max_hp}){Colors.RESET}")
+        if fx.get("dispel") and (self.enemy.shield or self.enemy.ward is not None):
+            self.enemy.shield, self.enemy.ward = 0, None
+            display_msg(f"{Colors.YELLOW}Lo scudo e le Scaglie di {self.enemy.name} si dissolvono!{Colors.RESET}")
+        if "damage_pct" in fx:
+            pct, eff = fx["damage_pct"], ""
+            if "detonate_pct" in fx and self.enemy.mark:
+                pct, eff = fx["detonate_pct"], f" {Colors.MAGENTA}[DETONAZIONE {get_element_icon(self.enemy.mark[0])}]{Colors.RESET}"
+                self.enemy.mark = None
+            dmg = self.spell_damage(spell_id, pct)
+            if MULTIPLIERS.get(s["element"], {}).get(self.enemy.element, 1.0) > 1.0: eff += f" {Colors.GREEN}[SUPER EFFICACE!]{Colors.RESET}"
+            if self.intent == "guard":
+                dmg = int(dmg * self._move("guard")["damage_taken_mult"])
+                eff += f" {Colors.BLUE}[GUARDIA]{Colors.RESET}"
+            dmg, eff = self._absorb(dmg, eff)
+            nem = getattr(self.enemy, "nemesis", None)
+            if nem and nemesis.resisted(nem, s["element"]) < 1:
+                dmg = int(dmg * nemesis.resisted(nem, s["element"]))
+                eff += f" {Colors.BLUE}[RESISTE]{Colors.RESET}"
+            self.enemy.hp -= dmg
+            display_msg(f"{s['name']} infligge {Colors.CYAN}{dmg} danni{Colors.RESET} a {self.enemy.name}!{eff}")
+            if "drain_pct" in fx and dmg > 0:
+                healed = self.player.heal(dmg * fx["drain_pct"] // 100)
+                if healed: display_msg(f"{Colors.GREEN}Assorbi {healed} HP.{Colors.RESET}")
+            if "status" in fx and self.enemy.hp > 0:
+                st = fx["status"]
+                self.enemy.statuses[st["type"]] = max(self.enemy.statuses.get(st["type"], 0), st["duration"])
+                display_msg(f"{Colors.MAGENTA}{self.enemy.name}: {STATUS_NAMES[st['type']]} per {st['duration']} turni.{Colors.RESET}")
+            if s["element"] != "Normale": self.apply_element(s["element"])
+        if self.enemy.hp <= 0:
+            self.on_enemy_death()
+            return False
+        return True
 
     def _calc_escape_chance(self) -> int:
         f_chance = 20 + self.player.get_dodge() - self.enemy.base_dodge + (20 if PROFILE_MANAGER.get_perk("scarpisti", False) else 0)

@@ -4,6 +4,7 @@ from data_manager import GAME_DATA, PROFILE_MANAGER, get_element_icon
 from entities import Rune, generate_random_element
 import runes as rune_rules
 import attributes
+import magic
 from archive import unlocked_archive_bonuses
 
 def _use_consumable(player, item, real_idx, in_combat) -> str:
@@ -240,7 +241,11 @@ def show_player_stats(player, session=None):
     display_msg(f"\n{Colors.CYAN}{Colors.BOLD}--- STATISTICHE DELL'EROE ---{Colors.RESET}")
     display_msg(f"Classe: {Colors.YELLOW}{player.role}{Colors.RESET} | Tratto: {Colors.MAGENTA}{player.trait_name}{Colors.RESET}")
     display_msg(f"❤️  HP: {Colors.GREEN}{player.hp}/{player.max_hp}{Colors.RESET} | 💰 Oro: {Colors.YELLOW}{player.gold}{Colors.RESET}")
-    display_msg(f"✨ EXP: {Colors.CYAN}{player.exp}/{player.max_exp}{Colors.RESET} (Livello {player.level})\n")
+    display_msg(f"✨ EXP: {Colors.CYAN}{player.exp}/{player.max_exp}{Colors.RESET} (Livello {player.level})")
+    if player.spells:
+        display_msg(f"🔮 Etere: {Colors.CYAN}{player.ether}/{player.max_ether()}{Colors.RESET} | Incantesimi: " + ", ".join(magic.spell(s)["name"] for s in player.spells)
+                    + (f" (potenza +{attributes.value(player, 'spell_pct')}%)" if attributes.value(player, "spell_pct") else ""))
+    display_msg("")
     
     display_msg(f"{Colors.BOLD}--- ATTRIBUTI ---{Colors.RESET}")
     display_msg(attributes.summary(player) + (f" | {Colors.YELLOW}Punti da spendere: {player.unspent_points} (dalla mappa){Colors.RESET}" if player.unspent_points else ""))

@@ -168,9 +168,42 @@ A ogni turno scegli una di queste azioni:
   - **Voto di Protezione** (Paladino): ti liberi da Veleno e Sanguinamento e recuperi il 5% degli HP;
   - **Mistura Reattiva** (Alchimista): recuperi il 5% degli HP e marchi il nemico con l'elemento della tua arma. Se poi ti colpisce, il marchio della tua armatura può scatenare una **reazione**, e con l'equipaggiamento iniziale (Fuoco e Terra) scatena il *Magma*;
   - **Sudario d'Ossa** (Negromante): strappi al nemico il 4% dei suoi HP massimi e li recuperi tu. Se gli restano pochi HP, può bastare ad abbatterlo.
+- **Lancia un incantesimo.** Costa il turno e l'Etere dell'incantesimo (vedi *La magia e l'Etere*). Tornare indietro dal menu degli incantesimi non costa nulla.
 - **Apri l'inventario.** Usare un oggetto o cambiare equipaggiamento **costa il turno**; chiudere lo zaino senza fare nulla no.
 - **Statistiche Eroe.** Gratis, in qualsiasi momento. Mostrano la tua **probabilità reale di colpire** contro il nemico che hai davanti.
 - **Tenta la fuga.** Riesce più spesso se sei agile. Contro i boss è impossibile.
+
+### La magia e l'Etere
+
+Ogni eroe conosce fin dall'inizio uno o due **incantesimi**. Lanciarli costa **Etere**, una risorsa che vedi accanto agli HP, sulla mappa e in combattimento.
+
+L'Etere resta da uno scontro all'altro. Si guadagna agendo: +1 a ogni colpo a segno, +2 quando ti difendi, +2 a ogni reazione elementale, e il 25% del massimo a ogni piano superato. All'inizio della discesa è pieno. Un incantesimo dell'elemento della tua Risonanza costa 1 Etere in meno.
+
+Un incantesimo d'attacco colpisce sempre (non si schiva). I suoi danni sono una parte del tuo ATK, cambiano con l'**elemento** dell'incantesimo contro quello del nemico e crescono con l'**Arcano**. Come le armi, lascia il **marchio** del suo elemento: così puoi **comporre una reazione** senza cambiare equipaggiamento. Colpisci con l'arma di Fuoco, poi lancia *Lama d'Acqua*: è *Vapore*. La Guardia del nemico dimezza anche gli incantesimi, e lo scudo della Barriera li assorbe; *Dissolvi* lo infrange.
+
+| Incantesimo | Elemento | Etere | Effetto |
+|---|---|---|---|
+| 🔥 **Dardo di Fuoco** | 🔥 Fuoco | 3 | Danni pari al 100% del tuo ATK e marchio di Fuoco. |
+| 💧 **Lama d'Acqua** | 💧 Acqua | 3 | Danni pari al 90% del tuo ATK e marchio d'Acqua. |
+| 🪨 **Frana** | 🪨 Terra | 4 | Danni pari al 70% del tuo ATK, marchio di Terra e nemico Impantanato per 2 turni. |
+| 🌪️ **Raffica** | 🌪️ Vento | 2 | Danni pari al 70% del tuo ATK e marchio di Vento. |
+| ✨ **Luce Guaritrice** | ✨ Luce | 4 | Ti cura del 25% degli HP massimi. |
+| 🌑 **Sifone d'Ombra** | 🌑 Tenebra | 4 | Danni pari al 70% del tuo ATK, marchio di Tenebra, e ti cura della metà (50%) dei danni inflitti. |
+| 🔷 **Dissolvi** | ⚪ Normale | 3 | Infrange lo scudo della Barriera e le Scaglie del nemico, poi infligge danni pari al 50% del tuo ATK. |
+| 💥 **Detonazione** | ⚪ Normale | 5 | Fa esplodere il marchio che il nemico porta: danni pari al 150% del tuo ATK (50% se non ha un marchio). |
+
+| Classe | Etere iniziale | Incantesimi |
+|---|---|---|
+| Guerriero | 6 | Frana |
+| Ladro | 8 | Raffica |
+| Mago | 16 | Dardo di Fuoco, Lama d'Acqua |
+| Paladino | 10 | Luce Guaritrice |
+| Berserker | 4 | Sifone d'Ombra |
+| Alchimista | 10 | Lama d'Acqua, Dissolvi |
+| Assassino | 8 | Raffica |
+| Negromante | 14 | Sifone d'Ombra, Detonazione |
+
+All'Etere iniziale si aggiungono 2 punti per ogni punto di **Arcano** (il Mago, con Arcano 2, parte con 20). Gli incantesimi lanciati almeno una volta compaiono nel Codice, alla pagina *Incantesimi*.
 
 ### Gli intenti dei nemici
 
@@ -391,7 +424,7 @@ Quando sali di livello, alla fine della stanza ti viene chiesto dove mettere il 
 | 💪 **Forza** | +4% danni con le armi, per punto. |
 | 🎯 **Destrezza** | +3% Precisione e +2% probabilità di critico, per punto. |
 | 🌪️ **Agilità** | +2% Schivata e +3% probabilità di fuga, per punto. |
-| 🔮 **Arcano** | +4% danni con le armi di un elemento (non Normale) e +10% danni delle reazioni elementali, per punto. |
+| 🔮 **Arcano** | +2 Etere massimo, +6% potenza degli incantesimi, +2% danni con le armi di un elemento (non Normale) e +10% danni delle reazioni elementali, per punto. |
 | 🍀 **Fortuna** | +8% Oro trovato, +3% probabilità di trovare una runa e +2% probabilità di critico, per punto. |
 
 Ogni classe parte con 3 punti già distribuiti secondo il suo stile:
@@ -528,6 +561,7 @@ Tra una discesa e l'altra spendi l'**Essenza Astrale**:
   - *Reazioni elementali*: le combinazioni di elementi che hai scatenato almeno una volta.
   - *Finali*: quelli che hai visto, e un indizio per gli altri.
   - *Bestiario*: nemici e boss incontrati e sconfitti; la loro storia si legge solo dopo averli battuti.
+  - *Incantesimi*: gli incantesimi che hai lanciato almeno una volta, con elemento, costo ed effetto.
   - *Personaggi*: i capitoli vissuti con Alaric e Silas, e il segno lasciato dalle tue scelte.
   - *Eventi*: quali hai visto e quante volte.
   - *Lettere insanguinate*: i messaggi letti sulle pareti prima degli scontri.

@@ -35,6 +35,13 @@ os.chdir(ROOT)
 # da qui in poi nessun salvataggio arriva al file
 from data_manager import GAME_DATA, PROFILE_MANAGER, RAW_DATA, cycle_of, echo_name, get_biome, update_game_data
 import runes
+import data_manager
+import magic
+
+
+def rooms_module():
+    import rooms
+    return rooms
 
 ANSI = re.compile(r"\x1b\[[0-9;?]*[A-Za-z]")
 FLOORS = (1, 5, 10, 15, 20, 25, 30)
@@ -139,6 +146,25 @@ class Bot:
         self.cls, self.player, self.calls, self.state, self.order, self.grade = cls, None, 0, {}, STRATEGIES[strategy], grade
         self.points = point_order(cls, points)
 
+    def pick_spell(self):
+        """L'incantesimo che conviene lanciare adesso (indice in player.spells), o None.
+
+        Cura sotto il 40% degli HP; altrimenti un incantesimo che completa una reazione con il marchio del nemico,
+        che lo colpisce Super Efficace, che fa esplodere un marchio o che infrange scudo e Scaglie."""
+        p, s = self.player, self.state.get("session")
+        if not s or not p.spells: return None
+        for i, sid in enumerate(p.spells):
+            if p.ether < magic.cost(p, sid): continue
+            fx, el = magic.spell(sid)["effects"], magic.spell(sid)["element"]
+            if fx.get("heal_pct") and p.hp < p.max_hp * 0.4: return i
+            if "damage_pct" not in fx: continue
+            mark = s.enemy.mark[0] if s.enemy.mark else None
+            if mark and el != "Normale" and mark != el and rooms_module().reaction_key(mark, el): return i
+            if el != "Normale" and data_manager.MULTIPLIERS.get(el, {}).get(s.enemy.element, 1.0) > 1.0: return i
+            if fx.get("detonate_pct") and mark: return i
+            if fx.get("dispel") and (s.enemy.shield or s.enemy.ward is not None): return i
+        return None
+
     def spend_point(self, opts):
         """Il prossimo attributo del piano che può ancora salire (altrimenti la Vitalità, poi qualunque)."""
         p, names = self.player, list(GAME_DATA["attributes"]["attributes"])
@@ -198,11 +224,17 @@ class Bot:
         if find("Forza la serratura") is not None: return 0 if p.hp > p.max_hp * 0.4 else 1
         if find("Aprilo comunque") is not None: return 0 if p.hp > p.max_hp * 0.6 else 1
         if "PUNTI ABILITÀ" in pr: return self.spend_point(opts)
+        if "INCANTESIMI" in pr: return self.state.pop("spell", len(opts) - 1)
         if "Intento del nemico" in pr:
             potion = any(i.type == "consumable" and i.category == "heal" for i in p.inventory)
-            if p.hp < p.max_hp * 0.35 and potion: self.state["potion"] = True; return 2
+            spell = self.pick_spell()
+            if spell is not None and magic.spell(p.spells[spell])["effects"].get("heal_pct"):
+                self.state["spell"] = spell; return find("Lancia un incantesimo")
+            if p.hp < p.max_hp * 0.35 and potion: self.state["potion"] = True; return find("Apri Inventario")
             if "sigillata" in opts[1]: return 0
-            return 1 if "Colpo pesante" in pr or "Colpo caricato" in pr else 0
+            if "Colpo pesante" in pr or "Colpo caricato" in pr: return 1
+            if spell is not None: self.state["spell"] = spell; return find("Lancia un incantesimo")
+            return 0
         if "ZAINO E INVENTARIO" in pr:
             if self.state.pop("potion", False):
                 i = next((i for i, o in enumerate(opts) if "(Cura" in o and "Antidoto" not in o), None)
@@ -239,6 +271,7 @@ def play(cls, seed, base, strategy="adattiva", grade=0, infinite=False, points="
         return d
 
     def start(self):
+        bot.state["session"] = self
         if self.enemy.is_boss: log["bosses"].append(self.enemy.base_name)
         log["killer"] = self.enemy.base_name
         return real_start(self)

@@ -86,7 +86,7 @@ class MoveChoiceTest(Sandbox):
         s.enemy.mark = ["Acqua", 2]
         s.enemy.statuses = {"blind": 2}
         prompts = []
-        with quiet(), mock.patch("rooms.interactive_menu", side_effect=lambda o, pr="": prompts.append(pr) or 3), \
+        with quiet(), mock.patch("rooms.interactive_menu", side_effect=lambda o, pr="": prompts.append(pr) or 4), \
              mock.patch("rooms.clear_screen"), mock.patch("inventory_menu.show_player_stats", side_effect=KeyError):
             with self.assertRaises(KeyError): s.player_turn()
         text = ANSI.sub("", prompts[0])

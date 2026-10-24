@@ -50,6 +50,11 @@ def record_reaction(key: str):
     if key not in found: found.append(key)
 
 
+def record_spell(spell_id: str):
+    found = PROFILE_MANAGER.codex.setdefault("spells", [])
+    if spell_id not in found: found.append(spell_id)
+
+
 def record_relic(relic_id: str):
     if relic_id not in PROFILE_MANAGER.codex["relics"]: PROFILE_MANAGER.codex["relics"].append(relic_id)
 
@@ -81,6 +86,7 @@ def sections() -> List[Tuple[str, int, int]]:
         ("Cimitero", len(PROFILE_MANAGER._data.get("cemetery", [])), len(PROFILE_MANAGER._data.get("cemetery", []))),
         ("Fasi dei boss", sum(min(enemies.get(n, {}).get("phases", 0), len(ph)) for n, ph in GAME_DATA["phases"].items()), sum(len(ph) for ph in GAME_DATA["phases"].values())),
         ("Reazioni elementali", len(set(PROFILE_MANAGER.codex.get("reactions", [])) & set(GAME_DATA["elements"]["reactions"])), len(GAME_DATA["elements"]["reactions"])),
+        ("Incantesimi", len(set(PROFILE_MANAGER.codex.get("spells", [])) & set(GAME_DATA["spells"]["spells"])), len(GAME_DATA["spells"]["spells"])),
     ]
 
 
@@ -226,6 +232,16 @@ def relics_page() -> List[str]:
     return lines
 
 
+def spells_page() -> List[str]:
+    """Gli incantesimi lanciati almeno una volta, con elemento, costo e descrizione."""
+    found = set(PROFILE_MANAGER.codex.get("spells", []))
+    lines = []
+    for sid, s in GAME_DATA["spells"]["spells"].items():
+        if sid in found: lines.append(f"  {s['icon']} {Colors.BOLD}{s['name']}{Colors.RESET} [{get_element_icon(s['element'])}] · {s['cost']} Etere\n    {Colors.CYAN}{s['desc']}{Colors.RESET}")
+        else: lines.append(f"  {UNKNOWN}")
+    return lines
+
+
 def reactions_page() -> List[str]:
     found = set(PROFILE_MANAGER.codex.get("reactions", []))
     lines = [f"  {Colors.CYAN}L'arma marchia il nemico con il suo elemento; in guardia, anche l'armatura marchia chi ti colpisce.",
@@ -252,7 +268,7 @@ def endings_page() -> List[str]:
 
 PAGES = {"Bestiario": bestiary_page, "Personaggi": characters_page, "Eventi": events_page,
          "Lettere insanguinate": letters_page, "Reliquie": relics_page, "Finali": endings_page,
-         "Rune": runes_page, "Parole runiche": runewords_page, "Nemesi": nemeses_page, "Cimitero": cemetery_page, "Fasi dei boss": phases_page, "Reazioni elementali": reactions_page}
+         "Rune": runes_page, "Parole runiche": runewords_page, "Nemesi": nemeses_page, "Cimitero": cemetery_page, "Fasi dei boss": phases_page, "Reazioni elementali": reactions_page, "Incantesimi": spells_page}
 
 
 def show_codex():
