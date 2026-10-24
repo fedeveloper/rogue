@@ -293,6 +293,68 @@
         "cost": 600,
         "corruption_gain_pct": 75,
         "desc": "La Corruzione che accumuli nelle discese cresce del 25% in meno."
+      },
+      {
+        "id": "biblioteca_arcano",
+        "name": "La Biblioteca dell'Arcano",
+        "requires": {
+          "npc": "valerius"
+        },
+        "locked_hint": "Libera l'Incantatore Valerius nel Labirinto",
+        "levels": [
+          {
+            "cost": 400,
+            "desc": "Ogni eroe ha +2 Etere massimo.",
+            "effects": {
+              "ether_max": 2
+            }
+          },
+          {
+            "cost": 700,
+            "desc": "Ogni discesa inizia con 1 pergamena a caso nello zaino.",
+            "start": {
+              "scroll": 1
+            }
+          },
+          {
+            "cost": 1000,
+            "desc": "Gli incantesimi di ogni eroe hanno +5% di potenza.",
+            "effects": {
+              "spell_pct": 5
+            }
+          }
+        ]
+      },
+      {
+        "id": "sala_armi",
+        "name": "La Sala d'Armi",
+        "requires": {
+          "npc": "borek"
+        },
+        "locked_hint": "Libera il Maestro d'Armi Borek nel Labirinto",
+        "levels": [
+          {
+            "cost": 400,
+            "desc": "Ogni discesa inizia con 1 punto abilità in più da spendere.",
+            "start": {
+              "points": 1
+            }
+          },
+          {
+            "cost": 700,
+            "desc": "Ogni eroe fa +3% danni con qualunque arma.",
+            "effects": {
+              "dmg_pct": 3
+            }
+          },
+          {
+            "cost": 1000,
+            "desc": "Ogni discesa inizia con 1 punto abilità in più da spendere, oltre a quello del primo livello.",
+            "start": {
+              "points": 1
+            }
+          }
+        ]
       }
     ]
   },

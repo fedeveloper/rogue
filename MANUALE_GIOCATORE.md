@@ -661,7 +661,15 @@ Tra una discesa e l'altra spendi l'**Essenza Astrale**:
 - **🔥 Il Fuoco del Campo** — chi incontri nel Labirinto può venire a scaldarsi qui. *Silas*, *la Cartografa*, *il Viandante Cieco* e, se lo hai liberato, *la luce di Alaric* compaiono quando le loro storie sono andate abbastanza avanti. Ti parlano in base a ciò che hai fatto e la prima volta ti lasciano un dono (✦). Qui costruisci anche, con l'Essenza:
   - *il Tavolo della Cartografa* (aiutala nel Labirinto): sulla mappa vedi quali storie ti aspettano nelle stanze speciali e negli eventi che tornano;
   - *lo Scrittoio di Silas* (salvalo): a ogni partenza scegli un dono fra +20 HP Max, +3 ATK e +100 Oro;
-  - *l'Altare della Purificazione*: la Corruzione cresce del 25% in meno.
+  - *l'Altare della Purificazione*: la Corruzione cresce del 25% in meno;
+  - *la Biblioteca dell'Arcano* (libera l'Incantatore Valerius), che si costruisce in tre livelli, uno alla volta. I livelli si sommano:
+    - Lv.1 (✨400): Ogni eroe ha +2 Etere massimo.
+    - Lv.2 (✨700): Ogni discesa inizia con 1 pergamena a caso nello zaino.
+    - Lv.3 (✨1000): Gli incantesimi di ogni eroe hanno +5% di potenza.
+  - *la Sala d'Armi* (libera il Maestro d'Armi Borek), anche lei in tre livelli:
+    - Lv.1 (✨400): Ogni discesa inizia con 1 punto abilità in più da spendere.
+    - Lv.2 (✨700): Ogni eroe fa +3% danni con qualunque arma.
+    - Lv.3 (✨1000): Ogni discesa inizia con 1 punto abilità in più da spendere, oltre a quello del primo livello.
 - **📖 Il Codice del Labirinto** — tutto ciò che hai scoperto, raccolto fra una run e l'altra, con la percentuale di completamento. Ciò che manca è segnato con ???.
   - *Reazioni elementali*: le combinazioni di elementi che hai scatenato almeno una volta.
   - *Finali*: quelli che hai visto, e un indizio per gli altri.
