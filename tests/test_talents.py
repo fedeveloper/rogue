@@ -9,6 +9,7 @@ from contextlib import redirect_stdout
 from unittest import mock
 
 import attributes
+import effects
 import inventory_menu
 import magic
 import talents
@@ -134,7 +135,7 @@ class EffectTest(Sandbox):
     def test_attribute_keys_add_up_with_the_attributes(self):
         base, hawk = self.hero(), self.hero("occhio_falco")
         self.assertEqual(hawk.get_crit_chance() - base.get_crit_chance(), fx("occhio_falco", "crit"))
-        self.assertEqual(attributes.value(hawk, "acc"), fx("occhio_falco", "acc"))
+        self.assertEqual(effects.total(hawk, "acc"), fx("occhio_falco", "acc"))
         self.assertEqual(self.hero("pozzo_etere").max_ether() - base.max_ether(), fx("pozzo_etere", "ether_max"))
 
     def test_damage_for_any_weapon(self):

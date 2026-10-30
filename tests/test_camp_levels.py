@@ -8,9 +8,9 @@ import unittest
 from contextlib import redirect_stdout
 from unittest import mock
 
-import attributes
 import camp
 import camp_rules
+import effects
 from data_manager import PROFILE_MANAGER
 from entities import Player
 
@@ -83,12 +83,12 @@ class EffectTest(Sandbox):
         self.build_to(LIB, 1)
         self.assertEqual(self.hero().max_ether(), base.max_ether() + camp_rules.levels(LIB)[0]["effects"]["ether_max"])
         self.build_to(LIB, 3)
-        self.assertEqual(self.hero().magic_value("spell_pct") - base.magic_value("spell_pct"), camp_rules.levels(LIB)[2]["effects"]["spell_pct"])
+        self.assertEqual(effects.total(self.hero(), "spell_pct") - effects.total(base, "spell_pct"), camp_rules.levels(LIB)[2]["effects"]["spell_pct"])
 
     def test_the_hall_gives_damage_to_every_weapon(self):
         base = self.hero()
         self.build_to(HALL, 2)
-        self.assertEqual(attributes.value(self.hero(), "dmg_pct") - attributes.value(base, "dmg_pct"), camp_rules.levels(HALL)[1]["effects"]["dmg_pct"])
+        self.assertEqual(effects.total(self.hero(), "dmg_pct") - effects.total(base, "dmg_pct"), camp_rules.levels(HALL)[1]["effects"]["dmg_pct"])
 
 
 class StartGiftTest(Sandbox):

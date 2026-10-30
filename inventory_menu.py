@@ -4,6 +4,7 @@ from data_manager import GAME_DATA, PROFILE_MANAGER, get_element_icon
 from entities import Rune, generate_random_element
 import runes as rune_rules
 import attributes
+import effects
 import magic
 import talents
 from archive import unlocked_archive_bonuses
@@ -14,7 +15,7 @@ def _use_consumable(player, item, real_idx, in_combat) -> str:
     if cat == "heal":
         heal_amt = item.heal_amount
         if player.alchemist_potions: heal_amt = int(heal_amt * 1.5)
-        heal_amt = heal_amt * (100 + attributes.value(player, "potion_pct")) // 100
+        heal_amt = heal_amt * (100 + effects.total(player, "potion_pct")) // 100
         if "carestia" in player.active_pacts: heal_amt //= 2
         for r in player.relic_effects: heal_amt = r.on_item_heal(player, heal_amt)
         actual_heal = player.heal(heal_amt)
@@ -286,7 +287,7 @@ def show_player_stats(player, session=None):
     display_msg(f"✨ EXP: {Colors.CYAN}{player.exp}/{player.max_exp}{Colors.RESET} (Livello {player.level})")
     if player.spells:
         display_msg(f"🔮 Etere: {Colors.CYAN}{player.ether}/{player.max_ether()}{Colors.RESET} | Incantesimi: " + ", ".join(magic.spell(s)["name"] for s in player.spells)
-                    + (f" (potenza +{player.magic_value('spell_pct')}%)" if player.magic_value("spell_pct") else ""))
+                    + (f" (potenza +{effects.total(player, 'spell_pct')}%)" if effects.total(player, "spell_pct") else ""))
     display_msg("")
     
     display_msg(f"{Colors.BOLD}--- ATTRIBUTI ---{Colors.RESET}")

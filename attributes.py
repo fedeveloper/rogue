@@ -1,11 +1,10 @@
 """Gli attributi dell'eroe: a ogni livello un punto da spendere fra Vitalità, Forza, Destrezza, Agilità, Arcano e Fortuna.
 
-I numeri stanno in `data/attributes.json`. Ogni attributo ha degli effetti per punto (`per_point`); `value(player, chiave)`
-li somma su tutti gli attributi e li leggono il Player e il combattimento. Gli HP massimi della Vitalità si aggiungono
+I numeri stanno in `data/attributes.json`. Ogni attributo ha degli effetti per punto (`per_point`); il registro
+degli effetti (`effects.total`) li somma su tutti gli attributi e li leggono il Player e il combattimento. Gli HP massimi della Vitalità si aggiungono
 quando si spende il punto (e si tolgono se si redistribuisce con il Tomo dell'Oblio); tutti gli altri effetti si calcolano
 al momento. Gli attributi iniziali vengono dalla classe (`classes.json → attributes`) e non si possono redistribuire.
 """
-import talents
 from data_manager import GAME_DATA, RAW_DATA
 from ui import Colors, clear_screen, display_msg, interactive_menu
 
@@ -24,14 +23,6 @@ def starting(class_id: str) -> dict:
     """Gli attributi con cui parte la classe: tutti gli attributi, a zero quelli che la classe non nomina."""
     start = RAW_DATA["classes"][class_id].get("attributes", {})
     return {a: start.get(a, 0) for a in definitions()}
-
-
-def value(player, key: str) -> int:
-    """La somma di un effetto (es. "acc", "spell_pct") su tutti gli attributi dell'eroe, più quella dei suoi talenti
-    e del suo tratto (`meta.json → traits[id].effects`) e delle strutture del Campo (`camp_rules`)."""
-    attrs = getattr(player, "attributes", {})
-    return (sum(points * definitions()[a]["per_point"].get(key, 0) for a, points in attrs.items()) + talents.value(player, key)
-            + getattr(player, "trait_effects", {}).get(key, 0) + getattr(player, "camp_effects", {}).get(key, 0))
 
 
 def weapon_bonus(player) -> int:
