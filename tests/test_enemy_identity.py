@@ -11,6 +11,7 @@ import codex
 from data_manager import GAME_DATA, PROFILE_MANAGER, RAW_DATA
 from entities import Armor, Enemy, Player, Weapon, pick_enemy_name
 from rooms import CombatSession
+from rooms_patch import patch_rooms
 
 ANSI = re.compile(r"\x1b\[[0-9;]*m")
 MOVES = GAME_DATA["moves"]
@@ -148,7 +149,7 @@ class DefenseTest(Sandbox):
         self.assertEqual(s.enemy.mark[0], "Fuoco")
         self.assertEqual(p.hp, 500 + 1000 * DEFENSES["mark"]["heal_pct"] // 100)
         s.intent = "attack"
-        with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: a), mock.patch("rooms.wait_enter"):
+        with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: a), patch_rooms("wait_enter"):
             s.enemy_turn()
         self.assertEqual(p.run_tracker.get("reactions"), 1)
 
@@ -161,7 +162,7 @@ class DefenseTest(Sandbox):
     def test_the_shroud_can_finish_the_enemy(self):
         p, s = self.fight("8")
         s.enemy.hp = 1
-        with quiet(), mock.patch("rooms.wait_enter"): self.assertFalse(s.execute_player_defense())
+        with quiet(), patch_rooms("wait_enter"): self.assertFalse(s.execute_player_defense())
         self.assertLessEqual(s.enemy.hp, 0)
 
     def test_the_curse_blocks_the_healing_but_not_the_theft(self):

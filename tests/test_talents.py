@@ -16,6 +16,7 @@ import talents
 from data_manager import GAME_DATA, PROFILE_MANAGER
 from entities import Armor, Consumable, Enemy, Player, Weapon
 from rooms import CombatSession
+from rooms_patch import patch_rooms
 
 ANSI = re.compile(r"\x1b\[[0-9;]*m")
 TALENTS, RULES = GAME_DATA["talents"]["talents"], GAME_DATA["talents"]["rules"]
@@ -168,7 +169,7 @@ class EffectTest(Sandbox):
     def test_harvest_heals_on_every_kill(self):
         p = self.hero("raccolto"); p.max_hp, p.hp = 1000, 100
         s = self.fight(p); s.enemy.exp_drop = s.enemy.gold_drop = 0
-        with quiet(), mock.patch("rooms.wait_enter"), mock.patch("rooms.get_random_relic", return_value=None):
+        with quiet(), patch_rooms("wait_enter"), patch_rooms("get_random_relic", return_value=None):
             s.on_enemy_death()
         self.assertEqual(p.hp, 100 + 1000 * fx("raccolto", "kill_heal_pct") // 100)
 

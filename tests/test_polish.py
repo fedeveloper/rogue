@@ -15,6 +15,7 @@ from data_manager import PROFILE_MANAGER
 from entities import Armor, Enemy, Player, Weapon
 from relic_effects import create_relic_effect
 from rooms import CombatSession, campfire_room
+from rooms_patch import patch_rooms
 
 
 class Sandbox(unittest.TestCase):
@@ -32,10 +33,10 @@ class Sandbox(unittest.TestCase):
     def run_quietly(self, func, *args, menu=None):
         out = io.StringIO()
         patches = [mock.patch("builtins.input", return_value=""), mock.patch("time.sleep"),
-                   mock.patch("rooms.delay_print"), mock.patch("rooms.clear_screen"),
+                   patch_rooms("delay_print"), patch_rooms("clear_screen"),
                    mock.patch("roguelike.clear_screen")]
         if menu is not None:
-            patches.append(mock.patch("rooms.interactive_menu", side_effect=menu))
+            patches.append(patch_rooms("interactive_menu", side_effect=menu))
             patches.append(mock.patch("roguelike.interactive_menu", side_effect=menu))
         with redirect_stdout(out):
             for p in patches: p.start()

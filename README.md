@@ -502,7 +502,8 @@ Il gioco è **data-driven**: classi, nemici, oggetti, reliquie, eventi, Maestrie
 rogue/
 ├── roguelike.py       # Menu principale, Campo Base, scelta dell'eroe, ciclo dei piani, fine partita
 ├── floor_map.py       # Mappa del piano: file di stanze, percorsi, biomi, disegno
-├── rooms.py           # Combattimento (CombatSession) e stanze: mercante, falò, forziere, trappola, mistero
+├── rooms.py           # Le stanze: combattimento, mercante, falò, forziere, trappola, mistero
+├── combat/            # Il combattimento (CombatSession): turno dell'eroe e del nemico, incantesimi, reazioni, fasi, premi
 ├── events.py          # Motore degli eventi: scene, condizioni, effetti, memoria fra le run
 ├── entities.py        # Eroe, nemici e oggetti; generazione dell'equipaggiamento
 ├── relic_effects.py   # Effetti delle reliquie come hook (on_attack, on_take_damage, ...)

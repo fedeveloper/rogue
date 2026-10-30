@@ -18,6 +18,7 @@ import rooms
 from constants import CAMPFIRE_REST_PCT, CURSE_CHANCE
 from data_manager import GAME_DATA, PROFILE_MANAGER
 from entities import Enemy, Player, generate_weapon
+from rooms_patch import patch_rooms
 
 ANSI = re.compile(r"\x1b\[[0-9;]*m")
 GRADES = GAME_DATA["modes"]["ascension"]["grades"]
@@ -116,8 +117,8 @@ class EffectContractTest(Sandbox):
         self.with_rules({"campfire_heal_mult": value})
         p = self.hero(); p.max_hp, p.hp = 1000, 1
         menus = []
-        with quiet(), mock.patch("rooms.interactive_menu", side_effect=lambda o, pr="", **k: menus.append(o) or 0), \
-             mock.patch("rooms.wait_enter"), mock.patch("rooms.delay_print"), mock.patch("rooms.clear_screen"):
+        with quiet(), patch_rooms("interactive_menu", side_effect=lambda o, pr="", **k: menus.append(o) or 0), \
+             patch_rooms("wait_enter"), patch_rooms("delay_print"), patch_rooms("clear_screen"):
             rooms.campfire_room(p, 5)
         pct = round(CAMPFIRE_REST_PCT * value)
         self.assertEqual(p.hp, 1 + 1000 * pct // 100)

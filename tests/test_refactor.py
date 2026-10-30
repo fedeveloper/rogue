@@ -18,6 +18,7 @@ from data_manager import GAME_DATA, PROFILE_MANAGER
 from entities import Enemy, Player
 from rooms import CombatSession
 from constants import BERSERKER_FURY_PCT
+from rooms_patch import patch_rooms
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -45,8 +46,8 @@ class CombatLoopTest(Sandbox):
         session.enemy.hp, session.enemy.base_dodge = 10_000, -1000
         # Molte più aperture delle statistiche del limite di ricorsione, poi fuga dal boss, poi attacco
         menu = [4] * 1500 + [5, 0]  # Statistiche e Fuga vengono dopo Attacca, Difesa, Incantesimi, Inventario
-        with redirect_stdout(io.StringIO()), mock.patch("rooms.interactive_menu", side_effect=menu), \
-             mock.patch("rooms.clear_screen"), mock.patch("inventory_menu.show_player_stats"), \
+        with redirect_stdout(io.StringIO()), patch_rooms("interactive_menu", side_effect=menu), \
+             patch_rooms("clear_screen"), mock.patch("inventory_menu.show_player_stats"), \
              mock.patch("builtins.input", return_value=""):
             self.assertTrue(session.player_turn())
         self.assertLess(session.enemy.hp, 10_000)
@@ -133,7 +134,8 @@ class ConsumableLabelTest(unittest.TestCase):
 
 class OutputThroughUiTest(unittest.TestCase):
     def test_game_modules_do_not_call_print_or_input_directly(self):
-        for name in ("rooms.py", "inventory_menu.py", "roguelike.py", "archive.py"):
+        combat = sorted(os.path.join("combat", f) for f in os.listdir(os.path.join(ROOT, "combat")) if f.endswith(".py"))
+        for name in ("rooms.py", "inventory_menu.py", "roguelike.py", "archive.py", *combat):
             with open(os.path.join(ROOT, name), encoding="utf-8") as f:
                 tree = ast.parse(f.read())
             direct = [n.lineno for n in ast.walk(tree) if isinstance(n, ast.Call)

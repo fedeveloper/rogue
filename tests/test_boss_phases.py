@@ -12,8 +12,9 @@ from unittest import mock
 
 import codex
 from data_manager import GAME_DATA, MULTIPLIERS, PROFILE_MANAGER, RAW_DATA
-from entities import Armor, Enemy, Player
-from rooms import CombatSession, STATUS_NAMES
+from entities import STATUS_NAMES, Armor, Enemy, Player
+from rooms import CombatSession
+from rooms_patch import patch_rooms
 
 ANSI = re.compile(r"\x1b\[[0-9;]*m")
 PHASES = GAME_DATA["phases"]
@@ -170,7 +171,7 @@ class PhaseInCombatTest(Sandbox):
             s.intent = "heavy"          # il boss aveva annunciato un colpo pesante...
             s.enemy.hp = 400            # ...ma il tuo attacco lo porta sotto la soglia
             return next(turns)
-        with quiet(), mock.patch.object(s, "player_turn", side_effect=your_turn), mock.patch("rooms.wait_enter"):
+        with quiet(), mock.patch.object(s, "player_turn", side_effect=your_turn), patch_rooms("wait_enter"):
             s._combat_loop()
         self.assertEqual(p.hp, 1000, "il turno del boss serve a trasformarsi: niente colpo pesante")
         self.assertEqual(s.enemy.phase, 1)

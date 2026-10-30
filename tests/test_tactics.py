@@ -12,6 +12,7 @@ import codex
 from data_manager import GAME_DATA, PROFILE_MANAGER
 from entities import Armor, Enemy, Player, Weapon
 from rooms import CombatSession, reaction_key
+from rooms_patch import patch_rooms
 
 ANSI = re.compile(r"\x1b\[[0-9;]*m")
 
@@ -48,7 +49,7 @@ class Sandbox(unittest.TestCase):
 
     def enemy(self, s, intent="attack"):
         s.intent = intent
-        with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: a), mock.patch("rooms.wait_enter"):
+        with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: a), patch_rooms("wait_enter"):
             s.enemy_turn()
 
 
@@ -86,8 +87,8 @@ class MoveChoiceTest(Sandbox):
         s.enemy.mark = ["Acqua", 2]
         s.enemy.statuses = {"blind": 2}
         prompts = []
-        with quiet(), mock.patch("rooms.interactive_menu", side_effect=lambda o, pr="": prompts.append(pr) or 4), \
-             mock.patch("rooms.clear_screen"), mock.patch("inventory_menu.show_player_stats", side_effect=KeyError):
+        with quiet(), patch_rooms("interactive_menu", side_effect=lambda o, pr="": prompts.append(pr) or 4), \
+             patch_rooms("clear_screen"), mock.patch("inventory_menu.show_player_stats", side_effect=KeyError):
             with self.assertRaises(KeyError): s.player_turn()
         text = ANSI.sub("", prompts[0])
         self.assertIn("Intento del nemico:", text)

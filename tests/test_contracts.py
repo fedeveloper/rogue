@@ -24,6 +24,7 @@ from constants import AMBUSH_DMG_PCT, BERSERKER_FURY_PCT, NECRO_HARVEST_PCT
 import attributes
 import effects
 import talents
+from rooms_patch import patch_rooms
 
 ALL_UNLOCKS = sorted({i["unlock_id"] for cat in ("weapons", "armors", "accessories", "consumables", "relics")
                       for i in RAW_DATA[cat] if i.get("unlock_id")})
@@ -187,7 +188,7 @@ class RelicContractTest(Sandbox):
     def c_martello(self):
         p = self.hero(); self.relic(p, "martello_lapicida"); p.weapon.sockets, p.weapon.runes = 1, ["forza"]; p.gold = 0
         picks = iter([1, 0, 0, -1])
-        with quiet(), mock.patch("rooms.interactive_menu", side_effect=lambda *a, **k: next(picks)), mock.patch("rooms.wait_enter"), mock.patch("rooms.clear_screen"):
+        with quiet(), patch_rooms("interactive_menu", side_effect=lambda *a, **k: next(picks)), patch_rooms("wait_enter"), patch_rooms("clear_screen"):
             rooms.rune_workshop(p, 10)
         self.assertEqual((p.weapon.runes, p.gold), ([], 0))
 
@@ -550,8 +551,8 @@ class ConsumableContractTest(Sandbox):
         p = self.hero(); self.assertEqual(self.drink(p, item, in_combat=True), "smoke_bomb")
         self.assertIn("Boss", d["desc"])
         s = self.session(p, boss=True)
-        with quiet(), mock.patch("rooms.interactive_menu", return_value=3), mock.patch("rooms.clear_screen"), \
-             mock.patch("rooms.show_inventory_menu", return_value="smoke_bomb"):
+        with quiet(), patch_rooms("interactive_menu", return_value=3), patch_rooms("clear_screen"), \
+             patch_rooms("show_inventory_menu", return_value="smoke_bomb"):
             self.assertTrue(s.player_turn(), "contro i Boss la fuga non riesce")
 
     def c_tome(self, d, item):
@@ -587,7 +588,7 @@ class ConsumableContractTest(Sandbox):
         start = dict(p.attributes); p.unspent_points = 2
         attributes.raise_attribute(p, "vitalita"); attributes.raise_attribute(p, "agilita")
         hp = p.max_hp
-        with quiet(), mock.patch("rooms.wait_enter"), mock.patch("attributes.interactive_menu", return_value=-1), mock.patch("attributes.clear_screen"):
+        with quiet(), patch_rooms("wait_enter"), mock.patch("attributes.interactive_menu", return_value=-1), mock.patch("attributes.clear_screen"):
             rooms.read_oblivion(p, item)
         self.assertEqual((p.attributes, p.unspent_points, p.inventory), (start, 2, []))
         self.assertEqual(p.max_hp, hp - GAME_DATA["attributes"]["attributes"]["vitalita"]["per_point"]["max_hp"])
@@ -629,8 +630,8 @@ class ConsumableContractTest(Sandbox):
                     self.assertEqual(self.drink(p, item, in_combat=True), "fiala_caos")
                 check(p)
         p = self.hero(); s = self.session(p); s.enemy.hp = 1000
-        with quiet(), mock.patch("rooms.interactive_menu", return_value=3), mock.patch("rooms.clear_screen"), \
-             mock.patch("rooms.show_inventory_menu", return_value="fiala_caos"), mock.patch("rooms.random.randint", return_value=37):
+        with quiet(), patch_rooms("interactive_menu", return_value=3), patch_rooms("clear_screen"), \
+             patch_rooms("show_inventory_menu", return_value="fiala_caos"), mock.patch("rooms.random.randint", return_value=37):
             s.player_turn()
         self.assertEqual(s.enemy.hp, 963)
         self.assertIn("10-100", d["desc"])
@@ -798,7 +799,7 @@ class RulesContractTest(Sandbox):
         def trap(pacts):
             p = self.hero(pacts=pacts); p.base_dodge = -100; p.max_hp = p.hp = 1000
             # Attraversa di corsa e fallisce la prova: il patto raddoppia il danno del meccanismo
-            with quiet(), mock.patch("rooms.delay_print"), mock.patch("builtins.input", return_value=""), mock.patch("rooms.interactive_menu", return_value=1), \
+            with quiet(), patch_rooms("delay_print"), mock.patch("builtins.input", return_value=""), patch_rooms("interactive_menu", return_value=1), \
                  mock.patch("rooms.random.randint", side_effect=lambda lo, hi: 100 if (lo, hi) == (1, 100) else 20):
                 rooms.trap_room(p, 1, pacts)
             return 1000 - p.hp
@@ -821,7 +822,7 @@ class RulesContractTest(Sandbox):
             return 0 if not captured else 2
         p = self.hero(pacts=pacts)
         random.seed(99)
-        with quiet(), mock.patch("rooms.interactive_menu", side_effect=menu), mock.patch("rooms.clear_screen"), mock.patch("rooms.delay_print"):
+        with quiet(), patch_rooms("interactive_menu", side_effect=menu), patch_rooms("clear_screen"), patch_rooms("delay_print"):
             rooms.vendor_room(p, 3)
         return captured
 
@@ -867,8 +868,8 @@ class RulesContractTest(Sandbox):
         for lvl in (0, 1):
             PROFILE_MANAGER.set_perk("riciclatore_lvl", lvl)
             p = self.hero(); p.inventory = [Weapon("Spada", 100, 1, "Normale", 1)]; gold = p.gold
-            with quiet(), mock.patch("rooms.interactive_menu", side_effect=[1, 0, -1, 2]), mock.patch("rooms.clear_screen"), \
-                 mock.patch("rooms.delay_print"), mock.patch("rooms.time.sleep"):
+            with quiet(), patch_rooms("interactive_menu", side_effect=[1, 0, -1, 2]), patch_rooms("clear_screen"), \
+                 patch_rooms("delay_print"), mock.patch("rooms.time.sleep"):
                 rooms.vendor_room(p, 1)
             sold[lvl] = p.gold - gold
         self.assertEqual(sold[1], int(sold[0] * 1.10))
@@ -956,7 +957,7 @@ class MoveContractTest(Sandbox):
     def enemy_hit(self, intent, defending=False):
         p, s = self.setup_fight(intent, defending)
         # Ogni tiro al minimo: il colpo va a segno, il danno è il più basso, lo status a probabilità 0 non scatta
-        with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: a), mock.patch("rooms.wait_enter"):
+        with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: a), patch_rooms("wait_enter"):
             s.enemy_turn()
         return p, s
 
@@ -974,7 +975,7 @@ class MoveContractTest(Sandbox):
         self.assertIn(f"per {m['silence_turns']} turni non potrai lanciare incantesimi", s.intent_text())
         p.spells, p.ether = ["raffica"], 50
         picks = iter([2, 0])  # prova a lanciare, poi attacca
-        with quiet(), mock.patch("rooms.interactive_menu", side_effect=lambda *a, **k: next(picks)), mock.patch("rooms.clear_screen"), \
+        with quiet(), patch_rooms("interactive_menu", side_effect=lambda *a, **k: next(picks)), patch_rooms("clear_screen"), \
              mock.patch("rooms.random.randint", return_value=100):
             s.player_turn()
         self.assertEqual(next(picks, "finito"), "finito", "l'incantesimo ammutolito non consuma il turno")
@@ -993,11 +994,11 @@ class MoveContractTest(Sandbox):
         self.assertIn(f"{m['ether_drain']} Etere", m["desc"])
         normal = 1000 - self.enemy_hit("attack")[0].hp
         p, s = self.setup_fight("ether_drain"); p.base_ether, p.ether = 100, 10
-        with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: a), mock.patch("rooms.wait_enter"):
+        with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: a), patch_rooms("wait_enter"):
             s.enemy_turn()
         self.assertEqual((1000 - p.hp, p.ether), (normal, 10 - m["ether_drain"]))
         p, s = self.setup_fight("ether_drain"); p.ether = 1
-        with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: a), mock.patch("rooms.wait_enter"):
+        with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: a), patch_rooms("wait_enter"):
             s.enemy_turn()
         self.assertEqual(p.ether, 0, "mai sotto zero")
 
@@ -1011,7 +1012,7 @@ class MoveContractTest(Sandbox):
             p, s = self.setup_fight(intent); p.armor = Armor("Corazza", 0, 10, "Normale", 1)
             estimate = s.estimate_enemy_damage(m["damage_mult"] if intent == "spellcast" else 1, m["pierce_pct"] if intent == "spellcast" else 0)
             self.assertIn(f"≈{estimate} danni", s.intent_text())
-            with quiet(), mock.patch("rooms.random.randint", return_value=0), mock.patch("rooms.wait_enter"):
+            with quiet(), mock.patch("rooms.random.randint", return_value=0), patch_rooms("wait_enter"):
                 s.enemy_turn()
             hits[intent] = 1000 - p.hp
             self.assertEqual(hits[intent], estimate)
@@ -1025,7 +1026,7 @@ class MoveContractTest(Sandbox):
         self.assertIn("tanti HP quanti te ne toglie", m["desc"])
         normal = 1000 - self.enemy_hit("attack")[0].hp
         p, s = self.setup_fight("drain"); s.enemy.hp = 100
-        with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: a), mock.patch("rooms.wait_enter"):
+        with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: a), patch_rooms("wait_enter"):
             s.enemy_turn()
         self.assertEqual(1000 - p.hp, normal)
         self.assertEqual(s.enemy.hp, 100 + normal)
@@ -1036,7 +1037,7 @@ class MoveContractTest(Sandbox):
         self.assertEqual(p.hp, 1000, "il Sigillo non attacca")
         self.assertTrue(s.sealed)
         picks = iter([1, 0])  # prova a difendersi, poi attacca
-        with quiet(), mock.patch("rooms.interactive_menu", side_effect=lambda *a, **k: next(picks)), mock.patch("rooms.clear_screen"), \
+        with quiet(), patch_rooms("interactive_menu", side_effect=lambda *a, **k: next(picks)), patch_rooms("clear_screen"), \
              mock.patch("rooms.random.randint", return_value=100):
             s.player_turn()
         self.assertFalse(s.is_defending)
@@ -1066,7 +1067,7 @@ class MoveContractTest(Sandbox):
         self.assertIn("non si somma", m["desc"])
         for before in (10, 400):
             p, s = self.setup_fight("shield"); s.enemy.shield = before
-            with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: a), mock.patch("rooms.wait_enter"):
+            with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: a), patch_rooms("wait_enter"):
                 s.enemy_turn()
             self.assertEqual(s.enemy.shield, max(before, s.enemy.max_hp * m["shield_pct"] // 100), "la Barriera non si somma")
         dealt = {}
@@ -1122,7 +1123,7 @@ class MoveContractTest(Sandbox):
         with quiet(): p.add_relic(next(r for r in RAW_DATA["relics"] if r["id"] == "scudo_cristallo"))
         s = self.session(p, 10); s.enemy.atk, s.enemy.base_acc, s.intent = 20, 100, "venom"
         s.enemy.status_inflict = {"type": "poison", "chance": 0, "duration": 3}
-        with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: a), mock.patch("rooms.wait_enter"):
+        with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: a), patch_rooms("wait_enter"):
             s.enemy_turn()
         self.assertNotIn("poison", p.statuses)
 
@@ -1131,7 +1132,7 @@ class MoveContractTest(Sandbox):
             p, s = self.setup_fight(intent)
             estimate = s.estimate_enemy_damage(GAME_DATA["moves"]["moves"][intent].get("damage_mult", 1))
             self.assertIn(f"≈{estimate} danni", s.intent_text())
-            with quiet(), mock.patch("rooms.random.randint", return_value=0), mock.patch("rooms.wait_enter"):
+            with quiet(), mock.patch("rooms.random.randint", return_value=0), patch_rooms("wait_enter"):
                 s.enemy_turn()
             self.assertEqual(1000 - p.hp, estimate)
 

@@ -13,6 +13,7 @@ import roguelike
 from data_manager import GAME_DATA, PROFILE_MANAGER, RAW_DATA
 from entities import Enemy, Player, pick_enemy_name
 from rooms import CombatSession
+from rooms_patch import patch_rooms
 
 ANSI = re.compile(r"\x1b\[[0-9;]*m")
 
@@ -51,8 +52,8 @@ class RecordingTest(Sandbox):
         p = self.hero()
         enemy = Enemy(5, False, [], modifier="hard")
         self.assertIn("(Potenziato)", enemy.name)
-        with quiet(), mock.patch("rooms.random.random", return_value=0.99), mock.patch("rooms.interactive_menu", return_value=0), \
-             mock.patch("rooms.wait_enter"), mock.patch("rooms.delay_print"), mock.patch("rooms.clear_screen"):
+        with quiet(), mock.patch("rooms.random.random", return_value=0.99), patch_rooms("interactive_menu", return_value=0), \
+             patch_rooms("wait_enter"), patch_rooms("delay_print"), patch_rooms("clear_screen"):
             session = CombatSession(p, 5, enemy)
             session.start()
         rec = PROFILE_MANAGER.codex["enemies"][enemy.base_name]
@@ -63,7 +64,7 @@ class RecordingTest(Sandbox):
     def test_letters_found_on_the_walls_are_recorded(self):
         p = self.hero()
         with quiet(), mock.patch("rooms.random.random", return_value=0.0), mock.patch("rooms.random.randrange", return_value=3), \
-             mock.patch.object(CombatSession, "_combat_loop"), mock.patch("rooms.delay_print"):
+             mock.patch.object(CombatSession, "_combat_loop"), patch_rooms("delay_print"):
             CombatSession(p, 1, Enemy(1, False, [])).start()
         self.assertEqual(PROFILE_MANAGER.codex["letters"], [3])
 
