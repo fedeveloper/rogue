@@ -18,29 +18,34 @@ def load_json_file(filename: str) -> Dict[str, Any]:
         print(f"{Colors.RED}ERRORE FATALE:{Colors.RESET} File 'data/{filename}' mancante o corrotto. ({e})")
         sys.exit(1)
 
+def default_profile() -> Dict[str, Any]:
+    """Il profilo di chi non ha mai giocato (e le voci che un profilo di una versione precedente riceve)."""
+    return {
+        "essence": 0, "max_floor": 0, "won_normal": False,
+        "unlocked_ids":[], "class_xp": {}, "class_lvl": {},
+        "stats": {"total_deaths": 0, "total_gold": 0, "total_bosses": 0}, "completed_feats":[],
+        "story": {"flags": {}, "counters": {}, "seen_events": {}},
+        "codex": {"enemies": {}, "letters": [], "relics": [], "reactions": [], "runes": [], "runewords": [], "spells": []},
+        "settings": {"text_speed": DEFAULT_TEXT_SPEED},
+        "ascension": {"best_win": 0}, "best_echo": 0, "daily": {}, "nemeses": [], "nemeses_fallen": [], "boss_grudges": {}, "cemetery": [],
+        "perks": {
+            "hp_lvl": 0, "gold_lvl": 0, "discount_lvl": 0, "sesto_senso": False, "scarpisti": False,
+            "dodge_lvl": 0, "acc_lvl": 0, "exp_lvl": 0, "farmacista": False, "altare_benedizione": False,
+            "riciclatore_lvl": 0, "banca_anima_lvl": 0, "artigiano_lvl": 0, "pelle_dura_lvl": 0, "speranza_luce_lvl": 0
+        }
+    }
+
+
 class ProfileManager:
     def __init__(self):
         self.filepath = os.path.join(BASE_DIR, "profile.json")
         self._data = self._load()
 
     def _load(self) -> Dict[str, Any]:
-        default_profile = {
-            "essence": 0, "max_floor": 0, "won_normal": False,
-            "unlocked_ids":[], "class_xp": {}, "class_lvl": {},
-            "stats": {"total_deaths": 0, "total_gold": 0, "total_bosses": 0}, "completed_feats":[],
-            "story": {"flags": {}, "counters": {}, "seen_events": {}},
-            "codex": {"enemies": {}, "letters": [], "relics": [], "reactions": [], "runes": [], "runewords": [], "spells": []},
-            "settings": {"text_speed": DEFAULT_TEXT_SPEED},
-            "ascension": {"best_win": 0}, "best_echo": 0, "daily": {}, "nemeses": [], "nemeses_fallen": [], "boss_grudges": {}, "cemetery": [],
-            "perks": {
-                "hp_lvl": 0, "gold_lvl": 0, "discount_lvl": 0, "sesto_senso": False, "scarpisti": False,
-                "dodge_lvl": 0, "acc_lvl": 0, "exp_lvl": 0, "farmacista": False, "altare_benedizione": False,
-                "riciclatore_lvl": 0, "banca_anima_lvl": 0, "artigiano_lvl": 0, "pelle_dura_lvl": 0, "speranza_luce_lvl": 0
-            }
-        }
+        default = default_profile()
         if not os.path.exists(self.filepath):
-            self._write(default_profile)
-            return default_profile
+            self._write(default)
+            return default
         try:
             with open(self.filepath, 'r', encoding='utf-8') as f: loaded = json.load(f)
             if not isinstance(loaded, dict): raise ValueError("il profilo non è un oggetto JSON")
@@ -48,11 +53,11 @@ class ProfileManager:
             backup = self.filepath + ".corrotto"
             os.replace(self.filepath, backup)
             print(f"{Colors.RED}ATTENZIONE:{Colors.RESET} profile.json illeggibile ({e}). Copia salvata in '{os.path.basename(backup)}', si riparte da un profilo nuovo.")
-            self._write(default_profile)
-            return default_profile
+            self._write(default)
+            return default
         # Un profilo di una versione precedente riceve le voci nuove; uno già aggiornato non viene riscritto
         migrated = False
-        for key, val in default_profile.items():
+        for key, val in default.items():
             if key not in loaded: loaded[key] = val; migrated = True
             elif isinstance(val, dict):
                 for sub_k, sub_v in val.items():

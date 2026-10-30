@@ -113,9 +113,21 @@ class EarnTest(Sandbox):
         self.assertEqual(p.talents, ["cuore_saldo"])
 
     def test_the_choice_comes_at_the_end_of_the_room_before_the_points(self):
-        import roguelike
-        with open(roguelike.__file__, encoding="utf-8") as f: src = f.read()
-        self.assertLess(src.index("talents.choose(player)"), src.index("and not player.points_offered: attributes.spend_points(player)"))
+        """In una discesa vera, giocata dal bot del simulatore: ogni volta che si spendono i punti, i talenti guadagnati
+        sono già stati scelti."""
+        import os, sys
+        sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "tools"))
+        import bilanciamento
+        real_choose, real_spend, seen = talents.choose, attributes.spend_points, []
+        def choose(player):
+            seen.append(("talento", player.level)); return real_choose(player)
+        def spend(player):
+            seen.append(("punti", player.level, player.pending_talents)); return real_spend(player)
+        with mock.patch.object(talents, "choose", side_effect=choose), mock.patch.object(attributes, "spend_points", side_effect=spend):
+            bilanciamento.play("1", 100003, bilanciamento.profile("completo"))
+        self.assertIn("talento", [e[0] for e in seen], "la discesa arriva a un talento")
+        for e in seen:
+            if e[0] == "punti": self.assertEqual(e[2], 0, f"punti spesi al livello {e[1]} con un talento ancora da scegliere")
 
 
 class EffectTest(Sandbox):
