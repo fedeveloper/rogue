@@ -7,10 +7,22 @@
             "bonus": {"gold_pct": 5, "escape": 5},
             "bonus_desc": "+5% Probabilità di Fuga e +5% Oro trovato",
             "chapters": [
-                {"title": "Giorno 1: L'Ingresso", "text": "Ho varcato la Soglia. L'aria sa di ferro e polvere. Non c'è ritorno, solo discesa."},
-                {"title": "Giorno 12: I Chiostri", "text": "Le voci dei morti sussurrano tra i marmi. Dicono che il tempo qui è un cerchio che si stringe."},
-                {"title": "Giorno 45: Il Ventre", "text": "Le pareti battono come un cuore. Il Labirinto è vivo, e io sono solo un parassita."},
-                {"title": "Giorno 75: La Porta Finale", "text": "Vedo lo specchio. Il Dio Antico non mi odia. Mi compatisce."}
+                {
+                    "title": "Giorno 1: L'Ingresso",
+                    "text": "Ho varcato la Soglia. L'aria sa di ferro e polvere. Non c'è ritorno, solo discesa."
+                },
+                {
+                    "title": "Giorno 12: I Chiostri",
+                    "text": "Le voci dei morti sussurrano tra i marmi. Dicono che il tempo qui è un cerchio che si stringe."
+                },
+                {
+                    "title": "Giorno 45: Il Ventre",
+                    "text": "Le pareti battono come un cuore. Il Labirinto è vivo, e io sono solo un parassita."
+                },
+                {
+                    "title": "Giorno 75: La Porta Finale",
+                    "text": "Vedo lo specchio. Il Dio Antico non mi odia. Mi compatisce."
+                }
             ]
         },
         "bestiario": {
@@ -20,9 +32,18 @@
             "bonus": {"boss_dmg_pct": 10},
             "bonus_desc": "+10% Danni inflitti contro i Boss",
             "chapters": [
-                {"title": "I Goblin", "text": "Non sono creature della terra, ma gli avari di Aethelgard che hanno perso la loro forma umana."},
-                {"title": "Il Drago di Zaffiro", "text": "Un'entità di pura memoria liquida. Colpirlo è come cercare di ferire l'oceano."},
-                {"title": "L'Angelo Caduto", "text": "Un tempo era la voce degli Architetti. Ora è solo un urlo di perfezione infranta."}
+                {
+                    "title": "I Goblin",
+                    "text": "Non sono creature della terra, ma gli avari di Aethelgard che hanno perso la loro forma umana."
+                },
+                {
+                    "title": "Il Drago di Zaffiro",
+                    "text": "Un'entità di pura memoria liquida. Colpirlo è come cercare di ferire l'oceano."
+                },
+                {
+                    "title": "L'Angelo Caduto",
+                    "text": "Un tempo era la voce degli Architetti. Ora è solo un urlo di perfezione infranta."
+                }
             ]
         },
         "cronache_ere": {
@@ -32,21 +53,25 @@
             "bonus": {"def": 5},
             "bonus_desc": "+5 Difesa fissa globale",
             "chapters": [
-                {"title": "L'Era della Luce Calma", "text": "Mille anni di pace in cui gli elementi danzavano in armonia."},
-                {"title": "La Grande Discordia", "text": "L'ambizione di Re Galdor ha lacerato il velo. Il Caos è entrato dalla ferita."},
-                {"title": "Il Futuro", "text": "Il Labirinto è il guscio di un mondo che aspetta di nascere o di essere perdonato."}
+                {
+                    "title": "L'Era della Luce Calma",
+                    "text": "Mille anni di pace in cui gli elementi danzavano in armonia."
+                },
+                {
+                    "title": "La Grande Discordia",
+                    "text": "L'ambizione di Re Galdor ha lacerato il velo. Il Caos è entrato dalla ferita."
+                },
+                {
+                    "title": "Il Futuro",
+                    "text": "Il Labirinto è il guscio di un mondo che aspetta di nascere o di essere perdonato."
+                }
             ]
         },
         "grimorio_valerius": {
             "title": "Il Grimorio di Valerius",
             "unlock_condition": "Scopri 10 incantesimi",
-            "unlock": {
-                "type": "spells_seen",
-                "value": 10
-            },
-            "bonus": {
-                "ether_max": 2
-            },
+            "unlock": {"type": "spells_seen", "value": 10},
+            "bonus": {"ether_max": 2},
             "bonus_desc": "+2 Etere massimo",
             "chapters": [
                 {
@@ -66,14 +91,8 @@
         "cronache_ascesa": {
             "title": "Le Cronache dell'Ascesa",
             "unlock_condition": "Vinci al grado 5 di Ascensione",
-            "unlock": {
-                "type": "ascension",
-                "value": 5
-            },
-            "bonus": {
-                "boss_dmg_pct": 5,
-                "gold_pct": 5
-            },
+            "unlock": {"type": "ascension", "value": 5},
+            "bonus": {"boss_dmg_pct": 5, "gold_pct": 5},
             "bonus_desc": "+5% Danni contro i Boss e +5% Oro trovato",
             "chapters": [
                 {
@@ -93,14 +112,8 @@
         "canto_eco": {
             "title": "Il Canto delle Eco",
             "unlock_condition": "Raggiungi l'Eco II della Modalità Infinita",
-            "unlock": {
-                "type": "best_echo",
-                "value": 2
-            },
-            "bonus": {
-                "def": 3,
-                "escape": 5
-            },
+            "unlock": {"type": "best_echo", "value": 2},
+            "bonus": {"def": 3, "escape": 5},
             "bonus_desc": "+3 Difesa fissa globale e +5% Probabilità di Fuga",
             "chapters": [
                 {

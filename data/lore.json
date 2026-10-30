@@ -1,5 +1,5 @@
 {
-    "combat":[
+    "combat": [
         "Le pareti trasudano un calore innaturale. Senti il crepitio di un fuoco che non ha legna da ardere, ma si nutre dell'aria stessa. Qualcosa si muove nella cenere.",
         "Il pavimento è coperto da una brina azzurrina che non si scioglie. Ogni tuo respiro diventa una nuvola di cristalli di ghiaccio. Nell'oscurità, occhi vitrei ti osservano.",
         "L'odore di ozono è pungente. Scariche elettriche percorrono le catene che pendono dal soffitto. Non sei solo in questa tempesta silenziosa.",
@@ -17,7 +17,7 @@
         "Ragnatele spesse come funi pendono dal soffitto. Qualcosa si agita in mezzo alla seta appiccicosa.",
         "Un odore nauseabondo di decomposizione e zolfo ti colpisce. È il dominio di creature che disprezzano la luce."
     ],
-    "boss":[
+    "boss": [
         "Le porte di ossidiana si chiudono con un rombo che scuote le tue fondamenta. Sei al cospetto di una memoria che si rifiuta di morire.",
         "L'aria si fa densa come melassa. Una figura antica, avvolta nei resti di un'autorità dimenticata, si erge dal suo trono di polvere.",
         "Un silenzio assoluto scende sull'arena. Qui, dove gli elementi si scontrano nel Caos, la tua fine è stata scritta eoni fa.",
@@ -32,7 +32,7 @@
         "Corde di energia legano l'essere mostruoso al centro della stanza, ma al tuo arrivo, i legami si spezzano uno ad uno.",
         "Sali su una piattaforma circondata da un abisso nero. Non è una battaglia, è un'esecuzione. Devi solo decidere di chi."
     ],
-    "vendor":[
+    "vendor": [
         "Un uomo senza volto siede tra pile di manufatti impossibili. 'L'oro è solo polvere che brilla,' sussurra, 'ma l'Essenza... l'Essenza è tutto ciò che rimane'.",
         "L'emporio profuma di incenso e spezie di terre che non esistono più. Il mercante sorride, ma i suoi occhi riflettono la fine del mondo.",
         "Tra scatoloni di ciarpame e artefatti inestimabili, una figura incappucciata lucida una moneta d'oro con ossessiva lentezza.",
@@ -46,7 +46,7 @@
         "In un angolo sicuro, un nano mercante affila coltelli senza sosta. 'Comprali ora o sarai tu a farti tagliare dopo.'",
         "L'esattore delle ombre sorride sotto un cappello logoro. 'Ho proprio l'elisir che ti salverà la vita. Per ora.'"
     ],
-    "treasure":[
+    "treasure": [
         "Un piedistallo d'oro zecchino sorregge un oggetto che sembra vibrare di una luce propria. Le pareti sono coperte di iscrizioni che lodano l'avidità come virtù suprema.",
         "Tra le rovine di un antico altare, giace un forziere avvolto in catene di ferro freddo. Non c'è polvere su di esso, come se il tempo avesse paura di toccarlo.",
         "Un raggio di luce astrale attraversa il soffitto crollato, illuminando una reliquia dimenticata. Qui il silenzio è così profondo da sembrare solido.",
@@ -61,7 +61,7 @@
         "Tra scudi spezzati e corazze arrugginite, l'unico bagliore proviene da un baule perfettamente lucido.",
         "Un piccolo forziere in legno di mogano emana un'aura calmante. I veri tesori non sono sempre i più sfarzosi."
     ],
-    "trap":[
+    "trap": [
         "La perfezione geometrica di questa stanza è sospetta. Le ombre sulle pareti sembrano muoversi indipendentemente dalla luce. Un passo falso, e la realtà si chiuderà su di te.",
         "Senti il ticchettio di un meccanismo antico, un cuore d'orologio che batte per la tua fine. L'aria è satura di vapori paralizzanti.",
         "Il pavimento vibra leggermente, come se la stanza stessa stesse trattenendo il respiro in attesa del tuo prossimo movimento.",
@@ -76,7 +76,7 @@
         "Un click meccanico fa raggelare il tuo sangue. Gas accecante invade rapidamente l'ambiente.",
         "Sensori magici scrutano l'area. Attraversare questa sala richiede riflessi sovrumani e molta fortuna."
     ],
-    "campfire":[
+    "campfire": [
         "Il fuoco qui emana un profumo di pini di Aethelgard, un odore che pensavi di aver dimenticato. Per un istante, il Labirinto sembra solo un brutto sogno.",
         "Le braci scoppiettano parlando una lingua antica. Ti siedi e senti la stanchezza delle tue vite precedenti scivolare via dalle tue ossa.",
         "Questo luogo è protetto da un sigillo di Luce che il Caos non può infrangere. Riposa, avventuriero, poiché la discesa sarà ancora lunga.",
@@ -91,7 +91,7 @@
         "Le fiamme bluastre di questo fuoco non bruciano la carne, ma scaldano l'anima e purificano la mente.",
         "Riposando qui, la tua mente si schiarisce e le strategie per le battaglie future diventano evidenti. La speranza si riaccende."
     ],
-    "letters":[
+    "letters": [
         "Non fidarti della Luce. Qui non illumina, ti segna per i predatori.",
         "Ho visto mio padre al Piano 3. Mi ha sorriso, ma i suoi denti erano d'oro e non aveva occhi. Non fermarti.",
         "L'oro pesa più del ferro. Buttalo via se vuoi correre più veloce delle ombre.",
@@ -128,7 +128,7 @@
         "Ho smesso di contare le mie morti. Il Labirinto no: tiene un cimitero intero solo per me.",
         "A chi verrà dopo di me, cioè a me: questa volta, quando sarai davanti al Dio, chiedigli chi ha scritto queste lettere."
     ],
-    "mystery":[
+    "mystery": [
         "Un velo di nebbia cangiante avvolge ogni cosa. I colori sembrano mutare a ogni tuo battito di ciglia, e sussurri senza voce echeggiano tra le pareti invisibili.",
         "L'aria è elettrica e carica di una magia instabile. Qui la realtà sembra sottile come pergamena, pronta a strapparsi per rivelare ciò che si cela oltre.",
         "Entri in un ambiente dove il tempo sembra scorrere a ritroso. Gocce d'acqua risalgono verso il soffitto e le ombre puntano verso fonti di luce inesistenti.",

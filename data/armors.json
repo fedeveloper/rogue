@@ -1,5 +1,5 @@
 {
-    "armors":[
+    "armors": [
         {"name": "Tunica del Viaggiatore", "base_def": 1},
         {"name": "Corazza di Cuoio", "base_def": 2},
         {"name": "Cotta di Maglia", "base_def": 4},
@@ -7,19 +7,113 @@
         {"name": "Armatura Pesante Nanesca", "base_def": 8},
         {"name": "Armatura in Mithril", "base_def": 10},
         {"name": "Corazza di Scaglie di Drago", "base_def": 14},
-        
-        {"name": "Mantello Riflettente", "base_def": 9, "unlock_id": "mantello_riflettente", "unlock_cost": 300, "desc": "Leggera ma resistente: difesa vicina a quella del Mithril.", "flavor": "Composto da specchi che riflettono la luce di un sole che non esiste più."},
-        {"name": "Egida del Titano", "base_def": 20, "unlock_id": "egida_titano", "unlock_cost": 600, "desc": "Un muro impenetrabile.", "flavor": "Scolpita dal petto di un colosso di Terra caduto durante la Prima Era."},
-		{"name": "Veste Eterea", "base_def": 0, "dodge_bonus": 20, "unlock_id": "veste_eterea", "unlock_cost": 0, "desc": "Difesa zero, ma +20% Schivata finché la indossi.", "flavor": "Tessuta con i fili della memoria di chi ha dimenticato il proprio nome."},
-        {"name": "Vesti di Brace", "base_def": 5, "element": "Fuoco", "desc": "Sempre di elemento Fuoco.", "flavor": "Tessute nella Forgia con fili che non smettono mai di ardere."},
-        {"name": "Cappa delle Maree", "base_def": 5, "element": "Acqua", "desc": "Sempre di elemento Acqua.", "flavor": "Gocciola anche nella sala più asciutta del Labirinto."},
-        {"name": "Usbergo di Basalto", "base_def": 9, "element": "Terra", "dodge_bonus": -5, "desc": "Sempre di elemento Terra. Pesante: -5% Schivata finché la indossi.", "flavor": "Ricavato da una colonna delle Miniere che reggeva un soffitto ormai crollato."},
-        {"name": "Giaco del Vento", "base_def": 3, "element": "Vento", "dodge_bonus": 8, "desc": "Sempre di elemento Vento. Leggero: +8% Schivata finché lo indossi.", "flavor": "Le Sentinelle di Nube lo cucivano per chi doveva attraversare i ponti delle Guglie."},
-        {"name": "Manto dell'Alba", "base_def": 7, "element": "Luce", "unlock_id": "manto_alba", "unlock_cost": 350, "desc": "Sempre di elemento Luce.", "flavor": "La Badessa lo indossava prima del Voto. Profuma ancora di incenso."},
-        {"name": "Sudario d'Ombra", "base_def": 6, "element": "Tenebra", "dodge_bonus": 5, "unlock_id": "sudario_ombra", "unlock_cost": 350, "desc": "Sempre di elemento Tenebra. +5% Schivata finché lo indossi.", "flavor": "Avvolgeva qualcuno che il Labirinto non ha voluto restituire."},
-        {"name": "Brigantina del Contrabbandiere", "base_def": 3, "dodge_bonus": 10, "desc": "Tasche ovunque e niente piastre: +10% Schivata finché la indossi.", "flavor": "Chi la portava conosceva ogni cunicolo dei Goblin. Non abbastanza, evidentemente."},
-        {"name": "Corazza del Penitente", "base_def": 16, "dodge_bonus": -10, "unlock_id": "corazza_penitente", "unlock_cost": 450, "desc": "Una delle difese più alte, ma -10% Schivata finché la indossi.", "flavor": "Ogni piastra è incisa con una colpa. Ne mancano ancora molte."},
-        {"name": "Corazza Runica", "base_def": 6, "sockets": 2, "unlock_id": "corazza_runica", "unlock_cost": 400, "desc": "Ha sempre almeno 2 incastoni per le rune.", "flavor": "Le scanalature sul petto sono state scavate prima che qualcuno sapesse cosa metterci."},
-        {"name": "Armatura del Custode", "base_def": 11, "sockets": 3, "unlock_id": "armatura_custode", "unlock_cost": 800, "desc": "Ha sempre 3 incastoni per le rune.", "flavor": "I Custodi di Aethelgard la passavano di padre in figlio, rune comprese. Le rune non sono arrivate fin qui."}
+        {
+            "name": "Mantello Riflettente",
+            "base_def": 9,
+            "unlock_id": "mantello_riflettente",
+            "unlock_cost": 300,
+            "desc": "Leggera ma resistente: difesa vicina a quella del Mithril.",
+            "flavor": "Composto da specchi che riflettono la luce di un sole che non esiste più."
+        },
+        {
+            "name": "Egida del Titano",
+            "base_def": 20,
+            "unlock_id": "egida_titano",
+            "unlock_cost": 600,
+            "desc": "Un muro impenetrabile.",
+            "flavor": "Scolpita dal petto di un colosso di Terra caduto durante la Prima Era."
+        },
+        {
+            "name": "Veste Eterea",
+            "base_def": 0,
+            "dodge_bonus": 20,
+            "unlock_id": "veste_eterea",
+            "unlock_cost": 0,
+            "desc": "Difesa zero, ma +20% Schivata finché la indossi.",
+            "flavor": "Tessuta con i fili della memoria di chi ha dimenticato il proprio nome."
+        },
+        {
+            "name": "Vesti di Brace",
+            "base_def": 5,
+            "element": "Fuoco",
+            "desc": "Sempre di elemento Fuoco.",
+            "flavor": "Tessute nella Forgia con fili che non smettono mai di ardere."
+        },
+        {
+            "name": "Cappa delle Maree",
+            "base_def": 5,
+            "element": "Acqua",
+            "desc": "Sempre di elemento Acqua.",
+            "flavor": "Gocciola anche nella sala più asciutta del Labirinto."
+        },
+        {
+            "name": "Usbergo di Basalto",
+            "base_def": 9,
+            "element": "Terra",
+            "dodge_bonus": -5,
+            "desc": "Sempre di elemento Terra. Pesante: -5% Schivata finché la indossi.",
+            "flavor": "Ricavato da una colonna delle Miniere che reggeva un soffitto ormai crollato."
+        },
+        {
+            "name": "Giaco del Vento",
+            "base_def": 3,
+            "element": "Vento",
+            "dodge_bonus": 8,
+            "desc": "Sempre di elemento Vento. Leggero: +8% Schivata finché lo indossi.",
+            "flavor": "Le Sentinelle di Nube lo cucivano per chi doveva attraversare i ponti delle Guglie."
+        },
+        {
+            "name": "Manto dell'Alba",
+            "base_def": 7,
+            "element": "Luce",
+            "unlock_id": "manto_alba",
+            "unlock_cost": 350,
+            "desc": "Sempre di elemento Luce.",
+            "flavor": "La Badessa lo indossava prima del Voto. Profuma ancora di incenso."
+        },
+        {
+            "name": "Sudario d'Ombra",
+            "base_def": 6,
+            "element": "Tenebra",
+            "dodge_bonus": 5,
+            "unlock_id": "sudario_ombra",
+            "unlock_cost": 350,
+            "desc": "Sempre di elemento Tenebra. +5% Schivata finché lo indossi.",
+            "flavor": "Avvolgeva qualcuno che il Labirinto non ha voluto restituire."
+        },
+        {
+            "name": "Brigantina del Contrabbandiere",
+            "base_def": 3,
+            "dodge_bonus": 10,
+            "desc": "Tasche ovunque e niente piastre: +10% Schivata finché la indossi.",
+            "flavor": "Chi la portava conosceva ogni cunicolo dei Goblin. Non abbastanza, evidentemente."
+        },
+        {
+            "name": "Corazza del Penitente",
+            "base_def": 16,
+            "dodge_bonus": -10,
+            "unlock_id": "corazza_penitente",
+            "unlock_cost": 450,
+            "desc": "Una delle difese più alte, ma -10% Schivata finché la indossi.",
+            "flavor": "Ogni piastra è incisa con una colpa. Ne mancano ancora molte."
+        },
+        {
+            "name": "Corazza Runica",
+            "base_def": 6,
+            "sockets": 2,
+            "unlock_id": "corazza_runica",
+            "unlock_cost": 400,
+            "desc": "Ha sempre almeno 2 incastoni per le rune.",
+            "flavor": "Le scanalature sul petto sono state scavate prima che qualcuno sapesse cosa metterci."
+        },
+        {
+            "name": "Armatura del Custode",
+            "base_def": 11,
+            "sockets": 3,
+            "unlock_id": "armatura_custode",
+            "unlock_cost": 800,
+            "desc": "Ha sempre 3 incastoni per le rune.",
+            "flavor": "I Custodi di Aethelgard la passavano di padre in figlio, rune comprese. Le rune non sono arrivate fin qui."
+        }
     ]
 }

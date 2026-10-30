@@ -1,135 +1,112 @@
 {
-  "biomes": [
-    {
-      "id": "chiostri",
-      "name": "I Chiostri del Rimpianto",
-      "icon": "📿",
-      "floors": [1, 5],
-      "intro": [
-        "Marmo bianco, venato di un viola che non dovrebbe esserci. L'aria sa di libri antichi e di polvere di stelle.",
-        "Le arcate di un'accademia della Luce Calma si piegano su corridoi vuoti. Da qualche parte, qualcuno pronuncia il tuo nome.",
-        "Nei chiostri il silenzio non è mai completo: c'è sempre una voce cara, appena dietro l'angolo."
-      ],
-      "hazard": {
-        "name": "Nostalgia Letale",
-        "desc": "In ogni piano una stanza ospita un'eco del passato, segnata con 📿 sulla mappa. Fermarsi ad ascoltare può guarire... o trasformarti in sale."
-      },
-      "room_weights": {"event": 1.5, "trap": 0.5},
-      "enemy_elements": {
-        "Luce": 2,
-        "Tenebra": 2
-      },
-      "signature_events": ["voce_cara", "statua_sale", "biblioteca_cenere", "coro_spento", "lavabo_ricordi"]
-    },
-    {
-      "id": "miniere",
-      "name": "Le Miniere della Testardaggine",
-      "icon": "🦇",
-      "floors": [6, 10],
-      "intro": [
-        "Corridoi stretti scavati nel basalto vivo. Le pareti trasudano un olio nero che sussurra nomi dimenticati, e ingranaggi di ferro girano a vuoto.",
-        "Il basalto suda un olio nero. Più avanti, un vapore verdastro si deposita negli angoli come acqua stagnante.",
-        "Ingranaggi grandi come case girano a vuoto, e ogni tanto una parete intera si sposta di un passo."
-      ],
-      "hazard": {
-        "name": "Gas del Silenzio",
-        "desc": "In ogni scontro c'è il 35% di probabilità che il gas riempia la stanza: la tua Difesa dimezza ancora i danni, ma perde la tecnica della tua classe, e non riesci a lanciare incantesimi."
-      },
-      "rules": {
-        "silence": {"chance": 35}
-      },
-      "room_weights": {"treasure": 1.5, "campfire": 0.5},
-      "enemy_elements": {
-        "Terra": 2
-      },
-      "signature_events": ["galleria_gas", "ingranaggio_fermo", "carrello_abbandonato", "minatore_cieco"]
-    },
-    {
-      "id": "guglie",
-      "name": "Le Guglie del Vento Urlante",
-      "icon": "🌀",
-      "floors": [11, 15],
-      "intro": [
-        "Non ci sono più corridoi: solo ponti sospesi su abissi di nubi elettriche, e un vento che vorrebbe strapparti l'Essenza dal corpo.",
-        "Un ponte di corda oscilla sopra un mare di nubi. Ogni lampo rivela, per un istante, quanto è lontano il fondo."
-      ],
-      "hazard": {
-        "name": "Caduta Astrale",
-        "desc": "Sui ponti sospesi, segnati con 🌀 sulla mappa, puoi perdere l'equilibrio: precipiti al piano successivo, senza riposo e senza il boss, e perdi il 40% dell'Oro."
-      },
-      "room_weights": {"trap": 1.5, "vendor": 0.5},
-      "enemy_elements": {
-        "Vento": 2
-      },
-      "signature_events": ["ponte_sospeso", "nido_tempesta", "osservatorio_vento", "fabbro_cielo"]
-    },
-    {
-      "id": "ventre",
-      "name": "Il Ventre della Memoria",
-      "icon": "🌊",
-      "floors": [16, 20],
-      "intro": [
-        "Le pareti sono membrane traslucide. Dentro, oggetti e volti di persone morte da secoli. L'aria sa di salmastro e di fiori appassiti.",
-        "Il pavimento è caldo e pulsa piano. Ti accorgi di non ricordare più il colore degli occhi di tua madre."
-      ],
-      "hazard": {
-        "name": "Dissoluzione dell'Io",
-        "desc": "A ogni piano del Ventre perdi il 4% degli HP massimi, finché resti qui: li ritrovi tutti quando ne esci."
-      },
-      "rules": {
-        "dissolve": {"max_hp_pct": 4}
-      },
-      "room_weights": {"event": 1.5, "mystery": 1.5},
-      "enemy_elements": {
-        "Acqua": 2,
-        "Tenebra": 1.5
-      },
-      "signature_events": ["volto_membrana", "giardino_appassito", "nido_sanguisughe", "eco_madre"]
-    },
-    {
-      "id": "forgia",
-      "name": "La Forgia del Caos",
-      "icon": "🌋",
-      "floors": [21, 25],
-      "intro": [
-        "Lava bianca e fumi neri. Martelli ciclopici battono su incudini invisibili, senza sosta, da quando gli Architetti tentarono di riforgiare gli elementi.",
-        "L'aria brucia la gola. Nelle crepe del pavimento scorre oro fuso, e nessuno lo raccoglie."
-      ],
-      "hazard": {
-        "name": "Ebollizione Astrale",
-        "desc": "Ogni colpo che subisci ha il 25% di probabilità di far bollire il 5% del tuo Oro."
-      },
-      "rules": {
-        "boil": {"chance": 25, "gold_pct": 5}
-      },
-      "room_weights": {"vendor": 1.5, "campfire": 0.5},
-      "enemy_elements": {
-        "Fuoco": 2
-      },
-      "signature_events": ["incudine_cosmica", "colata_oro", "crogiolo_rune", "forgiatore_incatenato"]
-    },
-    {
-      "id": "soglia",
-      "name": "La Soglia del Dio Antico",
-      "icon": "🌌",
-      "floors": [26, 30],
-      "intro": [
-        "Non ci sono più pareti, solo piattaforme di pura volontà sospese nel vuoto. La Luce brucia la Tenebra, che a sua volta divora il Fuoco.",
-        "Al centro del vuoto, lontanissimo, c'è un occhio chiuso fatto di galassie e polvere d'ossa. Ti sembra che stia per aprirsi."
-      ],
-      "hazard": {
-        "name": "Paradosso Temporale",
-        "desc": "Il tempo è lacerato: dopo ogni tuo turno c'è il 10% di probabilità che tu agisca di nuovo, e dopo ogni turno nemico il 15% che il nemico agisca due volte."
-      },
-      "rules": {
-        "paradox": {"player_repeat": 10, "enemy_double": 15}
-      },
-      "room_weights": {"mystery": 2, "treasure": 1.5},
-      "enemy_elements": {
-        "Luce": 1.5,
-        "Tenebra": 1.5
-      },
-      "signature_events": ["occhio_chiuso", "eco_del_tempo", "biblioteca_vuoto", "porta_ritorno"]
-    }
-  ]
+    "biomes": [
+        {
+            "id": "chiostri",
+            "name": "I Chiostri del Rimpianto",
+            "icon": "📿",
+            "floors": [1, 5],
+            "intro": [
+                "Marmo bianco, venato di un viola che non dovrebbe esserci. L'aria sa di libri antichi e di polvere di stelle.",
+                "Le arcate di un'accademia della Luce Calma si piegano su corridoi vuoti. Da qualche parte, qualcuno pronuncia il tuo nome.",
+                "Nei chiostri il silenzio non è mai completo: c'è sempre una voce cara, appena dietro l'angolo."
+            ],
+            "hazard": {
+                "name": "Nostalgia Letale",
+                "desc": "In ogni piano una stanza ospita un'eco del passato, segnata con 📿 sulla mappa. Fermarsi ad ascoltare può guarire... o trasformarti in sale."
+            },
+            "room_weights": {"event": 1.5, "trap": 0.5},
+            "enemy_elements": {"Luce": 2, "Tenebra": 2},
+            "signature_events": ["voce_cara", "statua_sale", "biblioteca_cenere", "coro_spento", "lavabo_ricordi"]
+        },
+        {
+            "id": "miniere",
+            "name": "Le Miniere della Testardaggine",
+            "icon": "🦇",
+            "floors": [6, 10],
+            "intro": [
+                "Corridoi stretti scavati nel basalto vivo. Le pareti trasudano un olio nero che sussurra nomi dimenticati, e ingranaggi di ferro girano a vuoto.",
+                "Il basalto suda un olio nero. Più avanti, un vapore verdastro si deposita negli angoli come acqua stagnante.",
+                "Ingranaggi grandi come case girano a vuoto, e ogni tanto una parete intera si sposta di un passo."
+            ],
+            "hazard": {
+                "name": "Gas del Silenzio",
+                "desc": "In ogni scontro c'è il 35% di probabilità che il gas riempia la stanza: la tua Difesa dimezza ancora i danni, ma perde la tecnica della tua classe, e non riesci a lanciare incantesimi."
+            },
+            "rules": {"silence": {"chance": 35}},
+            "room_weights": {"treasure": 1.5, "campfire": 0.5},
+            "enemy_elements": {"Terra": 2},
+            "signature_events": ["galleria_gas", "ingranaggio_fermo", "carrello_abbandonato", "minatore_cieco"]
+        },
+        {
+            "id": "guglie",
+            "name": "Le Guglie del Vento Urlante",
+            "icon": "🌀",
+            "floors": [11, 15],
+            "intro": [
+                "Non ci sono più corridoi: solo ponti sospesi su abissi di nubi elettriche, e un vento che vorrebbe strapparti l'Essenza dal corpo.",
+                "Un ponte di corda oscilla sopra un mare di nubi. Ogni lampo rivela, per un istante, quanto è lontano il fondo."
+            ],
+            "hazard": {
+                "name": "Caduta Astrale",
+                "desc": "Sui ponti sospesi, segnati con 🌀 sulla mappa, puoi perdere l'equilibrio: precipiti al piano successivo, senza riposo e senza il boss, e perdi il 40% dell'Oro."
+            },
+            "room_weights": {"trap": 1.5, "vendor": 0.5},
+            "enemy_elements": {"Vento": 2},
+            "signature_events": ["ponte_sospeso", "nido_tempesta", "osservatorio_vento", "fabbro_cielo"]
+        },
+        {
+            "id": "ventre",
+            "name": "Il Ventre della Memoria",
+            "icon": "🌊",
+            "floors": [16, 20],
+            "intro": [
+                "Le pareti sono membrane traslucide. Dentro, oggetti e volti di persone morte da secoli. L'aria sa di salmastro e di fiori appassiti.",
+                "Il pavimento è caldo e pulsa piano. Ti accorgi di non ricordare più il colore degli occhi di tua madre."
+            ],
+            "hazard": {
+                "name": "Dissoluzione dell'Io",
+                "desc": "A ogni piano del Ventre perdi il 4% degli HP massimi, finché resti qui: li ritrovi tutti quando ne esci."
+            },
+            "rules": {"dissolve": {"max_hp_pct": 4}},
+            "room_weights": {"event": 1.5, "mystery": 1.5},
+            "enemy_elements": {"Acqua": 2, "Tenebra": 1.5},
+            "signature_events": ["volto_membrana", "giardino_appassito", "nido_sanguisughe", "eco_madre"]
+        },
+        {
+            "id": "forgia",
+            "name": "La Forgia del Caos",
+            "icon": "🌋",
+            "floors": [21, 25],
+            "intro": [
+                "Lava bianca e fumi neri. Martelli ciclopici battono su incudini invisibili, senza sosta, da quando gli Architetti tentarono di riforgiare gli elementi.",
+                "L'aria brucia la gola. Nelle crepe del pavimento scorre oro fuso, e nessuno lo raccoglie."
+            ],
+            "hazard": {
+                "name": "Ebollizione Astrale",
+                "desc": "Ogni colpo che subisci ha il 25% di probabilità di far bollire il 5% del tuo Oro."
+            },
+            "rules": {"boil": {"chance": 25, "gold_pct": 5}},
+            "room_weights": {"vendor": 1.5, "campfire": 0.5},
+            "enemy_elements": {"Fuoco": 2},
+            "signature_events": ["incudine_cosmica", "colata_oro", "crogiolo_rune", "forgiatore_incatenato"]
+        },
+        {
+            "id": "soglia",
+            "name": "La Soglia del Dio Antico",
+            "icon": "🌌",
+            "floors": [26, 30],
+            "intro": [
+                "Non ci sono più pareti, solo piattaforme di pura volontà sospese nel vuoto. La Luce brucia la Tenebra, che a sua volta divora il Fuoco.",
+                "Al centro del vuoto, lontanissimo, c'è un occhio chiuso fatto di galassie e polvere d'ossa. Ti sembra che stia per aprirsi."
+            ],
+            "hazard": {
+                "name": "Paradosso Temporale",
+                "desc": "Il tempo è lacerato: dopo ogni tuo turno c'è il 10% di probabilità che tu agisca di nuovo, e dopo ogni turno nemico il 15% che il nemico agisca due volte."
+            },
+            "rules": {"paradox": {"player_repeat": 10, "enemy_double": 15}},
+            "room_weights": {"mystery": 2, "treasure": 1.5},
+            "enemy_elements": {"Luce": 1.5, "Tenebra": 1.5},
+            "signature_events": ["occhio_chiuso", "eco_del_tempo", "biblioteca_vuoto", "porta_ritorno"]
+        }
+    ]
 }

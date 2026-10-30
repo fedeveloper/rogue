@@ -56,11 +56,7 @@
         {
             "name": "Meteora Chiodata",
             "base_atk": 11,
-            "status_inflict": {
-                "type": "bleed",
-                "chance": 20,
-                "duration": 2
-            },
+            "status_inflict": {"type": "bleed", "chance": 20, "duration": 2},
             "hit_modifier": -5,
             "desc": "Chiodi crudeli: 20% di infliggere Sanguinamento, ma -5% Precisione.",
             "scaling": "forza"
@@ -133,11 +129,7 @@
             "base_atk": 22,
             "unlock_id": "falce_mietitore",
             "unlock_cost": 650,
-            "status_inflict": {
-                "type": "bleed",
-                "chance": 20,
-                "duration": 3
-            },
+            "status_inflict": {"type": "bleed", "chance": 20, "duration": 3},
             "element": "Tenebra",
             "scaling": "arcano"
         },
@@ -171,11 +163,7 @@
             "base_atk": 14,
             "unlock_id": "frusta_spine",
             "unlock_cost": 250,
-            "status_inflict": {
-                "type": "bleed",
-                "chance": 30,
-                "duration": 3
-            },
+            "status_inflict": {"type": "bleed", "chance": 30, "duration": 3},
             "scaling": "destrezza"
         },
         {
@@ -197,11 +185,7 @@
             "base_atk": 12,
             "unlock_id": "pugnali_vento",
             "unlock_cost": 200,
-            "status_inflict": {
-                "type": "bleed",
-                "chance": 25,
-                "duration": 2
-            },
+            "status_inflict": {"type": "bleed", "chance": 25, "duration": 2},
             "element": "Vento",
             "scaling": "destrezza"
         },
@@ -235,11 +219,7 @@
             "base_atk": 19,
             "unlock_id": "balestra_gnomica",
             "unlock_cost": 550,
-            "status_inflict": {
-                "type": "poison",
-                "chance": 30,
-                "duration": 3
-            },
+            "status_inflict": {"type": "poison", "chance": 30, "duration": 3},
             "scaling": "destrezza"
         },
         {
@@ -249,11 +229,7 @@
             "base_atk": 21,
             "unlock_id": "tridente_oceanico",
             "unlock_cost": 600,
-            "status_inflict": {
-                "type": "poison",
-                "chance": 20,
-                "duration": 3
-            },
+            "status_inflict": {"type": "poison", "chance": 20, "duration": 3},
             "element": "Acqua",
             "scaling": "destrezza"
         },

@@ -1,17 +1,7 @@
 {
-    "mastery_xp_requirements": {
-        "2": 100,
-        "3": 250,
-        "4": 500,
-        "5": 1000,
-        "6": 2000
-    },
+    "mastery_xp_requirements": {"2": 100, "3": 250, "4": 500, "5": 1000, "6": 2000},
     "traits": {
-        "base": {
-            "name": "Nessun Tratto",
-            "desc": "Gioca con le regole standard.",
-            "unlock_req": "none"
-        },
+        "base": {"name": "Nessun Tratto", "desc": "Gioca con le regole standard.", "unlock_req": "none"},
         "maledetto": {
             "name": "Patto del Sangue",
             "desc": "+50 ATK, ma HP Massimi dimezzati e le cure hanno effetto ZERO.",
@@ -19,12 +9,12 @@
         },
         "midas": {
             "name": "Tocco di Mida",
-            "desc": "Non ottieni EXP dai mostri, ma l'Oro \u00e8 TRIPLICATO.",
+            "desc": "Non ottieni EXP dai mostri, ma l'Oro è TRIPLICATO.",
             "unlock_req": "gold_5000"
         },
         "aristocratico": {
             "name": "Aristocratico",
-            "desc": "Inizi con 500 Oro, ma i nemici non droppano pi\u00f9 Oro.",
+            "desc": "Inizi con 500 Oro, ma i nemici non droppano più Oro.",
             "unlock_req": "feat_avaro"
         },
         "cacciatore_etereo": {
@@ -65,18 +55,9 @@
         }
     },
     "pacts": {
-        "carestia": {
-            "name": "Carestia",
-            "desc": "Le pozioni curano la met\u00e0"
-        },
-        "inflazione": {
-            "name": "Inflazione",
-            "desc": "I prezzi del Mercante sono Raddoppiati"
-        },
-        "trappole": {
-            "name": "Labirinto Mortale",
-            "desc": "Le Trappole infliggono danni Doppi"
-        }
+        "carestia": {"name": "Carestia", "desc": "Le pozioni curano la metà"},
+        "inflazione": {"name": "Inflazione", "desc": "I prezzi del Mercante sono Raddoppiati"},
+        "trappole": {"name": "Labirinto Mortale", "desc": "Le Trappole infliggono danni Doppi"}
     },
     "feats": {
         "feat_pacifista": {
@@ -123,7 +104,7 @@
         },
         "feat_sopravvissuto": {
             "name": "Il Sopravvissuto",
-            "desc": "Supera il Piano 10 senza MAI usare il riposo al Fal\u00f2.",
+            "desc": "Supera il Piano 10 senza MAI usare il riposo al Falò.",
             "target": 1,
             "reward_type": "unlock",
             "reward_id": "cuore_drago"
@@ -248,20 +229,52 @@
             "vendor": 10,
             "campfire": 10
         },
-        "elite": {"from_floor": 2, "hp_mult": 1.6, "atk_mult": 1.3, "reward_mult": 2, "relic_chance": 20, "loot_floor_bonus": 0, "epic_chance": 15},
+        "elite": {
+            "from_floor": 2,
+            "hp_mult": 1.6,
+            "atk_mult": 1.3,
+            "reward_mult": 2,
+            "relic_chance": 20,
+            "loot_floor_bonus": 0,
+            "epic_chance": 15
+        },
         "trap": {
-            "loot_floor_bonus": 0, "epic_chance": 10, "gear_chance": 70, "salvage_gold": [20, 5],
+            "loot_floor_bonus": 0,
+            "epic_chance": 10,
+            "gear_chance": 70,
+            "salvage_gold": [20, 5],
             "disarm": {"base": 45, "per_point": 1.5},
             "dash": {"base": 40, "per_point": 2},
-            "min_chance": 15, "max_chance": 90
+            "min_chance": 15,
+            "max_chance": 90
         },
         "treasure": {
-            "relic_chance": 6, "loot_floor_bonus": 0,
+            "relic_chance": 6,
+            "loot_floor_bonus": 0,
             "mimic": {"from_floor": 3, "pct_per_floor": 1.5, "max": 30, "tell": 60, "false_tell": 10},
             "locked": {"from_floor": 3, "pct_per_floor": 2, "max": 30, "hp_cost_pct": 8}
         },
-        "mystery": {"hoard_gold_mult": 1.5, "outcomes": {"hoard": 20, "relic": 5, "hard": 25, "easy": 15, "trap": 15, "spring": 6, "scroll": 5, "rune": 4, "empty": 5}, "spring_heal_pct": 25},
-        "audacity": {"points": {"combat": 1, "elite": 2, "nemesis": 2, "trap": 1, "mystery": 1}, "gold_pct_per_point": 15, "item_at": 5, "epic_at": 7}
+        "mystery": {
+            "hoard_gold_mult": 1.5,
+            "outcomes": {
+                "hoard": 20,
+                "relic": 5,
+                "hard": 25,
+                "easy": 15,
+                "trap": 15,
+                "spring": 6,
+                "scroll": 5,
+                "rune": 4,
+                "empty": 5
+            },
+            "spring_heal_pct": 25
+        },
+        "audacity": {
+            "points": {"combat": 1, "elite": 2, "nemesis": 2, "trap": 1, "mystery": 1},
+            "gold_pct_per_point": 15,
+            "item_at": 5,
+            "epic_at": 7
+        }
     },
     "corruption": {
         "max": 100,
@@ -271,7 +284,11 @@
         "desc": "Cresce con le scelte oscure e cala con quelle pure, e vale per la sola discesa. Ogni 10 punti danno +2 ATK. Da 50 il Labirinto ti offusca la vista: il 25% delle volte non vedi gli effetti di una scelta. Da 75 ti nasconde il nemico: il 30% delle volte non vedi la mossa che prepara."
     },
     "cycle": {
-        "hazard_pct_per_cycle": 25, "hazard_max_mult": 2.0, "chance_cap": 90, "essence_pct_per_cycle": 25, "arcane_moves": {"ether_drain": 10, "silence": 5},
+        "hazard_pct_per_cycle": 25,
+        "hazard_max_mult": 2.0,
+        "chance_cap": 90,
+        "essence_pct_per_cycle": 25,
+        "arcane_moves": {"ether_drain": 10, "silence": 5},
         "intro": "Il Paradosso Temporale della Soglia ti rimanda indietro. Il Labirinto ricomincia, ma non è più lo stesso: è la sua {echo}, e ogni pericolo è più duro.",
         "desc": "Oltre il piano 30 i sei biomi tornano, ogni 30 piani, in un ordine nuovo (la Soglia resta l'ultima). Ogni ciclo è un'Eco: i pericoli che hanno una regola numerica crescono del 25% a ciclo, fino al doppio (le probabilità al massimo al 90%); i nativi tornano forti quanto i nemici più profondi; tutti i nemici imparano a combattere la magia, con il Risucchio d'Etere e il Silenzio; al piano 60, 90 e così via ti attende di nuovo il DIO ANTICO. L'Essenza oltre il 30 vale ×1,5, e il 25% in più per ogni Eco oltre la seconda."
     }

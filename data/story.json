@@ -1,449 +1,312 @@
 {
-  "quest_items": {
-    "chiave_arrugginita": {
-      "name": "Chiave Arrugginita",
-      "desc": "Una chiave di ferro mangiata dalla ruggine. Apre qualcosa, da qualche parte."
+    "quest_items": {
+        "chiave_arrugginita": {
+            "name": "Chiave Arrugginita",
+            "desc": "Una chiave di ferro mangiata dalla ruggine. Apre qualcosa, da qualche parte."
+        },
+        "mappa_cartografa": {
+            "name": "Mappa della Cartografa",
+            "desc": "Uno schizzo a carboncino dei piani inferiori, con una croce rossa e la scritta 'qui ti aspetto'."
+        },
+        "lanterna_spenta": {
+            "name": "Lanterna Spenta",
+            "desc": "La lanterna del Viandante Cieco. Pesa più di quanto dovrebbe."
+        },
+        "fiore_lavanda": {
+            "name": "Fiore di Lavanda",
+            "desc": "Un fiore cresciuto dove nessuno l'ha seminato. Una lettera sulle pareti dice a chi portarlo."
+        }
     },
-    "mappa_cartografa": {
-      "name": "Mappa della Cartografa",
-      "desc": "Uno schizzo a carboncino dei piani inferiori, con una croce rossa e la scritta 'qui ti aspetto'."
-    },
-    "lanterna_spenta": {
-      "name": "Lanterna Spenta",
-      "desc": "La lanterna del Viandante Cieco. Pesa più di quanto dovrebbe."
-    },
-    "fiore_lavanda": {
-      "name": "Fiore di Lavanda",
-      "desc": "Un fiore cresciuto dove nessuno l'ha seminato. Una lettera sulle pareti dice a chi portarlo."
-    }
-  },
-  "npcs": {
-    "speziale": "lo Speziale",
-    "borek": "Borek",
-    "elara": "Elara",
-    "valerius": "Valerius"
-  },
-  "characters": {
-    "alaric": {
-      "name": "Sir Alaric",
-      "epithet": "il Primo Paladino",
-      "counter": "alaric",
-      "hint": "Una lettera parla di un cavaliere stanco e di un fiore di lavanda.",
-      "chapters": [
-        {
-          "event": "alaric_porta",
-          "text": "Lo hai incontrato davanti a una porta che non conduce a nulla. La custodisce da secoli, per abitudine più che per odio."
-        },
-        {
-          "event": "alaric_stanco",
-          "text": "Si è tolto l'elmo davanti a te. Sotto l'ossidiana c'è un volto di cenere, e una stanchezza più antica del Labirinto."
-        },
-        {
-          "event": "alaric_sigillo",
-          "text": "Ti ha chiesto di spezzare il giuramento che lo lega alla porta. Qualunque cosa tu abbia scelto, il Labirinto la ricorda."
-        }
-      ],
-      "notes": [
-        {
-          "flag": "alaric_paladino",
-          "text": "Ti ha riconosciuto come un fratello d'ordine."
-        },
-        {
-          "flag": "alaric_lavanda",
-          "text": "Il fiore di lavanda gli ha ricordato sua figlia, a Valeriana."
-        },
-        {
-          "flag": "alaric_tradito",
-          "text": "Lo hai colpito quando era più debole. Non lo ha dimenticato."
-        },
-        {
-          "flag": "alaric_liberato",
-          "text": "Lo hai liberato: il Cavaliere Oscuro non custodisce più nessuna porta, e non lo incontrerai più."
-        },
-        {
-          "flag": "alaric_erede",
-          "text": "Hai preso il suo posto. Un giorno, qualcuno verrà a liberare te."
-        }
-      ]
-    },
-    "silas": {
-      "name": "Silas",
-      "epithet": "il Cercatore",
-      "counter": "silas",
-      "hint": "Qualcuno scrive un diario, sempre un piano più in basso di te.",
-      "chapters": [
-        {
-          "event": "silas_fuoco",
-          "text": "Hai diviso il fuoco con lui. Scrive tutto, ogni giorno, perché ha paura di dimenticare chi era."
-        },
-        {
-          "event": "silas_tracce",
-          "text": "Hai trovato le pagine strappate del suo diario, e una scia d'inchiostro che portava a lui."
-        },
-        {
-          "event": "silas_soglia",
-          "text": "Alla soglia ti ha raccontato cosa c'è oltre l'ultima porta: non un mostro, ma uno specchio."
-        }
-      ],
-      "notes": [
-        {
-          "flag": "silas_letto",
-          "text": "Hai letto il suo diario di nascosto: c'era anche il tuo ritratto."
-        },
-        {
-          "flag": "silas_salvato",
-          "text": "Gli hai salvato la vita."
-        },
-        {
-          "flag": "silas_abbandonato",
-          "text": "Lo hai lasciato solo. È sopravvissuto lo stesso."
-        },
-        {
-          "flag": "silas_verita",
-          "text": "Sai cosa c'è oltre la soglia."
-        },
-        {
-          "flag": "silas_compagno",
-          "text": "Ti ha dato l'ultima pagina del suo diario. La fine, adesso, la scrivi tu."
-        }
-      ]
-    }
-  },
-  "camp": {
-    "characters": [
-      {
-        "id": "silas",
-        "name": "Silas",
-        "requires": {
-          "counter": {
-            "silas": 2
-          }
-        },
-        "lines": [
-          {
-            "requires": {
-              "flag": "silas_compagno"
-            },
-            "text": "Silas rigira fra le dita una matita consumata. 'Ho riletto l'ultima pagina che ti ho dato. È ancora bianca. Bene: vuol dire che non è ancora finita.'"
-          },
-          {
-            "requires": {
-              "flag": "silas_verita"
-            },
-            "text": "Silas fissa le fiamme. 'Lo specchio... ci penso ogni notte. Se lo trovi, non guardarti. Guarda quello che c'è dietro di te.'"
-          },
-          {
-            "requires": {
-              "flag": "silas_abbandonato"
-            },
-            "text": "Silas non alza gli occhi dal diario. 'Non ti devo niente.' Poi spinge la pentola verso di te. 'Ma la zuppa basta per due.'"
-          },
-          {
-            "text": "Silas scrive, come sempre. 'Giorno... non importa. Siediti. Qui il Labirinto non arriva.'"
-          }
-        ],
-        "gift": {
-          "essence": 100,
-          "text": "Silas strappa una pagina del diario e te la porge: è la mappa di un piano che non hai ancora visto. La sua Essenza è ancora calda."
-        }
-      },
-      {
-        "id": "cartografa",
-        "name": "La Cartografa",
-        "requires": {
-          "counter": {
-            "cartografa_aiutata": 1
-          }
-        },
-        "lines": [
-          {
-            "requires": {
-              "flag": "prima_pietra"
-            },
-            "text": "La Cartografa ti mostra un foglio fitto di segni. 'Ho segnato la Prima Pietra al piano 3. Mio nonno non ci credeva. Grazie a te, ora c'è sulla mappa.'"
-          },
-          {
-            "text": "La Cartografa ha steso le sue pergamene sul tavolo del campo. 'Più scendi, più la mappa si riempie. Raccontami cosa hai visto, e lo disegno.'"
-          }
-        ],
-        "gift": {
-          "essence": 80,
-          "text": "'Tieni. Ho venduto una copia della mappa a un mercante senza volto: metà del guadagno è tua.'"
-        }
-      },
-      {
-        "id": "viandante",
-        "name": "Il Viandante Cieco",
-        "requires": {
-          "counter": {
-            "viandante_incontri": 2
-          }
-        },
-        "lines": [
-          {
-            "requires": {
-              "counter": {
-                "viandante_derubato": 1
-              }
-            },
-            "text": "Il Viandante siede lontano dal fuoco, la bisaccia stretta al petto. 'Riconosco i tuoi passi. Sono gli stessi di chi mi ha alleggerito. Me le renderai, un giorno, le mie monete.'"
-          },
-          {
-            "text": "Il Viandante siede al buio, lontano dal fuoco, e conta a bassa voce. 'Non ti preoccupare per me. La luce, ormai, mi fa male.'"
-          }
-        ],
-        "gift": {
-          "essence": 50,
-          "text": "Il Viandante ti porge una moneta d'oro con un occhio inciso sopra. 'Una delle mie. Ne ho ancora una.'"
-        }
-      },
-      {
-        "id": "alaric",
-        "name": "La Luce di Alaric",
-        "requires": {
-          "flag": "alaric_liberato"
-        },
-        "lines": [
-          {
-            "requires": {
-              "flag": "alaric_lavanda"
-            },
-            "text": "Una luce calma, tiepida, resta accanto al fuoco. Non parla. Profuma di lavanda."
-          },
-          {
-            "text": "Una luce calma, tiepida, resta accanto al fuoco. Non parla, ma quando la guardi ti senti al sicuro, come davanti a una porta ben custodita."
-          }
-        ],
-        "gift": {
-          "essence": 150,
-          "text": "La luce si posa per un istante sulla tua spalla. Senti il peso di un'armatura che non porti, e la forza che dava."
-        }
-      },
-      {
-        "id": "erede",
-        "name": "Il posto vuoto",
-        "requires": {
-          "flag": "alaric_erede"
-        },
-        "lines": [
-          {
-            "text": "Accanto al fuoco c'è un'impronta nella cenere, con la forma di un cavaliere inginocchiato. Il sigillo sulla tua schiena prude. La porta ti aspetta."
-          }
-        ]
-      }
-    ],
-    "structures": [
-      {
-        "id": "tavolo_cartografa",
-        "name": "Il Tavolo della Cartografa",
-        "cost": 300,
-        "requires": {
-          "counter": {
-            "cartografa_aiutata": 1
-          }
-        },
-        "locked_hint": "Aiuta la Cartografa nel Labirinto",
-        "desc": "Sulla mappa vedi in anticipo quali storie ti aspettano nelle stanze speciali dei biomi e negli eventi che tornano a cercarti."
-      },
-      {
-        "id": "scrittoio_silas",
-        "name": "Lo Scrittoio di Silas",
-        "cost": 400,
-        "requires": {
-          "any_flags": [
-            "silas_salvato",
-            "silas_compagno"
-          ]
-        },
-        "locked_hint": "Salva Silas nel Labirinto",
-        "desc": "All'inizio di ogni discesa leggi una pagina del suo diario e scegli un dono.",
-        "boons": [
-          {
-            "text": "La pagina della resistenza",
-            "effects": [
-              {
-                "max_hp": 20
-              },
-              {
-                "heal_pct": 100
-              }
+    "npcs": {"speziale": "lo Speziale", "borek": "Borek", "elara": "Elara", "valerius": "Valerius"},
+    "characters": {
+        "alaric": {
+            "name": "Sir Alaric",
+            "epithet": "il Primo Paladino",
+            "counter": "alaric",
+            "hint": "Una lettera parla di un cavaliere stanco e di un fiore di lavanda.",
+            "chapters": [
+                {
+                    "event": "alaric_porta",
+                    "text": "Lo hai incontrato davanti a una porta che non conduce a nulla. La custodisce da secoli, per abitudine più che per odio."
+                },
+                {
+                    "event": "alaric_stanco",
+                    "text": "Si è tolto l'elmo davanti a te. Sotto l'ossidiana c'è un volto di cenere, e una stanchezza più antica del Labirinto."
+                },
+                {
+                    "event": "alaric_sigillo",
+                    "text": "Ti ha chiesto di spezzare il giuramento che lo lega alla porta. Qualunque cosa tu abbia scelto, il Labirinto la ricorda."
+                }
+            ],
+            "notes": [
+                {"flag": "alaric_paladino", "text": "Ti ha riconosciuto come un fratello d'ordine."},
+                {"flag": "alaric_lavanda", "text": "Il fiore di lavanda gli ha ricordato sua figlia, a Valeriana."},
+                {"flag": "alaric_tradito", "text": "Lo hai colpito quando era più debole. Non lo ha dimenticato."},
+                {
+                    "flag": "alaric_liberato",
+                    "text": "Lo hai liberato: il Cavaliere Oscuro non custodisce più nessuna porta, e non lo incontrerai più."
+                },
+                {"flag": "alaric_erede", "text": "Hai preso il suo posto. Un giorno, qualcuno verrà a liberare te."}
             ]
-          },
-          {
-            "text": "La pagina della lama",
-            "effects": [
-              {
-                "atk": 3
-              }
-            ]
-          },
-          {
-            "text": "La pagina del mercante",
-            "effects": [
-              {
-                "gold": 100
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "id": "altare_purificazione",
-        "name": "L'Altare della Purificazione",
-        "cost": 600,
-        "corruption_gain_pct": 75,
-        "desc": "La Corruzione che accumuli nelle discese cresce del 25% in meno."
-      },
-      {
-        "id": "biblioteca_arcano",
-        "name": "La Biblioteca dell'Arcano",
-        "requires": {
-          "npc": "valerius"
         },
-        "locked_hint": "Libera l'Incantatore Valerius nel Labirinto",
-        "levels": [
-          {
-            "cost": 400,
-            "desc": "Ogni eroe ha +2 Etere massimo.",
-            "effects": {
-              "ether_max": 2
+        "silas": {
+            "name": "Silas",
+            "epithet": "il Cercatore",
+            "counter": "silas",
+            "hint": "Qualcuno scrive un diario, sempre un piano più in basso di te.",
+            "chapters": [
+                {
+                    "event": "silas_fuoco",
+                    "text": "Hai diviso il fuoco con lui. Scrive tutto, ogni giorno, perché ha paura di dimenticare chi era."
+                },
+                {
+                    "event": "silas_tracce",
+                    "text": "Hai trovato le pagine strappate del suo diario, e una scia d'inchiostro che portava a lui."
+                },
+                {
+                    "event": "silas_soglia",
+                    "text": "Alla soglia ti ha raccontato cosa c'è oltre l'ultima porta: non un mostro, ma uno specchio."
+                }
+            ],
+            "notes": [
+                {"flag": "silas_letto", "text": "Hai letto il suo diario di nascosto: c'era anche il tuo ritratto."},
+                {"flag": "silas_salvato", "text": "Gli hai salvato la vita."},
+                {"flag": "silas_abbandonato", "text": "Lo hai lasciato solo. È sopravvissuto lo stesso."},
+                {"flag": "silas_verita", "text": "Sai cosa c'è oltre la soglia."},
+                {
+                    "flag": "silas_compagno",
+                    "text": "Ti ha dato l'ultima pagina del suo diario. La fine, adesso, la scrivi tu."
+                }
+            ]
+        }
+    },
+    "camp": {
+        "characters": [
+            {
+                "id": "silas",
+                "name": "Silas",
+                "requires": {"counter": {"silas": 2}},
+                "lines": [
+                    {
+                        "requires": {"flag": "silas_compagno"},
+                        "text": "Silas rigira fra le dita una matita consumata. 'Ho riletto l'ultima pagina che ti ho dato. È ancora bianca. Bene: vuol dire che non è ancora finita.'"
+                    },
+                    {
+                        "requires": {"flag": "silas_verita"},
+                        "text": "Silas fissa le fiamme. 'Lo specchio... ci penso ogni notte. Se lo trovi, non guardarti. Guarda quello che c'è dietro di te.'"
+                    },
+                    {
+                        "requires": {"flag": "silas_abbandonato"},
+                        "text": "Silas non alza gli occhi dal diario. 'Non ti devo niente.' Poi spinge la pentola verso di te. 'Ma la zuppa basta per due.'"
+                    },
+                    {
+                        "text": "Silas scrive, come sempre. 'Giorno... non importa. Siediti. Qui il Labirinto non arriva.'"
+                    }
+                ],
+                "gift": {
+                    "essence": 100,
+                    "text": "Silas strappa una pagina del diario e te la porge: è la mappa di un piano che non hai ancora visto. La sua Essenza è ancora calda."
+                }
+            },
+            {
+                "id": "cartografa",
+                "name": "La Cartografa",
+                "requires": {"counter": {"cartografa_aiutata": 1}},
+                "lines": [
+                    {
+                        "requires": {"flag": "prima_pietra"},
+                        "text": "La Cartografa ti mostra un foglio fitto di segni. 'Ho segnato la Prima Pietra al piano 3. Mio nonno non ci credeva. Grazie a te, ora c'è sulla mappa.'"
+                    },
+                    {
+                        "text": "La Cartografa ha steso le sue pergamene sul tavolo del campo. 'Più scendi, più la mappa si riempie. Raccontami cosa hai visto, e lo disegno.'"
+                    }
+                ],
+                "gift": {
+                    "essence": 80,
+                    "text": "'Tieni. Ho venduto una copia della mappa a un mercante senza volto: metà del guadagno è tua.'"
+                }
+            },
+            {
+                "id": "viandante",
+                "name": "Il Viandante Cieco",
+                "requires": {"counter": {"viandante_incontri": 2}},
+                "lines": [
+                    {
+                        "requires": {"counter": {"viandante_derubato": 1}},
+                        "text": "Il Viandante siede lontano dal fuoco, la bisaccia stretta al petto. 'Riconosco i tuoi passi. Sono gli stessi di chi mi ha alleggerito. Me le renderai, un giorno, le mie monete.'"
+                    },
+                    {
+                        "text": "Il Viandante siede al buio, lontano dal fuoco, e conta a bassa voce. 'Non ti preoccupare per me. La luce, ormai, mi fa male.'"
+                    }
+                ],
+                "gift": {
+                    "essence": 50,
+                    "text": "Il Viandante ti porge una moneta d'oro con un occhio inciso sopra. 'Una delle mie. Ne ho ancora una.'"
+                }
+            },
+            {
+                "id": "alaric",
+                "name": "La Luce di Alaric",
+                "requires": {"flag": "alaric_liberato"},
+                "lines": [
+                    {
+                        "requires": {"flag": "alaric_lavanda"},
+                        "text": "Una luce calma, tiepida, resta accanto al fuoco. Non parla. Profuma di lavanda."
+                    },
+                    {
+                        "text": "Una luce calma, tiepida, resta accanto al fuoco. Non parla, ma quando la guardi ti senti al sicuro, come davanti a una porta ben custodita."
+                    }
+                ],
+                "gift": {
+                    "essence": 150,
+                    "text": "La luce si posa per un istante sulla tua spalla. Senti il peso di un'armatura che non porti, e la forza che dava."
+                }
+            },
+            {
+                "id": "erede",
+                "name": "Il posto vuoto",
+                "requires": {"flag": "alaric_erede"},
+                "lines": [
+                    {
+                        "text": "Accanto al fuoco c'è un'impronta nella cenere, con la forma di un cavaliere inginocchiato. Il sigillo sulla tua schiena prude. La porta ti aspetta."
+                    }
+                ]
             }
-          },
-          {
-            "cost": 700,
-            "desc": "Ogni discesa inizia con 1 pergamena a caso nello zaino.",
-            "start": {
-              "scroll": 1
+        ],
+        "structures": [
+            {
+                "id": "tavolo_cartografa",
+                "name": "Il Tavolo della Cartografa",
+                "cost": 300,
+                "requires": {"counter": {"cartografa_aiutata": 1}},
+                "locked_hint": "Aiuta la Cartografa nel Labirinto",
+                "desc": "Sulla mappa vedi in anticipo quali storie ti aspettano nelle stanze speciali dei biomi e negli eventi che tornano a cercarti."
+            },
+            {
+                "id": "scrittoio_silas",
+                "name": "Lo Scrittoio di Silas",
+                "cost": 400,
+                "requires": {"any_flags": ["silas_salvato", "silas_compagno"]},
+                "locked_hint": "Salva Silas nel Labirinto",
+                "desc": "All'inizio di ogni discesa leggi una pagina del suo diario e scegli un dono.",
+                "boons": [
+                    {"text": "La pagina della resistenza", "effects": [{"max_hp": 20}, {"heal_pct": 100}]},
+                    {"text": "La pagina della lama", "effects": [{"atk": 3}]},
+                    {"text": "La pagina del mercante", "effects": [{"gold": 100}]}
+                ]
+            },
+            {
+                "id": "altare_purificazione",
+                "name": "L'Altare della Purificazione",
+                "cost": 600,
+                "corruption_gain_pct": 75,
+                "desc": "La Corruzione che accumuli nelle discese cresce del 25% in meno."
+            },
+            {
+                "id": "biblioteca_arcano",
+                "name": "La Biblioteca dell'Arcano",
+                "requires": {"npc": "valerius"},
+                "locked_hint": "Libera l'Incantatore Valerius nel Labirinto",
+                "levels": [
+                    {"cost": 400, "desc": "Ogni eroe ha +2 Etere massimo.", "effects": {"ether_max": 2}},
+                    {
+                        "cost": 700,
+                        "desc": "Ogni discesa inizia con 1 pergamena a caso nello zaino.",
+                        "start": {"scroll": 1}
+                    },
+                    {
+                        "cost": 1000,
+                        "desc": "Gli incantesimi di ogni eroe hanno +5% di potenza.",
+                        "effects": {"spell_pct": 5}
+                    }
+                ]
+            },
+            {
+                "id": "sala_armi",
+                "name": "La Sala d'Armi",
+                "requires": {"npc": "borek"},
+                "locked_hint": "Libera il Maestro d'Armi Borek nel Labirinto",
+                "levels": [
+                    {
+                        "cost": 400,
+                        "desc": "Ogni discesa inizia con 1 punto abilità in più da spendere.",
+                        "start": {"points": 1}
+                    },
+                    {"cost": 700, "desc": "Ogni eroe fa +3% danni con qualunque arma.", "effects": {"dmg_pct": 3}},
+                    {
+                        "cost": 1000,
+                        "desc": "Ogni discesa inizia con 1 punto abilità in più da spendere, oltre a quello del primo livello.",
+                        "start": {"points": 1}
+                    }
+                ]
             }
-          },
-          {
-            "cost": 1000,
-            "desc": "Gli incantesimi di ogni eroe hanno +5% di potenza.",
-            "effects": {
-              "spell_pct": 5
-            }
-          }
         ]
-      },
-      {
-        "id": "sala_armi",
-        "name": "La Sala d'Armi",
-        "requires": {
-          "npc": "borek"
+    },
+    "endings": [
+        {
+            "id": "sonno_spezzato",
+            "title": "Il Sonno Spezzato",
+            "hint": "Sconfiggi il Dio Antico.",
+            "requires": {},
+            "reward": {"essence": 0},
+            "choice": "Colpisci l'occhio finché non si chiude per sempre",
+            "text": [
+                "Il Dio Antico cade senza un grido. Le galassie nelle sue vene si spengono una a una, come lanterne alla fine di una festa.",
+                "Il Labirinto trema, si piega, poi tace. Non è distrutto: dorme, finalmente senza sogni.",
+                "Torni in superficie con le mani vuote e il cuore pesante. Aethelgard non rinasce. Ma, per un po', nessun altro scenderà."
+            ]
         },
-        "locked_hint": "Libera il Maestro d'Armi Borek nel Labirinto",
-        "levels": [
-          {
-            "cost": 400,
-            "desc": "Ogni discesa inizia con 1 punto abilità in più da spendere.",
-            "start": {
-              "points": 1
-            }
-          },
-          {
-            "cost": 700,
-            "desc": "Ogni eroe fa +3% danni con qualunque arma.",
-            "effects": {
-              "dmg_pct": 3
-            }
-          },
-          {
-            "cost": 1000,
-            "desc": "Ogni discesa inizia con 1 punto abilità in più da spendere, oltre a quello del primo livello.",
-            "start": {
-              "points": 1
-            }
-          }
-        ]
-      }
+        {
+            "id": "nuovo_dio",
+            "title": "Il Nuovo Dio",
+            "hint": "Arriva in fondo con il cuore nero di Corruzione.",
+            "requires": {"corruption": 75},
+            "reward": {"essence": 1500},
+            "choice": "Siediti sul trono vuoto",
+            "text": [
+                "Il trono è freddo, poi tiepido, poi tuo. Le pareti del Labirinto si avvicinano per ascoltarti.",
+                "Senti ogni eroe che scende, ogni goccia di sangue sugli altari, ogni moneta gettata nel pozzo. Sono tuoi. Sei tu.",
+                "Da qualche parte, in superficie, un nuovo avventuriero varca la soglia. Sorridi. Hai fame."
+            ]
+        },
+        {
+            "id": "aethelgard_rinasce",
+            "title": "Aethelgard Rinasce",
+            "hint": "Conosci la verità di Silas e hai liberato Sir Alaric.",
+            "requires": {"flags": ["silas_verita", "alaric_liberato"]},
+            "reward": {"essence": 2000},
+            "choice": "Guarda nello specchio, come ti ha insegnato Silas",
+            "text": [
+                "Non c'è un mostro, oltre il Dio. C'è uno specchio, come diceva Silas. Dentro c'è Aethelgard come sarebbe stata: città sospese nel Vento, pilastri di Luce, la morte che torna all'Essenza.",
+                "Una luce calma, tiepida, ti si posa sulla spalla. Alaric. 'La porta,' dice. 'Adesso puoi aprirla.'",
+                "Attraversi lo specchio. Dietro di te, il Labirinto si sbriciola come un sogno al risveglio. Davanti a te, per la prima volta in mille anni, sorge il sole."
+            ]
+        },
+        {
+            "id": "custode",
+            "title": "Il Custode",
+            "hint": "Prendi il posto di qualcuno che custodiva una porta.",
+            "requires": {"flag": "alaric_erede"},
+            "reward": {"essence": 1200},
+            "choice": "Torna alla porta che hai giurato di custodire",
+            "text": [
+                "Il Dio è caduto, ma il sigillo sulla tua schiena brucia ancora. Il giuramento non conosce vittorie.",
+                "Risali piano dopo piano fino all'arco di pietra che non conduce a nulla, e ti inginocchi davanti al muro liscio.",
+                "'Nessuno passa,' dici al primo eroe che arriva. La tua voce è un'eco che arriva da molto lontano."
+            ]
+        },
+        {
+            "id": "lettera_mai_scritta",
+            "title": "La Lettera Mai Scritta",
+            "hint": "Raccogli tutte le lettere insanguinate.",
+            "requires": {"letters_complete": true},
+            "reward": {"essence": 2500},
+            "choice": "Rileggi le lettere insanguinate, tutte insieme",
+            "text": [
+                "Le hai lette tutte, una per una, sulle pareti. Solo ora, in fondo al Labirinto, riconosci la calligrafia.",
+                "È la tua. Ogni avvertimento, ogni consiglio, ogni 'non fidarti della Luce': li hai scritti tu, in tutte le discese che non ricordi.",
+                "Prendi un sasso appuntito e, sulla parete davanti al Dio caduto, scrivi l'ultima lettera, quella che nessuno ha mai letto. Poi, finalmente, ti ricordi chi sei."
+            ]
+        }
     ]
-  },
-  "endings": [
-    {
-      "id": "sonno_spezzato",
-      "title": "Il Sonno Spezzato",
-      "hint": "Sconfiggi il Dio Antico.",
-      "requires": {},
-      "reward": {
-        "essence": 0
-      },
-      "choice": "Colpisci l'occhio finché non si chiude per sempre",
-      "text": [
-        "Il Dio Antico cade senza un grido. Le galassie nelle sue vene si spengono una a una, come lanterne alla fine di una festa.",
-        "Il Labirinto trema, si piega, poi tace. Non è distrutto: dorme, finalmente senza sogni.",
-        "Torni in superficie con le mani vuote e il cuore pesante. Aethelgard non rinasce. Ma, per un po', nessun altro scenderà."
-      ]
-    },
-    {
-      "id": "nuovo_dio",
-      "title": "Il Nuovo Dio",
-      "hint": "Arriva in fondo con il cuore nero di Corruzione.",
-      "requires": {
-        "corruption": 75
-      },
-      "reward": {
-        "essence": 1500
-      },
-      "choice": "Siediti sul trono vuoto",
-      "text": [
-        "Il trono è freddo, poi tiepido, poi tuo. Le pareti del Labirinto si avvicinano per ascoltarti.",
-        "Senti ogni eroe che scende, ogni goccia di sangue sugli altari, ogni moneta gettata nel pozzo. Sono tuoi. Sei tu.",
-        "Da qualche parte, in superficie, un nuovo avventuriero varca la soglia. Sorridi. Hai fame."
-      ]
-    },
-    {
-      "id": "aethelgard_rinasce",
-      "title": "Aethelgard Rinasce",
-      "hint": "Conosci la verità di Silas e hai liberato Sir Alaric.",
-      "requires": {
-        "flags": [
-          "silas_verita",
-          "alaric_liberato"
-        ]
-      },
-      "reward": {
-        "essence": 2000
-      },
-      "choice": "Guarda nello specchio, come ti ha insegnato Silas",
-      "text": [
-        "Non c'è un mostro, oltre il Dio. C'è uno specchio, come diceva Silas. Dentro c'è Aethelgard come sarebbe stata: città sospese nel Vento, pilastri di Luce, la morte che torna all'Essenza.",
-        "Una luce calma, tiepida, ti si posa sulla spalla. Alaric. 'La porta,' dice. 'Adesso puoi aprirla.'",
-        "Attraversi lo specchio. Dietro di te, il Labirinto si sbriciola come un sogno al risveglio. Davanti a te, per la prima volta in mille anni, sorge il sole."
-      ]
-    },
-    {
-      "id": "custode",
-      "title": "Il Custode",
-      "hint": "Prendi il posto di qualcuno che custodiva una porta.",
-      "requires": {
-        "flag": "alaric_erede"
-      },
-      "reward": {
-        "essence": 1200
-      },
-      "choice": "Torna alla porta che hai giurato di custodire",
-      "text": [
-        "Il Dio è caduto, ma il sigillo sulla tua schiena brucia ancora. Il giuramento non conosce vittorie.",
-        "Risali piano dopo piano fino all'arco di pietra che non conduce a nulla, e ti inginocchi davanti al muro liscio.",
-        "'Nessuno passa,' dici al primo eroe che arriva. La tua voce è un'eco che arriva da molto lontano."
-      ]
-    },
-    {
-      "id": "lettera_mai_scritta",
-      "title": "La Lettera Mai Scritta",
-      "hint": "Raccogli tutte le lettere insanguinate.",
-      "requires": {
-        "letters_complete": true
-      },
-      "reward": {
-        "essence": 2500
-      },
-      "choice": "Rileggi le lettere insanguinate, tutte insieme",
-      "text": [
-        "Le hai lette tutte, una per una, sulle pareti. Solo ora, in fondo al Labirinto, riconosci la calligrafia.",
-        "È la tua. Ogni avvertimento, ogni consiglio, ogni 'non fidarti della Luce': li hai scritti tu, in tutte le discese che non ricordi.",
-        "Prendi un sasso appuntito e, sulla parete davanti al Dio caduto, scrivi l'ultima lettera, quella che nessuno ha mai letto. Poi, finalmente, ti ricordi chi sei."
-      ]
-    }
-  ]
 }

@@ -322,6 +322,8 @@ Il profilo del giocatore non viene mai toccato (il caricamento lo riscrive solo 
 
 **Quante run servono.** L'errore sulla percentuale di vittorie di una classe è circa ±(50/√N) punti con N run: ±9 con 30, ±6 con 60, ±3 con 300. Per i controlli rapidi di una PR bastano 30 run; per decidere una correzione su una classe ne servono almeno 300, ripetute con un altro `scarto`, perché ogni cambiamento rimescola gli esiti delle singole run. Il ribilanciamento della v5 è stato misurato così: obiettivo circa il 28% di vittorie medie con il profilo completo, nessuna classe lontana dalla media.
 
+**Formato dei dati.** Tutti i file di `data/` hanno lo stesso formato, quello di `tools/formatta_dati.py`: indentazione di 4 spazi, caratteri non ASCII così come sono, e un oggetto o una lista su una riga sola se ci sta in `WIDTH` = 120 caratteri, altrimenti una voce per riga. Dopo una modifica ai dati si esegue `python tools/formatta_dati.py` (`--check` elenca i file fuori formato senza toccarli); `tests/test_data_format.py` fallisce se un file non è nel formato.
+
 **README.** `README.md` si genera con `python tools/genera_readme.py`: il testo è nello script, tabelle e numeri vengono da `data/`. `tests/test_docs.py` fallisce se il README non è aggiornato, quindi va rigenerato in ogni PR che cambia i dati.
 
 ### Nemesi
@@ -576,6 +578,8 @@ Il salvataggio si crea al primo avvio e **non va committato** (è in `.gitignore
 
 ## 8. Aggiungere contenuti
 
+Dopo ogni modifica a `data/`: `python tools/formatta_dati.py`, poi `python tools/genera_readme.py`.
+
 - **Un'arma, un'armatura, un monile o un consumabile.** Aggiungi l'oggetto al JSON. Per renderlo sbloccabile alla Forgia dagli un `unlock_id` e un `unlock_cost`; con `unlock_cost: 0` lo si ottiene solo da un'impresa o da una Maestria che ne citi l'`unlock_id`. Una volta sbloccato compare anche nella bottega dell'artigiano.
 - **Una reliquia.** Aggiungila a `relics.json`, scrivi la sua classe in `relic_effects.py`, registrala in `RELIC_REGISTRY` e aggiungi il suo contratto in `RelicContractTest`: un test fallisce se ne manca uno.
 - **Un nemico o un boss.** Basta `enemies.json`: la sua forza (`base_hp × base_atk`) decide a che profondità compare. Dagli uno stile con `profile` (o mosse proprie con `moves`; il `venom` richiede uno `status_inflict`). Un boss ha bisogno anche delle sue fasi in `phases.json`; con `biome` diventa il boss nativo di quel bioma (uno per bioma).
@@ -626,6 +630,7 @@ La CI (`.github/workflows/tests.yml`) li esegue su Python 3.9 e sull'ultima 3.x;
 | `test_cycle.py` | Ciclo del Labirinto: cicli ed Eco, primo ciclo intatto, ogni bioma una volta per ciclo con la Soglia in fondo, ordine dal seme, dati intatti, pericoli più duri fino al limite e descrizioni con i numeri nuovi, regola usata nello scontro, nativi rinforzati, DIO ANTICO a ogni fine ciclo, annuncio e record, Epitaffio, Essenza, Codice, testo delle regole |
 | `test_map.py` | Mappa (file alternate, collegamenti senza incroci né vicoli ciechi, tipi e tempi di ricarica, evento richiamato, disegno, ciclo dei piani reale) e biomi (copertura dei piani, dati, nativi, elementi, pesi delle stanze, stanza speciale per piano, Prima Pietra, annuncio del pericolo) |
 | `test_elementalista.py` | Elementalista: incantesimi iniziali che reagiscono con il marchio della verga, equipaggiamento, Prisma Elementale (dimezza e dà Etere), Catena Elementale, sblocco con *Alchimia degli Elementi* |
+| `test_data_format.py` | Formato dei dati: ogni file di `data/` è nel formato di `tools/formatta_dati.py`, che conserva il contenuto ed è stabile |
 | `test_golden_master.py` | Golden master: 14 run del simulatore con semi fissi danno sempre lo stesso esito, e non dipendono dal profilo locale |
 | `test_camp_levels.py` | Strutture a più livelli: un livello alla volta e solo dopo aver liberato il personaggio, strutture di un solo livello ancora lette, etichette, Etere e potenza della Biblioteca, danni della Sala d'Armi, pergamena e punti a inizio discesa |
 | `test_contents.py` | Contenuti: Fonte d'Etere (Etere o cura), Pergamena e Runa del Mistero, nomi degli esiti, tomi nuovi (sblocco con incantesimi, Ascensione ed Eco; Etere del Grimorio; numeri dei bonus nei testi), Sordo all'Arcano (niente pergamene né Etere), Erudito, Talento Naturale, sblocco dei tratti con le imprese |
