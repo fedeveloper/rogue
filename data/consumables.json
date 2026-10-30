@@ -1,41 +1,11 @@
 {
     "consumables": [
-        {
-            "name": "Fiala di Sangue",
-            "base_heal": 15,
-            "val_base": 5,
-            "category": "heal"
-        },
-        {
-            "name": "Pozione Minore",
-            "base_heal": 25,
-            "val_base": 10,
-            "category": "heal"
-        },
-        {
-            "name": "Decotto alle Erbe",
-            "base_heal": 35,
-            "val_base": 15,
-            "category": "heal"
-        },
-        {
-            "name": "Pozione Curativa",
-            "base_heal": 50,
-            "val_base": 20,
-            "category": "heal"
-        },
-        {
-            "name": "Elisir Maggiore",
-            "base_heal": 80,
-            "val_base": 35,
-            "category": "heal"
-        },
-        {
-            "name": "Lacrima di Fenice",
-            "base_heal": 150,
-            "val_base": 60,
-            "category": "heal"
-        },
+        {"name": "Fiala di Sangue", "base_heal": 15, "val_base": 5, "category": "heal"},
+        {"name": "Pozione Minore", "base_heal": 25, "val_base": 10, "category": "heal"},
+        {"name": "Decotto alle Erbe", "base_heal": 35, "val_base": 15, "category": "heal"},
+        {"name": "Pozione Curativa", "base_heal": 50, "val_base": 20, "category": "heal"},
+        {"name": "Elisir Maggiore", "base_heal": 80, "val_base": 35, "category": "heal"},
+        {"name": "Lacrima di Fenice", "base_heal": 150, "val_base": 60, "category": "heal"},
         {
             "name": "Elisir degli Dei",
             "base_heal": 300,
@@ -106,18 +76,8 @@
             "val_base": 40,
             "category": "antidote"
         },
-        {
-            "name": "Tè di Lavanda",
-            "base_heal": 20,
-            "val_base": 8,
-            "category": "heal"
-        },
-        {
-            "name": "Infuso di Radici",
-            "base_heal": 45,
-            "val_base": 18,
-            "category": "heal"
-        },
+        {"name": "Tè di Lavanda", "base_heal": 20, "val_base": 8, "category": "heal"},
+        {"name": "Infuso di Radici", "base_heal": 45, "val_base": 18, "category": "heal"},
         {
             "name": "Balsamo d'Ossidiana",
             "base_heal": 110,

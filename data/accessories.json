@@ -3,7 +3,7 @@
         {
             "id": "a1",
             "name": "Anello del Berserker",
-            "desc": "+15% probabilit\u00e0 di infliggere colpo critico.",
+            "desc": "+15% probabilità di infliggere colpo critico.",
             "bonus_type": "crit_chance",
             "bonus_value": 15,
             "base_val": 120,
@@ -60,7 +60,6 @@
             "unlock_cost": 0,
             "unlock_id": null
         },
-
         {
             "id": "a7",
             "name": "Orecchino della Lince",
@@ -154,7 +153,7 @@
         {
             "id": "a16",
             "name": "Dente di Drago Antico",
-            "desc": "+20% probabilit\u00e0 di infliggere colpo critico.",
+            "desc": "+20% probabilità di infliggere colpo critico.",
             "bonus_type": "crit_chance",
             "bonus_value": 20,
             "base_val": 220,

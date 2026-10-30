@@ -17,7 +17,8 @@ Questo repository è mantenuto in buona parte con assistenti IA. Queste regole v
 
 ## Documenti
 
-- `README.md` si genera con `python tools/genera_readme.py` (i test falliscono se non è aggiornato). Il Manuale del Giocatore e la Documentazione Tecnica vanno aggiornati nella stessa PR che cambia regole, dati o codice.
+- `README.md` si genera con `python tools/genera_readme.py` (i test falliscono se non è aggiornato).
+- Dopo aver modificato un file in `data/`, riformattalo con `python tools/formatta_dati.py`: i test falliscono se un file di dati non è nel formato unico. Il Manuale del Giocatore e la Documentazione Tecnica vanno aggiornati nella stessa PR che cambia regole, dati o codice.
 
 ## Dipendenze
 
