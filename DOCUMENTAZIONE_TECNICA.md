@@ -313,9 +313,12 @@ Un'arma tipica abbatte un nemico tipico in circa 3 colpi e un'armatura tipica ne
 - `oggetti`: ogni arma e armatura a ogni piano;
 - `run N nuovo|completo [scarto]`: N run per classe (lo `scarto` sposta i seed: un altro gruppo di run) con il codice vero e un giocatore automatico, con vittorie, piano raggiunto, Essenza, colpi annullati, morti per bioma e letalità dei boss;
 - `ascensione N gradi`: profilo completo, N run per classe a ogni grado (es. `0,5,10,15,20`), con vittorie e piano mediano;
+- `golden`: riscrive `tests/golden_master.json`, l'impronta di 14 run di riferimento (vedi sotto);
 - `strategie N nuovo|completo`: le stesse run con diversi modi di scegliere le stanze (adattiva in base agli HP, prudente, aggressiva, trappole per prime). Serve a verificare che nessun ordine fisso domini: è la prova che la scelta della stanza è una decisione.
 
-Il profilo del giocatore non viene mai toccato (il caricamento lo riscrive solo se va migrato da una versione precedente).
+Il profilo del giocatore non viene mai toccato (il caricamento lo riscrive solo se va migrato da una versione precedente), e non viene nemmeno letto: ogni simulazione parte da `data_manager.default_profile()`, così le misure sono le stesse su ogni macchina.
+
+**Golden master.** `tests/test_golden_master.py` gioca 14 run di riferimento con semi fissi (`GOLDEN_RUNS`: ogni classe col profilo completo, tre col profilo nuovo, due con l'Ascensione) e confronta esito, piano, livello, Essenza, chi uccide, boss incontrati e colpi con `tests/golden_master.json`. Una rifattorizzazione non deve cambiarle; una modifica voluta al gioco le cambia, e allora si rigenera l'impronta con `python tools/bilanciamento.py golden` e si spiega nella PR perché.
 
 **Quante run servono.** L'errore sulla percentuale di vittorie di una classe è circa ±(50/√N) punti con N run: ±9 con 30, ±6 con 60, ±3 con 300. Per i controlli rapidi di una PR bastano 30 run; per decidere una correzione su una classe ne servono almeno 300, ripetute con un altro `scarto`, perché ogni cambiamento rimescola gli esiti delle singole run. Il ribilanciamento della v5 è stato misurato così: obiettivo circa il 28% di vittorie medie con il profilo completo, nessuna classe lontana dalla media.
 
@@ -623,6 +626,7 @@ La CI (`.github/workflows/tests.yml`) li esegue su Python 3.9 e sull'ultima 3.x;
 | `test_cycle.py` | Ciclo del Labirinto: cicli ed Eco, primo ciclo intatto, ogni bioma una volta per ciclo con la Soglia in fondo, ordine dal seme, dati intatti, pericoli più duri fino al limite e descrizioni con i numeri nuovi, regola usata nello scontro, nativi rinforzati, DIO ANTICO a ogni fine ciclo, annuncio e record, Epitaffio, Essenza, Codice, testo delle regole |
 | `test_map.py` | Mappa (file alternate, collegamenti senza incroci né vicoli ciechi, tipi e tempi di ricarica, evento richiamato, disegno, ciclo dei piani reale) e biomi (copertura dei piani, dati, nativi, elementi, pesi delle stanze, stanza speciale per piano, Prima Pietra, annuncio del pericolo) |
 | `test_elementalista.py` | Elementalista: incantesimi iniziali che reagiscono con il marchio della verga, equipaggiamento, Prisma Elementale (dimezza e dà Etere), Catena Elementale, sblocco con *Alchimia degli Elementi* |
+| `test_golden_master.py` | Golden master: 14 run del simulatore con semi fissi danno sempre lo stesso esito, e non dipendono dal profilo locale |
 | `test_camp_levels.py` | Strutture a più livelli: un livello alla volta e solo dopo aver liberato il personaggio, strutture di un solo livello ancora lette, etichette, Etere e potenza della Biblioteca, danni della Sala d'Armi, pergamena e punti a inizio discesa |
 | `test_contents.py` | Contenuti: Fonte d'Etere (Etere o cura), Pergamena e Runa del Mistero, nomi degli esiti, tomi nuovi (sblocco con incantesimi, Ascensione ed Eco; Etere del Grimorio; numeri dei bonus nei testi), Sordo all'Arcano (niente pergamene né Etere), Erudito, Talento Naturale, sblocco dei tratti con le imprese |
 | `test_risk_rooms.py` | Stanze a rischio: trappola (ritirata, bottino garantito, prove e probabilità mostrate), forziere (rischio per piano, serratura, Mimic, Sesto Senso), Élite (piano minimo, statistiche, ricompensa, etichette), Audacia (punti, premio del boss, ciclo dei piani), Mistero (probabilità dai dati, reliquia esaurita) |

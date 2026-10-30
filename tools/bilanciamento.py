@@ -9,8 +9,9 @@ Uso, dalla radice del repository:
     python tools/bilanciamento.py ascensione [N] [gradi]   # profilo completo, N run per classe a ogni grado (es. 0,5,10,15,20)
     python tools/bilanciamento.py infinita [N]        # profilo completo, N run per classe in Modalità Infinita: fin dove arriva nel Ciclo
     python tools/bilanciamento.py attributi [N]       # profilo completo, N run per classe per ogni modo di spendere i punti abilità
+    python tools/bilanciamento.py golden              # riscrive tests/golden_master.json: l'impronta delle run di riferimento
 
-Il profilo del giocatore non viene mai letto per le statistiche né salvato: ogni simulazione parte da un profilo
+Il profilo del giocatore non viene mai letto né salvato: ogni simulazione parte da un profilo
 costruito in memoria ("nuovo": nulla di sbloccato; "completo": tutto sbloccato, potenziamenti e Maestrie al massimo).
 Il giocatore automatico è ragionevole ma non ottimo: si difende dai colpi pesanti, si cura sotto il 35% degli HP,
 riposa ai falò sotto il 70%, equipaggia l'arma e l'armatura con la statistica più alta e sceglie a caso negli eventi.
@@ -23,6 +24,7 @@ rimescola gli esiti, e un gruppo di seed può essere fortunato per una classe.
 """
 import contextlib
 import copy
+import json
 import os
 import random
 import re
@@ -37,7 +39,7 @@ os.chdir(ROOT)
 
 # Il caricamento riscrive profile.json solo se va migrato da una versione precedente (come all'avvio del gioco);
 # da qui in poi nessun salvataggio arriva al file
-from data_manager import GAME_DATA, PROFILE_MANAGER, RAW_DATA, cycle_of, echo_name, get_biome, update_game_data
+from data_manager import GAME_DATA, PROFILE_MANAGER, RAW_DATA, cycle_of, default_profile, echo_name, get_biome, update_game_data
 import runes
 import data_manager
 import magic
@@ -53,7 +55,7 @@ FLOORS = (1, 5, 10, 15, 20, 25, 30)
 
 def profile(kind: str) -> dict:
     import roguelike
-    data = copy.deepcopy(PROFILE_MANAGER._data)
+    data = default_profile()  # mai il profilo locale: le misure sono le stesse su ogni macchina
     data.update(essence=0, max_floor=0, won_normal=False, completed_feats=[], class_xp={},
                 story={"flags": {}, "counters": {}, "seen_events": {}}, codex={"enemies": {}, "letters": [], "relics": [], "reactions": []})
     for k in ("starting_consumables", "starting_weapons", "starting_armors", "starting_accessories"): data[k] = []
@@ -370,6 +372,31 @@ def cmd_attributi(n):
         print(f"{plan:<12} {sum(l['won'] for l in logs) / len(logs) * 100:>7.0f}% {st.median(l['floor'] for l in logs):>13} {st.median(l['level'] for l in logs):>15}")
 
 
+# ------------------------------------------------------------------ golden master
+GOLDEN_FILE = os.path.join(ROOT, "tests", "golden_master.json")
+# (classe, profilo, grado di Ascensione): una run per voce, con un seme fisso
+GOLDEN_RUNS = [(c, "completo", 0) for c in ("1", "2", "3", "4", "5", "6", "7", "8", "9")] + \
+              [(c, "nuovo", 0) for c in ("1", "2", "3")] + [("4", "completo", 10), ("8", "completo", 20)]
+GOLDEN_KEYS = ("won", "floor", "level", "essence", "killer", "bosses", "hits", "zero")
+
+
+def golden_runs(limit: int = None) -> list:
+    """L'impronta delle run di riferimento (le prime `limit`): ciò che una rifattorizzazione non deve cambiare."""
+    profiles = {kind: profile(kind) for kind in ("completo", "nuovo")}
+    out = []
+    for i, (cls, kind, grade) in enumerate(GOLDEN_RUNS[:limit]):
+        log = play(cls, int(cls) * 100003 + i * 7919 + 424242, profiles[kind], grade=grade)
+        out.append({"run": f"{GAME_DATA['classes'][cls]['role']} · {kind} · A{grade}", **{k: log[k] for k in GOLDEN_KEYS}})
+    return out
+
+
+def cmd_golden():
+    runs = golden_runs()
+    with open(GOLDEN_FILE, "w", encoding="utf-8") as f:
+        json.dump(runs, f, ensure_ascii=False, indent=2); f.write("\n")
+    print(f"{GOLDEN_FILE}: {len(runs)} run, vittorie {sum(r['won'] for r in runs)}")
+
+
 def cmd_infinita(n):
     base = profile("completo")
     use_profile(base)
@@ -389,7 +416,8 @@ def cmd_infinita(n):
 
 if __name__ == "__main__":
     args = sys.argv[1:] or ["curve"]
-    if args[0] == "curve": cmd_curve()
+    if args[0] == "golden": cmd_golden()
+    elif args[0] == "curve": cmd_curve()
     elif args[0] == "oggetti": cmd_oggetti()
     elif args[0] == "run": cmd_run(int(args[1]) if len(args) > 1 else 50, args[2] if len(args) > 2 else "nuovo", int(args[3]) if len(args) > 3 else 0)
     elif args[0] == "ascensione": cmd_ascensione(int(args[1]) if len(args) > 1 else 20, [int(g) for g in (args[2] if len(args) > 2 else "0,5,10,15,20").split(",")])
