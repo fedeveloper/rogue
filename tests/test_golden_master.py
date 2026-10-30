@@ -5,17 +5,18 @@ run, il comportamento è cambiato. Quando il cambiamento è voluto (regole, dati
 l'impronta con `python tools/bilanciamento.py golden` e si spiega nella PR perché è cambiata.
 """
 import copy
+import importlib
 import json
 import os
 import sys
 import unittest
 from unittest import mock
 
+from data_manager import PROFILE_MANAGER, update_game_data
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "tools"))
-
-import bilanciamento  # noqa: E402
-from data_manager import PROFILE_MANAGER, update_game_data  # noqa: E402
+bilanciamento = importlib.import_module("bilanciamento")  # il simulatore sta in tools/, fuori dai pacchetti del gioco
 
 
 class GoldenMasterTest(unittest.TestCase):
