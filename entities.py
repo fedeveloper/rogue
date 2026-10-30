@@ -3,12 +3,12 @@ from typing import List, Dict
 from ui import Colors, delay_print, clear_screen, display_msg, interactive_menu
 from data_manager import GAME_DATA, RAW_DATA, PROFILE_MANAGER, ELEMENTS, MULTIPLIERS, cycle_of, echo_name, get_biome, get_element_icon
 from relic_effects import create_relic_effect
-from archive import get_archive_bonus
 from codex import record_relic
 import modes
 import runes as rune_rules
 import attributes
 import camp_rules
+import effects
 import magic
 import talents
 from constants import BERSERKER_FURY_PCT, BASE_HIT_CHANCE, ENEMY_DEPTH_WINDOW, BOSS_DEPTH_WINDOW, INFINITE_MODE_THRESHOLD, CURSE_CHANCE, CURSE_STAT_MULTIPLIER, BOSS_HP_MULT, BOSS_ATK_MULT, ENEMY_HP_PER_FLOOR, ENEMY_ATK_PER_FLOOR, BULWARK_HEAL_PCT, WEAPON_TARGET_HITS, ARMOR_TARGET_ABSORB, WEAPON_QUALITY, ARMOR_QUALITY, NORMAL_ELEMENT_BONUS, EPIC_MULTIPLIER
@@ -267,7 +267,7 @@ class Player:
         self.talents, self.pending_talents = [], 0  # vedi talents.py
         self.trait_effects, self.arcane_deaf, self.talent_every, self.trait_hp_per_level = {}, False, None, 0  # tratti v5
         self.camp_effects = camp_rules.total("effects")  # strutture del Campo (Biblioteca dell'Arcano, Sala d'Armi)
-        self.max_hp += attributes.value(self, "max_hp")
+        self.max_hp += effects.total(self, "max_hp")
         # Magia (magic.py): gli incantesimi della classe e l'Etere, pieno all'inizio della discesa (riempito in fondo,
         # quando arma, armatura e reliquie che lo cambiano ci sono già)
         self.base_ether, self.spells = data.get("ether", 0), list(data.get("spells", []))
@@ -474,46 +474,34 @@ class Player:
     def corruption_atk(self) -> int:
         return self.corruption // 10 * GAME_DATA["meta"]["corruption"]["atk_per_10"]
 
-    def rune_value(self, key: str):
-        """Somma di un effetto delle rune (e delle parole runiche) dell'arma e dell'armatura equipaggiate."""
-        runes = sum(effects.get(key, 0) for item in (self.weapon, self.armor) for effects in rune_rules.item_effects(item))
-        mult = 1 + sum(r.get_rune_multiplier() for r in self.relic_effects)
-        return int(runes * mult) + sum(r.get_rune_bonus(key) for r in self.relic_effects)
-
-    def magic_value(self, key: str) -> int:
-        """Un effetto magico (ether_max, spell_pct, ether_on_hit, spell_discount): attributi e talenti, rune e reliquie,
-        Maestria Lv.6, libri dell'Archivio."""
-        return (attributes.value(self, key) + self.rune_value(key) + getattr(self, "mastery_magic", {}).get(key, 0)
-                + int(get_archive_bonus(key, PROFILE_MANAGER._data)))
-
     def get_total_atk(self):
         atk = self.weapon.atk + self.bonus_atk_relic + self.weapon.get_gold_atk_bonus(self.gold) + self.corruption_atk()
         for r in self.relic_effects: atk += r.get_atk_modifier(self)
-        return atk + self.weapon.atk * self.rune_value("atk_pct") // 100
+        return atk + self.weapon.atk * effects.total(self, "atk_pct") // 100
 
     def get_crit_chance(self) -> int:
-        crit = self.base_crit + self.rune_value("crit_chance_add") + attributes.value(self, "crit")
+        crit = self.base_crit + effects.total(self, "crit_chance_add") + effects.total(self, "crit")
         if self.accessory and self.accessory.bonus_type == "crit_chance": crit += self.accessory.bonus_value
         return min(100, crit)
 
     def get_lifesteal(self) -> int:
-        ls = self.base_lifesteal + attributes.value(self, "lifesteal")
+        ls = self.base_lifesteal + effects.total(self, "lifesteal")
         if self.accessory and self.accessory.bonus_type == "lifesteal": ls += self.accessory.bonus_value
         return ls
 
     def get_hit_chance(self, enemy_dodge: int = 0, multiplier: float = 1.0) -> int:
         """Probabilità reale di colpire (in %), la stessa usata in combattimento."""
-        hit = BASE_HIT_CHANCE + self.base_acc + attributes.value(self, "acc") + self.temp_acc - enemy_dodge + (15 if multiplier > 1.0 else -20 if multiplier < 1.0 else 0)
+        hit = BASE_HIT_CHANCE + self.base_acc + effects.total(self, "acc") + self.temp_acc - enemy_dodge + (15 if multiplier > 1.0 else -20 if multiplier < 1.0 else 0)
         hit += self.weapon.get_hit_chance_modifier()
         for r in self.relic_effects: hit += r.get_acc_modifier()
         return max(10, min(100, hit))
 
     def get_total_def(self) -> int:
-        return (self.armor.defense + self.armor.defense * (self.rune_value("def_pct") + attributes.value(self, "def_pct")) // 100 + self.temp_def + self.bonus_def
-                + get_archive_bonus("def", PROFILE_MANAGER._data))
+        return (self.armor.defense + self.armor.defense * effects.total(self, "def_pct") // 100 + self.temp_def + self.bonus_def
+                + effects.total(self, "def"))
     
     def get_dodge(self): 
-        dodge = self.base_dodge + attributes.value(self, "dodge") + self.temp_dodge + getattr(self.armor, "dodge_bonus", 0) + self.weapon.traits.get("dodge_bonus", 0) + self.rune_value("dodge_add")
+        dodge = self.base_dodge + effects.total(self, "dodge") + self.temp_dodge + getattr(self.armor, "dodge_bonus", 0) + self.weapon.traits.get("dodge_bonus", 0) + effects.total(self, "dodge_add")
         for effect in self.relic_effects: dodge += effect.get_dodge_modifier()
         if self._berserker_fury_active(): return 0
         if self.has_curse("heavy"): dodge -= 15
@@ -532,7 +520,7 @@ class Player:
 
     def max_ether(self) -> int:
         if self.arcane_deaf: return 0
-        return self.base_ether + self.magic_value("ether_max")
+        return self.base_ether + effects.total(self, "ether_max")
 
     def gain_ether(self, amount: int) -> int:
         """Aggiunge Etere fino al massimo; restituisce quanto ne è entrato davvero."""
@@ -542,7 +530,7 @@ class Player:
 
     def gain_exp(self, amount: int):
         if self.midas: return
-        multi = self.exp_multiplier + (self.rune_value("exp_pct") + attributes.value(self, "exp_pct")) / 100
+        multi = self.exp_multiplier + effects.total(self, "exp_pct") / 100
         for effect in self.relic_effects: multi += effect.get_exp_modifier()
         amount = int(amount * multi)
         self.exp += amount
@@ -574,8 +562,8 @@ class Player:
         g = base_gold * 3 if self.midas else base_gold
         for r in self.relic_effects: g = r.on_gold_gain(self, g)
         g = int(g * (1 + PROFILE_MANAGER.get_perk("banca_anima_lvl", 0) * 0.05))
-        g = int(g * (1 + get_archive_bonus("gold_pct", PROFILE_MANAGER._data) / 100))
-        return g * (100 + self.rune_value("gold_pct") + attributes.value(self, "gold_pct")) // 100
+        g = int(g * (1 + effects.of(self, "archivio", "gold_pct") / 100))  # l'Archivio si applica prima, a parte
+        return g * (100 + effects.total(self, "gold_pct", skip=("archivio",))) // 100
 
     def take_damage(self, amount: int) -> bool:
         self.hp -= amount

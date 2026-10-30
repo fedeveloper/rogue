@@ -22,6 +22,7 @@ from entities import Accessory, Armor, Consumable, Enemy, Player, Weapon, genera
 from rooms import CombatSession
 from constants import AMBUSH_DMG_PCT, BERSERKER_FURY_PCT, NECRO_HARVEST_PCT
 import attributes
+import effects
 import talents
 
 ALL_UNLOCKS = sorted({i["unlock_id"] for cat in ("weapons", "armors", "accessories", "consumables", "relics")
@@ -112,8 +113,8 @@ class RelicContractTest(Sandbox):
     def c_rune_bonus(self, rid, key, value):
         def check():
             self.assertIn(str(value), self.desc(rid))
-            p = self.hero(); before = p.rune_value(key); self.relic(p, rid)
-            self.assertEqual(p.rune_value(key), before + value, "vale come una runa con lo stesso effetto (vedi test_runes)")
+            p = self.hero(); before = effects.total(p, key); self.relic(p, rid)
+            self.assertEqual(effects.total(p, key), before + value, "vale come una runa con lo stesso effetto (vedi test_runes)")
         return check
 
     def c_cuore_risonante(self):
@@ -180,8 +181,8 @@ class RelicContractTest(Sandbox):
 
     def c_cristallo_runico(self):
         p = self.hero(); p.weapon.sockets = 1; p.weapon.runes = ["forza"]
-        before = p.rune_value("atk_pct"); self.relic(p, "cristallo_runico")
-        self.assertEqual(p.rune_value("atk_pct"), int(before * 1.5))
+        before = effects.total(p, "atk_pct"); self.relic(p, "cristallo_runico")
+        self.assertEqual(effects.total(p, "atk_pct"), int(before * 1.5))
 
     def c_martello(self):
         p = self.hero(); self.relic(p, "martello_lapicida"); p.weapon.sockets, p.weapon.runes = 1, ["forza"]; p.gold = 0
@@ -768,7 +769,7 @@ class RulesContractTest(Sandbox):
             "titano": lambda p: self.assertEqual((p.max_hp, p.base_acc, p.base_dodge), (base.max_hp + 100, base.base_acc // 2, base.base_dodge // 2)),
             "benedetto": lambda p: (self.assertIn("scudo_cristallo", p.relic_ids), self.assertTrue(p.take_damage(10 ** 6)), self.assertEqual(p.hp, 1)),
             "sordo_arcano": lambda p: (self.assertEqual((p.spells, p.max_ether(), p.max_hp), ([], 0, base.max_hp + 30)),
-                                       self.assertEqual(attributes.value(p, "dmg_pct") - attributes.value(base, "dmg_pct"), 25)),
+                                       self.assertEqual(effects.total(p, "dmg_pct") - effects.total(base, "dmg_pct"), 25)),
             "erudito": lambda p: self.assertEqual((len(p.spells), p.base_ether, p.max_hp), (len(base.spells) + 1, base.base_ether + 4, base.max_hp - 15)),
             "talento_naturale": lambda p: (self.assertEqual(self.growth(p) - self.growth(base), -4), self.assertTrue(talents.earned(4, p.talent_every)),
                                            self.assertFalse(talents.earned(5, p.talent_every))),

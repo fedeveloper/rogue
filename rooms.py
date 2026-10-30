@@ -3,12 +3,12 @@ import time
 from typing import List
 from ui import Colors, delay_print, clear_screen, interactive_menu, display_msg, wait_enter
 from data_manager import GAME_DATA, PROFILE_MANAGER, MULTIPLIERS, get_biome, get_element_icon
-from archive import get_archive_bonus
 from codex import record_enemy_killed, record_enemy_seen, record_letter, record_phase, record_reaction, record_rune, record_runeword, record_spell
 from constants import AMBUSH_DMG_PCT, ELEMENTAL_CHAIN_ETHER, NECRO_HARVEST_PCT, CAMPFIRE_REST_PCT, BASE_HIT_CHANCE, BLOOD_LETTER_CHANCE, CURSE_HP_DRAIN_PCT, MIN_DAMAGE_PCT, POISON_MIN, POISON_PCT
 from entities import STATUS_NAMES, Player, Enemy, generate_weapon, generate_armor, generate_accessory, generate_potion, generate_rune, generate_scroll, get_random_relic, set_sockets
 import runes as rune_rules
 import attributes
+import effects
 import magic
 import nemesis
 from epitaph import note
@@ -237,8 +237,8 @@ class CombatSession:
         if self.player.necro_harvest:
             healed = self.player.heal(max(1, self.player.max_hp * NECRO_HARVEST_PCT // 100))
             if healed > 0: display_msg(f"{Colors.MAGENTA}Raccolto d'Anime: assorbi {healed} HP dal nemico caduto!{Colors.RESET}")
-        if attributes.value(self.player, "kill_heal_pct"):
-            healed = self.player.heal(max(1, self.player.max_hp * attributes.value(self.player, "kill_heal_pct") // 100))
+        if effects.total(self.player, "kill_heal_pct"):
+            healed = self.player.heal(max(1, self.player.max_hp * effects.total(self.player, "kill_heal_pct") // 100))
             if healed > 0: display_msg(f"{Colors.GREEN}Talento: recuperi {healed} HP.{Colors.RESET}")
         if self.enemy.exp_drop > 0: self.player.gain_exp(self.enemy.exp_drop)
         
@@ -301,7 +301,7 @@ class CombatSession:
             return
         if not mark or mark[0] != element:
             display_msg(f"{Colors.CYAN}{self.enemy.name} porta il marchio {get_element_icon(element)}.{Colors.RESET}")
-        self.enemy.mark = [element, GAME_DATA["elements"]["marks"]["duration"] + self.player.rune_value("mark_duration_add")]
+        self.enemy.mark = [element, GAME_DATA["elements"]["marks"]["duration"] + effects.total(self.player, "mark_duration_add")]
 
     def _trigger_reaction(self, key: str):
         r = GAME_DATA["elements"]["reactions"][key]
@@ -316,7 +316,7 @@ class CombatSession:
             self.player.gain_ether(ELEMENTAL_CHAIN_ETHER)
         msg = f"{Colors.MAGENTA}{Colors.BOLD}⚡ REAZIONE: {r['icon']} {r['name'].upper()}!{Colors.RESET}"
         if r.get("bonus_pct"):
-            dmg = self.player.get_total_atk() * r["bonus_pct"] // 100 * (100 + self.player.rune_value("reaction_dmg_pct") + attributes.value(self.player, "reaction_dmg_pct")) // 100
+            dmg = self.player.get_total_atk() * r["bonus_pct"] // 100 * (100 + effects.total(self.player, "reaction_dmg_pct")) // 100
             self.enemy.hp -= dmg
             msg += f" {Colors.CYAN}{dmg} danni extra.{Colors.RESET}"
         if r.get("status"):
@@ -466,7 +466,7 @@ class CombatSession:
             dmg_dealt, eff = self._calc_base_damage(multiplier)
         
         if self.enemy.is_boss:
-            dmg_dealt = int(dmg_dealt * (1 + get_archive_bonus("boss_dmg_pct", PROFILE_MANAGER._data) / 100))
+            dmg_dealt = int(dmg_dealt * (1 + effects.total(self.player, "boss_dmg_pct") / 100))
 
         crit = self.player.get_crit_chance()
         if crit > 0 and not was_focused and random.randint(1, 100) <= crit:
@@ -476,7 +476,7 @@ class CombatSession:
         # Imboscata (Assassino): il primo attacco di ogni scontro, anche se manca, consuma il bonus.
         # Non si somma all'attacco concentrato, che è già un critico garantito.
         ambush = self.player.assassin_ambush and self.first_player_attack and not was_focused
-        first_strike = self.first_player_attack and self.player.rune_value("first_strike_pct")
+        first_strike = self.first_player_attack and effects.total(self.player, "first_strike_pct")
         self.first_player_attack = False
         if ambush:
             dmg_dealt = dmg_dealt * AMBUSH_DMG_PCT // 100
@@ -485,13 +485,13 @@ class CombatSession:
         self.player.run_tracker["floor_attacks"] += 1
         if random.randint(1, 100) <= hit_chance:
             self.player.run_tracker["floor_hits"] += 1
-            self.player.gain_ether(magic.rules()["gain"]["hit"] + self.player.magic_value("ether_on_hit"))
+            self.player.gain_ether(magic.rules()["gain"]["hit"] + effects.total(self.player, "ether_on_hit"))
             dmg_dealt = int(dmg_dealt * self.player.get_class_damage_multiplier())
             # L'attributo con cui scala l'arma (Forza, Destrezza o Arcano) e i talenti che aumentano i danni
-            dmg_dealt = dmg_dealt * (100 + attributes.weapon_bonus(self.player) + attributes.value(self.player, "dmg_pct")) // 100
+            dmg_dealt = dmg_dealt * (100 + attributes.weapon_bonus(self.player) + effects.total(self.player, "dmg_pct")) // 100
             # Rune dell'arma: Contrasto sui colpi Super Efficaci, Agguato sul primo attacco dello scontro
-            if multiplier > 1.0 and self.player.rune_value("super_effective_pct"):
-                dmg_dealt = dmg_dealt * (100 + self.player.rune_value("super_effective_pct")) // 100
+            if multiplier > 1.0 and effects.total(self.player, "super_effective_pct"):
+                dmg_dealt = dmg_dealt * (100 + effects.total(self.player, "super_effective_pct")) // 100
             if first_strike:
                 dmg_dealt = dmg_dealt * (100 + first_strike) // 100
                 eff += f" {Colors.MAGENTA}[AGGUATO]{Colors.RESET}"
@@ -523,7 +523,7 @@ class CombatSession:
             
             for r in self.player.relic_effects: r.on_attack_landed(self, multiplier)
 
-            ls = self.player.get_lifesteal() + dmg_dealt * self.player.rune_value("lifesteal_pct") // 100
+            ls = self.player.get_lifesteal() + dmg_dealt * effects.total(self.player, "lifesteal_pct") // 100
             stolen = self.player.heal(ls) if ls > 0 else 0
             if stolen > 0: display_msg(f"{Colors.RED}Rubavita: assorbi {stolen} HP!{Colors.RESET}")
             if self.resonance == "Luce":
@@ -533,7 +533,7 @@ class CombatSession:
                 self.burn_dmg += int(self._resonance_value("Fuoco"))
 
             for s_type, key, turns in rune_rules.ON_HIT_STATUSES:
-                chance = self.player.rune_value(key)
+                chance = effects.total(self.player, key)
                 if chance and self.enemy.hp > 0 and random.randint(1, 100) <= chance:
                     self.enemy.statuses[s_type] = max(self.enemy.statuses.get(s_type, 0), turns)
                     display_msg(f"{Colors.MAGENTA}La runa colpisce: {self.enemy.name} è afflitto da {STATUS_NAMES[s_type].upper()}!{Colors.RESET}")
@@ -558,8 +558,8 @@ class CombatSession:
         self.is_defending = True
         self.player.gain_ether(magic.rules()["gain"]["defend"])
         self.player.on_defense_started()
-        if self.player.rune_value("defend_heal_pct"):
-            healed = self.player.heal(max(1, self.player.max_hp * self.player.rune_value("defend_heal_pct") // 100))
+        if effects.total(self.player, "defend_heal_pct"):
+            healed = self.player.heal(max(1, self.player.max_hp * effects.total(self.player, "defend_heal_pct") // 100))
             if healed: display_msg(f"{Colors.GREEN}Runa della Quiete: recuperi {healed} HP.{Colors.RESET}")
         if self.def_type == "silenced":
             display_msg(f"\n{Colors.BLUE}-> Ti ripari come puoi: nel gas la tecnica non ti riesce.{Colors.RESET}")
@@ -724,7 +724,7 @@ class CombatSession:
         mult = MULTIPLIERS.get(element, {}).get(self.enemy.element, 1.0)
         nem = getattr(self.enemy, "nemesis", None)
         if nem: mult *= nemesis.spell_resisted(nem, element)
-        power = 100 + self.player.magic_value("spell_pct") + self.player.weapon.traits.get("spell_pct", 0)
+        power = 100 + effects.total(self.player, "spell_pct") + self.player.weapon.traits.get("spell_pct", 0)
         return max(1, int(self.player.get_total_atk() * pct / 100 * mult) * power // 100)
 
     def cast_spell(self, spell_id: str) -> bool:
@@ -787,7 +787,7 @@ class CombatSession:
 
     def _calc_escape_chance(self) -> int:
         f_chance = 20 + self.player.get_dodge() - self.enemy.base_dodge + (20 if PROFILE_MANAGER.get_perk("scarpisti", False) else 0)
-        f_chance += get_archive_bonus("escape", PROFILE_MANAGER._data) + attributes.value(self.player, "escape")
+        f_chance += effects.total(self.player, "escape")
         f_chance = max(10, min(90, f_chance))
         for r in self.player.relic_effects:
             mod = r.get_escape_modifier()
@@ -909,7 +909,7 @@ class CombatSession:
                         self.player.statuses[s_type] = max(self.player.statuses.get(s_type, 0), s_data["duration"])
                         display_msg(f"{Colors.MAGENTA}Sei stato afflitto da {STATUS_NAMES.get(s_type, s_type).upper()}!{Colors.RESET}")
                 
-                reflect_total = dmg_taken * self.player.rune_value("thorns_pct") // 100
+                reflect_total = dmg_taken * effects.total(self.player, "thorns_pct") // 100
                 if self.player.accessory and self.player.accessory.bonus_type == "reflect": reflect_total += self.player.accessory.bonus_value
                 if reflect_total > 0:
                     self.enemy.hp -= reflect_total
@@ -1307,7 +1307,7 @@ def scroll_drop(player: Player, floor: int, source: str):
 
 def rune_drop(player: Player, floor: int, source: str):
     """Una runa con la probabilità della fonte (`runes.json`, `rules.drops`)."""
-    if rune_rules.roll_drop(source, attributes.value(player, "rune_drop_add")) or any(source in r.rune_drop_always for r in player.relic_effects):
+    if rune_rules.roll_drop(source, effects.total(player, "rune_drop_add")) or any(source in r.rune_drop_always for r in player.relic_effects):
         r = generate_rune(floor)
         record_rune(r.rune_id)
         display_msg(f"{Colors.CYAN}Trovi una runa: {r.display_name}! (Si incastona al Falò){Colors.RESET}")
@@ -1403,7 +1403,7 @@ def trap_chances(player: Player) -> dict:
     rules = GAME_DATA["meta"]["rooms"]["trap"]
     precision = player.base_acc + player.temp_acc + player.weapon.get_hit_chance_modifier() + sum(r.get_acc_modifier() for r in player.relic_effects)
     stats = {"disarm": precision, "dash": player.get_dodge()}
-    bonus = player.rune_value("trap_chance_add")
+    bonus = effects.total(player, "trap_chance_add")
     return {k: int(max(rules["min_chance"], min(rules["max_chance"], rules[k]["base"] + stats[k] * rules[k]["per_point"] + bonus))) for k in stats}
 
 

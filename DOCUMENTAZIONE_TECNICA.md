@@ -21,13 +21,14 @@ Riferimento per chi modifica il gioco: architettura, formato dei dati, formule d
 | `rooms.py` | `CombatSession` (turni, danni, status, Risonanze, fine scontro) e le stanze: mercante, falò, forziere, trappola, mistero. |
 | `modes.py` | Modalità: regole della discesa in corso (`RUN`, `rule`, `combine`, `start_run`/`end_run`), gradi di Ascensione (`max_grade`, `ascension_rules`, `ascension_essence_mult`, `record_ascension_win`) e Sfida del Giorno (`daily_setup`, `daily_rules`, `daily_score`, `record_daily`, `daily_streak`). |
 | `magic.py` | Incantesimi ed Etere: dati (`spell`, `rules`), costo con lo sconto della Risonanza (`cost`), voce del menu (`label`), chiavi degli effetti (`SPELL_EFFECT_KEYS`). Il lancio è `CombatSession.cast_spell`. |
-| `talents.py` | Talenti: ogni `rules.every` livelli (`earned`) un talento fra `rules.offered` proposti a caso (`offer`, `choose`), effetti sommati da `value` e aggiunti da `attributes.value`, HP massimi aggiunti alla scelta (`take`), riga delle Statistiche (`summary`). |
-| `attributes.py` | Attributi dell'eroe: valori per classe (`starting`), somma degli effetti (`value`, che aggiunge quelli dei talenti), spesa e limiti (`raise_attribute`), Tomo dell'Oblio (`reset`), menu dei punti (`spend_points`), riga delle Statistiche (`summary`). |
+| `talents.py` | Talenti: ogni `rules.every` livelli (`earned`) un talento fra `rules.offered` proposti a caso (`offer`, `choose`), effetti sommati dal registro degli effetti (`effects.total`), HP massimi aggiunti alla scelta (`take`), riga delle Statistiche (`summary`). |
+| `attributes.py` | Attributi dell'eroe: valori per classe (`starting`), danni dell'arma che scala con un attributo (`weapon_bonus`), spesa e limiti (`raise_attribute`), Tomo dell'Oblio (`reset`), menu dei punti (`spend_points`), riga delle Statistiche (`summary`). |
+| `effects.py` | Il registro degli effetti: `total(player, chiave)` somma un effetto su tutte le fonti di `SOURCES` (attributi, talenti, tratto, Campo, rune e reliquie, Maestria Lv.6, Archivio), `of(player, fonte, chiave)` ne legge una sola. Vedi [Il registro degli effetti](#il-registro-degli-effetti). |
 | `runes.py` | Rune e Incastoni: chiavi degli effetti (`RUNE_EFFECT_KEYS`), dati delle rune (`rune`, `fits`, `random_rune_id`), probabilità di drop (`roll_drop`), costo di estrazione, etichetta degli incastoni sul nome (`socket_tag`). |
 | `nemesis.py` | La Nemesi: nascita e rango (`on_death`), comparsa sulla mappa (`waiting_on`), nemico (`build_enemy`), tratti che può imparare (`traits_for`), tratto che resiste (`resisted`, e `spell_resisted` per gli incantesimi: elemento dell'uccisione e Antimagia), sconfitta (`defeat`), boss che ti riconoscono (`boss_grudge`). |
 | `epitaph.py` | L'Epitaffio: cronaca della discesa (`note`, in `Player.chronicle`), composizione dai modelli (`compose`), Cimitero (`record`, `cemetery`). |
 | `camp.py` | Il Fuoco del Campo: personaggi presenti, frasi e doni (`talk`), strutture e loro livelli (`build`, `built`, `complete`, `next_level`), doni di inizio run delle strutture e dello Scrittoio (`start_of_run_boon`). |
-| `camp_rules.py` | Livelli delle strutture del Campo, senza interfaccia: `levels`, `level`/`set_level` (flag e contatore `camp_<id>`), `total("effects")` (letto da `Player.camp_effects` e sommato da `attributes.value`) e `total("start")`. |
+| `camp_rules.py` | Livelli delle strutture del Campo, senza interfaccia: `levels`, `level`/`set_level` (flag e contatore `camp_<id>`), `total("effects")` (letto da `Player.camp_effects` e sommato da `effects.total`) e `total("start")`. |
 | `endings.py` | Finali: disponibili (`available_endings`), scelta e premio (`choose_ending`), registro in `profile.story.endings`. |
 | `codex.py` | Il Codice del Labirinto: registra nemici visti e sconfitti, fasi dei boss, lettere e reliquie (`record_*`), calcola il completamento e mostra le pagine (`show_codex`). |
 | `events.py` | Motore degli eventi narrativi: condizioni (`CONDITIONS`), effetti (`EFFECTS`), riepiloghi generati dagli effetti, scene a più passi (`event_room`), scelta dell'evento per le porte (`pick_event`), memoria fra le run e conseguenze differite (`pop_due_event`). |
@@ -39,7 +40,7 @@ Riferimento per chi modifica il gioco: architettura, formato dei dati, formule d
 | `ui.py` | Terminale: colori ANSI, lettura dei tasti (Windows e POSIX), menu a frecce (`interactive_menu`), velocità del testo (`delay_print`, `set_text_speed`). |
 | `constants.py` | Costanti di bilanciamento (precisione base, scaling, finestre di profondità, velocità del testo…). |
 
-Dipendenze fra i moduli: `ui` ← `data_manager` ← `archive`/`relic_effects`/`codex`/`modes`/`talents`/`attributes`/`magic` ← `entities` ← `inventory_menu` ← `rooms` ← `events` ← `floor_map`/`camp`/`endings` ← `roguelike`. Nessun modulo importa da uno che sta alla sua destra.
+Dipendenze fra i moduli: `ui` ← `data_manager` ← `archive`/`relic_effects`/`codex`/`modes`/`talents`/`attributes`/`runes` ← `effects` ← `magic` ← `entities` ← `inventory_menu` ← `rooms` ← `events` ← `floor_map`/`camp`/`endings` ← `roguelike`. Nessun modulo importa da uno che sta alla sua destra.
 
 ---
 
@@ -63,8 +64,8 @@ Un test controlla che ogni oggetto sbloccabile abbia davvero una di queste strad
 | `consumables.json` | Consumabili | `name`, `category` (`heal`, `antidote`, `smoke_bomb`, `chaos_tome`, `chaos_vial`, `holy_water`, `whetstone`, `accuracy_potion`, `rune_solvent`: estrae gratis una runa dall'equipaggiamento, `socket_chisel`: +1 incastone fino a `sockets.boss`; senza un bersaglio valido non si consumano; `respec`: il Tomo dell'Oblio, si legge solo al Falò; `ether`: restituisce `ether_pct` dell'Etere massimo), `base_heal`, `val_base`, `weight` (opz., rarità: predefinito 10), `desc`, `unlock_id` |
 | `relics.json` | Reliquie | `id`, `name`, `desc`, `lore`, `unlock_id`, `unlock_cost` |
 | `elements.json` | Sistema elementale | `list`, `icons`, `multipliers[attaccante][difensore]`, `resonance[elemento] = {value, desc, announce}`, `marks.duration`, `conditions` (`blind`, `slow`, `scorch_pct`), `reactions["A+B"] = {name, icon, desc, bonus_pct, status: {type, duration}}` |
-| `books.json` | Tomi dell'Archivio | `title`, `unlock_condition` (testo), `unlock = {type: max_floor\|total_bosses\|won_normal\|spells_seen\|ascension\|best_echo, value}` (incantesimi nel Codice, grado di Ascensione vinto, Eco raggiunta), `bonus = {gold_pct, escape, boss_dmg_pct, def, ether_max, spell_pct}` (gli ultimi due entrano in `Player.magic_value`), `bonus_desc`, `chapters` |
-| `meta.json` | Regole di contorno | `traits` (`name`, `desc`, `unlock_req`; i tratti della v5 hanno anche `effects`, chiavi sommate da `attributes.value`, e `max_hp`, `ether`, `talent_every`, `hp_per_level`, applicati in `Player._apply_trait`), `pacts` (`name`, `desc`: gli effetti dei gradi di Ascensione con `pact`), `feats` (`target`, `reward_type`: `unlock`, `class`, `perk`, `trait` o `essence`, `reward_id`; `roguelike._check_feats` confronta il target con un valore della discesa, per le imprese della v5 i contatori `run_tracker["spells_cast"]`, `["reactions"]`, `["kill_muted_done"]`, i talenti, gli attributi e la vittoria), `mastery_xp_requirements`, `rooms.weights`/`rooms.cooldowns`, `corruption` (`max`, `atk_per_10`, `veil`, `voice`, `desc`), `cycle` (`hazard_pct_per_cycle`, `hazard_max_mult`, `chance_cap`, `essence_pct_per_cycle`, `arcane_moves` (pesi delle mosse aggiunti a ogni nemico nelle Eco, anche dopo le fasi dei boss: `Enemy.extra_moves`), `intro`, `desc`: vedi [Il Ciclo del Labirinto](#il-ciclo-del-labirinto)) |
+| `books.json` | Tomi dell'Archivio | `title`, `unlock_condition` (testo), `unlock = {type: max_floor\|total_bosses\|won_normal\|spells_seen\|ascension\|best_echo, value}` (incantesimi nel Codice, grado di Ascensione vinto, Eco raggiunta), `bonus = {gold_pct, escape, boss_dmg_pct, def, ether_max, spell_pct}` (fonte `archivio` di `effects.total`), `bonus_desc`, `chapters` |
+| `meta.json` | Regole di contorno | `traits` (`name`, `desc`, `unlock_req`; i tratti della v5 hanno anche `effects`, chiavi sommate da `effects.total`, e `max_hp`, `ether`, `talent_every`, `hp_per_level`, applicati in `Player._apply_trait`), `pacts` (`name`, `desc`: gli effetti dei gradi di Ascensione con `pact`), `feats` (`target`, `reward_type`: `unlock`, `class`, `perk`, `trait` o `essence`, `reward_id`; `roguelike._check_feats` confronta il target con un valore della discesa, per le imprese della v5 i contatori `run_tracker["spells_cast"]`, `["reactions"]`, `["kill_muted_done"]`, i talenti, gli attributi e la vittoria), `mastery_xp_requirements`, `rooms.weights`/`rooms.cooldowns`, `corruption` (`max`, `atk_per_10`, `veil`, `voice`, `desc`), `cycle` (`hazard_pct_per_cycle`, `hazard_max_mult`, `chance_cap`, `essence_pct_per_cycle`, `arcane_moves` (pesi delle mosse aggiunti a ogni nemico nelle Eco, anche dopo le fasi dei boss: `Enemy.extra_moves`), `intro`, `desc`: vedi [Il Ciclo del Labirinto](#il-ciclo-del-labirinto)) |
 | `biomes.json` | Biomi | `id`, `name`, `icon`, `floors`, `intro`, `hazard`, `room_weights`, `enemy_elements`, `signature_events` (opzionali gli ultimi quattro) |
 | `events.json` | Eventi narrativi | `title`, `start`, `scenes`, `requires` (opz.), `scripted` (opz.), `weight` (opz.): vedi [Eventi narrativi](#eventi-narrativi) |
 | `moves.json` | Mosse dei nemici (intenti) | `moves` (`name`, `icon`, `desc`, `damage_mult`, `damage_taken_mult`, `heal_pct`, `silence_turns`, `ether_drain`, `pierce_pct`), `profiles[id] = {name, desc, moves}` (stili condivisi da più nemici, mostrati nel Bestiario), `defaults` (pesi di `enemy`, `boss`, `with_status`), `rules` (`heal_below_pct`, `max_heals`, `no_repeat`) |
@@ -90,7 +91,7 @@ Un test controlla che ogni oggetto sbloccabile abbia davvero una di queste strad
 | `unlock` | 3, 5 | `id` | Aggiunge `id` a `unlocked_ids` (oggetto, reliquia, tratto) |
 | `global` | 4 | `bonus = {stat, value}` | Bonus a **tutti** gli eroi. Valori di `stat`: `def`, `dodge`, `exp`, `max_hp`, `weapon_atk`, `acc`, `crit`, `lifesteal` |
 | `class` | 5 | `id` | Sblocca la classe con quell'id |
-| `magic` | 6 | `bonus = {chiave: valore}` | Effetti magici della sola classe (`ether_max`, `spell_pct`, `ether_on_hit`, `spell_discount`), in `Player.mastery_magic` e sommati da `Player.magic_value` |
+| `magic` | 6 | `bonus = {chiave: valore}` | Effetti magici della sola classe (`ether_max`, `spell_pct`, `ether_on_hit`, `spell_discount`), in `Player.mastery_magic` e sommati da `effects.total` |
 
 Gli sblocchi dei livelli già raggiunti vengono riconcessi all'avvio (`_grant_retroactive_mastery_unlocks`). Così contenuti aggiunti più tardi arrivano anche a chi aveva già il livello.
 
@@ -197,7 +198,7 @@ Gli eventi visti e i personaggi vengono da `profile.story`. Il completamento con
 
 **Fuoco del Campo** (`story.json → camp`).
 - `characters`: `id`, `name`, `requires`, `lines` (la prima con condizioni vere; l'ultima, senza condizioni, è quella di riserva) e `gift` (`essence`, `text`), ricevuto una volta sola (flag `camp_dono_<id>`).
-- `structures`: `id`, `name`, `cost`, `desc`, `requires`, `locked_hint`. Una volta costruite diventano il flag `camp_<id>`. Una struttura a più livelli ha al posto di `cost`/`desc` una lista `levels` di `{cost, desc, effects, start}`: si costruisce un livello alla volta, il contatore `camp_<id>` conta i livelli, e i livelli sono cumulativi. `effects` usa le chiavi di `attributes.value` (`ether_max`, `spell_pct`, `dmg_pct`…) e vale per ogni eroe; `start` dà a inizio discesa `scroll` pergamene e `points` punti abilità. Ogni numero di `effects` e `start` è nella `desc` del livello (`test_endgame.test_camp_data`).
+- `structures`: `id`, `name`, `cost`, `desc`, `requires`, `locked_hint`. Una volta costruite diventano il flag `camp_<id>`. Una struttura a più livelli ha al posto di `cost`/`desc` una lista `levels` di `{cost, desc, effects, start}`: si costruisce un livello alla volta, il contatore `camp_<id>` conta i livelli, e i livelli sono cumulativi. `effects` usa le chiavi del registro degli effetti (`ether_max`, `spell_pct`, `dmg_pct`…) e vale per ogni eroe; `start` dà a inizio discesa `scroll` pergamene e `points` punti abilità. Ogni numero di `effects` e `start` è nella `desc` del livello (`test_endgame.test_camp_data`).
   - Il *Tavolo della Cartografa* fa mostrare a `floor_map.room_label` il titolo delle stanze speciali e degli eventi richiamati.
   - Lo *Scrittoio di Silas* ha i suoi `boons`, effetti degli eventi con riepilogo generato.
   - L'*Altare* ha `corruption_gain_pct`.
@@ -342,7 +343,7 @@ Oltre `max_active` la più vecchia si perde. `generate_floor_map` mette al posto
 
 ### Rune e Incastoni
 
-`Weapon` e `Armor` hanno `sockets` (incastoni) e `runes` (id incastonati); il nome mostra `[Incastoni: icone◇]` (le icone delle rune incastonate, un ◇ per ogni incastone libero) (`runes.socket_tag`). I generatori danno `normal` incastoni, gli epici `epic` (`set_sockets`), il drop leggendario dei boss `boss`. Le rune nello zaino sono oggetti `Rune` (`type = "rune"`), create da `generate_rune`. `Player.rune_value(chiave)` somma un effetto sulle rune dell'arma e dell'armatura **equipaggiate**:
+`Weapon` e `Armor` hanno `sockets` (incastoni) e `runes` (id incastonati); il nome mostra `[Incastoni: icone◇]` (le icone delle rune incastonate, un ◇ per ogni incastone libero) (`runes.socket_tag`). I generatori danno `normal` incastoni, gli epici `epic` (`set_sockets`), il drop leggendario dei boss `boss`. Le rune nello zaino sono oggetti `Rune` (`type = "rune"`), create da `generate_rune`. La fonte `rune` del registro degli effetti somma un effetto sulle rune dell'arma e dell'armatura **equipaggiate**:
 
 | Effetto | Dove agisce |
 |---|---|
@@ -355,11 +356,11 @@ Oltre `max_active` la più vecchia si perde. `generate_floor_map` mette al posto
 | `defend_heal_pct` | `execute_player_defense` |
 | `trap_chance_add` | `rooms.trap_chances` |
 | `audacity_start` | Audacia all'inizio di ogni piano (`roguelike`) |
-| `ether_max`, `spell_pct`, `ether_on_hit`, `spell_discount` | Magia (famiglia *Arcana*): `Player.magic_value(chiave)` le somma ad attributi, talenti e Maestria Lv.6, e la leggono `max_ether`, `spell_damage`, il colpo a segno di `execute_player_attack` e `magic.cost`. `spell_discount` esiste solo nella parola *Mente Arcana* |
+| `ether_max`, `spell_pct`, `ether_on_hit`, `spell_discount` | Magia (famiglia *Arcana*): `effects.total` le somma ad attributi, talenti, Campo, Maestria Lv.6 e Archivio, e la leggono `max_ether`, `spell_damage`, il colpo a segno di `execute_player_attack` e `magic.cost`. `spell_discount` esiste solo nella parola *Mente Arcana* |
 
 Il Falò ha `rune_workshop` (`RUNE_WORKSHOP`): incastonare (gratis, nell'arma o nell'armatura con un incastone libero adatto allo `slot`) ed estrarre (`extract_cost`); non spegne il falò. `rune_drop(player, piano, fonte)` lascia una runa con la probabilità di `drops[fonte]` (Élite, boss, trappola, tesoro del Mistero, Mimic) e la registra nel Codice (`record_rune`, pagina *Rune*). La fusione dell'Altare tiene le rune della base e rimette nello zaino quelle del sacrificio.
 
-**Parole runiche** (`runes.json`, `words[id] = {name, runes, effects, desc}`). `runes.active_words(oggetto)` trova le parole composte dalle rune di un oggetto: prima le più lunghe, poi nell'ordine dei dati, e ogni runa vale per una sola parola. `runes.item_effects` restituisce gli effetti delle rune più quelli delle parole, e `Player.rune_value` li somma, quindi una parola usa le stesse chiavi delle rune. Tre chiavi esistono solo nelle parole: `spell_discount`, `scorch_on_hit` e `stun_on_hit` (con `bleed_on_hit` e `poison_on_hit` in `ON_HIT_STATUSES`: status, chiave, turni). Il nome dell'oggetto mostra le parole fra «». Il laboratorio del Falò annuncia una parola appena composta e la registra nel Codice (`record_runeword`, pagina *Parole runiche*).
+**Parole runiche** (`runes.json`, `words[id] = {name, runes, effects, desc}`). `runes.active_words(oggetto)` trova le parole composte dalle rune di un oggetto: prima le più lunghe, poi nell'ordine dei dati, e ogni runa vale per una sola parola. `runes.item_effects` restituisce gli effetti delle rune più quelli delle parole, e la fonte `rune` li somma, quindi una parola usa le stesse chiavi delle rune. Tre chiavi esistono solo nelle parole: `spell_discount`, `scorch_on_hit` e `stun_on_hit` (con `bleed_on_hit` e `poison_on_hit` in `ON_HIT_STATUSES`: status, chiave, turni). Il nome dell'oggetto mostra le parole fra «». Il laboratorio del Falò annuncia una parola appena composta e la registra nel Codice (`record_runeword`, pagina *Parole runiche*).
 
 ### Modalità
 
@@ -432,6 +433,24 @@ La Maledizione blocca le cure, non il danno del `siphon`. Se la tecnica abbatte 
 
 **Livello dell'eroe**: soglia iniziale 100 EXP, ×1,5 a ogni livello. A ogni livello: cura completa, `attributes.json → rules.per_level` (+7 HP massimi, +1 precisione, +1 schivata) e `points_per_level` punti abilità in `Player.unspent_points` (con `points_offered = False`).
 
+### Il registro degli effetti
+
+Ogni bonus numerico dell'eroe è una chiave (`acc`, `def_pct`, `spell_pct`…) e si legge con `effects.total(player, chiave)`, che somma le fonti di `effects.SOURCES`:
+
+| Fonte | Da dove viene |
+|---|---|
+| `attributi` | Punti dell'eroe × `per_point` (`attributes.json`) |
+| `talenti` | `effects` dei talenti presi (`talents.json`) |
+| `tratto` | `effects` del tratto (`meta.json → traits`), in `Player.trait_effects` |
+| `campo` | `effects` dei livelli costruiti (`story.json → camp.structures`), in `Player.camp_effects` |
+| `rune` | Rune e parole runiche di arma e armatura equipaggiate, × (1 + `get_rune_multiplier` delle reliquie), più `get_rune_bonus` delle reliquie |
+| `maestria` | Bonus della Maestria Lv.6 di tipo `magic` della propria classe, in `Player.mastery_magic` |
+| `archivio` | `bonus` dei tomi sbloccati (`books.json`, `get_archive_bonus`) |
+
+Una chiave vale allo stesso modo da qualsiasi fonte: un tomo che desse `crit` funzionerebbe come un talento con `crit`. `skip` lascia fuori una fonte quando la formula la applica a parte: l'oro guadagnato applica prima l'Archivio (`effects.of(player, "archivio", "gold_pct")`) e poi tutte le altre fonti insieme. `tests/test_effects.py` controlla che ogni chiave dei dati abbia un lettore nel codice e che ogni chiave letta venga da una fonte.
+
+Restano fuori dal registro i bonus che cambiano una volta sola i valori base dell'eroe all'inizio della discesa (Maestrie `global`, Perk del Campo, crescita per livello) e gli effetti con una regola propria, che non sono numeri da sommare: gli effetti personali della Maestria Lv.2 (`has_mastery_effect`), i tratti come Titano o Maledetto (`Player._apply_trait`) e le reliquie con un comportamento (gli hook di `RelicEffect`).
+
 ### La magia
 
 `magic.py` e `data/spells.json`.
@@ -452,7 +471,7 @@ La Maledizione blocca le cure, non il danno del `siphon`. Se la tecnica abbatte 
 - **Pergamene** (`entities.Scroll`, `type = "scroll"`). `generate_scroll` sceglie fra `magic.available()`, cioè gli incantesimi senza `unlock_id` o già sbloccati alla Forgia (categoria *Pergamene*, `roguelike.forge_pool("spells")`). `rooms.scroll_drop(fonte)` usa `rules.drops` ed è chiamata da `rune_drop`, quindi le stesse fonti delle rune possono dare una pergamena; il Mercante ne ha `vendor_stock`. `inventory_menu.learn_scroll` impara l'incantesimo fino a `slots` posti; a posti pieni chiede quale dimenticare (o tiene la pergamena). In combattimento non si leggono.
 - **Fuori dal combattimento.** Gli incantesimi con `outside: true` (solo cure) compaiono nello zaino fuori dal combattimento (`magic.castable_outside`, `magic.cast_outside`). Al Falò `MEDITATE` riempie l'Etere e spegne il falò. Il consumabile `ether` (*Fiala d'Etere*, `ether_pct`) restituisce quella parte dell'Etere massimo; in combattimento costa il turno, e a Etere pieno non si consuma.
 
-**Attributi** (`attributes.py`, `data/attributes.json`). `Player.attributes` parte da `classes.json → attributes` (3 punti per classe) e ogni attributo arriva al massimo a `max_points`. `attributes.value(player, chiave)` somma un effetto di `per_point` su tutti gli attributi, e lo leggono:
+**Attributi** (`attributes.py`, `data/attributes.json`). `Player.attributes` parte da `classes.json → attributes` (3 punti per classe) e ogni attributo arriva al massimo a `max_points`. La fonte `attributi` del registro degli effetti somma un effetto di `per_point` su tutti gli attributi, e lo leggono:
 
 | Chiave | Attributo | Dove agisce |
 |---|---|---|
@@ -465,7 +484,7 @@ La Maledizione blocca le cure, non il danno del `siphon`. Se la tecnica abbatte 
 
 La scelta dei punti (`attributes.spend_points`) arriva alla fine della stanza in cui si è saliti di livello (`_descent`); finché restano punti, la mappa ha la voce *Distribuisci i punti abilità*. Il consumabile `respec` (*Tomo dell'Oblio*, `weight: 1`) si legge solo al Falò (`rooms.read_oblivion`): `attributes.reset` rende i punti spesi oltre quelli della classe. `generate_potion` sceglie i consumabili pesati da `weight` (predefinito `CONSUMABLE_WEIGHT = 10`).
 
-**Talenti** (`talents.py`, `data/talents.json`). In `Player.gain_exp`, ogni livello multiplo di `rules.every` (`talents.earned`) aggiunge 1 a `Player.pending_talents`; alla fine della stanza `_descent` chiama `talents.choose`, prima dei punti abilità, che propone `rules.offered` talenti a caso fra quelli che l'eroe non ha (`offer`) e non si rimanda. I talenti scelti stanno in `Player.talents`. `talents.value` somma un effetto sui talenti e `attributes.value` lo aggiunge a quello degli attributi, quindi le chiavi degli attributi (`acc`, `crit`, `dodge`, `escape`, `ether_max`, `spell_pct`, `reaction_dmg_pct`, `gold_pct`, `rune_drop_add`) agiscono negli stessi punti della tabella sopra; `max_hp` si aggiunge alla scelta (`take`). Il Tomo dell'Oblio non tocca i talenti. Le chiavi proprie (`TALENT_EFFECT_KEYS`):
+**Talenti** (`talents.py`, `data/talents.json`). In `Player.gain_exp`, ogni livello multiplo di `rules.every` (`talents.earned`) aggiunge 1 a `Player.pending_talents`; alla fine della stanza `_descent` chiama `talents.choose`, prima dei punti abilità, che propone `rules.offered` talenti a caso fra quelli che l'eroe non ha (`offer`) e non si rimanda. I talenti scelti stanno in `Player.talents`. Il registro degli effetti somma i talenti alle altre fonti, quindi le chiavi degli attributi (`acc`, `crit`, `dodge`, `escape`, `ether_max`, `spell_pct`, `reaction_dmg_pct`, `gold_pct`, `rune_drop_add`) agiscono negli stessi punti della tabella sopra; `max_hp` si aggiunge alla scelta (`take`). Il Tomo dell'Oblio non tocca i talenti. Le chiavi proprie (`TALENT_EFFECT_KEYS`):
 
 | Chiave | Dove agisce |
 |---|---|
@@ -540,7 +559,7 @@ Ogni reliquia è una sottoclasse di `RelicEffect` che ridefinisce solo gli hook 
 | `on_item_use(player, item)` | Restituire `False` evita di consumare l'oggetto |
 | `get_dodge_modifier` / `get_acc_modifier` / `get_exp_modifier` / `get_escape_modifier` | Modificatori passivi |
 | `modify_multiplier(mult, is_defense)` / `modify_trap_damage` / `modify_room_weights` | Elementi, trappole e generazione delle stanze |
-| `get_rune_bonus(chiave)` | Un bonus con le chiavi degli effetti delle rune, sommato da `Player.rune_value` (la sottoclasse `RuneBonus` lo dichiara con `BONUS`) |
+| `get_rune_bonus(chiave)` | Un bonus con le chiavi degli effetti delle rune, sommato dalla fonte `rune` di `effects.total` (la sottoclasse `RuneBonus` lo dichiara con `BONUS`) |
 | `get_rune_multiplier()` | Le rune incastonate valgono × (1 + valore) |
 | `modify_enemy_status_damage(status, dmg)` | Danni di veleno, sanguinamento e magma sul nemico (`CombatSession._enemy_status_damage`) |
 | `on_reaction(session, chiave)` | Dopo ogni reazione elementale |
@@ -587,6 +606,7 @@ Dopo ogni modifica a `data/`: `python tools/formatta_dati.py`, poi `python tools
 - **Una classe.** Aggiungila a `classes.json` con le sue Maestrie e rendila sbloccabile da un'impresa o da una Maestria di tipo `class`. Gli effetti personali nuovi vanno controllati nel codice con `has_mastery_effect`.
 - **Un evento.** Aggiungilo a `events.json` con condizioni ed effetti esistenti: di solito non serve toccare il codice. Un effetto o una condizione nuovi vanno aggiunti a `EFFECTS`/`CONDITIONS` in `events.py` e al contratto in `EventContractTest`. I test controllano che ogni scena sia raggiungibile, che abbia sempre un'uscita senza requisiti, che ogni oggetto chiave serva a qualcosa e che ogni evento `scripted` venga richiamato.
 - **Una Risonanza o un tomo dell'Archivio.** Modifica `elements.json → resonance` o `books.json`.
+- **Un effetto nuovo.** Una chiave che una fonte già conosce (attributi, talenti, tratti, Campo, rune, Maestria Lv.6, Archivio) si aggiunge ai dati e si legge nel punto del gioco con `effects.total(player, "chiave")`: vale subito per tutte le fonti. `tests/test_effects.py` fallisce se una chiave dei dati non ha un lettore.
 
 Dopo ogni modifica alla logica o ai dati aggiungi o aggiorna i test (vedi `AGENTS.md`). Per i contenuti nuovi vuol dire anche: descrizione con i numeri reali e, se servono, i contratti in `tests/test_contracts.py`.
 
@@ -624,12 +644,13 @@ La CI (`.github/workflows/tests.yml`) li esegue su Python 3.9 e sull'ultima 3.x;
 | `test_enemy_identity.py` | Stili dei nemici (dati, uso, Colpo infetto, Bestiario), boss nativi (uno per bioma, solo nel suo bioma), sei nativi per bioma (stile, forza rispetto ai generici, quota degli scontri), difese delle classi (dati e numeri dei testi, ogni tecnica, Maledizione, colpo finale) |
 | `test_talents.py` | Talenti: dati e testi (ogni numero degli effetti è nella descrizione), un talento ogni `every` livelli, proposta senza doppioni, scelta e HP massimi, effetto di ogni chiave propria, Tomo dell'Oblio che non li tocca, scelta a fine stanza prima dei punti, Statistiche |
 | `test_attributes.py` | Attributi: dati e testi, attributi di ogni classe, punti a ogni livello e crescita automatica, limiti, menu e rinvio, Tomo dell'Oblio, effetto di ogni attributo (Vitalità, Destrezza, Agilità e fuga, ogni arma con il suo attributo, focus e armi iniziali, Arcano sulle reazioni, Fortuna), Statistiche |
-| `test_magic_world.py` | Magia nel mondo: stile Arcanista e nativi, boss che lanciano incantesimi nelle fasi, mosse delle Eco (anche dopo una fase), Nemesi Antimagia (solo da chi conosce incantesimi, resistenza e mosse) e resistenza elementale sugli incantesimi, scelte degli eventi per ogni attributo e per chi conosce incantesimi, Maestria Lv.6 (dati, solo per la sua classe, salita), `magic_value` da tutte le fonti, Etere pieno all'inizio anche con una reliquia |
+| `test_magic_world.py` | Magia nel mondo: stile Arcanista e nativi, boss che lanciano incantesimi nelle fasi, mosse delle Eco (anche dopo una fase), Nemesi Antimagia (solo da chi conosce incantesimi, resistenza e mosse) e resistenza elementale sugli incantesimi, scelte degli eventi per ogni attributo e per chi conosce incantesimi, Maestria Lv.6 (dati, solo per la sua classe, salita), effetto magico da tutte le fonti, Etere pieno all'inizio anche con una reliquia |
 | `test_magic.py` | Magia: dati e testi degli incantesimi, Etere e incantesimi di ogni classe, testo delle regole; Etere iniziale e Arcano, guadagni (colpo, difesa, reazione, massimo); lancio (danni, marchio, Codice), elemento del nemico e Arcano, reazione composta con l'arma, Guardia, scudo e Dissolvi, cura, Sifone, status, Detonazione con e senza marchio, sconto della Risonanza, colpo finale; menu (terza azione, Indietro gratis, Etere insufficiente, eroe senza incantesimi); Statistiche e Codice |
 | `test_grimoires.py` | Grimori: testo delle regole, incantesimi da sbloccare (né in pergamena né alla Forgia prima dello sblocco), drop per fonte, Mercante, imparare (posto libero, già noto, posti pieni, tenere per dopo), niente lettura in combattimento, cure dallo zaino (solo fuori dal combattimento, cura, purificazione, Etere insufficiente), Medita al Falò, Pelle di Pietra, Maledizione una volta sola, Passo del Vento (anche contro i boss), Morsa di Ghiaccio, Vampa, Marea Curativa |
 | `test_cycle.py` | Ciclo del Labirinto: cicli ed Eco, primo ciclo intatto, ogni bioma una volta per ciclo con la Soglia in fondo, ordine dal seme, dati intatti, pericoli più duri fino al limite e descrizioni con i numeri nuovi, regola usata nello scontro, nativi rinforzati, DIO ANTICO a ogni fine ciclo, annuncio e record, Epitaffio, Essenza, Codice, testo delle regole |
 | `test_map.py` | Mappa (file alternate, collegamenti senza incroci né vicoli ciechi, tipi e tempi di ricarica, evento richiamato, disegno, ciclo dei piani reale) e biomi (copertura dei piani, dati, nativi, elementi, pesi delle stanze, stanza speciale per piano, Prima Pietra, annuncio del pericolo) |
 | `test_elementalista.py` | Elementalista: incantesimi iniziali che reagiscono con il marchio della verga, equipaggiamento, Prisma Elementale (dimezza e dà Etere), Catena Elementale, sblocco con *Alchimia degli Elementi* |
+| `test_effects.py` | Registro degli effetti: ogni fonte dei dati è registrata, ogni chiave dei dati ha un lettore nel codice e ogni chiave letta viene da una fonte, la somma è quella delle fonti (e `skip` ne lascia fuori una), le statistiche dell'eroe leggono il registro |
 | `test_data_format.py` | Formato dei dati: ogni file di `data/` è nel formato di `tools/formatta_dati.py`, che conserva il contenuto ed è stabile |
 | `test_golden_master.py` | Golden master: 14 run del simulatore con semi fissi danno sempre lo stesso esito, e non dipendono dal profilo locale |
 | `test_camp_levels.py` | Strutture a più livelli: un livello alla volta e solo dopo aver liberato il personaggio, strutture di un solo livello ancora lette, etichette, Etere e potenza della Biblioteca, danni della Sala d'Armi, pergamena e punti a inizio discesa |

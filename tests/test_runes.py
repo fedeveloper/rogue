@@ -8,6 +8,7 @@ import unittest
 from contextlib import redirect_stdout
 from unittest import mock
 
+import effects
 import codex
 import magic
 import roguelike
@@ -204,7 +205,7 @@ class EffectContractTest(Sandbox):
         self.assertEqual(gains[1], int(1000 * (p.exp_multiplier + v / 100)))
 
     def _audacity(self, rid, v):
-        self.assertEqual(self.hero(rid).rune_value("audacity_start"), v)
+        self.assertEqual(effects.total(self.hero(rid), "audacity_start"), v)
         seen = []
         def menu(options, prompt="", **kw):
             seen.append(plain(prompt)); return len(options) - 1  # Fuga dal Labirinto
@@ -322,7 +323,7 @@ class SocketTest(Sandbox):
         p = self.hero()
         spare = Weapon("Riserva", 1, 10, "Normale", 1); spare.runes = ["forza"]
         p.inventory.append(spare)
-        self.assertEqual(p.rune_value("atk_pct"), 0)
+        self.assertEqual(effects.total(p, "atk_pct"), 0)
 
 
 class WorkshopTest(Sandbox):

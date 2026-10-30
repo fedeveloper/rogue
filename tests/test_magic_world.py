@@ -1,6 +1,6 @@
 """La magia nel mondo: nemici che combattono la magia (Arcanista, nativi, fasi dei boss, Eco del Ciclo), Nemesi
 Antimagia, scelte degli eventi per attributo e per chi conosce incantesimi, Maestria Lv.6 e l'effetto magico condiviso
-da attributi, talenti, rune, reliquie e Maestria (`Player.magic_value`)."""
+da attributi, talenti, rune, reliquie e Maestria (`effects.total`)."""
 import copy
 import io
 import random
@@ -8,6 +8,7 @@ import unittest
 from contextlib import redirect_stdout
 from unittest import mock
 
+import effects
 import events
 import magic
 import nemesis
@@ -153,7 +154,7 @@ class MasteryTest(Sandbox):
         mage, warrior = self.hero("3"), self.hero("1")
         bonus = GAME_DATA["classes"]["3"]["mastery"]["6"]["bonus"]
         self.assertEqual(mage.max_ether() - base.max_ether(), bonus.get("ether_max", 0))
-        self.assertEqual(mage.magic_value("spell_pct") - base.magic_value("spell_pct"), bonus.get("spell_pct", 0))
+        self.assertEqual(effects.total(mage, "spell_pct") - effects.total(base, "spell_pct"), bonus.get("spell_pct", 0))
         self.assertEqual(warrior.mastery_magic, {}, "la Maestria del Mago vale solo per il Mago")
 
     def test_mastery_climbs_to_the_sixth_level(self):
@@ -172,7 +173,7 @@ class MagicValueTest(Sandbox):
         p.mastery_magic = {"spell_pct": 7}
         expected = (GAME_DATA["talents"]["talents"]["mente_affilata"]["effects"]["spell_pct"]
                     + GAME_DATA["runes"]["runes"]["sapienza"]["effects"]["spell_pct"] + 7)
-        self.assertEqual(p.magic_value("spell_pct"), expected)
+        self.assertEqual(effects.total(p, "spell_pct"), expected)
 
     def test_the_hero_starts_with_full_ether_even_with_a_relic_that_raises_it(self):
         PROFILE_MANAGER._data.setdefault("perks", {})["altare_benedizione"] = True

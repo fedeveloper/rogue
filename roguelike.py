@@ -18,6 +18,7 @@ import modes
 import nemesis
 import epitaph
 import attributes
+import effects
 import magic
 import talents
 from constants import TEXT_SPEEDS, SPERANZA_LUCE_PCT_PER_LVL, RATIO_GOLD_TO_ESSENCE_ON_DEATH, BOSS_ESSENCE_BONUS, XP_PER_FLOOR, XP_PER_BOSS, INFINITE_MODE_THRESHOLD, INFINITE_MODE_ESSENCE_MULTIPLIER, BLIND_FURY_MIN_ATTACKS
@@ -564,7 +565,7 @@ def _descent(c_choice, t_choice, active_pacts, infinite_mode, grade, daily):
         apply_biome_on_floor(player, biome)
             
         player.run_tracker["floor_attacks"] = player.run_tracker["floor_hits"] = 0
-        player.audacity = player.rune_value("audacity_start")
+        player.audacity = effects.total(player, "audacity_start")
         
         # La mappa del piano si genera all'arrivo: le reliquie possedute in quel momento ne cambiano i pesi
         weights_def = floor_room_weights(base_weights, player)

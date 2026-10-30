@@ -1,8 +1,8 @@
 """I talenti: ogni `rules.every` livelli l'eroe ne sceglie uno fra `rules.offered` proposti a caso (`data/talents.json`).
 
 Ogni talento ha degli effetti (`effects`) con le stesse chiavi degli attributi più alcune proprie (`TALENT_EFFECT_KEYS`).
-`value(player, chiave)` li somma e `attributes.value` li aggiunge a quelli degli attributi, così li leggono gli stessi
-punti del gioco. Gli HP massimi si aggiungono quando si sceglie il talento. I talenti valgono per una sola discesa e il
+Il registro degli effetti (`effects.total`) li somma a quelli delle altre fonti, così li leggono gli stessi punti del
+gioco. Gli HP massimi si aggiungono quando si sceglie il talento. I talenti valgono per una sola discesa e il
 Tomo dell'Oblio non li tocca.
 """
 import random
@@ -20,11 +20,6 @@ def rules() -> dict:
 
 def definitions() -> dict:
     return GAME_DATA["talents"]["talents"]
-
-
-def value(player, key: str) -> int:
-    """La somma di un effetto su tutti i talenti dell'eroe."""
-    return sum(definitions()[t]["effects"].get(key, 0) for t in getattr(player, "talents", []))
 
 
 def earned(level: int, every: int = None) -> bool:

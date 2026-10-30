@@ -7,6 +7,7 @@ import unittest
 from contextlib import redirect_stdout
 from unittest import mock
 
+import effects
 import magic
 import roguelike
 from constants import ELEMENTAL_CHAIN_ETHER
@@ -56,7 +57,7 @@ class KitTest(Sandbox):
 
     def test_the_hero_starts_with_the_kit(self):
         with quiet(): p = Player("9", "base", [])
-        self.assertEqual((p.role, p.spells, p.weapon.scaling, p.max_ether()), ("Elementalista", CLS["spells"], "arcano", p.base_ether + p.magic_value("ether_max")))
+        self.assertEqual((p.role, p.spells, p.weapon.scaling, p.max_ether()), ("Elementalista", CLS["spells"], "arcano", p.base_ether + effects.total(p, "ether_max")))
 
 
 class DefenseTest(Sandbox):
