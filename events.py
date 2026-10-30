@@ -65,6 +65,11 @@ def _role(class_id: str) -> str:
     return GAME_DATA["classes"][class_id]["role"]
 
 
+def _attribute_tag(attr: str, points: int) -> str:
+    d = GAME_DATA["attributes"]["attributes"][attr]
+    return f"{d['icon']} {d['name']} {points}+"
+
+
 def _as_list(value) -> list:
     return value if isinstance(value, list) else [value]
 
@@ -100,6 +105,8 @@ CONDITIONS: Dict[str, tuple] = {
     "corruption": (lambda p, v, f: p.corruption >= v, lambda v: f"Corruzione {v}+"),
     "corruption_below": (lambda p, v, f: p.corruption < v, None),
     "not_npc": (lambda p, v, f: not PROFILE_MANAGER.get_npc_unlocked(v), None),
+    "attribute": (lambda p, v, f: all(p.attributes.get(a, 0) >= n for a, n in v.items()), lambda v: ", ".join(_attribute_tag(a, n) for a, n in v.items())),
+    "spells": (lambda p, v, f: bool(p.spells) == v, lambda v: "Incantesimi"),
 }
 # Condizioni che dipendono solo da piano e profilo: valutabili anche senza un eroe (es. nella scelta delle porte)
 PROFILE_CONDITIONS = {"flags", "any_flags", "letters_complete", "biome", "min_floor", "max_floor", "flag", "not_flag", "counter", "counter_below", "npc", "not_npc"}
@@ -167,6 +174,27 @@ def _equipment(generator, epic_arg=True):
         p.inventory.append(item)
         display_msg(f"{Colors.MAGENTA}Ottieni: {item.display_name}!{Colors.RESET}")
     return apply
+
+
+def _rune(p, v, eff, floor):
+    from entities import generate_rune
+    from codex import record_rune
+    item = generate_rune(floor, "" if v == "random" else v)
+    record_rune(item.rune_id)
+    p.inventory.append(item)
+    display_msg(f"{Colors.MAGENTA}Ottieni: {item.display_name}! (Si incastona al Falò){Colors.RESET}")
+
+
+def _scroll(p, v, eff, floor):
+    from entities import generate_scroll
+    item = generate_scroll(floor)
+    p.inventory.append(item)
+    display_msg(f"{Colors.MAGENTA}Ottieni: {item.display_name}! (La leggi dallo zaino){Colors.RESET}")
+
+
+def _ether(p, v, eff, floor):
+    gained = p.gain_ether(p.max_ether() if v == "full" else v)
+    display_msg(f"{Colors.CYAN}+{gained} Etere. ({p.ether}/{p.max_ether()}){Colors.RESET}")
 
 
 def _potion(p, v, eff, floor):
@@ -247,6 +275,9 @@ EFFECTS: Dict[str, tuple] = {
     "armor": (_equipment(generate_armor), lambda v, e: "Armatura Epica" if v == "epic" else "Armatura"),
     "accessory": (_equipment(generate_accessory, epic_arg=False), lambda v, e: "Monile"),
     "potion": (_potion, lambda v, e: _plural(v, "Pozione", "Pozioni")),
+    "rune": (_rune, lambda v, e: "Runa" if v == "random" else f"Runa: {GAME_DATA['runes']['runes'][v]['name']}"),
+    "scroll": (_scroll, lambda v, e: "Pergamena"),
+    "ether": (_ether, lambda v, e: "Tutto l'Etere" if v == "full" else f"+{v} Etere"),
     "fight": (_fight, lambda v, e: FIGHTS[v][0]),
     "quest_item": (_quest_item, lambda v, e: f"Oggetto chiave: {item_name(v)}"),
     "take_quest_item": (_take_quest_item, lambda v, e: f"Consuma: {item_name(v)}"),
@@ -394,6 +425,7 @@ def _header(ev: dict, player: Player) -> str:
 def event_room(player: Player, event_id: str, floor: int):
     ev = GAME_DATA["events"][event_id]
     player.seen_events.add(event_id)
+    player.chronicle.append({"kind": "event", "title": ev["title"]})
     seen = _story()["seen_events"]
     seen[event_id] = seen.get(event_id, 0) + 1
     scene_id = ev["start"]

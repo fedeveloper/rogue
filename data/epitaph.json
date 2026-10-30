@@ -1,0 +1,31 @@
+{
+    "cemetery_size": 50,
+    "max_middle": 3,
+    "opening": {
+        "death":   ["Qui giace un {cls}, caduto al piano {floor}.", "Un {cls} scese fino al piano {floor}, e lì rimase.", "Il piano {floor} tiene ancora le ossa di un {cls}."],
+        "escape":  ["Un {cls} uscì vivo dal Labirinto al piano {floor}, con {gold} Oro e molte cicatrici.", "Al piano {floor} un {cls} decise che bastava, e tornò alla luce."],
+        "victory": ["Un {cls} abbatté il DIO ANTICO e vide la fine del Labirinto.", "Trenta piani, un {cls}, e un Dio che non si è più rialzato."]
+    },
+    "middle": {
+        "ascension": "Aveva sfidato l'Ascensione fino al grado {grade}.",
+        "daily":     "Era la Sfida del Giorno del {date}.",
+        "echo":      "Si spinse nel Ciclo del Labirinto fino all'{echo}.",
+        "bosses":    "Abbatté {bosses} boss; l'ultimo fu {last_boss}.",
+        "nemesis":   "Si vendicò di {nemesis}.",
+        "runeword":  "Sulle sue armi brillava la parola «{runeword}».",
+        "relics":    "Portava con sé {relics}.",
+        "event":     "Il suo ultimo incontro fu «{event}».",
+        "biomes":    "Attraversò {biomes}.",
+        "corruption": "Il Labirinto lo aveva già segnato: la Corruzione era a {corruption}."
+    },
+    "priority": ["ascension", "daily", "echo", "nemesis", "bosses", "runeword", "relics", "event", "biomes", "corruption"],
+    "cause": {
+        "nemesis":  "Lo uccise di nuovo {killer}, che non lo aveva mai dimenticato.",
+        "boss":     "{killer} non gli lasciò scampo.",
+        "enemy":    "Lo uccise {killer}.",
+        "trap":     "Lo tradì una trappola.",
+        "other":    "Le ferite fecero il resto."
+    },
+    "born": "Da quel giorno {nemesis} porta il suo Oro.",
+    "ending": "Scelse il finale «{ending}»."
+}

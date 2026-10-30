@@ -71,6 +71,30 @@ class RelicEffect:
     def modify_room_weights(self, weights: dict):
         pass
 
+    def get_rune_bonus(self, key: str) -> int:
+        """Un bonus con le stesse chiavi degli effetti delle rune (runes.RUNE_EFFECT_KEYS)."""
+        return 0
+
+    def get_rune_multiplier(self) -> float:
+        """Quanto valgono in più le rune incastonate (0.5 = +50%)."""
+        return 0.0
+
+    def modify_enemy_status_damage(self, status: str, dmg: int) -> int:
+        """Danni di veleno, sanguinamento e magma sul nemico."""
+        return dmg
+
+    def on_reaction(self, session, key: str):
+        pass
+
+    def get_audacity_bonus(self) -> int:
+        """Punti di Audacia in più per ogni stanza rischiosa."""
+        return 0
+
+    # Regole che altri sistemi leggono dalla presenza della reliquia
+    free_rune_extraction = False
+    ignore_silence = False  # né il Silenzio né il Gas del Silenzio impediscono gli incantesimi
+    rune_drop_always = ()
+
 # --- IMPLEMENTAZIONI ---
 
 class ArtiglioVampiro(RelicEffect):
@@ -259,6 +283,97 @@ class MascheraAntigas(RelicEffect):
         return 0
 
 
+class AgoUntore(RelicEffect):
+    def modify_enemy_status_damage(self, status, dmg):
+        return dmg * 2 if status in ("poison", "bleed") else dmg
+
+class FialaCremisi(RelicEffect):
+    def on_attack_landed(self, session, multiplier):
+        if session.enemy.hp > 0 and random.randint(1, 100) <= 20:
+            session.enemy.statuses["bleed"] = max(session.enemy.statuses.get("bleed", 0), 2)
+            display_msg(f"{Colors.RED}Fiala Cremisi: {session.enemy.name} sanguina!{Colors.RESET}")
+
+class SporaNera(RelicEffect):
+    def on_combat_start(self, session):
+        session.enemy.statuses["poison"] = max(session.enemy.statuses.get("poison", 0), 3)
+
+class BilanciaMercante(RelicEffect):
+    def get_atk_modifier(self, player) -> int:
+        return min(10, max(0, player.gold) // 100)
+
+class MonetaTraghettatore(RelicEffect):
+    def on_enemy_death(self, session):
+        if session.enemy.is_boss and not session.player.aristocrat:
+            session.player.gold += 100
+            display_msg(f"{Colors.YELLOW}Moneta del Traghettatore: +100 Oro.{Colors.RESET}")
+
+class DenteOro(RelicEffect):
+    def on_gold_gain(self, player, amount):
+        return amount * 115 // 100
+    def get_exp_modifier(self) -> float:
+        return 0.05
+
+class RuneBonus(RelicEffect):
+    """Reliquie che danno un effetto con le stesse chiavi delle rune."""
+    BONUS = {}
+    def get_rune_bonus(self, key):
+        return self.BONUS.get(key, 0)
+
+class Catalizzatore(RuneBonus):
+    BONUS = {"reaction_dmg_pct": 50}
+
+class CristalloMarea(RelicEffect):
+    def on_reaction(self, session, key):
+        healed = session.player.heal(max(1, session.player.max_hp * 5 // 100))
+        if healed: display_msg(f"{Colors.CYAN}Cristallo di Marea: +{healed} HP.{Colors.RESET}")
+
+class SpecchioElementi(RuneBonus):
+    BONUS = {"mark_duration_add": 2}
+
+class PiastraCustode(RuneBonus):
+    BONUS = {"def_pct": 10}
+
+class CornoBastione(RelicEffect):
+    def on_take_damage(self, session, dmg_taken, en_multiplier):
+        return dmg_taken // 2 if session.is_defending else dmg_taken
+
+class RovoAntico(RuneBonus):
+    BONUS = {"thorns_pct": 20}
+
+class AmuletoQuiete(RuneBonus):
+    BONUS = {"defend_heal_pct": 5}
+
+class CristalloRunico(RelicEffect):
+    def get_rune_multiplier(self):
+        return 0.5
+
+class MartelloLapicida(RelicEffect):
+    free_rune_extraction = True
+
+class PietraParlante(RelicEffect):
+    rune_drop_always = ("elite",)
+
+class MarchioCacciatore(RelicEffect):
+    def on_attack(self, session, dmg_dealt, multiplier, eff_text):
+        if session.enemy.modifier == "elite" or getattr(session.enemy, "nemesis", None):
+            return int(dmg_dealt * 1.3), eff_text + f" {Colors.RED}[PREDA]{Colors.RESET}"
+        return dmg_dealt, eff_text
+
+class StendardoAudacia(RelicEffect):
+    def get_audacity_bonus(self):
+        return 1
+
+class TeschioRivale(RelicEffect):
+    def on_enemy_death(self, session):
+        if getattr(session.enemy, "nemesis", None):
+            session.player.max_hp += 20; session.player.hp += 20
+            display_msg(f"{Colors.MAGENTA}Teschio del Rivale: +20 HP massimi.{Colors.RESET}")
+
+class LanternaCartografo(RelicEffect):
+    def modify_room_weights(self, weights: dict):
+        if "event" in weights: weights["event"] += 10.0
+        if "mystery" in weights: weights["mystery"] += 10.0
+
 RELIC_REGISTRY = {
     "artiglio_vampiro": ArtiglioVampiro,
     "lente_prismatica": LentePrismatica,
@@ -289,8 +404,38 @@ RELIC_REGISTRY = {
     "bussola_dimensionale": BussolaDimensionale,
     "spallacci_rovo": SpallacciRovo,
     "sigillo_elementale": SigilloElementale,
-    "maschera_antigas": MascheraAntigas
+    "maschera_antigas": MascheraAntigas,
+    "ago_untore": AgoUntore, "fiala_cremisi": FialaCremisi, "spora_nera": SporaNera,
+    "bilancia_mercante": BilanciaMercante, "moneta_traghettatore": MonetaTraghettatore, "dente_oro": DenteOro,
+    "catalizzatore": Catalizzatore, "cristallo_marea": CristalloMarea, "specchio_elementi": SpecchioElementi,
+    "piastra_custode": PiastraCustode, "corno_bastione": CornoBastione, "rovo_antico": RovoAntico, "amuleto_quiete": AmuletoQuiete,
+    "cristallo_runico": CristalloRunico, "martello_lapicida": MartelloLapicida, "pietra_parlante": PietraParlante,
+    "marchio_cacciatore": MarchioCacciatore, "stendardo_audacia": StendardoAudacia, "teschio_rivale": TeschioRivale,
+    "lanterna_cartografo": LanternaCartografo,
 }
+
+class CristalloEtere(RuneBonus):
+    BONUS = {"ether_max": 6}
+
+class AnelloArcimago(RuneBonus):
+    BONUS = {"spell_pct": 20}
+
+class CalamaioEterno(RuneBonus):
+    BONUS = {"spell_discount": 1}
+
+class CuoreRisonante(RelicEffect):
+    def on_enemy_death(self, session):
+        gained = session.player.gain_ether(3)
+        if gained: display_msg(f"{Colors.CYAN}Cuore Risonante: +{gained} Etere.{Colors.RESET}")
+
+class VeloSilenzio(RelicEffect):
+    ignore_silence = True
+
+RELIC_REGISTRY["cristallo_etere"] = CristalloEtere
+RELIC_REGISTRY["anello_arcimago"] = AnelloArcimago
+RELIC_REGISTRY["calamaio_eterno"] = CalamaioEterno
+RELIC_REGISTRY["cuore_risonante"] = CuoreRisonante
+RELIC_REGISTRY["velo_silenzio"] = VeloSilenzio
 
 def create_relic_effect(relic_id: str) -> RelicEffect:
     if relic_id in RELIC_REGISTRY:

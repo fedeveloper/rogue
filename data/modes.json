@@ -1,0 +1,42 @@
+{
+    "ascension": {
+        "max": 20,
+        "grades": [
+            {"name": "Campioni", "desc": "Gli scontri d'Élite compaiono il doppio delle volte.", "essence_bonus": 0.15, "effects": {"room_weights": {"elite": 2.0}}},
+            {"name": "Scale Fredde", "desc": "Il riposo prima delle scale cura la metà e restituisce la metà dell'Etere.", "essence_bonus": 0.15, "effects": {"rest_heal_mult": 0.5, "floor_ether_mult": 0.5}},
+            {"name": "Labirinto Mortale", "desc": "Le trappole infliggono danni doppi.", "essence_bonus": 0.25, "effects": {"pact": "trappole"}},
+            {"name": "Forzieri Avidi", "desc": "Forzieri chiusi e Mimic sono il doppio più probabili (fino a uno su due).", "essence_bonus": 0.15, "effects": {"chest_risk_mult": 2.0}},
+            {"name": "Boss Feroci", "desc": "I boss hanno il 15% di HP in più.", "essence_bonus": 0.15, "effects": {"boss_hp_mult": 1.15}},
+            {"name": "Inflazione", "desc": "I prezzi del Mercante sono raddoppiati.", "essence_bonus": 0.25, "effects": {"pact": "inflazione"}},
+            {"name": "Borsa Vuota", "desc": "Parti con metà dell'Oro.", "essence_bonus": 0.15, "effects": {"start_gold_mult": 0.5}},
+            {"name": "Braci Deboli", "desc": "Riposare al Falò cura il 30% degli HP invece del 50%.", "essence_bonus": 0.15, "effects": {"campfire_heal_mult": 0.6}},
+            {"name": "Occhi nel Buio", "desc": "I nemici hanno +5 di Precisione.", "essence_bonus": 0.15, "effects": {"enemy_acc_add": 5}},
+            {"name": "Campioni Temprati", "desc": "Gli scontri d'Élite hanno il 20% di HP in più.", "essence_bonus": 0.15, "effects": {"elite_hp_mult": 1.2}},
+            {"name": "Oggetti Inquieti", "desc": "Gli oggetti maledetti compaiono il doppio delle volte.", "essence_bonus": 0.15, "effects": {"curse_chance_mult": 2.0}},
+            {"name": "Avarizia", "desc": "I nemici lasciano il 25% di Oro in meno.", "essence_bonus": 0.15, "effects": {"enemy_gold_mult": 0.75}},
+            {"name": "Carestia", "desc": "Le pozioni curano la metà.", "essence_bonus": 0.25, "effects": {"pact": "carestia"}},
+            {"name": "Macchia", "desc": "Inizi la discesa con 20 di Corruzione.", "essence_bonus": 0.15, "effects": {"start_corruption": 20}},
+            {"name": "Durezza", "desc": "I nemici e i boss hanno il 15% di HP in più.", "essence_bonus": 0.25, "effects": {"enemy_hp_mult": 1.15, "boss_hp_mult": 1.15}},
+            {"name": "Mercanti in Fuga", "desc": "I Mercanti compaiono la metà delle volte.", "essence_bonus": 0.15, "effects": {"room_weights": {"vendor": 0.5}}},
+            {"name": "Boss Implacabili", "desc": "I boss hanno il 10% di ATK in più.", "essence_bonus": 0.15, "effects": {"boss_atk_mult": 1.1}},
+            {"name": "Voci Spente", "desc": "I nemici comuni hanno il 10% di HP in più e possono ammutolirti con il Silenzio.", "essence_bonus": 0.15, "effects": {"enemy_hp_mult": 1.1, "enemy_moves": {"silence": 10}}},
+            {"name": "Furia", "desc": "I nemici e i boss hanno il 10% di ATK in più.", "essence_bonus": 0.25, "effects": {"enemy_atk_mult": 1.1}},
+            {"name": "Il Dio si Sveglia", "desc": "Il DIO ANTICO ha il 30% di HP in più.", "essence_bonus": 0.3, "effects": {"final_boss_hp_mult": 1.3}}
+        ]
+    },
+    "daily": {
+        "maluses": 2,
+        "first_attempt_essence_mult": 1.5,
+        "history": 30,
+        "score": {"per_floor": 100, "per_boss": 250, "victory": 2000, "gold_div": 10},
+        "boons": [
+            {"name": "Borsa Piena", "desc": "Parti con 150 Oro in più.", "effects": {"start_gold_add": 150}},
+            {"name": "Dono Antico", "desc": "Parti con una Reliquia casuale.", "effects": {"start_relic": 1}},
+            {"name": "Scorte", "desc": "Parti con 2 pozioni in più.", "effects": {"start_potions_add": 2}},
+            {"name": "Nebbie Generose", "desc": "Le Stanze del Mistero compaiono il doppio delle volte.", "effects": {"room_weights": {"mystery": 2.0}}},
+            {"name": "Taglie", "desc": "I nemici lasciano il 50% di Oro in più.", "effects": {"enemy_gold_mult": 1.5}},
+            {"name": "Scale Calde", "desc": "Il riposo prima delle scale cura il 50% in più.", "effects": {"rest_heal_mult": 1.5}},
+            {"name": "Pozzo Profondo", "desc": "Parti con 10 Etere massimo in più.", "effects": {"start_ether_add": 10}}
+        ]
+    }
+}

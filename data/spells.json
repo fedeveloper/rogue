@@ -1,0 +1,32 @@
+{
+    "rules": {
+        "gain": {"hit": 1, "defend": 2, "reaction": 2, "floor_pct": 25},
+        "resonance_discount": 1,
+        "desc": "L'Etere resta da uno scontro all'altro. Si guadagna agendo: +1 a ogni colpo a segno, +2 quando ti difendi, +2 a ogni reazione elementale, e il 25% del massimo a ogni piano superato. All'inizio della discesa è pieno. Un incantesimo dell'elemento della tua Risonanza costa 1 Etere in meno.",
+        "slots": 3,
+        "drops": {"boss": 35, "elite": 20, "mystery_hoard": 25, "mimic": 30, "trap": 10},
+        "vendor_stock": 1,
+        "scroll_value": [40, 6],
+        "scroll_desc": "Leggendo una pergamena impari il suo incantesimo. Ne tieni a mente al massimo 3: se non c'è posto, scegli quale dimenticare. Le pergamene si trovano nei forzieri del boss (35%), dalle Élite (20%), nei Mimic (30%), nei depositi del Mistero (25%), nelle trappole (10%) e dal Mercante."
+    },
+    "spells": {
+        "dardo_fuoco": {"name": "Dardo di Fuoco", "icon": "🔥", "element": "Fuoco", "cost": 3, "effects": {"damage_pct": 100}, "desc": "Danni pari al 100% del tuo ATK e marchio di Fuoco."},
+        "lama_acqua": {"name": "Lama d'Acqua", "icon": "💧", "element": "Acqua", "cost": 3, "effects": {"damage_pct": 90}, "desc": "Danni pari al 90% del tuo ATK e marchio d'Acqua."},
+        "frana": {"name": "Frana", "icon": "🪨", "element": "Terra", "cost": 4, "effects": {"damage_pct": 70, "status": {"type": "slow", "duration": 2}}, "desc": "Danni pari al 70% del tuo ATK, marchio di Terra e nemico Impantanato per 2 turni."},
+        "raffica": {"name": "Raffica", "icon": "🌪️", "element": "Vento", "cost": 2, "effects": {"damage_pct": 70}, "desc": "Danni pari al 70% del tuo ATK e marchio di Vento."},
+        "luce_guaritrice": {"name": "Luce Guaritrice", "icon": "✨", "element": "Luce", "cost": 4, "effects": {"heal_pct": 25}, "desc": "Ti cura del 25% degli HP massimi.", "outside": true},
+        "sifone_ombra": {"name": "Sifone d'Ombra", "icon": "🌑", "element": "Tenebra", "cost": 4, "effects": {"damage_pct": 70, "drain_pct": 50}, "desc": "Danni pari al 70% del tuo ATK, marchio di Tenebra, e ti cura della metà (50%) dei danni inflitti."},
+        "dissolvi": {"name": "Dissolvi", "icon": "🔷", "element": "Normale", "cost": 3, "effects": {"damage_pct": 50, "dispel": true}, "desc": "Infrange lo scudo della Barriera e le Scaglie del nemico, poi infligge danni pari al 50% del tuo ATK."},
+        "detonazione": {"name": "Detonazione", "icon": "💥", "element": "Normale", "cost": 5, "effects": {"damage_pct": 50, "detonate_pct": 150}, "desc": "Fa esplodere il marchio che il nemico porta: danni pari al 150% del tuo ATK (50% se non ha un marchio)."},
+        "vampa": {"name": "Vampa", "icon": "🌋", "element": "Fuoco", "cost": 4, "effects": {"damage_pct": 60, "status": {"type": "scorch", "duration": 3}}, "desc": "Danni pari al 60% del tuo ATK, marchio di Fuoco, e il nemico brucia di Magma per 3 turni."},
+        "marea_curativa": {"name": "Marea Curativa", "icon": "🌊", "element": "Acqua", "cost": 5, "effects": {"heal_pct": 20, "cleanse": true}, "outside": true, "unlock_id": "pergamena_marea", "unlock_cost": 300, "desc": "Ti cura del 20% degli HP massimi e ti libera da Veleno e Sanguinamento."},
+        "pelle_pietra": {"name": "Pelle di Pietra", "icon": "🛡️", "element": "Terra", "cost": 3, "effects": {"def_pct": 50}, "desc": "Per il resto dello scontro la tua Difesa cresce del 50% di quella dell'armatura."},
+        "passo_vento": {"name": "Passo del Vento", "icon": "💨", "element": "Vento", "cost": 3, "effects": {"escape": true}, "desc": "Fuggi di sicuro dallo scontro (non dai boss)."},
+        "lancia_luce": {"name": "Lancia di Luce", "icon": "🔆", "element": "Luce", "cost": 4, "effects": {"damage_pct": 110}, "desc": "Danni pari al 110% del tuo ATK e marchio di Luce."},
+        "maledizione": {"name": "Maledizione", "icon": "🕯️", "element": "Tenebra", "cost": 3, "effects": {"weaken_pct": 25}, "desc": "Per il resto dello scontro l'ATK del nemico scende del 25% (una volta sola per nemico)."},
+        "morsa_ghiaccio": {"name": "Morsa di Ghiaccio", "icon": "🧊", "element": "Acqua", "cost": 5, "effects": {"damage_pct": 60, "status": {"type": "stun", "duration": 1}}, "unlock_id": "pergamena_morsa", "unlock_cost": 500, "desc": "Danni pari al 60% del tuo ATK, marchio d'Acqua, e il nemico è congelato: perde il suo prossimo turno."},
+        "tempesta": {"name": "Tempesta", "icon": "⛈️", "element": "Vento", "cost": 5, "effects": {"damage_pct": 130}, "unlock_id": "pergamena_tempesta", "unlock_cost": 400, "desc": "Danni pari al 130% del tuo ATK e marchio di Vento."},
+        "purificazione": {"name": "Purificazione", "icon": "🕊️", "element": "Luce", "cost": 3, "effects": {"heal_pct": 10, "cleanse": true}, "outside": true, "desc": "Ti libera da Veleno e Sanguinamento e ti cura del 10% degli HP massimi."},
+        "esplosione_arcana": {"name": "Esplosione Arcana", "icon": "🌟", "element": "Normale", "cost": 6, "effects": {"damage_pct": 160}, "unlock_id": "pergamena_esplosione", "unlock_cost": 600, "desc": "Danni pari al 160% del tuo ATK, senza elemento."}
+    }
+}

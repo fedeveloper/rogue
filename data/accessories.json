@@ -160,6 +160,89 @@
             "base_val": 220,
             "unlock_cost": 500,
             "unlock_id": "dente_drago"
+        },
+        {
+            "id": "a17",
+            "name": "Occhio di Falco Minore",
+            "desc": "+10% probabilità di infliggere colpo critico.",
+            "bonus_type": "crit_chance",
+            "bonus_value": 10,
+            "base_val": 100,
+            "unlock_cost": 0,
+            "unlock_id": null
+        },
+        {
+            "id": "a18",
+            "name": "Zanna di Lupo",
+            "desc": "Assorbi 1 HP per ogni colpo a segno.",
+            "bonus_type": "lifesteal",
+            "bonus_value": 1,
+            "base_val": 90,
+            "unlock_cost": 0,
+            "unlock_id": null
+        },
+        {
+            "id": "a19",
+            "name": "Cuore di Quercia",
+            "desc": "+20 HP Massimi.",
+            "bonus_type": "max_hp",
+            "bonus_value": 20,
+            "base_val": 110,
+            "unlock_cost": 0,
+            "unlock_id": null
+        },
+        {
+            "id": "a20",
+            "name": "Piuma di Fenice",
+            "desc": "+8% Schivata.",
+            "bonus_type": "dodge",
+            "bonus_value": 8,
+            "base_val": 90,
+            "unlock_cost": 0,
+            "unlock_id": null
+        },
+        {
+            "id": "a21",
+            "name": "Lente del Cartografo",
+            "desc": "+20% Precisione.",
+            "bonus_type": "acc",
+            "bonus_value": 20,
+            "base_val": 130,
+            "unlock_cost": 250,
+            "unlock_id": "lente_cartografo",
+            "lore": "La Cartografa la usava per leggere le mappe che il Labirinto ridisegnava ogni notte."
+        },
+        {
+            "id": "a22",
+            "name": "Bracciale di Spine",
+            "desc": "Rifletti 4 danni ogni volta che vieni colpito.",
+            "bonus_type": "reflect",
+            "bonus_value": 4,
+            "base_val": 140,
+            "unlock_cost": 0,
+            "unlock_id": null
+        },
+        {
+            "id": "a23",
+            "name": "Medaglione del Guardiano",
+            "desc": "+45 HP Massimi.",
+            "bonus_type": "max_hp",
+            "bonus_value": 45,
+            "base_val": 300,
+            "unlock_cost": 650,
+            "unlock_id": "medaglione_guardiano",
+            "lore": "Apparteneva a uno dei Custodi. Dentro c'è il ritratto di qualcuno che lo aspettava."
+        },
+        {
+            "id": "a24",
+            "name": "Sigillo dello Specchio",
+            "desc": "Rifletti 12 danni ogni volta che vieni colpito.",
+            "bonus_type": "reflect",
+            "bonus_value": 12,
+            "base_val": 350,
+            "unlock_cost": 750,
+            "unlock_id": "sigillo_specchio",
+            "lore": "Una scheggia dello Specchio della Verità, incastonata in argento. Ti restituisce ciò che ricevi."
         }
     ]
 }

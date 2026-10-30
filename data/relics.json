@@ -207,6 +207,141 @@
             "unlock_cost": 0,
             "unlock_id": "pietra_filosofale",
             "lore": "La prova finale che in questo mondo la conoscenza vale meno del metallo."
-        }
+        },
+        {
+            "id": "ago_untore",
+            "name": "Ago dell'Untore",
+            "desc": "Il Veleno e il Sanguinamento che infliggi fanno danni doppi.",
+            "lore": "Lo usavano i guaritori della peste per capire chi sarebbe sopravvissuto. Nessuno, di solito."
+        },
+        {
+            "id": "fiala_cremisi",
+            "name": "Fiala Cremisi",
+            "desc": "I tuoi colpi a segno hanno il 20% di probabilità di far sanguinare il nemico.",
+            "lore": "Il vetro è caldo. Dentro qualcosa pulsa al ritmo del tuo cuore."
+        },
+        {
+            "id": "spora_nera",
+            "name": "Spora Nera",
+            "desc": "Ogni nemico inizia lo scontro avvelenato per 3 turni.",
+            "unlock_cost": 400,
+            "unlock_id": "spora_nera",
+            "lore": "Raccolta nel Ventre, dove anche l'aria è viva e affamata."
+        },
+        {
+            "id": "bilancia_mercante",
+            "name": "Bilancia del Mercante",
+            "desc": "+1 ATK ogni 100 Oro che possiedi, fino a +10.",
+            "lore": "Pesa l'oro e il coraggio con la stessa precisione. Il secondo pesa sempre meno."
+        },
+        {
+            "id": "moneta_traghettatore",
+            "name": "Moneta del Traghettatore",
+            "desc": "Ogni boss sconfitto ti dà 100 Oro in più.",
+            "lore": "Qualcuno, laggiù, accetta ancora il pedaggio."
+        },
+        {
+            "id": "dente_oro",
+            "name": "Dente d'Oro",
+            "desc": "+15% di Oro raccolto e +5% di EXP.",
+            "lore": "Strappato a un Goblin che ne andava fierissimo."
+        },
+        {
+            "id": "catalizzatore",
+            "name": "Catalizzatore Antico",
+            "desc": "Le reazioni elementali infliggono il 50% di danni in più.",
+            "unlock_cost": 450,
+            "unlock_id": "catalizzatore",
+            "lore": "Un frammento della Prima Pietra, ancora intriso dei sette elementi."
+        },
+        {
+            "id": "cristallo_marea",
+            "name": "Cristallo di Marea",
+            "desc": "Ogni reazione elementale che scateni ti cura del 5% degli HP massimi.",
+            "lore": "Si riempie d'acqua ogni volta che due elementi si toccano."
+        },
+        {
+            "id": "specchio_elementi",
+            "name": "Specchio degli Elementi",
+            "desc": "I marchi elementali durano 2 turni in più.",
+            "lore": "Riflette ogni elemento un po' più a lungo di quanto dovrebbe."
+        },
+        {
+            "id": "piastra_custode",
+            "name": "Piastra del Custode",
+            "desc": "+10% di Difesa dell'armatura.",
+            "lore": "L'ultima piastra di un'armatura che nessuno ha più indossato."
+        },
+        {
+            "id": "corno_bastione",
+            "name": "Corno del Bastione",
+            "desc": "Quando ti difendi, i colpi che subisci sono dimezzati un'altra volta.",
+            "unlock_cost": 500,
+            "unlock_id": "corno_bastione",
+            "lore": "Suonava per chiudere le porte di Aethelgard. Le porte non si sono mai riaperte."
+        },
+        {
+            "id": "rovo_antico",
+            "name": "Rovo Antico",
+            "desc": "Chi ti ferisce subisce il 20% dei danni che ti ha inflitto.",
+            "lore": "Cresce solo dove qualcuno ha sanguinato a lungo."
+        },
+        {
+            "id": "amuleto_quiete",
+            "name": "Amuleto della Quiete",
+            "desc": "Quando ti difendi recuperi il 5% degli HP massimi.",
+            "lore": "Le monache dei Chiostri lo stringevano durante il Voto."
+        },
+        {
+            "id": "cristallo_runico",
+            "name": "Cristallo Runico",
+            "desc": "Le rune incastonate valgono il 50% in più.",
+            "unlock_cost": 550,
+            "unlock_id": "cristallo_runico",
+            "lore": "Le rune vi si specchiano e ne escono più nitide."
+        },
+        {
+            "id": "martello_lapicida",
+            "name": "Martello del Lapicida",
+            "desc": "Estrarre una runa al Falò è gratis.",
+            "lore": "Il lapicida che lo usava non sbagliava mai un colpo. Poi sbagliò il Labirinto."
+        },
+        {
+            "id": "pietra_parlante",
+            "name": "Pietra Parlante",
+            "desc": "Le Élite lasciano sempre una runa.",
+            "lore": "Sussurra il nome della runa che il campione porta con sé."
+        },
+        {
+            "id": "marchio_cacciatore",
+            "name": "Marchio del Cacciatore",
+            "desc": "I tuoi colpi contro le Élite e le Nemesi infliggono il 30% di danni in più.",
+            "lore": "Chi lo porta non dimentica una preda. Né un torto."
+        },
+        {
+            "id": "stendardo_audacia",
+            "name": "Stendardo dell'Audacia",
+            "desc": "Ogni stanza rischiosa ti dà 1 punto di Audacia in più.",
+            "unlock_cost": 350,
+            "unlock_id": "stendardo_audacia",
+            "lore": "Strappato, bruciato, ricucito. Sventola ancora."
+        },
+        {
+            "id": "teschio_rivale",
+            "name": "Teschio del Rivale",
+            "desc": "Ogni Nemesi sconfitta ti dà +20 HP massimi.",
+            "lore": "Non sai di chi fosse. Sai che ti odiava."
+        },
+        {
+            "id": "lanterna_cartografo",
+            "name": "Lanterna del Cartografo",
+            "desc": "Gli Eventi e le Stanze del Mistero compaiono più spesso.",
+            "lore": "La Cartografa la lasciò accesa su un tavolo. Illumina solo le strade che vale la pena prendere."
+        },
+        {"id": "cristallo_etere", "name": "Cristallo d'Etere", "desc": "+6 Etere massimo.", "lore": "Una goccia della Prima Luce rimasta solida. Dentro, qualcosa respira ancora."},
+        {"id": "anello_arcimago", "name": "Anello dell'Arcimago", "desc": "+20% potenza degli incantesimi.", "lore": "L'Arcimago lo portò fino al piano trenta. Il dito è rimasto con l'anello."},
+        {"id": "calamaio_eterno", "name": "Calamaio Eterno", "desc": "Ogni incantesimo costa 1 Etere in meno (mai meno di 1).", "lore": "Non si svuota mai. I Bibliotecari di Cenere lo cercano da secoli."},
+        {"id": "cuore_risonante", "name": "Cuore Risonante", "desc": "Ogni nemico sconfitto ti restituisce 3 Etere.", "lore": "Batte quando qualcosa muore vicino a te, e ti passa ciò che resta."},
+        {"id": "velo_silenzio", "name": "Velo del Silenzio", "desc": "Né il Silenzio dei nemici né il Gas del Silenzio ti impediscono di lanciare incantesimi.", "lore": "Tessuto dalla Badessa per l'unica novizia che non volle tacere."}
     ]
 }

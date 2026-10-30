@@ -4,8 +4,8 @@ import sys
 import time
 import traceback
 from ui import Colors, clear_screen, delay_print, interactive_menu, display_msg, wait_enter
-from data_manager import PROFILE_MANAGER, GAME_DATA, RAW_DATA, get_biome, update_game_data
-from entities import Player
+from data_manager import PROFILE_MANAGER, GAME_DATA, RAW_DATA, cycle_of, echo_name, get_biome, set_cycle_seed, update_game_data
+from entities import Player, generate_potion, get_random_relic
 from rooms import audacity_text, combat_room, gain_audacity, mystery_room, vendor_room, campfire_room, treasure_room, trap_room
 from events import event_room
 from floor_map import ROWS, SIDES, TALL_MAP_ROWS, apply_biome_on_floor, generate_floor_map, reachable, render_map, room_label
@@ -14,6 +14,12 @@ from archive import show_archive
 from codex import show_codex
 from camp import show_camp_fire, start_of_run_boon
 from endings import choose_ending
+import modes
+import nemesis
+import epitaph
+import attributes
+import magic
+import talents
 from constants import TEXT_SPEEDS, SPERANZA_LUCE_PCT_PER_LVL, RATIO_GOLD_TO_ESSENCE_ON_DEATH, BOSS_ESSENCE_BONUS, XP_PER_FLOOR, XP_PER_BOSS, INFINITE_MODE_THRESHOLD, INFINITE_MODE_ESSENCE_MULTIPLIER, BLIND_FURY_MIN_ATTACKS
 
 def _update_class_mastery(player: Player, floor: int):
@@ -25,7 +31,7 @@ def _update_class_mastery(player: Player, floor: int):
     
     display_msg(f"\n{Colors.MAGENTA}[ Maestria {player.role} ] +{xp_gained} XP (Totale: {curr_xp}){Colors.RESET}")
     reqs = GAME_DATA["meta"]["mastery_xp_requirements"]
-    while curr_lvl < 5 and curr_xp >= reqs[str(curr_lvl + 1)]:
+    while str(curr_lvl + 1) in reqs and curr_xp >= reqs[str(curr_lvl + 1)]:
         curr_lvl += 1; PROFILE_MANAGER.set_class_lvl(c_id, curr_lvl)
         display_msg(f"{Colors.YELLOW}*** MAESTRIA SALITA AL LIVELLO {curr_lvl}! ***{Colors.RESET}")
         reward = GAME_DATA["classes"][c_id]["mastery"].get(str(curr_lvl), {"desc": "Nessun bonus disponibile (In Sviluppo).", "type": "null", "id": "null"})
@@ -52,7 +58,14 @@ def _check_feats(player: Player, floor: int, infinite: bool):
         "feat_lama_cristallo": 1 if floor >= 15 and not player.run_tracker.get("weapon_changed") else 0,
         "feat_furia_cieca": 1 if player.run_tracker.get("blind_fury_done") else 0,
         "feat_tiratore_scelto": player.run_tracker.get("super_effective_hits", 0),
-        "feat_assaggiatore": 1 if player.run_tracker.get("1_hp_survive") else 0
+        "feat_assaggiatore": 1 if player.run_tracker.get("1_hp_survive") else 0,
+        "feat_eco": cycle_of(floor) + 1 if infinite else 0,
+        "feat_arcimago": player.run_tracker.get("spells_cast", 0),
+        "feat_alchimia": player.run_tracker.get("reactions", 0),
+        "feat_voce_silenzio": 1 if player.run_tracker.get("kill_muted_done") else 0,
+        "feat_talenti": len(player.talents),
+        "feat_specialista": max(player.attributes.values(), default=0),
+        "feat_asceta": 1 if player.won and not player.run_tracker.get("spells_cast") else 0,
     }
 
     for f_id, f_data in GAME_DATA["meta"]["feats"].items():
@@ -62,12 +75,26 @@ def _check_feats(player: Player, floor: int, infinite: bool):
             if f_data["reward_type"] in ["unlock", "class"] and f_data["reward_id"] not in PROFILE_MANAGER.unlocked_ids: PROFILE_MANAGER.unlocked_ids.append(f_data["reward_id"])
             elif f_data["reward_type"] == "perk": PROFILE_MANAGER.set_perk(f_data["reward_id"], True)
             elif f_data["reward_type"] == "trait": display_msg(f"Nuovo Tratto Sbloccato: {f_data['name']}")
+            elif f_data["reward_type"] == "essence":
+                PROFILE_MANAGER.essence += f_data["reward_id"]
+                display_msg(f"{Colors.CYAN}+{f_data['reward_id']} Essenza Astrale.{Colors.RESET}")
+
+def cycle_essence_mult(floor: int) -> float:
+    """Il moltiplicatore dell'Essenza oltre il piano 30: ×1,5 nell'Eco II, e una quota in più per ogni Eco successiva."""
+    extra = GAME_DATA["meta"]["cycle"]["essence_pct_per_cycle"] * max(0, cycle_of(floor) - 1) / 100
+    return INFINITE_MODE_ESSENCE_MULTIPLIER * (1 + extra)
+
 
 def evaluate_run(player: Player, floor: int, infinite: bool):
     display_msg("\n" + ("="*50))
+    born = None  # la Nemesi nata da questa morte, per l'Epitaffio
     if player.hp <= 0:
         delay_print(f"{Colors.RED}S E I   M O R T O.{Colors.RESET}")
         player.essence_gathered += int(player.gold * RATIO_GOLD_TO_ESSENCE_ON_DEATH); PROFILE_MANAGER.stats["total_deaths"] += 1
+        killer = player.run_tracker.get("killer") or {}
+        story = nemesis.on_death(player, floor)
+        if story: display_msg(f"{Colors.MAGENTA}{Colors.BOLD}✦ {story}{Colors.RESET}")
+        born = nemesis.full_name(nemesis.active()[-1]) if story and not killer.get("nemesis_id") else None
     elif player.escaped:
         delay_print(f"{Colors.GREEN}S E I   F U G G I T O.{Colors.RESET}"); player.essence_gathered += player.gold
     elif player.won:
@@ -76,17 +103,31 @@ def evaluate_run(player: Player, floor: int, infinite: bool):
         
     player.essence_gathered += (player.bosses_killed * BOSS_ESSENCE_BONUS)
     
-    pact_multi = 1.0 + sum([GAME_DATA["meta"]["pacts"][p]["bonus"] for p in player.active_pacts])
-    final_essence = int(player.essence_gathered * pact_multi)
-    if infinite and floor > INFINITE_MODE_THRESHOLD: final_essence = int(final_essence * INFINITE_MODE_ESSENCE_MULTIPLIER)
+    # L'Ascensione moltiplica l'Essenza; la Sfida del Giorno premia il primo tentativo
+    daily_score = None
+    if player.daily:
+        daily_score = modes.record_daily(player.daily, floor, player.bosses_killed, player.won, player.gold, player.role)
+        essence_multi = GAME_DATA["modes"]["daily"]["first_attempt_essence_mult"] if daily_score is not None else 1.0
+    else:
+        essence_multi = modes.ascension_essence_mult(player.ascension)
+    final_essence = int(player.essence_gathered * essence_multi)
+    if infinite and floor > INFINITE_MODE_THRESHOLD: final_essence = int(final_essence * cycle_essence_mult(floor))
     
     PROFILE_MANAGER.essence += final_essence
     PROFILE_MANAGER.stats["total_gold"] += player.gold
 
     display_msg(f"Piano raggiunto: {floor} | Boss: {player.bosses_killed}")
-    display_msg(f"Moltiplicatore Maledizioni: {pact_multi}x")
+    if player.daily:
+        display_msg(f"📅 Sfida del Giorno ({player.daily['date']}): " + (f"punteggio {Colors.YELLOW}{daily_score}{Colors.RESET}, Essenza ×{essence_multi}" if daily_score is not None
+                    else "tentativo di allenamento, il punteggio del giorno è già registrato"))
+    else:
+        display_msg(f"Ascensione {player.ascension}: Essenza ×{essence_multi:g}")
     display_msg(f"Essenza Astrale ottenuta: {Colors.CYAN}✨ {final_essence}{Colors.RESET}")
     
+    lines = epitaph.compose(player, floor, born)
+    epitaph.record(player, floor, lines)
+    display_msg(f"\n{Colors.YELLOW}🪦 {' '.join(lines)}{Colors.RESET}")
+
     _update_class_mastery(player, floor)
     _check_feats(player, floor, infinite)
 
@@ -171,6 +212,8 @@ def base_camp_forge():
         if has_valerius:
             options.append("Monili")
             valid_cats.append("accessories")
+        options.append("Pergamene")
+        valid_cats.append("spells")
             
         prompt = f"{Colors.CYAN}--- FORGIA DIMENSIONALE --- Essenza: ✨{PROFILE_MANAGER.essence}{Colors.RESET}\nCosa desideri forgiare?"
         idx = interactive_menu(options, prompt, cancellable=True)
@@ -181,9 +224,14 @@ def base_camp_forge():
         cat_name = options[idx]
         base_camp_forge_category(cat, cat_name)
 
+def forge_pool(cat) -> list:
+    """Gli oggetti di una categoria della Forgia; per le pergamene, gli incantesimi (con il loro sblocco)."""
+    if cat == "spells": return list(RAW_DATA["spells"]["spells"].values())
+    return RAW_DATA[cat]
+
 def locked_forge_items(cat) -> list:
     """Oggetti ancora da sbloccare: "unlock_id": null indica un oggetto disponibile fin dall'inizio."""
-    return [i for i in RAW_DATA[cat] if i.get("unlock_id") and i["unlock_id"] not in PROFILE_MANAGER.unlocked_ids]
+    return [i for i in forge_pool(cat) if i.get("unlock_id") and i["unlock_id"] not in PROFILE_MANAGER.unlocked_ids]
 
 def base_camp_forge_category(cat, cat_name):
     while True:
@@ -388,15 +436,36 @@ def _hero_selection() -> tuple[str, str, list[str]]:
         idx = interactive_menu(options, f"\n{Colors.CYAN}Scegli un Tratto di partenza:{Colors.RESET}")
         t_choice = avail_t_list[idx][0]
 
-    active_pacts = []
-    if PROFILE_MANAGER.won_normal:
-        avail_p = GAME_DATA["meta"]["pacts"]
-        for p_id, p in avail_p.items():
-            prompt = f"\n{Colors.RED}I PATTI DEL CAOS{Colors.RESET}\nAttiva le maledizioni per aumentare il moltiplicatore di Essenza.\n\nAttivare '{p['name']}'? ({p['desc']})"
-            ans_idx = interactive_menu(["No", "Sì"], prompt)
-            if ans_idx == 1: active_pacts.append(p_id)
+    # I Patti del Caos sono diventati gradi di Ascensione (vedi _choose_ascension)
+    return c_choice, t_choice, []
 
-    return c_choice, t_choice, active_pacts
+
+def _choose_ascension() -> int:
+    """Dopo la prima vittoria si sceglie il grado di Ascensione: valgono tutti i gradi fino a quello scelto."""
+    top = modes.max_grade()
+    if top <= 0: return 0
+    grades = modes.grades()
+    options = [f"Grado 0 — nessuna regola aggiuntiva (Essenza ×1)"]
+    options += [f"Grado {i} — {Colors.BOLD}{g['name']}{Colors.RESET}: {g['desc']} (Essenza ×{modes.ascension_essence_mult(i):g})"
+                for i, g in enumerate(grades[:top], 1)]
+    prompt = (f"\n{Colors.RED}ASCENSIONE{Colors.RESET}\nOgni grado aggiunge una regola a quelle dei gradi precedenti e aumenta l'Essenza.\n"
+              f"Vincendo al grado più alto sblocchi il successivo. Scegli il grado:")
+    return interactive_menu(options, prompt, initial=top)
+
+
+def _apply_mode_start(player: Player):
+    """Gli effetti di inizio discesa dell'Ascensione e della Sfida del Giorno."""
+    player.gold = int(player.gold * modes.rule("start_gold_mult")) + modes.rule("start_gold_add")
+    if modes.rule("start_corruption"): player.add_corruption(modes.rule("start_corruption"))
+    for _ in range(modes.rule("start_relic")):
+        relic = get_random_relic(player)
+        if relic: player.add_relic(relic)
+    player.inventory.extend(generate_potion(1) for _ in range(modes.rule("start_potions_add")))
+    player.base_ether += modes.rule("start_ether_add"); player.ether += modes.rule("start_ether_add")
+
+def rest_ether(player: Player) -> int:
+    """L'Etere che restituisce il riposo prima delle scale (una parte del massimo; l'Ascensione può ridurla)."""
+    return player.gain_ether(int(player.max_ether() * magic.rules()["gain"]["floor_pct"] // 100 * modes.rule("floor_ether_mult")))
 
 def _apply_floor_regen(player: Player) -> int:
     sp_lvl = PROFILE_MANAGER.get_perk("speranza_luce_lvl", 0)
@@ -405,10 +474,56 @@ def _apply_floor_regen(player: Player) -> int:
     if healed > 0: display_msg(f"{Colors.GREEN}La Speranza di Luce ti rigenera {healed} HP. ({player.hp}/{player.max_hp}){Colors.RESET}")
     return healed
 
-def play_game(infinite_mode=False):
-    c_choice, t_choice, active_pacts = _hero_selection()
+def floor_room_weights(base_weights: dict, player: Player) -> dict:
+    """I pesi delle stanze di un piano: quelli dei dati, cambiati dalle reliquie e dalle regole della discesa."""
+    weights = dict(base_weights)
+    for r in player.relic_effects: r.modify_room_weights(weights)
+    for rt, mult in modes.rule("room_weights").items():
+        if rt in weights: weights[rt] *= mult
+    return weights
 
+
+def rest_heal(floor: int) -> int:
+    """La cura del riposo prima delle scale, a fine piano."""
+    return int((20 + floor * 5) * modes.rule("rest_heal_mult"))
+
+
+def play_game(infinite_mode=False, daily=None):
+    """Una discesa. `daily` è la Sfida del Giorno (modes.daily_setup): eroe, tratto e regole sono quelli del giorno."""
+    if daily:
+        c_choice, t_choice, active_pacts = daily["class_id"], daily["trait_id"], []
+        grade, rules = 0, modes.daily_rules(daily)
+        random.seed(daily["seed"])
+    else:
+        c_choice, t_choice, active_pacts = _hero_selection()
+        grade = _choose_ascension()
+        rules = modes.ascension_rules(grade)
+    modes.start_run(rules)
+    try:
+        _descent(c_choice, t_choice, active_pacts + rules["pacts"], infinite_mode, grade, daily)
+    finally:
+        modes.end_run()
+
+
+def enter_cycle(player: Player, floor: int) -> bool:
+    """Al primo piano di un nuovo ciclo del Labirinto (31, 61…): lo annuncia, lo annota per l'Epitaffio e aggiorna il record."""
+    cycle = cycle_of(floor)
+    if not cycle or floor != cycle * INFINITE_MODE_THRESHOLD + 1: return False
+    echo = echo_name(cycle)
+    delay_print(f"\n{Colors.MAGENTA}{Colors.BOLD}⏳ {echo.upper()}{Colors.RESET}", 0.05)
+    display_msg(f"{Colors.MAGENTA}{GAME_DATA['meta']['cycle']['intro'].format(echo=echo)}{Colors.RESET}")
+    epitaph.note(player, "echo", echo=echo)
+    # best_echo è il numero dell'Eco (2 per l'Eco II); 0 finché non si è mai superato il piano 30
+    if cycle + 1 > PROFILE_MANAGER._data.get("best_echo", 0): PROFILE_MANAGER._data["best_echo"] = cycle + 1
+    return True
+
+
+def _descent(c_choice, t_choice, active_pacts, infinite_mode, grade, daily):
     player = Player(c_choice, t_choice, active_pacts)
+    player.ascension, player.daily = grade, daily
+    # L'ordine dei biomi nei cicli oltre il piano 30 nasce dal caso della discesa (dal seme del giorno nella Sfida)
+    set_cycle_seed(random.randrange(1 << 30))
+    _apply_mode_start(player)
     start_of_run_boon(player)
     delay_print(f"\nLe porte si chiudono alle tue spalle, {player.role}.", 0.03); time.sleep(1)
     
@@ -422,16 +537,21 @@ def play_game(infinite_mode=False):
             clear_screen()
             display_msg(f"{Colors.YELLOW}{Colors.BOLD}" + "="*50); delay_print("H A I   V I N T O ! ! !"); display_msg("="*50 + Colors.RESET)
             PROFILE_MANAGER.won_normal = True; player.won = True; player.essence_gathered += 1000
-            choose_ending(player)
+            if not daily and modes.record_ascension_win(grade):
+                display_msg(f"{Colors.RED}{Colors.BOLD}Nuovo grado di Ascensione sbloccato: {modes.max_grade()}!{Colors.RESET}")
+            ending = choose_ending(player)
+            if isinstance(ending, dict): epitaph.note(player, "ending", title=ending["title"])
             _grant_victory_rewards()
             break
 
         clear_screen()
         delay_print(f"\n{Colors.MAGENTA}{Colors.BOLD}==== PIANO {floor} ===={Colors.RESET}", 0.05)
         biome = get_biome(floor)
-        biome_title = f" · {biome['icon']} {biome['name']}" if biome else ""
+        biome_title = f" · {biome['icon']} {biome['name']}" + (f" · {Colors.MAGENTA}{biome['echo']}{Colors.CYAN}" if biome.get("echo") else "") if biome else ""
+        biome_title += " · 📅 Sfida del Giorno" if daily else (f" · {Colors.RED}Ascensione {grade}{Colors.CYAN}" if grade else "")
         # L'atmosfera del bioma resta sopra la mappa per tutto il piano; entrando in un bioma nuovo se ne legge il pericolo
         biome_intro = f"{Colors.CYAN}{random.choice(biome['intro'])}{Colors.RESET}\n" if biome else ""
+        enter_cycle(player, floor)
         if biome and floor == biome["floors"][0]:
             delay_print(f"\n{Colors.MAGENTA}{Colors.BOLD}{biome['icon']}  {biome['name'].upper()}{Colors.RESET}", 0.03)
             delay_print(biome_intro, 0.03)
@@ -439,14 +559,17 @@ def play_game(infinite_mode=False):
             wait_enter("\nPremi INVIO per entrare...")
         
         _apply_floor_regen(player)
+        if biome and not any(e["kind"] == "biome" and e["name"] == biome["name"] for e in player.chronicle):
+            epitaph.note(player, "biome", name=biome["name"])
         apply_biome_on_floor(player, biome)
             
         player.run_tracker["floor_attacks"] = player.run_tracker["floor_hits"] = 0
-        player.audacity = 0
+        player.audacity = player.rune_value("audacity_start")
         
         # La mappa del piano si genera all'arrivo: le reliquie possedute in quel momento ne cambiano i pesi
-        weights_def = base_weights.copy()
-        for r in player.relic_effects: r.modify_room_weights(weights_def)
+        weights_def = floor_room_weights(base_weights, player)
+        # La Sfida del Giorno: ogni piano nasce dallo stesso seme, qualunque strada si sia presa prima
+        if daily: random.seed(daily["seed"] * 100 + floor)
         floor_map = generate_floor_map(floor, weights_def, cooldowns_def, room_cooldowns, active_pacts, player)
         path, current = [], None
 
@@ -458,19 +581,25 @@ def play_game(infinite_mode=False):
                 clear_screen()
                 prompt = "\n".join([
                     f"\n{Colors.CYAN}--- Piano {floor}{biome_title} | Esplorazione {step}/{ROWS + 1} ---{Colors.RESET}",
-                    f"❤️  HP: {Colors.GREEN}{player.hp}/{player.max_hp}{Colors.RESET} | 💰 Oro: {Colors.YELLOW}{player.gold}{Colors.RESET}"
+                    f"❤️  HP: {Colors.GREEN}{player.hp}/{player.max_hp}{Colors.RESET}"
+                    + (f" | ✨ Etere: {Colors.CYAN}{player.ether}/{player.max_ether()}{Colors.RESET}" if player.spells else "")
+                    + f" | 💰 Oro: {Colors.YELLOW}{player.gold}{Colors.RESET}"
                     + (f" | 🩸 Corruzione: {Colors.MAGENTA}{player.corruption}{Colors.RESET}" if player.corruption else "")
                     + f" | 🎲 Audacia: {Colors.RED}{player.audacity}{Colors.RESET} ({audacity_text(player.audacity)})", biome_intro,
                     *render_map(floor_map, step, path, biome, tall=shutil.get_terminal_size().lines >= TALL_MAP_ROWS), "", "Scegli dove proseguire:"])
                 sixth = PROFILE_MANAGER.get_perk("sesto_senso", False)
                 options = [f"Entra: {room_label(floor_map[step - 1][i], sixth, biome)}" + (f" ({SIDES[floor_map[step - 1][i]['slot']]})" if step <= ROWS else "")
                            for i in choices]
+                points = f"{Colors.YELLOW}Distribuisci i punti abilità ({player.unspent_points}){Colors.RESET}"
+                if player.unspent_points: options.append(points)
                 options.append("Apri Inventario")
                 options.append("Statistiche Eroe")
                 options.append("Fuga dal Labirinto")
                 
                 idx = interactive_menu(options, prompt)
-                if idx == len(options) - 3:
+                if options[idx] == points:
+                    attributes.spend_points(player)
+                elif idx == len(options) - 3:
                     show_inventory_menu(player)
                 elif idx == len(options) - 2:
                     show_player_stats(player)
@@ -485,8 +614,8 @@ def play_game(infinite_mode=False):
             
             rt = chosen_door["type"]
             # L'Audacia premia chi entra nel rischio; la trappola conta solo se la si affronta
-            if rt in ("combat", "elite", "mystery"): gain_audacity(player, rt)
-            if rt in ("combat", "elite", "boss"): combat_room(player, floor, chosen_door["enemy"])
+            if rt in ("combat", "elite", "nemesis", "mystery"): gain_audacity(player, rt)
+            if rt in ("combat", "elite", "nemesis", "boss"): combat_room(player, floor, chosen_door["enemy"])
             elif rt == "vendor": vendor_room(player, floor)
             elif rt == "treasure": treasure_room(player, floor)
             elif rt == "trap":
@@ -494,6 +623,9 @@ def play_game(infinite_mode=False):
             elif rt == "campfire": campfire_room(player, floor)
             elif rt == "event": event_room(player, chosen_door["event_id"], floor)
             elif rt == "mystery": mystery_room(player, floor, active_pacts)
+            # Un passaggio di livello durante la stanza: la scelta dei punti arriva appena finita
+            if player.hp > 0 and player.pending_talents: talents.choose(player)
+            if player.hp > 0 and player.unspent_points and not player.points_offered: attributes.spend_points(player)
             if player.fallen: break
 
         if player.fallen and player.hp > 0 and not player.escaped:
@@ -507,9 +639,11 @@ def play_game(infinite_mode=False):
             delay_print(f"\n{Colors.YELLOW}{Colors.BOLD}*** PIANO {floor} SUPERATO! ***{Colors.RESET}", 0.05)
             attacks, hits = player.run_tracker["floor_attacks"], player.run_tracker["floor_hits"]
             if attacks >= BLIND_FURY_MIN_ATTACKS and hits * 2 < attacks: player.run_tracker["blind_fury_done"] = True
-            heal = 20 + (floor * 5)
+            heal = rest_heal(floor)
             player.heal(heal)
-            display_msg(f"Ti riposi prima delle scale. (HP: {player.hp}/{player.max_hp})")
+            ether = rest_ether(player)
+            display_msg(f"Ti riposi prima delle scale. (HP: {player.hp}/{player.max_hp})"
+                        + (f" {Colors.CYAN}+{ether} Etere ({player.ether}/{player.max_ether()}).{Colors.RESET}" if ether else ""))
             floor += 1
             if floor > PROFILE_MANAGER.max_floor: PROFILE_MANAGER.max_floor = floor
             wait_enter("\nPremi INVIO per scendere...")
@@ -527,6 +661,34 @@ def settings_menu():
         if idx == -1: break
         PROFILE_MANAGER.text_speed = speeds[idx]
         PROFILE_MANAGER.save()
+
+def daily_page(setup: dict) -> str:
+    """La schermata della Sfida del Giorno: eroe, tratto, modificatori, punteggio di oggi e storico."""
+    grades, cfg = modes.grades(), GAME_DATA["modes"]["daily"]
+    cls, trait, boon = GAME_DATA["classes"][setup["class_id"]], GAME_DATA["meta"]["traits"][setup["trait_id"]], cfg["boons"][setup["boon"]]
+    history = modes.daily_history()
+    lines = [f"\n{Colors.CYAN}--- 📅 SFIDA DEL GIORNO · {setup['date']} ---{Colors.RESET}",
+             "La stessa discesa per chiunque la giochi oggi: stesso eroe, stesse regole, stessa mappa a ogni piano.",
+             f"\nEroe: {Colors.BOLD}{cls['role']}{Colors.RESET} · Tratto: {Colors.BOLD}{trait['name']}{Colors.RESET} ({trait['desc']})"]
+    lines += [f"{Colors.RED}Malus{Colors.RESET} {grades[i]['name']}: {grades[i]['desc']}" for i in setup["maluses"]]
+    lines.append(f"{Colors.GREEN}Dono{Colors.RESET} {boon['name']}: {boon['desc']}")
+    today = history.get(setup["date"])
+    if today: lines.append(f"\nOggi: {Colors.YELLOW}{today['score']} punti{Colors.RESET} (piano {today['floor']}{', vittoria' if today['won'] else ''}). Altri tentativi sono allenamento.")
+    else: lines.append(f"\nConta solo il primo tentativo, che vale anche Essenza ×{cfg['first_attempt_essence_mult']:g}.")
+    if history:
+        best = max(history.items(), key=lambda kv: kv[1]["score"])
+        lines.append(f"Serie: {modes.daily_streak(modes.today())} giorni · Record: {best[1]['score']} punti ({best[0]}, {best[1]['class']})")
+        lines += [f"  {d}: {r['score']} punti, piano {r['floor']} con {r['class']}" for d, r in sorted(history.items(), reverse=True)[:5]]
+    return "\n".join(lines)
+
+
+def daily_menu():
+    setup = modes.daily_setup(modes.today())
+    clear_screen()
+    played = setup["date"] in modes.daily_history()
+    idx = interactive_menu(["Gioca di nuovo (allenamento)" if played else "Accetta la sfida"], daily_page(setup), cancellable=True)
+    if idx == 0: play_game(daily=setup)
+
 
 # Sblocchi che si ottengono solo vincendo la discesa standard
 VICTORY_UNLOCKS = ["lama_creatore"]
@@ -561,9 +723,12 @@ def main():
             clear_screen()
             delay_print(f"{Colors.MAGENTA}{Colors.BOLD}=== IL LABIRINTO DEGLI ELEMENTI E DEL CAOS ==={Colors.RESET}", 0.01)
             actions = [(f"Inizia Run (Standard - {INFINITE_MODE_THRESHOLD} Piani)", lambda: play_game(infinite_mode=False)),
+                       ("📅 Sfida del Giorno", daily_menu),
                        ("Campo Base (Potenziamenti, Forgia, Taverna)", base_camp)]
             if PROFILE_MANAGER.won_normal:
-                actions.append((f"{Colors.RED}Inizia Run Infinita (Oltre i {INFINITE_MODE_THRESHOLD} Piani){Colors.RESET}", lambda: play_game(infinite_mode=True)))
+                best = PROFILE_MANAGER._data.get("best_echo", 0)
+                record = f" · record: {echo_name(best - 1)}" if best >= 2 else ""
+                actions.append((f"{Colors.RED}Inizia Run Infinita (Oltre i {INFINITE_MODE_THRESHOLD} Piani){record}{Colors.RESET}", lambda: play_game(infinite_mode=True)))
             actions.append(("Impostazioni", settings_menu))
             actions.append(("Esci dal gioco", None))
             

@@ -6,7 +6,7 @@ Ciò che non hai ancora scoperto compare come "???".
 """
 from typing import List, Tuple
 
-from data_manager import GAME_DATA, PROFILE_MANAGER, RAW_DATA, get_element_icon
+from data_manager import GAME_DATA, PROFILE_MANAGER, RAW_DATA, echo_name, get_element_icon
 from ui import Colors, clear_screen, display_msg, interactive_menu, wait_enter
 
 UNKNOWN = f"{Colors.RED}???{Colors.RESET}"
@@ -25,6 +25,22 @@ def record_enemy_killed(name: str):
     _enemy(name)["killed"] += 1
 
 
+def record_phase(name: str, phase: int):
+    """Il boss `name` è entrato nella sua fase numero `phase` (da 1)."""
+    rec = _enemy(name)
+    rec["phases"] = max(rec.get("phases", 0), phase)
+
+
+def record_rune(rune_id: str):
+    found = PROFILE_MANAGER.codex.setdefault("runes", [])
+    if rune_id not in found: found.append(rune_id)
+
+
+def record_runeword(word_id: str):
+    found = PROFILE_MANAGER.codex.setdefault("runewords", [])
+    if word_id not in found: found.append(word_id)
+
+
 def record_letter(index: int):
     if index not in PROFILE_MANAGER.codex["letters"]: PROFILE_MANAGER.codex["letters"].append(index)
 
@@ -32,6 +48,11 @@ def record_letter(index: int):
 def record_reaction(key: str):
     found = PROFILE_MANAGER.codex.setdefault("reactions", [])
     if key not in found: found.append(key)
+
+
+def record_spell(spell_id: str):
+    found = PROFILE_MANAGER.codex.setdefault("spells", [])
+    if spell_id not in found: found.append(spell_id)
 
 
 def record_relic(relic_id: str):
@@ -59,13 +80,24 @@ def sections() -> List[Tuple[str, int, int]]:
         ("Lettere insanguinate", len(set(PROFILE_MANAGER.codex["letters"]) & set(range(len(GAME_DATA["lore"]["letters"])))), len(GAME_DATA["lore"]["letters"])),
         ("Reliquie", len(set(PROFILE_MANAGER.codex["relics"]) & {r["id"] for r in RAW_DATA["relics"]}), len(RAW_DATA["relics"])),
         ("Finali", len(set(PROFILE_MANAGER.story.get("endings", {})) & {e["id"] for e in GAME_DATA["story"]["endings"]}), len(GAME_DATA["story"]["endings"])),
+        ("Rune", len(set(PROFILE_MANAGER.codex.get("runes", [])) & set(GAME_DATA["runes"]["runes"])), len(GAME_DATA["runes"]["runes"])),
+        ("Parole runiche", len(set(PROFILE_MANAGER.codex.get("runewords", [])) & set(GAME_DATA["runes"]["words"])), len(GAME_DATA["runes"]["words"])),
+        ("Nemesi", len(PROFILE_MANAGER._data.get("nemeses_fallen", [])), len(PROFILE_MANAGER._data.get("nemeses_fallen", [])) + len(PROFILE_MANAGER._data.get("nemeses", []))),
+        ("Cimitero", len(PROFILE_MANAGER._data.get("cemetery", [])), len(PROFILE_MANAGER._data.get("cemetery", []))),
+        ("Fasi dei boss", sum(min(enemies.get(n, {}).get("phases", 0), len(ph)) for n, ph in GAME_DATA["phases"].items()), sum(len(ph) for ph in GAME_DATA["phases"].values())),
         ("Reazioni elementali", len(set(PROFILE_MANAGER.codex.get("reactions", [])) & set(GAME_DATA["elements"]["reactions"])), len(GAME_DATA["elements"]["reactions"])),
+        ("Incantesimi", len(set(PROFILE_MANAGER.codex.get("spells", [])) & set(GAME_DATA["spells"]["spells"])), len(GAME_DATA["spells"]["spells"])),
     ]
 
 
+# Sezioni che raccontano la tua storia invece di elencare scoperte: non contano nel completamento
+UNCOUNTED = ("Nemesi", "Cimitero")
+
+
 def completion() -> int:
-    found = sum(s[1] for s in sections())
-    total = sum(s[2] for s in sections())
+    counted = [s for s in sections() if s[0] not in UNCOUNTED]
+    found = sum(s[1] for s in counted)
+    total = sum(s[2] for s in counted)
     return found * 100 // total if total else 0
 
 
@@ -84,6 +116,77 @@ def bestiary_page() -> List[str]:
             lines.append(f"{head} [{get_element_icon(data['element'])}]  incontri {rec['seen']} · sconfitti {rec['killed']}")
             if rec["killed"] and data.get("lore"): lines.append(f"    {Colors.CYAN}{data['lore']}{Colors.RESET}")
             elif not rec["killed"]: lines.append(f"    {Colors.RED}Sconfiggilo per conoscerne la storia.{Colors.RESET}")
+            if rec["killed"] and (style := GAME_DATA["moves"]["profiles"].get(data.get("profile"))):
+                lines.append(f"    {Colors.MAGENTA}Stile: {style['name']}. {style['desc']}{Colors.RESET}")
+    return lines
+
+
+def runes_page() -> List[str]:
+    found = PROFILE_MANAGER.codex.get("runes", [])
+    lines = []
+    for rid, r in GAME_DATA["runes"]["runes"].items():
+        if rid in found: lines.append(f"  {r['icon']} {Colors.BOLD}{r['name']}{Colors.RESET} [{r['family']}] — {r['desc']}")
+        else: lines.append(f"  {UNKNOWN} [{r['family']}]")
+    return lines
+
+
+def runewords_page() -> List[str]:
+    """Le parole runiche scoperte; di quelle ignote si vede quante rune servono e, se l'hai già trovata, la prima."""
+    found, known_runes = PROFILE_MANAGER.codex.get("runewords", []), PROFILE_MANAGER.codex.get("runes", [])
+    runes = GAME_DATA["runes"]["runes"]
+    lines = []
+    for wid, w in GAME_DATA["runes"]["words"].items():
+        icons = "".join(runes[r]["icon"] for r in w["runes"])
+        if wid in found:
+            lines.append(f"  {Colors.BOLD}«{w['name']}»{Colors.RESET} {icons} — {w['desc']}")
+            lines.append(f"    {Colors.CYAN}{' + '.join(runes[r]['name'] for r in w['runes'])}{Colors.RESET}")
+        else:
+            hint = f", fra cui {runes[w['runes'][0]]['name']}" if w["runes"][0] in known_runes else ""
+            lines.append(f"  {UNKNOWN} — {len(w['runes'])} rune{hint}")
+    return lines
+
+
+def nemeses_page() -> List[str]:
+    """Le Nemesi: chi ti ha ucciso e ti aspetta ancora, e chi hai già sconfitto."""
+    import nemesis
+    lines = [f"{Colors.YELLOW}{Colors.BOLD}TI ASPETTANO{Colors.RESET}"]
+    for nem in nemesis.active():
+        trait = GAME_DATA["nemesis"]["traits"][nem["trait"]]
+        lines.append(f"  {Colors.MAGENTA}{Colors.BOLD}{nemesis.full_name(nem)}{Colors.RESET} ({nem['enemy']}) — ti ha ucciso {nem['kills']} volte, l'ultima al piano {nem['floor']}")
+        lines.append(f"    {trait['name']}: {trait['desc']} Ha con sé {nem['gold']} Oro.")
+    if not nemesis.active(): lines.append("  Nessuno. Per ora.")
+    lines.append(f"\n{Colors.YELLOW}{Colors.BOLD}SCONFITTE{Colors.RESET}")
+    for nem in reversed(nemesis.fallen()):
+        lines.append(f"  {nem['name']} {GAME_DATA['nemesis']['ranks'][nem['rank'] - 1]} ({nem['enemy']}), che aveva ucciso {nem['kills']} volte")
+    if not nemesis.fallen(): lines.append("  Nessuna.")
+    return lines
+
+
+CEMETERY_PAGE = 10
+OUTCOME_ICONS = {"death": "🪦", "escape": "🏃", "victory": "🏆"}
+
+
+def cemetery_page() -> List[str]:
+    """Gli epitaffi delle ultime discese, dalla più recente."""
+    graves = PROFILE_MANAGER._data.get("cemetery", [])
+    if not graves: return ["  Nessuno. Il Labirinto non ha ancora storie da raccontare su di te."]
+    lines = []
+    for g in reversed(graves[-CEMETERY_PAGE:]):
+        lines.append(f"  {OUTCOME_ICONS.get(g['outcome'], '')} {Colors.BOLD}{g['date']} · {g['class']} · piano {g['floor']}{Colors.RESET}")
+        lines.append(f"    {Colors.CYAN}{' '.join(g['epitaph'])}{Colors.RESET}")
+    return lines
+
+
+def phases_page() -> List[str]:
+    """Le fasi dei boss che hai visto: ogni boss cambia a una soglia di HP, e lo scopri solo portandolo fin lì."""
+    lines, known = [], PROFILE_MANAGER.codex["enemies"]
+    for name, data in sorted(RAW_DATA["bosses"].items(), key=lambda kv: kv[1]["base_hp"] * kv[1]["base_atk"]):
+        phases, seen = GAME_DATA["phases"].get(name, []), known.get(name, {}).get("phases", 0)
+        if not phases: continue
+        lines.append(f"  {Colors.BOLD}{name if known.get(name, {}).get('seen') else UNKNOWN}{Colors.RESET}")
+        for i, ph in enumerate(phases):
+            if i < seen: lines.append(f"    {ph['at_pct']}% HP — {Colors.MAGENTA}{ph['name']}{Colors.RESET}: {Colors.CYAN}{ph['text']}{Colors.RESET}")
+            else: lines.append(f"    {ph['at_pct']}% HP — {UNKNOWN}")
     return lines
 
 
@@ -129,6 +232,16 @@ def relics_page() -> List[str]:
     return lines
 
 
+def spells_page() -> List[str]:
+    """Gli incantesimi lanciati almeno una volta, con elemento, costo e descrizione."""
+    found = set(PROFILE_MANAGER.codex.get("spells", []))
+    lines = []
+    for sid, s in GAME_DATA["spells"]["spells"].items():
+        if sid in found: lines.append(f"  {s['icon']} {Colors.BOLD}{s['name']}{Colors.RESET} [{get_element_icon(s['element'])}] · {s['cost']} Etere\n    {Colors.CYAN}{s['desc']}{Colors.RESET}")
+        else: lines.append(f"  {UNKNOWN}")
+    return lines
+
+
 def reactions_page() -> List[str]:
     found = set(PROFILE_MANAGER.codex.get("reactions", []))
     lines = [f"  {Colors.CYAN}L'arma marchia il nemico con il suo elemento; in guardia, anche l'armatura marchia chi ti colpisce.",
@@ -154,7 +267,8 @@ def endings_page() -> List[str]:
 
 
 PAGES = {"Bestiario": bestiary_page, "Personaggi": characters_page, "Eventi": events_page,
-         "Lettere insanguinate": letters_page, "Reliquie": relics_page, "Finali": endings_page, "Reazioni elementali": reactions_page}
+         "Lettere insanguinate": letters_page, "Reliquie": relics_page, "Finali": endings_page,
+         "Rune": runes_page, "Parole runiche": runewords_page, "Nemesi": nemeses_page, "Cimitero": cemetery_page, "Fasi dei boss": phases_page, "Reazioni elementali": reactions_page, "Incantesimi": spells_page}
 
 
 def show_codex():
@@ -163,7 +277,8 @@ def show_codex():
         stats = sections()
         options = [f"{name} ({found}/{total})" for name, found, total in stats]
         prompt = (f"{Colors.MAGENTA}{Colors.BOLD}=== 📖 IL CODICE DEL LABIRINTO ==={Colors.RESET}\n"
-                  f"Completato al {Colors.CYAN}{completion()}%{Colors.RESET}. Ciò che non hai ancora scoperto è segnato con ???")
+                  f"Completato al {Colors.CYAN}{completion()}%{Colors.RESET}. Ciò che non hai ancora scoperto è segnato con ???"
+                  + (f"\nNel Ciclo del Labirinto sei arrivato fino all'{Colors.MAGENTA}{echo_name(best - 1)}{Colors.RESET}." if (best := PROFILE_MANAGER._data.get("best_echo", 0)) >= 2 else ""))
         idx = interactive_menu(options, prompt, cancellable=True)
         if idx == -1: break  # "Indietro", aggiunto dal menu
         name = stats[idx][0]

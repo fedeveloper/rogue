@@ -19,7 +19,7 @@
         "Luce": 2,
         "Tenebra": 2
       },
-      "signature_events": ["voce_cara", "statua_sale", "biblioteca_cenere"]
+      "signature_events": ["voce_cara", "statua_sale", "biblioteca_cenere", "coro_spento", "lavabo_ricordi"]
     },
     {
       "id": "miniere",
@@ -33,7 +33,7 @@
       ],
       "hazard": {
         "name": "Gas del Silenzio",
-        "desc": "In ogni scontro c'è il 35% di probabilità che il gas riempia la stanza: la tua Difesa dimezza ancora i danni, ma perde la tecnica della tua classe (contrattacco, concentrazione o riparo)."
+        "desc": "In ogni scontro c'è il 35% di probabilità che il gas riempia la stanza: la tua Difesa dimezza ancora i danni, ma perde la tecnica della tua classe, e non riesci a lanciare incantesimi."
       },
       "rules": {
         "silence": {"chance": 35}
@@ -42,7 +42,7 @@
       "enemy_elements": {
         "Terra": 2
       },
-      "signature_events": ["galleria_gas", "ingranaggio_fermo"]
+      "signature_events": ["galleria_gas", "ingranaggio_fermo", "carrello_abbandonato", "minatore_cieco"]
     },
     {
       "id": "guglie",
@@ -61,7 +61,7 @@
       "enemy_elements": {
         "Vento": 2
       },
-      "signature_events": ["ponte_sospeso", "nido_tempesta"]
+      "signature_events": ["ponte_sospeso", "nido_tempesta", "osservatorio_vento", "fabbro_cielo"]
     },
     {
       "id": "ventre",
@@ -84,7 +84,7 @@
         "Acqua": 2,
         "Tenebra": 1.5
       },
-      "signature_events": ["volto_membrana", "giardino_appassito"]
+      "signature_events": ["volto_membrana", "giardino_appassito", "nido_sanguisughe", "eco_madre"]
     },
     {
       "id": "forgia",
@@ -106,7 +106,7 @@
       "enemy_elements": {
         "Fuoco": 2
       },
-      "signature_events": ["incudine_cosmica", "colata_oro"]
+      "signature_events": ["incudine_cosmica", "colata_oro", "crogiolo_rune", "forgiatore_incatenato"]
     },
     {
       "id": "soglia",
@@ -129,7 +129,7 @@
         "Luce": 1.5,
         "Tenebra": 1.5
       },
-      "signature_events": ["occhio_chiuso", "eco_del_tempo"]
+      "signature_events": ["occhio_chiuso", "eco_del_tempo", "biblioteca_vuoto", "porta_ritorno"]
     }
   ]
 }

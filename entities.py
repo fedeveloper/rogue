@@ -1,11 +1,17 @@
 import random
 from typing import List, Dict
 from ui import Colors, delay_print, clear_screen, display_msg, interactive_menu
-from data_manager import GAME_DATA, RAW_DATA, PROFILE_MANAGER, ELEMENTS, MULTIPLIERS, get_biome, get_element_icon
+from data_manager import GAME_DATA, RAW_DATA, PROFILE_MANAGER, ELEMENTS, MULTIPLIERS, cycle_of, echo_name, get_biome, get_element_icon
 from relic_effects import create_relic_effect
 from archive import get_archive_bonus
 from codex import record_relic
-from constants import BASE_HIT_CHANCE, ENEMY_DEPTH_WINDOW, BOSS_DEPTH_WINDOW, INFINITE_MODE_THRESHOLD, CURSE_CHANCE, CURSE_STAT_MULTIPLIER, BOSS_HP_MULT, BOSS_ATK_MULT, ENEMY_HP_PER_FLOOR, ENEMY_ATK_PER_FLOOR, RECOVERY_HEAL_PCT, BULWARK_HEAL_PCT, WEAPON_TARGET_HITS, ARMOR_TARGET_ABSORB, WEAPON_QUALITY, ARMOR_QUALITY, NORMAL_ELEMENT_BONUS, EPIC_MULTIPLIER
+import modes
+import runes as rune_rules
+import attributes
+import camp_rules
+import magic
+import talents
+from constants import BERSERKER_FURY_PCT, BASE_HIT_CHANCE, ENEMY_DEPTH_WINDOW, BOSS_DEPTH_WINDOW, INFINITE_MODE_THRESHOLD, CURSE_CHANCE, CURSE_STAT_MULTIPLIER, BOSS_HP_MULT, BOSS_ATK_MULT, ENEMY_HP_PER_FLOOR, ENEMY_ATK_PER_FLOOR, BULWARK_HEAL_PCT, WEAPON_TARGET_HITS, ARMOR_TARGET_ABSORB, WEAPON_QUALITY, ARMOR_QUALITY, NORMAL_ELEMENT_BONUS, EPIC_MULTIPLIER
 
 class Item:
     def __init__(self, name: str, value: int, item_type: str, level: int = 1, flavor: str = "", is_cursed: bool = False, curse_effect: str = "", element: str = "Normale"):
@@ -16,16 +22,17 @@ class Item:
     def refresh_display_name(self):
         cursed_tag = f"{Colors.MAGENTA}[MALEDETTO]{Colors.RESET} " if self.is_cursed else ""
         el_tag = f" [{get_element_icon(self.element)}]" if self.element != "Normale" and self.element != "" else ""
-        self.display_name = f"{cursed_tag}{self.name}{el_tag}"
+        self.display_name = f"{cursed_tag}{self.name}{el_tag}{rune_rules.socket_tag(self)}"
 
 # Gli ultimi quattro nascono dalle reazioni elementali e colpiscono solo i nemici
 STATUS_NAMES = {"poison": "Veleno", "bleed": "Sanguinamento", "stun": "Gelo", "blind": "Accecato", "slow": "Impantanato", "scorch": "Magma"}
 
 # Proprietà speciali di un'arma che weapons.json può definire
-WEAPON_TRAIT_KEYS = ("hit_modifier", "crit_chance", "gold_atk_per", "gold_atk_max")
+WEAPON_TRAIT_KEYS = ("hit_modifier", "crit_chance", "gold_atk_per", "gold_atk_max", "dodge_bonus", "guard_break", "shield_mult", "scaling", "spell_pct")
 
 class Weapon(Item):
     def __init__(self, name: str, value: int, atk: int, element: str, level: int, flavor: str = "", is_cursed: bool = False, curse_effect: str = "", status_inflict: dict = None, traits: dict = None):
+        self.sockets, self.runes = rune_rules.rules()["sockets"]["normal"], []  # incastoni e rune incastonate
         super().__init__(name, value, "weapon", level, flavor, is_cursed, curse_effect, element)
         self.atk = atk
         # Stesso formato di status_inflict dei nemici: {"type", "chance", "duration"}
@@ -35,11 +42,31 @@ class Weapon(Item):
     def get_hit_chance_modifier(self) -> int:
         return self.traits.get("hit_modifier", 0)
 
+    @property
+    def scaling(self) -> str:
+        """L'attributo con cui l'arma scala: le sue armi danno +scaled_dmg_pct per punto (attributes.json)."""
+        return self.traits.get("scaling", "forza")
+
     def get_gold_atk_bonus(self, gold: int) -> int:
         """Armi come lo Zweihander d'Oro: +1 ATK ogni gold_atk_per Oro posseduto, fino a gold_atk_max."""
         per = self.traits.get("gold_atk_per")
         if not per: return 0
         return min(self.traits.get("gold_atk_max", 999), max(0, gold) // per)
+
+    def trait_text(self) -> str:
+        """Le proprietà speciali dell'arma in breve, per lo zaino e le statistiche ("" se non ne ha)."""
+        t, parts = self.traits, []
+        if t.get("hit_modifier"): parts.append(f"{t['hit_modifier']:+d}% Precisione")
+        if t.get("crit_chance"): parts.append(f"{t['crit_chance']}% critico")
+        if t.get("dodge_bonus"): parts.append(f"{t['dodge_bonus']:+d}% Schivata")
+        if t.get("guard_break"): parts.append("sfonda la Guardia")
+        if t.get("shield_mult"): parts.append(f"scudi ×{t['shield_mult']}")
+        if self.status_inflict: parts.append(f"{self.status_inflict['chance']}% {STATUS_NAMES[self.status_inflict['type']]}")
+        if t.get("gold_atk_per"): parts.append(f"+1 ATK ogni {t['gold_atk_per']} Oro")
+        if t.get("spell_pct"): parts.append(f"+{t['spell_pct']}% incantesimi")
+        scale = GAME_DATA["attributes"]["attributes"][self.scaling]
+        parts.append(f"scala con {scale['icon']} {scale['name']}")
+        return ", ".join(parts)
 
     def on_attack(self, dmg_dealt: int, eff: str) -> tuple[int, str]:
         crit = self.traits.get("crit_chance", 0)
@@ -49,6 +76,7 @@ class Weapon(Item):
 
 class Armor(Item):
     def __init__(self, name: str, value: int, defense: int, element: str, level: int, flavor: str = "", is_cursed: bool = False, curse_effect: str = "", dodge_bonus: int = 0):
+        self.sockets, self.runes = rune_rules.rules()["sockets"]["normal"], []
         super().__init__(name, value, "armor", level, flavor, is_cursed, curse_effect, element)
         self.defense = defense
         self.dodge_bonus = dodge_bonus
@@ -57,6 +85,37 @@ class Accessory(Item):
     def __init__(self, name: str, value: int, element: str, bonus_type: str, bonus_value: int, desc: str, flavor: str = "", is_cursed: bool = False, curse_effect: str = ""):
         super().__init__(name, value, "accessory", 1, flavor, is_cursed, curse_effect, element)
         self.bonus_type, self.bonus_value, self.desc = bonus_type, bonus_value, desc
+
+class Rune(Item):
+    """Una runa nello zaino: si incastona al Falò in un'arma o in un'armatura (vedi runes.py)."""
+    def __init__(self, rune_id: str, floor: int = 1):
+        data = rune_rules.rune(rune_id)
+        super().__init__(f"{data['icon']} {data['name']}", rune_rules.item_value(rune_id, floor), "rune")
+        self.rune_id, self.desc = rune_id, data["desc"]
+
+
+class Scroll(Item):
+    """Una pergamena nello zaino: leggendola si impara il suo incantesimo (vedi magic.py)."""
+    def __init__(self, spell_id: str, floor: int = 1):
+        data = magic.spell(spell_id)
+        super().__init__(f"📜 Pergamena: {data['name']}", magic.scroll_value(floor), "scroll")
+        self.spell_id, self.desc = spell_id, data["desc"]
+
+
+def generate_scroll(floor: int, spell_id: str = "") -> "Scroll":
+    return Scroll(spell_id or random.choice(magic.available()), floor)
+
+
+def generate_rune(floor: int, rune_id: str = "") -> "Rune":
+    return Rune(rune_id or rune_rules.random_rune_id(), floor)
+
+
+def set_sockets(item, kind: str, at_least: int = 0):
+    """Incastoni di un oggetto generato: normale, epico o premio di un boss (e almeno quelli dei suoi dati)."""
+    item.sockets = max(rune_rules.rules()["sockets"][kind], at_least)
+    item.refresh_display_name()
+    return item
+
 
 class Consumable(Item):
     def __init__(self, name: str, value: int, heal_amount: int, category: str = "heal"):
@@ -76,20 +135,34 @@ def floor_multiplier(floor: int) -> float:
 
 _TYPICAL = {}
 
+def generic_base(floor: int) -> tuple:
+    """(HP, ATK) di base medi dei nemici generici nella finestra di profondità del piano, senza crescita."""
+    pool = {n: d for n, d in RAW_DATA["enemies"].items() if "biome" not in d and "lair" not in d}
+    ranked = sorted(pool, key=lambda n: pool[n]["base_hp"] * pool[n]["base_atk"])
+    window = min(len(ranked), ENEMY_DEPTH_WINDOW)
+    progress = min(1.0, (max(1, floor) - 1) / (INFINITE_MODE_THRESHOLD - 1))
+    lo = max(0, min(round(progress * (len(ranked) - 1) - (window - 1) / 2), len(ranked) - window))
+    names = ranked[lo:lo + window]
+    return sum(pool[n]["base_hp"] for n in names) / window, sum(pool[n]["base_atk"] for n in names) / window
+
 def typical_enemy(floor: int) -> tuple:
     """(HP, ATK) attesi di un nemico normale al piano: media della finestra di profondità, crescita e salti di piano."""
     floor = max(1, floor)
     if floor not in _TYPICAL:
-        pool = {n: d for n, d in RAW_DATA["enemies"].items() if "biome" not in d and "lair" not in d}
-        ranked = sorted(pool, key=lambda n: pool[n]["base_hp"] * pool[n]["base_atk"])
-        window = min(len(ranked), ENEMY_DEPTH_WINDOW)
-        progress = min(1.0, (floor - 1) / (INFINITE_MODE_THRESHOLD - 1))
-        lo = max(0, min(round(progress * (len(ranked) - 1) - (window - 1) / 2), len(ranked) - window))
-        names = ranked[lo:lo + window]
-        hp = (sum(pool[n]["base_hp"] for n in names) / window + int((floor - 1) * ENEMY_HP_PER_FLOOR)) * floor_multiplier(floor)
-        atk = (sum(pool[n]["base_atk"] for n in names) / window + int((floor - 1) * ENEMY_ATK_PER_FLOOR) + 0.5) * floor_multiplier(floor)
+        base_hp, base_atk = generic_base(floor)
+        hp = (base_hp + int((floor - 1) * ENEMY_HP_PER_FLOOR)) * floor_multiplier(floor)
+        atk = (base_atk + int((floor - 1) * ENEMY_ATK_PER_FLOOR) + 0.5) * floor_multiplier(floor)
         _TYPICAL[floor] = (hp, atk)
     return _TYPICAL[floor]
+
+def echo_native_base(data: dict) -> tuple:
+    """Le statistiche di base di un nativo quando il suo bioma torna in un'Eco: forte, rispetto ai nemici più profondi,
+    quanto lo era rispetto ai generici dei piani del suo bioma."""
+    lo, hi = next(b["floors"] for b in RAW_DATA["biomes"] if b["id"] == data["biome"])
+    home = [generic_base(lo), generic_base(hi)]
+    home_hp, home_atk = sum(h for h, _ in home) / 2, sum(a for _, a in home) / 2
+    deep_hp, deep_atk = generic_base(INFINITE_MODE_THRESHOLD)
+    return round(data["base_hp"] * deep_hp / home_hp), round(data["base_atk"] * deep_atk / home_atk)
 
 
 def boss_quality(data: dict) -> tuple:
@@ -113,7 +186,7 @@ def generate_weapon(level: int, is_epic: bool = False) -> Weapon:
     element = w_data.get("element") or generate_random_element()
     
     is_cursed, curse_effect = False, ""
-    if not is_epic and random.random() < CURSE_CHANCE:
+    if not is_epic and random.random() < CURSE_CHANCE * modes.rule("curse_chance_mult"):
         is_cursed = True
         curse_effect = random.choice(["hp_drain", "gold_drain"])
         power *= CURSE_STAT_MULTIPLIER
@@ -121,7 +194,8 @@ def generate_weapon(level: int, is_epic: bool = False) -> Weapon:
     if element == "Normale": power *= NORMAL_ELEMENT_BONUS
     if is_epic: power *= EPIC_MULTIPLIER; name = f"EPICO {name}"
     atk = max(1, round(power))
-    return Weapon(f"{name} (lv.{level})", atk * 5, atk, element, level, flavor, is_cursed, curse_effect, w_data.get("status_inflict"), w_data)
+    w = Weapon(f"{name} (lv.{level})", atk * 5, atk, element, level, flavor, is_cursed, curse_effect, w_data.get("status_inflict"), w_data)
+    return set_sockets(w, "epic" if is_epic else "normal", w_data.get("sockets", 0))
 
 def generate_armor(level: int, is_epic: bool = False) -> Armor:
     a_data = random.choice(GAME_DATA["armors"])
@@ -131,7 +205,7 @@ def generate_armor(level: int, is_epic: bool = False) -> Armor:
     element = a_data.get("element") or generate_random_element()
     
     is_cursed, curse_effect = False, ""
-    if not is_epic and random.random() < CURSE_CHANCE:
+    if not is_epic and random.random() < CURSE_CHANCE * modes.rule("curse_chance_mult"):
         is_cursed = True
         curse_effect = random.choice(["hp_drain", "gold_drain", "heavy"])
         power *= CURSE_STAT_MULTIPLIER
@@ -139,14 +213,15 @@ def generate_armor(level: int, is_epic: bool = False) -> Armor:
     if element == "Normale": power *= NORMAL_ELEMENT_BONUS
     if is_epic: power *= EPIC_MULTIPLIER; name = f"EPICO {name}"
     defense = max(1, round(power))
-    return Armor(f"{name} (lv.{level})", defense * 8, defense, element, level, flavor, is_cursed, curse_effect, a_data.get("dodge_bonus", 0))
+    a = Armor(f"{name} (lv.{level})", defense * 8, defense, element, level, flavor, is_cursed, curse_effect, a_data.get("dodge_bonus", 0))
+    return set_sockets(a, "epic" if is_epic else "normal", a_data.get("sockets", 0))
 
 def generate_accessory(level: int) -> Accessory:
     a_data = random.choice(GAME_DATA["accessories"])
     is_cursed, curse_effect = False, ""
     bonus_val = a_data["bonus_value"]
     desc = a_data["desc"]
-    if random.random() < CURSE_CHANCE:
+    if random.random() < CURSE_CHANCE * modes.rule("curse_chance_mult"):
         is_cursed = True
         curse_effect = random.choice(["hp_drain", "gold_drain"])
         bonus_val = int(bonus_val * 2)
@@ -160,8 +235,11 @@ HEALING_CATEGORIES = ("heal", "antidote")
 def consumable_name(name: str, heal: int, category: str) -> str:
     return f"{name} (Cura {heal})" if heal > 0 and category in HEALING_CATEGORIES else name
 
+CONSUMABLE_WEIGHT = 10  # peso di un consumabile senza "weight" nei dati: il Tomo dell'Oblio ha 1, quindi è raro
+
 def generate_potion(level: int) -> Consumable:
-    c_data = random.choice(GAME_DATA["consumables"])
+    pool = GAME_DATA["consumables"]
+    c_data = random.choices(pool, weights=[c.get("weight", CONSUMABLE_WEIGHT) for c in pool])[0]
     cat = c_data.get("category", "heal")
     heal = c_data["base_heal"] + (level * 5) if cat in HEALING_CATEGORIES else 0
     val = c_data["val_base"] + (level * 15)
@@ -176,11 +254,24 @@ def get_random_relic(player):
 # --- CLASSI E PLAYER ---
 class Player:
     def __init__(self, class_id: str, trait_id: str, active_pacts: List[str]):
+        self.chronicle = []  # momenti chiave della discesa, per l'Epitaffio (vedi epitaph.note)
         self.class_id = class_id
         data = RAW_DATA["classes"][class_id]
         
         self.role = data["role"]
+        self.defense = data["defense"]  # la tecnica di difesa della classe (defenses.json)
         self.max_hp = data["max_hp"] + (PROFILE_MANAGER.get_perk("hp_lvl", 0) * 15)
+        # Attributi (attributes.py): quelli della classe, e i punti da spendere che arrivano a ogni livello
+        self.attributes = attributes.starting(class_id)
+        self.unspent_points, self.points_offered = 0, True
+        self.talents, self.pending_talents = [], 0  # vedi talents.py
+        self.trait_effects, self.arcane_deaf, self.talent_every, self.trait_hp_per_level = {}, False, None, 0  # tratti v5
+        self.camp_effects = camp_rules.total("effects")  # strutture del Campo (Biblioteca dell'Arcano, Sala d'Armi)
+        self.max_hp += attributes.value(self, "max_hp")
+        # Magia (magic.py): gli incantesimi della classe e l'Etere, pieno all'inizio della discesa (riempito in fondo,
+        # quando arma, armatura e reliquie che lo cambiano ci sono già)
+        self.base_ether, self.spells = data.get("ether", 0), list(data.get("spells", []))
+        self.ether = 0
         self.hp = self.max_hp
         self.gold = data["gold"] + (PROFILE_MANAGER.get_perk("gold_lvl", 0) * 20)
         self.base_acc, self.base_dodge = data["acc"], data["dodge"]
@@ -207,6 +298,7 @@ class Player:
         self.base_lifesteal = 0
         # Effetti personali (Maestria della propria classe) e bonus globali (Maestrie di tutte le classi), definiti in classes.json
         self.mastery_effects = self._own_mastery_effects(class_id)
+        self.mastery_magic = self._own_mastery_magic(class_id)  # Maestria Lv.6: effetti magici della classe
         global_bonus = self._global_mastery_bonuses()
         self.bonus_def += global_bonus.get("def", 0)
         self.base_dodge += global_bonus.get("dodge", 0)
@@ -240,11 +332,13 @@ class Player:
         self.level, self.exp, self.max_exp = 1, 0, 100
         self.escaped = False
         self.won = False
+        self.nemeses_met = set()  # Nemesi già comparse in questa discesa
+        self.ascension, self.daily = 0, None  # grado di Ascensione e Sfida del Giorno della discesa (vedi modes)
         self.run_tracker = {"escapes": 0, "fusions": 0, "no_hit_boss_done": False, "kill_1_hp_done": False, "floor_attacks": 0, "floor_hits": 0}
         self.essence_gathered, self.bosses_killed = 0, 0
         
         w_data = data["weapon"]
-        self.weapon = Weapon(w_data["name"], w_data["value"], w_data["atk"], w_data.get("element", "Normale"), 1) if start_weapon_lv == 1 else generate_weapon(2)
+        self.weapon = Weapon(w_data["name"], w_data["value"], w_data["atk"], w_data.get("element", "Normale"), 1, traits=w_data) if start_weapon_lv == 1 else generate_weapon(2)
         self.weapon.atk += PROFILE_MANAGER.get_perk("artigiano_lvl", 0) + (50 if self.cursed else 0)
         self.weapon.atk += global_bonus.get("weapon_atk", 0)
         self.temp_dodge = 0
@@ -261,12 +355,21 @@ class Player:
         if PROFILE_MANAGER.get_perk("altare_benedizione", False):
             r = get_random_relic(self)
             if r: self.add_relic(r)
+        self.ether = self.max_ether()
 
     @staticmethod
     def _own_mastery_effects(class_id: str) -> set:
         lvl = PROFILE_MANAGER.get_class_lvl(class_id, 1)
         mastery = RAW_DATA["classes"][class_id].get("mastery", {})
         return {m["effect"] for m_lvl, m in mastery.items() if m.get("effect") and lvl >= int(m_lvl)}
+
+    @staticmethod
+    def _own_mastery_magic(class_id: str) -> dict:
+        lvl, totals = PROFILE_MANAGER.get_class_lvl(class_id, 1), {}
+        for m_lvl, m in RAW_DATA["classes"][class_id].get("mastery", {}).items():
+            if m.get("type") == "magic" and lvl >= int(m_lvl):
+                for key, v in m["bonus"].items(): totals[key] = totals.get(key, 0) + v
+        return totals
 
     @staticmethod
     def _global_mastery_bonuses() -> dict:
@@ -293,9 +396,22 @@ class Player:
             r = next((x for x in GAME_DATA["relics"] if x["id"] == "scudo_cristallo"), None)
             if r: self.add_relic(r)
         
+        def _sordo():
+            self.arcane_deaf, self.spells, self.base_ether = True, [], 0
+            self.trait_effects = dict(self.trait["effects"])
+            self.max_hp += self.trait["max_hp"]; self.hp = self.max_hp
+        def _erudito():
+            known = [s for s in magic.available() if s not in self.spells]
+            if known and len(self.spells) < magic.rules()["slots"]: self.spells.append(random.choice(known))
+            self.base_ether += self.trait["ether"]
+            self.max_hp += self.trait["max_hp"]; self.hp = self.max_hp
+        def _talento():
+            self.talent_every, self.trait_hp_per_level = self.trait["talent_every"], self.trait["hp_per_level"]
+
         traits_map = {
             "maledetto": _maledetto, "midas": _midas, "aristocratico": _aristocratico,
-            "cacciatore_etereo": _cacciatore, "titano": _titano, "benedetto": _benedetto
+            "cacciatore_etereo": _cacciatore, "titano": _titano, "benedetto": _benedetto,
+            "sordo_arcano": _sordo, "erudito": _erudito, "talento_naturale": _talento,
         }
         if trait_id in traits_map: traits_map[trait_id]()
 
@@ -337,6 +453,7 @@ class Player:
         self.relics.append(relic)
         self.relic_ids.append(relic["id"])
         record_relic(relic["id"])
+        self.chronicle.append({"kind": "relic", "name": relic["name"]})
         effect = create_relic_effect(relic["id"])
         self.relic_effects.append(effect)
         effect.on_equip(self)
@@ -357,33 +474,46 @@ class Player:
     def corruption_atk(self) -> int:
         return self.corruption // 10 * GAME_DATA["meta"]["corruption"]["atk_per_10"]
 
+    def rune_value(self, key: str):
+        """Somma di un effetto delle rune (e delle parole runiche) dell'arma e dell'armatura equipaggiate."""
+        runes = sum(effects.get(key, 0) for item in (self.weapon, self.armor) for effects in rune_rules.item_effects(item))
+        mult = 1 + sum(r.get_rune_multiplier() for r in self.relic_effects)
+        return int(runes * mult) + sum(r.get_rune_bonus(key) for r in self.relic_effects)
+
+    def magic_value(self, key: str) -> int:
+        """Un effetto magico (ether_max, spell_pct, ether_on_hit, spell_discount): attributi e talenti, rune e reliquie,
+        Maestria Lv.6, libri dell'Archivio."""
+        return (attributes.value(self, key) + self.rune_value(key) + getattr(self, "mastery_magic", {}).get(key, 0)
+                + int(get_archive_bonus(key, PROFILE_MANAGER._data)))
+
     def get_total_atk(self):
         atk = self.weapon.atk + self.bonus_atk_relic + self.weapon.get_gold_atk_bonus(self.gold) + self.corruption_atk()
         for r in self.relic_effects: atk += r.get_atk_modifier(self)
-        return atk
+        return atk + self.weapon.atk * self.rune_value("atk_pct") // 100
 
     def get_crit_chance(self) -> int:
-        crit = self.base_crit
+        crit = self.base_crit + self.rune_value("crit_chance_add") + attributes.value(self, "crit")
         if self.accessory and self.accessory.bonus_type == "crit_chance": crit += self.accessory.bonus_value
         return min(100, crit)
 
     def get_lifesteal(self) -> int:
-        ls = self.base_lifesteal
+        ls = self.base_lifesteal + attributes.value(self, "lifesteal")
         if self.accessory and self.accessory.bonus_type == "lifesteal": ls += self.accessory.bonus_value
         return ls
 
     def get_hit_chance(self, enemy_dodge: int = 0, multiplier: float = 1.0) -> int:
         """Probabilità reale di colpire (in %), la stessa usata in combattimento."""
-        hit = BASE_HIT_CHANCE + self.base_acc + self.temp_acc - enemy_dodge + (15 if multiplier > 1.0 else -20 if multiplier < 1.0 else 0)
+        hit = BASE_HIT_CHANCE + self.base_acc + attributes.value(self, "acc") + self.temp_acc - enemy_dodge + (15 if multiplier > 1.0 else -20 if multiplier < 1.0 else 0)
         hit += self.weapon.get_hit_chance_modifier()
         for r in self.relic_effects: hit += r.get_acc_modifier()
         return max(10, min(100, hit))
 
     def get_total_def(self) -> int:
-        return self.armor.defense + self.temp_def + self.bonus_def + get_archive_bonus("def", PROFILE_MANAGER._data)
+        return (self.armor.defense + self.armor.defense * (self.rune_value("def_pct") + attributes.value(self, "def_pct")) // 100 + self.temp_def + self.bonus_def
+                + get_archive_bonus("def", PROFILE_MANAGER._data))
     
     def get_dodge(self): 
-        dodge = self.base_dodge + self.temp_dodge + getattr(self.armor, "dodge_bonus", 0)
+        dodge = self.base_dodge + attributes.value(self, "dodge") + self.temp_dodge + getattr(self.armor, "dodge_bonus", 0) + self.weapon.traits.get("dodge_bonus", 0) + self.rune_value("dodge_add")
         for effect in self.relic_effects: dodge += effect.get_dodge_modifier()
         if self._berserker_fury_active(): return 0
         if self.has_curse("heavy"): dodge -= 15
@@ -400,9 +530,19 @@ class Player:
                 return True
         return False
 
+    def max_ether(self) -> int:
+        if self.arcane_deaf: return 0
+        return self.base_ether + self.magic_value("ether_max")
+
+    def gain_ether(self, amount: int) -> int:
+        """Aggiunge Etere fino al massimo; restituisce quanto ne è entrato davvero."""
+        gained = max(0, min(amount, self.max_ether() - self.ether))
+        self.ether += gained
+        return gained
+
     def gain_exp(self, amount: int):
         if self.midas: return
-        multi = self.exp_multiplier
+        multi = self.exp_multiplier + (self.rune_value("exp_pct") + attributes.value(self, "exp_pct")) / 100
         for effect in self.relic_effects: multi += effect.get_exp_modifier()
         amount = int(amount * multi)
         self.exp += amount
@@ -410,10 +550,17 @@ class Player:
         while self.exp >= self.max_exp:
             self.exp -= self.max_exp
             self.level += 1; self.max_exp = int(self.max_exp * 1.5)
-            self.max_hp += 15
+            growth = attributes.rules()["per_level"]
+            self.max_hp += growth["max_hp"] + self.trait_hp_per_level
             self.heal(self.max_hp)
-            self.base_acc += 2; self.base_dodge += 2
-            display_msg(f"\n{Colors.YELLOW}{Colors.BOLD}*** LEVEL UP! Sei salito al livello {self.level}! ***{Colors.RESET}")
+            self.base_acc += growth["acc"]; self.base_dodge += growth["dodge"]
+            self.unspent_points += attributes.rules()["points_per_level"]
+            self.points_offered = False
+            display_msg(f"\n{Colors.YELLOW}{Colors.BOLD}*** LEVEL UP! Sei salito al livello {self.level}! ***{Colors.RESET}"
+                        f"\n{Colors.YELLOW}Hai {self.unspent_points} punti abilità da spendere negli attributi.{Colors.RESET}")
+            if talents.earned(self.level, self.talent_every):
+                self.pending_talents += 1
+                display_msg(f"{Colors.MAGENTA}Hai guadagnato un talento: lo scegli a fine stanza.{Colors.RESET}")
 
     def heal(self, amount: int) -> int:
         if self.cursed:
@@ -428,7 +575,7 @@ class Player:
         for r in self.relic_effects: g = r.on_gold_gain(self, g)
         g = int(g * (1 + PROFILE_MANAGER.get_perk("banca_anima_lvl", 0) * 0.05))
         g = int(g * (1 + get_archive_bonus("gold_pct", PROFILE_MANAGER._data) / 100))
-        return g
+        return g * (100 + self.rune_value("gold_pct") + attributes.value(self, "gold_pct")) // 100
 
     def take_damage(self, amount: int) -> bool:
         self.hp -= amount
@@ -440,7 +587,7 @@ class Player:
         return self.hp > 0
 
     def get_class_damage_multiplier(self) -> float:
-        return 1.5 if self._berserker_fury_active() else 1.0
+        return 1 + BERSERKER_FURY_PCT / 100 if self._berserker_fury_active() else 1.0
 
     def _berserker_fury_active(self) -> bool:
         return self.has_mastery_effect("berserker_fury") and self.hp < self.max_hp * 0.3
@@ -457,12 +604,8 @@ class Player:
             display_msg(f"{Colors.MAGENTA}Sintonia: Assorbi {h} HP!{Colors.RESET}")
             
     def get_defense_action(self) -> tuple[str, str]:
-        if self.role in ["Guerriero", "Berserker"]:
-            return "counter", "Difesa Aggressiva (Dimezza danni e Contrattacca)"
-        elif self.role in ["Ladro", "Assassino"]:
-            return "focus", "Concentrazione (Dimezza danni, prossimo colpo Critico 100%)"
-        else:
-            return "recovery", f"Riparo Magico (Dimezza danni e Cura {RECOVERY_HEAL_PCT}% HP)"
+        d = GAME_DATA["defenses"][self.defense]
+        return self.defense, f"{d['name']} ({d['short']})"
 
 def pick_enemy_name(floor: int, is_boss: bool, final: bool = False) -> str:
     """Sceglie un nemico adatto alla profondità: più si scende, più forti sono i candidati."""
@@ -516,8 +659,10 @@ class Enemy:
             self.atk = int(atk * data["atk_mult"] / floor_multiplier(floor)) + random.randint(0, 1)
             self.gold_drop, self.exp_drop = max(5, 5 + int(floor * 3.5)), 30 + (floor * 10)
         else:
-            self.hp = data["base_hp"] + int(lvl_scale * ENEMY_HP_PER_FLOOR) + random.randint(-5, 5)
-            self.atk = data["base_atk"] + int(lvl_scale * ENEMY_ATK_PER_FLOOR) + random.randint(0, 1)
+            # Nelle Eco oltre il piano 30 i nativi tornano forti quanto i nemici più profondi
+            base_hp, base_atk = echo_native_base(data) if data.get("biome") and cycle_of(floor) else (data["base_hp"], data["base_atk"])
+            self.hp = base_hp + int(lvl_scale * ENEMY_HP_PER_FLOOR) + random.randint(-5, 5)
+            self.atk = base_atk + int(lvl_scale * ENEMY_ATK_PER_FLOOR) + random.randint(0, 1)
             self.gold_drop, self.exp_drop = max(5, 5 + int(floor * 3.5)), 30 + (floor * 10)
             
         if floor >= 10:
@@ -541,21 +686,47 @@ class Enemy:
             self.hp = int(self.hp * 0.6)
             self.atk = int(self.atk * 0.6)
             self.name += f"{Colors.CYAN} (Debilitato){Colors.RESET}"
+        # Il DIO ANTICO che attende alla fine di ogni ciclo porta il nome della sua Eco
+        if data.get("final_boss") and cycle_of(floor): self.name += f"{Colors.MAGENTA} ({echo_name(cycle_of(floor))}){Colors.RESET}"
             
-        if "durezza" in active_pacts: self.hp = int(self.hp * 1.3)
-        if "furia" in active_pacts: self.atk = int(self.atk * 1.3)
+        # Gradi di Ascensione e modificatori della Sfida del Giorno
+        self.atk = int(self.atk * modes.rule("enemy_atk_mult"))
+        if is_boss:
+            self.hp = int(self.hp * modes.rule("boss_hp_mult") * (modes.rule("final_boss_hp_mult") if data.get("final_boss") else 1.0))
+            self.atk = int(self.atk * modes.rule("boss_atk_mult"))
+        else:
+            self.hp = int(self.hp * modes.rule("enemy_hp_mult") * (modes.rule("elite_hp_mult") if modifier == "elite" else 1.0))
+        self.base_acc += modes.rule("enemy_acc_add")
+        self.gold_drop = int(self.gold_drop * modes.rule("enemy_gold_mult"))
         self.max_hp = self.hp
 
-        # Mosse annunciate in anticipo (intenti): pesi del nemico o quelli predefiniti della sua categoria
+        # Mosse annunciate in anticipo (intenti): pesi del nemico, del suo profilo o quelli predefiniti della sua categoria
         defaults = GAME_DATA["moves"]["defaults"]
-        self.moves = dict(data.get("moves") or defaults["boss" if is_boss else "enemy"])
-        if self.status_inflict and not data.get("moves"): self.moves.update(defaults["with_status"])
+        own = data.get("moves") or GAME_DATA["moves"]["profiles"].get(data.get("profile"), {}).get("moves")
+        self.moves = dict(own or defaults["boss" if is_boss else "enemy"])
+        if self.status_inflict and not own: self.moves.update(defaults["with_status"])
+        # Mosse contro la magia: tutti i nemici nelle Eco del Ciclo, i nemici comuni con l'Ascensione
+        extra = dict(GAME_DATA["meta"]["cycle"]["arcane_moves"]) if cycle_of(floor) else {}
+        if not is_boss:
+            for move, w in modes.rule("enemy_moves").items(): extra[move] = extra.get(move, 0) + w
+        for move, w in extra.items(): self.moves[move] = self.moves.get(move, 0) + w
+        self.extra_moves = extra  # restano anche quando una fase del boss cambia le mosse
         self.last_move = None
         self.heals_used = 0
         self.mark = None  # [elemento, turni]: il marchio elementale che una reazione può far esplodere
+        # Fasi dei boss (phases.json): a ogni soglia di HP cambiano mosse e regole; vedi CombatSession.check_phase
+        self.phases = sorted(GAME_DATA["phases"].get(self.base_name, []), key=lambda ph: -ph["at_pct"]) if is_boss else []
+        self.phase = 0      # fasi già attraversate
+        self.shield = 0     # scudo della Barriera: assorbe i danni degli attacchi dell'eroe
+        self.ward = None    # Scaglie: moltiplicatore dei danni degli attacchi, finché una reazione non le infrange
+        self.charged = False  # dopo la Carica arriva sempre il Colpo caricato
 
     def choose_move(self) -> str:
         """La prossima mossa, annunciata al giocatore prima del suo turno."""
+        if self.charged:
+            self.charged = False
+            self.last_move = "unleash"
+            return "unleash"
         rules = GAME_DATA["moves"]["rules"]
         weights = dict(self.moves)
         if self.last_move in rules["no_repeat"]: weights.pop(self.last_move, None)

@@ -54,7 +54,7 @@ class Sandbox(unittest.TestCase):
 
 class StartingGearTest(Sandbox):
     def test_classes_start_with_a_reaction_or_a_resonance(self):
-        reactions = {"1", "2", "3", "6", "7"}
+        reactions = {"1", "2", "3", "6", "7", "9"}
         resonance = {"4", "8"}
         for cid, c in GAME_DATA["classes"].items():
             w, a = c["weapon"]["element"], c["armor"]["element"]

@@ -13,12 +13,16 @@ from contextlib import redirect_stdout
 from unittest import mock
 
 import events
+import entities
 import inventory_menu
 import roguelike
 import rooms
 from data_manager import GAME_DATA, PROFILE_MANAGER, RAW_DATA, update_game_data
-from entities import Accessory, Armor, Consumable, Enemy, Player, Weapon, generate_accessory, generate_weapon
+from entities import Accessory, Armor, Consumable, Enemy, Player, Weapon, generate_accessory, generate_armor, generate_weapon
 from rooms import CombatSession
+from constants import AMBUSH_DMG_PCT, BERSERKER_FURY_PCT, NECRO_HARVEST_PCT
+import attributes
+import talents
 
 ALL_UNLOCKS = sorted({i["unlock_id"] for cat in ("weapons", "armors", "accessories", "consumables", "relics")
                       for i in RAW_DATA[cat] if i.get("unlock_id")})
@@ -85,7 +89,137 @@ class RelicContractTest(Sandbox):
             "contratto_demoniaco": self.c_contratto, "pozione_infinita": self.c_pozione, "bussola_dimensionale": self.c_dimensionale,
             "cuore_drago": self.c_drago, "sigillo_elementale": self.c_sigillo, "spirito_spada": self.c_spirito,
             "maschera_antigas": self.c_maschera, "teschio_sangue": self.c_teschio, "pietra_filosofale": self.c_filosofale,
+            "ago_untore": self.c_ago, "fiala_cremisi": self.c_fiala_cremisi, "spora_nera": self.c_spora,
+            "bilancia_mercante": self.c_bilancia, "moneta_traghettatore": self.c_moneta, "dente_oro": self.c_dente,
+            "catalizzatore": self.c_rune_bonus("catalizzatore", "reaction_dmg_pct", 50),
+            "cristallo_marea": self.c_marea, "specchio_elementi": self.c_rune_bonus("specchio_elementi", "mark_duration_add", 2),
+            "piastra_custode": self.c_rune_bonus("piastra_custode", "def_pct", 10), "corno_bastione": self.c_corno,
+            "rovo_antico": self.c_rune_bonus("rovo_antico", "thorns_pct", 20),
+            "amuleto_quiete": self.c_rune_bonus("amuleto_quiete", "defend_heal_pct", 5),
+            "cristallo_runico": self.c_cristallo_runico, "martello_lapicida": self.c_martello, "pietra_parlante": self.c_parlante,
+            "marchio_cacciatore": self.c_marchio, "stendardo_audacia": self.c_stendardo, "teschio_rivale": self.c_rivale,
+            "lanterna_cartografo": self.c_lanterna,
+            "cristallo_etere": self.c_rune_bonus("cristallo_etere", "ether_max", 6),
+            "anello_arcimago": self.c_rune_bonus("anello_arcimago", "spell_pct", 20),
+            "calamaio_eterno": self.c_rune_bonus("calamaio_eterno", "spell_discount", 1),
+            "cuore_risonante": self.c_cuore_risonante, "velo_silenzio": self.c_velo,
         }
+
+    # --------------------------------------------------------- reliquie degli archetipi della v3
+    def desc(self, rid):
+        return next(r for r in RAW_DATA["relics"] if r["id"] == rid)["desc"]
+
+    def c_rune_bonus(self, rid, key, value):
+        def check():
+            self.assertIn(str(value), self.desc(rid))
+            p = self.hero(); before = p.rune_value(key); self.relic(p, rid)
+            self.assertEqual(p.rune_value(key), before + value, "vale come una runa con lo stesso effetto (vedi test_runes)")
+        return check
+
+    def c_cuore_risonante(self):
+        self.assertIn("3 Etere", self.desc("cuore_risonante"))
+        p = self.hero(); p.base_ether, p.ether = 100, 0
+        e = self.relic(p, "cuore_risonante"); e.on_enemy_death(self.session(p))
+        self.assertEqual(p.ether, 3)
+
+    def c_velo(self):
+        p = self.hero(); p.spells = ["raffica"]; s = self.session(p)
+        s.mute_turns, s.silenced = 2, True
+        self.assertTrue(s.spells_muted())
+        self.relic(p, "velo_silenzio")
+        self.assertEqual(s.spells_muted(), "", "né il Silenzio né il gas lo fermano")
+
+    def c_ago(self):
+        p = self.hero(); s = self.session(p); s.enemy.hp = s.enemy.max_hp = 1000
+        s.enemy.statuses = {"poison": 3}
+        with quiet(): s.process_statuses_and_curses(is_player_turn=False)
+        plain = 1000 - s.enemy.hp
+        p = self.hero(); self.relic(p, "ago_untore"); s = self.session(p); s.enemy.hp = s.enemy.max_hp = 1000
+        s.enemy.statuses = {"poison": 3}
+        with quiet(): s.process_statuses_and_curses(is_player_turn=False)
+        self.assertEqual(1000 - s.enemy.hp, plain * 2)
+        self.assertIn("doppi", self.desc("ago_untore"))
+
+    def c_fiala_cremisi(self):
+        p = self.hero(); e = self.relic(p, "fiala_cremisi"); s = self.session(p)
+        with quiet(), mock.patch("relic_effects.random.randint", return_value=20): e.on_attack_landed(s, 1.0)
+        self.assertIn("bleed", s.enemy.statuses)
+        s = self.session(p)
+        with quiet(), mock.patch("relic_effects.random.randint", return_value=21): e.on_attack_landed(s, 1.0)
+        self.assertNotIn("bleed", s.enemy.statuses)
+
+    def c_spora(self):
+        p = self.hero(); self.relic(p, "spora_nera"); s = self.session(p)
+        self.assertEqual(s.enemy.statuses.get("poison"), 3)
+
+    def c_bilancia(self):
+        p = self.hero(); p.gold = 0; plain = p.get_total_atk(); self.relic(p, "bilancia_mercante")
+        p.gold = 350; self.assertEqual(p.get_total_atk(), plain + 3)
+        p.gold = 10 ** 6; self.assertEqual(p.get_total_atk(), plain + 10)
+
+    def c_moneta(self):
+        p = self.hero(); e = self.relic(p, "moneta_traghettatore"); p.gold = 0
+        with quiet(): e.on_enemy_death(self.session(p, boss=True))
+        self.assertEqual(p.gold, 100)
+        with quiet(): e.on_enemy_death(self.session(p))
+        self.assertEqual(p.gold, 100, "solo i boss")
+
+    def c_dente(self):
+        p = self.hero(); self.relic(p, "dente_oro"); self.assertEqual(p.calculate_gold_gain(100), 115)
+        self.assertEqual(p.relic_effects[-1].get_exp_modifier(), 0.05)
+
+    def c_marea(self):
+        p = self.hero(); p.max_hp, p.hp = 1000, 1; self.relic(p, "cristallo_marea"); s = self.session(p)
+        with quiet(): s._trigger_reaction(next(iter(GAME_DATA["elements"]["reactions"])))
+        self.assertEqual(p.hp, 1 + 50)
+
+    def c_corno(self):
+        p = self.hero(); e = self.relic(p, "corno_bastione"); s = self.session(p)
+        s.is_defending = True; self.assertEqual(e.on_take_damage(s, 40, 1.0), 20)
+        s.is_defending = False; self.assertEqual(e.on_take_damage(s, 40, 1.0), 40)
+
+    def c_cristallo_runico(self):
+        p = self.hero(); p.weapon.sockets = 1; p.weapon.runes = ["forza"]
+        before = p.rune_value("atk_pct"); self.relic(p, "cristallo_runico")
+        self.assertEqual(p.rune_value("atk_pct"), int(before * 1.5))
+
+    def c_martello(self):
+        p = self.hero(); self.relic(p, "martello_lapicida"); p.weapon.sockets, p.weapon.runes = 1, ["forza"]; p.gold = 0
+        picks = iter([1, 0, 0, -1])
+        with quiet(), mock.patch("rooms.interactive_menu", side_effect=lambda *a, **k: next(picks)), mock.patch("rooms.wait_enter"), mock.patch("rooms.clear_screen"):
+            rooms.rune_workshop(p, 10)
+        self.assertEqual((p.weapon.runes, p.gold), ([], 0))
+
+    def c_parlante(self):
+        p = self.hero(); self.relic(p, "pietra_parlante"); p.inventory = []
+        with quiet(), mock.patch("runes.random.random", return_value=0.999): rooms.rune_drop(p, 5, "elite")
+        self.assertEqual(len(p.inventory), 1)
+        with quiet(), mock.patch("runes.random.random", return_value=0.999): rooms.rune_drop(p, 5, "trap")
+        self.assertEqual(len(p.inventory), 1, "solo le Élite")
+
+    def c_marchio(self):
+        p = self.hero(); e = self.relic(p, "marchio_cacciatore")
+        with quiet(): s = CombatSession(p, 5, Enemy(5, False, [], modifier="elite"))
+        self.assertEqual(e.on_attack(s, 100, 1.0, "")[0], 130)
+        self.assertEqual(e.on_attack(self.session(p), 100, 1.0, "")[0], 100)
+
+    def c_stendardo(self):
+        p = self.hero(); self.relic(p, "stendardo_audacia")
+        self.assertEqual(rooms.gain_audacity(p, "combat"), GAME_DATA["meta"]["rooms"]["audacity"]["points"]["combat"] + 1)
+        self.assertEqual(rooms.gain_audacity(p, "treasure"), 0, "solo le stanze rischiose")
+
+    def c_rivale(self):
+        p = self.hero(); e = self.relic(p, "teschio_rivale"); before = p.max_hp
+        s = self.session(p); s.enemy.nemesis = {"id": "x"}
+        with quiet(): e.on_enemy_death(s)
+        self.assertEqual(p.max_hp, before + 20)
+        with quiet(): e.on_enemy_death(self.session(p))
+        self.assertEqual(p.max_hp, before + 20)
+
+    def c_lanterna(self):
+        w = {"event": 10.0, "mystery": 10.0, "combat": 60.0}
+        e = self.relic(self.hero(), "lanterna_cartografo"); e.modify_room_weights(w)
+        self.assertEqual(w, {"event": 20.0, "mystery": 20.0, "combat": 60.0})
 
     def test_every_relic_has_a_contract(self):
         self.assertEqual(set(self.contracts()), {r["id"] for r in RAW_DATA["relics"]})
@@ -247,12 +381,22 @@ class EquipmentContractTest(Sandbox):
     def test_numbers_in_weapon_descriptions_come_from_the_data(self):
         for w in RAW_DATA["weapons"]:
             st = w.get("status_inflict") or {}
-            allowed = {st.get("chance"), -w.get("hit_modifier", 0), w.get("crit_chance"), w.get("gold_atk_per"), w.get("gold_atk_max")}
+            allowed = {st.get("chance"), abs(w.get("hit_modifier", 0)), w.get("crit_chance"), w.get("gold_atk_per"), w.get("gold_atk_max"), abs(w.get("dodge_bonus", 0)), w.get("spell_pct")}
             if w.get("gold_atk_per"): allowed.add(1)  # "+1 ATK ogni ... Oro"
             with self.subTest(weapon=w["name"]):
                 for n in NUM.findall(w.get("desc", "")):
                     self.assertIn(int(n), allowed, f"numero {n} nella descrizione senza un effetto corrispondente")
                 if w.get("element"): self.assertIn(w["element"], w["desc"])
+                # ogni proprietà speciale è raccontata, con il suo segno
+                if w.get("hit_modifier"): self.assertIn(f"{w['hit_modifier']:+d}% Precisione", w["desc"])
+                if w.get("dodge_bonus"): self.assertIn(f"{w['dodge_bonus']:+d}% Schivata", w["desc"])
+                if w.get("crit_chance"): self.assertIn(f"{w['crit_chance']}%", w["desc"]); self.assertIn("critico", w["desc"])
+                if w.get("guard_break"): self.assertIn("Guardia", w["desc"])
+                if w.get("shield_mult"): self.assertEqual(w["shield_mult"], 2); self.assertIn("doppio dello scudo", w["desc"])
+                if st: self.assertIn(f"{st['chance']}%", w["desc"])
+                if w.get("spell_pct"): self.assertIn(f"+{w['spell_pct']}% potenza degli incantesimi", w["desc"])
+                self.assertIn(w["scaling"], ("forza", "destrezza", "arcano"), "ogni arma scala con un attributo")
+                if w.get("spell_pct"): self.assertEqual(w["scaling"], "arcano", "solo i focus arcani potenziano gli incantesimi")
 
     def test_weapon_traits_behave_as_described(self):
         p = self.hero()
@@ -274,12 +418,58 @@ class EquipmentContractTest(Sandbox):
                     p.gold = w["gold_atk_per"] * 3; self.assertEqual(p.get_total_atk(), plain + 3)
                     p.gold = 10 ** 9; self.assertEqual(p.get_total_atk(), plain + w["gold_atk_max"])
                     p.gold = 0
+                p.base_dodge = 40  # sopra lo zero anche con i malus, che altrimenti si fermerebbero a 0
+                p.weapon = Weapon("Senza", 1, 1, "Normale", 1); plain_dodge = p.get_dodge(); p.weapon = weapon
+                self.assertEqual(p.get_dodge(), plain_dodge + w.get("dodge_bonus", 0))
+
+    def _strike(self, weapon, intent=None, shield=0):
+        p = self.hero(); p.weapon = weapon; p.base_acc = 1000
+        s = self.session(p, 5)
+        s.enemy.hp = s.enemy.max_hp = 10 ** 6
+        s.enemy.element, s.enemy.base_dodge, s.enemy.shield, s.intent = "Normale", 0, shield, intent
+        p.weapon.element = "Normale"
+        with quiet(), mock.patch("rooms.random.randint", return_value=50), mock.patch("entities.random.randint", return_value=100):
+            s.execute_player_attack()
+        return 10 ** 6 - s.enemy.hp, s.enemy.shield
+
+    def test_guard_break_and_shield_mult(self):
+        plain, breaker, piercer = (Weapon("Arma", 1, 40, "Normale", 1, traits=t) for t in ({}, {"guard_break": True}, {"shield_mult": 2}))
+        full = self._strike(plain)[0]
+        self.assertLess(self._strike(plain, "guard")[0], full, "la Guardia dimezza i colpi")
+        self.assertEqual(self._strike(breaker, "guard")[0], full, "sfonda la Guardia")
+        dealt, left = self._strike(plain, shield=full * 3)
+        self.assertEqual((dealt, left), (0, full * 2))
+        dealt, left = self._strike(piercer, shield=full * 3)
+        self.assertEqual((dealt, left), (0, full), "consuma il doppio dello scudo")
+        dealt, left = self._strike(piercer, shield=full)
+        # infrangere uno scudo di `full` costa full/2 di danno, arrotondato per eccesso; il resto passa
+        self.assertEqual((dealt, left), (full - -(-full // 2), 0), "metà del colpo infrange lo scudo, il resto passa")
+
+    def test_the_backpack_shows_the_weapon_traits(self):
+        w = Weapon("Ascia", 1, 9, "Normale", 1, status_inflict={"type": "bleed", "chance": 20, "duration": 2},
+                   traits={"crit_chance": 10, "hit_modifier": -5, "dodge_bonus": -10, "guard_break": True, "shield_mult": 2})
+        self.assertEqual(w.trait_text(), "-5% Precisione, 10% critico, -10% Schivata, sfonda la Guardia, scudi ×2, 20% Sanguinamento, scala con 💪 Forza")
+        self.assertEqual(Weapon("Spada", 1, 9, "Normale", 1).trait_text(), "scala con 💪 Forza", "ogni arma dice con che attributo scala")
+        focus = Weapon("Bacchetta", 1, 4, "Normale", 1, traits={"scaling": "arcano", "spell_pct": 10})
+        self.assertEqual(focus.trait_text(), "+10% incantesimi, scala con 🔮 Arcano")
 
     def test_numbers_in_armor_descriptions_come_from_the_data(self):
         for a in RAW_DATA["armors"]:
             with self.subTest(armor=a["name"]):
                 for n in NUM.findall(a.get("desc", "")):
-                    self.assertIn(int(n), {a.get("dodge_bonus"), a["base_def"]})
+                    self.assertIn(int(n), {abs(a.get("dodge_bonus", 0)), a["base_def"], a.get("sockets")})
+                if a.get("element"): self.assertIn(a["element"], a["desc"])
+
+    def test_armor_data_traits_behave_as_described(self):
+        for a in RAW_DATA["armors"]:
+            with self.subTest(armor=a["name"]), mock.patch("entities.random.choice", side_effect=lambda seq: a if isinstance(seq, list) and a in seq else seq[0]):
+                armor = generate_armor(5)
+                if a.get("element"): self.assertEqual(armor.element, a["element"])
+                self.assertEqual(armor.dodge_bonus, a.get("dodge_bonus", 0))
+                if a.get("dodge_bonus"): self.assertIn(f"{a['dodge_bonus']:+d}% Schivata", a["desc"])
+                if a.get("sockets"):
+                    self.assertEqual(armor.sockets, a["sockets"])
+                    self.assertIn(f"{a['sockets']} incastoni", a["desc"])
 
     def test_armor_dodge_bonus(self):
         veste = next(a for a in RAW_DATA["armors"] if a["name"] == "Veste Eterea")
@@ -328,7 +518,8 @@ class EquipmentContractTest(Sandbox):
 class ConsumableContractTest(Sandbox):
     def contracts(self):
         return {"heal": self.c_heal, "antidote": self.c_antidote, "whetstone": self.c_whetstone, "smoke_bomb": self.c_smoke,
-                "chaos_tome": self.c_tome, "accuracy_potion": self.c_accuracy, "holy_water": self.c_holy, "chaos_vial": self.c_vial}
+                "chaos_tome": self.c_tome, "accuracy_potion": self.c_accuracy, "holy_water": self.c_holy, "chaos_vial": self.c_vial,
+                "rune_solvent": self.c_solvent, "socket_chisel": self.c_chisel, "respec": self.c_respec, "ether": self.c_ether}
 
     def item(self, category):
         d = next(c for c in RAW_DATA["consumables"] if c.get("category", "heal") == category)
@@ -358,7 +549,7 @@ class ConsumableContractTest(Sandbox):
         p = self.hero(); self.assertEqual(self.drink(p, item, in_combat=True), "smoke_bomb")
         self.assertIn("Boss", d["desc"])
         s = self.session(p, boss=True)
-        with quiet(), mock.patch("rooms.interactive_menu", return_value=2), mock.patch("rooms.clear_screen"), \
+        with quiet(), mock.patch("rooms.interactive_menu", return_value=3), mock.patch("rooms.clear_screen"), \
              mock.patch("rooms.show_inventory_menu", return_value="smoke_bomb"):
             self.assertTrue(s.player_turn(), "contro i Boss la fuga non riesce")
 
@@ -372,6 +563,52 @@ class ConsumableContractTest(Sandbox):
         self.assertEqual(p.get_hit_chance(s.enemy.base_dodge), 100)
         with quiet(): s._end_combat()
         self.assertLess(p.get_hit_chance(), 100, "vale solo per questo combattimento")
+
+    def c_solvent(self, d, item):
+        p = self.hero(); p.weapon.runes = ["forza"]; gold = p.gold
+        self.drink(p, item)
+        self.assertEqual(p.weapon.runes, [])
+        self.assertEqual([i.rune_id for i in p.inventory if i.type == "rune"], ["forza"])
+        self.assertEqual(p.gold, gold, "gratis: la descrizione lo promette")
+        self.assertIn("gratis", d["desc"])
+        p = self.hero(); p.inventory = [item]
+        with quiet(), mock.patch("builtins.input", return_value=""): inventory_menu._use_consumable(p, item, 0, False)
+        self.assertEqual(p.inventory, [item], "senza rune incastonate non si consuma")
+
+    def c_respec(self, d, item):
+        import attributes
+        self.assertIn("Falò", d["desc"]); self.assertIn("Raro", d["desc"])
+        pool = RAW_DATA["consumables"]
+        self.assertLess(d["weight"] * 20, sum(c.get("weight", entities.CONSUMABLE_WEIGHT) for c in pool), "raro: meno di un consumabile su venti")
+        p = self.hero(); p.inventory = [item]
+        with quiet(), mock.patch("builtins.input", return_value=""): inventory_menu._use_consumable(p, item, 0, False)
+        self.assertEqual(p.inventory, [item], "fuori dal Falò non si legge e non si consuma")
+        start = dict(p.attributes); p.unspent_points = 2
+        attributes.raise_attribute(p, "vitalita"); attributes.raise_attribute(p, "agilita")
+        hp = p.max_hp
+        with quiet(), mock.patch("rooms.wait_enter"), mock.patch("attributes.interactive_menu", return_value=-1), mock.patch("attributes.clear_screen"):
+            rooms.read_oblivion(p, item)
+        self.assertEqual((p.attributes, p.unspent_points, p.inventory), (start, 2, []))
+        self.assertEqual(p.max_hp, hp - GAME_DATA["attributes"]["attributes"]["vitalita"]["per_point"]["max_hp"])
+
+    def c_ether(self, d, item):
+        self.assertIn(f"{d['ether_pct']}% dell'Etere massimo", d["desc"]); self.assertIn("costa il turno", d["desc"])
+        p = self.hero(); p.ether = 0; p.inventory = [item]
+        self.assertEqual(self.drink(p, item, in_combat=True), "turn_used")
+        self.assertEqual(p.ether, p.max_ether() * d["ether_pct"] // 100)
+        p = self.hero(); p.inventory = [item]
+        with quiet(), mock.patch("builtins.input", return_value=""): inventory_menu._use_consumable(p, item, 0, False)
+        self.assertEqual(p.inventory, [item], "a Etere pieno non si consuma")
+
+    def c_chisel(self, d, item):
+        top = GAME_DATA["runes"]["rules"]["sockets"]["boss"]
+        self.assertIn(f"al massimo {top}", d["desc"])
+        p = self.hero(); p.armor.sockets = top; before = p.weapon.sockets
+        self.drink(p, item)
+        self.assertEqual(p.weapon.sockets, before + 1)
+        p = self.hero(); p.weapon.sockets = p.armor.sockets = top; p.inventory = [item]
+        with quiet(), mock.patch("builtins.input", return_value=""): inventory_menu._use_consumable(p, item, 0, False)
+        self.assertEqual((p.weapon.sockets, p.inventory), (top, [item]))
 
     def c_holy(self, d, item):
         p = self.hero(); p.weapon.is_cursed, p.weapon.curse_effect = True, "hp_drain"; self.drink(p, item)
@@ -391,7 +628,7 @@ class ConsumableContractTest(Sandbox):
                     self.assertEqual(self.drink(p, item, in_combat=True), "fiala_caos")
                 check(p)
         p = self.hero(); s = self.session(p); s.enemy.hp = 1000
-        with quiet(), mock.patch("rooms.interactive_menu", return_value=2), mock.patch("rooms.clear_screen"), \
+        with quiet(), mock.patch("rooms.interactive_menu", return_value=3), mock.patch("rooms.clear_screen"), \
              mock.patch("rooms.show_inventory_menu", return_value="fiala_caos"), mock.patch("rooms.random.randint", return_value=37):
             s.player_turn()
         self.assertEqual(s.enemy.hp, 963)
@@ -415,7 +652,7 @@ class EventContractTest(Sandbox):
                 "relics": len(p.relic_ids), "items": len(p.inventory), "quest": sorted(p.quest_items),
                 "essence": p.essence_gathered, "exp": 0, "flags": dict(story["flags"]), "counters": dict(story["counters"]),
                 "npcs": dict(PROFILE_MANAGER._data.get("npc_unlocked", {})), "pending": [list(x) for x in p.pending_events],
-                "run_flags": sorted(p.run_flags), "fallen": p.fallen, "corruption": p.corruption}
+                "run_flags": sorted(p.run_flags), "fallen": p.fallen, "corruption": p.corruption, "ether": p.ether, "max_ether": p.max_ether()}
 
     def expected(self, before, effects, floor):
         """Ciò che gli effetti dichiarano, calcolato senza passare dal motore degli eventi."""
@@ -429,6 +666,8 @@ class EventContractTest(Sandbox):
             elif key == "relic": e["relics"] += 1
             elif key in ("weapon", "armor", "accessory"): e["items"] += 1
             elif key == "potion": e["items"] += v
+            elif key in ("rune", "scroll"): e["items"] += 1
+            elif key == "ether": e["ether"] = min(e["max_ether"], e["ether"] + (e["max_ether"] if v == "full" else v))
             elif key == "quest_item": e["quest"] = sorted(set(e["quest"]) | {v})
             elif key == "take_quest_item": e["quest"] = sorted(set(e["quest"]) - {v})
             elif key == "unlock_npc": e["npcs"][v] = True
@@ -448,6 +687,7 @@ class EventContractTest(Sandbox):
         p = self.hero(); p.max_hp = 500; p.hp = 250; p.gold = 500
         p.corruption = 80  # sopra ogni soglia delle opzioni proibite, e con margine per misurare aumenti e cali
         p.quest_items = list(GAME_DATA["story"]["quest_items"])
+        p.ether = 0  # così si misura l'Etere che una scelta restituisce
         before = self.snapshot(p)
         exp = []
         won = lambda player, floor, enemy: setattr(enemy, "hp", 0)
@@ -527,6 +767,11 @@ class RulesContractTest(Sandbox):
             "cacciatore_etereo": lambda p: self.assertEqual(p.base_dodge, base.base_dodge - 20),
             "titano": lambda p: self.assertEqual((p.max_hp, p.base_acc, p.base_dodge), (base.max_hp + 100, base.base_acc // 2, base.base_dodge // 2)),
             "benedetto": lambda p: (self.assertIn("scudo_cristallo", p.relic_ids), self.assertTrue(p.take_damage(10 ** 6)), self.assertEqual(p.hp, 1)),
+            "sordo_arcano": lambda p: (self.assertEqual((p.spells, p.max_ether(), p.max_hp), ([], 0, base.max_hp + 30)),
+                                       self.assertEqual(attributes.value(p, "dmg_pct") - attributes.value(base, "dmg_pct"), 25)),
+            "erudito": lambda p: self.assertEqual((len(p.spells), p.base_ether, p.max_hp), (len(base.spells) + 1, base.base_ether + 4, base.max_hp - 15)),
+            "talento_naturale": lambda p: (self.assertEqual(self.growth(p) - self.growth(base), -4), self.assertTrue(talents.earned(4, p.talent_every)),
+                                           self.assertFalse(talents.earned(5, p.talent_every))),
         }
         self.assertEqual(set(checks), set(GAME_DATA["meta"]["traits"]))
         for tid, check in checks.items():
@@ -534,6 +779,12 @@ class RulesContractTest(Sandbox):
                 with quiet(): p = Player("1", tid, [])
                 check(p)
         self.assertIn("dimezzati", GAME_DATA["meta"]["traits"]["maledetto"]["desc"])
+
+    def growth(self, p):
+        """Gli HP massimi che dà un livello."""
+        before = p.max_hp
+        with quiet(): p.gain_exp(p.max_exp - p.exp)
+        return p.max_hp - before
 
     def exp_after(self, p, amount):
         p.exp = 0
@@ -554,8 +805,6 @@ class RulesContractTest(Sandbox):
             p = self.hero(pacts=pacts); p.max_hp, p.hp = 1000, 1
             self.drink(p, Consumable("Pozione", 1, 40, "heal")); return p.hp - 1
         checks = {
-            "durezza": lambda: self.assertEqual(enemy(["durezza"]).hp, int(enemy([]).hp * 1.3)),
-            "furia": lambda: self.assertEqual(enemy(["furia"]).atk, int(enemy([]).atk * 1.3)),
             "carestia": lambda: self.assertEqual(potion(["carestia"]), potion([]) // 2),
             "inflazione": lambda: self.assertEqual(self.vendor_prices(["inflazione"]), [v * 2 for v in self.vendor_prices([])]),
             "trappole": lambda: self.assertEqual(trap(["trappole"]), trap([]) * 2),
@@ -632,8 +881,11 @@ class RulesContractTest(Sandbox):
         PROFILE_MANAGER.set_class_lvl("5", 2)
         with quiet(): berserker = Player("5", "base", [])
         berserker.base_dodge = 50; berserker.hp = 1
-        self.assertEqual((berserker.get_dodge(), berserker.get_class_damage_multiplier()), (0, 1.5))
+        self.assertEqual((berserker.get_dodge(), berserker.get_class_damage_multiplier()), (0, 1 + BERSERKER_FURY_PCT / 100))
         self.assertIn("Schivata scende a 0", GAME_DATA["classes"]["5"]["mastery"]["2"]["desc"])
+        self.assertIn(f"+{BERSERKER_FURY_PCT}% ATK", GAME_DATA["classes"]["5"]["mastery"]["2"]["desc"])
+        self.assertIn(f"{AMBUSH_DMG_PCT - 100}% di danni in più", GAME_DATA["classes"]["7"]["mastery"]["2"]["desc"])
+        self.assertIn(f"{NECRO_HARVEST_PCT}% degli HP Max", GAME_DATA["classes"]["8"]["mastery"]["2"]["desc"])
 
     def test_every_feat_has_the_threshold_its_text_says(self):
         def run(setup, floor=5):
@@ -641,10 +893,11 @@ class RulesContractTest(Sandbox):
             PROFILE_MANAGER._data["stats"]["total_bosses"] = 0
             p = self.hero(); p.run_tracker = {"escapes": 0, "fusions": 0}; p.escaped = False
             setup(p)
-            with quiet(): roguelike._check_feats(p, getattr(p, "_floor", floor), False)
+            with quiet(): roguelike._check_feats(p, getattr(p, "_floor", floor), getattr(p, "_infinite", False))
             return PROFILE_MANAGER._data["completed_feats"]
         def tr(**kv): return lambda p: p.run_tracker.update(kv)
         def at_floor(n, **kv): return lambda p: (setattr(p, "_floor", n), p.run_tracker.update(kv))
+        def infinite_at(n): return lambda p: (setattr(p, "_floor", n), setattr(p, "_infinite", True))
         def escaped_with(gold): return lambda p: (setattr(p, "escaped", True), setattr(p, "gold", gold))
         def bosses(n): return lambda p: (PROFILE_MANAGER._data["stats"].update(total_bosses=n - 1), setattr(p, "bosses_killed", 1))
         def elements(w, a): return lambda p: (setattr(p, "escaped", True), setattr(p.weapon, "element", w), setattr(p.armor, "element", a))
@@ -663,6 +916,13 @@ class RulesContractTest(Sandbox):
             "feat_furia_cieca": (None, tr(blind_fury_done=True), tr()),
             "feat_tiratore_scelto": (5, tr(super_effective_hits=5), tr(super_effective_hits=4)),
             "feat_assaggiatore": (1, tr(**{"1_hp_survive": True}), tr()),
+            "feat_eco": (61, infinite_at(61), infinite_at(60)),
+            "feat_arcimago": (25, tr(spells_cast=25), tr(spells_cast=24)),
+            "feat_alchimia": (12, tr(reactions=12), tr(reactions=11)),
+            "feat_voce_silenzio": (None, tr(kill_muted_done=True), tr()),
+            "feat_talenti": (3, lambda p: setattr(p, "talents", ["flusso", "raccolto", "studioso"]), lambda p: setattr(p, "talents", ["flusso", "raccolto"])),
+            "feat_specialista": (10, lambda p: p.attributes.update(forza=10), lambda p: p.attributes.update(forza=9)),
+            "feat_asceta": (None, lambda p: setattr(p, "won", True), lambda p: (setattr(p, "won", True), p.run_tracker.update(spells_cast=1))),
         }
         self.assertEqual(set(table), set(GAME_DATA["meta"]["feats"]))
         for fid, (number, done, below) in table.items():
@@ -700,7 +960,122 @@ class MoveContractTest(Sandbox):
         return p, s
 
     def test_every_move_has_a_contract(self):
-        self.assertEqual(set(GAME_DATA["moves"]["moves"]), {"attack", "heavy", "guard", "heal", "venom"})
+        self.assertEqual(set(GAME_DATA["moves"]["moves"]), {"attack", "heavy", "guard", "heal", "venom", "drain", "seal", "charge", "unleash", "shield",
+                                                            "silence", "ether_drain", "spellcast"})
+
+    def test_silence_mutes_spells_for_some_turns(self):
+        m = GAME_DATA["moves"]["moves"]["silence"]
+        self.assertIn(f"{m['silence_turns']} turni", m["desc"])
+        p, s = self.enemy_hit("silence")
+        self.assertEqual(p.hp, 1000, "il Silenzio non attacca")
+        self.assertEqual(s.mute_turns, m["silence_turns"])
+        s.intent = "silence"
+        self.assertIn(f"per {m['silence_turns']} turni non potrai lanciare incantesimi", s.intent_text())
+        p.spells, p.ether = ["raffica"], 50
+        picks = iter([2, 0])  # prova a lanciare, poi attacca
+        with quiet(), mock.patch("rooms.interactive_menu", side_effect=lambda *a, **k: next(picks)), mock.patch("rooms.clear_screen"), \
+             mock.patch("rooms.random.randint", return_value=100):
+            s.player_turn()
+        self.assertEqual(next(picks, "finito"), "finito", "l'incantesimo ammutolito non consuma il turno")
+        for left in range(m["silence_turns"], 0, -1):
+            self.assertTrue(s.spells_muted())
+            s.mute_turns -= 1  # come fa il ciclo del combattimento dopo ogni turno dell'eroe
+        self.assertEqual(s.spells_muted(), "")
+
+    def test_the_gas_mutes_spells_too(self):
+        p, s = self.setup_fight("attack"); p.spells = ["raffica"]
+        s.silenced = True
+        self.assertIn("gas", s.spells_muted())
+
+    def test_ether_drain_takes_ether_when_it_hurts(self):
+        m = GAME_DATA["moves"]["moves"]["ether_drain"]
+        self.assertIn(f"{m['ether_drain']} Etere", m["desc"])
+        normal = 1000 - self.enemy_hit("attack")[0].hp
+        p, s = self.setup_fight("ether_drain"); p.base_ether, p.ether = 100, 10
+        with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: a), mock.patch("rooms.wait_enter"):
+            s.enemy_turn()
+        self.assertEqual((1000 - p.hp, p.ether), (normal, 10 - m["ether_drain"]))
+        p, s = self.setup_fight("ether_drain"); p.ether = 1
+        with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: a), mock.patch("rooms.wait_enter"):
+            s.enemy_turn()
+        self.assertEqual(p.ether, 0, "mai sotto zero")
+
+    def test_spellcast_goes_through_half_the_defense(self):
+        m = GAME_DATA["moves"]["moves"]["spellcast"]
+        self.assertIn(f"×{m['damage_mult']}", m["desc"])
+        self.assertIn(f"solo il {100 - m['pierce_pct']}%", m["desc"])
+        self.assertIn("Difenditi per dimezzarlo", m["desc"])
+        hits = {}
+        for intent in ("attack", "spellcast"):
+            p, s = self.setup_fight(intent); p.armor = Armor("Corazza", 0, 10, "Normale", 1)
+            estimate = s.estimate_enemy_damage(m["damage_mult"] if intent == "spellcast" else 1, m["pierce_pct"] if intent == "spellcast" else 0)
+            self.assertIn(f"≈{estimate} danni", s.intent_text())
+            with quiet(), mock.patch("rooms.random.randint", return_value=0), mock.patch("rooms.wait_enter"):
+                s.enemy_turn()
+            hits[intent] = 1000 - p.hp
+            self.assertEqual(hits[intent], estimate)
+        defense = 10
+        self.assertEqual(hits["spellcast"], max(int(20 * m["damage_mult"]) - defense * (100 - m["pierce_pct"]) // 100, 1))
+        self.assertEqual(hits["attack"], 20 - defense)
+
+    def test_drain_heals_as_much_as_it_hurts(self):
+        m = GAME_DATA["moves"]["moves"]["drain"]
+        self.assertEqual(m["heal_ratio"], 1)
+        self.assertIn("tanti HP quanti te ne toglie", m["desc"])
+        normal = 1000 - self.enemy_hit("attack")[0].hp
+        p, s = self.setup_fight("drain"); s.enemy.hp = 100
+        with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: a), mock.patch("rooms.wait_enter"):
+            s.enemy_turn()
+        self.assertEqual(1000 - p.hp, normal)
+        self.assertEqual(s.enemy.hp, 100 + normal)
+
+    def test_seal_forbids_defending_for_one_turn(self):
+        self.assertIn("non potrai difenderti", GAME_DATA["moves"]["moves"]["seal"]["desc"])
+        p, s = self.enemy_hit("seal")
+        self.assertEqual(p.hp, 1000, "il Sigillo non attacca")
+        self.assertTrue(s.sealed)
+        picks = iter([1, 0])  # prova a difendersi, poi attacca
+        with quiet(), mock.patch("rooms.interactive_menu", side_effect=lambda *a, **k: next(picks)), mock.patch("rooms.clear_screen"), \
+             mock.patch("rooms.random.randint", return_value=100):
+            s.player_turn()
+        self.assertFalse(s.is_defending)
+        self.assertEqual(next(picks, "finito"), "finito", "la difesa sigillata non consuma il turno")
+
+    def test_charge_announces_the_unleashed_blow(self):
+        charge, unleash = GAME_DATA["moves"]["moves"]["charge"], GAME_DATA["moves"]["moves"]["unleash"]
+        self.assertIn("Colpo caricato", charge["desc"])
+        self.assertIn(f"×{unleash['damage_mult']}", unleash["desc"])
+        p, s = self.enemy_hit("charge")
+        self.assertEqual(p.hp, 1000, "la Carica non attacca")
+        self.assertEqual(s.enemy.choose_move(), "unleash")
+        self.assertNotEqual(s.enemy.choose_move(), "unleash", "il Colpo caricato arriva una volta sola")
+        normal = 1000 - self.enemy_hit("attack")[0].hp
+        self.assertEqual(1000 - self.enemy_hit("unleash")[0].hp, normal * unleash["damage_mult"])
+        self.assertIn("Difenditi per dimezzare", unleash["desc"])
+        self.assertEqual(1000 - self.enemy_hit("unleash", defending=True)[0].hp, normal * unleash["damage_mult"] // 2)
+        p, s = self.setup_fight("charge")
+        self.assertIn(f"≈{s.estimate_enemy_damage(unleash['damage_mult'])} danni", s.intent_text())
+
+    def test_shield_absorbs_attacks(self):
+        m = GAME_DATA["moves"]["moves"]["shield"]
+        self.assertIn(f"{m['shield_pct']}% degli HP massimi", m["desc"])
+        p, s = self.enemy_hit("shield")
+        self.assertEqual(p.hp, 1000)
+        self.assertEqual(s.enemy.shield, 500 * m["shield_pct"] // 100)
+        self.assertIn("non si somma", m["desc"])
+        for before in (10, 400):
+            p, s = self.setup_fight("shield"); s.enemy.shield = before
+            with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: a), mock.patch("rooms.wait_enter"):
+                s.enemy_turn()
+            self.assertEqual(s.enemy.shield, max(before, s.enemy.max_hp * m["shield_pct"] // 100), "la Barriera non si somma")
+        dealt = {}
+        for shield in (0, 30):
+            p, s = self.setup_fight("attack"); s.enemy.shield = shield
+            p.weapon.element = "Normale"
+            with quiet(), mock.patch("rooms.random.randint", return_value=1):
+                s.execute_player_attack()
+            dealt[shield] = 500 - s.enemy.hp
+        self.assertEqual(dealt[30], max(0, dealt[0] - 30))
 
     def test_heavy_blow(self):
         desc = GAME_DATA["moves"]["moves"]["heavy"]["desc"]

@@ -16,6 +16,7 @@ import roguelike
 from data_manager import GAME_DATA, PROFILE_MANAGER
 from entities import Enemy, Player
 from rooms import CombatSession
+import camp_rules
 
 ANSI = re.compile(r"\x1b\[[0-9;]*m")
 CFG = GAME_DATA["meta"]["corruption"]
@@ -185,7 +186,11 @@ class CampTest(Sandbox):
                 for line in c["lines"]: self.assertLessEqual(set(line.get("requires", {})), events.PROFILE_CONDITIONS)
         for s in camp.camp()["structures"]:
             with self.subTest(structure=s["id"]):
-                self.assertGreater(s["cost"], 0)
+                costs = [lv["cost"] for lv in camp_rules.levels(s)]
+                self.assertTrue(all(c > 0 for c in costs))
+                self.assertEqual(costs, sorted(set(costs)), "ogni livello costa più del precedente")
+                for lv in camp_rules.levels(s):
+                    for v in list(lv.get("effects", {}).values()) + list(lv.get("start", {}).values()): self.assertIn(str(v), lv["desc"])
                 self.assertLessEqual(set(s.get("requires", {})), events.PROFILE_CONDITIONS)
         altar = camp.structure("altare_purificazione")
         self.assertIn(f"{100 - altar['corruption_gain_pct']}% in meno", altar["desc"])

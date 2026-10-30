@@ -17,13 +17,13 @@ Se colori o emoji non si vedono bene, usa un terminale con codifica UTF-8 (su Wi
 
 ## 🧭 La discesa
 
-1. **Scegli l'eroe e il tratto.** Dopo la prima vittoria puoi attivare anche i **Patti del Caos** (vedi sotto).
+1. **Scegli l'eroe e il tratto.** Dopo la prima vittoria scegli anche il grado di **Ascensione** (vedi *Modalità*).
 2. **Ogni piano ha una mappa.** All'arrivo vedi tutto il piano: quattro file di stanze collegate, e in fondo il boss (★). A ogni tappa scegli una delle stanze collegate a quella in cui ti trovi: in giallo le stanze raggiungibili, in verde il percorso fatto, in grigio ciò che ormai è fuori strada. Pianifica: un falò due file più in basso vale una deviazione? Con il potenziamento *Sesto Senso* vedi anche quale nemico o evento ti aspetta.
 3. **La quinta tappa è sempre un boss.**
 4. **Superato il piano** recuperi un po' di HP (20 + 5 per piano) e scendi.
 5. In qualsiasi bivio puoi scegliere **Fuga dal Labirinto**: porti a casa tutto l'Oro, convertito in Essenza.
 
-Più scendi, più i nemici sono forti: ai primi piani incontri banditi, goblin e scheletri, verso il fondo idre di lava e leviatani. Anche i boss crescono con la profondità, e il DIO ANTICO compare **solo al piano 30**.
+Più scendi, più i nemici sono forti: ai primi piani incontri banditi, goblin e scheletri, verso il fondo idre di lava e leviatani. Anche i boss crescono con la profondità, e il DIO ANTICO compare **solo al piano 30** (in Modalità Infinita anche alla fine di ogni ciclo: piano 60, 90…).
 
 ```text
   1      🎭 Evento      ❓ Mistero      💰 Mercante
@@ -52,6 +52,32 @@ La Corruzione va da 0 a 100 e vale per la sola discesa:
 
 La vedi accanto agli HP sulla mappa e nelle Statistiche. Arrivare in fondo con il cuore nero apre un finale che gli altri non vedranno mai.
 
+### 😈 La Nemesi
+
+Il nemico comune o l'Élite che ti uccide **se ne ricorda**: diventa una **Nemesi**, con un nome, un rango e un tratto imparato da te, e si prende il 50% dell'Oro che avevi.
+
+- **Torna a cercarti.** Nelle discese successive compare una volta, in una stanza 😈 della mappa, fra 1 piano prima e 2 dopo quello in cui ti ha ucciso. L'etichetta dice chi è e quanto Oro ha con sé.
+- **Cresce.** Ha il 10% di HP e Attacco in più per ogni rango. Se ti uccide di nuovo sale di rango (fino a 5: il Fortunato, il Persecutore, il Flagello, l'Incubo, la Fine) e aggiunge il tuo Oro al suo.
+- **Si vendica di te.** Ognuna ha uno di questi tratti:
+
+| Tratto | Effetto |
+|---|---|
+| Ha imparato a resistere | I colpi dell'elemento con cui ti ha ucciso gli fanno il 40% di danni in meno. |
+| Più grosso di come lo ricordi | Ha il 20% di HP in più. |
+| Conosce i tuoi movimenti | Ha +15 di Precisione. |
+| Affamato di vendetta | Ha il 15% di Attacco in più. |
+| Ha imparato a zittirti | I tuoi incantesimi gli fanno il 40% di danni in meno, e ti combatte con il Silenzio e il Risucchio d'Etere. Lo impara solo da chi conosceva incantesimi. |
+
+- **Sconfiggerla** restituisce tutto l'Oro che aveva e lascia un **trofeo**, un pezzo d'equipaggiamento epico. Vale 2 punti di Audacia, come un'Élite.
+- Le Nemesi attive sono al massimo 3: una nuova scaccia la più vecchia. I **boss** non diventano Nemesi, ma ti riconoscono la volta dopo.
+- Nel Codice, alla pagina *Nemesi*, trovi chi ti aspetta e chi hai già sconfitto.
+
+### 🪦 L'Epitaffio e il Cimitero
+
+Durante la discesa il gioco annota i momenti che contano: i biomi attraversati, gli eventi, le reliquie trovate, i boss abbattuti, le parole runiche composte, le Nemesi sconfitte, il finale scelto e come è finita. A fine partita ne fa un **epitaffio** di poche frasi: come è finita, fino a 3 fatti della discesa (prima il grado di Ascensione o la Sfida del Giorno, poi le Nemesi sconfitte, i boss, le parole runiche, le reliquie, l'ultimo evento, i biomi, la Corruzione alta) e chi o cosa ti ha ucciso. La stessa discesa dà sempre lo stesso epitaffio.
+
+Gli epitaffi delle ultime 50 discese restano nel **Cimitero**, una pagina del Codice: lì leggi anche quale Nemesi è nata da quale morte.
+
 ### 🏁 I finali
 
 Sconfitto il Dio Antico, scegli come finisce la tua storia fra i finali che ti sei guadagnato. Il primo è sempre disponibile; gli altri dipendono da quello che hai fatto in questa discesa e in quelle passate: i personaggi che hai liberato, le verità che hai ascoltato, le lettere che hai raccolto, la tua Corruzione. Ogni finale nuovo dà un premio in Essenza e finisce nel Codice. Nel Codice i finali che non hai ancora visto mostrano un indizio.
@@ -62,39 +88,39 @@ Il Labirinto cambia mentre scendi: ogni cinque piani entri in un **bioma** diver
 
 **📿 I Chiostri del Rimpianto (piani 1–5).** Le rovine di un'accademia della Luce Calma.
 - **Più eventi, meno trappole.** E più creature di Luce e di Tenebra.
-- **Nativi.** L'*Eco del Rimpianto*, la *Statua di Sale* e un boss, *La Badessa del Silenzio*, vivono solo qui.
-- **Pericolo: Nostalgia Letale.** In ogni piano una stanza, segnata con 📿, ospita un'eco del passato: *La Voce Cara*, *La Statua di Sale* o *La Biblioteca di Cenere*. Fermarsi ad ascoltare può guarirti… o trasformarti in sale, e il Labirinto se ne ricorderà.
+- **Nativi.** L'*Eco del Rimpianto*, la *Statua di Sale*, la *Novizia del Silenzio* (che sigilla la tua difesa), il *Corista Spento*, che si rigenera, il *Bibliotecario di Cenere*, che carica i suoi incantesimi, l'*Ombra del Novizio*, che ti prosciuga, e un boss, *La Badessa del Silenzio*, vivono solo qui.
+- **Pericolo: Nostalgia Letale.** In ogni piano una stanza, segnata con 📿, ospita un'eco del passato: *La Voce Cara*, *La Statua di Sale*, *La Biblioteca di Cenere*, *Il Coro Spento* o *Il Lavabo dei Ricordi*. Fermarsi ad ascoltare può guarirti… o trasformarti in sale, e il Labirinto se ne ricorderà.
 - **Segreto.** Al piano 3, sotto il marmo, si dice riposi la *Prima Pietra* posata dagli Architetti.
 
 **🦇 Le Miniere della Testardaggine (piani 6–10).** Basalto, olio nero e ingranaggi che girano a vuoto.
 - **Più forzieri, meno falò.** E più creature di Terra.
-- **Nativi.** Il *Minatore Svuotato* e l'*Ingranaggio Senziente*, che si ripara spesso.
-- **Pericolo: Gas del Silenzio.** In ogni scontro c'è il 35% di probabilità che il gas riempia la stanza. La tua Difesa dimezza ancora i danni, ma perde la tecnica della classe (contrattacco, concentrazione o riparo).
-- **Stanze speciali:** *La Galleria del Gas*, *L'Ingranaggio Fermo*.
+- **Nativi.** Il *Minatore Svuotato*, l'*Ingranaggio Senziente*, che si ripara spesso, la *Talpa Esplosiva* e il *Carrello Posseduto*, che caricano il colpo, la *Lucciola del Grisù*, imprevedibile, e il *Guardiano di Basalto*, che alza barriere. Il boss è *Il Caposquadra Sepolto*: carica i colpi e, quando la galleria crolla, si ripara dietro una barriera.
+- **Pericolo: Gas del Silenzio.** In ogni scontro c'è il 35% di probabilità che il gas riempia la stanza. La tua Difesa dimezza ancora i danni, ma perde la tecnica della classe, e non riesci a lanciare incantesimi.
+- **Stanze speciali:** *La Galleria del Gas*, *L'Ingranaggio Fermo*, *Il Carrello Abbandonato*, *Il Minatore Cieco*.
 
 **🌀 Le Guglie del Vento Urlante (piani 11–15).** Ponti sospesi su nubi elettriche.
 - **Più trappole, meno mercanti.** E più creature di Vento.
-- **Nativi.** La *Sentinella di Nube* e il *Falco Astrale*, difficilissimi da colpire.
+- **Nativi.** La *Sentinella di Nube*, il *Falco Astrale* e l'*Aquila di Tempesta*, difficilissimi da colpire, il *Corvo del Tuono*, che raccoglie il fulmine, lo *Spirito del Ponte*, che ti sigilla la difesa, e l'*Astronomo Caduto*. Il boss è *L'Astronoma delle Guglie*: ti sigilla la difesa e, sotto la pioggia di stelle, colpisce più forte.
 - **Pericolo: Caduta Astrale.** Sui ponti sospesi puoi perdere l'equilibrio. Precipiti al piano successivo, senza riposo e senza il boss, e perdi il 40% dell'Oro. Puoi anche lasciarti cadere di proposito: un modo rischioso per saltare un boss.
-- **Stanze speciali:** *Il Ponte Sospeso*, *Il Nido della Tempesta*.
+- **Stanze speciali:** *Il Ponte Sospeso*, *Il Nido della Tempesta*, *L'Osservatorio del Vento*, *Il Fabbro del Cielo*.
 
 **🌊 Il Ventre della Memoria (piani 16–20).** Pareti di membrana con dentro i volti dei morti.
 - **Più eventi e misteri.** E più creature d'Acqua e di Tenebra.
-- **Nativi.** Il *Ricordo Annegato*, che si rigenera, e il *Volto nella Membrana*, che fa sanguinare.
+- **Nativi.** Il *Ricordo Annegato*, che si rigenera, il *Volto nella Membrana*, che fa sanguinare, la *Medusa della Memoria*, che avvelena, la *Sanguisuga Madre* e la *Lacrima Vivente*, che ti prosciugano, e la *Bambola di Ricordi*, che sigilla la difesa. Il boss è *Il Cuore del Ventre*: avvelena, ti prosciuga e, quando comincia la digestione, si rigenera.
 - **Pericolo: Dissoluzione dell'Io.** A ogni piano del Ventre perdi il 4% degli HP massimi. Li ritrovi tutti quando ne esci.
-- **Stanze speciali:** *Il Volto nella Membrana*, *Il Giardino Appassito*.
+- **Stanze speciali:** *Il Volto nella Membrana*, *Il Giardino Appassito*, *Il Nido delle Sanguisughe*, *L'Eco della Madre*.
 
 **🌋 La Forgia del Caos (piani 21–25).** Lava bianca, fumi neri, martelli ciclopici.
 - **Più mercanti, meno falò.** E più creature di Fuoco.
-- **Nativi.** Il *Golem di Scorie* e il *Martello Errante*, che ama i colpi pesanti.
+- **Nativi.** Il *Golem di Scorie*, il *Martello Errante* e l'*Apprendista di Scoria*, che amano i colpi pesanti, lo *Scudiero di Scoria*, che alza barriere, la *Scintilla Ribelle*, imprevedibile, e il *Crogiolo Ambulante*, che si rifonde. Il boss è *Il Maestro di Forgia*: picchia duro e, con la Tempra, si copre di Scaglie che solo una reazione infrange.
 - **Pericolo: Ebollizione Astrale.** Ogni colpo che subisci ha il 25% di probabilità di far bollire il 5% del tuo Oro.
-- **Stanze speciali:** *L'Incudine Cosmica*, *La Colata d'Oro*.
+- **Stanze speciali:** *L'Incudine Cosmica*, *La Colata d'Oro*, *Il Crogiolo delle Rune*, *Il Forgiatore Incatenato*.
 
 **🌌 La Soglia del Dio Antico (piani 26–30).** Piattaforme di pura volontà nel vuoto.
 - **Più misteri e forzieri.** E creature di Luce e di Tenebra.
-- **Nativi.** Il *Frammento di Galassia* e l'*Eco del Dio Antico*.
+- **Nativi.** Il *Frammento di Galassia*, l'*Eco del Dio Antico* e il *Frammento del Prima*, che sigilla e prosciuga, il *Riflesso Futuro*, che carica il colpo, il *Vuoto Affamato*, che ti divora, e la *Clessidra Infranta*, che si ripara. Il boss è *Il Custode della Soglia*: a metà della vita la sua Luce si rovescia in Tenebra.
 - **Pericolo: Paradosso Temporale.** Dopo ogni tuo turno c'è il 10% di probabilità che tu agisca di nuovo; dopo ogni turno nemico, il 15% che il nemico agisca due volte (con una mossa non annunciata).
-- **Stanze speciali:** *L'Occhio Chiuso*, *L'Eco del Tempo*.
+- **Stanze speciali:** *L'Occhio Chiuso*, *L'Eco del Tempo*, *La Biblioteca del Vuoto*, *La Porta del Ritorno*.
 
 In ogni piano una stanza della mappa, segnata con l'icona del bioma, è una delle sue stanze speciali.
 
@@ -105,11 +131,11 @@ In ogni piano una stanza della mappa, segnata con l'icona del bioma, è una dell
 | 👹 **Scontro** | Un nemico adatto al piano. La mappa mostra quanta EXP vale; vincendo ottieni anche Oro e a volte una pozione. |
 | 👺 **Élite** | Dal piano 2. Un campione più duro (HP ×1,6, ATK ×1,3) che vale il doppio di EXP e Oro e lascia sempre una **reliquia o un pezzo d'equipaggiamento**, a volte epico. |
 | 💰 **Mercante** | Compra armi, armature, monili e pozioni; vendi ciò che non ti serve. Dopo ogni acquisto il resto della merce rincara del 10%. |
-| 🔥 **Falò** | *Riposa* (50% degli HP) **oppure** *affila l'arma* (+3 ATK per 50 Oro): una delle due, poi il falò si spegne. Prima puoi usare l'**Altare dell'Evoluzione** e la **purificazione** quante volte vuoi. |
+| 🔥 **Falò** | *Riposa* (50% degli HP) **oppure** *affila l'arma* (+3 ATK per 50 Oro) **oppure** *medita* (tutto l'Etere): una delle tre, poi il falò si spegne. Prima puoi usare l'**Altare dell'Evoluzione**, la **purificazione** e le **Rune e Incastoni** quante volte vuoi. |
 | 💎 **Forziere** | Oro, a volte un monile, una pozione o una reliquia. Dal piano 3 può essere **chiuso a chiave** (lo forzi pagando l'8% degli HP massimi, in cambio di un bottino garantito) o un **Mimic**: un mostro che, sconfitto, restituisce il doppio. La mappa mostra la probabilità del rischio, che cresce con la profondità. A volte il coperchio sembra respirare: può essere un Mimic, ma anche no. |
 | 💀 **Trappola** | Custodisce sempre un oggetto. Scegli come affrontarla: **disinnescarla** (prova di Precisione, se riesce recuperi anche dell'Oro), **attraversarla di corsa** (prova di Schivata) o **tornare indietro** senza danni e senza bottino. Il menu mostra le probabilità e i danni in caso di fallimento; chi la affronta prende il bottino anche se la prova fallisce. |
 | 🎭 **Evento** | Una piccola storia con bivi, a volte in più scene: vedi *Gli eventi* qui sotto. Alcuni nascondono un artigiano prigioniero da liberare. |
-| ❓ **Mistero** | Un azzardo: un tesoro nascosto (Oro e un monile), una reliquia, un nemico potenziato (che lascia un oggetto), uno debilitato, una trappola… o niente. In media rende più di un forziere. Con il *Sesto Senso* la mappa mostra le probabilità. |
+| ❓ **Mistero** | Un azzardo: un tesoro nascosto (Oro e un monile), una reliquia, un nemico potenziato (che lascia un oggetto), uno debilitato, una trappola, una *Fonte d'Etere* (tutto l'Etere, o il 25% degli HP a chi non conosce incantesimi), una pergamena, una runa… o niente. In media rende più di un forziere. Con il *Sesto Senso* la mappa mostra le probabilità. |
 
 ### L'Audacia
 
@@ -138,11 +164,63 @@ A ogni turno scegli una di queste azioni:
 - **Attacca.** La probabilità di colpire dipende dalla tua precisione, dalla schivata del nemico e dagli elementi.
 - **Difenditi.** Dimezza i danni del prossimo colpo, e ogni classe aggiunge un effetto:
   - **Difesa Aggressiva** (Guerriero, Berserker): restituisci al nemico i danni subiti;
-  - **Concentrazione** (Ladro, Assassino): il colpo successivo è un critico garantito;
-  - **Riparo Magico** (le altre classi): recuperi il 10% degli HP.
+  - **Concentrazione** (Ladro, Assassino): recuperi il 5% degli HP e il colpo successivo è un critico garantito;
+  - **Riparo Magico** (Mago): recuperi il 10% degli HP;
+  - **Voto di Protezione** (Paladino): ti liberi da Veleno e Sanguinamento e recuperi il 5% degli HP;
+  - **Mistura Reattiva** (Alchimista): recuperi il 5% degli HP e marchi il nemico con l'elemento della tua arma. Se poi ti colpisce, il marchio della tua armatura può scatenare una **reazione**, e con l'equipaggiamento iniziale (Fuoco e Terra) scatena il *Magma*;
+  - **Sudario d'Ossa** (Negromante): strappi al nemico il 4% dei suoi HP massimi e li recuperi tu. Se gli restano pochi HP, può bastare ad abbatterlo.
+  - **Prisma Elementale** (Elementalista): recuperi il 5% degli HP e 3 Etere in più, oltre a quello che dà ogni difesa.
+- **Lancia un incantesimo.** Costa il turno e l'Etere dell'incantesimo (vedi *La magia e l'Etere*). Tornare indietro dal menu degli incantesimi non costa nulla.
 - **Apri l'inventario.** Usare un oggetto o cambiare equipaggiamento **costa il turno**; chiudere lo zaino senza fare nulla no.
 - **Statistiche Eroe.** Gratis, in qualsiasi momento. Mostrano la tua **probabilità reale di colpire** contro il nemico che hai davanti.
 - **Tenta la fuga.** Riesce più spesso se sei agile. Contro i boss è impossibile.
+
+### La magia e l'Etere
+
+Ogni eroe conosce fin dall'inizio uno o due **incantesimi**. Lanciarli costa **Etere**, una risorsa che vedi accanto agli HP, sulla mappa e in combattimento.
+
+L'Etere resta da uno scontro all'altro. Si guadagna agendo: +1 a ogni colpo a segno, +2 quando ti difendi, +2 a ogni reazione elementale, e il 25% del massimo a ogni piano superato. All'inizio della discesa è pieno. Un incantesimo dell'elemento della tua Risonanza costa 1 Etere in meno.
+
+Un incantesimo d'attacco colpisce sempre (non si schiva). I suoi danni sono una parte del tuo ATK, cambiano con l'**elemento** dell'incantesimo contro quello del nemico e crescono con l'**Arcano**. Come le armi, lascia il **marchio** del suo elemento: così puoi **comporre una reazione** senza cambiare equipaggiamento. Colpisci con l'arma di Fuoco, poi lancia *Lama d'Acqua*: è *Vapore*. La Guardia del nemico dimezza anche gli incantesimi, e lo scudo della Barriera li assorbe; *Dissolvi* lo infrange.
+
+| Incantesimo | Elemento | Etere | Effetto |
+|---|---|---|---|
+| 🔥 **Dardo di Fuoco** | 🔥 Fuoco | 3 | Danni pari al 100% del tuo ATK e marchio di Fuoco. |
+| 💧 **Lama d'Acqua** | 💧 Acqua | 3 | Danni pari al 90% del tuo ATK e marchio d'Acqua. |
+| 🪨 **Frana** | 🪨 Terra | 4 | Danni pari al 70% del tuo ATK, marchio di Terra e nemico Impantanato per 2 turni. |
+| 🌪️ **Raffica** | 🌪️ Vento | 2 | Danni pari al 70% del tuo ATK e marchio di Vento. |
+| ✨ **Luce Guaritrice** | ✨ Luce | 4 | Ti cura del 25% degli HP massimi. |
+| 🌑 **Sifone d'Ombra** | 🌑 Tenebra | 4 | Danni pari al 70% del tuo ATK, marchio di Tenebra, e ti cura della metà (50%) dei danni inflitti. |
+| 🔷 **Dissolvi** | ⚪ Normale | 3 | Infrange lo scudo della Barriera e le Scaglie del nemico, poi infligge danni pari al 50% del tuo ATK. |
+| 💥 **Detonazione** | ⚪ Normale | 5 | Fa esplodere il marchio che il nemico porta: danni pari al 150% del tuo ATK (50% se non ha un marchio). |
+| 🌋 **Vampa** | 🔥 Fuoco | 4 | Danni pari al 60% del tuo ATK, marchio di Fuoco, e il nemico brucia di Magma per 3 turni. |
+| 🌊 **Marea Curativa** | 💧 Acqua | 5 | Ti cura del 20% degli HP massimi e ti libera da Veleno e Sanguinamento. |
+| 🛡️ **Pelle di Pietra** | 🪨 Terra | 3 | Per il resto dello scontro la tua Difesa cresce del 50% di quella dell'armatura. |
+| 💨 **Passo del Vento** | 🌪️ Vento | 3 | Fuggi di sicuro dallo scontro (non dai boss). |
+| 🔆 **Lancia di Luce** | ✨ Luce | 4 | Danni pari al 110% del tuo ATK e marchio di Luce. |
+| 🕯️ **Maledizione** | 🌑 Tenebra | 3 | Per il resto dello scontro l'ATK del nemico scende del 25% (una volta sola per nemico). |
+| 🧊 **Morsa di Ghiaccio** | 💧 Acqua | 5 | Danni pari al 60% del tuo ATK, marchio d'Acqua, e il nemico è congelato: perde il suo prossimo turno. |
+| ⛈️ **Tempesta** | 🌪️ Vento | 5 | Danni pari al 130% del tuo ATK e marchio di Vento. |
+| 🕊️ **Purificazione** | ✨ Luce | 3 | Ti libera da Veleno e Sanguinamento e ti cura del 10% degli HP massimi. |
+| 🌟 **Esplosione Arcana** | ⚪ Normale | 6 | Danni pari al 160% del tuo ATK, senza elemento. |
+
+| Classe | Etere iniziale | Incantesimi |
+|---|---|---|
+| Guerriero | 6 | Frana |
+| Ladro | 8 | Raffica |
+| Mago | 16 | Dardo di Fuoco, Lama d'Acqua |
+| Paladino | 10 | Luce Guaritrice |
+| Berserker | 4 | Sifone d'Ombra |
+| Alchimista | 10 | Lama d'Acqua, Dissolvi |
+| Assassino | 8 | Raffica |
+| Negromante | 12 | Sifone d'Ombra, Detonazione |
+| Elementalista | 14 | Raffica, Lama d'Acqua |
+
+All'Etere iniziale si aggiungono 2 punti per ogni punto di **Arcano** (il Mago, con Arcano 2, parte con 20). Gli incantesimi lanciati almeno una volta compaiono nel Codice, alla pagina *Incantesimi*.
+
+**Pergamene e posti.** Leggendo una pergamena impari il suo incantesimo. Ne tieni a mente al massimo 3: se non c'è posto, scegli quale dimenticare. Le pergamene si trovano nei forzieri del boss (35%), dalle Élite (20%), nei Mimic (30%), nei depositi del Mistero (25%), nelle trappole (10%) e dal Mercante. Alcuni incantesimi (*Marea Curativa*, *Morsa di Ghiaccio*, *Tempesta*, *Esplosione Arcana*) si trovano in pergamena solo dopo averli sbloccati alla **Forgia**, nella categoria *Pergamene*. Le pergamene si leggono dallo zaino, fuori dal combattimento.
+
+**Magia fuori dal combattimento.** Le cure (*Luce Guaritrice*, *Marea Curativa*, *Purificazione*) si lanciano anche dallo zaino, spendendo Etere: è il modo di curarsi fra uno scontro e l'altro, ma l'Etere che usi ora non ti servirà nello scontro dopo. Al Falò puoi **Meditare** (tutto l'Etere torna, il falò si spegne) e la *Fiala d'Etere* ti restituisce metà dell'Etere massimo.
 
 ### Gli intenti dei nemici
 
@@ -160,8 +238,46 @@ Intento del nemico: 💢 Colpo pesante (≈24 danni) — difenditi!
 | 🧱 Guardia | Non attacca; i tuoi colpi fanno il 50% dei danni | È il turno giusto per curarti, difenderti o usare un oggetto |
 | 💚 Rigenerazione | Non attacca; recupera il 15% degli HP massimi (solo sotto il 60%, al massimo due volte) | Colpisci forte prima |
 | 🧪 Colpo infetto | Se ti ferisce, infligge di sicuro il suo status (veleno, sanguinamento) | Difenditi o tieni pronto l'antidoto |
+| 🩸 Prosciugamento | Un attacco che lo cura di tanti HP quanti te ne toglie | Difenditi: dimezzi sia il danno sia la sua cura |
+| 🔒 Sigillo | Non attacca; al tuo prossimo turno non puoi difenderti | Cùrati o attacca adesso; il Sigillo dura un turno |
+| ⏳ Carica | Non attacca; il turno dopo arriva il **Colpo caricato** (l'intento mostra già i danni) | Preparati: il turno dopo difenditi |
+| 💥 Colpo caricato | Arriva sempre dopo la Carica: la sua forza triplica prima della tua difesa | **Difenditi**, o abbattilo prima |
+| 💠 Barriera | Non attacca; riporta il suo scudo al 20% degli HP massimi (non si somma a quello che ha già), e lo scudo assorbe i danni dei tuoi attacchi | Lo scudo si consuma colpendo: conviene continuare ad attaccare |
+| 🤫 Silenzio | Non attacca; per i tuoi prossimi 2 turni non puoi lanciare incantesimi (la voce resta nel menu, ma non costa il turno) | Attacca o difenditi: l'Etere ti aspetta |
+| 🌀 Risucchio d'Etere | Un attacco che, se ti ferisce, ti toglie anche 4 Etere | Spendi l'Etere prima, o difenditi |
+| 🔮 Incantesimo | Lo lanciano alcuni boss: la sua forza cresce della metà (×1.5) e la tua Difesa ne ferma solo il 50% | **Difenditi**: dimezzi il colpo |
 
-Colpo pesante e Guardia non si ripetono mai due volte di fila. I boss si rigenerano più spesso, e alcuni nemici hanno abitudini proprie: i Golem si riparano, i Vampiri si curano col sangue.
+Colpo pesante, Guardia, Sigillo, Carica, Barriera, Silenzio e Incantesimo non si ripetono mai due volte di fila. I boss si rigenerano più spesso.
+
+Quasi ogni nemico ha uno **stile**, che decide quali mosse preferisce. Dopo averlo sconfitto lo trovi scritto nel *Bestiario*:
+
+| Stile | Mosse preferite | Chi lo usa, per esempio |
+|---|---|---|
+| **Bruto** | Colpi pesanti | Orco, Idra di Lava, Minatore Svuotato |
+| **Predatore** | Carica e colpi pesanti | Lupo Mannaro, Arpia del Labirinto, Falco Astrale |
+| **Difensore** | Guardia e Barriera | Gargoyle, Costrutto Magico, Paladino Corrotto |
+| **Succhiavita** | Prosciugamento | Golem di Sale, Sirena Abissale |
+| **Infetto** | Colpi infetti | Melma Acida, Manticora Infetta, Volto nella Membrana |
+| **Mistico** | Sigillo e Rigenerazione | Chierico Corrotto, Cultista Cieco, Eco del Rimpianto |
+| **Furia** | Colpi pesanti e cariche | Elementale del Fuoco, Spirito della Tempesta |
+| **Arcanista** | Silenzio e Risucchio d'Etere | Cacciatore di Streghe |
+
+Goblin, Scheletri e Banditi, i primi nemici che incontri, combattono senza uno stile preciso. Alcuni nativi dei biomi e i Vampiri hanno mosse tutte loro: la Novizia del Silenzio ti ammutolisce, il Bibliotecario di Cenere ti risucchia l'Etere.
+
+### Le fasi dei boss
+
+Ogni boss, arrivato a una soglia di HP (di solito il 50%), **cambia fase**: lo annuncia con un nome e una frase, e mostra cosa è cambiato. Il turno in cui si trasforma non attacca. Il DIO ANTICO ha tre fasi.
+
+Una fase può:
+
+- cambiargli l'**elemento** (il DIO ANTICO diventa quello che colpisce meglio la tua armatura);
+- aumentargli l'**attacco**, o fargli **recuperare** HP;
+- dargli uno **scudo**, che assorbe i danni dei tuoi attacchi finché non lo consumi;
+- coprirlo di **Scaglie**: i tuoi attacchi fanno metà dei danni finché una **reazione elementale** non le infrange;
+- rendere i suoi colpi **infetti** (sanguinamento più probabile);
+- cambiargli le **mosse**: Sigillo, Carica, Prosciugamento, Barriera, e per alcuni boss la magia (Incantesimo, Silenzio, Risucchio d'Etere): la Badessa del Silenzio, l'Astronoma delle Guglie, il Custode della Soglia, il Negromante Supremo, i due Lich e il DIO ANTICO.
+
+Le fasi che hai visto finiscono nel Codice, alla pagina *Fasi dei boss*; quelle che non hai ancora visto restano "???".
 
 ### Marchi e reazioni elementali
 
@@ -224,18 +340,87 @@ La Risonanza si ricalcola subito se cambi equipaggiamento durante lo scontro. Il
 
 ### Armi e armature speciali
 
-Molte armi hanno un elemento casuale, ma quelle a tema hanno sempre il loro: il *Bastone dell'Alba* è di Luce, il *Tridente Oceanico* d'Acqua, e così via. Alcune hanno proprietà proprie, scritte nella loro descrizione:
+Molte armi hanno un elemento casuale, ma quelle a tema hanno sempre il loro: il *Bastone dell'Alba* è di Luce, il *Tridente Oceanico* d'Acqua, e così via.
+
+**Ogni arma scala con un attributo**, scritto accanto all'ATK (`scala con 💪 Forza`): le armi pesanti con la **Forza**, quelle leggere e da tiro con la **Destrezza**, bastoni e focus con l'**Arcano**. Ogni punto di quell'attributo dà +4% di danni con l'arma, mentre gli altri attributi non la rendono più forte. Scegliere un'arma vuol dire anche scegliere dove mettere i punti. I **focus** arcani potenziano anche gli incantesimi: la *Bacchetta di Frassino* (+10%), il *Tomo Fluttuante* (+15%), il *Bastone dell'Alba* (+15%), lo *Scettro dell'Arcimago* (+25%, dalla Forgia); il Mago parte con un bastone da +10%.
+
+Quasi ogni arma ha anche un **carattere**, scritto nello zaino e nelle Statistiche accanto all'ATK (per esempio `· 10% critico, -5% Precisione`). Ogni proprietà risponde a uno stile dei nemici:
+
+| Proprietà | Cosa fa | Contro chi conta | Per esempio |
+|---|---|---|---|
+| **Precisione** ± | Cambia la probabilità di colpire | Nemici agili (Falchi, Sentinelle) | *Spada Corta* +5%, *Bastone dell'Alba* +10% |
+| **Critico** | Probabilità di colpo critico (danni doppi) | Tutti | *Katana Affilata* 10%, *Ascia del Minotauro* 15% |
+| **Schivata** ± | Le armi leggere aiutano a schivare, quelle pesanti no | Bruti e Predatori | *Spada Corta* +5%, *Ascia del Minotauro* −5% |
+| **Sfonda la Guardia** | Quando il nemico è in Guardia i tuoi colpi non vengono dimezzati | Difensori, Golem, Costrutti | *Alabarda della Guardia*, *Martello da Guerra* |
+| **Scudi ×2** | Contro la Barriera ogni colpo consuma il doppio dello scudo | Difensori e boss con scudo | *Lancia Perforante*, *Spadone a Due Mani* |
+| **Status** | Probabilità di infliggere Veleno o Sanguinamento | Nemici con molti HP | *Meteora Chiodata* 20% Sanguinamento |
+
+Il prezzo di queste proprietà è spesso un malus: meno precisione per le armi pesanti, meno schivata per quelle enormi. Altre armi speciali:
 - l'*Ascia del Boia*: −15% di precisione, ma 35% di critico;
 - lo *Zweihander d'Oro*: più ATK quanto più oro porti;
-- la *Veste Eterea*: +20% di schivata.
+- la *Falce Divora-Anime*, lo *Spadone Infranto* e la *Lama del Creatore* puntano tutto sui danni di base;
+- la *Veste Eterea*: +20% di schivata;
+- le armature elementali, come le *Vesti di Brace* (Fuoco) o il *Giaco del Vento* (Vento, +8% di schivata): sempre del loro elemento, quindi utili per cercare una Risonanza o una reazione;
+- le armature pesanti, come la *Corazza del Penitente*: tanta difesa, meno schivata.
 
 L'enciclopedia nel [README](README.md) le elenca tutte.
 
 ### Reliquie, livelli e fusioni
 
-- **Reliquie.** Artefatti passivi trovati sconfiggendo i boss, nei forzieri o negli eventi. Ne porti al massimo **4**: trovandone una quinta, scegli quale sacrificare.
-- **Livelli.** Con l'EXP sali di livello: +15 HP massimi, cura completa, +2% di precisione e di schivata.
-- **Altare dell'Evoluzione.** Al Falò, fondi due armi (o due armature) dello zaino: la prima assorbe metà delle statistiche della seconda e sale di livello.
+- **Reliquie.** Artefatti passivi trovati sconfiggendo i boss, nei forzieri o negli eventi. Ne porti al massimo **4**: trovandone una quinta, scegli quale sacrificare. Molte si combinano con una strategia: veleno e sanguinamento (l'*Ago dell'Untore* li raddoppia), oro (la *Bilancia del Mercante* trasforma l'Oro in Attacco), reazioni elementali (il *Catalizzatore Antico*), difesa (il *Corno del Bastione*), rune (il *Cristallo Runico* le potenzia del 50%), Nemesi ed Élite (il *Marchio del Cacciatore*). L'enciclopedia nel README le elenca tutte.
+- **Livelli.** Con l'EXP sali di livello: cura completa, una piccola crescita automatica e un **punto abilità** da spendere negli attributi (vedi *Livelli e attributi*).
+- **Altare dell'Evoluzione.** Al Falò, fondi due armi (o due armature) dello zaino: la prima assorbe metà delle statistiche della seconda e sale di livello. Le rune della prima restano; quelle della seconda tornano nello zaino.
+
+### Rune e Incastoni
+
+Armi e armature hanno degli **incastoni** (accanto al nome: `[Incastoni: ◇]` per un incastone libero, `[Incastoni: 🔪◇]` con una runa incastonata e uno libero): 1 per gli oggetti comuni, 2 per gli epici, 3 per i premi dei boss. Anche l'equipaggiamento iniziale ne ha uno.
+
+- **Dove si trovano le rune.** Le lasciano le Élite (35%), i boss (60%), le trappole affrontate (15%), i tesori del Mistero (30%) e i Mimic (35%); il Mercante ne vende 1.
+- **Incastonare.** Al Falò, voce *Rune e Incastoni*: incastonare è gratis e il falò resta acceso. Ogni runa va su un'arma, su un'armatura o su entrambe.
+- **Estrarre.** Costa 30 Oro più 5 per piano, e la runa torna nello zaino. Cambiando arma le rune restano su quella vecchia: spostarle è una scelta.
+- **Oggetti per le rune.** Il *Solvente Runico* estrae gratis una runa dall'equipaggiamento; lo *Scalpello Runico* (dalla Forgia) apre un incastone in più nell'arma o nell'armatura, fino a 3. Alcune armature hanno sempre più incastoni: la *Corazza Runica* almeno 2, l'*Armatura del Custode* 3.
+- **Contano solo le rune dell'arma e dell'armatura equipaggiate.** Quelle che trovi finiscono nel Codice, alla pagina *Rune*.
+
+| Runa | Famiglia | Dove | Effetto |
+|---|---|---|---|
+| 🔁 Runa dell'Eco | Elementale | Arma | I marchi della tua arma durano 1 turno in più. |
+| 🌀 Runa della Catalisi | Elementale | Arma | Le reazioni elementali infliggono il 30% di danni in più. |
+| 🌗 Runa del Contrasto | Elementale | Arma | I colpi Super Efficaci infliggono il 15% di danni in più. |
+| 🌹 Runa della Spina | Status | Arma | I tuoi colpi hanno il 10% di probabilità di far sanguinare il nemico. |
+| 🐍 Runa della Vipera | Status | Arma | I tuoi colpi hanno il 10% di probabilità di avvelenare il nemico. |
+| 🎯 Runa dell'Occhio | Offensiva | Arma | +5% di probabilità di colpo critico. |
+| 💪 Runa della Forza | Offensiva | Arma | +6% di Attacco. |
+| 🩸 Runa del Sangue | Offensiva | Arma | Ti curi del 5% dei danni che infliggi con gli attacchi. |
+| 🔪 Runa dell'Agguato | Offensiva | Arma | Il primo attacco di ogni scontro infligge il 50% di danni in più. |
+| 🪨 Runa della Pietra | Difensiva | Armatura | +8% di Difesa dell'armatura. |
+| 🍃 Runa del Vento | Difensiva | Armatura | +4% di Schivata. |
+| 🌵 Runa del Rovo | Difensiva | Armatura | Chi ti ferisce subisce l'8% dei danni che ti ha inflitto. |
+| 🌙 Runa della Quiete | Difensiva | Armatura | Quando ti difendi recuperi il 2% degli HP massimi. |
+| 🪙 Runa dell'Avidità | Utilità | Arma o armatura | +10% di Oro raccolto. |
+| 📘 Runa del Sapere | Utilità | Arma o armatura | +10% di EXP. |
+| 🦁 Runa del Coraggio | Utilità | Arma o armatura | Ogni piano inizia con 1 punto di Audacia. |
+| 👣 Runa del Passo | Utilità | Arma o armatura | +10 alle prove delle trappole. |
+| 💧 Runa del Flusso | Arcana | Arma | Ogni colpo a segno ti dà 1 Etere in più. |
+| 📘 Runa della Sapienza | Arcana | Arma | +12% potenza degli incantesimi. |
+| 🏺 Runa del Pozzo | Arcana | Armatura | +4 Etere massimo. |
+
+### Parole runiche
+
+Certe combinazioni di rune **sullo stesso oggetto** formano una **parola runica**: oltre agli effetti delle singole rune ne aggiungono uno proprio, e il nome dell'oggetto la mostra fra «». Ogni runa vale per una sola parola; le parole di tre rune hanno la precedenza (servono un oggetto epico o un premio di boss). La prima volta che ne componi una al Falò viene annunciata e finisce nel Codice, alla pagina *Parole runiche*: di quelle che non conosci vedi quante rune servono e, se l'hai già trovata, la prima.
+
+| Parola | Rune | Effetto in più |
+|---|---|---|
+| «Tempesta Elementale» | Runa della Catalisi + Runa del Contrasto | Le reazioni infliggono il 30% di danni in più e i colpi Super Efficaci il 10% in più. |
+| «Veleno di Spine» | Runa della Spina + Runa della Vipera | I tuoi colpi hanno anche il 10% di probabilità di bruciare il nemico con il Magma. |
+| «Colpo del Boia» | Runa della Forza + Runa dell'Occhio | +8% di probabilità di colpo critico. |
+| «Bacio del Vampiro» | Runa del Sangue + Runa dell'Agguato | Ti curi di un altro 5% dei danni inflitti e il primo attacco di ogni scontro fa il 25% di danni in più. |
+| «Prisma» | Runa dell'Eco + Runa della Catalisi + Runa del Contrasto | I tuoi colpi hanno l'8% di probabilità di congelare il nemico e i marchi durano 1 turno in più. |
+| «Fortezza di Spine» | Runa della Pietra + Runa del Rovo | Chi ti ferisce subisce un altro 6% dei danni e la Difesa dell'armatura sale del 5%. |
+| «Passo del Monaco» | Runa del Vento + Runa della Quiete | +4% di Schivata e difendendoti recuperi un altro 1% degli HP massimi. |
+| «Patto del Mercante» | Runa dell'Avidità + Runa del Sapere | +10% di Oro e +10% di EXP. |
+| «Cuore Temerario» | Runa del Coraggio + Runa del Passo | Ogni piano inizia con 1 punto di Audacia in più e +10 alle prove delle trappole. |
+| «Egida Silente» | Runa della Pietra + Runa del Vento + Runa della Quiete | +6% di Difesa dell'armatura e +3% di Schivata. |
+| «Mente Arcana» | Runa del Flusso + Runa della Sapienza | Ogni incantesimo costa 1 Etere in meno (mai meno di 1). |
 
 ---
 
@@ -243,29 +428,95 @@ L'enciclopedia nel [README](README.md) le elenca tutte.
 
 | Eroe | Punti di forza | Come si sblocca |
 |---|---|---|
-| ⚔️ **Guerriero** | 120 HP, solido, contrattacca in difesa. Spada di Terra, cotta d'Acqua: *Fango* | Subito |
+| ⚔️ **Guerriero** | 140 HP, solido, contrattacca in difesa. Spada di Terra, cotta d'Acqua: *Fango* | Subito |
 | 🗡️ **Ladro** | Schivata alta, 100 Oro iniziali, critico garantito dopo la Concentrazione. Pugnali di Vento, cuoio d'Acqua: *Gelo* | Subito |
-| 🔮 **Mago** | Bastone di Fuoco potente e mira eccellente, ma solo 80 HP. Vesti di Vento: *Incendio* | Subito |
-| 🛡️ **Paladino** | 180 HP e Risonanza di Luce fin dall'inizio | Maestria Guerriero Lv.5 |
+| 🔮 **Mago** | Bastone di Fuoco potente e mira eccellente, ma solo 90 HP; si cura quando si difende. Vesti di Vento: *Incendio* | Subito |
+| 🛡️ **Paladino** | 195 HP e Risonanza di Luce fin dall'inizio; difendendosi si libera da veleno e sanguinamento | Maestria Guerriero Lv.5 |
 | 🪓 **Berserker** | L'ascia più forte, nessuna armatura | Impresa *Danza con la Morte* |
-| 🧪 **Alchimista** | 4 pozioni iniziali e bombe di Fuoco. Grembiule di Terra: *Magma* | Impresa *Genio Elementale* |
-| 🥷 **Assassino** | 15% di critico innato e 20% di schivata, ma solo 75 HP. Pugnale di Vento, mantello di Terra: *Tempesta di Sabbia* | Maestria Ladro Lv.5 |
-| 💀 **Negromante** | Risonanza di Tenebra fin dall'inizio | Maestria Mago Lv.5 |
+| 🧪 **Alchimista** | 2 pozioni iniziali e bombe di Fuoco; difendendosi lancia una fiala che prepara la reazione. Grembiule di Terra: *Magma* | Impresa *Genio Elementale* |
+| 🥷 **Assassino** | 8% di critico innato e 10% di schivata, ma solo 75 HP. Pugnale di Vento, mantello di Terra: *Tempesta di Sabbia* | Maestria Ladro Lv.5 |
+| 💀 **Negromante** | Risonanza di Tenebra fin dall'inizio; difendendosi ruba vita al nemico | Maestria Mago Lv.5 |
+| 🌈 **Elementalista** | Il maestro delle reazioni: molto Etere, e ogni reazione gliene restituisce di più (Maestria Lv.2). Verga di Terra, mantello di Vento: *Tempesta di Sabbia*; i suoi incantesimi di Vento e d'Acqua reagiscono con il marchio di Terra della verga | Impresa *Alchimia degli Elementi* |
 
 Ogni eroe parte con un equipaggiamento che ha già un'idea di gioco. Cinque classi hanno arma e armatura di elementi che **reagiscono** fra loro: il nome della reazione è in tabella. Paladino e Negromante portano lo stesso elemento e partono con la **Risonanza**. Il Berserker combatte a petto nudo.
 
+### Livelli e attributi
+
+A ogni livello l'eroe recupera tutti gli HP, ottiene +7 HP massimi, +1% Precisione e +1% Schivata, e 1 punto da spendere negli attributi. Ogni attributo arriva al massimo a 10 punti. Gli attributi valgono per una sola discesa.
+
+Quando sali di livello, alla fine della stanza ti viene chiesto dove mettere il punto. Puoi anche rimandare: i punti restano, e li spendi quando vuoi con la voce *Distribuisci i punti abilità* della mappa. Le *Statistiche* mostrano i tuoi attributi.
+
+| Attributo | Per ogni punto |
+|---|---|
+| ❤️ **Vitalità** | +12 HP massimi (e altrettanti HP), per punto. |
+| 💪 **Forza** | +4% danni con le armi che scalano con la Forza, per punto. |
+| 🎯 **Destrezza** | +3% Precisione, +2% probabilità di critico e +4% danni con le armi che scalano con la Destrezza, per punto. |
+| 🌪️ **Agilità** | +2% Schivata e +3% probabilità di fuga, per punto. |
+| 🔮 **Arcano** | +2 Etere massimo, +6% potenza degli incantesimi, +10% danni delle reazioni elementali e +4% danni con le armi che scalano con l'Arcano, per punto. |
+| 🍀 **Fortuna** | +8% Oro trovato, +3% probabilità di trovare una runa e +2% probabilità di critico, per punto. |
+
+Ogni classe parte con 3 punti già distribuiti secondo il suo stile:
+
+| Classe | Attributi iniziali |
+|---|---|
+| Guerriero | Vitalità 1, Forza 2 |
+| Ladro | Destrezza 1, Agilità 1, Fortuna 1 |
+| Mago | Arcano 2, Destrezza 1 |
+| Paladino | Vitalità 2, Forza 1 |
+| Berserker | Forza 3 |
+| Alchimista | Arcano 1, Vitalità 1, Fortuna 1 |
+| Assassino | Destrezza 2, Agilità 1 |
+| Negromante | Arcano 2, Vitalità 1 |
+| Elementalista | Arcano 2, Agilità 1 |
+
+**Il Tomo dell'Oblio.** È un consumabile raro (meno di uno su venti). Si legge al Falò, senza spegnerlo: i punti che hai speso tornano da spendere e li redistribuisci subito. Gli attributi iniziali della classe restano.
+
+### I talenti
+
+Ogni 5 livelli l'eroe sceglie un talento fra 3 proposti a caso, diversi da quelli che ha già. I talenti valgono per una sola discesa, si sommano agli attributi e il Tomo dell'Oblio non li fa dimenticare.
+
+La scelta arriva alla fine della stanza in cui sei salito di livello, prima dei punti abilità, e non si rimanda. Con una discesa normale si arriva in genere a due o tre talenti. Le *Statistiche* mostrano quelli che hai.
+
+| Talento | Effetto |
+|---|---|
+| ⚔️ **Lama Affilata** | +8% danni con qualunque arma. |
+| 🦅 **Occhio di Falco** | +6% Precisione e +4% probabilità di critico. |
+| 🛡️ **Pelle di Ferro** | +15% Difesa dell'armatura. |
+| ❤️ **Cuore Saldo** | +30 HP massimi (e altrettanti HP). |
+| 🩸 **Sete di Sangue** | Rubi 2 HP a ogni colpo a segno. |
+| 💀 **Raccolto** | Recuperi il 6% degli HP massimi a ogni nemico sconfitto. |
+| 👤 **Passo d'Ombra** | +5% Schivata e +15% probabilità di fuga. |
+| 💧 **Pozzo d'Etere** | +6 Etere massimo. |
+| 🔮 **Mente Affilata** | +15% potenza degli incantesimi. |
+| 📜 **Parsimonia Arcana** | Ogni incantesimo costa 1 Etere in meno (mai meno di 1). |
+| 🌊 **Flusso** | +1 Etere in più a ogni colpo a segno. |
+| ⚗️ **Catalizzatore** | +30% danni delle reazioni elementali. |
+| 🌿 **Erborista** | Le pozioni curative curano il 25% in più. |
+| 💰 **Mano d'Oro** | +25% Oro trovato e +6% probabilità di trovare una runa. |
+| 📖 **Studioso** | +15% EXP guadagnata. |
+
 ### La Maestria
 
-Ogni eroe ha un albero di **Maestria** a 5 livelli, che sale con l'esperienza accumulata nelle sue discese:
+Ogni eroe ha un albero di **Maestria** a 6 livelli, che sale con l'esperienza accumulata nelle sue discese:
 
-- **Lv.2** — un bonus personale (es. *Imboscata* dell'Assassino: il primo attacco di ogni scontro fa danni doppi).
+- **Lv.2** — un bonus personale (es. *Imboscata* dell'Assassino: il primo attacco di ogni scontro fa il 50% di danni in più).
 - **Lv.3** — sblocca un oggetto (es. la *Bomba Fumogena* per il Ladro).
 - **Lv.4** — un'**Eredità**: un bonus permanente per **tutti** gli eroi.
 - **Lv.5** — sblocca una nuova classe, un tratto o una reliquia.
+- **Lv.6** — un dono **arcano** dell'eroe, che vale solo per lui (2000 XP di Maestria):
+  - **Guerriero**: *Lama Incantata*: +3 Etere massimo e +1 Etere a ogni colpo a segno.
+  - **Ladro**: *Mani Leste*: ogni incantesimo costa 1 Etere in meno (mai meno di 1).
+  - **Mago**: *Arcimago*: +20% potenza degli incantesimi e +4 Etere massimo.
+  - **Paladino**: *Preghiera Costante*: +6 Etere massimo.
+  - **Berserker**: *Furia Arcana*: +1 Etere a ogni colpo a segno.
+  - **Alchimista**: *Distillato d'Etere*: +15% potenza degli incantesimi.
+  - **Assassino**: *Ombra Silente*: +1 Etere a ogni colpo a segno.
+  - **Negromante**: *Patto d'Ossa*: +4 Etere massimo.
+  - **Elementalista**: *Armonia*: +10% potenza degli incantesimi.
 
 ---
 
-## 🎭 Tratti e Patti del Caos
+## 🎭 Tratti
 
 **Tratti.** Si sceglie un tratto a ogni partenza:
 
@@ -278,16 +529,85 @@ Ogni eroe ha un albero di **Maestria** a 5 livelli, che sale con l'esperienza ac
 | Cacciatore Etereo | Il primo attacco nemico di ogni scontro manca sempre, ma −20% Schivata |
 | Titano | +100 HP, ma precisione e schivata dimezzate |
 | Benedetto | Inizi con lo Scudo di Cristallo e resisti al primo colpo letale |
+| Sordo all'Arcano | Non conosci e non impari incantesimi e non hai Etere, ma +25% danni con le armi e +30 HP Max. |
+| Erudito | Parti con un incantesimo in più (a caso) e +4 Etere massimo, ma -15 HP Max. |
+| Talento Naturale | Un talento ogni 4 livelli invece di 5, ma ogni livello dà 4 HP Max in meno. |
 
-**Patti del Caos.** Dopo la prima vittoria puoi attivare all'inizio di ogni discesa fino a 5 maledizioni. Ognuna aggiunge +25% all'Essenza finale, fino a **×2,25** con tutte e cinque:
+Quasi tutti i tratti si sbloccano con un'impresa: *Sordo all'Arcano* con *L'Asceta*, *Erudito* con *L'Arcimago*, *Talento Naturale* con *Pieno di Talento*.
 
-| Patto | Effetto |
+---
+
+## 🎮 Modalità
+
+Dal menu principale:
+
+- **Discesa standard** — 30 piani fino al DIO ANTICO.
+- **📅 Sfida del Giorno** — sempre disponibile (vedi sotto).
+- **Discesa infinita** — dopo la prima vittoria: si prosegue oltre il piano 30 finché resisti, nel **Ciclo del Labirinto** (vedi sotto). Il menu mostra la tua Eco record.
+
+### Il Ciclo del Labirinto
+
+Superata la Soglia, il Paradosso Temporale ti rimanda indietro: il Labirinto ricomincia, ma non è più lo stesso.
+
+- **I biomi tornano.** Dal piano 31 al 60 ripercorri i sei biomi, 5 piani ciascuno, poi di nuovo dal 61 al 90, e così via. L'ordine cambia a ogni ciclo e a ogni discesa; la Soglia resta sempre l'ultima. Ogni bioma porta con sé nativi, boss, stanze speciali e pericolo.
+- **Ogni ciclo è un'Eco.** Il piano 31 apre l'**Eco II**, il 61 l'**Eco III**. Il nome dell'Eco è in cima alla mappa.
+- **I pericoli si inaspriscono.** In ogni Eco i pericoli con una regola numerica crescono del 25% (fino al doppio, e le probabilità al massimo al 90%): più gas nelle Miniere, più HP persi nel Ventre, più Oro che bolle nella Forgia, un tempo più lacerato sulla Soglia. La descrizione del pericolo mostra i numeri nuovi. Nostalgia Letale e Caduta Astrale restano come sono.
+- **I nativi tornano forti.** Nelle Eco i nativi di ogni bioma sono forti, rispetto ai nemici più profondi, quanto lo erano rispetto ai nemici dei loro piani.
+- **I nemici combattono la magia.** Nelle Eco tutti i nemici, boss compresi, possono usare il Risucchio d'Etere e il Silenzio.
+- **Il DIO ANTICO ritorna** alla fine di ogni ciclo, al piano 60, 90 e così via, con il nome della sua Eco.
+- **Essenza.** Oltre il piano 30 l'Essenza finale vale ×1,5, e il 25% in più per ogni Eco oltre la seconda (Eco III ×1,875).
+- **Memoria.** La tua Eco più profonda resta nel Codice e nel menu principale. L'Epitaffio ricorda fino a quale Eco ti sei spinto, e l'impresa *L'Eco Infinita* (raggiungi l'Eco III) vale 1.500 Essenza.
+
+### Ascensione
+
+Dopo la prima vittoria, a ogni partenza scegli un **grado di Ascensione**. Ogni grado aggiunge una regola a quelle dei gradi precedenti e aumenta l'Essenza finale. All'inizio è disponibile il grado 1; vincendo la discesa standard al grado più alto sblocchi il successivo, fino al **20**. Il grado scelto è indicato in cima alla mappa e nelle Statistiche dell'Eroe.
+
+I cinque **Patti del Caos** delle versioni precedenti sono diventati gradi: *Labirinto Mortale*, *Inflazione*, *Carestia*, *Durezza* e *Furia* (questi ultimi due più leggeri, perché si sommano agli altri gradi).
+
+| Grado | Nome | Regola che si aggiunge | Essenza |
+|---|---|---|---|
+| 1 | Campioni | Gli scontri d'Élite compaiono il doppio delle volte. | ×1,15 |
+| 2 | Scale Fredde | Il riposo prima delle scale cura la metà e restituisce la metà dell'Etere. | ×1,3 |
+| 3 | Labirinto Mortale | Le trappole infliggono danni doppi. | ×1,55 |
+| 4 | Forzieri Avidi | Forzieri chiusi e Mimic sono il doppio più probabili (fino a uno su due). | ×1,7 |
+| 5 | Boss Feroci | I boss hanno il 15% di HP in più. | ×1,85 |
+| 6 | Inflazione | I prezzi del Mercante sono raddoppiati. | ×2,1 |
+| 7 | Borsa Vuota | Parti con metà dell'Oro. | ×2,25 |
+| 8 | Braci Deboli | Riposare al Falò cura il 30% degli HP invece del 50%. | ×2,4 |
+| 9 | Occhi nel Buio | I nemici hanno +5 di Precisione. | ×2,55 |
+| 10 | Campioni Temprati | Gli scontri d'Élite hanno il 20% di HP in più. | ×2,7 |
+| 11 | Oggetti Inquieti | Gli oggetti maledetti compaiono il doppio delle volte. | ×2,85 |
+| 12 | Avarizia | I nemici lasciano il 25% di Oro in meno. | ×3 |
+| 13 | Carestia | Le pozioni curano la metà. | ×3,25 |
+| 14 | Macchia | Inizi la discesa con 20 di Corruzione. | ×3,4 |
+| 15 | Durezza | I nemici e i boss hanno il 15% di HP in più. | ×3,65 |
+| 16 | Mercanti in Fuga | I Mercanti compaiono la metà delle volte. | ×3,8 |
+| 17 | Boss Implacabili | I boss hanno il 10% di ATK in più. | ×3,95 |
+| 18 | Voci Spente | I nemici comuni hanno il 10% di HP in più e possono ammutolirti con il Silenzio. | ×4,1 |
+| 19 | Furia | I nemici e i boss hanno il 10% di ATK in più. | ×4,35 |
+| 20 | Il Dio si Sveglia | Il DIO ANTICO ha il 30% di HP in più. | ×4,65 |
+
+### Sfida del Giorno
+
+Una discesa al giorno, **uguale per chiunque la giochi quel giorno**:
+
+- l'eroe e il tratto sono assegnati, anche se non li hai ancora sbloccati: è un modo per provarli;
+- 2 **malus** presi dai gradi di Ascensione e un **dono**:
+
+| Dono | Effetto |
 |---|---|
-| Durezza | HP dei nemici +30% |
-| Furia | Attacco dei nemici +30% |
-| Carestia | Le pozioni curano la metà |
-| Inflazione | Prezzi del mercante raddoppiati |
-| Labirinto Mortale | Le trappole fanno danni doppi |
+| Borsa Piena | Parti con 150 Oro in più. |
+| Dono Antico | Parti con una Reliquia casuale. |
+| Scorte | Parti con 2 pozioni in più. |
+| Nebbie Generose | Le Stanze del Mistero compaiono il doppio delle volte. |
+| Taglie | I nemici lasciano il 50% di Oro in più. |
+| Scale Calde | Il riposo prima delle scale cura il 50% in più. |
+| Pozzo Profondo | Parti con 10 Etere massimo in più. |
+
+- ogni piano nasce dallo stesso seme: la mappa di un piano è la stessa qualunque strada tu abbia preso prima;
+- conta solo il **primo tentativo** del giorno, che vale anche Essenza ×1,5; i tentativi successivi sono allenamento;
+- **punteggio**: 100 per piano raggiunto, 250 per boss, 2000 per la vittoria, più un punto ogni 10 Oro;
+- la schermata della sfida mostra il punteggio di oggi, la **serie** di giorni consecutivi, il record e le ultime sfide (lo storico tiene 30 giorni).
 
 ---
 
@@ -301,16 +621,60 @@ Tra una discesa e l'altra spendi l'**Essenza Astrale**:
   - *Sesto Senso*: vedi cosa c'è dietro le porte.
 - **⚒️ Forgia Dimensionale** — sblocca armi, armature, monili, consumabili e reliquie, che da quel momento possono comparire nel labirinto. Le categorie diverse dalle reliquie si aprono liberando l'artigiano corrispondente.
 - **🍺 Taverna** — mostra le classi ancora da conquistare.
-- **📜 Grimorio** — imprese completate e livelli di Maestria.
-- **📚 Archivio di Aethelgard** — tre tomi da sbloccare scendendo nel labirinto. Ognuno dà un bonus permanente: più Oro e fuga, danni contro i boss, difesa.
+- **📜 Grimorio** — imprese completate e livelli di Maestria. Le imprese:
+
+| Impresa | Come si completa | Ricompensa |
+|---|---|---|
+| L'Ombra | Scappa da 10 combattimenti in una singola run. | +20% probabilità di fuga, per sempre |
+| Fabbro Folle | Fondi 3 oggetti all'Altare dell'Evoluzione in una run. | Spadone Infranto |
+| Cannone di Vetro | Sconfiggi un Boss senza subire alcun danno. | Veste Eterea |
+| Danza con la Morte | Sconfiggi un nemico avendo esattamente 1 HP rimanente. | Classe: Berserker |
+| L'Avaro | Esci dal labirinto con almeno 2000 Oro non speso. | Tratto: Aristocratico |
+| Genio Elementale | Fondi un'arma fino al Livello 5. | Classe: Alchimista |
+| Il Sopravvissuto | Supera il Piano 10 senza MAI usare il riposo al Falò. | Cuore di Drago |
+| Epuratore di Demoni | Sconfiggi 10 Boss in totale. | Tratto: Cacciatore Etereo |
+| Mani Bucate | Spendi almeno 2000 Oro dal Mercante in una singola run. | Zweihander d'Oro |
+| Equilibrista | Finisci una run con Arma e Armatura di elementi diversi. | Sigillo Elementale |
+| Lama di Cristallo | Arriva al piano 15 senza mai cambiare l'arma iniziale. | Spirito della Spada |
+| Furia Cieca | Supera un piano mancando più della metà dei tuoi attacchi (almeno 6 attacchi). | Tratto: Titano |
+| Tiratore Scelto | Infliggi 5 colpi Super Efficaci ai Boss in una singola run. | Filtro Preciso |
+| Assaggiatore di Veleni | Sopravvivi a un danno letale rimanendo a 1 HP (es. Benedizione o Fiala del Caos). | Maschera Antigas |
+| L'Eco Infinita | Raggiungi l'Eco III della Modalità Infinita (piano 61). | 1500 Essenza |
+| L'Arcimago | Lancia 25 incantesimi in una singola run. | Tratto: Erudito |
+| Alchimia degli Elementi | Scatena 12 reazioni elementali in una singola run. | Classe: Elementalista |
+| Voce nel Silenzio | Sconfiggi un nemico mentre non puoi lanciare incantesimi (Silenzio o Gas). | 400 Essenza |
+| Pieno di Talento | Ottieni 3 talenti in una singola run. | Tratto: Talento Naturale |
+| Lo Specialista | Porta un attributo a 10 punti. | 400 Essenza |
+| L'Asceta | Vinci una discesa senza lanciare un solo incantesimo. | Tratto: Sordo all'Arcano |
+
+- **📚 Archivio di Aethelgard** — sei tomi da sbloccare scendendo nel labirinto. Ognuno si legge a capitoli e dà un bonus permanente a tutti gli eroi:
+
+| Tomo | Come si sblocca | Bonus |
+|---|---|---|
+| Il Diario di Silas il Cercatore | Raggiungi il Piano 5 | +5% Probabilità di Fuga e +5% Oro trovato |
+| Bestiario dell'Abisso | Sconfiggi 5 Boss | +10% Danni inflitti contro i Boss |
+| Cronache delle Ere | Completa una Run | +5 Difesa fissa globale |
+| Il Grimorio di Valerius | Scopri 10 incantesimi | +2 Etere massimo |
+| Le Cronache dell'Ascesa | Vinci al grado 5 di Ascensione | +5% Danni contro i Boss e +5% Oro trovato |
+| Il Canto delle Eco | Raggiungi l'Eco II della Modalità Infinita | +3 Difesa fissa globale e +5% Probabilità di Fuga |
+
 - **🔥 Il Fuoco del Campo** — chi incontri nel Labirinto può venire a scaldarsi qui. *Silas*, *la Cartografa*, *il Viandante Cieco* e, se lo hai liberato, *la luce di Alaric* compaiono quando le loro storie sono andate abbastanza avanti. Ti parlano in base a ciò che hai fatto e la prima volta ti lasciano un dono (✦). Qui costruisci anche, con l'Essenza:
   - *il Tavolo della Cartografa* (aiutala nel Labirinto): sulla mappa vedi quali storie ti aspettano nelle stanze speciali e negli eventi che tornano;
   - *lo Scrittoio di Silas* (salvalo): a ogni partenza scegli un dono fra +20 HP Max, +3 ATK e +100 Oro;
-  - *l'Altare della Purificazione*: la Corruzione cresce del 25% in meno.
+  - *l'Altare della Purificazione*: la Corruzione cresce del 25% in meno;
+  - *la Biblioteca dell'Arcano* (libera l'Incantatore Valerius), che si costruisce in tre livelli, uno alla volta. I livelli si sommano:
+    - Lv.1 (✨400): Ogni eroe ha +2 Etere massimo.
+    - Lv.2 (✨700): Ogni discesa inizia con 1 pergamena a caso nello zaino.
+    - Lv.3 (✨1000): Gli incantesimi di ogni eroe hanno +5% di potenza.
+  - *la Sala d'Armi* (libera il Maestro d'Armi Borek), anche lei in tre livelli:
+    - Lv.1 (✨400): Ogni discesa inizia con 1 punto abilità in più da spendere.
+    - Lv.2 (✨700): Ogni eroe fa +3% danni con qualunque arma.
+    - Lv.3 (✨1000): Ogni discesa inizia con 1 punto abilità in più da spendere, oltre a quello del primo livello.
 - **📖 Il Codice del Labirinto** — tutto ciò che hai scoperto, raccolto fra una run e l'altra, con la percentuale di completamento. Ciò che manca è segnato con ???.
   - *Reazioni elementali*: le combinazioni di elementi che hai scatenato almeno una volta.
   - *Finali*: quelli che hai visto, e un indizio per gli altri.
   - *Bestiario*: nemici e boss incontrati e sconfitti; la loro storia si legge solo dopo averli battuti.
+  - *Incantesimi*: gli incantesimi che hai lanciato almeno una volta, con elemento, costo ed effetto.
   - *Personaggi*: i capitoli vissuti con Alaric e Silas, e il segno lasciato dalle tue scelte.
   - *Eventi*: quali hai visto e quante volte.
   - *Lettere insanguinate*: i messaggi letti sulle pareti prima degli scontri.
@@ -331,7 +695,7 @@ Tra una discesa e l'altra spendi l'**Essenza Astrale**:
 | 🏃 Fuga dal labirinto | 100% dell'Oro |
 | 🏆 Vittoria al piano 30 | 100% dell'Oro + 1.000 (e la leggendaria *Lama del Creatore*) |
 
-Si aggiungono **50 Essenza per ogni boss** sconfitto, il moltiplicatore dei Patti e, oltre il piano 30 in **Modalità Infinita**, un ulteriore ×1,5.
+Si aggiungono **50 Essenza per ogni boss** sconfitto; poi si applicano il moltiplicatore del grado di **Ascensione** (o ×1,5 per il primo tentativo della **Sfida del Giorno**) e, oltre il piano 30 in **Modalità Infinita**, un ulteriore ×1,5 che cresce del 25% per ogni Eco oltre la seconda.
 
 ---
 

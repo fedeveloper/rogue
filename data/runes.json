@@ -1,0 +1,44 @@
+{
+    "rules": {
+        "sockets": {"normal": 1, "epic": 2, "boss": 3},
+        "extract_cost": [30, 5],
+        "value": [40, 8],
+        "drops": {"elite": 35, "boss": 60, "trap": 15, "mystery_hoard": 30, "mimic": 35},
+        "vendor_stock": 1
+    },
+    "runes": {
+        "eco":       {"name": "Runa dell'Eco",      "icon": "🔁", "family": "Elementale", "slot": "weapon", "weight": 10, "effects": {"mark_duration_add": 1},       "desc": "I marchi della tua arma durano 1 turno in più."},
+        "catalisi":  {"name": "Runa della Catalisi", "icon": "🌀", "family": "Elementale", "slot": "weapon", "weight": 8,  "effects": {"reaction_dmg_pct": 30},       "desc": "Le reazioni elementali infliggono il 30% di danni in più."},
+        "contrasto": {"name": "Runa del Contrasto",  "icon": "🌗", "family": "Elementale", "slot": "weapon", "weight": 10, "effects": {"super_effective_pct": 15},    "desc": "I colpi Super Efficaci infliggono il 15% di danni in più."},
+        "spina":     {"name": "Runa della Spina",    "icon": "🌹", "family": "Status",     "slot": "weapon", "weight": 10, "effects": {"bleed_on_hit": 10},           "desc": "I tuoi colpi hanno il 10% di probabilità di far sanguinare il nemico."},
+        "vipera":    {"name": "Runa della Vipera",   "icon": "🐍", "family": "Status",     "slot": "weapon", "weight": 10, "effects": {"poison_on_hit": 10},          "desc": "I tuoi colpi hanno il 10% di probabilità di avvelenare il nemico."},
+        "occhio":    {"name": "Runa dell'Occhio",    "icon": "🎯", "family": "Offensiva",  "slot": "weapon", "weight": 10, "effects": {"crit_chance_add": 5},         "desc": "+5% di probabilità di colpo critico."},
+        "forza":     {"name": "Runa della Forza",    "icon": "💪", "family": "Offensiva",  "slot": "weapon", "weight": 10, "effects": {"atk_pct": 6},                 "desc": "+6% di Attacco."},
+        "sangue":    {"name": "Runa del Sangue",     "icon": "🩸", "family": "Offensiva",  "slot": "weapon", "weight": 8,  "effects": {"lifesteal_pct": 5},           "desc": "Ti curi del 5% dei danni che infliggi con gli attacchi."},
+        "agguato":   {"name": "Runa dell'Agguato",   "icon": "🔪", "family": "Offensiva",  "slot": "weapon", "weight": 8,  "effects": {"first_strike_pct": 50},       "desc": "Il primo attacco di ogni scontro infligge il 50% di danni in più."},
+        "pietra":    {"name": "Runa della Pietra",   "icon": "🪨", "family": "Difensiva",  "slot": "armor",  "weight": 10, "effects": {"def_pct": 8},                 "desc": "+8% di Difesa dell'armatura."},
+        "vento":     {"name": "Runa del Vento",      "icon": "🍃", "family": "Difensiva",  "slot": "armor",  "weight": 10, "effects": {"dodge_add": 4},               "desc": "+4% di Schivata."},
+        "rovo":      {"name": "Runa del Rovo",       "icon": "🌵", "family": "Difensiva",  "slot": "armor",  "weight": 8,  "effects": {"thorns_pct": 8},              "desc": "Chi ti ferisce subisce l'8% dei danni che ti ha inflitto."},
+        "quiete":    {"name": "Runa della Quiete",   "icon": "🌙", "family": "Difensiva",  "slot": "armor",  "weight": 8,  "effects": {"defend_heal_pct": 2},         "desc": "Quando ti difendi recuperi il 2% degli HP massimi."},
+        "avidita":   {"name": "Runa dell'Avidità",   "icon": "🪙", "family": "Utilità",    "slot": "any",    "weight": 8,  "effects": {"gold_pct": 10},               "desc": "+10% di Oro raccolto."},
+        "sapere":    {"name": "Runa del Sapere",     "icon": "📘", "family": "Utilità",    "slot": "any",    "weight": 8,  "effects": {"exp_pct": 10},                "desc": "+10% di EXP."},
+        "coraggio":  {"name": "Runa del Coraggio",   "icon": "🦁", "family": "Utilità",    "slot": "any",    "weight": 3,  "effects": {"audacity_start": 1},          "desc": "Ogni piano inizia con 1 punto di Audacia."},
+        "passo":     {"name": "Runa del Passo",      "icon": "👣", "family": "Utilità",    "slot": "any",    "weight": 8,  "effects": {"trap_chance_add": 10},        "desc": "+10 alle prove delle trappole."},
+        "flusso":    {"name": "Runa del Flusso",     "icon": "💧", "family": "Arcana",     "slot": "weapon", "weight": 8,  "effects": {"ether_on_hit": 1},            "desc": "Ogni colpo a segno ti dà 1 Etere in più."},
+        "sapienza":  {"name": "Runa della Sapienza", "icon": "📘", "family": "Arcana",     "slot": "weapon", "weight": 8,  "effects": {"spell_pct": 12},              "desc": "+12% potenza degli incantesimi."},
+        "pozzo":     {"name": "Runa del Pozzo",      "icon": "🏺", "family": "Arcana",     "slot": "armor",  "weight": 8,  "effects": {"ether_max": 4},               "desc": "+4 Etere massimo."}
+    },
+    "words": {
+        "tempesta":  {"name": "Tempesta Elementale", "runes": ["catalisi", "contrasto"],       "effects": {"reaction_dmg_pct": 30, "super_effective_pct": 10}, "desc": "Le reazioni infliggono il 30% di danni in più e i colpi Super Efficaci il 10% in più."},
+        "veleno":    {"name": "Veleno di Spine",     "runes": ["spina", "vipera"],             "effects": {"scorch_on_hit": 10},                               "desc": "I tuoi colpi hanno anche il 10% di probabilità di bruciare il nemico con il Magma."},
+        "boia":      {"name": "Colpo del Boia",      "runes": ["forza", "occhio"],             "effects": {"crit_chance_add": 8},                              "desc": "+8% di probabilità di colpo critico."},
+        "vampiro":   {"name": "Bacio del Vampiro",   "runes": ["sangue", "agguato"],           "effects": {"lifesteal_pct": 5, "first_strike_pct": 25},        "desc": "Ti curi di un altro 5% dei danni inflitti e il primo attacco di ogni scontro fa il 25% di danni in più."},
+        "prisma":    {"name": "Prisma",              "runes": ["eco", "catalisi", "contrasto"], "effects": {"stun_on_hit": 8, "mark_duration_add": 1},         "desc": "I tuoi colpi hanno l'8% di probabilità di congelare il nemico e i marchi durano 1 turno in più."},
+        "fortezza":  {"name": "Fortezza di Spine",   "runes": ["pietra", "rovo"],              "effects": {"thorns_pct": 6, "def_pct": 5},                     "desc": "Chi ti ferisce subisce un altro 6% dei danni e la Difesa dell'armatura sale del 5%."},
+        "monaco":    {"name": "Passo del Monaco",    "runes": ["vento", "quiete"],             "effects": {"dodge_add": 4, "defend_heal_pct": 1},              "desc": "+4% di Schivata e difendendoti recuperi un altro 1% degli HP massimi."},
+        "mercante":  {"name": "Patto del Mercante",  "runes": ["avidita", "sapere"],           "effects": {"gold_pct": 10, "exp_pct": 10},                     "desc": "+10% di Oro e +10% di EXP."},
+        "temerario": {"name": "Cuore Temerario",     "runes": ["coraggio", "passo"],           "effects": {"audacity_start": 1, "trap_chance_add": 10},        "desc": "Ogni piano inizia con 1 punto di Audacia in più e +10 alle prove delle trappole."},
+        "egida":     {"name": "Egida Silente",       "runes": ["pietra", "vento", "quiete"],   "effects": {"def_pct": 6, "dodge_add": 3},                      "desc": "+6% di Difesa dell'armatura e +3% di Schivata."},
+        "mente":     {"name": "Mente Arcana",        "runes": ["flusso", "sapienza"],          "effects": {"spell_discount": 1},                               "desc": "Ogni incantesimo costa 1 Etere in meno (mai meno di 1)."}
+    }
+}

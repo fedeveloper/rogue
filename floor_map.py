@@ -13,13 +13,14 @@ from data_manager import GAME_DATA, PROFILE_MANAGER, get_biome, get_element_icon
 from entities import Enemy, Player
 from events import pick_event, pop_due_event
 from rooms import MYSTERY_NAMES, chest_risks, mystery_odds
+import nemesis
 from ui import Colors, display_msg, visible_width
 
 ROWS = 4  # file di stanze prima del boss
 TALL_MAP_ROWS = 30  # da quest'altezza del terminale i collegamenti occupano due righe
 # Solo emoji larghe di natura (senza selettore di variante): le colonne della mappa restano allineate in ogni terminale
-ROOM_ICONS = {"combat": "👹", "elite": "👺", "vendor": "💰", "campfire": "🔥", "treasure": "💎", "trap": "💀", "event": "🎭", "mystery": "❓", "boss": "👑"}
-ROOM_NAMES = {"combat": "Scontro", "elite": "Élite", "vendor": "Mercante", "campfire": "Falò", "treasure": "Forziere", "trap": "Trappola",
+ROOM_ICONS = {"combat": "👹", "elite": "👺", "nemesis": "😈", "vendor": "💰", "campfire": "🔥", "treasure": "💎", "trap": "💀", "event": "🎭", "mystery": "❓", "boss": "👑"}
+ROOM_NAMES = {"combat": "Scontro", "elite": "Élite", "nemesis": "Nemesi", "vendor": "Mercante", "campfire": "Falò", "treasure": "Forziere", "trap": "Trappola",
               "event": "Evento", "mystery": "Mistero", "boss": "Boss"}
 SLOTS = {1: [1], 2: [0, 2], 3: [0, 1, 2]}
 SIDES = {0: "sinistra", 1: "centro", 2: "destra"}
@@ -37,8 +38,8 @@ def generate_row(floor: int, step: int, weights_def: dict, cooldowns_def: dict, 
         if room_cooldowns[k] > 0: room_cooldowns[k] -= 1
 
     if step == ROWS + 1:
-        # Il boss finale attende solo all'ultimo piano della discesa standard
-        return [{"type": "boss", "enemy": Enemy(floor, True, active_pacts, final=floor == INFINITE_MODE_THRESHOLD)}]
+        # Il boss finale attende all'ultimo piano della discesa standard, e alla fine di ogni ciclo della Modalità Infinita
+        return [{"type": "boss", "enemy": Enemy(floor, True, active_pacts, final=floor % INFINITE_MODE_THRESHOLD == 0)}]
 
     avail = {rt: w for rt, w in weights_def.items() if room_cooldowns.get(rt, 0) <= 0 and w > 0}
     if floor < GAME_DATA["meta"]["rooms"]["elite"]["from_floor"]: avail.pop("elite", None)
@@ -90,6 +91,14 @@ def generate_floor_map(floor: int, weights_def: dict, cooldowns_def: dict, room_
         events = [i for i, d in enumerate(row) if d["type"] == "event"]
         row[events[0] if events else random.randrange(len(row))] = {"type": "event", "event_id": sig, "signature": True}
 
+    # La Nemesi che ti aspetta vicino al piano in cui ti ha ucciso, una volta per discesa
+    if player is not None and (nem := nemesis.waiting_on(floor, player.nemeses_met)):
+        player.nemeses_met.add(nem["id"])
+        r = random.randrange(1, ROWS)
+        free = [i for i, d in enumerate(rows[r]) if not d.get("signature") and not d.get("fated")]
+        if free:
+            rows[r][random.choice(free)] = {"type": "nemesis", "nemesis_id": nem["id"], "enemy": nemesis.build_enemy(nem, floor, active_pacts)}
+
     for r, row in enumerate(rows):
         for d, slot in zip(row, SLOTS[len(row)]): d["slot"] = slot
     for r in range(len(rows) - 1):
@@ -135,6 +144,9 @@ def room_label(d: dict, sixth_sense: bool = False, biome: Optional[dict] = None)
     if d["type"] == "combat": label += f" {Colors.CYAN}+{d['enemy'].exp_drop} EXP{Colors.RESET}"
     elif d["type"] == "elite": label += f" {Colors.CYAN}+{d['enemy'].exp_drop} EXP{Colors.RESET} {Colors.MAGENTA}· reliquia o equipaggiamento{Colors.RESET}"
     elif d["type"] == "trap": label += f" {Colors.MAGENTA}· custodisce un oggetto{Colors.RESET}"
+    elif d["type"] == "nemesis":
+        nem = d["enemy"].nemesis
+        label += f" {Colors.MAGENTA}✦ {nemesis.full_name(nem)}, che ti uccise al piano {nem['floor']} · riprenditi {nem['gold']} Oro{Colors.RESET}"
     elif d["type"] == "treasure" and d.get("risk"): label += f" {Colors.RED}· {d['risk']}% chiuso o Mimic{Colors.RESET}"
     if sixth_sense:
         if d["type"] in ("combat", "elite", "boss"): label += f" ({d['enemy'].name} {get_element_icon(d['enemy'].element)})"

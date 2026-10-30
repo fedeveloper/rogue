@@ -1,0 +1,26 @@
+{
+    "rules": {
+        "max_active": 3,
+        "max_rank": 5,
+        "stats_pct_per_rank": 10,
+        "gold_taken_pct": 50,
+        "floor_window": [-1, 2],
+        "trophy_epic": true
+    },
+    "names": ["Grugno", "Morsa", "Vedova", "Sghembo", "Lingua di Cenere", "Ossoduro", "Zanna Storta", "Mezzanotte", "Ruggine", "Silenzio", "Cardo", "Becco Nero", "Spiga", "Lampo", "Fessura", "Malacarne"],
+    "ranks": ["il Fortunato", "il Persecutore", "il Flagello", "l'Incubo", "la Fine"],
+    "traits": {
+        "resist_element": {"name": "Ha imparato a resistere", "desc": "I colpi dell'elemento con cui ti ha ucciso gli fanno il 40% di danni in meno.", "value": 40},
+        "hp_bonus_pct":   {"name": "Più grosso di come lo ricordi", "desc": "Ha il 20% di HP in più.", "value": 20},
+        "acc_add":        {"name": "Conosce i tuoi movimenti", "desc": "Ha +15 di Precisione.", "value": 15},
+        "atk_bonus_pct":  {"name": "Affamato di vendetta", "desc": "Ha il 15% di Attacco in più.", "value": 15},
+        "antimagia":      {"name": "Ha imparato a zittirti", "desc": "I tuoi incantesimi gli fanno il 40% di danni in meno, e ti combatte con il Silenzio e il Risucchio d'Etere. Lo impara solo da chi conosceva incantesimi.", "value": 40, "requires_spells": true, "moves": {"silence": 15, "ether_drain": 20}}
+    },
+    "text": {
+        "born": "{name} {rank} si ricorderà di te. Ha preso {gold} Oro dal tuo corpo.",
+        "returns": "La tua morte al piano {floor} ha un nome: {name} {rank}. Ti stava aspettando.",
+        "rank_up": "{name} ti uccide di nuovo e diventa {rank}.",
+        "defeated": "{name} {rank} cade. Fra i suoi resti ritrovi {gold} Oro e un trofeo.",
+        "boss_grudge": "{boss} ti riconosce: «Sei tornato. Gli altri non tornano.»"
+    }
+}

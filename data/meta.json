@@ -3,7 +3,8 @@
         "2": 100,
         "3": 250,
         "4": 500,
-        "5": 1000
+        "5": 1000,
+        "6": 2000
     },
     "traits": {
         "base": {
@@ -40,33 +41,41 @@
             "name": "Benedetto",
             "desc": "Inizi con una Reliquia difensiva e resisti al primo colpo letale.",
             "unlock_req": "benedetto"
+        },
+        "sordo_arcano": {
+            "name": "Sordo all'Arcano",
+            "desc": "Non conosci e non impari incantesimi e non hai Etere, ma +25% danni con le armi e +30 HP Max.",
+            "unlock_req": "feat_asceta",
+            "effects": {"dmg_pct": 25},
+            "max_hp": 30
+        },
+        "erudito": {
+            "name": "Erudito",
+            "desc": "Parti con un incantesimo in più (a caso) e +4 Etere massimo, ma -15 HP Max.",
+            "unlock_req": "feat_arcimago",
+            "ether": 4,
+            "max_hp": -15
+        },
+        "talento_naturale": {
+            "name": "Talento Naturale",
+            "desc": "Un talento ogni 4 livelli invece di 5, ma ogni livello dà 4 HP Max in meno.",
+            "unlock_req": "feat_talenti",
+            "talent_every": 4,
+            "hp_per_level": -4
         }
     },
     "pacts": {
-        "durezza": {
-            "name": "Durezza",
-            "desc": "HP di tutti i Nemici +30%",
-            "bonus": 0.25
-        },
-        "furia": {
-            "name": "Furia",
-            "desc": "Attacco di tutti i Nemici +30%",
-            "bonus": 0.25
-        },
         "carestia": {
             "name": "Carestia",
-            "desc": "Le pozioni curano la met\u00e0",
-            "bonus": 0.25
+            "desc": "Le pozioni curano la met\u00e0"
         },
         "inflazione": {
             "name": "Inflazione",
-            "desc": "I prezzi del Mercante sono Raddoppiati",
-            "bonus": 0.25
+            "desc": "I prezzi del Mercante sono Raddoppiati"
         },
         "trappole": {
             "name": "Labirinto Mortale",
-            "desc": "Le Trappole infliggono danni Doppi",
-            "bonus": 0.25
+            "desc": "Le Trappole infliggono danni Doppi"
         }
     },
     "feats": {
@@ -167,6 +176,55 @@
             "target": 1,
             "reward_type": "unlock",
             "reward_id": "maschera_antigas"
+        },
+        "feat_eco": {
+            "name": "L'Eco Infinita",
+            "desc": "Raggiungi l'Eco III della Modalità Infinita (piano 61).",
+            "target": 3,
+            "reward_type": "essence",
+            "reward_id": 1500
+        },
+        "feat_arcimago": {
+            "name": "L'Arcimago",
+            "desc": "Lancia 25 incantesimi in una singola run.",
+            "target": 25,
+            "reward_type": "trait",
+            "reward_id": "erudito"
+        },
+        "feat_alchimia": {
+            "name": "Alchimia degli Elementi",
+            "desc": "Scatena 12 reazioni elementali in una singola run.",
+            "target": 12,
+            "reward_type": "class",
+            "reward_id": "9"
+        },
+        "feat_voce_silenzio": {
+            "name": "Voce nel Silenzio",
+            "desc": "Sconfiggi un nemico mentre non puoi lanciare incantesimi (Silenzio o Gas).",
+            "target": 1,
+            "reward_type": "essence",
+            "reward_id": 400
+        },
+        "feat_talenti": {
+            "name": "Pieno di Talento",
+            "desc": "Ottieni 3 talenti in una singola run.",
+            "target": 3,
+            "reward_type": "trait",
+            "reward_id": "talento_naturale"
+        },
+        "feat_specialista": {
+            "name": "Lo Specialista",
+            "desc": "Porta un attributo a 10 punti.",
+            "target": 10,
+            "reward_type": "essence",
+            "reward_id": 400
+        },
+        "feat_asceta": {
+            "name": "L'Asceta",
+            "desc": "Vinci una discesa senza lanciare un solo incantesimo.",
+            "target": 1,
+            "reward_type": "trait",
+            "reward_id": "sordo_arcano"
         }
     },
     "rooms": {
@@ -202,8 +260,8 @@
             "mimic": {"from_floor": 3, "pct_per_floor": 1.5, "max": 30, "tell": 60, "false_tell": 10},
             "locked": {"from_floor": 3, "pct_per_floor": 2, "max": 30, "hp_cost_pct": 8}
         },
-        "mystery": {"hoard_gold_mult": 1.5, "outcomes": {"hoard": 20, "relic": 5, "hard": 25, "easy": 15, "trap": 15, "empty": 20}},
-        "audacity": {"points": {"combat": 1, "elite": 2, "trap": 1, "mystery": 1}, "gold_pct_per_point": 15, "item_at": 5, "epic_at": 7}
+        "mystery": {"hoard_gold_mult": 1.5, "outcomes": {"hoard": 20, "relic": 5, "hard": 25, "easy": 15, "trap": 15, "spring": 6, "scroll": 5, "rune": 4, "empty": 5}, "spring_heal_pct": 25},
+        "audacity": {"points": {"combat": 1, "elite": 2, "nemesis": 2, "trap": 1, "mystery": 1}, "gold_pct_per_point": 15, "item_at": 5, "epic_at": 7}
     },
     "corruption": {
         "max": 100,
@@ -211,5 +269,10 @@
         "veil": {"threshold": 50, "chance": 25},
         "voice": {"threshold": 75, "chance": 30},
         "desc": "Cresce con le scelte oscure e cala con quelle pure, e vale per la sola discesa. Ogni 10 punti danno +2 ATK. Da 50 il Labirinto ti offusca la vista: il 25% delle volte non vedi gli effetti di una scelta. Da 75 ti nasconde il nemico: il 30% delle volte non vedi la mossa che prepara."
+    },
+    "cycle": {
+        "hazard_pct_per_cycle": 25, "hazard_max_mult": 2.0, "chance_cap": 90, "essence_pct_per_cycle": 25, "arcane_moves": {"ether_drain": 10, "silence": 5},
+        "intro": "Il Paradosso Temporale della Soglia ti rimanda indietro. Il Labirinto ricomincia, ma non è più lo stesso: è la sua {echo}, e ogni pericolo è più duro.",
+        "desc": "Oltre il piano 30 i sei biomi tornano, ogni 30 piani, in un ordine nuovo (la Soglia resta l'ultima). Ogni ciclo è un'Eco: i pericoli che hanno una regola numerica crescono del 25% a ciclo, fino al doppio (le probabilità al massimo al 90%); i nativi tornano forti quanto i nemici più profondi; tutti i nemici imparano a combattere la magia, con il Risucchio d'Etere e il Silenzio; al piano 60, 90 e così via ti attende di nuovo il DIO ANTICO. L'Essenza oltre il 30 vale ×1,5, e il 25% in più per ogni Eco oltre la seconda."
     }
 }

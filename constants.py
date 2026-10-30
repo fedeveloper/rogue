@@ -30,7 +30,11 @@ CURSE_STAT_MULTIPLIER = 1.3
 # --- DANNI E MALEDIZIONI ---
 MIN_DAMAGE_PCT = 20       # un colpo a segno fa sempre almeno questa parte del danno grezzo, qualunque sia la difesa
 CURSE_HP_DRAIN_PCT = 2    # la maledizione che drena vita toglie questa % degli HP massimi a ogni turno (minimo 2)
-RECOVERY_HEAL_PCT = 10    # Riparo Magico: la difesa di Mago, Paladino, Alchimista e Negromante cura questa % degli HP massimi
+CAMPFIRE_REST_PCT = 50  # cura del riposo al Falò, in % degli HP massimi
+AMBUSH_DMG_PCT = 150       # Imboscata (Assassino, Maestria Lv.2): danni del primo attacco di ogni scontro, in %
+BERSERKER_FURY_PCT = 35    # Furia Sanguinaria (Berserker, Maestria Lv.2): ATK in più sotto il 30% degli HP
+ELEMENTAL_CHAIN_ETHER = 2  # Catena Elementale (Elementalista, Maestria Lv.2): Etere in più a ogni reazione
+NECRO_HARVEST_PCT = 6     # Raccolto d'Anime (Negromante, Maestria Lv.2): cura a ogni nemico sconfitto, in % degli HP massimi
 BULWARK_HEAL_PCT = 5      # Baluardo della Fede (Paladino, Maestria Lv.2): cura extra in difesa, in % degli HP massimi
 POISON_PCT, POISON_MIN = 4, 3  # il veleno toglie il 4% degli HP massimi a ogni turno, almeno 3 (come il sanguinamento, scala con la vittima)
 
@@ -39,7 +43,7 @@ ENEMY_HP_PER_FLOOR = 5
 ENEMY_ATK_PER_FLOOR = 1.2
 # I boss sono un multiplo del nemico tipico del loro piano (entities.typical_enemy); i valori base dei dati
 # diventano la loro qualità: qualità = 0.75 + 0.25 · base / media dei boss
-BOSS_HP_MULT = 2.2
+BOSS_HP_MULT = 2.0
 BOSS_ATK_MULT = 1.8
 
 # --- SELEZIONE NEMICI PER PROFONDITÀ ---
