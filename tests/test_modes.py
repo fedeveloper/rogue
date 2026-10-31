@@ -23,6 +23,7 @@ from rooms_patch import patch_rooms
 ANSI = re.compile(r"\x1b\[[0-9;]*m")
 GRADES = GAME_DATA["modes"]["ascension"]["grades"]
 BOONS = GAME_DATA["modes"]["daily"]["boons"]
+GRADE, BOON = {g["id"]: g for g in GRADES}, {b["id"]: b for b in BOONS}
 
 
 def quiet():
@@ -305,8 +306,41 @@ class DailyTest(Sandbox):
 
     def test_the_rules_are_the_maluses_plus_the_boon(self):
         setup = modes.daily_setup(self.DAY)
-        effects = [GRADES[i]["effects"] for i in setup["maluses"]] + [BOONS[setup["boon"]]["effects"]]
+        effects = [GRADE[g]["effects"] for g in setup["maluses"]] + [BOON[setup["boon"]]["effects"]]
         self.assertEqual(modes.daily_rules(setup), modes.combine(effects))
+
+    def test_every_grade_and_boon_has_its_own_id(self):
+        ids = [g["id"] for g in GRADES] + [b["id"] for b in BOONS]
+        self.assertEqual(len(ids), len(set(ids)))
+        self.assertTrue(all(isinstance(i, str) and i for i in ids))
+
+    def test_the_order_of_the_data_does_not_change_the_challenge(self):
+        days = [self.DAY + datetime.timedelta(days=i) for i in range(30)]
+        before = [modes.daily_setup(d) for d in days]
+        shuffled = {"grades": list(reversed(GRADES)), "boons": list(reversed(BOONS)),
+                    "classes": dict(reversed(list(GAME_DATA["classes"].items()))),
+                    "traits": dict(reversed(list(GAME_DATA["meta"]["traits"].items())))}
+        with mock.patch.dict(GAME_DATA["modes"]["ascension"], grades=shuffled["grades"]), \
+             mock.patch.dict(GAME_DATA["modes"]["daily"], boons=shuffled["boons"]), \
+             mock.patch.dict(GAME_DATA, classes=shuffled["classes"]), mock.patch.dict(GAME_DATA["meta"], traits=shuffled["traits"]):
+            after = [modes.daily_setup(d) for d in days]
+        for a, b in zip(before, after):
+            self.assertEqual({**a, "maluses": set(a["maluses"])}, {**b, "maluses": set(b["maluses"])})
+
+    def test_new_content_changes_only_the_days_it_wins(self):
+        days = [self.DAY + datetime.timedelta(days=i) for i in range(60)]
+        before = [modes.daily_setup(d) for d in days]
+        new_boon = {"id": "dono_nuovo", "name": "Dono Nuovo", "desc": "", "effects": {"start_gold_add": 1}}
+        new_class = dict(GAME_DATA["classes"]["1"], role="Classe Nuova")
+        with mock.patch.dict(GAME_DATA["modes"]["daily"], boons=BOONS + [new_boon]), mock.patch.dict(GAME_DATA["classes"], {"99": new_class}):
+            after = [modes.daily_setup(d) for d in days]
+        changed = [(a, b) for a, b in zip(before, after) if a != b]
+        self.assertTrue(changed, "il contenuto nuovo arriva in qualche giorno")
+        self.assertLess(len(changed), len(days) // 2)
+        for a, b in changed:
+            self.assertTrue(b["boon"] == "dono_nuovo" or b["class_id"] == "99", "cambia solo dove vince il nuovo")
+            self.assertEqual(a["maluses"], b["maluses"])
+            self.assertEqual(a["trait_id"], b["trait_id"])
 
     def test_only_the_first_attempt_counts(self):
         PROFILE_MANAGER._data["daily"] = {}
@@ -316,6 +350,8 @@ class DailyTest(Sandbox):
         self.assertEqual(score, 12 * s["per_floor"] + 2 * s["per_boss"] + 300 // s["gold_div"])
         self.assertIsNone(modes.record_daily(setup, 30, 6, True, 999, "Mago"))
         self.assertEqual(modes.daily_history()[setup["date"]]["score"], score)
+        self.assertEqual(modes.daily_history()[setup["date"]]["setup"],
+                         {k: setup[k] for k in ("class_id", "trait_id", "maluses", "boon")}, "lo storico ricorda la sfida giocata")
 
     def test_history_is_trimmed_and_streaks_count_consecutive_days(self):
         PROFILE_MANAGER._data["daily"] = {}
@@ -375,15 +411,15 @@ class DailyTest(Sandbox):
         p.ascension, p.daily = 0, modes.daily_setup(self.DAY)
         lines = inventory_menu.mode_rule_lines(p)
         self.assertEqual(len(lines), GAME_DATA["modes"]["daily"]["maluses"] + 1)
-        self.assertIn(BOONS[p.daily["boon"]]["name"], lines[-1])
+        self.assertIn(BOON[p.daily["boon"]]["name"], lines[-1])
 
     def test_the_daily_page_shows_hero_rules_and_record(self):
         PROFILE_MANAGER._data["daily"] = {}
         setup = modes.daily_setup(self.DAY)
         page = plain(roguelike.daily_page(setup))
         self.assertIn(GAME_DATA["classes"][setup["class_id"]]["role"], page)
-        for i in setup["maluses"]: self.assertIn(GRADES[i]["name"], page)
-        self.assertIn(BOONS[setup["boon"]]["name"], page)
+        for g in setup["maluses"]: self.assertIn(GRADE[g]["name"], page)
+        self.assertIn(BOON[setup["boon"]]["name"], page)
         modes.record_daily(setup, 9, 1, False, 0, "Ladro")
         self.assertIn(f"{modes.daily_history()[setup['date']]['score']} punti", plain(roguelike.daily_page(setup)))
 

@@ -609,6 +609,8 @@ Una discesa al giorno, **uguale per chiunque la giochi quel giorno**:
 - **punteggio**: 100 per piano raggiunto, 250 per boss, 2000 per la vittoria, più un punto ogni 10 Oro;
 - la schermata della sfida mostra il punteggio di oggi, la **serie** di giorni consecutivi, il record e le ultime sfide (lo storico tiene 30 giorni).
 
+Quando il gioco si aggiorna con eroi, tratti, gradi o doni nuovi, la sfida cambia solo nei giorni in cui tocca a un contenuto nuovo: tutti gli altri giorni restano quelli di prima.
+
 ---
 
 ## 🏕️ Il Campo Base

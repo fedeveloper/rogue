@@ -1,0 +1,99 @@
+{
+    "essence": 1840,
+    "max_floor": 23,
+    "won_normal": true,
+    "unlocked_ids": [
+        "2",
+        "3",
+        "5",
+        "spada_carnefice",
+        "mantello_riflettente",
+        "bracciale_titano",
+        "elisir_dei",
+        "corona_re_folle",
+        "maledetto",
+        "midas"
+    ],
+    "class_xp": {
+        "1": 420,
+        "2": 180,
+        "3": 95
+    },
+    "class_lvl": {
+        "1": 4,
+        "2": 3,
+        "3": 2
+    },
+    "stats": {
+        "total_deaths": 17,
+        "total_gold": 9320,
+        "total_bosses": 21
+    },
+    "completed_feats": [
+        "feat_pacifista",
+        "feat_fabbro"
+    ],
+    "story": {
+        "flags": {
+            "alaric_liberato": true,
+            "silas_compagno": true,
+            "prima_pietra": true
+        },
+        "counters": {
+            "alaric": 2,
+            "silas": 1
+        },
+        "seen_events": {
+            "altare_sangue": 3,
+            "mendicante_ombra": 1
+        }
+    },
+    "codex": {
+        "enemies": {
+            "Minatore Svuotato": {
+                "seen": 4,
+                "killed": 3
+            },
+            "Re dei Goblin": {
+                "seen": 2,
+                "killed": 1
+            }
+        },
+        "letters": [
+            1,
+            4
+        ],
+        "relics": [
+            "artiglio_vampiro"
+        ],
+        "reactions": [
+            "Fuoco+Acqua"
+        ]
+    },
+    "settings": {
+        "text_speed": "normale"
+    },
+    "perks": {
+        "hp_lvl": 3,
+        "gold_lvl": 2,
+        "discount_lvl": 1,
+        "sesto_senso": true,
+        "scarpisti": false,
+        "dodge_lvl": 1,
+        "acc_lvl": 2,
+        "exp_lvl": 1,
+        "farmacista": true,
+        "altare_benedizione": false,
+        "riciclatore_lvl": 0,
+        "banca_anima_lvl": 1,
+        "artigiano_lvl": 2,
+        "pelle_dura_lvl": 1,
+        "speranza_luce_lvl": 1
+    },
+    "starting_weapons": [
+        "Spada Corta"
+    ],
+    "starting_armors": [],
+    "starting_accessories": [],
+    "starting_consumables": []
+}
