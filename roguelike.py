@@ -665,13 +665,13 @@ def settings_menu():
 
 def daily_page(setup: dict) -> str:
     """La schermata della Sfida del Giorno: eroe, tratto, modificatori, punteggio di oggi e storico."""
-    grades, cfg = modes.grades(), GAME_DATA["modes"]["daily"]
-    cls, trait, boon = GAME_DATA["classes"][setup["class_id"]], GAME_DATA["meta"]["traits"][setup["trait_id"]], cfg["boons"][setup["boon"]]
+    cfg = GAME_DATA["modes"]["daily"]
+    cls, trait, boon = GAME_DATA["classes"][setup["class_id"]], GAME_DATA["meta"]["traits"][setup["trait_id"]], modes.boon_by_id(setup["boon"])
     history = modes.daily_history()
     lines = [f"\n{Colors.CYAN}--- 📅 SFIDA DEL GIORNO · {setup['date']} ---{Colors.RESET}",
              "La stessa discesa per chiunque la giochi oggi: stesso eroe, stesse regole, stessa mappa a ogni piano.",
              f"\nEroe: {Colors.BOLD}{cls['role']}{Colors.RESET} · Tratto: {Colors.BOLD}{trait['name']}{Colors.RESET} ({trait['desc']})"]
-    lines += [f"{Colors.RED}Malus{Colors.RESET} {grades[i]['name']}: {grades[i]['desc']}" for i in setup["maluses"]]
+    lines += [f"{Colors.RED}Malus{Colors.RESET} {g['name']}: {g['desc']}" for g in map(modes.grade_by_id, setup["maluses"])]
     lines.append(f"{Colors.GREEN}Dono{Colors.RESET} {boon['name']}: {boon['desc']}")
     today = history.get(setup["date"])
     if today: lines.append(f"\nOggi: {Colors.YELLOW}{today['score']} punti{Colors.RESET} (piano {today['floor']}{', vittoria' if today['won'] else ''}). Altri tentativi sono allenamento.")

@@ -6,6 +6,7 @@ import runes as rune_rules
 import attributes
 import effects
 import magic
+import modes
 import talents
 from archive import unlocked_archive_bonuses
 
@@ -274,8 +275,8 @@ def mode_rule_lines(player) -> list:
     """Le regole della discesa in corso: i gradi di Ascensione, o i modificatori della Sfida del Giorno."""
     grades = GAME_DATA["modes"]["ascension"]["grades"]
     if player.daily:
-        boon = GAME_DATA["modes"]["daily"]["boons"][player.daily["boon"]]
-        return [f"{grades[i]['name']}: {grades[i]['desc']}" for i in player.daily["maluses"]] + [f"{boon['name']} (dono): {boon['desc']}"]
+        boon = modes.boon_by_id(player.daily["boon"])
+        return [f"{g['name']}: {g['desc']}" for g in map(modes.grade_by_id, player.daily["maluses"])] + [f"{boon['name']} (dono): {boon['desc']}"]
     return [f"{g['name']}: {g['desc']}" for g in grades[:player.ascension]]
 
 

@@ -4,7 +4,7 @@ Entrambe cambiano le regole di una discesa con gli stessi effetti (`data/modes.j
 in corso sono in `RUN`: le leggono nemici, stanze e oggetti. `start_run` le imposta, `end_run` le azzera.
 """
 import datetime
-import random
+import hashlib
 from typing import List, Optional
 
 from data_manager import GAME_DATA, PROFILE_MANAGER
@@ -87,24 +87,36 @@ def daily_seed(day: datetime.date) -> int:
     return day.year * 10000 + day.month * 100 + day.day
 
 
+def daily_rank(day: datetime.date, kind: str, ids) -> list:
+    """Gli id ordinati per il giorno: ognuno ha un numero che dipende solo da data, tipo e id. Aggiungere un elemento
+    ai dati cambia la sfida solo nei giorni in cui il nuovo arriva primo, e l'ordine dei dati non conta."""
+    return sorted(ids, key=lambda i: hashlib.sha256(f"{day.isoformat()}|{kind}|{i}".encode("utf-8")).hexdigest())
+
+
+def grade_by_id(grade_id: str) -> dict:
+    return next(g for g in grades() if g["id"] == grade_id)
+
+
+def boon_by_id(boon_id: str) -> dict:
+    return next(b for b in GAME_DATA["modes"]["daily"]["boons"] if b["id"] == boon_id)
+
+
 def daily_setup(day: datetime.date) -> dict:
     """La sfida di un giorno: uguale per chiunque la giochi quel giorno. Eroe e tratto sono scelti fra tutti,
-    anche quelli non ancora sbloccati: la sfida è anche un assaggio."""
+    anche quelli non ancora sbloccati: la sfida è anche un assaggio. I malus sono id di gradi, nell'ordine dei gradi."""
     cfg = GAME_DATA["modes"]["daily"]
-    rng = random.Random(daily_seed(day))
-    maluses = rng.sample(range(len(grades())), cfg["maluses"])
-    boon = rng.randrange(len(cfg["boons"]))
+    maluses = set(daily_rank(day, "malus", [g["id"] for g in grades()])[:cfg["maluses"]])
     return {
         "date": day.isoformat(), "seed": daily_seed(day),
-        "class_id": rng.choice(sorted(GAME_DATA["classes"], key=int)),
-        "trait_id": rng.choice(sorted(GAME_DATA["meta"]["traits"])),
-        "maluses": sorted(maluses), "boon": boon,
+        "class_id": daily_rank(day, "class", GAME_DATA["classes"])[0],
+        "trait_id": daily_rank(day, "trait", GAME_DATA["meta"]["traits"])[0],
+        "maluses": [g["id"] for g in grades() if g["id"] in maluses],
+        "boon": daily_rank(day, "boon", [b["id"] for b in cfg["boons"]])[0],
     }
 
 
 def daily_rules(setup: dict) -> dict:
-    cfg = GAME_DATA["modes"]["daily"]
-    return combine([grades()[i]["effects"] for i in setup["maluses"]] + [cfg["boons"][setup["boon"]]["effects"]])
+    return combine([grade_by_id(g)["effects"] for g in setup["maluses"]] + [boon_by_id(setup["boon"])["effects"]])
 
 
 def daily_score(floor: int, bosses: int, won: bool, gold: int) -> int:
@@ -121,7 +133,8 @@ def record_daily(setup: dict, floor: int, bosses: int, won: bool, gold: int, cla
     history = daily_history()
     if setup["date"] in history: return None
     score = daily_score(floor, bosses, won, gold)
-    history[setup["date"]] = {"score": score, "floor": floor, "won": won, "class": class_role}
+    played = {k: setup[k] for k in ("class_id", "trait_id", "maluses", "boon")}  # la sfida giocata, anche se i dati cambiano
+    history[setup["date"]] = {"score": score, "floor": floor, "won": won, "class": class_role, "setup": played}
     for old in sorted(history)[:-GAME_DATA["modes"]["daily"]["history"]]: del history[old]
     return score
 
