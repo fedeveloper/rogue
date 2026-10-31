@@ -299,8 +299,9 @@ def play(cls, seed, base, strategy="adattiva", grade=0, infinite=False, points="
         real_evaluate(p, floor, infinite)
         log.update(floor=floor, won=p.won, essence=PROFILE_MANAGER.essence - before)
 
-    modules = ("roguelike", "rooms", "events", "entities", "inventory_menu", "camp", "endings", "attributes", "talents")
-    patches = [mock.patch(f"{m}.interactive_menu", side_effect=bot.menu) for m in modules]
+    modules = ("roguelike", "rooms", "events", "entities", "inventory_menu", "camp", "endings", "attributes", "talents",
+               "combat.session", "combat.actions", "combat.spells", "combat.reactions", "combat.phases", "combat.enemy", "combat.rewards")
+    patches = [mock.patch(f"{m}.interactive_menu", side_effect=bot.menu) for m in modules if hasattr(sys.modules[m], "interactive_menu")]
     patches += [mock.patch(f"{m}.{f}") for m in modules for f in ("wait_enter", "clear_screen", "delay_print") if hasattr(sys.modules[m], f)]
     patches += [mock.patch("roguelike.Player", side_effect=make_player), mock.patch("roguelike.evaluate_run", side_effect=evaluate),
                 mock.patch("roguelike.time.sleep"), mock.patch("rooms.time.sleep"), mock.patch.object(PROFILE_MANAGER, "save"),

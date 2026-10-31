@@ -17,6 +17,7 @@ import runes
 from data_manager import GAME_DATA, PROFILE_MANAGER
 from entities import Armor, Enemy, Player, Rune, Weapon, generate_armor, generate_rune, generate_weapon
 from rooms import CombatSession
+from rooms_patch import patch_rooms
 
 ANSI = re.compile(r"\x1b\[[0-9;]*m")
 RUNES = GAME_DATA["runes"]["runes"]
@@ -47,7 +48,7 @@ class Sandbox(unittest.TestCase):
         self._saved = copy.deepcopy(PROFILE_MANAGER._data)
         self._save = mock.patch.object(PROFILE_MANAGER, "save")
         self._save.start()
-        self._ui = [mock.patch(f"rooms.{f}") for f in ("wait_enter", "delay_print", "clear_screen")] + [mock.patch("rooms.time.sleep")]
+        self._ui = [patch_rooms(f) for f in ("wait_enter", "delay_print", "clear_screen")] + [mock.patch("rooms.time.sleep")]
         for p in self._ui: p.start()
         random.seed(8)
 
@@ -183,7 +184,7 @@ class EffectContractTest(Sandbox):
     def _thorns(self, rid, v):
         p = self.hero(rid); p.base_dodge = -1000
         s = self.session(p)
-        with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: a), mock.patch("rooms.wait_enter"):
+        with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: a), patch_rooms("wait_enter"):
             s.enemy_turn()
         self.assertEqual(1000 - s.enemy.hp, (1000 - p.hp) * v // 100)
 
@@ -290,7 +291,7 @@ class RunewordTest(Sandbox):
         p.inventory = [Rune("occhio")]
         out = io.StringIO()
         picks = iter([0, 0, 0, -1])
-        with redirect_stdout(out), mock.patch("rooms.interactive_menu", side_effect=lambda *a, **k: next(picks)):
+        with redirect_stdout(out), patch_rooms("interactive_menu", side_effect=lambda *a, **k: next(picks)):
             rooms.rune_workshop(p, 5)
         self.assertIn("PAROLA RUNICA «Colpo del Boia»", plain(out.getvalue()))
         self.assertEqual(PROFILE_MANAGER.codex["runewords"], ["boia"])
@@ -315,7 +316,7 @@ class SocketTest(Sandbox):
     def test_boss_gear_drops_with_three_sockets(self):
         p = self.hero()
         with quiet(): s = CombatSession(p, 10, Enemy(10, True, []))
-        with quiet(), mock.patch("rooms.get_random_relic", return_value=None): s.on_enemy_death()
+        with quiet(), patch_rooms("get_random_relic", return_value=None): s.on_enemy_death()
         gear = [i for i in p.inventory if i.type in ("weapon", "armor")]
         self.assertEqual([g.sockets for g in gear], [RULES["sockets"]["boss"]])
 
@@ -329,7 +330,7 @@ class SocketTest(Sandbox):
 class WorkshopTest(Sandbox):
     def run_workshop(self, p, picks, floor=5):
         it = iter(picks)
-        with quiet(), mock.patch("rooms.interactive_menu", side_effect=lambda *a, **k: next(it)):
+        with quiet(), patch_rooms("interactive_menu", side_effect=lambda *a, **k: next(it)):
             rooms.rune_workshop(p, floor)
 
     def test_socketing_is_free_and_respects_the_slot(self):
@@ -365,7 +366,7 @@ class WorkshopTest(Sandbox):
             if len(menus) == 1: return options.index(rooms.RUNE_WORKSHOP)
             if len(menus) == 2: return -1                 # esce dal laboratorio
             return options.index("Prosegui")
-        with quiet(), mock.patch("rooms.interactive_menu", side_effect=menu):
+        with quiet(), patch_rooms("interactive_menu", side_effect=menu):
             rooms.campfire_room(p, 5)
         self.assertEqual(len(menus), 3, "dopo il laboratorio il falò è ancora acceso")
 
@@ -375,7 +376,7 @@ class WorkshopTest(Sandbox):
         a.runes, b.runes = ["forza"], ["occhio"]
         p.inventory = [a, b]
         picks = iter([2, 0, 1])  # Altare → base → sacrificio
-        with quiet(), mock.patch("rooms.interactive_menu", side_effect=lambda options, *x, **k: next(picks, options.index("Prosegui") if "Prosegui" in options else -1)):
+        with quiet(), patch_rooms("interactive_menu", side_effect=lambda options, *x, **k: next(picks, options.index("Prosegui") if "Prosegui" in options else -1)):
             rooms.campfire_room(p, 5)
         self.assertEqual(a.runes, ["forza"])
         self.assertIn("occhio", [i.rune_id for i in p.inventory if i.type == "rune"])
@@ -394,12 +395,12 @@ class DropTest(Sandbox):
 
     def test_each_source_calls_its_drop(self):
         sources = set()
-        with mock.patch("rooms.rune_drop", side_effect=lambda p, f, src: sources.add(src)):
+        with patch_rooms("rune_drop", side_effect=lambda p, f, src: sources.add(src)):
             p = self.hero()
             for modifier, boss in (("elite", False), ("normal", True)):
                 with quiet(): s = CombatSession(p, 10, Enemy(10, boss, [], modifier=modifier))
                 with quiet(): s.on_enemy_death()
-            with quiet(), mock.patch("rooms.interactive_menu", return_value=1), mock.patch("rooms.random.randint", return_value=1): rooms.trap_room(p, 5, [])
+            with quiet(), patch_rooms("interactive_menu", return_value=1), mock.patch("rooms.random.randint", return_value=1): rooms.trap_room(p, 5, [])
             with quiet(), mock.patch("rooms.random.choices", return_value=["hoard"]): rooms.mystery_room(p, 5, [])
             with quiet(), mock.patch("rooms.chest_risks", return_value={"mimic": 100.0, "locked": 0.0}), mock.patch("rooms.random.random", return_value=0.99), \
                  mock.patch("rooms.combat_room", side_effect=lambda pl, f, e: setattr(e, "hp", 0)):
@@ -412,14 +413,14 @@ class DropTest(Sandbox):
             if "COMPRA" in prompt: stock.extend(plain(o) for o in options); return -1
             return 0 if not stock else 2
         p = self.hero()
-        with quiet(), mock.patch("rooms.interactive_menu", side_effect=menu):
+        with quiet(), patch_rooms("interactive_menu", side_effect=menu):
             rooms.vendor_room(p, 5)
         self.assertEqual(sum(o.startswith("[Runa]") for o in stock), RULES["vendor_stock"])
 
     def test_found_runes_enter_the_codex(self):
         PROFILE_MANAGER.codex["runes"] = []
         p = self.hero()
-        with quiet(), mock.patch("runes.random.random", return_value=0.0), mock.patch("rooms.generate_rune", return_value=Rune("eco")):
+        with quiet(), mock.patch("runes.random.random", return_value=0.0), patch_rooms("generate_rune", return_value=Rune("eco")):
             rooms.rune_drop(p, 5, "boss")
         self.assertEqual(PROFILE_MANAGER.codex["runes"], ["eco"])
         page = "\n".join(plain(l) for l in codex.runes_page())

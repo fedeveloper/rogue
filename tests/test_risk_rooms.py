@@ -16,6 +16,7 @@ import roguelike
 import rooms
 from data_manager import GAME_DATA, PROFILE_MANAGER, RAW_DATA
 from entities import Enemy, Player, pick_enemy_name, typical_enemy
+from rooms_patch import patch_rooms
 
 ANSI = re.compile(r"\x1b\[[0-9;]*m")
 RULES = GAME_DATA["meta"]["rooms"]
@@ -34,7 +35,7 @@ class Sandbox(unittest.TestCase):
         self._saved = copy.deepcopy(PROFILE_MANAGER._data)
         self._save = mock.patch.object(PROFILE_MANAGER, "save")
         self._save.start()
-        self._ui = [mock.patch(f"rooms.{f}") for f in ("wait_enter", "delay_print")] + [mock.patch("rooms.time.sleep")]
+        self._ui = [patch_rooms(f) for f in ("wait_enter", "delay_print")] + [mock.patch("rooms.time.sleep")]
         for p in self._ui: p.start()
         random.seed(3)
 
@@ -59,7 +60,7 @@ class TrapTest(Sandbox):
         prompts = []
         def menu(options, prompt="", **kw):
             prompts.append((prompt, options)); return choice
-        with quiet(), mock.patch("rooms.interactive_menu", side_effect=menu), \
+        with quiet(), patch_rooms("interactive_menu", side_effect=menu), \
              mock.patch("rooms.random.randint", side_effect=lambda lo, hi: roll if (lo, hi) == (1, 100) else 20):
             braved = rooms.trap_room(p, floor, [])
         return braved, prompts
@@ -115,7 +116,7 @@ class TreasureTest(Sandbox):
         def menu(options, prompt="", **kw):
             menus.append(plain(prompt)); return choice
         with quiet(), mock.patch("rooms.chest_risks", return_value=risks), mock.patch("rooms.combat_room", side_effect=fight), \
-             mock.patch("rooms.interactive_menu", side_effect=menu), mock.patch.object(PROFILE_MANAGER, "get_perk", side_effect=lambda k, d=None: sixth if k == "sesto_senso" else d):
+             patch_rooms("interactive_menu", side_effect=menu), mock.patch.object(PROFILE_MANAGER, "get_perk", side_effect=lambda k, d=None: sixth if k == "sesto_senso" else d):
             rooms.treasure_room(p, floor)
         return fights, menus
 
@@ -250,7 +251,7 @@ class MysteryTest(Sandbox):
 
     def test_a_relic_outcome_without_relics_left_becomes_a_hoard(self):
         p = self.hero(); p.gold = 0
-        with quiet(), mock.patch("rooms.random.choices", return_value=["relic"]), mock.patch("rooms.get_random_relic", return_value=None):
+        with quiet(), mock.patch("rooms.random.choices", return_value=["relic"]), patch_rooms("get_random_relic", return_value=None):
             rooms.mystery_room(p, 5, [])
         self.assertGreater(p.gold, 0)
         self.assertEqual(len(self.gear(p)), 1)

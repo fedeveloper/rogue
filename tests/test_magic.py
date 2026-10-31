@@ -14,6 +14,7 @@ import magic
 from data_manager import GAME_DATA, MULTIPLIERS, PROFILE_MANAGER, RAW_DATA
 from entities import Armor, Enemy, Player, Weapon
 from rooms import CombatSession
+from rooms_patch import patch_rooms
 
 ANSI = re.compile(r"\x1b\[[0-9;]*m")
 SPELLS, RULES = GAME_DATA["spells"]["spells"], GAME_DATA["spells"]["rules"]
@@ -52,7 +53,7 @@ class Sandbox(unittest.TestCase):
         return p, s
 
     def cast(self, s, sid):
-        with quiet(), mock.patch("rooms.wait_enter"): return s.cast_spell(sid)
+        with quiet(), patch_rooms("wait_enter"): return s.cast_spell(sid)
 
 
 class DataTest(Sandbox):
@@ -187,15 +188,15 @@ class CastTest(Sandbox):
 class MenuTest(Sandbox):
     def turn(self, s, picks):
         it = iter(picks)
-        with quiet(), mock.patch("rooms.interactive_menu", side_effect=lambda o, pr="": next(it)), mock.patch("rooms.clear_screen"), \
-             mock.patch("rooms.wait_enter"):
+        with quiet(), patch_rooms("interactive_menu", side_effect=lambda o, pr="": next(it)), patch_rooms("clear_screen"), \
+             patch_rooms("wait_enter"):
             return s.player_turn()
 
     def test_the_spell_is_the_third_action_and_back_costs_nothing(self):
         p, s = self.fight(("dardo_fuoco",))
         prompts = []
-        with quiet(), mock.patch("rooms.interactive_menu", side_effect=lambda o, pr="": prompts.append(o) or [2, 1, 0][len(prompts) - 1]), \
-             mock.patch("rooms.clear_screen"), mock.patch("rooms.random.randint", return_value=1):
+        with quiet(), patch_rooms("interactive_menu", side_effect=lambda o, pr="": prompts.append(o) or [2, 1, 0][len(prompts) - 1]), \
+             patch_rooms("clear_screen"), mock.patch("rooms.random.randint", return_value=1):
             s.player_turn()
         self.assertTrue(prompts[0][2].startswith("Lancia un incantesimo"))
         self.assertEqual(prompts[1][-1], "Indietro")
@@ -212,7 +213,7 @@ class MenuTest(Sandbox):
 
     def test_a_hero_without_spells_has_no_spell_action(self):
         p, s = self.fight(()); options = []
-        with quiet(), mock.patch("rooms.interactive_menu", side_effect=lambda o, pr="": options.append(o) or 0), mock.patch("rooms.clear_screen"), \
+        with quiet(), patch_rooms("interactive_menu", side_effect=lambda o, pr="": options.append(o) or 0), patch_rooms("clear_screen"), \
              mock.patch("rooms.random.randint", return_value=1):
             s.player_turn()
         self.assertFalse(any(o.startswith("Lancia") for o in options[0]))

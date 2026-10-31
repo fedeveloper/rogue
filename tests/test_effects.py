@@ -41,7 +41,7 @@ def data_keys() -> dict:
 def read_keys() -> set:
     """Le chiavi che il codice del gioco legge dal registro."""
     keys = {key for _, key, _ in runes.ON_HIT_STATUSES}  # lette con una variabile, una per status
-    for path in glob.glob(os.path.join(ROOT, "*.py")):
+    for path in glob.glob(os.path.join(ROOT, "*.py")) + glob.glob(os.path.join(ROOT, "combat", "*.py")):
         with open(path, encoding="utf-8") as f:
             keys |= {a or b for a, b in READ.findall(f.read())}
     return keys

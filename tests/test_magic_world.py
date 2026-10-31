@@ -16,6 +16,7 @@ import roguelike
 from data_manager import GAME_DATA, PROFILE_MANAGER, RAW_DATA, cycle_of
 from entities import Armor, Enemy, Player, Weapon
 from rooms import CombatSession
+from rooms_patch import patch_rooms
 
 MOVES = GAME_DATA["moves"]
 ARCANE = ("silence", "ether_drain", "spellcast")
@@ -75,7 +76,7 @@ class EnemiesTest(Sandbox):
         p = self.hero()
         with quiet(): s = CombatSession(p, floor, e)
         e.hp = e.max_hp // 4
-        with quiet(), mock.patch("rooms.wait_enter"): s.check_phase()
+        with quiet(), patch_rooms("wait_enter"): s.check_phase()
         for move, w in GAME_DATA["meta"]["cycle"]["arcane_moves"].items():
             self.assertGreaterEqual(e.moves.get(move, 0), w)
 

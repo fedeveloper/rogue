@@ -18,7 +18,8 @@ Riferimento per chi modifica il gioco: architettura, formato dei dati, formule d
 |---|---|
 | `roguelike.py` | Punto d'ingresso (`main`). Menu principale, Impostazioni, Campo Base (Fuoco dell'Anima, Forgia, Taverna, Grimorio, botteghe), scelta di eroe/tratto e del grado di Ascensione (`_choose_ascension`), Sfida del Giorno (`daily_menu`, `daily_page`), ciclo dei piani (`play_game` → `_descent`) con la mappa e l'atmosfera del bioma, fine partita (`evaluate_run`), Maestria e imprese. |
 | `floor_map.py` | Mappa del piano: file di stanze (`generate_row`), collegamenti e stanze speciali (`generate_floor_map`), percorsi (`reachable`), disegno (`render_map`) ed etichette (`room_label`). |
-| `rooms.py` | `CombatSession` (turni, danni, status, Risonanze, fine scontro) e le stanze: mercante, falò, forziere, trappola, mistero. |
+| `rooms.py` | Le stanze: combattimento (`combat_room`, che avvia `CombatSession`), mercante, falò, forziere, trappola, mistero. Riesporta `CombatSession`, `reaction_key` e i premi di `combat/rewards.py` per chi li importa da qui. |
+| `combat/` | Il combattimento a turni. `session.py`: `CombatSession` (stato, inizio, ciclo dei turni, status e maledizioni, Risonanza, fine e vittoria), che unisce le parti degli altri moduli: `actions.py` (`PlayerActions`: menu dell'eroe, attacco, difesa, fuga), `spells.py` (`Spells`: incantesimi), `reactions.py` (`Reactions`: marchi e reazioni elementali), `phases.py` (`Phases`: fasi dei boss e scudi), `enemy.py` (`EnemyActions`: intento, precisione, danni e mosse del nemico). `rules.py`: mosse per tipo (`ATTACK_MOVES`, `HEAVY_MOVES`, `CONTROL_STATUSES`) e `reaction_key`; `rewards.py`: Audacia (`audacity_*`, `gain_audacity`), rune e pergamene che cadono (`rune_drop`, `scroll_drop`). Le parti sono classi di soli metodi (mixin) sullo stato della sessione. |
 | `modes.py` | Modalità: regole della discesa in corso (`RUN`, `rule`, `combine`, `start_run`/`end_run`), gradi di Ascensione (`max_grade`, `ascension_rules`, `ascension_essence_mult`, `record_ascension_win`) e Sfida del Giorno (`daily_setup`, `daily_rules`, `daily_score`, `record_daily`, `daily_streak`). |
 | `magic.py` | Incantesimi ed Etere: dati (`spell`, `rules`), costo con lo sconto della Risonanza (`cost`), voce del menu (`label`), chiavi degli effetti (`SPELL_EFFECT_KEYS`). Il lancio è `CombatSession.cast_spell`. |
 | `talents.py` | Talenti: ogni `rules.every` livelli (`earned`) un talento fra `rules.offered` proposti a caso (`offer`, `choose`), effetti sommati dal registro degli effetti (`effects.total`), HP massimi aggiunti alla scelta (`take`), riga delle Statistiche (`summary`). |
@@ -40,7 +41,7 @@ Riferimento per chi modifica il gioco: architettura, formato dei dati, formule d
 | `ui.py` | Terminale: colori ANSI, lettura dei tasti (Windows e POSIX), menu a frecce (`interactive_menu`), velocità del testo (`delay_print`, `set_text_speed`). |
 | `constants.py` | Costanti di bilanciamento (precisione base, scaling, finestre di profondità, velocità del testo…). |
 
-Dipendenze fra i moduli: `ui` ← `data_manager` ← `archive`/`relic_effects`/`codex`/`modes`/`talents`/`attributes`/`runes` ← `effects` ← `magic` ← `entities` ← `inventory_menu` ← `rooms` ← `events` ← `floor_map`/`camp`/`endings` ← `roguelike`. Nessun modulo importa da uno che sta alla sua destra.
+Dipendenze fra i moduli: `ui` ← `data_manager` ← `archive`/`relic_effects`/`codex`/`modes`/`talents`/`attributes`/`runes` ← `effects` ← `magic` ← `entities` ← `inventory_menu` ← `combat` ← `rooms` ← `events` ← `floor_map`/`camp`/`endings` ← `roguelike`. Nessun modulo importa da uno che sta alla sua destra.
 
 ---
 
@@ -468,7 +469,7 @@ Restano fuori dal registro i bonus che cambiano una volta sola i valori base del
   5. il marchio dell'elemento (`apply_element`, che può scatenare una reazione), se l'elemento non è Normale.
 
   Gli altri effetti: `cleanse` toglie `poison` e `bleed` all'eroe; `def_pct` aggiunge a `CombatSession.spell_def` (sommato alla difesa nei danni nemici) quella parte della difesa dell'armatura; `weaken_pct` riduce l'ATK del nemico una volta sola (`weakened`); `escape` chiude lo scontro come una fuga riuscita, e `choose_spell` lo rifiuta contro i boss senza spendere Etere.
-- **Pergamene** (`entities.Scroll`, `type = "scroll"`). `generate_scroll` sceglie fra `magic.available()`, cioè gli incantesimi senza `unlock_id` o già sbloccati alla Forgia (categoria *Pergamene*, `roguelike.forge_pool("spells")`). `rooms.scroll_drop(fonte)` usa `rules.drops` ed è chiamata da `rune_drop`, quindi le stesse fonti delle rune possono dare una pergamena; il Mercante ne ha `vendor_stock`. `inventory_menu.learn_scroll` impara l'incantesimo fino a `slots` posti; a posti pieni chiede quale dimenticare (o tiene la pergamena). In combattimento non si leggono.
+- **Pergamene** (`entities.Scroll`, `type = "scroll"`). `generate_scroll` sceglie fra `magic.available()`, cioè gli incantesimi senza `unlock_id` o già sbloccati alla Forgia (categoria *Pergamene*, `roguelike.forge_pool("spells")`). `combat.rewards.scroll_drop(fonte)` usa `rules.drops` ed è chiamata da `rune_drop`, quindi le stesse fonti delle rune possono dare una pergamena; il Mercante ne ha `vendor_stock`. `inventory_menu.learn_scroll` impara l'incantesimo fino a `slots` posti; a posti pieni chiede quale dimenticare (o tiene la pergamena). In combattimento non si leggono.
 - **Fuori dal combattimento.** Gli incantesimi con `outside: true` (solo cure) compaiono nello zaino fuori dal combattimento (`magic.castable_outside`, `magic.cast_outside`). Al Falò `MEDITATE` riempie l'Etere e spegne il falò. Il consumabile `ether` (*Fiala d'Etere*, `ether_pct`) restituisce quella parte dell'Etere massimo; in combattimento costa il turno, e a Etere pieno non si consuma.
 
 **Attributi** (`attributes.py`, `data/attributes.json`). `Player.attributes` parte da `classes.json → attributes` (3 punti per classe) e ogni attributo arriva al massimo a `max_points`. La fonte `attributi` del registro degli effetti somma un effetto di `per_point` su tutti gli attributi, e lo leggono:
@@ -563,7 +564,7 @@ Ogni reliquia è una sottoclasse di `RelicEffect` che ridefinisce solo gli hook 
 | `get_rune_multiplier()` | Le rune incastonate valgono × (1 + valore) |
 | `modify_enemy_status_damage(status, dmg)` | Danni di veleno, sanguinamento e magma sul nemico (`CombatSession._enemy_status_damage`) |
 | `on_reaction(session, chiave)` | Dopo ogni reazione elementale |
-| `get_audacity_bonus()` | Punti di Audacia in più per ogni stanza che ne dà (`rooms.gain_audacity`) |
+| `get_audacity_bonus()` | Punti di Audacia in più per ogni stanza che ne dà (`combat.rewards.gain_audacity`) |
 | `free_rune_extraction`, `rune_drop_always` | Attributi letti dal laboratorio del Falò (estrazione gratis) e da `rune_drop` (fonti che lasciano sempre una runa) |
 
 Le reliquie sono organizzate per archetipi: status (Ago dell'Untore, Fiala Cremisi, Spora Nera), Oro (Bilancia del Mercante, Moneta del Traghettatore, Dente d'Oro), reazioni (Catalizzatore Antico, Cristallo di Marea, Specchio degli Elementi), difesa (Piastra del Custode, Corno del Bastione, Rovo Antico, Amuleto della Quiete), rune (Cristallo Runico, Martello del Lapicida, Pietra Parlante), Nemesi e Audacia (Marchio del Cacciatore, Stendardo dell'Audacia, Teschio del Rivale), più le originali.
@@ -602,7 +603,7 @@ Dopo ogni modifica a `data/`: `python tools/formatta_dati.py`, poi `python tools
 - **Un'arma, un'armatura, un monile o un consumabile.** Aggiungi l'oggetto al JSON. Per renderlo sbloccabile alla Forgia dagli un `unlock_id` e un `unlock_cost`; con `unlock_cost: 0` lo si ottiene solo da un'impresa o da una Maestria che ne citi l'`unlock_id`. Una volta sbloccato compare anche nella bottega dell'artigiano.
 - **Una reliquia.** Aggiungila a `relics.json`, scrivi la sua classe in `relic_effects.py`, registrala in `RELIC_REGISTRY` e aggiungi il suo contratto in `RelicContractTest`: un test fallisce se ne manca uno.
 - **Un nemico o un boss.** Basta `enemies.json`: la sua forza (`base_hp × base_atk`) decide a che profondità compare. Dagli uno stile con `profile` (o mosse proprie con `moves`; il `venom` richiede uno `status_inflict`). Un boss ha bisogno anche delle sue fasi in `phases.json`; con `biome` diventa il boss nativo di quel bioma (uno per bioma).
-- **Una tecnica di difesa.** Aggiungila a `defenses.json`, assegnala a una classe con `defense` e scrivi il suo ramo in `CombatSession.execute_player_defense`; `tests/test_enemy_identity.py` controlla che ogni numero di `short` e `desc` sia quello dei dati.
+- **Una tecnica di difesa.** Aggiungila a `defenses.json`, assegnala a una classe con `defense` e scrivi il suo ramo in `CombatSession.execute_player_defense` (`combat/actions.py`); `tests/test_enemy_identity.py` controlla che ogni numero di `short` e `desc` sia quello dei dati.
 - **Una classe.** Aggiungila a `classes.json` con le sue Maestrie e rendila sbloccabile da un'impresa o da una Maestria di tipo `class`. Gli effetti personali nuovi vanno controllati nel codice con `has_mastery_effect`.
 - **Un evento.** Aggiungilo a `events.json` con condizioni ed effetti esistenti: di solito non serve toccare il codice. Un effetto o una condizione nuovi vanno aggiunti a `EFFECTS`/`CONDITIONS` in `events.py` e al contratto in `EventContractTest`. I test controllano che ogni scena sia raggiungibile, che abbia sempre un'uscita senza requisiti, che ogni oggetto chiave serva a qualcosa e che ogni evento `scripted` venga richiamato.
 - **Una Risonanza o un tomo dell'Archivio.** Modifica `elements.json → resonance` o `books.json`.
@@ -620,6 +621,8 @@ python -m unittest discover -s tests
 
 La CI (`.github/workflows/tests.yml`) li esegue su Python 3.9 e sull'ultima 3.x; su ogni pull request gira anche [rsp](https://github.com/fedeveloper/rsp). I test non salvano mai il profilo: lo modificano in memoria e lo ripristinano.
 
+Per sostituire nei test una funzione d'interfaccia o di gioco usata dalle stanze e dal combattimento (`wait_enter`, `interactive_menu`, `clear_screen`, `delay_print`, `get_random_relic`, `rune_drop`…) si usa `patch_rooms("nome", ...)` di `tests/rooms_patch.py` al posto di `mock.patch("rooms.nome", ...)`: mette lo stesso mock in `rooms` e in ogni modulo di `combat/` che ha quel nome, così una sequenza di scelte (`side_effect` a lista) vale per tutto lo scontro anche quando passa da un modulo all'altro. `mock.patch("rooms.random.randint")` e `mock.patch("rooms.time.sleep")` restano come sono: sostituiscono la funzione del modulo `random` o `time`, quindi valgono ovunque.
+
 | File | Cosa copre |
 |---|---|
 | `test_data.py` | Coerenza dei JSON |
@@ -635,7 +638,7 @@ La CI (`.github/workflows/tests.yml`) li esegue su Python 3.9 e sull'ultima 3.x;
 | `test_polish.py` | Messaggi di combattimento, Falò, Fuoco dell'Anima, limite di fuga |
 | `test_features.py` | Velocità del testo, Speranza di Luce, Assassino e Negromante, probabilità di colpire |
 | `test_depth.py` | Nemici e boss per profondità, boss finale, tratto e antidoto mostrati |
-| `test_refactor.py` | Ciclo del turno, ridisegno dei menu, bonus nei dati, output tramite `ui`, etichette dei consumabili |
+| `test_refactor.py` | Ciclo del turno, ridisegno dei menu, bonus nei dati, output tramite `ui` (anche nei moduli di `combat/`), etichette dei consumabili |
 | `test_shops.py` | Botteghe degli artigiani, elenco della Forgia, Cuore di Drago |
 | `test_balance.py` | Invarianti di bilanciamento: armi fra 1,5 e 5 colpi per il nemico tipico, armature sotto il 75% del colpo, qualità che mantiene il rango a ogni piano, nemico tipico fedele ai nemici veri, boss proporzionati al piano, difesa che non annulla mai un colpo, maledizione e veleno in % degli HP |
 | `test_endgame.py` | Corruzione (limiti, ATK, contratto della descrizione, Sguardo Velato, Voce del Labirinto, opzioni proibite, statistiche), finali (dati, condizioni, scelta e premio, vittoria nel vero ciclo), Fuoco del Campo (dati, personaggi e doni, strutture, Tavolo, Scrittoio, Altare, menu) |

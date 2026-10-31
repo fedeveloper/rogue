@@ -15,6 +15,7 @@ import rooms
 from data_manager import GAME_DATA, PROFILE_MANAGER
 from entities import Enemy, Player
 from rooms import CombatSession
+from rooms_patch import patch_rooms
 
 ANSI = re.compile(r"\x1b\[[0-9;]*m")
 DATA = GAME_DATA["nemesis"]
@@ -171,7 +172,7 @@ class FightTest(Sandbox):
         self.die_to(self.hero(400))
         nem = nemesis.active()[0]
         p, s = self.session(nem)
-        with quiet(), mock.patch("rooms.wait_enter"): s.on_enemy_death()
+        with quiet(), patch_rooms("wait_enter"): s.on_enemy_death()
         self.assertEqual(nemesis.active(), [])
         self.assertEqual(nemesis.fallen()[-1]["name"], nem["name"])
         self.assertGreaterEqual(p.gold, nem["gold"])

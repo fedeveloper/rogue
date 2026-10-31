@@ -15,6 +15,7 @@ import rooms
 from data_manager import GAME_DATA, PROFILE_MANAGER, RAW_DATA
 from entities import Armor, Enemy, Player, Scroll, Weapon, generate_scroll
 from rooms import CombatSession
+from rooms_patch import patch_rooms
 
 ANSI = re.compile(r"\x1b\[[0-9;]*m")
 SPELLS, RULES = GAME_DATA["spells"]["spells"], GAME_DATA["spells"]["rules"]
@@ -53,7 +54,7 @@ class Sandbox(unittest.TestCase):
         return s
 
     def cast(self, s, sid):
-        with quiet(), mock.patch("rooms.wait_enter"): return s.cast_spell(sid)
+        with quiet(), patch_rooms("wait_enter"): return s.cast_spell(sid)
 
 
 class DataTest(Sandbox):
@@ -96,8 +97,8 @@ class ScrollTest(Sandbox):
 
     def test_the_vendor_sells_a_scroll(self):
         p = self.hero(); seen = []
-        with quiet(), mock.patch("rooms.interactive_menu", side_effect=lambda o, pr="", **k: seen.append(o) or (0 if len(seen) == 1 else -1 if len(seen) == 2 else 2)), \
-             mock.patch("rooms.clear_screen"), mock.patch("rooms.delay_print"), mock.patch("rooms.wait_enter"):
+        with quiet(), patch_rooms("interactive_menu", side_effect=lambda o, pr="", **k: seen.append(o) or (0 if len(seen) == 1 else -1 if len(seen) == 2 else 2)), \
+             patch_rooms("clear_screen"), patch_rooms("delay_print"), patch_rooms("wait_enter"):
             rooms.vendor_room(p, 3)
         self.assertTrue(any("Pergamena" in ANSI.sub("", o) for o in seen[1]))
 
@@ -154,21 +155,21 @@ class OutsideTest(Sandbox):
 
     def test_meditating_at_the_campfire(self):
         p = self.hero(ether=0); seen = []
-        with quiet(), mock.patch("rooms.interactive_menu", side_effect=lambda o, pr="": seen.append(o) or next(i for i, x in enumerate(o) if "Medita" in x)), \
-             mock.patch("rooms.clear_screen"), mock.patch("rooms.delay_print"), mock.patch("rooms.wait_enter"):
+        with quiet(), patch_rooms("interactive_menu", side_effect=lambda o, pr="": seen.append(o) or next(i for i, x in enumerate(o) if "Medita" in x)), \
+             patch_rooms("clear_screen"), patch_rooms("delay_print"), patch_rooms("wait_enter"):
             rooms.campfire_room(p, 3)
         self.assertEqual(p.ether, p.max_ether())
         self.assertEqual(len(seen), 1, "il falò si spegne")
         p = self.hero(spells=()); seen = []
-        with quiet(), mock.patch("rooms.interactive_menu", side_effect=lambda o, pr="": seen.append(o) or len(o) - 1), \
-             mock.patch("rooms.clear_screen"), mock.patch("rooms.delay_print"), mock.patch("rooms.wait_enter"):
+        with quiet(), patch_rooms("interactive_menu", side_effect=lambda o, pr="": seen.append(o) or len(o) - 1), \
+             patch_rooms("clear_screen"), patch_rooms("delay_print"), patch_rooms("wait_enter"):
             rooms.campfire_room(p, 3)
         self.assertFalse(any("Medita" in x for x in seen[0]), "senza incantesimi non si medita")
 
 
 class NewEffectsTest(Sandbox):
     def hit(self, s):
-        with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: a), mock.patch("rooms.wait_enter"):
+        with quiet(), mock.patch("rooms.random.randint", side_effect=lambda a, b: a), patch_rooms("wait_enter"):
             s.enemy_turn()
 
     def test_stone_skin_and_curse(self):
@@ -180,7 +181,7 @@ class NewEffectsTest(Sandbox):
         self.assertEqual(s.estimate_enemy_damage(), max(1, before - s.spell_def))
         self.cast(s, "maledizione")
         self.assertEqual(s.enemy.atk, 200 * (100 - SPELLS["maledizione"]["effects"]["weaken_pct"]) // 100)
-        with quiet(), mock.patch("rooms.interactive_menu", return_value=1), mock.patch("rooms.clear_screen"):
+        with quiet(), patch_rooms("interactive_menu", return_value=1), patch_rooms("clear_screen"):
             self.assertIsNone(s.choose_spell(), "una sola Maledizione per nemico")
 
     def test_wind_step_flees_but_not_from_bosses(self):
@@ -188,7 +189,7 @@ class NewEffectsTest(Sandbox):
         self.assertFalse(self.cast(s, "passo_vento"))
         self.assertEqual(p.run_tracker["escapes"], 1)
         p = self.hero(("passo_vento",)); s = self.fight(p, boss=True)
-        with quiet(), mock.patch("rooms.interactive_menu", return_value=0), mock.patch("rooms.clear_screen"):
+        with quiet(), patch_rooms("interactive_menu", return_value=0), patch_rooms("clear_screen"):
             self.assertIsNone(s.choose_spell())
         self.assertEqual(p.ether, 100, "rifiutato senza spendere Etere")
 

@@ -12,6 +12,7 @@ import roguelike
 from data_manager import GAME_DATA, PROFILE_MANAGER, RAW_DATA
 from entities import Enemy, Player
 from rooms import CombatSession
+from rooms_patch import patch_rooms
 
 ANSI = re.compile(r"\x1b\[[0-9;]*m")
 DATA = GAME_DATA["epitaph"]
@@ -105,7 +106,7 @@ class ChronicleTest(Sandbox):
         relic = next(r for r in RAW_DATA["relics"] if r["id"] == "tasca_dorata")
         with quiet(): p.add_relic(relic)
         with quiet(): s = CombatSession(p, 5, Enemy(5, True, []))
-        with quiet(), mock.patch("rooms.wait_enter"): s.on_enemy_death()
+        with quiet(), patch_rooms("wait_enter"): s.on_enemy_death()
         kinds = [e["kind"] for e in p.chronicle]
         self.assertIn("relic", kinds)
         self.assertIn("boss", kinds)

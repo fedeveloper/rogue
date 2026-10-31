@@ -14,6 +14,7 @@ import roguelike
 import rooms
 from data_manager import GAME_DATA, PROFILE_MANAGER
 from entities import Player, Scroll
+from rooms_patch import patch_rooms
 
 MYSTERY = GAME_DATA["meta"]["rooms"]["mystery"]
 
@@ -27,7 +28,7 @@ class Sandbox(unittest.TestCase):
         self._saved = copy.deepcopy(PROFILE_MANAGER._data)
         self._save = mock.patch.object(PROFILE_MANAGER, "save")
         self._save.start()
-        self._ui = [mock.patch(f"rooms.{f}") for f in ("wait_enter", "delay_print", "clear_screen")] + [mock.patch("rooms.time.sleep")]
+        self._ui = [patch_rooms(f) for f in ("wait_enter", "delay_print", "clear_screen")] + [mock.patch("rooms.time.sleep")]
         for p in self._ui: p.start()
         random.seed(4)
 

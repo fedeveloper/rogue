@@ -12,6 +12,7 @@ import roguelike
 from data_manager import GAME_DATA, PROFILE_MANAGER, RAW_DATA, get_biome
 from entities import Armor, Enemy, Player, Weapon
 from rooms import CombatSession, reaction_key
+from rooms_patch import patch_rooms
 
 ANSI = re.compile(r"\x1b\[[0-9;]*m")
 
@@ -110,7 +111,7 @@ class HazardMechanicsTest(Sandbox):
                 p, s = self.session(8, self.hero(cls), silence_roll=0.0)
                 self.assertTrue(s.silenced)
                 prompts = []
-                with quiet(), mock.patch("rooms.interactive_menu", side_effect=lambda o, pr="": prompts.append(o) or 1), mock.patch("rooms.clear_screen"):
+                with quiet(), patch_rooms("interactive_menu", side_effect=lambda o, pr="": prompts.append(o) or 1), patch_rooms("clear_screen"):
                     s.player_turn()
                 self.assertTrue(prompts[0][1].startswith("Difesa (Dimezza danni; il gas soffoca la tecnica)"))
                 self.assertTrue(s.is_defending)
