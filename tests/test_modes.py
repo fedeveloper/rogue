@@ -383,7 +383,8 @@ class DailyTest(Sandbox):
             maps.append((floor, [[(d["type"], d.get("enemy").base_name if d.get("enemy") else None) for d in row] for row in rows]))
             return rows
         def menu(options, prompt="", **kw):
-            return min(choice, len(options) - 4) if "Scegli dove proseguire" in prompt else 0
+            doors = sum(o.startswith("Entra:") for o in options)  # le porte vengono prima delle altre voci
+            return min(choice, doors - 1) if "Scegli dove proseguire" in prompt else 0
         rooms_ = {n: mock.DEFAULT for n in ("combat_room", "vendor_room", "treasure_room", "campfire_room", "mystery_room", "event_room")}
         with quiet(), mock.patch("roguelike._hero_selection") as hero_sel, mock.patch("roguelike.interactive_menu", side_effect=menu), \
              mock.patch("roguelike.generate_floor_map", side_effect=make_map), mock.patch.multiple("roguelike", **rooms_), \

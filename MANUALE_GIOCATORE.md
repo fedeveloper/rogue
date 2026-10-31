@@ -22,6 +22,7 @@ Se colori o emoji non si vedono bene, usa un terminale con codifica UTF-8 (su Wi
 3. **La quinta tappa è sempre un boss.**
 4. **Superato il piano** recuperi un po' di HP (20 + 5 per piano) e scendi.
 5. In qualsiasi bivio puoi scegliere **Fuga dal Labirinto**: porti a casa tutto l'Oro, convertito in Essenza.
+6. In qualsiasi bivio puoi anche **salvare ed uscire**: la discesa si ferma davanti alla scelta della porta e dal menu principale la **riprendi** da lì, con lo stesso eroe, la stessa mappa e lo stesso destino. Il salvataggio vale una volta sola: si cancella appena riprendi (e quando la discesa finisce), quindi non si può ricaricare per ritentare una stanza. Se inizi una discesa nuova mentre ne hai una salvata, il gioco ti chiede conferma prima di perderla.
 
 Più scendi, più i nemici sono forti: ai primi piani incontri banditi, goblin e scheletri, verso il fondo idre di lava e leviatani. Anche i boss crescono con la profondità, e il DIO ANTICO compare **solo al piano 30** (in Modalità Infinita anche alla fine di ogni ciclo: piano 60, 90…).
 

@@ -16,7 +16,7 @@ Riferimento per chi modifica il gioco: architettura, formato dei dati, formule d
 
 | Modulo | Responsabilità |
 |---|---|
-| `roguelike.py` | Punto d'ingresso (`main`). Menu principale, Impostazioni, Campo Base (Fuoco dell'Anima, Forgia, Taverna, Grimorio, botteghe), scelta di eroe/tratto e del grado di Ascensione (`_choose_ascension`), Sfida del Giorno (`daily_menu`, `daily_page`), ciclo dei piani (`play_game` → `_descent`) con la mappa e l'atmosfera del bioma, fine partita (`evaluate_run`), Maestria e imprese. |
+| `roguelike.py` | Punto d'ingresso (`main`). Menu principale, Impostazioni, Campo Base (Fuoco dell'Anima, Forgia, Taverna, Grimorio, botteghe), scelta di eroe/tratto e del grado di Ascensione (`_choose_ascension`), Sfida del Giorno (`daily_menu`, `daily_page`), ciclo dei piani (`play_game` → `_descent`, anche da una discesa salvata: `resume_game`, `new_game`, `_save_and_exit`) con la mappa e l'atmosfera del bioma, fine partita (`evaluate_run`), Maestria e imprese. |
 | `floor_map.py` | Mappa del piano: file di stanze (`generate_row`), collegamenti e stanze speciali (`generate_floor_map`), percorsi (`reachable`), disegno (`render_map`) ed etichette (`room_label`). |
 | `rooms.py` | Le stanze: combattimento (`combat_room`, che avvia `CombatSession`), mercante, falò, forziere, trappola, mistero. Riesporta `CombatSession`, `reaction_key` e i premi di `combat/rewards.py` per chi li importa da qui. |
 | `combat/` | Il combattimento a turni. `session.py`: `CombatSession` (stato, inizio, ciclo dei turni, status e maledizioni, Risonanza, fine e vittoria), che unisce le parti degli altri moduli: `actions.py` (`PlayerActions`: menu dell'eroe, attacco, difesa, fuga), `spells.py` (`Spells`: incantesimi), `reactions.py` (`Reactions`: marchi e reazioni elementali), `phases.py` (`Phases`: fasi dei boss e scudi), `enemy.py` (`EnemyActions`: intento, precisione, danni e mosse del nemico). `rules.py`: mosse per tipo (`ATTACK_MOVES`, `HEAVY_MOVES`, `CONTROL_STATUSES`) e `reaction_key`; `rewards.py`: Audacia (`audacity_*`, `gain_audacity`), rune e pergamene che cadono (`rune_drop`, `scroll_drop`). Le parti sono classi di soli metodi (mixin) sullo stato della sessione. |
@@ -37,6 +37,7 @@ Riferimento per chi modifica il gioco: architettura, formato dei dati, formule d
 | `relic_effects.py` | Una classe per reliquia, con gli hook che le servono; `RELIC_REGISTRY` collega l'id del JSON alla classe. |
 | `inventory_menu.py` | Zaino, uso dei consumabili (`_use_consumable`), equipaggiamento e schermata delle statistiche. |
 | `archive.py` | Tomi dell'Archivio: condizioni di sblocco e bonus (`get_archive_bonus`), letti una volta da `books.json`. |
+| `run_save.py` | Salvataggio a metà discesa: «Salva ed esci» (`save`), «Riprendi la discesa» (`peek`, `load`, che cancella il file), formato JSON degli oggetti del gioco (`encode`, `decode`), `SAVE_VERSION`. Vedi [Salvataggio a metà discesa](#salvataggio-a-metà-discesa). |
 | `data_manager.py` | Carica i JSON (`RAW_DATA`), filtra ciò che è sbloccato (`GAME_DATA`, ricalcolato da `update_game_data()`), gestisce il profilo (`PROFILE_MANAGER`). |
 | `ui.py` | Terminale: colori ANSI, lettura dei tasti (Windows e POSIX), menu a frecce (`interactive_menu`), velocità del testo (`delay_print`, `set_text_speed`). |
 | `constants.py` | Costanti di bilanciamento (precisione base, scaling, finestre di profondità, velocità del testo…). |
@@ -594,6 +595,15 @@ Il salvataggio si crea al primo avvio e **non va committato** (è in `.gitignore
 | `starting_consumables` / `_weapons` / `_armors` / `_accessories` | Oggetti comprati nelle botteghe per la prossima discesa. Vengono svuotati all'inizio della partita, anche se un oggetto non si può costruire, così un dato difettoso non blocca le partite successive |
 | `settings.text_speed` | `lenta`, `normale`, `veloce`, `istantanea` |
 
+### Salvataggio a metà discesa
+
+`run_save.py` scrive `run_save.json` (nella cartella del gioco, in `.gitignore` come il profilo) quando sulla mappa si sceglie *Salva ed esci* (`roguelike.SAVE_AND_EXIT`, penultima voce, prima di *Fuga dal Labirinto*). Si salva solo lì, davanti alla scelta della porta: `_descent` tiene lo stato del piano in corso in `floor_state` (`map`, `path`, `step`, `biome_intro`) e `_save_and_exit` scrive l'eroe, il piano, `room_cooldowns`, `floor_state`, modalità (`infinite_mode`, `grade`, `daily`, `active_pacts`), più le regole di `modes.RUN`, il seme del Ciclo e `random.getstate()`. Poi salva il profilo e torna al menu senza `evaluate_run`.
+
+- *Riprendere.* Il menu principale mostra *Riprendi la discesa (eroe, piano N)* se il file esiste (`peek`). `resume_game` chiama `run_save.load()`, che **cancella il file** e rimette regole, Ciclo e generatore casuale; `play_game(resume=…)` passa la discesa a `_descent`, che riparte dalla stessa fila con la stessa mappa. Senza riaprire il file non si può tornare indietro: morte e fine discesa non lasciano salvataggi. Iniziare una discesa nuova con un salvataggio presente chiede conferma (`new_game`) e lo cancella.
+- *Formato.* JSON. `encode` scrive gli oggetti dei moduli in `OBJECT_MODULES` (`entities`, `relic_effects`) come `{"__object__": "modulo.Classe", "state": vars(oggetto)}`, le tuple come `{"__tuple__": […]}`, gli insiemi come `{"__set__": […]}` e i dizionari con chiavi non di testo come `{"__dict__": [[chiave, valore], …]}`. `decode` ricostruisce solo classi di quei moduli (`cls.__new__` più gli attributi, senza eseguire `__init__`): un nome diverso, per esempio `os.system`, è un `SaveError`.
+- *Versioni.* Un file con `version` diverso da `SAVE_VERSION`, illeggibile o incompleto non si carica: `load` lo cancella e alza `SaveError`, e `resume_game` lo dice al giocatore. `tests/test_run_save.py` tiene l'impronta degli attributi di eroe, nemici, oggetti e reliquie per ogni `SAVE_VERSION`: se un attributo nasce o sparisce il test fallisce, e si alza `SAVE_VERSION` aggiungendo la nuova impronta.
+- *Fedeltà.* `test_run_save.ResumeTest` fa giocare il bot del simulatore, salva alla n-esima scelta di una porta, passa dal disco, sporca lo stato in memoria e riprende: la discesa deve finire come quella giocata senza fermarsi, con l'eroe identico attributo per attributo.
+
 ---
 
 ## 8. Aggiungere contenuti
@@ -634,6 +644,7 @@ Per sostituire nei test una funzione d'interfaccia o di gioco usata dalle stanze
 | `test_modes.py` | Modalità: contratto e testo di ogni effetto, gradi cumulativi e sblocco, menu del grado, Essenza, regole nella vera discesa e pulizia; Sfida del Giorno (stessa sfida nello stesso giorno, scelte per id: l'ordine dei dati non conta e il contenuto nuovo cambia solo i giorni in cui vince, regole, primo tentativo, storico con la sfida giocata e serie, Essenza, mappe uguali qualunque strada, schermata, statistiche) |
 | `test_docs.py` | Il Manuale elenca gradi di Ascensione e doni della Sfida come nei dati |
 | `test_mechanics.py` | Tratti, patti, Maestrie, ricompense di fine partita, profilo corrotto |
+| `test_run_save.py` | Salvataggio a metà discesa: l'eroe torna con oggetti, rune, insiemi e status; tuple, insiemi e chiavi non di testo; solo oggetti del gioco ricostruiti; impronta degli attributi per `SAVE_VERSION`; regole, Ciclo e generatore rimessi; file cancellato al caricamento; salvataggi rotti o vecchi rifiutati e rimossi; voce *Riprendi* nel menu, conferma prima di perdere un salvataggio; una discesa salvata e ripresa finisce come quella senza pause |
 | `test_profile_migration.py` | Un salvataggio della v2 (`tests/profilo_v2.json`): riceve le voci nuove e tiene le sue, non viene riscritto una seconda volta, apre le schermate (Sfida del Giorno, Codice, eroi sbloccati) e gioca una discesa del simulatore |
 | `test_combat_design.py` | Risonanza dinamica, status a fine scontro, armi con status |
 | `test_polish.py` | Messaggi di combattimento, Falò, Fuoco dell'Anima, limite di fuga |

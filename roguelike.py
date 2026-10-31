@@ -16,6 +16,7 @@ from camp import show_camp_fire, start_of_run_boon
 from endings import choose_ending
 import modes
 import nemesis
+import run_save
 import epitaph
 import attributes
 import effects
@@ -489,9 +490,14 @@ def rest_heal(floor: int) -> int:
     return int((20 + floor * 5) * modes.rule("rest_heal_mult"))
 
 
-def play_game(infinite_mode=False, daily=None):
-    """Una discesa. `daily` è la Sfida del Giorno (modes.daily_setup): eroe, tratto e regole sono quelli del giorno."""
-    if daily:
+def play_game(infinite_mode=False, daily=None, resume=None):
+    """Una discesa. `daily` è la Sfida del Giorno (modes.daily_setup): eroe, tratto e regole sono quelli del giorno.
+    `resume` è una discesa salvata (`run_save.load`, che ha già rimesso regole, Ciclo e generatore casuale)."""
+    if resume:
+        infinite_mode, daily = resume["infinite_mode"], resume["daily"]
+        c_choice = t_choice = None
+        active_pacts, grade = resume["active_pacts"], resume["grade"]
+    elif daily:
         c_choice, t_choice, active_pacts = daily["class_id"], daily["trait_id"], []
         grade, rules = 0, modes.daily_rules(daily)
         random.seed(daily["seed"])
@@ -499,11 +505,35 @@ def play_game(infinite_mode=False, daily=None):
         c_choice, t_choice, active_pacts = _hero_selection()
         grade = _choose_ascension()
         rules = modes.ascension_rules(grade)
-    modes.start_run(rules)
+    if not resume: modes.start_run(rules)
     try:
-        _descent(c_choice, t_choice, active_pacts + rules["pacts"], infinite_mode, grade, daily)
+        if resume: _descent(None, None, active_pacts, infinite_mode, grade, daily, resume)
+        else: _descent(c_choice, t_choice, active_pacts + rules["pacts"], infinite_mode, grade, daily)
     finally:
         modes.end_run()
+
+
+def resume_game():
+    """«Riprendi la discesa» dal menu principale: carica (e cancella) il salvataggio e riparte dallo stesso punto."""
+    try:
+        run = run_save.load()
+    except run_save.SaveError as e:
+        clear_screen()
+        display_msg(f"{Colors.RED}Non si può riprendere la discesa: {e}. Il salvataggio è stato rimosso.{Colors.RESET}")
+        wait_enter("\nPremi INVIO per tornare al menu...")
+        return
+    play_game(resume=run)
+
+
+def new_game(**kwargs):
+    """Una discesa nuova. Se ce n'è una salvata, iniziarne un'altra la cancella: prima si chiede."""
+    if run_save.exists():
+        clear_screen()
+        idx = interactive_menu(["Inizia una nuova discesa (quella salvata si perde)", "Torna indietro"],
+                               f"{Colors.YELLOW}Hai una discesa salvata.{Colors.RESET}", cancellable=True)
+        if idx != 0: return
+        run_save.discard()
+    play_game(**kwargs)
 
 
 def enter_cycle(player: Player, floor: int) -> bool:
@@ -519,63 +549,93 @@ def enter_cycle(player: Player, floor: int) -> bool:
     return True
 
 
-def _descent(c_choice, t_choice, active_pacts, infinite_mode, grade, daily):
-    player = Player(c_choice, t_choice, active_pacts)
-    player.ascension, player.daily = grade, daily
-    # L'ordine dei biomi nei cicli oltre il piano 30 nasce dal caso della discesa (dal seme del giorno nella Sfida)
-    set_cycle_seed(random.randrange(1 << 30))
-    _apply_mode_start(player)
-    start_of_run_boon(player)
-    delay_print(f"\nLe porte si chiudono alle tue spalle, {player.role}.", 0.03); time.sleep(1)
-    
+def floor_title(floor: int, daily, grade: int) -> tuple:
+    """Il bioma del piano e il suo titolo sopra la mappa (bioma, Eco, modalità)."""
+    biome = get_biome(floor)
+    biome_title = f" · {biome['icon']} {biome['name']}" + (f" · {Colors.MAGENTA}{biome['echo']}{Colors.CYAN}" if biome.get("echo") else "") if biome else ""
+    biome_title += " · 📅 Sfida del Giorno" if daily else (f" · {Colors.RED}Ascensione {grade}{Colors.CYAN}" if grade else "")
+    return biome, biome_title
+
+
+SAVE_AND_EXIT = "Salva ed esci (riprendi dal menu principale)"
+
+
+def _save_and_exit(player, floor, room_cooldowns, floor_state, infinite_mode, grade, daily, active_pacts):
+    """«Salva ed esci»: scrive la discesa com'è ora, davanti alla scelta della porta, e salva il profilo."""
+    run_save.save({"player": player, "floor": floor, "room_cooldowns": room_cooldowns, "floor_state": floor_state,
+                   "infinite_mode": infinite_mode, "grade": grade, "daily": daily, "active_pacts": active_pacts})
+    PROFILE_MANAGER.save()
+    clear_screen()
+    display_msg(f"{Colors.CYAN}Discesa salvata al piano {floor}. La riprendi dal menu principale.{Colors.RESET}")
+    wait_enter("\nPremi INVIO per tornare al menu...")
+
+
+def _descent(c_choice, t_choice, active_pacts, infinite_mode, grade, daily, resume=None):
+    """Il ciclo dei piani. `resume` è una discesa salvata: riparte dal piano, dalla fila e dalla mappa del salvataggio.
+    Lo stato di un piano in corso è `floor_state` (mappa, strada fatta, fila, atmosfera): è ciò che «Salva ed esci» scrive."""
     base_weights = GAME_DATA["meta"]["rooms"]["weights"]
     cooldowns_def = GAME_DATA["meta"]["rooms"]["cooldowns"]
-    room_cooldowns = {k: 0 for k in base_weights.keys()}
-    
-    floor = 1
+    if resume:
+        player, floor, room_cooldowns, floor_state = resume["player"], resume["floor"], resume["room_cooldowns"], resume["floor_state"]
+        clear_screen(); delay_print(f"\n{Colors.CYAN}Riprendi la discesa, {player.role}: piano {floor}.{Colors.RESET}", 0.03)
+    else:
+        player = Player(c_choice, t_choice, active_pacts)
+        player.ascension, player.daily = grade, daily
+        # L'ordine dei biomi nei cicli oltre il piano 30 nasce dal caso della discesa (dal seme del giorno nella Sfida)
+        set_cycle_seed(random.randrange(1 << 30))
+        _apply_mode_start(player)
+        start_of_run_boon(player)
+        delay_print(f"\nLe porte si chiudono alle tue spalle, {player.role}.", 0.03); time.sleep(1)
+        room_cooldowns = {k: 0 for k in base_weights.keys()}
+        floor, floor_state = 1, None
+
     while player.hp > 0 and not player.escaped:
-        if not infinite_mode and floor > INFINITE_MODE_THRESHOLD:
+        if floor_state is None:
+            if not infinite_mode and floor > INFINITE_MODE_THRESHOLD:
+                clear_screen()
+                display_msg(f"{Colors.YELLOW}{Colors.BOLD}" + "="*50); delay_print("H A I   V I N T O ! ! !"); display_msg("="*50 + Colors.RESET)
+                PROFILE_MANAGER.won_normal = True; player.won = True; player.essence_gathered += 1000
+                if not daily and modes.record_ascension_win(grade):
+                    display_msg(f"{Colors.RED}{Colors.BOLD}Nuovo grado di Ascensione sbloccato: {modes.max_grade()}!{Colors.RESET}")
+                ending = choose_ending(player)
+                if isinstance(ending, dict): epitaph.note(player, "ending", title=ending["title"])
+                _grant_victory_rewards()
+                break
+
             clear_screen()
-            display_msg(f"{Colors.YELLOW}{Colors.BOLD}" + "="*50); delay_print("H A I   V I N T O ! ! !"); display_msg("="*50 + Colors.RESET)
-            PROFILE_MANAGER.won_normal = True; player.won = True; player.essence_gathered += 1000
-            if not daily and modes.record_ascension_win(grade):
-                display_msg(f"{Colors.RED}{Colors.BOLD}Nuovo grado di Ascensione sbloccato: {modes.max_grade()}!{Colors.RESET}")
-            ending = choose_ending(player)
-            if isinstance(ending, dict): epitaph.note(player, "ending", title=ending["title"])
-            _grant_victory_rewards()
-            break
-
-        clear_screen()
-        delay_print(f"\n{Colors.MAGENTA}{Colors.BOLD}==== PIANO {floor} ===={Colors.RESET}", 0.05)
-        biome = get_biome(floor)
-        biome_title = f" · {biome['icon']} {biome['name']}" + (f" · {Colors.MAGENTA}{biome['echo']}{Colors.CYAN}" if biome.get("echo") else "") if biome else ""
-        biome_title += " · 📅 Sfida del Giorno" if daily else (f" · {Colors.RED}Ascensione {grade}{Colors.CYAN}" if grade else "")
-        # L'atmosfera del bioma resta sopra la mappa per tutto il piano; entrando in un bioma nuovo se ne legge il pericolo
-        biome_intro = f"{Colors.CYAN}{random.choice(biome['intro'])}{Colors.RESET}\n" if biome else ""
-        enter_cycle(player, floor)
-        if biome and floor == biome["floors"][0]:
-            delay_print(f"\n{Colors.MAGENTA}{Colors.BOLD}{biome['icon']}  {biome['name'].upper()}{Colors.RESET}", 0.03)
-            delay_print(biome_intro, 0.03)
-            if biome.get("hazard"): display_msg(f"{Colors.RED}Pericolo: {biome['hazard']['name']}.{Colors.RESET} {biome['hazard']['desc']}")
-            wait_enter("\nPremi INVIO per entrare...")
+            delay_print(f"\n{Colors.MAGENTA}{Colors.BOLD}==== PIANO {floor} ===={Colors.RESET}", 0.05)
+            biome, biome_title = floor_title(floor, daily, grade)
+            # L'atmosfera del bioma resta sopra la mappa per tutto il piano; entrando in un bioma nuovo se ne legge il pericolo
+            biome_intro = f"{Colors.CYAN}{random.choice(biome['intro'])}{Colors.RESET}\n" if biome else ""
+            enter_cycle(player, floor)
+            if biome and floor == biome["floors"][0]:
+                delay_print(f"\n{Colors.MAGENTA}{Colors.BOLD}{biome['icon']}  {biome['name'].upper()}{Colors.RESET}", 0.03)
+                delay_print(biome_intro, 0.03)
+                if biome.get("hazard"): display_msg(f"{Colors.RED}Pericolo: {biome['hazard']['name']}.{Colors.RESET} {biome['hazard']['desc']}")
+                wait_enter("\nPremi INVIO per entrare...")
         
-        _apply_floor_regen(player)
-        if biome and not any(e["kind"] == "biome" and e["name"] == biome["name"] for e in player.chronicle):
-            epitaph.note(player, "biome", name=biome["name"])
-        apply_biome_on_floor(player, biome)
+            _apply_floor_regen(player)
+            if biome and not any(e["kind"] == "biome" and e["name"] == biome["name"] for e in player.chronicle):
+                epitaph.note(player, "biome", name=biome["name"])
+            apply_biome_on_floor(player, biome)
             
-        player.run_tracker["floor_attacks"] = player.run_tracker["floor_hits"] = 0
-        player.audacity = effects.total(player, "audacity_start")
+            player.run_tracker["floor_attacks"] = player.run_tracker["floor_hits"] = 0
+            player.audacity = effects.total(player, "audacity_start")
         
-        # La mappa del piano si genera all'arrivo: le reliquie possedute in quel momento ne cambiano i pesi
-        weights_def = floor_room_weights(base_weights, player)
-        # La Sfida del Giorno: ogni piano nasce dallo stesso seme, qualunque strada si sia presa prima
-        if daily: random.seed(daily["seed"] * 100 + floor)
-        floor_map = generate_floor_map(floor, weights_def, cooldowns_def, room_cooldowns, active_pacts, player)
-        path, current = [], None
+            # La mappa del piano si genera all'arrivo: le reliquie possedute in quel momento ne cambiano i pesi
+            weights_def = floor_room_weights(base_weights, player)
+            # La Sfida del Giorno: ogni piano nasce dallo stesso seme, qualunque strada si sia presa prima
+            if daily: random.seed(daily["seed"] * 100 + floor)
+            floor_map = generate_floor_map(floor, weights_def, cooldowns_def, room_cooldowns, active_pacts, player)
+            floor_state = {"map": floor_map, "path": [], "step": 1, "biome_intro": biome_intro}
+        else:
+            biome, biome_title = floor_title(floor, daily, grade)
+        floor_map, path, biome_intro = floor_state["map"], floor_state["path"], floor_state["biome_intro"]
+        current = floor_map[len(path) - 1][path[-1]] if path else None
 
-        for step in range(1, ROWS + 2):
+        for step in range(floor_state["step"], ROWS + 2):
             if player.hp <= 0 or player.escaped: break
+            floor_state["step"] = step
             choices = reachable(floor_map, step, current)
 
             while True:
@@ -593,18 +653,20 @@ def _descent(c_choice, t_choice, active_pacts, infinite_mode, grade, daily):
                            for i in choices]
                 points = f"{Colors.YELLOW}Distribuisci i punti abilità ({player.unspent_points}){Colors.RESET}"
                 if player.unspent_points: options.append(points)
-                options.append("Apri Inventario")
-                options.append("Statistiche Eroe")
-                options.append("Fuga dal Labirinto")
-                
+                inventory, stats, flee = "Apri Inventario", "Statistiche Eroe", "Fuga dal Labirinto"
+                options += [inventory, stats, SAVE_AND_EXIT, flee]
+
                 idx = interactive_menu(options, prompt)
                 if options[idx] == points:
                     attributes.spend_points(player)
-                elif idx == len(options) - 3:
+                elif options[idx] == inventory:
                     show_inventory_menu(player)
-                elif idx == len(options) - 2:
+                elif options[idx] == stats:
                     show_player_stats(player)
-                elif idx == len(options) - 1:
+                elif options[idx] == SAVE_AND_EXIT:
+                    _save_and_exit(player, floor, room_cooldowns, floor_state, infinite_mode, grade, daily, active_pacts)
+                    return
+                elif options[idx] == flee:
                     clear_screen(); display_msg(f"{Colors.YELLOW}Fuggi portando in salvo le ricchezze.{Colors.RESET}")
                     player.escaped = True; break
                 else:
@@ -629,6 +691,7 @@ def _descent(c_choice, t_choice, active_pacts, infinite_mode, grade, daily):
             if player.hp > 0 and player.unspent_points and not player.points_offered: attributes.spend_points(player)
             if player.fallen: break
 
+        floor_state = None
         if player.fallen and player.hp > 0 and not player.escaped:
             # Caduta Astrale: niente boss né riposo, si atterra direttamente sul piano successivo
             player.fallen = False
@@ -688,7 +751,7 @@ def daily_menu():
     clear_screen()
     played = setup["date"] in modes.daily_history()
     idx = interactive_menu(["Gioca di nuovo (allenamento)" if played else "Accetta la sfida"], daily_page(setup), cancellable=True)
-    if idx == 0: play_game(daily=setup)
+    if idx == 0: new_game(daily=setup)
 
 
 # Sblocchi che si ottengono solo vincendo la discesa standard
@@ -723,13 +786,18 @@ def main():
         while True:
             clear_screen()
             delay_print(f"{Colors.MAGENTA}{Colors.BOLD}=== IL LABIRINTO DEGLI ELEMENTI E DEL CAOS ==={Colors.RESET}", 0.01)
-            actions = [(f"Inizia Run (Standard - {INFINITE_MODE_THRESHOLD} Piani)", lambda: play_game(infinite_mode=False)),
+            actions = []
+            saved = run_save.peek() if run_save.exists() else None
+            if run_save.exists():
+                where = f" ({saved['role']}, piano {saved['floor']})" if saved else ""
+                actions.append((f"{Colors.GREEN}Riprendi la discesa{where}{Colors.RESET}", resume_game))
+            actions += [(f"Inizia Run (Standard - {INFINITE_MODE_THRESHOLD} Piani)", lambda: new_game(infinite_mode=False)),
                        ("📅 Sfida del Giorno", daily_menu),
                        ("Campo Base (Potenziamenti, Forgia, Taverna)", base_camp)]
             if PROFILE_MANAGER.won_normal:
                 best = PROFILE_MANAGER._data.get("best_echo", 0)
                 record = f" · record: {echo_name(best - 1)}" if best >= 2 else ""
-                actions.append((f"{Colors.RED}Inizia Run Infinita (Oltre i {INFINITE_MODE_THRESHOLD} Piani){record}{Colors.RESET}", lambda: play_game(infinite_mode=True)))
+                actions.append((f"{Colors.RED}Inizia Run Infinita (Oltre i {INFINITE_MODE_THRESHOLD} Piani){record}{Colors.RESET}", lambda: new_game(infinite_mode=True)))
             actions.append(("Impostazioni", settings_menu))
             actions.append(("Esci dal gioco", None))
             
