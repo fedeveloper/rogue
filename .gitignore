@@ -1,5 +1,8 @@
 # Salvataggio del giocatore (generato automaticamente)
 profile.json
+# Discesa salvata a metà («Salva ed esci»)
+run_save.json
+run_save.json.tmp
 
 # Python
 __pycache__/

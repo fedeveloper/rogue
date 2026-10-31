@@ -521,6 +521,7 @@ rogue/
 ├── runes.py           # Rune e Incastoni: effetti, drop, etichette
 ├── modes.py           # Ascensione e Sfida del Giorno: le regole della discesa
 ├── data_manager.py    # Caricamento dei dati e salvataggio del profilo
+├── run_save.py        # Salvataggio a metà discesa: «Salva ed esci» e «Riprendi la discesa»
 ├── ui.py              # Terminale: colori, menu a frecce, output centralizzato
 ├── constants.py       # Costanti di bilanciamento
 ├── data/              # Tutti i contenuti del gioco in JSON

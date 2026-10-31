@@ -34,3 +34,4 @@ Questo repository è mantenuto in buona parte con assistenti IA. Queste regole v
 ## File da non committare
 
 - `profile.json` è il salvataggio del giocatore, generato al primo avvio.
+- `run_save.json` è la discesa salvata a metà («Salva ed esci»), generata dal gioco.
