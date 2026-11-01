@@ -525,7 +525,8 @@ rogue/
 ├── ui.py              # Terminale: colori, menu a frecce, output centralizzato
 ├── constants.py       # Costanti di bilanciamento
 ├── data/              # Tutti i contenuti del gioco in JSON
-├── tools/             # Bilanciamento (simulatore di run) e generatore di questo README
+├── texts.py           # I testi d'atmosfera scelti a caso, con un caso tutto loro
+├── tools/             # Bilanciamento (simulatore di run), conteggio della lore e generatore di questo README
 └── tests/             # Test automatici (unittest)
 ```
 
@@ -537,7 +538,7 @@ I **test di contratto** (`tests/test_contracts.py`, `tests/test_modes.py`) verif
 
 - 📖 [**Manuale del Giocatore**](MANUALE_GIOCATORE.md) — strategie e regole in dettaglio.
 - 🔧 [**Documentazione Tecnica**](DOCUMENTAZIONE_TECNICA.md) — architettura, formato dei dati, formule e come aggiungere contenuti.
-- 📜 [**La Storia**](STORY.md) — il mondo di Aethelgard.
+- 📜 [**La Storia**](STORY.md) — il canone del mondo di Aethelgard e la guida di scrittura della lore.
 - 🤖 [**AGENTS.md**](AGENTS.md) — regole per contribuire (anche con assistenti IA): branch e pull request, test, niente dipendenze esterne.
 
 ## 📝 Roadmap
