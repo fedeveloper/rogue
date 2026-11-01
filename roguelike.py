@@ -22,6 +22,7 @@ import attributes
 import effects
 import magic
 import talents
+import texts
 from constants import TEXT_SPEEDS, SPERANZA_LUCE_PCT_PER_LVL, RATIO_GOLD_TO_ESSENCE_ON_DEATH, BOSS_ESSENCE_BONUS, XP_PER_FLOOR, XP_PER_BOSS, INFINITE_MODE_THRESHOLD, INFINITE_MODE_ESSENCE_MULTIPLIER, BLIND_FURY_MIN_ATTACKS
 
 def _update_class_mastery(player: Player, floor: int):
@@ -606,7 +607,7 @@ def _descent(c_choice, t_choice, active_pacts, infinite_mode, grade, daily, resu
             delay_print(f"\n{Colors.MAGENTA}{Colors.BOLD}==== PIANO {floor} ===={Colors.RESET}", 0.05)
             biome, biome_title = floor_title(floor, daily, grade)
             # L'atmosfera del bioma resta sopra la mappa per tutto il piano; entrando in un bioma nuovo se ne legge il pericolo
-            biome_intro = f"{Colors.CYAN}{random.choice(biome['intro'])}{Colors.RESET}\n" if biome else ""
+            biome_intro = f"{Colors.CYAN}{texts.pick(biome['intro'])}{Colors.RESET}\n" if biome else ""
             enter_cycle(player, floor)
             if biome and floor == biome["floors"][0]:
                 delay_print(f"\n{Colors.MAGENTA}{Colors.BOLD}{biome['icon']}  {biome['name'].upper()}{Colors.RESET}", 0.03)

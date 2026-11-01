@@ -3,6 +3,7 @@ import random
 
 import effects
 import nemesis
+import texts
 from ui import Colors, delay_print, display_msg, wait_enter
 from data_manager import GAME_DATA, get_biome, get_element_icon
 from codex import record_enemy_killed, record_enemy_seen, record_letter
@@ -98,7 +99,7 @@ class CombatSession(PlayerActions, Spells, Reactions, Phases, EnemyActions):
 
     def start(self):
         if self.enemy.modifier == "normal":
-            delay_print(f"\n{random.choice(GAME_DATA['lore']['boss' if self.enemy.is_boss else 'combat'])}")
+            delay_print(f"\n{texts.pick(GAME_DATA['lore']['boss' if self.enemy.is_boss else 'combat'])}")
             if self.enemy.is_boss:
                 delay_print(f"{Colors.MAGENTA}{Colors.BOLD}--- {self.enemy.title.upper()} ---{Colors.RESET}")
                 if self.enemy.lore: delay_print(f"{Colors.YELLOW}\"{self.enemy.lore}\"{Colors.RESET}\n")
@@ -116,7 +117,7 @@ class CombatSession(PlayerActions, Spells, Reactions, Phases, EnemyActions):
             display_msg(f"{Colors.RED}{grudge}{Colors.RESET}")
         # Chance to find a Bloody Letter before combat
         if not self.enemy.is_boss and random.random() < BLOOD_LETTER_CHANCE:
-            idx = random.randrange(len(GAME_DATA['lore']['letters']))
+            idx = texts.index(len(GAME_DATA['lore']['letters']))
             letter = GAME_DATA['lore']['letters'][idx]
             record_letter(idx)
             display_msg(f"\n{Colors.YELLOW}📜 Noti un messaggio inciso sulla parete:{Colors.RESET}")
