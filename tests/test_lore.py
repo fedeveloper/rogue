@@ -125,6 +125,13 @@ def gated_texts():
         for ch in b["chapters"]: yield ch["title"] + " " + ch["text"], {**won, **ch.get("requires", {})}
     for life in RAW_DATA["vite"]["classes"].values():
         for m in life["memories"]: yield m["text"], m.get("requires", {})
+    for b in RAW_DATA["voci_boss"]["bosses"].values():
+        for lines in b.values():
+            for t in lines: yield t, {}
+    for e in RAW_DATA["epiloghi"]["endings"].values():
+        for t in e.values(): yield t, {"won": True}
+    for group in RAW_DATA["armeria"].values():
+        for t in group.values(): yield t, {}
 
 
 def v6_books() -> dict:
@@ -244,6 +251,80 @@ class LivesAndBooksTest(unittest.TestCase):
         with mock.patch.object(events, "check", return_value=True):
             self.assertEqual(len(archive.open_chapters(book)), len(book["chapters"]))
         self.assertNotIn(book["title"], [t for t, _ in archive.unlocked_archive_bonuses({"max_floor": 30})])
+
+
+class EndingsBossesArmoryTest(unittest.TestCase):
+    def test_every_boss_has_a_voice_for_each_moment(self):
+        self.assertEqual(set(RAW_DATA["voci_boss"]["bosses"]), set(RAW_DATA["bosses"]))
+        for name, b in RAW_DATA["voci_boss"]["bosses"].items():
+            with self.subTest(boss=name):
+                self.assertEqual(set(b), {"intro", "phase", "death"})
+                for lines in b.values():
+                    self.assertTrue(lines)
+                    for t in lines: self.assertLessEqual(len(t.split()), 25, "una battuta di un boss è al massimo 25 parole")
+
+    def test_a_boss_voice_does_not_touch_the_game_dice(self):
+        import random
+        state = random.getstate()
+        name = next(iter(RAW_DATA["bosses"]))
+        for moment in ("intro", "phase", "death"): self.assertIn(texts.boss_voice(name, moment), RAW_DATA["voci_boss"]["bosses"][name][moment])
+        self.assertEqual(texts.boss_voice("Nessuno", "intro"), "")
+        self.assertEqual(random.getstate(), state)
+
+    def test_every_ending_has_an_epilogue_for_every_life(self):
+        endings = {e["id"] for e in RAW_DATA["story"]["endings"]}
+        self.assertEqual(set(RAW_DATA["epiloghi"]["endings"]), endings)
+        for eid, lives in RAW_DATA["epiloghi"]["endings"].items():
+            with self.subTest(ending=eid):
+                self.assertEqual(set(lives), set(RAW_DATA["classes"]))
+                for t in lives.values(): self.assertTrue(40 <= len(t.split()) <= 120, f"{len(t.split())} parole")
+
+    def test_an_epilogue_is_remembered_in_the_codex(self):
+        import copy
+        import codex
+        import endings
+        from data_manager import PROFILE_MANAGER
+        saved = copy.deepcopy(PROFILE_MANAGER._data)
+        try:
+            PROFILE_MANAGER.story["endings"] = {"custode": 1}
+            PROFILE_MANAGER.story["epilogues"] = []
+            text = endings.record_epilogue("custode", "4")
+            self.assertEqual(text, RAW_DATA["epiloghi"]["endings"]["custode"]["4"])
+            endings.record_epilogue("custode", "4")
+            self.assertEqual(PROFILE_MANAGER.story["epilogues"], ["custode:4"])
+            self.assertIn(text, "\n".join(codex.endings_page()))
+        finally:
+            PROFILE_MANAGER._data.clear(); PROFILE_MANAGER._data.update(saved)
+
+    def test_the_armory_tells_every_item(self):
+        a = RAW_DATA["armeria"]
+        self.assertEqual(set(a["weapons"]), {w["name"] for w in RAW_DATA["weapons"]})
+        self.assertEqual(set(a["armors"]), {w["name"] for w in RAW_DATA["armors"]})
+        self.assertEqual(set(a["accessories"]), {w["name"] for w in RAW_DATA["accessories"]})
+        self.assertEqual(set(a["relics"]), {r["id"] for r in RAW_DATA["relics"]})
+        for group in a.values():
+            for name, t in group.items():
+                with self.subTest(item=name): self.assertTrue(40 <= len(t.split()) <= 80, f"{len(t.split())} parole")
+
+    def test_the_armory_opens_with_the_forge_and_the_codex(self):
+        import copy
+        import codex
+        from data_manager import PROFILE_MANAGER
+        saved = copy.deepcopy(PROFILE_MANAGER._data)
+        try:
+            PROFILE_MANAGER._data["unlocked_ids"] = []
+            PROFILE_MANAGER.codex["relics"] = []
+            known = dict(codex.armory_open())
+            self.assertIn("Spada Corta", known)
+            self.assertNotIn("Spada del Carnefice", known, "un'arma della Forgia si legge quando la sblocchi")
+            PROFILE_MANAGER._data["unlocked_ids"] = ["spada_carnefice"]
+            PROFILE_MANAGER.codex["relics"] = ["tasca_dorata"]
+            known = dict(codex.armory_open())
+            self.assertIn("Spada del Carnefice", known)
+            self.assertIn("Tasca Dorata", known)
+            self.assertIn("Armeria", codex.UNCOUNTED)
+        finally:
+            PROFILE_MANAGER._data.clear(); PROFILE_MANAGER._data.update(saved)
 
 
 class TextsTest(unittest.TestCase):

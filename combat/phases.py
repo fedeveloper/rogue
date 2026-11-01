@@ -1,6 +1,7 @@
 """Le fasi dei boss: quando scattano e cosa cambiano, e gli scudi (`_absorb`)."""
 from typing import List
 
+import texts
 from ui import Colors, display_msg
 from data_manager import GAME_DATA, MULTIPLIERS, get_element_icon
 from codex import record_phase
@@ -21,6 +22,7 @@ class Phases:
             record_phase(e.base_name, e.phase)
             display_msg(f"\n{Colors.RED}{Colors.BOLD}⚠ {e.name.upper()}: {ph['name'].upper()}{Colors.RESET}\n{Colors.YELLOW}{ph['text']}{Colors.RESET}")
             for line in self._apply_phase(ph): display_msg(f"{Colors.MAGENTA}  · {line}{Colors.RESET}")
+            if voice := texts.boss_voice(e.base_name, "phase"): display_msg(f"{Colors.MAGENTA}{voice}{Colors.RESET}")
         if changed: self.intent = None
         return changed
 

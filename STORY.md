@@ -24,13 +24,14 @@ La discesa deve restare veloce. Il testo lungo vive dove il giocatore sceglie di
 | | Esito di una scelta | 1-2 frasi, al massimo 30 parole |
 | | Frase d'ingresso di una stanza, atmosfera di un bioma | 1-2 frasi, al massimo 30 parole |
 | | Lettera insanguinata | 1 frase, al massimo 25 parole |
-| | Battuta di un boss (inizio, fase, morte) | 1 frase, al massimo 25 parole |
+| | Battuta di un boss (inizio, fase, morte) | 1-2 frasi, al massimo 25 parole |
 | **Fuori partita** | Conversazione al Campo (un argomento) | 80-250 parole, divise in battute |
 | | Voce del Bestiario (un livello) | 40-80 parole |
 | | Pagina dell'Atlante (storia di un bioma) | 80-200 parole |
 | | Capitolo di un libro dell'Archivio | 80-400 parole |
 | | Ricordo di una vita prestata (classe) | 70-250 parole |
-| | Epilogo di un finale | 3-6 frasi per variante |
+| | Epilogo di un finale (una vita prestata) | 3-6 frasi, 40-120 parole |
+| | Storia di un oggetto (Armeria) | 40-80 parole |
 
 Un testo in partita che supera la misura si spezza: la prima parte resta nella scena, il resto diventa una nota del Codice o una battuta al Campo.
 
@@ -446,6 +447,21 @@ Gli **Scheletri** sono Svuotati che cercano ancora un'uscita; i **Goblin** sono 
 
 Le **reliquie** sono frammenti dei cristalli di Aetheria e di altri pezzi del mondo che hanno resistito alla Discordia. Ogni reliquia porta il desiderio di chi l'ha posseduta: per questo «fa» qualcosa. Le armi e le armature hanno una storia breve (`flavor`); le reliquie una più lunga (`lore`). Reliquie notevoli: l'**Artiglio Vampirico** (la mano di Malphas), lo **Scudo di Cristallo** (un frammento della cupola di Aurelia), la **Lente Prismatica** (le lenti con cui gli Architetti guardavano gli elementi), la **Corona del Re Folle** (la corona di Galdor, pesante di lacrime), la **Pietra Filosofale** (l'ultima opera dell'Alchimista Supremo, maestro di Ottavia Lune). La **Lama del Creatore** contiene un atomo di ogni elemento: è stata forgiata con un frammento della Prima Pietra.
 
+### L'Armeria
+Ogni arma, armatura, accessorio e reliquia ha una storia più lunga nel Codice, alla pagina *Armeria* (`data/armeria.json`): le armi, le armature e gli accessori si leggono quando li puoi trovare (subito, o dopo lo sblocco alla Forgia), le reliquie dopo averle trovate. Non conta nel completamento del Codice. Le storie non promettono effetti diversi da quelli dei dati. Fatti nuovi:
+- Il boia di Aurelia si chiamava **Hob**, e piangeva di nascosto prima di ogni esecuzione. L'Ascia del Boia la vietò Alaric da Primo Paladino; i Paladini Corrotti la ripresero.
+- **Port'Alba** era il porto più grande del Mare Interno, da cui partì la flotta che non tornò; i guardiani del suo faro portavano la *Cappa delle Maree*. I pescatori raccoglievano le scaglie cadute al Drago di Zaffiro e ne fecero la *Corazza di Scaglie di Drago*.
+- Sotto Aurelia dormiva un **colosso di Terra** messo dagli Architetti a reggere la città: si spezzò per tenerla più a lungo. L'*Egida del Titano* è il suo petto, il *Bracciale del Titano* un suo frammento.
+- **Malphas** era un medico di Aurelia nel Crepuscolo Lungo che prolungava le vite con l'Essenza dei morenti; i suoi allievi ridussero il suo artiglio ad anello.
+- **Bertolo**, mercante di Valeriana, scese con la *Tasca Dorata* per riavere la figlia. **Fenn**, un Cercatore, diede l'occhio sinistro a una strega delle paludi per vedere l'Essenza.
+- La *Pergamena d'Oro* è il contratto di Galdor; l'unica riga leggibile è «Il popolo non avrà più fame», e la firma dell'Architetto è grattata via. La *Bussola Perfetta* la fece un cartografo di corte per Galdor (il Viandante Cieco, senza che il testo lo dica).
+- La *Campanella degli Spiriti* fu un regalo del Mercante a Silas, «forse un anticipo». Il *Contratto Demoniaco* è l'unico contratto che il Mercante dice di non aver scritto.
+- Il *Teschio di Sangue* era di un Berserker di Ignis che danzò tre giorni nella Forgia; Hrodna diceva che ballava meglio di lei. Il *Velo del Silenzio* fu tessuto per l'unica novizia che non volle tacere: continuò a cantare sotto il velo.
+- L'Arcimago dell'Accademia scese fino al piano trenta: lo scettro tornò da solo, l'anello restò con il suo dito.
+
+### Le voci dei boss
+Ogni boss ha due o tre battute per l'inizio dello scontro, il cambio di fase e la morte (`data/voci_boss.json`), scelte con il generatore dei testi: non cambiano nessun tiro di dado. Sono in partita, quindi brevi, e restano al primo gradino della Scala: il DIO ANTICO parla di stanchezza e di riposo senza dire di chi. Il Cavaliere Oscuro, morendo, nomina Ilse e la lavanda.
+
 ---
 
 ## Parte XII · Le lettere insanguinate
@@ -485,7 +501,7 @@ I finali rispondono a una domanda sola: **vale la pena continuare a scendere?**
 | **Il Custode** | Non si sa: il Ritornante prende il posto di Alaric alla porta. Qualcuno, un giorno, verrà a liberarlo. |
 | **La Lettera Mai Scritta** | La domanda cambia: il Ritornante ricorda di essere Sereth, e sceglie cosa fare del suo rimorso. |
 
-Nella v6 ogni finale ha varianti secondo le scelte fatte: chi è stato salvato o tradito, quanta Corruzione, quali vite prestate hanno trovato pace.
+Nella v6, dopo il testo di ogni finale, un **epilogo** dice cosa fa in quel finale la vita prestata della classe con cui ci sei arrivato (`data/epiloghi.json`, un epilogo per finale e per classe): Bran, Nim, Teodor, Maud, Hrodna, Ottavia, Corvo, Isaura e Ilio reagiscono ognuno a modo suo. Gli epiloghi letti restano nel Codice, alla pagina *Finali*. Fatti nuovi: nel *Sonno Spezzato* Corvo incide il nome di Ivo su una pietra nelle Valli del Sud; in *Aethelgard Rinasce* la guardia alla Porta del Sole ha il viso di Mila, e Alaric chiama Maud per nome nel campo di lavanda; nella *Lettera Mai Scritta* la domanda di Teodor è scritta fra le lettere, e sotto il Ritornante scrive la risposta.
 
 ---
 

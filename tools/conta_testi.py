@@ -22,7 +22,7 @@ TARGET_MULT = 10
 BASELINE = {"eventi": 5166, "stanze": 1900, "lettere": 544, "personaggi": 583, "finali": 340, "bestiario": 1147,
             "fasi dei boss": 436, "biomi": 283, "libri": 346, "reliquie e oggetti": 999, "epitaffi e nemesi": 229,
             "dialoghi del Campo": 0, "atlante": 0,
-            "discese dimenticate": 0, "vite prestate": 0}
+            "discese dimenticate": 0, "vite prestate": 0, "voci dei boss": 0}
 STOPWORDS = set("""il lo la i gli le un uno una di a da in con su per tra fra e o ma se che chi non ne ci si mi ti vi
 è sono era ha ho hai del della dei degli delle al alla ai agli alle dal dalla nel nella nei negli nelle sul sulla
 come più quando dove anche solo poi già ancora tutto tutti tua tuo tue tuoi sua suo sue suoi mia mio è ed d l un'
@@ -77,18 +77,20 @@ def blocks() -> dict:
                   + [t for rooms in load("atmosfere.json")["biomes"].values() for v in rooms.values() for t in v],
         "lettere": list(load("lore.json")["letters"]),
         "personaggi": strings(story["characters"], {"hint", "text"}) + strings(story["camp"]["characters"], {"text"}),
-        "finali": strings(story["endings"], {"text", "choice"}),
+        "finali": strings(story["endings"], {"text", "choice"}) + [t for e in load("epiloghi.json")["endings"].values() for t in e.values()],
         "bestiario": strings(enemies, {"lore", "title"}) + [v for e in load("bestiario.json")["creatures"].values() for v in e.values()],
         "fasi dei boss": strings(load("phases.json"), {"text"}),
         "biomi": strings(load("biomes.json"), {"intro"}),
         "libri": strings(load("books.json"), {"text"}),
         "reliquie e oggetti": strings(load("relics.json"), {"lore"}) + strings(load("weapons.json"), {"flavor"})
-                              + strings(load("armors.json"), {"flavor"}) + strings(load("accessories.json"), {"lore"}),
+                              + strings(load("armors.json"), {"flavor"}) + strings(load("accessories.json"), {"lore"})
+                              + [t for group in load("armeria.json").values() for t in group.values()],
         "epitaffi e nemesi": strings(load("epitaph.json")) + strings(load("nemesis.json"), {"born", "returns", "defeated", "boss_grudge"}),
         "dialoghi del Campo": dialogue_texts(load("dialogues.json")),
         "atlante": [p["text"] for pages in load("atlante.json")["biomes"].values() for p in pages],
         "discese dimenticate": [x for t in load("lettere.json")["threads"] for x in t["letters"] + [t["epilogue"]]],
         "vite prestate": [m["text"] for c in load("vite.json")["classes"].values() for m in c["memories"]],
+        "voci dei boss": [t for b in load("voci_boss.json")["bosses"].values() for lines in b.values() for t in lines],
     }
 
 

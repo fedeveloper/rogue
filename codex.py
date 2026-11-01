@@ -90,12 +90,13 @@ def sections() -> List[Tuple[str, int, int]]:
         ("Atlante", sum(len(atlas_open(b)) for b in GAME_DATA["atlante"]["biomes"]), sum(len(p) for p in GAME_DATA["atlante"]["biomes"].values())),
         ("Discese dimenticate", sum(min(PROFILE_MANAGER.codex.get("threads", {}).get(t["id"], 0), len(t["letters"])) for t in GAME_DATA["lettere"]["threads"]),
          sum(len(t["letters"]) for t in GAME_DATA["lettere"]["threads"])),
+        ("Armeria", len(armory_open()), sum(len(v) for v in GAME_DATA["armeria"].values())),
         ("Vite prestate", sum(len(lives_open(c)) for c in GAME_DATA["vite"]["classes"]), sum(len(v["memories"]) for v in GAME_DATA["vite"]["classes"].values())),
     ]
 
 
 # Sezioni che raccontano la tua storia invece di elencare scoperte: non contano nel completamento
-UNCOUNTED = ("Nemesi", "Cimitero")
+UNCOUNTED = ("Nemesi", "Cimitero", "Armeria")  # l'Armeria si apre con la Forgia, non con le scoperte
 
 
 def completion() -> int:
@@ -300,8 +301,43 @@ def endings_page() -> List[str]:
             n = seen[e["id"]]
             lines.append(f"  {Colors.MAGENTA}{e['title']}{Colors.RESET}  {Colors.CYAN}(visto {n} {'volta' if n == 1 else 'volte'}){Colors.RESET}")
             lines.append(f"    {e['text'][-1]}")
+            read = set(PROFILE_MANAGER.story.get("epilogues", []))
+            lives = GAME_DATA["epiloghi"]["endings"].get(e["id"], {})
+            seen_lives = [cid for cid in lives if f"{e['id']}:{cid}" in read]
+            for cid in seen_lives: lines.append(f"    {Colors.CYAN}{GAME_DATA['classes'][cid]['role']}:{Colors.RESET} {lives[cid]}")
+            if lives: lines.append(f"    {Colors.CYAN}(epiloghi delle vite prestate: {len(seen_lives)}/{len(lives)}){Colors.RESET}")
         else:
             lines.append(f"  {UNKNOWN} — {Colors.RED}{e['hint']}{Colors.RESET}")
+    return lines
+
+
+ARMORY = (("weapons", "Armi", "weapons"), ("armors", "Armature", "armors"), ("accessories", "Accessori", "accessories"))
+
+
+def armory_open() -> List[Tuple[str, str]]:
+    """(nome, storia) degli oggetti dell'Armeria che conosci: armi, armature e accessori che puoi già trovare (senza
+    sblocco, o sbloccati alla Forgia) e le reliquie del Codice (`data/armeria.json`)."""
+    found = []
+    for key, _, source in ARMORY:
+        for item in RAW_DATA[source]:
+            if (not item.get("unlock_id") or item["unlock_id"] in PROFILE_MANAGER.unlocked_ids) and item["name"] in GAME_DATA["armeria"][key]:
+                found.append((item["name"], GAME_DATA["armeria"][key][item["name"]]))
+    names = {r["id"]: r["name"] for r in RAW_DATA["relics"]}
+    found += [(names[r], GAME_DATA["armeria"]["relics"][r]) for r in GAME_DATA["armeria"]["relics"] if r in PROFILE_MANAGER.codex["relics"]]
+    return found
+
+
+def armory_page() -> List[str]:
+    """L'Armeria: da dove vengono le armi, le armature, gli accessori e le reliquie che conosci."""
+    known = dict(armory_open())
+    lines = []
+    groups = [(title, [i["name"] for i in RAW_DATA[source]]) for _, title, source in ARMORY] + [("Reliquie", [r["name"] for r in RAW_DATA["relics"]])]
+    for title, names in groups:
+        lines.append(f"{Colors.MAGENTA}{Colors.BOLD}{title}{Colors.RESET}  ({sum(1 for n in names if n in known)}/{len(names)})")
+        for n in names:
+            if n in known: lines += [f"  {Colors.CYAN}{n}{Colors.RESET}", f"  {known[n]}", ""]
+            else: lines.append(f"  {UNKNOWN}")
+        lines.append("")
     return lines
 
 
@@ -364,7 +400,7 @@ def lives_page() -> List[str]:
 PAGES = {"Bestiario": bestiary_page, "Personaggi": characters_page, "Eventi": events_page,
          "Lettere insanguinate": letters_page, "Reliquie": relics_page, "Finali": endings_page,
          "Rune": runes_page, "Parole runiche": runewords_page, "Nemesi": nemeses_page, "Cimitero": cemetery_page, "Fasi dei boss": phases_page, "Reazioni elementali": reactions_page, "Incantesimi": spells_page, "Atlante": atlas_page,
-         "Discese dimenticate": threads_page, "Vite prestate": lives_page}
+         "Discese dimenticate": threads_page, "Vite prestate": lives_page, "Armeria": armory_page}
 
 
 def show_codex():

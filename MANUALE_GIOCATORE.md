@@ -81,7 +81,7 @@ Gli epitaffi delle ultime 50 discese restano nel **Cimitero**, una pagina del Co
 
 ### 🏁 I finali
 
-Sconfitto il Dio Antico, scegli come finisce la tua storia fra i finali che ti sei guadagnato. Il primo è sempre disponibile; gli altri dipendono da quello che hai fatto in questa discesa e in quelle passate: i personaggi che hai liberato, le verità che hai ascoltato, le lettere che hai raccolto, la tua Corruzione. Ogni finale nuovo dà un premio in Essenza e finisce nel Codice. Nel Codice i finali che non hai ancora visto mostrano un indizio.
+Sconfitto il Dio Antico, scegli come finisce la tua storia fra i finali che ti sei guadagnato. Il primo è sempre disponibile; gli altri dipendono da quello che hai fatto in questa discesa e in quelle passate: i personaggi che hai liberato, le verità che hai ascoltato, le lettere che hai raccolto, la tua Corruzione. Ogni finale nuovo dà un premio in Essenza e finisce nel Codice. Dopo il finale leggi anche cosa fa, in quella fine, la vita prestata della classe con cui sei arrivato: ogni classe ha il suo epilogo per ogni finale, e quelli letti restano nel Codice. Nel Codice i finali che non hai ancora visto mostrano un indizio.
 
 ### I biomi
 
@@ -267,7 +267,7 @@ Goblin, Scheletri e Banditi, i primi nemici che incontri, combattono senza uno s
 
 ### Le fasi dei boss
 
-Ogni boss, arrivato a una soglia di HP (di solito il 50%), **cambia fase**: lo annuncia con un nome e una frase, e mostra cosa è cambiato. Il turno in cui si trasforma non attacca. Il DIO ANTICO ha tre fasi.
+Ogni boss, arrivato a una soglia di HP (di solito il 50%), **cambia fase**: lo annuncia con un nome e una frase, e mostra cosa è cambiato. Il turno in cui si trasforma non attacca. Il DIO ANTICO ha tre fasi. I boss parlano: una battuta quando li incontri, una quando cambiano fase e una quando cadono. Sono solo parole: non cambiano niente nello scontro.
 
 Una fase può:
 
@@ -690,7 +690,8 @@ Tra una discesa e l'altra spendi l'**Essenza Astrale**:
     - Lv.3 (✨1000): Ogni discesa inizia con 1 punto abilità in più da spendere, oltre a quello del primo livello.
 - **📖 Il Codice del Labirinto** — tutto ciò che hai scoperto, raccolto fra una run e l'altra, con la percentuale di completamento. Ciò che manca è segnato con ???.
   - *Reazioni elementali*: le combinazioni di elementi che hai scatenato almeno una volta.
-  - *Finali*: quelli che hai visto, e un indizio per gli altri.
+  - *Finali*: quelli che hai visto, con gli epiloghi delle vite prestate che hai letto, e un indizio per gli altri.
+  - *Armeria*: la storia di ogni arma, armatura e accessorio che puoi trovare (quelli della Forgia dopo averli sbloccati) e di ogni reliquia trovata. Si legge e basta: non conta nella percentuale del Codice.
   - *Bestiario*: nemici e boss incontrati e sconfitti; la loro storia si legge solo dopo averli battuti.
   - *Incantesimi*: gli incantesimi che hai lanciato almeno una volta, con elemento, costo ed effetto.
   - *Personaggi*: i capitoli vissuti con Alaric e Silas, e il segno lasciato dalle tue scelte.

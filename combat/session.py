@@ -103,6 +103,7 @@ class CombatSession(PlayerActions, Spells, Reactions, Phases, EnemyActions):
             if self.enemy.is_boss:
                 delay_print(f"{Colors.MAGENTA}{Colors.BOLD}--- {self.enemy.title.upper()} ---{Colors.RESET}")
                 if self.enemy.lore: delay_print(f"{Colors.YELLOW}\"{self.enemy.lore}\"{Colors.RESET}\n")
+                if voice := texts.boss_voice(self.enemy.base_name, "intro"): delay_print(f"{Colors.MAGENTA}{voice}{Colors.RESET}\n")
             
             boss_tag = f"{Colors.MAGENTA} [BOSS]{Colors.RESET}" if self.enemy.is_boss else ""
             delay_print(f"{Colors.RED}!!! Incontri un {self.enemy.name.upper()}{boss_tag} [{get_element_icon(self.enemy.element)}] !!!{Colors.RESET}", 0.04)
@@ -211,6 +212,7 @@ class CombatSession(PlayerActions, Spells, Reactions, Phases, EnemyActions):
                         return
 
     def on_enemy_death(self):
+        if self.enemy.is_boss and (voice := texts.boss_voice(self.enemy.base_name, "death")): delay_print(f"\n{Colors.MAGENTA}{voice}{Colors.RESET}")
         display_msg(f"\n{Colors.YELLOW}{Colors.BOLD}*** Hai sconfitto {self.enemy.name}! ***{Colors.RESET}")
         record_enemy_killed(self.enemy.base_name)
         if self.player.hp == 1: self.player.run_tracker["kill_1_hp_done"] = True

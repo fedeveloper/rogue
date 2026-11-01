@@ -1,7 +1,8 @@
 """I finali: dopo il Dio Antico si sceglie fra quelli che la storia della discesa (e del profilo) ha aperto.
 
 Ogni finale ha condizioni come quelle degli eventi (flag del profilo, Corruzione della run, lettere del Codice),
-un testo, e un premio in Essenza. Il primo, "Il Sonno Spezzato", è sempre disponibile.
+un testo, e un premio in Essenza. Il primo, "Il Sonno Spezzato", è sempre disponibile. Dopo il testo, un epilogo dice
+cosa fa in quel finale la vita prestata della classe con cui ci sei arrivato (`data/epiloghi.json`).
 """
 from data_manager import GAME_DATA, PROFILE_MANAGER
 from events import check
@@ -22,6 +23,20 @@ def available_endings(player) -> list:
     return [e for e in endings() if check(player, e.get("requires"), FINAL_FLOOR)]
 
 
+def epilogue(ending_id: str, class_id: str) -> str:
+    """Cosa fa, in questo finale, la vita prestata della classe (`data/epiloghi.json`); stringa vuota se non c'è."""
+    return GAME_DATA["epiloghi"]["endings"].get(ending_id, {}).get(class_id, "")
+
+
+def record_epilogue(ending_id: str, class_id: str) -> str:
+    """Restituisce l'epilogo e lo segna come letto nel profilo (il Codice lo rilegge alla pagina *Finali*)."""
+    text = epilogue(ending_id, class_id)
+    if text:
+        read = PROFILE_MANAGER.story.setdefault("epilogues", [])
+        if f"{ending_id}:{class_id}" not in read: read.append(f"{ending_id}:{class_id}")
+    return text
+
+
 def choose_ending(player) -> dict:
     options = available_endings(player)
     labels = [f"{e['choice']}" + (f" {Colors.CYAN}(già visto){Colors.RESET}" if e["id"] in seen_endings() else "") for e in options]
@@ -32,6 +47,8 @@ def choose_ending(player) -> dict:
     for paragraph in ending["text"]:
         delay_print(paragraph, 0.03)
         display_msg()
+    if epilogue := record_epilogue(ending["id"], player.class_id):
+        display_msg(f"{Colors.CYAN}{epilogue}{Colors.RESET}\n")
     first = ending["id"] not in seen_endings()
     seen_endings()[ending["id"]] = seen_endings().get(ending["id"], 0) + 1
     if ending["reward"]["essence"]:

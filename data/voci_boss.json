@@ -1,0 +1,368 @@
+{
+    "bosses": {
+        "La Badessa del Silenzio": {
+            "intro": [
+                "'Siediti, figliolo. Qui nessuno ha fretta. Qui nessuno se ne va.'",
+                "'Le novizie dormono. Abbassa la voce, o le sveglierai tutte.'"
+            ],
+            "phase": [
+                "'Basta parole. Il silenzio è l'ultima preghiera che conosco.'",
+                "Undici archi tacciono insieme. Senti solo il tuo cuore, e anche quello ti sembra troppo forte."
+            ],
+            "death": [
+                "'Finalmente... posso alzare la voce.' Ride, piano, come una ragazza.",
+                "'Di' alle novizie che possono cantare.' Il chiostro si riempie di un'eco che sembra un coro."
+            ]
+        },
+        "Il Caposquadra Sepolto": {
+            "intro": [
+                "'Sei della squadra di sopra? Prendi un piccone. Si scende.'",
+                "'Nessuno risale finché non troviamo l'uscita. Nessuno.'"
+            ],
+            "phase": [
+                "'Tenete la volta! Ho detto: tenete la volta!'",
+                "Le travi gemono. Il Caposquadra conta i suoi uomini, e ne conta uno in più: te."
+            ],
+            "death": [
+                "'Risalite... ditegli di risalire.' La lanterna sul suo elmo si spegne da sola.",
+                "Fa una tacca sul muro con l'ultima forza che ha. Poi si siede, come a fine turno."
+            ]
+        },
+        "L'Astronoma delle Guglie": {
+            "intro": [
+                "'Millecentoquaranta. Millecentotrentanove. Non muoverti: mi fai perdere il conto.'",
+                "'Sei una stella che non è ancora caduta. Rimedio subito.'"
+            ],
+            "phase": [
+                "'Guarda in alto. Non sono mai state così vicine.'",
+                "Il cielo delle Guglie si apre. Le stelle scendono a contarti."
+            ],
+            "death": [
+                "'Ho finito di contarle.' Chiude gli occhi, e per un istante il vento tace.",
+                "Cade, finalmente, come aveva sempre voluto: piano, guardando in su."
+            ]
+        },
+        "Il Cuore del Ventre": {
+            "intro": [
+                "Il battito rallenta quando entri. Il Ventre ti ha sentito, e ha fame del tuo nome.",
+                "Le pareti pulsano. Fra un battito e l'altro, senti voci che chiamano nomi che non sono il tuo."
+            ],
+            "phase": [
+                "Il battito accelera. Ricordi che non sono tuoi ti scivolano nella testa: un cortile, un cane, una madre.",
+                "Il Cuore stringe. Per un momento non ricordi come ti chiami. Poi neanche lui."
+            ],
+            "death": [
+                "Il battito si ferma. In mille case che non esistono più, qualcuno ricorda un volto.",
+                "Il Cuore si sgonfia con un sospiro lunghissimo, come chi restituisce qualcosa."
+            ]
+        },
+        "Il Maestro di Forgia": {
+            "intro": [
+                "'Ancora un tentativo. Questa volta il ferro terrà.' Non ti guarda: guarda il metallo.",
+                "'Sei venuto a prendere la scoria? È lì. È tutta lì. Siamo tutti lì.'"
+            ],
+            "phase": [
+                "'Sbagliato! Di nuovo sbagliato!' L'incudine si spacca, e dalla crepa esce fuoco che urla.",
+                "Il martello cade più forte. Ogni colpo è un errore, e ogni errore apre gli occhi."
+            ],
+            "death": [
+                "'Era il fuoco a essere sbagliato... non il ferro.' Il martello gli scivola dalle dita.",
+                "Si spegne come una forgia a fine giornata, lentamente, con un ultimo bagliore arancione."
+            ]
+        },
+        "Il Custode della Soglia": {
+            "intro": [
+                "'Di nuovo tu. Ci siamo già visti, anche se per te è la prima volta.'",
+                "'Ti ho visto passare mille volte. Una volta sola sei tornato indietro.'"
+            ],
+            "phase": [
+                "'Questo l'hai già fatto. Lo rifarai. Io sono qui da prima, e da dopo.'",
+                "Il tempo si piega. Il Custode para un colpo che non hai ancora dato."
+            ],
+            "death": [
+                "'Passa, allora. Ma ricordati da che parte sei entrato.'",
+                "Si dissolve, e per un istante vedi in lui il tuo stesso volto, più vecchio."
+            ]
+        },
+        "Re dei Goblin": {
+            "intro": [
+                "'Il mio popolo ha mangiato. Hai capito? Ha mangiato! Inginocchiati davanti al re che ha sfamato il Sud.'",
+                "'Hai oro? Tutti hanno oro. Dammi il tuo, e forse ti lascio passare.'"
+            ],
+            "phase": [
+                "'Guardie! Guardie... dov'è la mia corte? Erano qui. Erano uomini, una volta.'",
+                "Si stringe la corona sulla testa verde. 'Il patto è il patto. Il patto è il patto!'"
+            ],
+            "death": [
+                "'Ho firmato... per loro.' La corona rotola via, troppo grande per un re così piccolo.",
+                "Muore abbracciando un sacco di monete. Nessuna è d'oro vero."
+            ]
+        },
+        "Cavaliere Oscuro": {
+            "intro": [
+                "'Nessuno passa.' La voce è stanca, gentile, e terribilmente sicura.",
+                "Dieci passi, giro, dieci passi. Si ferma. 'Torna indietro. Non te lo chiederò una seconda volta.'"
+            ],
+            "phase": [
+                "'Ho giurato sulla porta. Non sul mondo, sulla porta.'",
+                "L'armatura nera si incrina, e dalle crepe esce una luce bianca, debole come una candela."
+            ],
+            "death": [
+                "'Ilse... la lavanda...' Si inginocchia, ma la spada resta piantata davanti alla porta.",
+                "'Chi custodirà la porta, adesso?' Ti guarda, e aspetta una risposta che non hai."
+            ]
+        },
+        "Drago di Zaffiro": {
+            "intro": [
+                "Il Drago alza la testa dall'acqua ferma, come faceva ogni alba con i pescatori. Poi ricorda che non ci sono più pescatori.",
+                "Gocce salate cadono dalle sue scaglie. Non è pioggia. Piange da mille anni."
+            ],
+            "phase": [
+                "Il Mare Interno si fa vetro. Nel vetro vedi tutte le vite che il Drago ha guardato annegare.",
+                "Le lacrime diventano marea. 'Erano miei,' sembra dire. 'Li salutavo ogni mattina.'"
+            ],
+            "death": [
+                "Il Drago si posa sull'acqua e la saluta, come un'alba. Poi affonda, piano.",
+                "L'ultima lacrima cade, e l'acqua, per un momento, torna a dissetare."
+            ]
+        },
+        "Negromante Supremo": {
+            "intro": [
+                "'Non temere. Qui nessuno è solo. Nemmeno tu, presto.'",
+                "Le ombre ti guardano con occhi che hai già visto. 'Sono tutti miei amici,' dice lui."
+            ],
+            "phase": [
+                "'Restate con me! Non andatevene anche voi!' L'esercito d'ombre si stringe intorno a lui.",
+                "Chiama i suoi morti per nome, uno per uno, e ognuno risponde."
+            ],
+            "death": [
+                "'Andate, allora.' Le ombre se ne vanno, e lui resta solo per la prima volta in mille anni.",
+                "'Isaura aveva ragione.' Sorride, stanchissimo. 'Lasciarli andare era l'unico modo di tenerli.'"
+            ]
+        },
+        "Demone Maggiore": {
+            "intro": [
+                "Il calore ti colpisce prima di lui. Dentro le fiamme c'è un volto che grida da mille anni.",
+                "'Hai perso qualcuno? Tutti hanno perso qualcuno. Lascia che ti aiuti a bruciare.'"
+            ],
+            "phase": [
+                "La rabbia diventa incendio. Nelle fiamme bruciano case di Ignis, una dopo l'altra.",
+                "'Più ti ferisco, più bruci. Più bruci, più mi somigli.'"
+            ],
+            "death": [
+                "Le fiamme si abbassano. Per un istante sono calde e basta, come un focolare.",
+                "Si spegne gridando, e il grido, alla fine, somiglia a un pianto."
+            ]
+        },
+        "Angelo Caduto": {
+            "intro": [
+                "'Sei pieno di difetti. Lascia che ti renda perfetto.' Le ali bruciano di una luce bianca.",
+                "'Non ti farò male. Ti toglierò soltanto ciò che di te è imperfetto. Cioè tutto.'"
+            ],
+            "phase": [
+                "Le ali si spezzano e la luce si fa più dura. 'La perfezione non ha bisogno di volare.'",
+                "La sua voce diventa un coro senza respiro. Non c'è nessuno, dentro."
+            ],
+            "death": [
+                "'Ero... bello?' Una piuma cade, grigia, con una macchia. Ti sembra la più bella che hai visto.",
+                "Cade come una stella, e nel cadere si sporca di polvere, e sorride."
+            ]
+        },
+        "Lich Reietto": {
+            "intro": [
+                "'Silenzio, in biblioteca.' Sfoglia un libro senza parole. 'Le hanno mangiate tutte.'",
+                "'Sei un lettore? Allora sei un ladro. Tutti i lettori portano via qualcosa.'"
+            ],
+            "phase": [
+                "Le pagine si alzano in volo come uccelli. Su ognuna c'è un nome cancellato.",
+                "'Non ricordo più il mio nome. L'ho prestato a un libro, e il libro è andato perso.'"
+            ],
+            "death": [
+                "'Il libro... ricordamene il titolo.' Si sbriciola in polvere che sa di carta vecchia.",
+                "Lascia cadere l'ultimo volume. Sulla copertina c'è scritto solo: «ricordami»."
+            ]
+        },
+        "Behemoth Terrestre": {
+            "intro": [
+                "La terra trema. Qualcosa di enorme si sveglia, si ricorda del mondo, e si rifiuta di credere che sia finito.",
+                "Una montagna si alza su quattro zampe. Nelle sue crepe crescono ancora fiori di superficie."
+            ],
+            "phase": [
+                "Il Behemoth si rannicchia, pietra su pietra. Non vuole combattere: vuole resistere.",
+                "Le sue mura si chiudono. 'Il mondo è ancora qui,' dice la roccia, 'finché io resto in piedi.'"
+            ],
+            "death": [
+                "Si sdraia, lentamente, come una montagna che finalmente si concede la pianura.",
+                "Le crepe si aprono e ne escono fiori, tantissimi. Ha tenuto in vita l'ultimo prato."
+            ]
+        },
+        "Signore delle Tempeste": {
+            "intro": [
+                "Il vento ti grida in mille voci. Sono i segreti che nessuno ha voluto ascoltare.",
+                "'Chi sei? Hai una domanda? Tutti avevano una domanda. Il vento le ha tenute tutte.'"
+            ],
+            "phase": [
+                "La tempesta si alza, e nel vento senti un ragazzo che grida una domanda dal tetto di un'accademia.",
+                "I segreti gli escono dalla bocca come fulmini. Nessuno è per te. Tutti ti colpiscono."
+            ],
+            "death": [
+                "Il vento cala. Nel silenzio resta una sola voce, che finalmente qualcuno ascolta.",
+                "Si disperde in una brezza leggera, che ti scompiglia i capelli come una mano."
+            ]
+        },
+        "DIO ANTICO": {
+            "intro": [
+                "L'occhio si apre. Non ti guarda come un nemico: ti guarda come uno specchio guarda un volto.",
+                "Il buio respira. 'Sei tornato.' Non è una domanda. Non è nemmeno una minaccia."
+            ],
+            "phase": [
+                "L'occhio si allarga. Per un istante senti una stanchezza immensa, che non è la tua. O forse sì.",
+                "'Lascia che finisca. Lascia che tutto riposi.' La voce sembra la tua, da molto lontano."
+            ],
+            "death": [
+                "L'occhio si chiude. Non muore: dorme. E nel sonno, per la prima volta, sembra in pace.",
+                "Il buio si ritira come una marea. Resta un silenzio pieno, il silenzio di chi ha smesso di chiedere."
+            ]
+        },
+        "Il Re Dimenticato": {
+            "intro": [
+                "'Inchinati al... al...' Si ferma. Non ricorda il nome del suo regno.",
+                "Una corona senza gemme, un trono senza sala. 'Ti conosco? Qualcuno mi conosceva, una volta.'"
+            ],
+            "phase": [
+                "'Ricordami! Qualcuno deve ricordarmi!' La sua forma sbiadisce e si fa più crudele.",
+                "Grida ordini a un esercito che il tempo ha cancellato. Gli rispondono solo gli echi."
+            ],
+            "death": [
+                "'Avevo una figlia... avevo...' Si dissolve prima di finire la frase.",
+                "Di lui resta solo la corona, e anche quella, mentre la guardi, dimentica di essere d'oro."
+            ]
+        },
+        "Golem dell'Eternità": {
+            "intro": [
+                "Ingranaggi di pietra girano piano. Il Golem ti misura, ti calcola, ti trova breve.",
+                "'Resisterò alla fine,' dicono le sue rune. 'Anche alla tua.'"
+            ],
+            "phase": [
+                "Il Golem accelera. Gli ingranaggi gridano. Ha deciso che l'eternità può aspettare un minuto.",
+                "Le rune sul petto si accendono una alla volta, contando un tempo che non è il tuo."
+            ],
+            "death": [
+                "Gli ingranaggi si fermano. Per la prima volta da secoli, il Golem non ha niente da aspettare.",
+                "Crolla senza rumore. Una runa, sul petto, si spegne per ultima: «basta»."
+            ]
+        },
+        "Leviatano dei Sotterranei": {
+            "intro": [
+                "L'acqua nera si gonfia. Sotto la superficie, qualcosa ti segue da tre stanze.",
+                "Un occhio enorme si apre nel lago sotterraneo. Ha fame, solo fame, nient'altro."
+            ],
+            "phase": [
+                "Il Leviatano si inabissa e torna su, più veloce. L'acqua ti sale alle ginocchia.",
+                "Le falde gridano. Tutta l'acqua del Labirinto sembra correre verso di lui."
+            ],
+            "death": [
+                "Il Leviatano affonda per l'ultima volta. L'acqua torna ferma, e limpida.",
+                "Un'onda lenta ti bagna i piedi e si ritira. Il lago, finalmente, tace."
+            ]
+        },
+        "Drago d'Ossidiana": {
+            "intro": [
+                "Le scaglie di vetro nero suonano come una foresta nel vento. Il Drago si sveglia dal suo vulcano.",
+                "Il calore deforma l'aria. Dentro il petto del Drago, un cuore fuso batte lento."
+            ],
+            "phase": [
+                "La corazza si incrina e ne cola lava. Il Drago ruggisce come una montagna che si spacca.",
+                "Il nucleo fuso si fa più luminoso. L'ossidiana canta, altissima."
+            ],
+            "death": [
+                "Il cuore si raffredda. Le scaglie si spengono una dopo l'altra, come finestre di notte.",
+                "Resta una statua di vetro nero che, quando passa il vento, suona ancora."
+            ]
+        },
+        "Lich Signore del Gelo": {
+            "intro": [
+                "Il freddo ti arriva all'anima prima che al corpo. Il Lich alza una mano coperta di brina.",
+                "'Il calore è un errore,' sussurra. 'Lascia che te lo correggano i secoli.'"
+            ],
+            "phase": [
+                "La brina diventa ghiaccio. Il trono del Lich si allarga e la stanza smette di respirare.",
+                "Il gelo ti morde i ricordi: una mano calda, un fuoco, una coperta. Scompaiono uno a uno."
+            ],
+            "death": [
+                "Il ghiaccio si scioglie e il Lich, per un istante, trema di freddo, come un uomo.",
+                "Si frantuma in mille cristalli che cadono a terra suonando come campanelle."
+            ]
+        },
+        "Araldo Radioso": {
+            "intro": [
+                "'Gioisci! Gioisci!' La sua luce è così forte che non vedi più le tue mani.",
+                "Canta un inno di estasi, e mentre canta le pareti intorno a lui si sciolgono."
+            ],
+            "phase": [
+                "La luce diventa insopportabile. 'Perché non sorridi? Tutti sorridono, alla fine.'",
+                "Il suo sorriso si allarga oltre il viso. Dentro, non c'è niente che sorrida davvero."
+            ],
+            "death": [
+                "La luce si spegne, e nel buio senti un sospiro di sollievo, come di chi può smettere di sorridere.",
+                "'Che stanchezza, la gioia.' Cade come una lampada a cui finisce l'olio."
+            ]
+        },
+        "Sovrano delle Tempeste": {
+            "intro": [
+                "L'occhio del ciclone ti fissa. Intorno, il vento delle stanze superiori ulula il suo nome.",
+                "'Inginocchiati, o vola.' Le correnti ti strappano il mantello."
+            ],
+            "phase": [
+                "Il ciclone si stringe. Al centro, per un istante, c'è una calma perfetta, e un volto che piange.",
+                "I venti urlanti si mettono in fila dietro di lui, come soldati."
+            ],
+            "death": [
+                "Il ciclone si scioglie in una brezza. Nella stanza cade una pioggia lenta, quasi dolce.",
+                "'L'occhio...' Il vento lo porta via prima che finisca."
+            ]
+        },
+        "Cavaliere dell'Apocalisse": {
+            "intro": [
+                "Un destriero pallido avanza a passo lento. Il cavaliere non ha fretta: tutto, prima o poi, arriva a lui.",
+                "L'odore di malattia ti riempie la bocca. 'Sono l'ultimo,' dice il cavaliere. 'Dopo di me, niente.'"
+            ],
+            "phase": [
+                "Il destriero si impenna. La peste si alza intorno a loro come nebbia verde.",
+                "'Credi di poter fermare la fine? La fine è paziente. Io sono paziente.'"
+            ],
+            "death": [
+                "Il destriero si accascia, e il cavaliere lo accarezza, per l'ultima volta, prima di cadere anche lui.",
+                "'Non sono la fine,' sussurra. 'Ero solo l'ultimo ad arrivare.'"
+            ]
+        },
+        "Madre delle Melme": {
+            "intro": [
+                "La Madre ti guarda con mille occhi molli. Intorno a lei, i suoi figli tremano di gioia.",
+                "'Un altro figlio,' gorgoglia. 'Vieni, vieni dalla mamma.'"
+            ],
+            "phase": [
+                "La Madre si gonfia. Dalla sua pelle escono melme nuove, piccole, affamate.",
+                "'Non toccate i miei piccoli!' Il veleno le cola da tutto il corpo."
+            ],
+            "death": [
+                "La Madre si sgonfia, e i suoi figli si stringono a lei, per l'ultima volta.",
+                "Si scioglie in una pozza che, per un momento, profuma di latte e di erba bagnata."
+            ]
+        },
+        "Il Tristo Mietitore": {
+            "intro": [
+                "'Sei in ritardo.' Il Mietitore controlla un registro. Il tuo nome è sottolineato due volte.",
+                "La falce si alza piano. 'Non è niente di personale. Il tuo nome era già scritto.'"
+            ],
+            "phase": [
+                "Il Mietitore chiude il registro. 'Basta formalità.'",
+                "La falce diventa più grande della stanza. Senti freddo nei denti."
+            ],
+            "death": [
+                "'Strano. Il tuo nome... non c'è più.' Ti guarda, quasi curioso. Poi svanisce.",
+                "Il registro cade a terra, aperto. La tua pagina è bianca. Qualcuno l'ha cancellata per te."
+            ]
+        }
+    }
+}
