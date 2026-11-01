@@ -28,8 +28,8 @@ La discesa deve restare veloce. Il testo lungo vive dove il giocatore sceglie di
 | **Fuori partita** | Conversazione al Campo (un argomento) | 80-250 parole, divise in battute |
 | | Voce del Bestiario (un livello) | 40-80 parole |
 | | Pagina dell'Atlante (storia di un bioma) | 80-200 parole |
-| | Capitolo di un libro dell'Archivio | 150-400 parole |
-| | Ricordo di una vita prestata (classe) | 120-250 parole |
+| | Capitolo di un libro dell'Archivio | 80-400 parole |
+| | Ricordo di una vita prestata (classe) | 70-250 parole |
 | | Epilogo di un finale | 3-6 frasi per variante |
 
 Un testo in partita che supera la misura si spezza: la prima parte resta nella scena, il resto diventa una nota del Codice o una battuta al Campo.
@@ -258,7 +258,22 @@ Il **Campo Base** è un cerchio di pietre intorno al Fuoco, in un punto del Labi
 - **Chi ci vive:** i personaggi liberati o incontrati nelle discese, quando hanno un motivo per restare. Al Campo parlano più che in partita: è qui che raccontano la loro storia (vedi la Parte VIII).
 - **Le strutture** sono pezzi di casa: il **Tavolo della Cartografa**, lo **Scrittoio di Silas**, l'**Altare della Purificazione**, la **Biblioteca dell'Arcano**, la **Sala d'Armi**. Ogni struttura nuova è un personaggio che decide di fermarsi.
 - **La Taverna, la Forgia, il Grimorio, le botteghe**: il lavoro degli artigiani liberati (Speziale, Borek, Elara, Valerius).
-- **L'Archivio di Aethelgard**: i libri ritrovati nelle discese.
+- **L'Archivio di Aethelgard**: i libri ritrovati nelle discese. I primi sei danno un bonus; dalla v6 se ne aggiungono quindici di sola lettura (`data/books.json`, senza `bonus`), con capitoli che si aprono più avanti (`requires`). Chi li ha scritti:
+  - *Trattato sulla Corruzione Elementale*: Ottavia Lune. L'ultimo capitolo (piano 20) ricorda la lavagna del maestro del Normale.
+  - *Il Quaderno di Orvin il Cartografo*: Orvin. Il suo passo è di settantuno centimetri; la croce rossa l'ha sognata prima di disegnarla.
+  - *Canti della Caduta*: canti delle novizie dei Chiostri; i sette sigilli degli Architetti, uno dei quali non volle mai essere trovato.
+  - *Le Ricette di Mastro Ambrogio*: lo Speziale. L'ultima ricetta è la *Pozione del Conto*, una goccia per ogni persona curata.
+  - *Il Registro della Squadra di Durn*: la squadra di **Hadrek**, quella che scese mentre Borek risaliva.
+  - *Le Valli della Seta*: una guida di Valeriana (quaranta valli, le torri dei tessitori, ogni famiglia un colore segreto), con una postilla scritta dopo.
+  - *Il Diario dell'Osservatorio*: l'allievo della Maestra delle stelle (le stelle non si guardano, si contano).
+  - *Le Cronache del Mare Interno*: i porti, il Drago di Zaffiro che salutava i pescatori, il mare che si fermò.
+  - *Il Libro delle Forge di Ignis*: la riforgiatura e la lista degli apprendisti fusi con il loro lavoro.
+  - *Lettere di Ilse*: tre lettere di Ilse al padre e la lettera non finita di Alaric. **Berta** è la vecchia della valle della lavanda.
+  - *Le Leggi di Galdor*: il re giusto, la carestia, il patto con un Architetto senza nome, il Re dei Goblin.
+  - *L'Ordine dei Paladini*: il giuramento in tre parti (l'ultima: non chiedere mai cosa si custodisce), Alaric figlio di un fabbro, i Paladini Corrotti.
+  - *I Taccuini di Calaris*: i taccuini di Sereth trovati alla Soglia, senza nome. Il terzo (il Vuoto come riposo) aspetta 40 boss, il quarto 50.
+  - *Il Libro del Fuoco che Resta*: i sei Architetti fedeli, Ardel, il potere di riportare, il perché.
+  - *Le Lezioni del Settimo Architetto*: gli appunti di Valerius, che lesse il nome del maestro e non lo scrive.
 
 Il Campo cambia con la storia: più personaggi trovano pace, più il Fuoco è caldo; chi sceglie la Corruzione lo trova un poco più freddo al ritorno.
 
@@ -373,6 +388,19 @@ Ogni classe è un caduto che il Fuoco ha salvato dal guscio. La Maestria della c
 | 🗡️ **Assassino** | **Corvo** | Sicario alla corte di Galdor. Uccise il messaggero degli Architetti che avrebbe potuto fermare l'esperimento. Il suo ricordo è una colpa precisa, con un nome e un volto. |
 | 💀 **Negromante** | **Isaura di Morva** | Parlava ai morti delle paludi quando i morti ancora se ne andavano. Dopo la Discordia i morti smisero di andarsene, e lei smise di dormire. Il suo ricordo è il confine fra un uomo e un'ombra. |
 | 🌈 **Elementalista** | **Ilio** | Un bambino di Aetheria nato la notte della Discordia, l'unico che possa tenere insieme tutti gli elementi. È la vita più vicina all'Equilibrio, e la più vicina alla verità di Sereth. |
+
+I ricordi sono in `data/vite.json` (sei per classe, uno per livello di Maestria) e si leggono nel Codice, *Vite prestate*. Il primo torna alla prima discesa con la classe. I ricordi che toccano il quarto gradino (il Vuoto come riposo) aspettano anche la vittoria e 40 boss: il quinto e il sesto di Teodor, il sesto di Isaura, gli ultimi tre di Ilio.
+
+**Dettagli già nel gioco:**
+- **Bran**: la sua compagna di turno era **Mila**, l'ultima arrivata in caserma, che aveva paura dei cavalli. Bran le disse di andare con l'ultimo carro; lei arrivò sulle colline, visse, e tenne appeso sulla porta uno scudo da guardia. Gerd russava.
+- **Nim**: le guardie di Valeriana la chiamavano *il gatto grigio*. Rubò la mappa di Orvin e gliela riportò; per ripagarlo scese con lui al piano otto e lo tirò fuori da una frana. Morì cadendo fra due guglie con la mappa del piano dodici in mano: quella mappa è arrivata a Tessa, portata dal Mercante Senza Volto. Tessa non sa da dove venga.
+- **Teodor**: figlio di un mugnaio, all'Accademia per una borsa di studio, spesso l'unico studente del corso sul Normale. Non fece la sua domanda («chi decide quando una cosa fragile ha bisogno di riposare?»); la gridò dal tetto la notte della Discordia, e la sua voce è rimasta nei Chiostri. Lesse il nome del maestro scritto sotto la frase dell'ultima lezione, e lo ha dimenticato.
+- **Maud**: Alaric le mise la spada sulla spalla e le parlava di Ilse e della lavanda. Scese dopo la Discordia con un fazzoletto nel guanto («arrivo, fratello. Aspettami») e morì a poche file dalla porta, senza chiamarlo.
+- **Hrodna**: danzatrice delle feste d'estate di Ignis, figlia di un fabbro. La notte della Discordia ballava a una festa di nozze quando il fuoco diventò rabbia ed entrò in lei. Morì danzando nella Forgia del Caos contro il Demone Maggiore.
+- **Ottavia**: scrisse il *Trattato sulla Corruzione Elementale* (le malattie degli elementi). Odiava la Pietra Filosofale del suo maestro. La notte della Discordia versò la sua formula dei sette elementi nel cristallo; nel guscio trovò l'errore: non aveva contato il Vuoto.
+- **Corvo**: per ordine di Galdor uccise il **messaggero** che gli Architetti fedeli mandarono a corte tre giorni prima della Discordia, e bruciò il messaggio. Il messaggero si chiamava **Ivo**.
+- **Isaura**: accompagnava i morti verso l'Essenza su una barca piatta; il suo maestro è il Negromante Supremo. Nel Labirinto ritrovò la bambina morta di febbre che non era riuscita ad accompagnare e si addormentò con lei nei Chiostri: è l'unica ombra del Labirinto che dorme davvero.
+- **Ilio**: sentiva una musica quando gli elementi si incontravano (Fuoco e Acqua una nota bassa e calda, Vento e Terra una nota lunga, Luce e Tenebra un silenzio pieno). Scese fino alla Soglia e si sedette sulla sedia di Sereth, rivolta verso il buio; non ne conosce il nome.
 
 ---
 

@@ -22,7 +22,7 @@ TARGET_MULT = 10
 BASELINE = {"eventi": 5166, "stanze": 1900, "lettere": 544, "personaggi": 583, "finali": 340, "bestiario": 1147,
             "fasi dei boss": 436, "biomi": 283, "libri": 346, "reliquie e oggetti": 999, "epitaffi e nemesi": 229,
             "dialoghi del Campo": 0, "atlante": 0,
-            "discese dimenticate": 0}
+            "discese dimenticate": 0, "vite prestate": 0}
 STOPWORDS = set("""il lo la i gli le un uno una di a da in con su per tra fra e o ma se che chi non ne ci si mi ti vi
 è sono era ha ho hai del della dei degli delle al alla ai agli alle dal dalla nel nella nei negli nelle sul sulla
 come più quando dove anche solo poi già ancora tutto tutti tua tuo tue tuoi sua suo sue suoi mia mio è ed d l un'
@@ -88,6 +88,7 @@ def blocks() -> dict:
         "dialoghi del Campo": dialogue_texts(load("dialogues.json")),
         "atlante": [p["text"] for pages in load("atlante.json")["biomes"].values() for p in pages],
         "discese dimenticate": [x for t in load("lettere.json")["threads"] for x in t["letters"] + [t["epilogue"]]],
+        "vite prestate": [m["text"] for c in load("vite.json")["classes"].values() for m in c["memories"]],
     }
 
 

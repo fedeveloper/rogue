@@ -90,6 +90,7 @@ def sections() -> List[Tuple[str, int, int]]:
         ("Atlante", sum(len(atlas_open(b)) for b in GAME_DATA["atlante"]["biomes"]), sum(len(p) for p in GAME_DATA["atlante"]["biomes"].values())),
         ("Discese dimenticate", sum(min(PROFILE_MANAGER.codex.get("threads", {}).get(t["id"], 0), len(t["letters"])) for t in GAME_DATA["lettere"]["threads"]),
          sum(len(t["letters"]) for t in GAME_DATA["lettere"]["threads"])),
+        ("Vite prestate", sum(len(lives_open(c)) for c in GAME_DATA["vite"]["classes"]), sum(len(v["memories"]) for v in GAME_DATA["vite"]["classes"].values())),
     ]
 
 
@@ -328,10 +329,42 @@ def atlas_page() -> List[str]:
     return lines
 
 
+def lives_open(class_id: str) -> list:
+    """I ricordi della vita prestata di una classe che il profilo ha già aperto: uno per livello di Maestria
+    (`data/vite.json`); i più vicini alla verità aspettano anche il progresso del profilo (`requires`)."""
+    from events import check
+    played = class_id in PROFILE_MANAGER._data.get("class_xp", {})  # il primo ricordo torna alla prima discesa
+    lvl = PROFILE_MANAGER.get_class_lvl(class_id, 1) if played else 0
+    return [m for m in GAME_DATA["vite"]["classes"][class_id]["memories"] if m["level"] <= lvl and check(None, m.get("requires"), 0)]
+
+
+def new_memories(class_id: str, old_lvl: int, new_lvl: int) -> list:
+    """I ricordi che salire di Maestria da `old_lvl` a `new_lvl` apre adesso."""
+    return [m for m in lives_open(class_id) if old_lvl < m["level"] <= new_lvl]
+
+
+def lives_page() -> List[str]:
+    """Le vite prestate: chi erano gli eroi che il Fuoco presta, un ricordo per ogni livello di Maestria."""
+    lines = []
+    for cid, life in GAME_DATA["vite"]["classes"].items():
+        role = GAME_DATA["classes"][cid]["role"]
+        found = lives_open(cid)
+        if not found:
+            lines += [f"{UNKNOWN} — {Colors.RED}Gioca il {role}.{Colors.RESET}", ""]
+            continue
+        lines.append(f"{Colors.MAGENTA}{Colors.BOLD}{role}: {life['name']}{Colors.RESET}  ({len(found)}/{len(life['memories'])})")
+        for m in life["memories"]:
+            if m in found: lines += [f"  {Colors.CYAN}Lv.{m['level']} · {m['title']}{Colors.RESET}", f"  {m['text']}", ""]
+            elif m.get("requires") and m["level"] <= PROFILE_MANAGER.get_class_lvl(cid, 1): lines.append(f"  {UNKNOWN} — {Colors.RED}Questo ricordo aspetta che tu sappia di più.{Colors.RESET}")
+            else: lines.append(f"  {UNKNOWN} — {Colors.RED}Maestria Lv.{m['level']}{Colors.RESET}")
+        lines.append("")
+    return lines
+
+
 PAGES = {"Bestiario": bestiary_page, "Personaggi": characters_page, "Eventi": events_page,
          "Lettere insanguinate": letters_page, "Reliquie": relics_page, "Finali": endings_page,
          "Rune": runes_page, "Parole runiche": runewords_page, "Nemesi": nemeses_page, "Cimitero": cemetery_page, "Fasi dei boss": phases_page, "Reazioni elementali": reactions_page, "Incantesimi": spells_page, "Atlante": atlas_page,
-         "Discese dimenticate": threads_page}
+         "Discese dimenticate": threads_page, "Vite prestate": lives_page}
 
 
 def show_codex():

@@ -120,6 +120,17 @@ def gated_texts():
             for c in sc["choices"]: yield c.get("msg", ""), ev.get("requires", {})
     for e in RAW_DATA["bestiario"]["creatures"].values():
         yield e["vista"], {}
+    for b in v6_books().values():
+        won = {"won": True} if b["unlock"]["type"] in ("won_normal", "ascension") else {}
+        for ch in b["chapters"]: yield ch["title"] + " " + ch["text"], {**won, **ch.get("requires", {})}
+    for life in RAW_DATA["vite"]["classes"].values():
+        for m in life["memories"]: yield m["text"], m.get("requires", {})
+
+
+def v6_books() -> dict:
+    """I libri dell'Archivio della v6: solo lettura, senza bonus."""
+    import archive
+    return {k: b for k, b in archive.BOOKS.items() if "bonus" not in b}
 
 
 class LadderTest(unittest.TestCase):
@@ -182,6 +193,57 @@ class ThreadsAndBestiaryTest(unittest.TestCase):
         self.assertEqual(len(tiers(0)), 1)
         self.assertEqual(len(tiers(rules["habits"])), 2)
         self.assertEqual(len(tiers(rules["story"])), 3)
+
+
+class LivesAndBooksTest(unittest.TestCase):
+    def setUp(self):
+        import copy
+        from data_manager import PROFILE_MANAGER
+        self.pm, self._saved = PROFILE_MANAGER, copy.deepcopy(PROFILE_MANAGER._data)
+        self._save = mock.patch.object(PROFILE_MANAGER, "save"); self._save.start()
+        PROFILE_MANAGER._data.update(class_xp={}, class_lvl={}, max_floor=0, won_normal=False)
+        PROFILE_MANAGER.stats["total_bosses"] = 0
+
+    def tearDown(self):
+        self._save.stop()
+        self.pm._data.clear(); self.pm._data.update(self._saved)
+
+    def test_lives_and_books_follow_the_writing_guide(self):
+        self.assertEqual(set(RAW_DATA["vite"]["classes"]), set(RAW_DATA["classes"]), "ogni classe ha la sua vita prestata")
+        levels = [str(n) for n in range(2, 7)]
+        for cid, life in RAW_DATA["vite"]["classes"].items():
+            with self.subTest(life=cid):
+                self.assertIn(life["name"], CANON)
+                self.assertEqual([m["level"] for m in life["memories"]], [1] + [int(n) for n in levels], "un ricordo per livello di Maestria")
+                for m in life["memories"]: self.assertTrue(70 <= len(m["text"].split()) <= 250, f"{len(m['text'].split())} parole")
+        for bid, b in v6_books().items():
+            with self.subTest(book=bid):
+                self.assertGreaterEqual(len(b["chapters"]), 4)
+                for ch in b["chapters"]:
+                    self.assertTrue(80 <= len(ch["text"].split()) <= 400, f"{len(ch['text'].split())} parole")
+                    self.assertLessEqual(set(ch.get("requires", {})), events.PROFILE_CONDITIONS)
+
+    def test_a_memory_returns_with_each_mastery_level(self):
+        import codex
+        self.assertEqual(codex.lives_open("1"), [], "una classe mai giocata non ricorda niente")
+        self.pm.set_class_xp("1", 10)
+        self.assertEqual([m["level"] for m in codex.lives_open("1")], [1])
+        self.pm.set_class_lvl("1", 3)
+        self.assertEqual([m["title"] for m in codex.new_memories("1", 1, 3)], [m["title"] for m in RAW_DATA["vite"]["classes"]["1"]["memories"][1:3]])
+        self.pm.set_class_xp("9", 10); self.pm.set_class_lvl("9", 6)
+        gated = [m for m in RAW_DATA["vite"]["classes"]["9"]["memories"] if m.get("requires")]
+        self.assertTrue(gated)
+        self.assertEqual(len(codex.lives_open("9")), 6 - len(gated), "i ricordi più vicini alla verità aspettano il progresso")
+        self.assertIn(codex.UNKNOWN, "\n".join(codex.lives_page()))
+
+    def test_a_late_chapter_stays_unreadable(self):
+        import archive
+        book = archive.BOOKS["quaderno_orvin"]
+        self.assertNotIn("bonus", book)
+        self.assertLess(len(archive.open_chapters(book)), len(book["chapters"]))
+        with mock.patch.object(events, "check", return_value=True):
+            self.assertEqual(len(archive.open_chapters(book)), len(book["chapters"]))
+        self.assertNotIn(book["title"], [t for t, _ in archive.unlocked_archive_bonuses({"max_floor": 30})])
 
 
 class TextsTest(unittest.TestCase):

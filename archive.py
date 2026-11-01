@@ -31,14 +31,15 @@ def get_archive_bonus(stat: str, profile: dict) -> float:
     return sum(b.get("bonus", {}).get(stat, 0) for b_id, b in BOOKS.items() if is_book_unlocked(b_id, profile))
 
 def unlocked_archive_bonuses(profile: dict) -> list:
-    return [(b["title"], b.get("bonus_desc", "")) for b_id, b in BOOKS.items() if is_book_unlocked(b_id, profile)]
+    """I tomi sbloccati che danno un bonus (i libri di sola lettura non hanno `bonus_desc`)."""
+    return [(b["title"], b["bonus_desc"]) for b_id, b in BOOKS.items() if b.get("bonus_desc") and is_book_unlocked(b_id, profile)]
 
 def show_archive(profile):
     books = BOOKS
     
     while True:
         clear_screen()
-        prompt = f"{Colors.MAGENTA}{Colors.BOLD}--- 📜 L'ARCHIVIO DI AETHELGARD ---{Colors.RESET}\nQui sono custoditi i frammenti di storia che hai recuperato.\nLa conoscenza è potere: decifrare questi tomi ti conferisce bonus in combattimento.\n"
+        prompt = f"{Colors.MAGENTA}{Colors.BOLD}--- 📜 L'ARCHIVIO DI AETHELGARD ---{Colors.RESET}\nQui sono custoditi i frammenti di storia che hai recuperato.\nLa conoscenza è potere: alcuni tomi ti conferiscono bonus in combattimento, altri raccontano soltanto.\n"
         
         available_books = []
         options = []
@@ -49,9 +50,10 @@ def show_archive(profile):
             
             if unlocked:
                 available_books.append((b_id, b_data))
-                options.append(f"{Colors.GREEN}{b_data['title']}{Colors.RESET} (Bonus: {buff})")
+                options.append(f"{Colors.GREEN}{b_data['title']}{Colors.RESET}" + (f" (Bonus: {buff})" if buff else " (da leggere)"))
             else:
-                prompt += f"\n{Colors.RED}?. [BLOCCATO] - {b_data['unlock_condition']}{Colors.RESET}\n   {Colors.YELLOW}↳ Ricompensa: {buff}{Colors.RESET}"
+                prompt += f"\n{Colors.RED}?. [BLOCCATO] - {b_data['unlock_condition']}{Colors.RESET}"
+                if buff: prompt += f"\n   {Colors.YELLOW}↳ Ricompensa: {buff}{Colors.RESET}"
         
         options.append("Torna al Campo Base")
         idx = interactive_menu(options, prompt)
@@ -60,20 +62,28 @@ def show_archive(profile):
         if 0 <= idx < len(available_books):
             read_book(available_books[idx][1])
 
+def open_chapters(book: dict) -> list:
+    """I capitoli di un libro che il profilo può leggere: alcuni si aprono più avanti (`requires`, condizioni del profilo)."""
+    from events import check
+    return [ch for ch in book["chapters"] if check(None, ch.get("requires"), 0)]
+
 def read_book(book):
     while True:
         clear_screen()
+        chapters = open_chapters(book)
+        locked = len(book["chapters"]) - len(chapters)
         prompt = f"{Colors.MAGENTA}{Colors.BOLD}--- {book['title']} ---{Colors.RESET}\n"
+        if locked: prompt += f"{Colors.RED}??? — {locked} {'capitolo è ancora illeggibile' if locked == 1 else 'capitoli sono ancora illeggibili'}: scendi più a fondo.{Colors.RESET}\n"
         
-        options = [ch['title'] for ch in book['chapters']]
+        options = [ch['title'] for ch in chapters]
         options.append("Indietro")
         
         idx = interactive_menu(options, prompt)
         
         if idx == len(options) - 1: break
-        if 0 <= idx < len(book['chapters']):
+        if 0 <= idx < len(chapters):
             clear_screen()
-            ch = book['chapters'][idx]
+            ch = chapters[idx]
             display_msg(f"{Colors.YELLOW}{Colors.BOLD}--- {ch['title']} ---{Colors.RESET}\n")
             delay_print(ch['text'], 0.03)
             wait_enter("\n\nPremi INVIO per tornare all'indice...")

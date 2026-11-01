@@ -1,0 +1,325 @@
+{
+    "classes": {
+        "1": {
+            "name": "Bran di Aurelia",
+            "memories": [
+                {
+                    "level": 1,
+                    "title": "La Porta del Sole",
+                    "text": "Ti ricordi una porta di bronzo alta come dieci uomini, sul lato orientale di Aurelia, e il sole che ci batteva sopra ogni mattina facendola sembrare d'oro. Bran la sorvegliava da undici anni. Conosceva il suono di ogni cardine, il peso di ogni battente, il nome di ogni mercante che entrava all'alba con il carro. Non era un eroe. Era una guardia. Gli piaceva il suo lavoro perché era semplice: stare fermo in un posto, e fare in modo che quel posto restasse com'era. Il Fuoco ti presta la sua forza, ma soprattutto ti presta questo: la pazienza di chi resta."
+                },
+                {
+                    "level": 2,
+                    "title": "Il Pane della Caserma",
+                    "text": "Ti ricordi il pane della caserma, duro come un sasso, inzuppato nel brodo la sera, e le risate dei compagni di turno. C'era Gerd, che russava; c'era la piccola Mila, l'ultima arrivata, che aveva paura dei cavalli e tirava di spada meglio di tutti. Bran le aveva insegnato a tenere lo scudo alto. Lei gli aveva insegnato a ridere delle cose che facevano paura. Nel Crepuscolo Lungo il cielo diventava grigio e i turni si allungavano, ma la sera, intorno al pane, nessuno parlava della fine. Parlavano di cavalli, di ragazze, del brodo troppo salato."
+                },
+                {
+                    "level": 3,
+                    "title": "La Notte della Discordia",
+                    "text": "Ti ricordi la notte. Il cielo che si strappava come una tela, le stelle che cadevano sulla città, il rumore del marmo che si spaccava sotto i piedi. La gente correva verso la Porta del Sole, l'unica che dava sulla strada per le colline. Bran l'aprì. Poi la tenne aperta. Il terreno sprofondava intorno alla porta e lui puntellava i battenti con le spalle, con lo scudo, con la schiena, mentre la folla passava. Mila era accanto a lui. Gli disse: chiudiamola e scappiamo. Lui disse: ancora un carro. Poi ancora uno."
+                },
+                {
+                    "level": 4,
+                    "title": "L'Ultimo Carro",
+                    "text": "Ti ricordi l'ultimo carro. Una donna con due bambini, e un vecchio che spingeva da dietro perché il mulo non ce la faceva più. Bran lo vide arrivare mentre la porta cominciava a scendere nel buio, insieme al pezzo di muro che la reggeva. Disse a Mila di andare. Lei andò, piangendo, aggrappata al carro. Il carro passò. La porta no. Bran restò con la schiena contro il bronzo mentre la città scendeva nel Labirinto, e l'ultima cosa che vide fu il sole, quello vero, sparire dietro il bordo del mondo. Non ebbe paura. Aveva tenuto la porta."
+                },
+                {
+                    "level": 5,
+                    "title": "Nel Guscio",
+                    "text": "Ti ricordi il dopo, per quel poco che un morto ricorda. Bran era diventato uno Svuotato, fermo con la schiena contro una porta che non portava più da nessuna parte, in un piano dei Chiostri. Il Labirinto lo stava facendo diventare un mattone del guscio, piano, come fa con tutti. Poi sentì un calore. Una brace, piccola, che lo cercava fra le pietre. Il Fuoco lo prese prima che il guscio lo finisse, e lo portò via. Bran non sapeva perché. Il Fuoco non lo disse. Lo tenne, come si tiene qualcosa di prezioso per prestarlo a qualcuno che ne avrà bisogno."
+                },
+                {
+                    "level": 6,
+                    "title": "Il Riposo di Bran",
+                    "text": "Ti ricordi Bran fino in fondo, adesso: la porta, il pane, Mila, l'ultimo carro. Il Fuoco ti ha prestato la sua vita abbastanza a lungo perché tu la conoscessi tutta, e quando una vita prestata è conosciuta tutta, può riposare. Lo senti andare via, piano, come un soldato che finalmente smonta dal turno. Ti lascia la sua forza, perché ormai è tua. Ti lascia anche un'ultima cosa, che non è un ricordo ma una certezza: Mila arrivò sulle colline, con il carro, e visse. Sulla sua porta, per tutta la vita, tenne appeso uno scudo da guardia."
+                }
+            ]
+        },
+        "2": {
+            "name": "Nim",
+            "memories": [
+                {
+                    "level": 1,
+                    "title": "Le Mappe di Valeriana",
+                    "text": "Ti ricordi le dita veloci di una ragazza in una piazza di Valeriana, nella nebbia, e la borsa di un mercante che diventa più leggera. Nim non rubava oro: rubava mappe. Nelle valli della nebbia le mappe valevano più dell'oro, perché senza mappa ci si perdeva a dieci passi da casa. Le rubava ai cartografi ricchi e le rivendeva ai pastori poveri, a metà prezzo. Non si sentiva un'eroina. Si sentiva una che sapeva sempre dove si trovava, ed era l'unica cosa di cui andasse fiera."
+                },
+                {
+                    "level": 2,
+                    "title": "I Tetti",
+                    "text": "Ti ricordi i tetti di ardesia di Valeriana, bagnati di nebbia, e la libertà di correrci sopra di notte. Nim conosceva ogni grondaia, ogni comignolo, ogni tetto che reggeva e ogni tetto che no. Le guardie la chiamavano il gatto grigio. Una volta una guardia giovane la inseguì per tre tetti e poi si fermò, ridendo, e le disse: sei troppo brava, vai. Lei tornò la sera dopo a lasciargli una mela sul davanzale. Da allora, ogni volta che lui era di turno, lei rubava un po' meno."
+                },
+                {
+                    "level": 3,
+                    "title": "La Mappa di Orvin",
+                    "text": "Ti ricordi la mappa più bella che Nim avesse mai visto, in casa di un cartografo vecchio e burbero di nome Orvin. Era la mappa del Labirinto, dei primi piani, disegnata dopo la Discordia da qualcuno che ci era sceso e tornato. Nim la rubò, e quella notte non la vendette. La guardò per ore. Capì che quell'uomo aveva fatto la cosa più coraggiosa che lei potesse immaginare: andare in un posto che cambia sempre, e tornare con qualcosa che non cambia. Il giorno dopo gliela riportò, e lui le diede un pezzo di pane e una matita."
+                },
+                {
+                    "level": 4,
+                    "title": "Il Debito",
+                    "text": "Ti ricordi il debito. Nim si era sentita in colpa con Orvin, e Orvin se n'era accorto, e le aveva detto: se vuoi ripagarmi, scendi con me fino al piano otto e reggi la lanterna. Lei scese. Imparò a contare i passi, a guardare cosa resta uguale, a non fidarsi delle porte troppo belle. Al piano otto una galleria crollò e Orvin restò dall'altra parte. Nim scavò per due giorni con le mani. Lo trovò vivo, furioso, che disegnava la frana. Le disse: adesso siamo pari. Lei pianse per la prima volta da quando era bambina."
+                },
+                {
+                    "level": 5,
+                    "title": "La Fuga",
+                    "text": "Ti ricordi l'ultima fuga di Nim. Era scesa da sola, anni dopo, per ritrovare una mappa che Orvin aveva perso al piano dodici. Qualcosa nelle Guglie la vide, e lei corse, come aveva sempre fatto, sui ponti di vento invece che sui tetti. Era la più veloce. Non bastò. Cadde fra due guglie, attraverso le nubi elettriche, e nella caduta vide il cielo di Aethelgard com'era, per un battito di ciglia: le stelle al loro posto, tutte. Poi il buio. Il Fuoco la trovò in fondo, con la mappa ancora stretta in mano."
+                },
+                {
+                    "level": 6,
+                    "title": "Il Riposo di Nim",
+                    "text": "Ti ricordi Nim tutta, adesso: le dita veloci, i tetti, la guardia con la mela, Orvin e la sua matita. Il Fuoco te l'ha prestata perché tu sapessi sempre dove ti trovi, e adesso lo sai. Lei se ne va leggera, come un gatto grigio su un tetto bagnato. Ti lascia la sua velocità, perché ormai è tua, e un'ultima cosa che non sapevi: la mappa del piano dodici, quella che stringeva cadendo, è arrivata a Tessa, anni dopo, portata da un mercante senza volto. Tessa non sa da dove venga. Adesso lo sai tu."
+                }
+            ]
+        },
+        "3": {
+            "name": "Teodor Vasse",
+            "memories": [
+                {
+                    "level": 1,
+                    "title": "L'Ultimo Allievo",
+                    "text": "Ti ricordi un ragazzo magro con le dita sporche d'inchiostro, nell'Accademia della Luce Calma, che arrivava sempre in ritardo e sapeva sempre la risposta. Teodor Vasse era figlio di un mugnaio, e all'Accademia c'era arrivato per una borsa di studio. Gli altri studenti lo prendevano in giro per le scarpe rotte. Lui non se ne accorgeva: era troppo occupato a capire come il Fuoco e l'Acqua si tenessero per mano. Il Fuoco ti presta il suo modo di guardare gli elementi: non come forze, ma come persone che una volta si volevano bene."
+                },
+                {
+                    "level": 2,
+                    "title": "Le Lezioni",
+                    "text": "Ti ricordi le lezioni sotto gli undici archi, le formule scritte sull'ardesia, l'odore di cera e di carta. Teodor amava soprattutto un corso che nessuno voleva frequentare: quello sull'elemento Normale, in fondo al terzo piano, tenuto da un maestro che non rideva mai. Teodor era spesso l'unico studente. Il maestro gli parlava come a un collega. Gli diceva che il Normale era l'elemento più importante, perché era quello di cui erano fatte le persone. Teodor lo scriveva sul quaderno, senza capire, sperando di capirlo un giorno."
+                },
+                {
+                    "level": 3,
+                    "title": "La Domanda",
+                    "text": "Ti ricordi l'ultima lezione. Il maestro scrisse una frase sola sulla lavagna e chiese se qualcuno avesse domande. Teodor ne aveva una. Voleva chiedere: e chi decide quando una cosa fragile ha bisogno di riposare? Non la fece. Aveva paura di sembrare stupido, o di sembrare troppo intelligente, non lo sapeva nemmeno lui. Il maestro aspettò, guardandolo. Poi cancellò la lavagna, tranne la frase, e uscì. Teodor si portò la domanda in tasca per il resto della sua vita, che non fu lunga."
+                },
+                {
+                    "level": 4,
+                    "title": "Il Grido",
+                    "text": "Ti ricordi la notte della Discordia vista dall'Accademia: il cielo che si spaccava, i libri che bruciavano da soli, gli studenti che correvano per i corridoi. Teodor non corse. Salì sul tetto, con il quaderno in mano, e gridò la sua domanda verso il cielo, verso gli Architetti, verso chiunque potesse sentire. Gridò finché non ebbe più voce. Nessuno rispose. Il tetto sprofondò con lui dentro il Labirinto, e la sua domanda restò nell'aria dei Chiostri, dove a volte la senti ancora, quando un'Eco del Rimpianto ti chiama con una voce che non riconosci."
+                },
+                {
+                    "level": 5,
+                    "title": "Il Quaderno",
+                    "text": "Ti ricordi il quaderno di Teodor, perché il Fuoco te l'ha restituito insieme alla sua vita. È pieno di formule, di schizzi, di domande scritte a margine. Nell'ultima pagina c'è scritto: il maestro dice che il Normale è l'elemento delle persone. Se è così, gli incantesimi sono un modo di parlare agli elementi come si parla a una persona. Sotto, una riga più recente, tremante: forse il maestro voleva parlare a tutte le persone insieme. Forse voleva dire a tutti di riposare. Teodor non scrisse altro.",
+                    "requires": {"won": true, "bosses_total": 40}
+                },
+                {
+                    "level": 6,
+                    "title": "Il Riposo di Teodor",
+                    "text": "Ti ricordi Teodor tutto, adesso: le scarpe rotte, le lezioni, la domanda non fatta, il grido dal tetto. Il Fuoco te l'ha prestato perché tu potessi parlare agli elementi come lui ci parlava, e adesso ci riesci. Lui se ne va con la sua domanda ancora in tasca, ma più leggera, come se qualcuno l'avesse finalmente ascoltata. Ti lascia l'Etere, che è tuo ormai, e una cosa che non sapevi: il suo maestro, la sera di quell'ultima lezione, aveva scritto sotto la frase il suo nome. Teodor lo lesse. Non lo ricorda più. Forse un giorno tu sì.",
+                    "requires": {"won": true, "bosses_total": 40}
+                }
+            ]
+        },
+        "4": {
+            "name": "Ser Maud",
+            "memories": [
+                {
+                    "level": 1,
+                    "title": "Sorella d'Ordine",
+                    "text": "Ti ricordi un'armatura bianca troppo grande per la ragazza che la indossava, e il giorno in cui Maud prestò giuramento nell'Ordine dei Paladini, ad Aurelia. Il cavaliere che le mise la spada sulla spalla si chiamava Alaric. Era già il Primo Paladino, già leggendario, e le sembrò un uomo molto stanco e molto gentile. Le disse: da oggi sei mia sorella. Lei ci credette fino in fondo. Il Fuoco ti presta il suo scudo, ma soprattutto ti presta il modo in cui Maud credeva nelle promesse."
+                },
+                {
+                    "level": 2,
+                    "title": "La Lavanda",
+                    "text": "Ti ricordi le serate in cui Alaric parlava di sua figlia Ilse, che coltivava lavanda in una valle di Valeriana. Lo faceva di rado, e solo con Maud, perché gli altri paladini lo avrebbero preso in giro. Diceva che Ilse piantava le file dritte come le piantava sua madre, e che d'estate il profumo arrivava fino alla strada. Maud gli disse una volta: quando sarà tutto finito, ci andiamo insieme a vedere il campo. Lui rise, e disse: quando sarà tutto finito. Nessuno dei due sapeva cosa sarebbe finito, e come."
+                },
+                {
+                    "level": 3,
+                    "title": "L'Ordine",
+                    "text": "Ti ricordi il giorno in cui la Luce divenne crudele. Gli Architetti convocarono Alaric da solo. Quando tornò aveva gli occhi di chi ha visto qualcosa che non può raccontare. Disse a Maud: mi hanno dato una porta da custodire. Non so cosa ci sia dietro. Non devo chiederlo. Lei gli chiese: e se ti serve aiuto? Lui disse: non mi servirà. Poi, dopo un silenzio lungo: se mi servisse, vieni. Partì quella notte. Maud lo guardò andare via dalla finestra della caserma, e cominciò quella notte stessa a prepararsi per raggiungerlo."
+                },
+                {
+                    "level": 4,
+                    "title": "La Strada",
+                    "text": "Ti ricordi la strada verso la porta. Maud partì dopo la Discordia, quando il mondo era già sprofondato. Scese nel Labirinto con la sua armatura bianca e un fazzoletto ripiegato nel guanto, su cui aveva scritto: arrivo, fratello. Aspettami. Combatté per molti piani. Imparò che la Luce degli Architetti non la proteggeva più, anzi bruciava. Continuò lo stesso. Sapeva dove andare perché Alaric le aveva disegnato la strada su un foglio, prima di partire, nel caso. Nel caso era arrivato."
+                },
+                {
+                    "level": 5,
+                    "title": "A Poche File",
+                    "text": "Ti ricordi le ultime ore di Maud, a poche file dalla porta. Era ferita, stanca, e aveva visto da lontano Alaric fare la ronda: dieci passi, giro, dieci passi. Avrebbe potuto chiamarlo. Non lo fece. Si sedette contro un muro, per riprendere fiato solo un momento, con lo scudo ancora al braccio. Pensò alla lavanda. Pensò che fra poco si sarebbe alzata e sarebbe andata da lui. Il momento durò più del previsto. Il Fuoco la trovò lì, seduta, con il fazzoletto ancora nel guanto."
+                },
+                {
+                    "level": 6,
+                    "title": "Il Riposo di Maud",
+                    "text": "Ti ricordi Maud tutta, adesso: il giuramento, la lavanda, l'ordine, la strada, le ultime file. Il Fuoco te l'ha prestata perché tu sapessi proteggere qualcuno anche quando è lontano, e adesso lo sai. Lei se ne va, finalmente, verso la porta che non ha mai raggiunto. Ti lascia la sua fede, che ormai è tua, e una cosa che non sapevi: Alaric, nei mille anni della sua ronda, si è fermato ogni giorno a guardare verso il punto da cui sarebbe dovuta arrivare. Dieci passi, giro, uno sguardo. Ogni giorno."
+                }
+            ]
+        },
+        "5": {
+            "name": "Hrodna di Ignis",
+            "memories": [
+                {
+                    "level": 1,
+                    "title": "La Festa del Fuoco",
+                    "text": "Ti ricordi i tamburi di Ignis, le fiaccole sulle montagne, una ragazza che danza intorno al falò più grande della festa d'estate con i capelli che sembrano fiamme. Hrodna era la danzatrice migliore della sua valle. Quando danzava, dicevano i vecchi, il fuoco si piegava a guardarla. Il fuoco di Ignis, allora, era gioia: si accendeva per le nozze, per le nascite, per il raccolto. Il Fuoco ti presta la sua forza, ma soprattutto ti presta il ricordo di quando il fuoco faceva ballare invece che bruciare."
+                },
+                {
+                    "level": 2,
+                    "title": "La Forgia di Casa",
+                    "text": "Ti ricordi la forgia di casa, piccola, con le iniziali della famiglia incise sulla cappa, e il padre di Hrodna che batteva il ferro mentre lei, bambina, gli girava intorno danzando. Lui fingeva di arrabbiarsi. Poi le dava il martelletto di legno e la lasciava battere su un pezzo di ferro freddo. Lei odiava il lavoro di forgia, troppo lento, troppo uguale. Amava il fuoco che ci stava dentro. Suo padre le disse una volta: il fuoco è lo stesso, sia per ballare sia per lavorare. Lei non gli credette."
+                },
+                {
+                    "level": 3,
+                    "title": "Il Fuoco che Cambia",
+                    "text": "Ti ricordi la sera in cui il fuoco cambiò. Era la notte della Discordia, e Hrodna stava danzando a una festa di nozze. Il falò si alzò di colpo, altissimo, e diventò rosso scuro, e smise di essere caldo per diventare furioso. Lei sentì il fuoco entrarle dentro, come un ballo che non poteva fermare. Danzò per tutta la notte, fra le case che bruciavano, e la gente fuggiva da lei come dal fuoco stesso. Non riusciva a smettere. Non voleva smettere. Il dolore e la gioia erano diventati la stessa cosa."
+                },
+                {
+                    "level": 4,
+                    "title": "La Rabbia",
+                    "text": "Ti ricordi gli anni dopo, quando Hrodna scese nel Labirinto perché in superficie nessuno voleva più vederla. Il fuoco furioso le era rimasto dentro. Combatteva come danzava, e più era ferita più danzava forte, perché il dolore la faceva bruciare meglio. I nemici avevano paura di lei. Lei aveva paura di sé stessa. A volte, dopo uno scontro, si sedeva e piangeva senza sapere perché, e poi sentiva il fuoco ricominciare a salire, come un tamburo lontano."
+                },
+                {
+                    "level": 5,
+                    "title": "L'Ultima Danza",
+                    "text": "Ti ricordi l'ultima danza di Hrodna, nella Forgia del Caos, dove il fuoco era più furioso che mai. Lì capì una cosa: la rabbia che aveva dentro era la stessa di tutte le forge di Ignis, di tutte le case che avevano perso qualcuno. Non era sua. Era di tutti. Danzò per loro, un'ultima volta, contro il Demone che portava quella rabbia, e mentre danzava sentì per un istante il fuoco tornare caldo, quello della festa d'estate. Poi cadde. Il Fuoco del Campo la trovò fra le scorie, ancora calda."
+                },
+                {
+                    "level": 6,
+                    "title": "Il Riposo di Hrodna",
+                    "text": "Ti ricordi Hrodna tutta, adesso: la festa, la forgia di casa, il fuoco che cambiò, la rabbia, l'ultima danza. Il Fuoco te l'ha prestata perché tu sapessi trasformare il dolore in forza, e adesso lo sai. Lei se ne va danzando, piano, con i passi di una festa d'estate e non di una battaglia. Ti lascia la sua furia, che ormai è tua, e un'ultima cosa che il Fuoco del Campo sa bene: il fuoco è lo stesso, sia per ballare sia per lavorare, sia per bruciare sia per riportare indietro. Suo padre aveva ragione."
+                }
+            ]
+        },
+        "6": {
+            "name": "Ottavia Lune",
+            "memories": [
+                {
+                    "level": 1,
+                    "title": "L'Allieva",
+                    "text": "Ti ricordi un laboratorio pieno di alambicchi su un'isola sospesa di Aetheria, e una ragazza dai capelli raccolti in fretta che annota tutto su un registro. Ottavia Lune era l'allieva dell'Alchimista Supremo, il più grande alchimista della sua epoca. Credeva nei numeri più che nelle persone: le persone mentono, i numeri no. Il Fuoco ti presta la sua precisione, la sua freddezza, e la sua convinzione che ogni cosa rotta abbia una formula per essere riparata."
+                },
+                {
+                    "level": 2,
+                    "title": "Il Trattato",
+                    "text": "Ti ricordi il trattato che Ottavia scrisse nel Crepuscolo Lungo, il Trattato sulla Corruzione Elementale, che tutti gli alchimisti lessero e nessuno ascoltò. Diceva che gli elementi non si stavano ribellando: si stavano ammalando, ognuno di una malattia diversa. Il Fuoco di rimpianto, la Luce di perfezione, il Normale di stanchezza. Diceva che le malattie si curano, ma bisogna capirne la causa. Ottavia passò anni a cercarla. La trovò, credeva, in un elemento che nessuno studiava, e chiese di parlare con l'Architetto che lo insegnava. Lui non la ricevette mai."
+                },
+                {
+                    "level": 3,
+                    "title": "La Pietra",
+                    "text": "Ti ricordi la Pietra Filosofale, l'ultima opera del suo maestro, che trasformava l'esperienza in oro. Ottavia la odiava. Diceva che era la prova che il mondo dava valore alla conoscenza solo se si poteva vendere. Il maestro rideva e le diceva che era troppo giovane. Lei gli rispondeva che lui era troppo vecchio per capire che il mondo stava finendo. Litigavano ogni sera, poi si sedevano insieme a guardare il tramonto dalle finestre del laboratorio, sopra il mare di nuvole. Si volevano bene come si vogliono bene due persone che hanno ragione tutte e due."
+                },
+                {
+                    "level": 4,
+                    "title": "La Formula",
+                    "text": "Ti ricordi la notte della Discordia vista dal laboratorio. Le isole di Aetheria cadevano una dopo l'altra, i cristalli di Luce si spezzavano nel cielo. Ottavia non scappò: aveva finito la formula. Una mistura dei sette elementi nella proporzione esatta, che secondo i suoi calcoli avrebbe invertito la Discordia. La versò nel cristallo dell'isola mentre l'isola cadeva. Per un istante, uno solo, tutto si fermò: l'isola nell'aria, le stelle nel cielo, il suo maestro con la bocca aperta. Poi la proporzione si ruppe, e l'isola cadde."
+                },
+                {
+                    "level": 5,
+                    "title": "Il Calcolo Sbagliato",
+                    "text": "Ti ricordi i secoli nel guscio, per quel poco che Ottavia ne ricorda. Continuava a rifare il calcolo, mentalmente, cercando l'errore. Lo trovò, alla fine: aveva calcolato tutti e sette gli elementi, ma non l'ottavo. Il Vuoto. Non era un elemento, per lei, e non lo aveva messo nella formula. Ma la Discordia non era una malattia degli elementi. Era una ferita fatta dal Vuoto. Nessuna proporzione di sette poteva curare la mancanza dell'ottavo. Il Fuoco la trovò mentre rifaceva il calcolo per la millesima volta."
+                },
+                {
+                    "level": 6,
+                    "title": "Il Riposo di Ottavia",
+                    "text": "Ti ricordi Ottavia tutta, adesso: il laboratorio, il trattato, la Pietra, la formula, l'errore. Il Fuoco te l'ha prestata perché tu sapessi mescolare ciò che sembra incompatibile, e adesso lo sai. Lei se ne va con il calcolo finalmente chiuso, il registro sotto il braccio. Ti lascia il suo talento, che ormai è tuo, e un'ultima nota che aveva scritto sul registro: la ferita non si cura con una formula. Si cura con una scelta. Qualcuno, un giorno, dovrà scegliere cosa fare del Vuoto. Spero che sia qualcuno che ha capito perché è stato creato."
+                }
+            ]
+        },
+        "7": {
+            "name": "Corvo",
+            "memories": [
+                {
+                    "level": 1,
+                    "title": "Il Nome",
+                    "text": "Ti ricordi un uomo che non aveva un nome, solo un soprannome: Corvo, perché vestiva di nero e arrivava sempre prima delle disgrazie. Era il sicario della corte di Galdor, nelle Valli del Sud. Non ne andava fiero e non se ne vergognava: era il suo lavoro, come per altri era arare. Il Fuoco ti presta la sua precisione, la sua capacità di colpire il punto giusto al momento giusto. E ti presta anche la sua colpa, perché senza quella Corvo non sarebbe Corvo."
+                },
+                {
+                    "level": 2,
+                    "title": "La Carestia",
+                    "text": "Ti ricordi la carestia del Sud. Tre raccolti perduti, i granai vuoti, i bambini con la pancia gonfia nei villaggi. Corvo li vedeva quando tornava dalle sue missioni, e per la prima volta il suo lavoro gli sembrò inutile: a cosa serviva uccidere i nemici del re, se il re non poteva sfamare il suo popolo? Ne parlò a Galdor, una sera, con una franchezza che a un altro sarebbe costata la testa. Galdor lo ascoltò e gli disse: ho trovato una soluzione. Un Architetto mi ha promesso la fine di ogni bisogno."
+                },
+                {
+                    "level": 3,
+                    "title": "Il Messaggero",
+                    "text": "Ti ricordi il messaggero. Arrivò a corte tre giorni prima della Discordia, con il sigillo degli Architetti fedeli. Portava un avvertimento: l'esperimento promesso al re era pericoloso, poteva lacerare il mondo, andava fermato. Galdor lesse il messaggio, impallidì, e poi chiamò Corvo. Gli disse: questo messaggio non è mai arrivato. Corvo esitò. Pensò ai bambini con la pancia gonfia. Pensò alla promessa dell'Architetto. Pensò che il messaggero aveva occhi gentili. Poi fece il suo lavoro, come sempre."
+                },
+                {
+                    "level": 4,
+                    "title": "La Notte",
+                    "text": "Ti ricordi la notte della Discordia vista dalle Valli del Sud, che furono le prime a sprofondare. Corvo era sulla strada di ritorno dalla frontiera, e vide le valli scendere nel buio una dopo l'altra, i villaggi, i granai vuoti, la corte. Capì subito. Capì che il messaggero aveva ragione, che il re aveva sbagliato, e che lui, Corvo, aveva tagliato l'unico filo che avrebbe potuto fermare tutto. Non pianse. Scese nel Labirinto quella notte stessa, per cercare un modo di rimediare, sapendo che non c'era."
+                },
+                {
+                    "level": 5,
+                    "title": "La Colpa Precisa",
+                    "text": "Ti ricordi gli anni di Corvo nel Labirinto. Uccideva mostri come aveva ucciso uomini, con precisione, senza gioia. Ogni volta che colpiva pensava al messaggero, ai suoi occhi gentili, alla lettera che non era mai arrivata. La sua colpa non era vaga, come quella del mondo: aveva un nome e un volto. Questo, stranamente, la rendeva più facile da portare. Morì nei Chiostri, colpito alle spalle da qualcosa che non aveva visto arrivare. Per un sicario, era quasi una giustizia."
+                },
+                {
+                    "level": 6,
+                    "title": "Il Riposo di Corvo",
+                    "text": "Ti ricordi Corvo tutto, adesso: il soprannome, la carestia, il messaggero, la notte, la colpa. Il Fuoco te l'ha prestato perché tu sapessi colpire senza esitare, e adesso lo sai. Lui se ne va come un'ombra che si scioglie alla luce, senza chiedere perdono. Ti lascia la sua mano ferma, che ormai è tua, e una cosa che non sapevi: il messaggero, prima di morire, gli aveva detto il suo nome. Si chiamava Ivo. Corvo lo ha ripetuto ogni giorno, per tutta la vita che gli è rimasta, e non lo ha mai dimenticato. È l'unica cosa del Labirinto che non è riuscito a togliergli."
+                }
+            ]
+        },
+        "8": {
+            "name": "Isaura di Morva",
+            "memories": [
+                {
+                    "level": 1,
+                    "title": "Le Paludi",
+                    "text": "Ti ricordi le Paludi di Morva, canne alte, acqua nera e ferma, nebbia bassa al mattino, e una donna seduta su una barca piatta che parla con qualcuno che non c'è. Isaura era una negromante, ma non nel senso che si teme: parlava con i morti per aiutarli ad andarsene. Ai suoi tempi la morte era un ritorno all'Essenza, ma alcuni morti avevano paura del viaggio, e restavano. Isaura li accompagnava. Il Fuoco ti presta il suo dono: sapere che fra un vivo e un morto c'è meno distanza di quanto si creda."
+                },
+                {
+                    "level": 2,
+                    "title": "Il Maestro",
+                    "text": "Ti ricordi il maestro di Isaura, un uomo magro con una veste piena di tasche, che le insegnò a parlare ai morti. Era gentile e stanchissimo. Diceva che tra un uomo e un'ombra non c'è differenza, se entrambi sono fatti di Essenza, e che il compito di un negromante è ricordarlo a tutti e due. Isaura lo ammirava moltissimo. Notava però che lui faceva sempre più fatica a lasciare andare i morti che accompagnava. Ne teneva qualcuno con sé, più a lungo del necessario. Per compagnia, diceva."
+                },
+                {
+                    "level": 3,
+                    "title": "I Morti che Restano",
+                    "text": "Ti ricordi il giorno, dopo la Discordia, in cui i morti smisero di andarsene. Isaura era sulla barca con una bambina morta di febbre, pronta ad accompagnarla. La bambina non partiva. Non poteva. La strada verso l'Essenza si era chiusa. Isaura provò per ore, poi per giorni. I morti si accumulavano nelle paludi, confusi, spaventati, e lei non poteva fare niente. Da quel giorno smise di dormire, perché nel sonno li sentiva tutti chiamarla."
+                },
+                {
+                    "level": 4,
+                    "title": "L'Esercito",
+                    "text": "Ti ricordi l'esercito del maestro. Quando i morti smisero di andarsene, lui smise di cercare di accompagnarli. Li tenne. Tutti. Ne fece un esercito di ombre e scese nel Labirinto, dove adesso lo chiamano il Negromante Supremo. Isaura lo seguì, per cercare di convincerlo a lasciarli andare. Lui le disse: andare dove? Non c'è più nessun posto. Qui almeno non sono soli. E nemmeno io. Isaura capì che aveva ragione, e che proprio per questo era la cosa più triste che avesse mai sentito."
+                },
+                {
+                    "level": 5,
+                    "title": "La Bambina",
+                    "text": "Ti ricordi l'ultima cosa che Isaura fece. Nel Labirinto ritrovò la bambina della barca, diventata un'ombra fra le ombre del maestro. La prese per mano e la portò via, attraverso tre biomi, cercando un posto dove potesse riposare. Non lo trovò. Allora si sedette con lei, in un angolo tranquillo dei Chiostri, e le raccontò una storia, e poi un'altra, finché la bambina non si addormentò, l'unica ombra del Labirinto che dorme davvero. Isaura si addormentò accanto a lei, per la prima volta in anni. Non si svegliò. Il Fuoco le trovò insieme."
+                },
+                {
+                    "level": 6,
+                    "title": "Il Riposo di Isaura",
+                    "text": "Ti ricordi Isaura tutta, adesso: le paludi, il maestro, i morti che restano, l'esercito, la bambina. Il Fuoco te l'ha prestata perché tu sapessi stare sul confine fra vivi e morti senza averne paura, e adesso lo sai. Lei se ne va dormendo, finalmente, con la mano di una bambina nella sua. Ti lascia il suo dono, che ormai è tuo, e una cosa che non sapevi: la strada verso l'Essenza non si è chiusa da sola. È stata chiusa dal Vuoto, che è un luogo dove l'Essenza si ferma. Chi lo ha creato voleva che i morti potessero finalmente fermarsi. Non sapeva che si sarebbero fermati anche i vivi.",
+                    "requires": {"won": true, "bosses_total": 40}
+                }
+            ]
+        },
+        "9": {
+            "name": "Ilio",
+            "memories": [
+                {
+                    "level": 1,
+                    "title": "La Notte della Nascita",
+                    "text": "Ti ricordi un pianto di neonato nella notte, su un'isola di Aetheria, mentre il cielo si strappa sopra la casa. Ilio nacque nell'istante esatto della Discordia, quando gli elementi si separarono. Sua madre lo tenne in braccio mentre l'isola cadeva, e mentre cadeva vide qualcosa di strano: intorno al bambino gli elementi non si separavano. Il fuoco della candela e l'acqua della brocca si toccavano senza spegnersi. Il Fuoco ti presta la vita più vicina all'Equilibrio che sia mai esistita dopo la fine dell'Equilibrio."
+                },
+                {
+                    "level": 2,
+                    "title": "Il Bambino che Teneva Insieme",
+                    "text": "Ti ricordi l'infanzia di Ilio fra i sopravvissuti di Aetheria, in un campo di profughi sulle colline. Dove lui giocava, le cose stavano insieme: il fuoco non bruciava l'erba, il vento non spegneva le candele, l'acqua dei pozzi tornava a dissetare. La gente veniva da lontano per stargli vicino. I sacerdoti lo chiamavano il bambino dell'Equilibrio. Lui odiava quel nome. Voleva solo giocare con gli altri bambini, che però avevano paura di lui, perché era diverso."
+                },
+                {
+                    "level": 3,
+                    "title": "La Musica",
+                    "text": "Ti ricordi la musica che Ilio sentiva quando gli elementi si incontravano. Ogni coppia aveva un accordo: Fuoco e Acqua una nota bassa e calda, Vento e Terra una nota lunga, Luce e Tenebra un silenzio pieno. Nessun altro la sentiva. Ilio passava le notti ad ascoltarla, sdraiato sull'erba, e la mattina provava a farla sentire agli altri, unendo elementi diversi. Gli adulti la chiamavano magia. Lui sapeva che era solo un ricordo: il mondo che si ricordava com'era stato, per un istante, ogni volta che due elementi si toccavano."
+                },
+                {
+                    "level": 4,
+                    "title": "La Torre",
+                    "text": "Ti ricordi il giorno in cui Ilio, ormai giovane, scese nel Labirinto per cercare la causa della Discordia. Pensava di poterla riparare, lui che teneva insieme gli elementi. Scese fino alla Soglia, e lì vide i resti di una cittadella su un'isola caduta, e capì di chi era. Non vide il suo padrone. Vide solo una sedia, rivolta verso il buio, e un cuscino consumato da qualcuno che ci si era seduto a pensare per moltissimo tempo. Ilio si sedette su quella sedia, e per la prima volta sentì una musica senza accordo: una nota sola, stanca, che chiedeva di smettere di suonare.",
+                    "requires": {"won": true, "bosses_total": 40}
+                },
+                {
+                    "level": 5,
+                    "title": "La Scelta di Ilio",
+                    "text": "Ti ricordi cosa capì Ilio su quella sedia. Che chi aveva creato il Vuoto non voleva distruggere il mondo: voleva farlo riposare. Che il Vuoto era una nota sola, stanca, che voleva il silenzio. E che lui, Ilio, era il contrario: era tutte le note insieme, era il mondo che voleva continuare a suonare. Non sapeva chi dei due avesse ragione. Restò alla Soglia per anni, cercando un accordo fra il silenzio e la musica, finché il Labirinto non lo prese. Il Fuoco lo trovò ancora seduto sulla sedia, con un sorriso.",
+                    "requires": {"won": true, "bosses_total": 40}
+                },
+                {
+                    "level": 6,
+                    "title": "Il Riposo di Ilio",
+                    "text": "Ti ricordi Ilio tutto, adesso: la nascita, il bambino che teneva insieme, la musica, la torre, la sedia. Il Fuoco te l'ha prestato per ultimo, perché è la vita più vicina alla verità, e adesso tu senti la sua musica ogni volta che due elementi si incontrano. Lui se ne va suonando, piano, un accordo che contiene anche il silenzio. Ti lascia la sua capacità di tenere insieme ciò che è separato, che ormai è tua, e una domanda che non ha fatto in tempo a fare a nessuno: e se il silenzio e la musica non fossero nemici? E se il riposo fosse solo la pausa fra due note?",
+                    "requires": {"won": true, "bosses_total": 40}
+                }
+            ]
+        }
+    }
+}

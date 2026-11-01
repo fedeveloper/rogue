@@ -11,7 +11,7 @@ from events import event_room
 from floor_map import ROWS, SIDES, TALL_MAP_ROWS, apply_biome_on_floor, generate_floor_map, reachable, render_map, room_label
 from inventory_menu import show_inventory_menu, show_player_stats
 from archive import show_archive
-from codex import show_codex
+from codex import new_memories, show_codex
 from camp import show_camp_fire, start_of_run_boon
 from endings import choose_ending
 import modes
@@ -34,6 +34,7 @@ def _update_class_mastery(player: Player, floor: int):
     
     display_msg(f"\n{Colors.MAGENTA}[ Maestria {player.role} ] +{xp_gained} XP (Totale: {curr_xp}){Colors.RESET}")
     reqs = GAME_DATA["meta"]["mastery_xp_requirements"]
+    start_lvl = curr_lvl
     while str(curr_lvl + 1) in reqs and curr_xp >= reqs[str(curr_lvl + 1)]:
         curr_lvl += 1; PROFILE_MANAGER.set_class_lvl(c_id, curr_lvl)
         display_msg(f"{Colors.YELLOW}*** MAESTRIA SALITA AL LIVELLO {curr_lvl}! ***{Colors.RESET}")
@@ -41,6 +42,8 @@ def _update_class_mastery(player: Player, floor: int):
         display_msg(f"Sbloccato: {reward['desc']}")
         if reward.get("type") in ["unlock", "class"] and reward.get("id", "null") != "null" and reward.get("id") not in PROFILE_MANAGER.unlocked_ids:
             PROFILE_MANAGER.unlocked_ids.append(reward.get("id"))
+    for m in new_memories(c_id, start_lvl, curr_lvl):
+        display_msg(f"{Colors.MAGENTA}Un ricordo torna: «{m['title']}». (Codice: Vite prestate){Colors.RESET}")
 
 def _check_feats(player: Player, floor: int, infinite: bool):
     display_msg(f"\n{Colors.CYAN}[ Imprese ]{Colors.RESET}")
