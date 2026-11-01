@@ -65,6 +65,89 @@
                 "requires": {"reached_floor": 15},
                 "text": "Su una guglia isolata, dove il vento non arriva, c'è un campo di lavanda. Le file sono dritte e curate, come le piantano i contadini di Valeriana, e il Labirinto non ha osato toccarle. Le guide dicevano che ogni bioma ha un posto che il Labirinto non riesce a mangiare, un ricordo troppo amato per essere digerito, e che sulle Guglie è questo. Chi l'ha piantato era una ragazza di Valeriana che aspettava suo padre, un cavaliere partito per custodire una porta. In fondo al campo c'è una vanga piccola, da bambina. Il profumo, nelle giornate senza vento, arriva fino all'Osservatorio."
             }
+        ],
+        "ventre": [
+            {
+                "title": "Il Mare Interno",
+                "requires": {"reached_floor": 16},
+                "text": "Il Ventre era il Mare Interno di Aethelgard, l'acqua al centro del continente, e le coste intorno: porti di pescatori, boschi, isole basse. Quando l'Acqua si separò dagli altri elementi diventò Memoria, e il mare diventò un organismo che digerisce ricordi. Le pareti sono membrane traslucide; dentro galleggiano oggetti e volti di gente morta secoli fa, che a volte si girano a guardarti. L'odore è quello del salmastro e dei fiori appassiti dei funerali. La gravità qui è soggettiva: chi crede abbastanza forte che il soffitto sia il pavimento, ci cammina sopra. I pescatori della costa dicevano che il mare ricorda tutto. Avevano ragione."
+            },
+            {
+                "title": "La Dissoluzione dell'Io",
+                "requires": {"reached_floor": 17},
+                "text": "Il pericolo del Ventre è lento. Più a lungo resti, più il Labirinto ti digerisce: perdi un poco di forza, poi un poco di te, poi i ricordi meno importanti, quelli che non sapevi di avere finché non te ne accorgi mancare. Le guide lo chiamavano Dissoluzione dell'Io. Chi esce dal Ventre torna quello che era, quasi. Chi resta diventa un Ricordo Annegato, una figura che galleggia nelle pozze azzurre e ripete per sempre l'ultima cosa che ha pensato prima di dimenticarsi. Per questo nel Ventre si cammina in fretta, e chi scrive un diario lo tiene stretto al petto."
+            },
+            {
+                "title": "Il Cuore del Ventre",
+                "requires": {"reached_floor": 19},
+                "text": "Al centro della Memoria batte un cuore grande come una casa. Ogni battito spinge ricordi in tutto il Labirinto, come il sangue in un corpo. I dotti di Aurelia avevano una teoria crudele: che a ogni battito, in superficie, qualcuno dimentichi qualcosa. Un nome, un sapore, il motivo per cui era uscito di casa. Che il Labirinto si nutra così, battito dopo battito, della memoria del mondo che resta. Nessuno ha mai potuto verificarla. Ma chi ha sentito il cuore battere da vicino giura che, fra un battito e l'altro, c'è un silenzio in cui si sente il mondo di sopra, lontanissimo, che si dimentica."
+            },
+            {
+                "title": "Il Drago di Zaffiro",
+                "requires": {"reached_floor": 20},
+                "text": "Il Drago di Zaffiro era il guardiano del Mare Interno, un essere fatto d'acqua e di pazienza che i pescatori salutavano all'alba. Quando l'Acqua divenne Memoria, il Drago bevve troppo profondamente dal passato. Ora rivive ogni perdita di Aethelgard come se fosse appena successa, e il suo soffio non è acqua ma rimpianto: chi ne viene colpito ricorda tutto ciò che ha perduto, contemporaneamente. Chi lo ha visto racconta che non ruggisce: emette un suono che sembra il pianto di un oceano intero. Non è malvagio. È un dio che annega, e non c'è nessuno che sappia nuotare abbastanza profondo da tirarlo fuori."
+            }
+        ],
+        "forgia": [
+            {
+                "title": "Le Terre Alte di Ignis",
+                "requires": {"reached_floor": 21},
+                "text": "La Forgia era Ignis, le Terre Alte a Est di Aethelgard, fra vulcani e foreste d'ossidiana. Gli alberi erano di vetro nero e suonavano quando c'era vento; i bambini si addormentavano così. A Ignis il fuoco non era rabbia: era lavoro. Ogni casa aveva la sua forgia, e la forgia restava accesa giorno e notte: spegnerla voleva dire che in quella casa era morto qualcuno. Le fucine di Ignis erano leggendarie, si diceva che sapessero riparare persino un cuore spezzato, con la giusta quantità di brace. Quando la Discordia separò gli elementi, il Fuoco diventò rabbia, e la rabbia entrò anche nelle forge."
+            },
+            {
+                "title": "La Riforgiatura",
+                "requires": {"reached_floor": 22},
+                "text": "Dopo la Discordia gli Architetti rimasti cercarono di riparare il mondo come si ripara una lama: riforgiando gli elementi separati in un pezzo solo. Presero le fucine di Ignis senza chiedere il permesso e chiamarono apprendisti da tutto il continente. Il lavoro fu un disastro. Gli elementi forgiati insieme a forza diventarono scoria viva: golem, martelli che camminano, crogioli con le gambe. Gli apprendisti si fusero con il loro lavoro e diventarono Apprendisti di Scoria. Le fucine non si spengono mai, laggiù. Non c'è più nessuno che muoia nel modo giusto per spegnerle."
+            },
+            {
+                "title": "L'Ebollizione Astrale",
+                "requires": {"reached_floor": 23},
+                "text": "Nella Forgia l'aria bolle. Ogni colpo che ricevi può far evaporare parte dell'oro che porti, come se il metallo si ricordasse di essere stato liquido e volesse tornarlo. I fabbri di Ignis la chiamavano Ebollizione Astrale e lasciavano le monete fuori dalla porta prima di entrare in fucina. I mercanti che scendono fin qui portano l'oro in sacchetti di cuoio bagnato, e ne perdono comunque un po'. Si dice che sul fondo della Forgia ci sia un lago d'oro fuso fatto di tutte le monete evaporate in mille anni, e che a guardarlo si vedano le facce di chi le ha perse."
+            },
+            {
+                "title": "Il Maestro di Forgia",
+                "requires": {"reached_floor": 25},
+                "text": "Il Maestro di Forgia era il più grande fabbro di Ignis, e fu lui che gli Architetti scelsero per la riforgiatura. Accettò perché pensava di poter salvare il mondo con il martello, come aveva salvato tante case. Lavorò giorno e notte. Vide i suoi apprendisti fondersi con il lavoro uno dopo l'altro e continuò a battere, perché fermarsi voleva dire ammettere che non si poteva fare. Batte ancora, su un'incudine che non c'è più, un colpo dopo l'altro, mille anni di colpi. Chi lo affronta non combatte un mostro: combatte un uomo che non sa smettere di provare."
+            }
+        ],
+        "soglia": [
+            {
+                "title": "Calaris, l'Isola più Alta",
+                "requires": {"reached_floor": 26},
+                "text": "La Soglia era Calaris, l'isola più alta dell'Arcipelago di Aetheria, sospesa nel cielo sopra tutte le altre da un cristallo di Luce grande come una montagna. Lassù c'era la cittadella di uno degli Architetti, quello che insegnava all'Accademia di Aurelia l'elemento delle cose comuni. La notte della Discordia, Calaris cadde più in basso di tutte le isole, attraverso il fondo del mondo, e diventò la Soglia. Non ci sono più pareti: solo piattaforme di volontà che galleggiano nel vuoto, frammenti della cittadella, polvere d'ossa che brilla come stelle. Gli elementi qui non sono separati: si scontrano, si divorano, ricominciano."
+            },
+            {
+                "title": "Il Paradosso Temporale",
+                "requires": {"reached_floor": 27},
+                "text": "Alla Soglia il tempo è sfilacciato. A volte un istante si ripete, e combatti lo stesso colpo due volte; a volte il nemico agisce prima ancora di essersi mosso. Le guide che sono arrivate fin qui chiamavano tutto questo Paradosso Temporale e dicevano di non contare sui ricordi recenti: quello che hai appena fatto potrebbe non essere ancora successo. C'è chi racconta di aver incontrato sé stesso alla Soglia, più vecchio, e di averlo superato senza salutarlo. C'è chi giura di aver visto una clessidra infranta che versava sabbia verso l'alto, e dentro la sabbia, i giorni che gli restavano."
+            },
+            {
+                "title": "Il Custode della Soglia",
+                "requires": {"reached_floor": 29},
+                "text": "Sull'ultima piattaforma prima del Dio Antico c'è qualcuno che sta lì da prima che il Labirinto avesse un nome. Le guide lo chiamano il Custode della Soglia, ma lui non custodisce niente: aspetta. Era un servitore della cittadella di Calaris, dicono, l'ultimo rimasto fedele al suo padrone quando tutti gli altri fuggirono. Chi lo affronta racconta la stessa cosa: che il Custode lo riconosce. Che dice «di nuovo tu», o «ti ho già visto», con la voce di chi saluta un ospite che torna sempre alla stessa ora. Nessuno ha mai capito chi creda di riconoscere."
+            },
+            {
+                "title": "L'Occhio Chiuso",
+                "requires": {"reached_floor": 30},
+                "text": "Al centro della Soglia, al piano trenta, c'è una struttura che assomiglia a un occhio chiuso, fatta di galassie e di polvere d'ossa. È il Dio Antico, quando dorme. Sotto la palpebra qualcosa si muove, come chi sogna. I pochi che sono arrivati qui dicono che il Labirinto intero è il suo sogno, e che le pareti, i biomi, le creature sono le cose che sogna. Più il Dio dorme profondo, più il Labirinto è calmo. Quando l'occhio si apre a metà, i corridoi si fanno crudeli. Nessuno sa cosa succederebbe se si aprisse del tutto. Nessuno, finora, è rimasto abbastanza da vederlo."
+            }
+        ],
+        "eco": [
+            {
+                "title": "Il Labirinto che Ricorda",
+                "requires": {"reached_floor": 31},
+                "text": "Oltre il piano trenta il Labirinto non finisce: ricomincia. I biomi tornano, in un ordine diverso, con un nome nuovo, Eco II, Eco III, e i loro pericoli più duri. Chi ci è arrivato racconta che non sono copie: sono ricordi. Il Labirinto, svegliandosi un poco, ripensa ai suoi piani e li sogna di nuovo, più forte. Nelle Eco i luoghi conoscono chi ci passa. Le voci dei Chiostri chiamano il tuo nome giusto, senza sbagliare l'accento. I minatori ti salutano con la mano. Il Mercante ti chiama per nome. È come tornare in una casa dove sei già stato, e trovarla un po' più cattiva."
+            },
+            {
+                "title": "La Canzone Suonata più Forte",
+                "requires": {"reached_floor": 61},
+                "text": "Le guide del Ciclo, quelle poche che sono tornate, dicono che ogni Eco è la stessa canzone suonata più forte. Il ritornello è sempre quello: scendere, combattere, scendere. Cambiano gli strumenti, si alza il volume, e la voce del Labirinto diventa più chiara. Alla seconda Eco cominci a capire le parole. Alla terza, a volte, ti accorgi di cantarle anche tu. Ogni trenta piani il Dio Antico è di nuovo lì, un po' più sveglio, con l'occhio un po' più aperto. Chi si ferma ad ascoltare la canzone, dicono, non riesce più a smettere di scendere. Chi la canta, smette di chiedersi perché."
+            },
+            {
+                "title": "Il Silenzio fra Due Note",
+                "requires": {"reached_floor": 91},
+                "text": "Un canto antico dice che se il Labirinto è una canzone, il Dio Antico è il silenzio fra due note. Nelle Eco più profonde il silenzio si allunga: fra un piano e l'altro ci sono momenti in cui niente si muove, niente respira, e il vuoto ascolta. In quei momenti, raccontano, si sente un'altra voce sotto la canzone, molto più bassa, molto più vecchia, che non canta ma ricorda. Dice una frase sola, sempre la stessa, e nessuno riesce a ripeterla una volta risalito. Chi ci ha provato ricorda solo l'inizio: «Ciò che è fragile». Il resto si perde, come la fine di un sogno."
+            }
         ]
     }
 }

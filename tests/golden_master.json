@@ -42,7 +42,7 @@
     "won": true,
     "floor": 31,
     "level": 13,
-    "essence": 39477,
+    "essence": 39557,
     "killer": "DIO ANTICO",
     "bosses": [
       "La Badessa del Silenzio",
@@ -82,10 +82,10 @@
   {
     "run": "Mago · completo · A0",
     "won": false,
-    "floor": 17,
+    "floor": 19,
     "level": 11,
-    "essence": 2965,
-    "killer": "Il Maestro di Forgia",
+    "essence": 3295,
+    "killer": "Madre delle Melme",
     "bosses": [
       "Negromante Supremo",
       "Cavaliere Oscuro",
@@ -103,9 +103,11 @@
       "L'Astronoma delle Guglie",
       "Sovrano delle Tempeste",
       "Il Cuore del Ventre",
-      "Il Maestro di Forgia"
+      "Golem dell'Eternità",
+      "Lich Signore del Gelo",
+      "Madre delle Melme"
     ],
-    "hits": 88,
+    "hits": 98,
     "zero": 0
   },
   {
@@ -192,7 +194,7 @@
     "won": true,
     "floor": 31,
     "level": 14,
-    "essence": 48277,
+    "essence": 48939,
     "killer": "DIO ANTICO",
     "bosses": [
       "Cavaliere Oscuro",
@@ -223,10 +225,10 @@
       "Il Custode della Soglia",
       "Cavaliere dell'Apocalisse",
       "Cavaliere dell'Apocalisse",
-      "Cavaliere dell'Apocalisse",
+      "Behemoth Terrestre",
       "DIO ANTICO"
     ],
-    "hits": 81,
+    "hits": 77,
     "zero": 0
   },
   {

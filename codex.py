@@ -276,6 +276,7 @@ def atlas_open(biome_id: str) -> list:
 def atlas_page() -> List[str]:
     """L'Atlante: la storia di ogni bioma, una pagina alla volta, man mano che si scende."""
     names = {b["id"]: f"{b['icon']} {b['name']}" for b in GAME_DATA["biomes"]}
+    names["eco"] = "⏳ Le Eco del Ciclo"
     lines = []
     for biome_id, pages in GAME_DATA["atlante"]["biomes"].items():
         found = atlas_open(biome_id)
