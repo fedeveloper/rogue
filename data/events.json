@@ -4421,5 +4421,893 @@
                 ]
             }
         }
+    },
+    "ventre_cucina": {
+        "title": "La Cucina nella Membrana",
+        "requires": {"biome": "ventre", "min_floor": 16},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Dentro la parete, come dietro un vetro, c'è una cucina: una pentola sul fuoco, un grembiule appeso, una finestra sul mare. La riconosci senza sapere da dove. Qualcuno, dentro, apparecchia per due.",
+                "choices": [
+                    {
+                        "text": "Tocca la membrana",
+                        "msg": "È calda. Dall'altra parte, la donna si volta, ti sorride, e la cucina si spegne.",
+                        "effects": [{"heal_pct": 35}, {"corruption": -5}]
+                    },
+                    {
+                        "text": "Cerca di entrare",
+                        "msg": "La membrana cede, poi si richiude, e ti respinge con dolcezza. Ti resta in mano un cucchiaio di legno.",
+                        "effects": [{"damage": 6}, {"essence": 60}]
+                    },
+                    {
+                        "text": "Distogli lo sguardo",
+                        "msg": "La pentola continua a bollire per qualcuno che non sei tu."
+                    }
+                ]
+            }
+        }
+    },
+    "ventre_bambole": {
+        "title": "Le Bambole di Ricordi",
+        "requires": {"biome": "ventre"},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Galleggiano nel corridoio decine di bambole di stoffa, cucite con pezzi di vestiti diversi. Ognuna ha un biglietto legato al polso con un nome. Una porta il nome di un bambino di Valeriana.",
+                "choices": [
+                    {
+                        "text": "Leggi i biglietti",
+                        "msg": "Sono i nomi di chi le aveva in braccio quando il mare arrivò. Nessuno è un adulto.",
+                        "effects": [{"exp": 70}, {"flag": "bambole_lette"}]
+                    },
+                    {
+                        "text": "Lega le bambole insieme perché non si perdano",
+                        "msg": "Le leghi con un filo. Il corridoio si fa un po' più silenzioso, come una stanza dove i bambini si sono addormentati.",
+                        "effects": [{"corruption": -10}]
+                    },
+                    {"text": "Passa in mezzo senza toccarle", "msg": "Le bambole ti sfiorano le spalle, leggere."}
+                ]
+            }
+        }
+    },
+    "ventre_citta": {
+        "title": "La Città Capovolta",
+        "requires": {"biome": "ventre", "min_floor": 17},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Sotto i tuoi piedi, oltre una membrana trasparente, c'è una città intera a testa in giù. I suoi abitanti cadono lentamente verso l'alto, verso di te, senza mai arrivare.",
+                "choices": [
+                    {
+                        "text": "Allunga una mano verso di loro",
+                        "msg": "Una ragazza ti afferra il polso per un istante, poi riprende a cadere. Ti ha lasciato in mano una moneta di un regno che non c'è.",
+                        "effects": [{"gold": 70}]
+                    },
+                    {
+                        "text": "Cammina sulla membrana fino al centro",
+                        "msg": "Al centro la città è giusta, e tu sei capovolto. Ti gira la testa, e capisci qualcosa che non sai dire.",
+                        "effects": [{"exp": 80}]
+                    },
+                    {"text": "Non guardare giù", "msg": "Che, qui, è anche su."}
+                ]
+            }
+        }
+    },
+    "ventre_conchiglia": {
+        "title": "La Conchiglia",
+        "requires": {"biome": "ventre"},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Una conchiglia grande come una sedia, appoggiata a una costola di pietra. Dentro non si sente il mare: si sente una voce che ripete un nome, sempre lo stesso, con sempre più fatica.",
+                "choices": [
+                    {
+                        "text": "Ascolta fino alla fine",
+                        "msg": "La voce si ferma a metà del nome. Nel silenzio che resta, ti senti meno solo.",
+                        "effects": [{"heal_pct": 30}]
+                    },
+                    {
+                        "text": "Rispondi al nome",
+                        "msg": "La voce tace. Poi, dalla conchiglia, esce un sospiro lungo, sollevato, e una perla.",
+                        "effects": [{"essence": 70}]
+                    },
+                    {"text": "Lasciala chiamare", "msg": "Il nome ti segue per un po'. Poi è solo mare."}
+                ]
+            }
+        }
+    },
+    "ventre_rete": {
+        "title": "La Rete del Pescatore",
+        "requires": {"biome": "ventre", "min_floor": 16},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Una rete da pescatore attraversa il corridoio da parete a parete. Impigliati, invece dei pesci, ricordi: un ombrello, un fischietto, una lettera bagnata, un dente da latte.",
+                "choices": [
+                    {
+                        "text": "Libera i ricordi dalla rete",
+                        "msg": "Galleggiano via, ognuno verso un punto diverso, come se sapessero dove andare.",
+                        "effects": [{"corruption": -10}, {"exp": 40}]
+                    },
+                    {
+                        "text": "Tieni la lettera bagnata",
+                        "msg": "L'inchiostro è sciolto. Si legge solo la firma: «Tuo per sempre».",
+                        "effects": [{"essence": 50}]
+                    },
+                    {
+                        "text": "Passa sotto la rete",
+                        "msg": "Il fischietto, quando ci passi accanto, emette una nota sola."
+                    }
+                ]
+            }
+        }
+    },
+    "ventre_pozza": {
+        "title": "La Pozza Azzurra",
+        "requires": {"biome": "ventre", "min_floor": 17},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Una pozza azzurra, liscia come vetro. Nel riflesso, invece della stanza, c'è un pomeriggio d'estate qualunque: un prato, una coperta, qualcuno che dorme con un libro sulla faccia.",
+                "choices": [
+                    {
+                        "text": "Bevi un sorso",
+                        "msg": "Per un istante sei lì, sul prato. Poi torni, e il pomeriggio ti resta in bocca come un sapore.",
+                        "effects": [{"heal_pct": 40}, {"max_hp": -3}]
+                    },
+                    {
+                        "text": "Gettaci un sasso",
+                        "msg": "Il pomeriggio si increspa e si rompe. Sotto, sul fondo, c'è un anello.",
+                        "effects": [{"gold": 60}]
+                    },
+                    {
+                        "text": "Lascia dormire chi dorme",
+                        "msg": "Il libro, sulla faccia di qualcuno, si gira da solo di una pagina."
+                    }
+                ]
+            }
+        }
+    },
+    "ventre_funerale": {
+        "title": "Il Tuo Funerale",
+        "requires": {"biome": "ventre", "min_floor": 18},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "In una cavità addobbata di fiori appassiti si celebra un funerale. Tutti sono vestiti di nero e piangono. Sulla bara, inciso, c'è il tuo nome. Alcuni volti li riconosci.",
+                "choices": [
+                    {
+                        "text": "Siediti in ultima fila",
+                        "msg": "Ascolti cosa dicono di te. Sono cose buone. Alcune non le ricordi.",
+                        "effects": [{"exp": 80}, {"flag": "funerale_visto"}]
+                    },
+                    {
+                        "text": "Apri la bara",
+                        "msg": "È vuota, tranne un biglietto: «Non ancora».",
+                        "effects": [{"heal_pct": 40}]
+                    },
+                    {
+                        "text": "Esci prima della fine",
+                        "msg": "Nessuno si accorge che sei uscito. Nessuno si accorge mai, ai funerali."
+                    }
+                ]
+            }
+        }
+    },
+    "ventre_medusa": {
+        "title": "Il Banco di Meduse",
+        "requires": {"biome": "ventre", "min_floor": 17},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Un banco di meduse di memoria fluttua nel corridoio, ognuna con una scena dentro, come in una lanterna. Si muovono piano, insieme, verso il cuore del Ventre.",
+                "choices": [
+                    {
+                        "text": "Seguile",
+                        "msg": "Ti portano a una sacca asciutta, dove qualcuno aveva lasciato provviste.",
+                        "effects": [{"potion": 1}, {"exp": 30}]
+                    },
+                    {
+                        "text": "Tocca la più luminosa",
+                        "msg": "Brucia come ortica. Dentro c'era la tua prima discesa, e adesso è un po' anche tua.",
+                        "effects": [{"damage": 8}, {"exp": 90}]
+                    },
+                    {
+                        "text": "Aspetta che passino",
+                        "msg": "Il banco scivola via, illuminando le pareti come un corteo."
+                    }
+                ]
+            }
+        }
+    },
+    "ventre_lacrima": {
+        "title": "La Lacrima Vivente",
+        "requires": {"biome": "ventre"},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Una goccia d'acqua grande come un pugno rotola sul pavimento verso di te, piano, come un animale che si avvicina per farsi accarezzare. Dentro c'è un piccolo volto che piange.",
+                "choices": [
+                    {
+                        "text": "Raccoglila nelle mani",
+                        "msg": "È tiepida. Il volto smette di piangere e si addormenta. La lasci in una nicchia asciutta.",
+                        "effects": [{"corruption": -10}]
+                    },
+                    {
+                        "text": "Lasciala bere dalla tua borraccia",
+                        "msg": "La lacrima si gonfia, felice, e ti segue per un pezzo. Poi si ferma, e ti saluta.",
+                        "effects": [{"heal_pct": 30}]
+                    },
+                    {"text": "Scansala", "msg": "La lacrima resta ferma dove l'hai lasciata."}
+                ]
+            }
+        }
+    },
+    "ventre_porto": {
+        "title": "Il Porto Sommerso",
+        "requires": {"biome": "ventre", "min_floor": 19},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Un molo di legno marcio sporge nel nulla. Legate alle bitte, barche piene d'acqua. In fondo al molo, un uomo con la pipa spenta guarda un orizzonte che non c'è.",
+                "choices": [
+                    {
+                        "text": "Chiedigli cosa aspetta",
+                        "msg": "«Il ritorno della flotta,» dice. «Mille anni fa. Sono in ritardo.» Ti offre del pesce affumicato.",
+                        "effects": [{"heal_pct": 35}]
+                    },
+                    {
+                        "text": "Accendigli la pipa",
+                        "msg": "Fuma in silenzio. Poi ti indica una barca: sotto il sedile, una cassetta.",
+                        "effects": [{"gold": 80}]
+                    },
+                    {"text": "Lascialo aspettare", "msg": "L'orizzonte, per lui, arriverà."}
+                ]
+            }
+        }
+    },
+    "ventre_madre": {
+        "title": "La Sanguisuga Gentile",
+        "requires": {"biome": "ventre", "min_floor": 18},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Una sanguisuga madre, enorme, è distesa davanti a un nido di piccole. Non attacca. Ti guarda con occhi stanchi, come una bestia che sa che non può più proteggere niente.",
+                "choices": [
+                    {
+                        "text": "Lasciale un po' del tuo sangue",
+                        "msg": "Bevono le piccole, poi lei. Ti senti più leggero, e stranamente in pace.",
+                        "effects": [{"damage": 8}, {"essence": 80}]
+                    },
+                    {
+                        "text": "Allontanati piano",
+                        "msg": "La madre si accuccia sul nido. Ti senti guardato fino alla fine del corridoio.",
+                        "effects": [{"exp": 40}]
+                    },
+                    {"text": "Non avvicinarti", "msg": "Ognuno al suo posto, nel Ventre."}
+                ]
+            }
+        }
+    },
+    "ventre_specchio_acqua": {
+        "title": "Il Riflesso Più Vecchio",
+        "requires": {"biome": "ventre", "min_floor": 19},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Sulla superficie di un lago immobile, il tuo riflesso è più vecchio di te. Ha i capelli bianchi e una cicatrice che non hai. Quando sorride, tu non sorridi.",
+                "choices": [
+                    {
+                        "text": "Chiedigli cosa ti succederà",
+                        "msg": "Il riflesso scuote la testa, piano. Poi indica in basso, sempre più in basso.",
+                        "effects": [{"exp": 80}]
+                    },
+                    {
+                        "text": "Tendigli la mano",
+                        "msg": "Il riflesso la stringe. È fredda, e forte. Ti lascia in mano una forza che non avevi.",
+                        "effects": [{"atk": 2}]
+                    },
+                    {"text": "Non guardarti", "msg": "Il lago resta liscio. Il riflesso no."}
+                ]
+            }
+        }
+    },
+    "forgia_casa": {
+        "title": "La Forgia di Famiglia",
+        "requires": {"biome": "forgia", "min_floor": 21},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Una forgia piccola, domestica, con le iniziali di una casa di Ignis incise sulla cappa. È spenta. Sul banco, un grembiule da bambino e un martelletto di legno.",
+                "choices": [
+                    {
+                        "text": "Riaccendi la forgia",
+                        "msg": "Il fuoco prende subito, come se aspettasse. Per un istante senti delle voci, una cena, qualcuno che ride.",
+                        "effects": [{"heal_pct": 35}, {"corruption": -5}]
+                    },
+                    {
+                        "text": "Lascia la forgia spenta, per rispetto",
+                        "msg": "Qualcuno in quella casa è morto. Chini la testa, ed esci.",
+                        "effects": [{"exp": 60}]
+                    },
+                    {"text": "Prendi il martelletto e vai", "msg": "Pesa niente. Lo tieni lo stesso."}
+                ]
+            }
+        }
+    },
+    "forgia_apprendista": {
+        "title": "L'Apprendista che Lavora",
+        "requires": {"biome": "forgia", "min_floor": 22},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Un apprendista di scoria batte su una lama storta, sempre nello stesso punto, da secoli. Ha una cicatrice sul mento, sotto la crosta di metallo. Non si accorge di te.",
+                "choices": [
+                    {
+                        "text": "Chiamalo per nome: Corin",
+                        "msg": "Il martello si ferma. L'apprendista si volta, ti guarda, e per un istante gli occhi sono di un ragazzo. Poi riprende a battere.",
+                        "effects": [{"exp": 80}, {"flag": "corin_chiamato"}]
+                    },
+                    {
+                        "text": "Correggigli il colpo",
+                        "msg": "Gli giri il polso come faceva un maestro. Il colpo successivo è giusto, e la lama si raddrizza.",
+                        "effects": [{"essence": 60}]
+                    },
+                    {"text": "Lascialo lavorare", "msg": "Il martello cade ancora, nello stesso punto."}
+                ]
+            }
+        }
+    },
+    "forgia_incudine": {
+        "title": "L'Incudine Cosmica Spenta",
+        "requires": {"biome": "forgia", "min_floor": 21},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Un'incudine nera, grande come un altare, con la superficie coperta di segni di martello. Ogni segno ha un elemento diverso. Al centro, un solco liscio, come se qualcosa ci fosse stato appoggiato a lungo.",
+                "choices": [
+                    {
+                        "text": "Appoggia la tua arma nel solco",
+                        "msg": "L'incudine vibra. Per un istante la tua lama riflette tutti e sette i colori.",
+                        "effects": [{"atk": 2}]
+                    },
+                    {
+                        "text": "Conta i segni di martello",
+                        "msg": "Sono migliaia. Gli ultimi sono più leggeri, come di chi non ci crede più.",
+                        "effects": [{"exp": 70}]
+                    },
+                    {
+                        "text": "Non toccarla",
+                        "msg": "Le incudini, a Ignis, si toccano solo con il permesso del fabbro."
+                    }
+                ]
+            }
+        }
+    },
+    "forgia_lago": {
+        "title": "Il Lago d'Oro",
+        "requires": {"biome": "forgia", "min_floor": 23},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Una caverna si apre su un lago d'oro fuso, liscio e silenzioso. Sulla superficie galleggiano volti, appena riconoscibili, come monete guardate controluce.",
+                "choices": [
+                    {
+                        "text": "Immergi la punta dell'arma",
+                        "msg": "Quando la ritiri è dorata. L'oro si raffredda e resta: è ricchezza, ed è anche il dolore di qualcuno.",
+                        "effects": [{"gold": 120}, {"corruption": 5}]
+                    },
+                    {
+                        "text": "Guarda i volti",
+                        "msg": "Uno di loro ti somiglia. Ha perso qui l'oro di una discesa che tu non ricordi.",
+                        "effects": [{"exp": 70}]
+                    },
+                    {"text": "Allontanati dal calore", "msg": "I volti ti seguono, sulla superficie, fino all'uscita."}
+                ]
+            }
+        }
+    },
+    "forgia_scintilla": {
+        "title": "La Scintilla Ribelle",
+        "requires": {"biome": "forgia"},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Una scintilla rimbalza da una parete all'altra, impazzita, cercando di uscire dalla Forgia. Quando ti vede si ferma a mezz'aria, tremante, come un uccellino.",
+                "choices": [
+                    {
+                        "text": "Aprile la mano",
+                        "msg": "La scintilla ci si posa, ti brucia appena, poi si spegne contenta. Ti resta un puntino rosso sul palmo.",
+                        "effects": [{"damage": 4}, {"exp": 60}]
+                    },
+                    {
+                        "text": "Indicale la strada per salire",
+                        "msg": "Schizza via verso l'alto. Lontano, una fucina si spegne, e qualcuno respira meglio.",
+                        "effects": [{"corruption": -10}]
+                    },
+                    {"text": "Lasciala cercare", "msg": "Rimbalza ancora, più lontano."}
+                ]
+            }
+        }
+    },
+    "forgia_gru": {
+        "title": "La Gru",
+        "requires": {"biome": "forgia", "min_floor": 22},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Una gru enorme regge, appeso alla catena, un blocco di metallo grande come una casa. Gli argani cigolano. Un fabbro di scoria tiene ancora la leva, da mille anni, perché non cada.",
+                "choices": [
+                    {
+                        "text": "Aiutalo a posare il blocco",
+                        "msg": "Lo posate insieme. Il fabbro molla la leva e si siede, e si sbriciola in cenere tranquilla.",
+                        "effects": [{"essence": 80}, {"corruption": -5}]
+                    },
+                    {
+                        "text": "Passa sotto il blocco in fretta",
+                        "msg": "Il fabbro trema sulla leva. Il blocco scende di un palmo dopo che sei passato.",
+                        "effects": [{"exp": 50}]
+                    },
+                    {"text": "Gira intorno", "msg": "Il fabbro continua a reggere."}
+                ]
+            }
+        }
+    },
+    "forgia_alberi": {
+        "title": "Il Bosco di Vetro",
+        "requires": {"biome": "forgia", "min_floor": 21},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Una galleria piena di alberi d'ossidiana, neri e lisci, intatti. Quando passa una corrente d'aria calda, i rami suonano, una musica bassa e lenta, come una ninnananna di Ignis.",
+                "choices": [
+                    {
+                        "text": "Siediti ad ascoltare",
+                        "msg": "La musica ti rallenta il respiro. Per un po', nella Forgia, non fa caldo.",
+                        "effects": [{"heal_pct": 40}]
+                    },
+                    {
+                        "text": "Spezza un ramo",
+                        "msg": "Il ramo suona una nota sola, acuta, e il bosco tace. Ti senti in colpa, ma il vetro è affilato.",
+                        "effects": [{"atk": 2}, {"corruption": 5}]
+                    },
+                    {"text": "Attraversalo in silenzio", "msg": "La ninnananna continua anche dopo che sei uscito."}
+                ]
+            }
+        }
+    },
+    "forgia_elenco": {
+        "title": "La Lista degli Apprendisti",
+        "requires": {"biome": "forgia", "min_floor": 23},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Inchiodata alla porta di una fucina, una lista di nomi: gli apprendisti chiamati per la grande riforgiatura. Accanto a ogni nome, una data. Accanto all'ultima data, solo una parola: «Tutti».",
+                "choices": [
+                    {
+                        "text": "Leggi la lista",
+                        "msg": "Fra i nomi c'è un Corin di Ignis, apprendista di primo anno. Accanto, qualcuno ha disegnato un piccolo cuore.",
+                        "effects": [{"exp": 70}, {"flag": "lista_apprendisti"}]
+                    },
+                    {
+                        "text": "Stacca la lista dalla porta",
+                        "msg": "Il chiodo cede. La porta della fucina si apre da sola, e dentro c'è un fuoco tranquillo.",
+                        "effects": [{"heal_pct": 30}]
+                    },
+                    {"text": "Lasciala dov'è", "msg": "I nomi restano sulla porta, a guardare chi passa."}
+                ]
+            }
+        }
+    },
+    "forgia_martello": {
+        "title": "Il Martello che Cammina",
+        "requires": {"biome": "forgia", "min_floor": 22},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Un martello da fabbro, alto come un uomo, avanza da solo per la galleria a colpi regolari: tum, tum. Non attacca. Cerca qualcosa da battere. Si ferma davanti a te.",
+                "choices": [
+                    {
+                        "text": "Porgigli la tua armatura",
+                        "msg": "Batte tre colpi. L'armatura è più dura, e il martello riparte soddisfatto.",
+                        "effects": [{"def": 2}]
+                    },
+                    {
+                        "text": "Porgigli un sasso",
+                        "msg": "Lo batte con cura, finché diventa una piccola moneta perfetta. Te la lascia.",
+                        "effects": [{"gold": 50}, {"exp": 30}]
+                    },
+                    {"text": "Togliti di mezzo", "msg": "Tum, tum. Riprende a cercare."}
+                ]
+            }
+        }
+    },
+    "forgia_cappa": {
+        "title": "La Cappa del Camino",
+        "requires": {"biome": "forgia"},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Sotto la cappa di un camino enorme, appesi ad asciugare, ci sono grembiuli di cuoio di tutte le misure. Il più piccolo è di un bambino. Il più grande, di qualcuno che non poteva essere umano.",
+                "choices": [
+                    {
+                        "text": "Indossa un grembiule",
+                        "msg": "Il cuoio è caldo e profuma di ferro. Ti sembra di essere tornato da una giornata di lavoro.",
+                        "effects": [{"heal_pct": 25}, {"def": 1}]
+                    },
+                    {
+                        "text": "Fruga nelle tasche",
+                        "msg": "Nel grembiule più grande, un pugno di monete e un biglietto: «Per la birra di stasera».",
+                        "effects": [{"gold": 70}]
+                    },
+                    {"text": "Lasciali appesi", "msg": "Domattina, qualcuno potrebbe averne bisogno."}
+                ]
+            }
+        }
+    },
+    "forgia_crogiolo": {
+        "title": "Il Crogiolo di Elara",
+        "requires": {"biome": "forgia", "min_floor": 23},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Un crogiolo rovesciato, raffreddato, con una crosta di metallo sul bordo. Dentro, impronte di mani: due grandi, due piccole. Accanto, un pezzo di armatura di Ignis, fuso a metà.",
+                "choices": [
+                    {
+                        "text": "Raccogli il pezzo di armatura",
+                        "msg": "È di buona fattura, fatta da una mano esperta. Lo porterai a chi saprà riconoscerlo.",
+                        "effects": [{"essence": 60}, {"flag": "pezzo_elara"}]
+                    },
+                    {
+                        "text": "Metti le mani nelle impronte piccole",
+                        "msg": "Combaciano quasi. Ti sale un groppo in gola che non è tuo.",
+                        "effects": [{"exp": 70}]
+                    },
+                    {
+                        "text": "Non toccare niente",
+                        "msg": "Il crogiolo resta rovesciato, come un bicchiere dopo una festa finita male."
+                    }
+                ]
+            }
+        }
+    },
+    "forgia_mantice": {
+        "title": "Il Mantice Stanco",
+        "requires": {"biome": "forgia", "min_floor": 24},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Un mantice di pelle grande come una tenda si gonfia e si sgonfia, sempre più piano. È rattoppato in cento punti. Il fuoco che alimenta è quasi spento.",
+                "choices": [
+                    {
+                        "text": "Aiutalo a respirare",
+                        "msg": "Spingi la leva con tutto il peso. Il fuoco si rianima, e la fucina vicina riprende a battere.",
+                        "effects": [{"atk": 1}, {"exp": 40}]
+                    },
+                    {
+                        "text": "Lascialo fermare",
+                        "msg": "L'ultimo respiro è lungo, sollevato. Il fuoco si spegne, e nel silenzio senti il tuo cuore.",
+                        "effects": [{"corruption": -10}, {"heal_pct": 20}]
+                    },
+                    {"text": "Prosegui", "msg": "Dentro, fuori. Sempre più piano."}
+                ]
+            }
+        }
+    },
+    "soglia_sedia": {
+        "title": "La Sedia",
+        "requires": {"biome": "soglia", "min_floor": 26},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Su una piattaforma vuota, una sedia di legno qualunque, rivolta verso il buio. Davanti alla sedia non c'è niente. Il cuscino è consumato, come se qualcuno ci si fosse seduto a pensare per moltissimo tempo.",
+                "choices": [
+                    {
+                        "text": "Siediti",
+                        "msg": "Il buio davanti a te ha la forma di un pensiero lungo. Quando ti alzi, sei più stanco e più calmo.",
+                        "effects": [{"exp": 90}, {"flag": "sedia_seduto"}]
+                    },
+                    {
+                        "text": "Girala verso la luce",
+                        "msg": "La sedia oppone resistenza, poi cede. Per un istante, il vuoto intorno sembra sollevato.",
+                        "effects": [{"corruption": -10}]
+                    },
+                    {"text": "Lasciala com'è", "msg": "Qualcuno, un giorno, tornerà a sedersi."}
+                ]
+            }
+        }
+    },
+    "soglia_clessidra": {
+        "title": "La Clessidra Infranta",
+        "requires": {"biome": "soglia", "min_floor": 26},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Una clessidra grande come un uomo, rotta a metà, galleggia nel vuoto. La sabbia esce dalla crepa e sale verso l'alto in un filo sottile, e ogni granello brilla un istante prima di sparire.",
+                "choices": [
+                    {
+                        "text": "Raccogli un pugno di sabbia",
+                        "msg": "È calda. Senti, per un secondo, il tempo che ti resta: non è poco, non è molto.",
+                        "effects": [{"heal_pct": 40}]
+                    },
+                    {
+                        "text": "Prova a chiudere la crepa",
+                        "msg": "La sabbia ti graffia le dita, poi rallenta. Qualcosa, da qualche parte, guadagna un'ora.",
+                        "effects": [{"damage": 6}, {"essence": 80}]
+                    },
+                    {"text": "Lascia scorrere la sabbia", "msg": "Sale, sale, finché non la vedi più."}
+                ]
+            }
+        }
+    },
+    "soglia_frammento": {
+        "title": "Il Frammento di Calaris",
+        "requires": {"biome": "soglia", "min_floor": 27},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Galleggia nel vuoto un pezzo di pavimento di marmo, con sopra un tappeto e un tavolino. Sul tavolino, una tazza di tè ancora tiepida e un libro aperto. È un pezzo della cittadella.",
+                "choices": [
+                    {
+                        "text": "Leggi il libro aperto",
+                        "msg": "È un trattato sull'elemento Normale. A margine, una nota: «E se la fragilità fosse un diritto?»",
+                        "effects": [{"exp": 80}, {"flag": "trattato_normale"}]
+                    },
+                    {
+                        "text": "Bevi il tè",
+                        "msg": "Sa di bergamotto. È il tè di qualcuno che aspettava ospiti e poi ha deciso di non aspettare più.",
+                        "effects": [{"heal_pct": 35}]
+                    },
+                    {"text": "Lascia tutto com'è", "msg": "La tazza continua a fumare nel vuoto."}
+                ]
+            }
+        }
+    },
+    "soglia_riflesso": {
+        "title": "Il Riflesso che Arriva Prima",
+        "requires": {"biome": "soglia", "min_floor": 26},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Su una piattaforma più avanti c'è il tuo riflesso, che cammina. Ma è avanti di qualche passo: fa ogni cosa un istante prima di te. Si ferma, si volta, ti aspetta.",
+                "choices": [
+                    {
+                        "text": "Raggiungilo",
+                        "msg": "Quando lo tocchi, ti senti un passo più avanti di te stesso. Il mondo, per un po', arriva in ritardo.",
+                        "effects": [{"atk": 2}]
+                    },
+                    {
+                        "text": "Chiedigli dove va",
+                        "msg": "Indica il fondo. «Dove andiamo sempre,» dice, con la tua voce, e sparisce.",
+                        "effects": [{"exp": 70}]
+                    },
+                    {"text": "Lascialo andare avanti", "msg": "Arriverà prima di te. Come sempre."}
+                ]
+            }
+        }
+    },
+    "soglia_galassia": {
+        "title": "La Galassia in Mano",
+        "requires": {"biome": "soglia", "min_floor": 27},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Un frammento di galassia, grande come un piatto, ruota davanti a te: stelle minuscole, nebbie colorate, un buco nero al centro. Puoi prenderlo in mano. Pesa come un ricordo.",
+                "choices": [
+                    {
+                        "text": "Tienilo per un po'",
+                        "msg": "Le stelle si muovono sul tuo palmo. Una si spegne, una si accende. Ti senti molto piccolo, e non è male.",
+                        "effects": [{"exp": 80}, {"corruption": -5}]
+                    },
+                    {
+                        "text": "Rompilo",
+                        "msg": "Le stelle si spargono nel vuoto come vetri. Ti resta in mano polvere che brilla.",
+                        "effects": [{"essence": 90}, {"corruption": 5}]
+                    },
+                    {"text": "Lascialo ruotare", "msg": "Continua a girare, come ha sempre fatto."}
+                ]
+            }
+        }
+    },
+    "soglia_ospite": {
+        "title": "L'Ospite Atteso",
+        "requires": {"biome": "soglia", "min_floor": 28},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Su una piattaforma c'è una tavola apparecchiata per due, con la tovaglia bianca e due bicchieri. Su un segnaposto, una parola sola: «Tu». L'altro segnaposto è stato raschiato.",
+                "choices": [
+                    {
+                        "text": "Siediti al tuo posto",
+                        "msg": "Davanti a te il posto resta vuoto. Ma il bicchiere dell'altro si riempie, e si svuota, lentamente.",
+                        "effects": [{"heal_pct": 40}, {"exp": 30}]
+                    },
+                    {
+                        "text": "Leggi il segnaposto raschiato",
+                        "msg": "Resta la prima lettera, e non riesci a leggerla. Ogni volta che ci provi, la dimentichi.",
+                        "effects": [{"exp": 80}]
+                    },
+                    {"text": "Non sederti", "msg": "La tavola resta apparecchiata. L'ospite arriverà."}
+                ]
+            }
+        }
+    },
+    "soglia_scale": {
+        "title": "La Scala verso l'Alto",
+        "requires": {"biome": "soglia", "min_floor": 28},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Una scala di pietra sale dal vuoto verso un punto di luce lontanissimo. Sui gradini, impronte di piedi nudi che salgono. Nessuna che scende.",
+                "choices": [
+                    {
+                        "text": "Sali qualche gradino",
+                        "msg": "La luce non si avvicina. Ma a ogni gradino ti senti più leggero, finché non torni giù.",
+                        "effects": [{"heal_pct": 40}]
+                    },
+                    {
+                        "text": "Conta le impronte",
+                        "msg": "Sono migliaia. Alcune piccole, alcune grandi. L'ultima ha la forma del tuo piede.",
+                        "effects": [{"exp": 80}]
+                    },
+                    {"text": "Volta le spalle alla scala", "msg": "La luce resta là. Aspetta, come tutto qui."}
+                ]
+            }
+        }
+    },
+    "soglia_architetto": {
+        "title": "La Statua senza Volto",
+        "requires": {"biome": "soglia", "min_floor": 27},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Una statua di marmo bianco, alta e gentile, con le mani aperte in un gesto di offerta. Il volto è stato scalpellato via. Ai suoi piedi, ciotole vuote, come per un'offerta che nessuno porta più.",
+                "choices": [
+                    {
+                        "text": "Metti qualcosa in una ciotola",
+                        "msg": "Lasci una moneta. La statua non si muove, ma il marmo delle mani si fa tiepido.",
+                        "effects": [{"gold": -20}, {"essence": 80}]
+                    },
+                    {
+                        "text": "Tocca il volto scalpellato",
+                        "msg": "Sotto le dita senti i segni dello scalpello, rabbiosi. E sotto, qualcosa che somiglia a un sorriso.",
+                        "effects": [{"exp": 80}, {"flag": "statua_toccata"}]
+                    },
+                    {"text": "Inchinati e passa", "msg": "Il gesto di offerta resta, per nessuno."}
+                ]
+            }
+        }
+    },
+    "soglia_stelle": {
+        "title": "La Costellazione Nota",
+        "requires": {"biome": "soglia", "min_floor": 26},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Le stelle intorno alla piattaforma si dispongono in una costellazione. La conosci, anche se non l'hai mai vista: è quella che c'era sopra il Campo la prima notte in cui ti sei svegliato.",
+                "choices": [
+                    {
+                        "text": "Guardala a lungo",
+                        "msg": "Ricordi il primo risveglio, il fuoco, la paura. Ti senti meno perso.",
+                        "effects": [{"heal_pct": 30}, {"exp": 40}]
+                    },
+                    {
+                        "text": "Disegnala su un foglio",
+                        "msg": "La porterai al Campo. Silas, forse, saprà come si chiama.",
+                        "effects": [{"exp": 70}, {"flag": "costellazione_disegnata"}]
+                    },
+                    {"text": "Abbassa gli occhi", "msg": "Le stelle si sciolgono di nuovo nel buio."}
+                ]
+            }
+        }
+    },
+    "soglia_voce_dio": {
+        "title": "Il Respiro",
+        "requires": {"biome": "soglia", "min_floor": 29},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Il vuoto si muove, piano, avanti e indietro, come il petto di qualcuno che dorme. Ogni respiro porta un odore: lavanda, ferro, pane, pioggia. Tutti gli odori del mondo di prima.",
+                "choices": [
+                    {
+                        "text": "Respira con lui",
+                        "msg": "Per qualche respiro siete in due a dormire, tu e il Labirinto. Ti svegli riposato.",
+                        "effects": [{"heal_pct": 50}]
+                    },
+                    {
+                        "text": "Trattieni il fiato",
+                        "msg": "Il respiro del vuoto esita, come chi si sveglia per un rumore. Poi riprende.",
+                        "effects": [{"exp": 80}]
+                    },
+                    {
+                        "text": "Prosegui in silenzio",
+                        "msg": "Il respiro ti accompagna, regolare, fino alla prossima piattaforma."
+                    }
+                ]
+            }
+        }
+    },
+    "soglia_porta_legno": {
+        "title": "Una Porta Qualunque",
+        "requires": {"biome": "soglia", "min_floor": 28},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Su una piattaforma nel vuoto c'è una porta di legno con una maniglia d'ottone consumata, senza muro intorno. Sul legno sono incisi centinaia di nomi. Fra gli ultimi, il tuo, con la tua calligrafia.",
+                "choices": [
+                    {
+                        "text": "Aprila",
+                        "msg": "Dall'altra parte c'è il retro della porta, e il vuoto. Ma l'aria che passa profuma di casa.",
+                        "effects": [{"heal_pct": 40}]
+                    },
+                    {
+                        "text": "Leggi i nomi",
+                        "msg": "Molti sono dello stesso pugno, il tuo, con firme diverse.",
+                        "effects": [{"exp": 90}]
+                    },
+                    {"text": "Lasciala chiusa", "msg": "Qualcuno, dall'altra parte, smette di bussare."}
+                ]
+            }
+        }
+    },
+    "soglia_ultimo_falo": {
+        "title": "L'Ultimo Bivacco",
+        "requires": {"biome": "soglia", "min_floor": 29},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Su una piattaforma, i resti di un bivacco: un sacco a pelo, una gavetta, una mappa con una croce rossa, un diario chiuso. La cenere è fredda da poco. Chi c'era è sceso.",
+                "choices": [
+                    {
+                        "text": "Leggi la mappa",
+                        "msg": "La croce rossa è qui, su questa piattaforma. Accanto, in una calligrafia d'uomo anziano: «Piano trenta. Quasi».",
+                        "effects": [{"exp": 80}, {"flag": "bivacco_orvin"}]
+                    },
+                    {
+                        "text": "Raccogli le provviste",
+                        "msg": "Nella gavetta c'è ancora del pane. Chi l'ha lasciato pensava di tornare.",
+                        "effects": [{"heal_pct": 40}]
+                    },
+                    {"text": "Non toccare niente", "msg": "Qualcuno potrebbe tornare a prendere le sue cose."}
+                ]
+            }
+        }
     }
 }

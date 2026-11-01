@@ -225,6 +225,7 @@ Ogni bioma è una regione ricordata dal Labirinto. Ha un boss nativo, una gente,
 - **Pericolo:** la Dissoluzione dell'Io: il Labirinto ti digerisce un poco.
 - **Segreti:** la sorgente di **Linnea**; la città capovolta i cui abitanti cadono verso l'alto; il punto dove il **Drago di Zaffiro** bevve troppo dal passato.
 - **Temi:** la memoria come cibo, l'identità che si scioglie.
+- **Dettagli già nel gioco:** galleggiano bambole di stoffa con il nome dei bambini che le avevano in braccio quando arrivò il mare. Al porto sommerso un vecchio aspetta il ritorno della flotta da mille anni. Nel Ventre il Ritornante può assistere al proprio funerale (la bara è vuota: «Non ancora»). Un lago mostra il suo riflesso invecchiato, che indica il fondo.
 
 ### 🔨 La Forgia del Caos (piani 21-25)
 - **Cos'era:** le fucine delle Terre Alte di Ignis, dove dopo la Discordia gli Architetti tentarono di riforgiare insieme gli elementi.
@@ -233,6 +234,7 @@ Ogni bioma è una regione ricordata dal Labirinto. Ha un boss nativo, una gente,
 - **Pericolo:** l'Ebollizione Astrale, che brucia l'oro.
 - **Segreti:** l'Incudine Cosmica; il crogiolo dove Elara perse il fratello; il primo tentativo di «riparare» il Normale.
 - **Temi:** riparare ciò che non si può riparare, il lavoro come penitenza.
+- **Dettagli già nel gioco:** sulla porta di una fucina c'è la lista degli apprendisti chiamati per la riforgiatura; accanto all'ultima data, «Tutti»; fra i nomi c'è «Corin di Ignis», con un piccolo cuore disegnato. Nel crogiolo di Elara ci sono impronte di due mani grandi e due piccole. Sul fondo c'è il lago d'oro fatto delle monete evaporate in mille anni, con i volti di chi le ha perse. Una foresta d'ossidiana suona ancora la ninnananna di Ignis.
 
 ### 👁️ La Soglia del Dio Antico (piani 26-30)
 - **Cos'era:** Calaris, l'isola più alta di Aetheria, e la cittadella di Sereth. Ora piattaforme di volontà nel vuoto, elementi in collisione.
@@ -241,9 +243,10 @@ Ogni bioma è una regione ricordata dal Labirinto. Ha un boss nativo, una gente,
 - **Pericolo:** il Paradosso Temporale.
 - **Segreti:** lo **specchio** oltre il Dio; la stanza vuota con una sedia («la fine del tempo»), dove Sereth sedeva a pensare.
 - **Temi:** la colpa, il perdono, la tentazione del riposo.
+- **Dettagli già nel gioco:** su un frammento di Calaris galleggiano un tavolino, una tazza di tè al bergamotto ancora tiepida e un trattato sul Normale con una nota a margine: «E se la fragilità fosse un diritto?». C'è una statua di marmo di un Architetto con il volto scalpellato via e le mani aperte in offerta. Una tavola apparecchiata per due ha il segnaposto «Tu»; l'altro è raschiato. Al piano 29 c'è l'ultimo bivacco di Orvin, con la mappa e la croce rossa («Piano trenta. Quasi.»). Le stelle della Soglia possono disporsi nella costellazione che c'era sopra il Campo la prima notte del Ritornante.
 
 ### ⏳ Le Eco (oltre il piano 30)
-Il Dio, svegliandosi, ricorda il suo sogno e lo ripete più forte: i biomi tornano in un ordine diverso, con pericoli più duri e un nome (Eco II, Eco III…). Nelle Eco i luoghi conoscono il Ritornante: le voci dei Chiostri cantano il suo nome, i minatori lo salutano. Ogni trenta piani il Dio Antico è di nuovo lì, un po' più sveglio.
+Il Dio, svegliandosi, ricorda il suo sogno e lo ripete più forte: i biomi tornano in un ordine diverso, con pericoli più duri e un nome (Eco II, Eco III…). Nelle Eco i luoghi conoscono il Ritornante: le voci dei Chiostri cantano il suo nome, i minatori lo salutano. Ogni trenta piani il Dio Antico è di nuovo lì, un po' più sveglio. L'Atlante ha tre pagine sulle Eco (dal piano 31, 61 e 91); nell'ultima, sotto la canzone, si sente una voce che ricorda una frase che comincia con «Ciò che è fragile».
 
 ---
 

@@ -79,6 +79,7 @@ class BiomeTextsTest(unittest.TestCase):
                     self.assertIn(kind, RAW_DATA["lore"], "lo stesso tipo di stanza delle frasi generiche")
                     self.assertGreaterEqual(len(phrases), 3)
                     for p in phrases: self.assertLessEqual(len(p.split()), 30)
+        self.assertLessEqual(set(RAW_DATA["atlante"]["biomes"]), {b["id"] for b in RAW_DATA["biomes"]} | {"eco"})
         for biome, pages in RAW_DATA["atlante"]["biomes"].items():
             for page in pages:
                 with self.subTest(biome=biome, page=page["title"]):
