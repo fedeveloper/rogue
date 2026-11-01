@@ -1,0 +1,357 @@
+{
+    "rules": {"chance": 35},
+    "threads": [
+        {
+            "id": "prima_discesa",
+            "title": "La prima discesa",
+            "requires": {"reached_floor": 1},
+            "letters": [
+                "Mi sono svegliato accanto a un fuoco che non brucia. Non so il mio nome. Scrivo per non dimenticare anche questo.",
+                "Il fuoco si è alzato quando ho aperto gli occhi, come un cane che riconosce il padrone. Non conosco nessun cane.",
+                "Primo piano. Marmo bianco, voci care. Una mi chiamava per nome. Il nome era giusto. Io non lo sapevo.",
+                "Ho ucciso qualcosa che aveva una faccia da ragazza. È diventato nebbia azzurra. L'ho respirata. Mi sono sentito più forte, e sporco.",
+                "Ho trovato una lettera incisa sul muro con la mia calligrafia. Non ricordo di averla scritta. Forse ricordo male la mia calligrafia.",
+                "Quinto piano. Una donna in nero mi ha chiesto di restare. Ho quasi detto di sì. Il silenzio era così riposante.",
+                "Ho paura di morire. Non perché finisca. Perché ho la sensazione che non finirà.",
+                "Sono caduto. Mentre cadevo, sentivo il fuoco lontano chiamarmi indietro. Se leggi questo, non so se sono tornato."
+            ],
+            "epilogue": "La prima discesa di cui resta traccia. Il Ritornante si svegliò accanto al Fuoco senza un nome, scese fino ai Chiostri con la paura di chi non sa nemmeno cosa ha da perdere, e morì al quinto piano, davanti alla Badessa. Mentre cadeva sentì il Fuoco chiamarlo indietro. È tornato. Non lo ricorda. Ma ogni volta che si sveglia accanto alle braci, il Fuoco si alza di un palmo, come quella prima volta."
+        },
+        {
+            "id": "discesa_silas",
+            "title": "La discesa con Silas",
+            "requires": {"reached_floor": 4},
+            "letters": [
+                "Ho incontrato un uomo che scrive alla luce di un fuoco azzurro. Dice di chiamarsi Silas. Dice di avermi già visto.",
+                "Scendiamo insieme da due piani. Lui conta le stelle che non ci sono. Io conto i passi. Andiamo d'accordo.",
+                "Silas mi ha disegnato. Dice che ho la spalla sinistra più bassa. Non me n'ero mai accorto.",
+                "Abbiamo diviso la zuppa. Sapeva di cenere. Silas ride quando mangia, come chi non ci è più abituato.",
+                "Terzo piano insieme. Silas ha smesso di scrivere per un giorno intero. Dice che con me non ha paura di dimenticare.",
+                "Qualcosa d'inchiostro ci ha seguiti. Ho detto a Silas di correre. Ha detto: prima finisco la frase.",
+                "Sto morendo. Silas mi tiene la mano e scrive con l'altra. Gli ho chiesto di non scrivere questo. Lo scrive lo stesso.",
+                "Se Silas trova questa lettera: non è colpa tua. E il tuo ritratto era bellissimo."
+            ],
+            "epilogue": "In una discesa dimenticata il Ritornante e Silas scesero insieme per tre piani. Silas, per una volta, smise di scrivere: con qualcuno accanto non aveva paura di dimenticare. Poi una cosa fatta d'inchiostro li raggiunse, e il Ritornante morì tenendo la mano di Silas, mentre lui scriveva con l'altra. Per questo Silas sa che il Ritornante torna. Per questo, nel diario, c'è scritto di non fidarsi di lui: perché ogni volta lo guarda morire."
+        },
+        {
+            "id": "lavanda",
+            "title": "La lavanda",
+            "requires": {"reached_floor": 11},
+            "letters": [
+                "Sulle Guglie c'è un campo di lavanda che il vento non tocca. Le file sono dritte. Qualcuno le ha amate.",
+                "In fondo al campo, una vanga da bambina. C'è inciso un nome: Ilse.",
+                "Ho dormito fra la lavanda. Ho sognato un cavaliere bianco che diceva: aspettami. Non so a chi.",
+                "Ho raccolto un fiore. Una lettera sulle pareti dice a chi portarlo. Il cavaliere alla porta. Forse.",
+                "Ho visto il cavaliere alla porta. Ho il fiore in tasca. Non gliel'ho dato. Avevo paura di cosa avrebbe significato.",
+                "Il fiore si è seccato nello zaino. Profuma ancora. Mi vergogno ogni volta che lo sento.",
+                "Sono tornato al campo per prenderne un altro. Il campo era più piccolo. Come se aspettasse da troppo tempo.",
+                "Se trovi il cavaliere, dagli la lavanda. Io non ci sono riuscito. Non fare il mio errore."
+            ],
+            "epilogue": "In una discesa dimenticata il Ritornante trovò il campo di lavanda di Ilse sulle Guglie, prima di chiunque altro. Raccolse un fiore e lo portò fino alla porta di Alaric. Ma non glielo diede: ebbe paura di quello che avrebbe significato, per un uomo che aspettava da mille anni, sapere che la figlia aveva piantato la lavanda dove lui le aveva detto. Il fiore si seccò nello zaino. Ogni volta che il Ritornante sente profumo di lavanda, ha un senso di colpa che non sa spiegare."
+        },
+        {
+            "id": "debito_mercante",
+            "title": "Il debito del Mercante",
+            "requires": {"reached_floor": 6},
+            "letters": [
+                "Il Mercante senza faccia mi ha chiesto un ricordo in cambio di una pozione. Mi è sembrato un buon prezzo.",
+                "Gli ho venduto il sapore delle fragole. Adesso le fragole sanno di acqua. Non mi importa. Qui non ci sono fragole.",
+                "Secondo baratto. Il colore del cielo d'estate, per un'arma migliore. Il cielo d'estate, adesso, è grigio anche nei ricordi.",
+                "Terzo baratto. Ho venduto il nome del mio primo cane. Non ricordo più che avevo un cane. Lo so solo perché l'ho scritto.",
+                "Il Mercante tiene un registro. Ho visto la mia calligrafia molte volte. Più di quante ne ricordi.",
+                "Ho chiesto di ricomprare il cielo d'estate. Costa più di quanto me l'ha pagato. Così funziona.",
+                "Ultimo baratto. Il nome della prima persona che ho amato, per un'ora di vita. L'ora è passata. Il nome no.",
+                "Se mi trovi al Mercante: non vendere le cose piccole. Sono quelle che tengono insieme le grandi."
+            ],
+            "epilogue": "In una discesa dimenticata il Ritornante vendette al Mercante Senza Volto, uno alla volta, i suoi ricordi più piccoli: il sapore delle fragole, il colore del cielo d'estate, il nome del suo primo cane. Ogni baratto sembrava un buon prezzo. L'ultimo fu il nome della prima persona che aveva amato, in cambio di un'ora di vita al piano diciotto. Il Mercante li conserva ancora, in una cassa a parte, con la calligrafia del Ritornante sulle etichette."
+        },
+        {
+            "id": "croce_rossa",
+            "title": "La croce rossa",
+            "requires": {"reached_floor": 20},
+            "letters": [
+                "Ho una mappa con una croce rossa e una scritta: qui ti aspetto. Non so chi mi aspetti. Vado a vedere.",
+                "La calligrafia sulla mappa è di un vecchio. Mani che tremano, ma linee dritte. Un cartografo vero.",
+                "Ventesimo piano. La croce è ancora lontana. Conto i passi come mi ha insegnato una ragazza al Campo.",
+                "Ventiseiesimo. La Soglia. Le piattaforme si muovono, la mappa no. Chi l'ha disegnata conosceva questo posto.",
+                "Ventinovesimo. Un bivacco abbandonato. Un sacco a pelo, una gavetta, la stessa calligrafia su un diario.",
+                "La croce è qui. Il vecchio no. Sulla mappa ha scritto: piano trenta, quasi. Era arrivato quasi.",
+                "Ho dormito nel suo sacco a pelo. Ho sognato una ragazza che teneva un piatto in caldo per lui.",
+                "Ho finito la mappa del vecchio con la mia matita. Se la ragazza la trova: è arrivato quasi. Quasi conta."
+            ],
+            "epilogue": "In una discesa dimenticata il Ritornante seguì la croce rossa della mappa di Orvin fino al piano ventinove, dove trovò l'ultimo bivacco del vecchio cartografo: il sacco a pelo, la gavetta, il diario, e la scritta «Piano trenta. Quasi.». Orvin non c'era. Il Ritornante finì la mappa con la sua matita, e la lasciò lì per chi sarebbe venuto. La croce rossa diceva «qui ti aspetto». Forse Orvin non aspettava Tessa: aspettava chiunque potesse finire il suo lavoro."
+        },
+        {
+            "id": "nemesi",
+            "title": "La Nemesi",
+            "requires": {"reached_floor": 3},
+            "letters": [
+                "Un goblin qualunque mi ha ucciso al terzo piano. Una cosa stupida. Sono inciampato.",
+                "Lo stesso goblin, nella discesa dopo. Aveva un nome, adesso. E il mio oro in tasca.",
+                "Mi ha ucciso di nuovo. Ha riso. Ha una cicatrice dove l'avevo colpito la prima volta.",
+                "Terza volta. Mi aspettava vicino al punto dove ero caduto. Sapeva che sarei tornato. Tutti lo sanno, qui.",
+                "Ho capito: quando mi uccide, beve un po' di me. Diventa qualcuno. Io divento un po' meno.",
+                "L'ho sconfitto. Prima di morire mi ha guardato con i miei occhi. Mi ha detto grazie.",
+                "Ho ripreso il mio oro. Non ho ripreso quello che si era bevuto. Quello, credo, se l'è portato via.",
+                "Se un mostro ti chiama per nome, non è magia. È che ti ha già ucciso. Stai attento a chi ti conosce."
+            ],
+            "epilogue": "In una discesa dimenticata un goblin senza storia uccise il Ritornante tre volte di fila al terzo piano, e ogni volta diventò un po' più qualcuno: un nome, una cicatrice, l'oro di un altro in tasca. Il Ritornante capì allora come nascono le Nemesi: chi lo uccide beve un poco del suo nome. Quando finalmente lo sconfisse, il goblin lo guardò con i suoi occhi e gli disse grazie. Quello che si era bevuto, se lo portò via."
+        },
+        {
+            "id": "patto_sangue",
+            "title": "Il patto del sangue",
+            "requires": {"reached_floor": 5},
+            "letters": [
+                "Ho trovato un altare del sangue. Ho dato poco, ho ricevuto molto. Mi sembra un affare.",
+                "Secondo altare. Ho dato di più. La ferita non si chiude del tutto, ma la lama taglia meglio.",
+                "Il fuoco al Campo, quando torno, è più basso. Lo noto solo adesso.",
+                "Terzo, quarto altare. Non conto più. Il sangue che do è nero, adesso. Le mani non tremano più.",
+                "Un'ombra mi segue. Non attacca. Mi guarda come si guarda qualcuno della propria famiglia.",
+                "Il Labirinto mi parla con la voce di tutti quelli che ho perso. Mi dice bravo. Nessuno mi aveva mai detto bravo.",
+                "Mi sono seduto su un trono, in fondo. Era tiepido. Mi stava bene. Ho avuto paura e mi sono alzato.",
+                "Se il fuoco al Campo si abbassa quando torni, smetti di dare il tuo sangue agli altari. Lui lo sente."
+            ],
+            "epilogue": "In una discesa dimenticata il Ritornante passò di altare in altare, dando il suo sangue in cambio di forza, sempre di più, finché il sangue diventò nero e le mani smisero di tremare. Il Labirinto gli parlò con la voce dei suoi morti e gli disse bravo. In fondo, alla Soglia, trovò un trono vuoto, tiepido, che gli stava bene. Si sedette, ebbe paura, si alzò. Al Campo il Fuoco era più basso. Il Fuoco, si dice, sente ogni goccia di sangue data agli altari."
+        },
+        {
+            "id": "sale",
+            "title": "Il sale",
+            "requires": {"reached_floor": 2},
+            "letters": [
+                "Nei Chiostri una voce mi chiama. È la voce di qualcuno che amavo. Non so chi. So che lo amavo.",
+                "Mi sono fermato ad ascoltare. Solo un momento. La voce diceva cose gentili.",
+                "Mi sono fermato di nuovo. Le mani mi pizzicano. Sul dorso c'è un velo bianco, come brina.",
+                "Ascolto da un'ora. Forse da un giorno. Le gambe sono pesanti. Va bene. Qui si sta bene.",
+                "Una novizia senza bocca mi ha preso per il braccio e mi ha tirato via. Il sale si è crepato.",
+                "Le crepe fanno male. Il silenzio dopo la voce fa più male delle crepe.",
+                "Sono tornato in quel corridoio. La voce c'era ancora. Mi sono tappato le orecchie e sono passato.",
+                "Se senti una voce cara nei Chiostri, rispondi, ma non fermarti. Le statue erano tutte persone che si sono fermate."
+            ],
+            "epilogue": "In una discesa dimenticata il Ritornante si fermò nei Chiostri ad ascoltare una voce cara, e quasi diventò una statua di sale. Una novizia con la bocca cucita lo prese per il braccio e lo tirò via mentre il sale gli saliva lungo le gambe. Il Ritornante non seppe mai di chi fosse la voce: sapeva solo che aveva amato quella persona. Forse è per questo che, quando passa davanti alle statue dei Chiostri, rallenta sempre un poco."
+        },
+        {
+            "id": "galleria",
+            "title": "La galleria",
+            "requires": {"reached_floor": 7},
+            "letters": [
+                "Nelle Miniere ho incontrato una squadra di minatori vivi. Undici. Nani e uomini. Mi hanno offerto birra nera.",
+                "Il loro capo si chiama Hadrek. Dice che l'uscita è sotto. Gli altri gli credono. Io no.",
+                "Un nano giovane, Borek, non ci crede neanche lui. Abbiamo parlato tutta la notte, a bassa voce.",
+                "Scendiamo da tre giorni. La roccia è calda come carne. Borek mi guarda e scuote la testa.",
+                "Borek ha deciso: risale. Sette vanno con lui. Quattro restano con Hadrek. Io vado con Borek.",
+                "Scaviamo verso l'alto. Borek davanti, io dietro di lui. La roccia trema. Non dico niente per non spaventarli.",
+                "La galleria è crollata. Ero dietro a Borek. Lui è passato. Io no.",
+                "Se trovi Borek: non è colpa sua. Lo seguirei di nuovo. E la birra era davvero nera come il carbone."
+            ],
+            "epilogue": "In una discesa dimenticata il Ritornante scese nelle Miniere quando la squadra di Hadrek era ancora viva, mille anni fa o in un tempo che il Labirinto ha ripiegato su sé stesso. Bevve la birra nera di Durn, parlò tutta la notte con un nano giovane di nome Borek, e quando Borek decise di disobbedire lo seguì verso l'alto. Era dietro di lui quando la galleria crollò. Borek passò. Il Ritornante no. Borek non sa che c'era anche lui, fra i sette."
+        },
+        {
+            "id": "gabbia",
+            "title": "La gabbia di cristallo",
+            "requires": {"reached_floor": 9},
+            "letters": [
+                "Ho trovato un uomo in una gabbia di cristallo. Elegante, insopportabile. Mi ha corretto la pronuncia.",
+                "Per liberarlo serve sangue. Ne ho poco. Gli ho detto che tornerò.",
+                "Sono tornato. Non avevo ancora abbastanza sangue. Mi ha guardato come si guarda chi mente.",
+                "Gli ho portato del pane, attraverso una crepa. Ha detto che era stantio. L'ha mangiato tutto.",
+                "Mi ha raccontato di un maestro senza nome e di una lavagna. Poi ha smesso, spaventato, a metà frase.",
+                "L'ho lasciato nella gabbia. Avevo paura di lui, di quello che sapeva. Mi vergogno a scriverlo.",
+                "Dalla gabbia, mentre andavo via, mi ha chiamato con un nome che non era il mio. O forse lo era.",
+                "Se trovi l'uomo nella gabbia, liberalo. E se ti chiama con un nome strano, non chiedergli quale."
+            ],
+            "epilogue": "In una discesa dimenticata il Ritornante trovò Valerius nella sua gabbia di cristallo, e tornò da lui più volte senza liberarlo. Gli portava pane attraverso una crepa. Valerius gli raccontò del maestro senza nome dell'Accademia, poi si interruppe, spaventato. Il Ritornante lo lasciò lì, perché aveva paura di quello che sapeva. Mentre se ne andava, Valerius lo chiamò con un nome. Il Ritornante non si voltò."
+        },
+        {
+            "id": "fratello",
+            "title": "Il fratello",
+            "requires": {"reached_floor": 21},
+            "letters": [
+                "Nella Forgia un apprendista di scoria batte sempre nello stesso punto. Ha una cicatrice sul mento.",
+                "Una donna con l'armatura fusa lo cerca. Si chiama Elara. Lo chiama Corin. Lui non si gira.",
+                "Ho aiutato Elara a cercare. Abbiamo trovato il crogiolo dove lavoravano. Impronte di mani: due grandi, due piccole.",
+                "Corin si è girato. Una volta. Quando lei ha cantato una ninnananna di Ignis.",
+                "Elara non lo ha colpito. Lui sì. L'hanno legata a un pilastro. Io sono scappato.",
+                "Sono tornato per lei. Il pilastro era vuoto. Qualcuno l'aveva liberata, o portata via.",
+                "Ho cantato la ninnananna anch'io, a Corin. Ha battuto un colpo fuori tempo. Uno solo.",
+                "Se trovi Elara, dille che una volta, per un colpo, ha sbagliato il ritmo. È ancora lì dentro."
+            ],
+            "epilogue": "In una discesa dimenticata il Ritornante aiutò Elara a cercare suo fratello Corin nella Forgia del Caos. Lo trovarono insieme: un apprendista di scoria con una cicatrice sul mento. Quando Elara cantò la ninnananna di Ignis, Corin si girò, una volta sola. Poi colpì la sorella, e lei fu legata a un pilastro. Il Ritornante scappò, e tornò troppo tardi. Ma prima di morire cantò anche lui la ninnananna, e Corin sbagliò il ritmo di un colpo. È ancora lì dentro."
+        },
+        {
+            "id": "fontana",
+            "title": "La fontana",
+            "requires": {"reached_floor": 8},
+            "letters": [
+                "Ho bevuto da una fontana che parla al plurale. Mi ha curato. Mi ha detto: noi ricordiamo.",
+                "Ho bevuto ancora. Ho visto un bosco di faggi. Non l'ho mai visto. Mi manca.",
+                "Ancora. Ho visto me stesso, con un'altra faccia, scrivere su un muro. Questo muro? Non lo so.",
+                "Ho bevuto troppo. Vedo le discese che ho dimenticato. Tutte insieme. Non riesco a smettere di guardarle.",
+                "In una di quelle discese ero felice. Non so di cosa. Lo ero e basta.",
+                "La fontana mi ha detto di smettere. Ha detto: tienine qualcuna per dopo. Ho smesso.",
+                "Ora mi ricordo troppo e troppo poco. Come chi ha letto le ultime pagine di un libro senza le prime.",
+                "Se bevi dalla fontana, ringraziala. Una volta sola sono stato l'unico a farlo. Le ha fatto piacere."
+            ],
+            "epilogue": "In una discesa dimenticata il Ritornante bevve da Linnea molto più di quanto si dovrebbe, finché non vide tutte insieme le sue discese dimenticate. In una di quelle era felice, e non seppe mai di cosa. Linnea gli disse di smettere, di tenerne qualcuna per dopo. Lui smise, e la ringraziò: l'unico, in mille anni, che l'avesse fatto. È per questo che Linnea lo riconosce sempre, qualunque faccia abbia."
+        },
+        {
+            "id": "trono",
+            "title": "Il trono",
+            "requires": {"won": true},
+            "letters": [
+                "Ho sconfitto il Dio. Dorme. Dietro di lui c'è un trono vuoto. È più piccolo di quanto pensassi.",
+                "Mi sono avvicinato al trono. Il Labirinto ha smesso di respirare per guardarmi.",
+                "Mi sono seduto. Sento ogni stanza del Labirinto come si sente il proprio corpo. Ogni eroe che scende.",
+                "Sono qui da un giorno, o da un anno. È facile. Non devo più scendere. Devo solo restare.",
+                "Ho sentito il fuoco del Campo, lontanissimo, abbassarsi. Come qualcuno che smette di sperare.",
+                "Mi sono alzato. Le gambe non mi reggevano. Il trono era tiepido, poi freddo, poi solo un trono.",
+                "Sono tornato al Campo strisciando. Il fuoco si è alzato di un palmo. Non lo merito.",
+                "Se trovi il trono, guardalo pure. Ma prima pensa al fuoco che ti aspetta. Lui sente quando ti siedi."
+            ],
+            "epilogue": "In una discesa dimenticata, dopo aver fatto dormire il Dio, il Ritornante si sedette sul trono vuoto alla Soglia. Per un giorno, o un anno, sentì tutto il Labirinto come un corpo, ogni eroe che scendeva, ogni goccia di sangue sugli altari. Era facile. Poi sentì il Fuoco del Campo, lontanissimo, abbassarsi come chi smette di sperare, e si alzò. Il Viandante Cieco ha visto questa discesa in sogno. Per questo si siede lontano dal Ritornante."
+        },
+        {
+            "id": "soglia",
+            "title": "La Soglia",
+            "requires": {"won": true, "bosses_total": 40},
+            "letters": [
+                "Il Custode della Soglia mi ha guardato e ha detto: di nuovo tu. Non era una minaccia. Era un saluto.",
+                "Gli ho chiesto chi sono. Ha esitato. Ha detto: lo sai. Non lo so.",
+                "Sono tornato da lui. Ha detto: ti ho sempre aspettato qui. Anche quando non sapevo che saresti venuto.",
+                "Mi ha chiamato maestro. Una volta. Poi si è corretto, come chi sbaglia una parola per stanchezza.",
+                "Gli ho chiesto di dirmi il mio nome. Ha detto: se te lo dico, poi devi ricordarlo. Ho detto di sì.",
+                "Me l'ha detto. Lo scrivo qui prima di dimenticarlo:",
+                "Ho cancellato la riga sopra. Non so perché. La mano l'ha fatto da sola, come chi si protegge.",
+                "Se il Custode ti dice il tuo nome, ascoltalo. Io non ce l'ho fatta. Lui aspetterà ancora."
+            ],
+            "epilogue": "In una discesa dimenticata il Custode della Soglia disse al Ritornante il suo nome. Il Custode lo aveva aspettato per secoli, e una volta lo chiamò maestro, prima di correggersi. Il Ritornante scrisse il nome su un muro, poi la sua stessa mano lo cancellò. Morì poco dopo, alla Soglia, e tornò al Campo senza ricordarlo. Il Custode lo sa. Aspetta ancora, con la pazienza di chi ha già aspettato molto di più."
+        },
+        {
+            "id": "gatto",
+            "title": "Il gatto dei Chiostri",
+            "requires": {"reached_floor": 4},
+            "letters": [
+                "Nei Chiostri c'è un gatto. Mi segue da due stanze, a distanza. È vecchio, magro, con un orecchio mangiato.",
+                "Gli ho lasciato un pezzo di pane. Non l'ha toccato. Ha aspettato che mi allontanassi, poi l'ha preso.",
+                "Il gatto dorme sopra le bilance. Ogni bilancia, ogni piatto. Ne ha trovate tre, in una stanza di speziali.",
+                "Ho provato a prenderlo. Mi ha graffiato. Poi si è seduto sui miei piedi e ha fatto le fusa.",
+                "Il gatto mi ha portato a una bottega crollata. Mortaio d'ottone sopra la porta. Si è seduto sulla bilancia.",
+                "Sotto la bilancia c'era un quaderno di ricette, con una ricetta per le bruciature. Talpa, c'è scritto. Mi sembra sbagliato.",
+                "Mi sono fermato a riposare con il gatto in grembo. Una cosa mi ha sentito. Il gatto è scappato. Io no.",
+                "Se qualcuno conosce uno speziale: il suo gatto è vivo. Dorme ancora sulla bilancia. Aspetta."
+            ],
+            "epilogue": "In una discesa dimenticata il Ritornante seguì per i Chiostri un gatto vecchio con un orecchio mangiato, che dormiva su tutte le bilance che trovava. Il gatto lo portò alla bottega crollata di uno speziale di Aurelia, sotto un mortaio d'ottone, e si sedette sulla bilancia come se fosse a casa. Il Ritornante morì lì, con il gatto in grembo, e la sua ultima lettera era per lo speziale. Lardo, se è lui, dorme ancora su quel piatto. Lo Speziale non sa che qualcuno, una volta, ha provato a dirglielo."
+        },
+        {
+            "id": "goblin",
+            "title": "Il piccolo Goblin",
+            "requires": {"reached_floor": 3},
+            "letters": [
+                "Due Goblin litigavano per una moneta. Il grande picchiava il piccolo. Mi sono messo in mezzo.",
+                "Il grande è scappato. Il piccolo mi ha morso la mano e si è preso la moneta. Ho riso tanto.",
+                "Il piccolo Goblin mi segue. Ogni tanto mi lancia un sasso. Credo che sia il suo modo di salutare.",
+                "Gli ho dato un pezzo di formaggio. L'ha annusato a lungo, come se non sapesse cosa fosse il cibo vero.",
+                "Il Goblin mangia sempre, ma ha sempre fame. Dice una parola sola, sempre la stessa: patto.",
+                "Stanotte il piccolo Goblin ha pianto. Mi ha mostrato una moneta falsa. Credo che pensasse fosse oro.",
+                "Ci hanno trovati quelli grandi. Il piccolo ha cercato di difendermi con i sassi. Non è bastato.",
+                "Se trovate un piccolo Goblin con un morso di formaggio in tasca: è mio amico. Ditegli che l'oro vero non sazia."
+            ],
+            "epilogue": "In una discesa dimenticata il Ritornante difese un piccolo Goblin da uno più grande, e ne ricevette un morso e una moneta rubata. Il Goblin lo seguì per giorni, lanciandogli sassi per salutarlo, mangiando sempre e avendo sempre fame, come tutto il popolo di Galdor dopo il patto. Una notte pianse su una moneta falsa che aveva creduto d'oro. Quando i Goblin grandi li trovarono, il piccolo provò a difenderlo con i sassi. È l'unica volta che si ricordi un Goblin difendere qualcuno senza chiedere niente in cambio."
+        },
+        {
+            "id": "carte_mercante",
+            "title": "La partita a carte",
+            "requires": {"reached_floor": 10},
+            "letters": [
+                "Il Mercante mi ha proposto una partita a carte. La posta: un ricordo. Ho accettato. Non so perché.",
+                "Ho perso la prima mano. Il Mercante ha preso il ricordo del sapore delle mele. Non so più com'erano.",
+                "Ho vinto la seconda. Gli ho chiesto di mostrarmi il suo volto. Ha mostrato solo oro. Ha detto: è tutto quello che c'è.",
+                "Terza mano. Il Mercante bara. Lo so. Lui sa che lo so. Continuiamo a giocare lo stesso.",
+                "Ho chiesto al Mercante perché compra ricordi. Ha detto: perché qualcuno deve tenerli, quando voi li perdete.",
+                "Ho perso tutto. Il Mercante ha guardato i miei ricordi sul tavolo, a lungo. Poi me ne ha restituito uno.",
+                "Era il ricordo di un fuoco che non brucia. Ha detto: questo è tuo. Non lo compro. Non ha prezzo.",
+                "Sono uscito dalla stanza del Mercante più povero di quando sono entrato. Ma con il ricordo giusto."
+            ],
+            "epilogue": "In una discesa dimenticata il Ritornante giocò a carte con il Mercante Senza Volto, puntando ricordi. Perse il sapore delle mele, vinse una domanda, perse tutto il resto. Il Mercante, che barava e sapeva di essere scoperto, guardò a lungo i ricordi sul tavolo, e alla fine ne restituì uno solo: quello di un fuoco che non brucia. Disse che non lo comprava, perché non aveva prezzo. È per questo, forse, che il Ritornante si sveglia sempre accanto al Fuoco: il ricordo che conta non è mai stato venduto."
+        },
+        {
+            "id": "ivetta",
+            "title": "Il ponte delle Campane",
+            "requires": {"reached_floor": 13},
+            "letters": [
+                "Sul ponte delle Campane c'è una Sentinella di Nube piccola. Più bassa delle altre. Ha la voce di una bambina.",
+                "La Sentinella piccola mi ha attaccato. Ho detto una parola che non so dove ho imparato: sopra. Si è fermata.",
+                "Ha ripetuto: sopra. Poi mi ha preso la mano e mi ha portato oltre il ponte, sul vento solido.",
+                "La Sentinella dice di chiamarsi Ivetta. Dice di aver lasciato cadere qualcosa, tanto tempo fa. Non ricorda cosa.",
+                "Ivetta cerca sotto il ponte, ogni notte. C'è una rete, vecchia, intrecciata con capelli. È vuota.",
+                "Le ho detto che la rete ha preso quello che è caduto. Che era vivo. Non so se è vero. Volevo che lo fosse.",
+                "Ivetta ha smesso di cercare. Si è seduta sul ponte e ha fischiato. Mi è sembrata felice.",
+                "Ho attraversato il ponte da solo. Dall'altra parte qualcosa mi aspettava. Ivetta, se leggi: sopra."
+            ],
+            "epilogue": "In una discesa dimenticata il Ritornante incontrò sul ponte delle Campane la Sentinella di Nube più piccola, che aveva la voce di una bambina. Le disse la parola delle Sentinelle, «Sopra», senza sapere dove l'avesse imparata, e lei si fermò. Era Ivetta, caduta a undici anni la notte della Discordia portando un neonato. Cercava ogni notte sotto il ponte quello che aveva lasciato cadere. Il Ritornante le disse che la rete lo aveva preso vivo. Era vero, anche se lui non lo sapeva. Ivetta smise di cercare, e si mise a fischiare."
+        },
+        {
+            "id": "pettirosso",
+            "title": "L'acqua per il pettirosso",
+            "requires": {"reached_floor": 17},
+            "letters": [
+                "Ho bevuto a una fontana che parlava. Ho visto un bosco di pietra, e un uccello con il becco aperto.",
+                "Non riesco a smettere di pensare all'uccello. Un pettirosso, credo. Aveva sete da mille anni.",
+                "Sono tornato alla fontana con una borraccia. La fata mi ha chiesto perché. Le ho detto: per il pettirosso.",
+                "La fata ha riso, una risata d'acqua. Ha detto che il bosco è troppo lontano. Ha detto che è dentro di lei.",
+                "Ho chiesto come si arriva dentro una fata. Ha detto: bevendo. Ho bevuto tre volte. Ho visto il ramo.",
+                "Ho visto il pettirosso da vicino. Ho versato l'acqua, nel ricordo. Non so se è servito. Il becco era bagnato.",
+                "La fata si è spenta quasi del tutto, dopo. Ha detto che le è costato molto. Ha detto che ne valeva la pena.",
+                "Muoio con la borraccia vuota. Ma da qualche parte, in un bosco di pietra, un pettirosso ha bevuto."
+            ],
+            "epilogue": "In una discesa dimenticata il Ritornante bevve alla Fontana Fatata e vide il Bosco Vecchio di pietra, con un pettirosso rimasto sul ramo più basso, il becco aperto verso la sorgente. Tornò con una borraccia. Linnea gli disse che il bosco era dentro di lei, e che ci si arrivava solo bevendo. Il Ritornante bevve tre volte, finché non vide il ramo da vicino, e versò l'acqua nel ricordo. Linnea quasi si spense per lo sforzo. Il becco del pettirosso, nella pietra, da allora è bagnato. Linnea non te l'ha mai detto, perché lo hai fatto tu."
+        },
+        {
+            "id": "gabbiana",
+            "title": "La Gabbiana",
+            "requires": {"reached_floor": 18},
+            "letters": [
+                "Nel Ventre c'è una flotta ferma, con le lanterne accese. Sono salito sulla nave più grande. Si chiama Gabbiana.",
+                "A bordo dormono tutti. Solo un gatto è sveglio, e una donna che scrive il suo nome su un libro, ogni mattina.",
+                "La donna si chiama Edda. È il capitano. Mi ha chiesto se vengo da Port'Alba. Ho detto di no. Era delusa.",
+                "Edda mi ha chiesto di leggerle il suo nome ad alta voce, perché la sua voce è stanca. L'ho letto.",
+                "Ho provato a svegliare il nostromo. Ha aperto gli occhi e ha detto: mamma? Poi si è riaddormentato.",
+                "Edda dice che la flotta non affonda finché qualcuno legge i nomi. Ho letto tutti i nomi del ruolo di bordo.",
+                "Cinquantadue nomi, tre cani, un gatto. Il gatto non ha nome. Edda dice che non ne ha mai voluto uno.",
+                "Il Ventre si stringe intorno alla nave. Edda, il tuo nome è Edda Vael. Lo leggo un'ultima volta."
+            ],
+            "epilogue": "In una discesa dimenticata il Ritornante salì sulla Gabbiana, la nave ammiraglia della flotta di Port'Alba, ferma nel Ventre con le lanterne accese. Il capitano, Edda Vael, scriveva il suo nome ogni mattina per non dimenticarlo, ma la sua voce era troppo stanca per leggerlo. Il Ritornante lo lesse per lei. Poi lesse i cinquantadue nomi del ruolo di bordo, uno per uno, perché Edda diceva che la flotta non affonda finché qualcuno legge i nomi. Morì sulla Gabbiana. La flotta, da allora, non è affondata."
+        },
+        {
+            "id": "lista_corin",
+            "title": "Il nome senza data",
+            "requires": {"reached_floor": 23},
+            "letters": [
+                "Sulla porta della fucina grande c'è una lista di nomi. Accanto a quasi tutti, una data. Accanto ad alcuni, niente.",
+                "Ho chiamato ad alta voce uno dei nomi senza data: Corin. Uno degli Apprendisti di Scoria si è girato.",
+                "L'Apprendista che si è girato ha una cicatrice sul mento. Mi ha guardato a lungo. Poi mi ha attaccato.",
+                "Non l'ho colpito. Ho detto di nuovo il suo nome. Si è fermato, con il martello alzato. Tremava.",
+                "Ho chiesto a Corin se volesse uscire. Non può parlare. Ha battuto il martello sull'incudine tre volte. Forse era un sì.",
+                "Ho provato a staccargli il ferro dal braccio. Brucia. Ne ho staccato un pezzo piccolo. Sotto c'era pelle.",
+                "Il Maestro di Forgia ci ha visti. Corin si è messo davanti a me. Non so come sia finita per lui.",
+                "Se qualcuno conosce una sorella di Corin: un pezzo di lui è ancora pelle. Ditele di non smettere."
+            ],
+            "epilogue": "In una discesa dimenticata il Ritornante lesse la lista sulla porta della fucina grande e chiamò ad alta voce uno dei nomi senza data: Corin. Uno degli Apprendisti di Scoria si girò, con la cicatrice sul mento. Il Ritornante non lo colpì, e riuscì a staccargli dal braccio un pezzo di ferro, piccolo: sotto c'era ancora pelle. Quando il Maestro di Forgia li vide, Corin si mise davanti al Ritornante per proteggerlo. È per questo, forse, che la data accanto al suo nome manca ancora: un pezzo di lui, quel giorno, ha scelto di essere un fratello."
+        },
+        {
+            "id": "badessa_notte",
+            "title": "La notte con la Badessa",
+            "requires": {"reached_floor": 3},
+            "letters": [
+                "La Badessa mi ha fatto sedere. Non per combattere. Mi ha versato del tè. Il tè non aveva sapore.",
+                "La Badessa non parla. Scrive su una lavagna piccola: perché sei qui? Ho scritto: non lo so.",
+                "Ha scritto: nessuno sa perché è qui. Poi ha cancellato. Poi ha scritto: io sì. Proteggo le novizie.",
+                "Le ho chiesto, scrivendo, da cosa le protegge. Ha guardato il corridoio a lungo. Poi ha cancellato la lavagna.",
+                "Di notte, nei Chiostri, qualcuno canta. Sottovoce, sotto un velo. La Badessa ha chiuso gli occhi per ascoltare.",
+                "Le ho scritto: è bello. Lei ha scritto: è pericoloso. Poi ha scritto, più piccolo: è bello.",
+                "Le cose dei corridoi hanno sentito il canto. La Badessa si è alzata per proteggere la novizia. Io con lei.",
+                "Se una novizia canta ancora, nei Chiostri: la Badessa ha difeso la tua voce. Te lo scrivo io, perché lei non può."
+            ],
+            "epilogue": "In una discesa dimenticata il Ritornante passò una notte con la Badessa del Silenzio, che invece di combattere gli versò un tè senza sapore e gli parlò scrivendo su una lavagna piccola. Gli disse che proteggeva le novizie. Quando nei Chiostri si alzò il canto di Agnese, sotto il velo, la Badessa chiuse gli occhi per ascoltarlo, e scrisse prima «è pericoloso» e poi, più piccolo, «è bello». Quando le cose dei corridoi sentirono il canto, la Badessa si alzò per difendere la voce che aveva proibito. Il Ritornante combatté accanto a lei, e morì nei Chiostri."
+        }
+    ]
+}

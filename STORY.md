@@ -24,12 +24,14 @@ La discesa deve restare veloce. Il testo lungo vive dove il giocatore sceglie di
 | | Esito di una scelta | 1-2 frasi, al massimo 30 parole |
 | | Frase d'ingresso di una stanza, atmosfera di un bioma | 1-2 frasi, al massimo 30 parole |
 | | Lettera insanguinata | 1 frase, al massimo 25 parole |
-| | Battuta di un boss (inizio, fase, morte) | 1 frase, al massimo 25 parole |
+| | Battuta di un boss (inizio, fase, morte) | 1-2 frasi, al massimo 25 parole |
 | **Fuori partita** | Conversazione al Campo (un argomento) | 80-250 parole, divise in battute |
 | | Voce del Bestiario (un livello) | 40-80 parole |
-| | Capitolo di un libro dell'Archivio | 150-400 parole |
-| | Ricordo di una vita prestata (classe) | 120-250 parole |
-| | Epilogo di un finale | 3-6 frasi per variante |
+| | Pagina dell'Atlante (storia di un bioma) | 80-200 parole |
+| | Capitolo di un libro dell'Archivio | 80-400 parole |
+| | Ricordo di una vita prestata (classe) | 70-250 parole |
+| | Epilogo di un finale (una vita prestata) | 3-6 frasi, 40-120 parole |
+| | Storia di un oggetto (Armeria) | 40-80 parole |
 
 Un testo in partita che supera la misura si spezza: la prima parte resta nella scena, il resto diventa una nota del Codice o una battuta al Campo.
 
@@ -197,6 +199,7 @@ Ogni bioma è una regione ricordata dal Labirinto. Ha un boss nativo, una gente,
 - **Pericolo:** la Nostalgia Letale. Le voci dei tuoi cari ti chiamano per nome.
 - **Segreti:** la **Prima Pietra** degli Architetti sotto il marmo del piano 3; l'aula dove Sereth insegnava, con il suo nome raschiato dalla lavagna.
 - **Temi:** il rimpianto, il sapere che non ha salvato nessuno.
+- **Dettagli già nel gioco:** ogni chiostro ha undici archi. Nel refettorio la tavola è apparecchiata per quaranta, con la sedia della Badessa a capotavola. Il registro dei voti è firmato da una sola mano per tutte le ultime novizie; l'ultima pagina dice «Restare». Le novizie hanno la bocca cucita con un filo d'argento. Sulla lavagna dell'aula di Sereth la firma è stata raschiata con una lama fino a incidere l'ardesia. Un copista di cenere scrive un elenco infinito di nomi, e quello del Ritornante c'è molte volte.
 
 ### ⛏️ Le Miniere della Testardaggine (piani 6-10)
 - **Cos'era:** le gallerie dei Monti di Durn, nani e uomini insieme, gli ingranaggi dell'Era dell'Ambizioso Raggiungimento.
@@ -205,6 +208,7 @@ Ogni bioma è una regione ricordata dal Labirinto. Ha un boss nativo, una gente,
 - **Pericolo:** il Gas del Silenzio, che toglie la voce e gli incantesimi.
 - **Segreti:** la forgia di **Kaelen il Muto**; la galleria da cui la squadra di Borek non è uscita.
 - **Temi:** la testardaggine, la fedeltà a un ordine sbagliato.
+- **Dettagli già nel gioco:** lampade d'ottone ogni venti passi; canarini d'ottone a molla che fischiano quando arriva il Gas. Le gallerie basse erano dei bambini. Su una trave sono incisi gli undici nomi della squadra di Borek: sette cerchiati (risalirono con lui), quattro barrati. Il carro del pane per la squadra di Hadrek è fermo a metà strada («Tornate presto»). I cartelli dell'Ambizioso Raggiungimento dicono «Basta scavare». Uno degli ingranaggi giganti porta la firma del nonno di Borek.
 
 ### 🌪️ Le Guglie del Vento Urlante (piani 11-15)
 - **Cos'era:** le torri dei tessitori di Valeriana e l'Osservatorio, dove si misuravano le stelle.
@@ -213,6 +217,7 @@ Ogni bioma è una regione ricordata dal Labirinto. Ha un boss nativo, una gente,
 - **Pericolo:** la Caduta Astrale: chi perde l'equilibrio non cade in basso, ma in un altro piano.
 - **Segreti:** la mappa del cielo di Aethelgard com'era, incisa sul pavimento dell'Osservatorio; il campo di lavanda di Ilse, sospeso su una guglia.
 - **Temi:** la curiosità, la perdita dei punti di riferimento.
+- **Dettagli già nel gioco:** gli stendardi azzurri portano i nomi delle quaranta valli di Valeriana. Fra le guglie ci sono ponti di vento che si attraversano con una formula di Aetheria. Un corriere di Valeriana cerca da mille anni la casa a cui consegnare una lettera incompleta di un cavaliere alla figlia che piantava lavanda (Alaric a Ilse). Dalla grande lente dell'Osservatorio, girata verso il basso, si vede in fondo al Labirinto un occhio chiuso.
 
 ### 🫀 Il Ventre della Memoria (piani 16-20)
 - **Cos'era:** il Mare Interno e le sue coste. Ora è un organismo: pareti traslucide come membrane, dentro oggetti e volti.
@@ -221,6 +226,7 @@ Ogni bioma è una regione ricordata dal Labirinto. Ha un boss nativo, una gente,
 - **Pericolo:** la Dissoluzione dell'Io: il Labirinto ti digerisce un poco.
 - **Segreti:** la sorgente di **Linnea**; la città capovolta i cui abitanti cadono verso l'alto; il punto dove il **Drago di Zaffiro** bevve troppo dal passato.
 - **Temi:** la memoria come cibo, l'identità che si scioglie.
+- **Dettagli già nel gioco:** galleggiano bambole di stoffa con il nome dei bambini che le avevano in braccio quando arrivò il mare. Al porto sommerso un vecchio aspetta il ritorno della flotta da mille anni. Nel Ventre il Ritornante può assistere al proprio funerale (la bara è vuota: «Non ancora»). Un lago mostra il suo riflesso invecchiato, che indica il fondo.
 
 ### 🔨 La Forgia del Caos (piani 21-25)
 - **Cos'era:** le fucine delle Terre Alte di Ignis, dove dopo la Discordia gli Architetti tentarono di riforgiare insieme gli elementi.
@@ -229,6 +235,7 @@ Ogni bioma è una regione ricordata dal Labirinto. Ha un boss nativo, una gente,
 - **Pericolo:** l'Ebollizione Astrale, che brucia l'oro.
 - **Segreti:** l'Incudine Cosmica; il crogiolo dove Elara perse il fratello; il primo tentativo di «riparare» il Normale.
 - **Temi:** riparare ciò che non si può riparare, il lavoro come penitenza.
+- **Dettagli già nel gioco:** sulla porta di una fucina c'è la lista degli apprendisti chiamati per la riforgiatura; accanto all'ultima data, «Tutti»; fra i nomi c'è «Corin di Ignis», con un piccolo cuore disegnato. Nel crogiolo di Elara ci sono impronte di due mani grandi e due piccole. Sul fondo c'è il lago d'oro fatto delle monete evaporate in mille anni, con i volti di chi le ha perse. Una foresta d'ossidiana suona ancora la ninnananna di Ignis.
 
 ### 👁️ La Soglia del Dio Antico (piani 26-30)
 - **Cos'era:** Calaris, l'isola più alta di Aetheria, e la cittadella di Sereth. Ora piattaforme di volontà nel vuoto, elementi in collisione.
@@ -237,11 +244,14 @@ Ogni bioma è una regione ricordata dal Labirinto. Ha un boss nativo, una gente,
 - **Pericolo:** il Paradosso Temporale.
 - **Segreti:** lo **specchio** oltre il Dio; la stanza vuota con una sedia («la fine del tempo»), dove Sereth sedeva a pensare.
 - **Temi:** la colpa, il perdono, la tentazione del riposo.
+- **Dettagli già nel gioco:** su un frammento di Calaris galleggiano un tavolino, una tazza di tè al bergamotto ancora tiepida e un trattato sul Normale con una nota a margine: «E se la fragilità fosse un diritto?». C'è una statua di marmo di un Architetto con il volto scalpellato via e le mani aperte in offerta. Una tavola apparecchiata per due ha il segnaposto «Tu»; l'altro è raschiato. Al piano 29 c'è l'ultimo bivacco di Orvin, con la mappa e la croce rossa («Piano trenta. Quasi.»). Le stelle della Soglia possono disporsi nella costellazione che c'era sopra il Campo la prima notte del Ritornante.
 
 ### ⏳ Le Eco (oltre il piano 30)
-Il Dio, svegliandosi, ricorda il suo sogno e lo ripete più forte: i biomi tornano in un ordine diverso, con pericoli più duri e un nome (Eco II, Eco III…). Nelle Eco i luoghi conoscono il Ritornante: le voci dei Chiostri cantano il suo nome, i minatori lo salutano. Ogni trenta piani il Dio Antico è di nuovo lì, un po' più sveglio.
+Il Dio, svegliandosi, ricorda il suo sogno e lo ripete più forte: i biomi tornano in un ordine diverso, con pericoli più duri e un nome (Eco II, Eco III…). Nelle Eco i luoghi conoscono il Ritornante: le voci dei Chiostri cantano il suo nome, i minatori lo salutano. Ogni trenta piani il Dio Antico è di nuovo lì, un po' più sveglio. L'Atlante ha quattro pagine sulle Eco (dal piano 31, 45, 61 e 91: quella del 45 racconta le creature che ricordano); nell'ultima, sotto la canzone, si sente una voce che ricorda una frase che comincia con «Ciò che è fragile».
 
 ---
+
+**Atlante, seconda ondata (v6):** due pagine in più per bioma. Chiostri: *Le Undici Ore* (gli archi sono undici per le ore; i Chiostri sono fermi all'undicesima, l'ora del silenzio) e *La Fontana senz'Acqua* (le monete delle novizie, la statua di sale). Miniere: *La Canzone della Risalita* (i minatori di Hadrek la cantano scendendo) e *Le Tacche a Croce* (la riga finisce sotto la mano del Caposquadra). Guglie: *I Ponti di Vento* e *Le Quaranta Valli* (i colori segreti della seta rimasti nel vento). Ventre: *La Flotta che Aspetta* e *Le Membrane*. Forgia: *La Lista sulla Porta* (gli Apprendisti che si girano sono quelli senza data) e *Gli Alberi di Vetro*. Soglia: *La Sedia Rivolta al Buio* (piano 28) e *Lo Specchio della Verità* (dopo la vittoria).
 
 ## Parte VII · Il Campo
 
@@ -251,7 +261,74 @@ Il **Campo Base** è un cerchio di pietre intorno al Fuoco, in un punto del Labi
 - **Chi ci vive:** i personaggi liberati o incontrati nelle discese, quando hanno un motivo per restare. Al Campo parlano più che in partita: è qui che raccontano la loro storia (vedi la Parte VIII).
 - **Le strutture** sono pezzi di casa: il **Tavolo della Cartografa**, lo **Scrittoio di Silas**, l'**Altare della Purificazione**, la **Biblioteca dell'Arcano**, la **Sala d'Armi**. Ogni struttura nuova è un personaggio che decide di fermarsi.
 - **La Taverna, la Forgia, il Grimorio, le botteghe**: il lavoro degli artigiani liberati (Speziale, Borek, Elara, Valerius).
-- **L'Archivio di Aethelgard**: i libri ritrovati nelle discese.
+- **L'Archivio di Aethelgard**: i libri ritrovati nelle discese. I primi sei danno un bonus; dalla v6 se ne aggiungono quindici di sola lettura (`data/books.json`, senza `bonus`), con capitoli che si aprono più avanti (`requires`). Chi li ha scritti:
+  - *Trattato sulla Corruzione Elementale*: Ottavia Lune. L'ultimo capitolo (piano 20) ricorda la lavagna del maestro del Normale.
+  - *Il Quaderno di Orvin il Cartografo*: Orvin. Il suo passo è di settantuno centimetri; la croce rossa l'ha sognata prima di disegnarla.
+  - *Canti della Caduta*: canti delle novizie dei Chiostri; i sette sigilli degli Architetti, uno dei quali non volle mai essere trovato.
+  - *Le Ricette di Mastro Ambrogio*: lo Speziale. L'ultima ricetta è la *Pozione del Conto*, una goccia per ogni persona curata.
+  - *Il Registro della Squadra di Durn*: la squadra di **Hadrek**, quella che scese mentre Borek risaliva.
+  - *Le Valli della Seta*: una guida di Valeriana (quaranta valli, le torri dei tessitori, ogni famiglia un colore segreto), con una postilla scritta dopo.
+  - *Il Diario dell'Osservatorio*: l'allievo della Maestra delle stelle (le stelle non si guardano, si contano).
+  - *Le Cronache del Mare Interno*: i porti, il Drago di Zaffiro che salutava i pescatori, il mare che si fermò.
+  - *Il Libro delle Forge di Ignis*: la riforgiatura e la lista degli apprendisti fusi con il loro lavoro.
+  - *Lettere di Ilse*: tre lettere di Ilse al padre e la lettera non finita di Alaric. **Berta** è la vecchia della valle della lavanda.
+  - *Le Leggi di Galdor*: il re giusto, la carestia, il patto con un Architetto senza nome, il Re dei Goblin.
+  - *L'Ordine dei Paladini*: il giuramento in tre parti (l'ultima: non chiedere mai cosa si custodisce), Alaric figlio di un fabbro, i Paladini Corrotti.
+  - *I Taccuini di Calaris*: i taccuini di Sereth trovati alla Soglia, senza nome. Il terzo (il Vuoto come riposo) aspetta 40 boss, il quarto 50.
+  - *Il Libro del Fuoco che Resta*: i sei Architetti fedeli, Ardel, il potere di riportare, il perché.
+  - *Le Lezioni del Settimo Architetto*: gli appunti di Valerius, che lesse il nome del maestro e non lo scrive.
+  - Terza ondata (diciannove libri):
+    - *Il Breviario della Badessa*: le undici ore dei Chiostri, le novizie (Berenice canta stonata, Clelia ruba le pere, Agnese ha la voce più bella), il Voto nato dopo che una cosa sentì cantare Berenice.
+    - *Il Taccuino di Fenn il Cercatore*: Fenn cercava il fratello **Arlo**, figlio di un orologiaio; il filo di Arlo finisce in un orologio fermo alle undici e un quarto.
+    - *Il Manuale del Minatore di Durn*: le regole della Gilda, la canzone della risalita; Borek strappò la regola sul caposquadra che non vuole risalire, e firmò con una B.
+    - *Le Leggende delle Sentinelle di Nube*: quaranta Sentinelle, una per valle, motto «Sopra»; la notte della Discordia ne cadde una sola, **Ivetta**, undici anni. Dire «Sopra» a una Sentinella di Nube a volte la ferma.
+    - *Il Giornale di Bordo della Flotta di Port'Alba*: la **Gabbiana**, capitano **Edda Vael**; la flotta non affondò, scese nel Ventre e aspetta con le lanterne accese.
+    - *Le Memorie di Malphas*: il medico che prese l'Essenza dei morenti; si tagliò la mano dopo aver lasciato andare l'Essenza di una novizia.
+    - *Il Libro di Hob*: il boia che non diede mai un secondo colpo; Alaric gli strinse la mano senza pinze. L'ultimo condannato fu uno studente che aveva scritto «La Luce è malata».
+    - *Il Canzoniere di Ignis*: le canzoni del suonatore **Gorm**; Hrodna vinse la scintilla cinque estati e rifiutò la sesta.
+    - *Le Lettere di Mila*: lettere a Bran sotto un sasso; la casa con lo scudo, la giumenta Gerd, l'ultima lettera a settantanove anni.
+    - *Il Diario di Corin, Apprendista*: valle di **Brasa**; Lisbet fu la prima a diventare parte del lavoro; «chiamatemi per nome: mi giro».
+    - *Le Preghiere dei Grandi Templi*: la preghiera dei malati («non rendila perfetta: rendila sana»), che i sacerdoti smisero di dire.
+    - *Le Favole del Bosco Vecchio*: raccolte da una maestra di Port'Alba; l'ultima, senza fine, è quella del viandante che si sveglia accanto al fuoco.
+    - *Il Trattato sulle Rune dei Lapicidi*: una runa è una parola che la pietra tiene; il miglior lapicida incise per due anni segni non suoi sotto un'isola lontana, e la pietra si raffreddava.
+    - *Il Grimorio Minore di Aetheria*: del maestro **Ruperto** («la magia si chiede, non si ordina»); l'Etere è la luce che resta.
+    - *Il Registro del Mercante*: il Mercante era il tesoriere del cielo; ha comprato una per una le discese del Ritornante, «da restituire quando sarà il momento». Un conto aperto: «qualcuno sta pagando per tutti».
+    - *Il Libro del Mendicante Ombra*: il canale fra chi dà e chi ha bisogno; ogni sera versa nel Fuoco quello che riceve.
+    - *Il Quaderno delle Eco*: il Labirinto che ricorda; il Dio che torna «non riesce a dormire».
+    - *Il Registro dei Custodi*: l'ordine delle porte; Alaric giurò come Paladino, non come Custode, e per questo non sa quando aprire. Il giuramento dei Custodi: aprire «il giorno in cui qualcuno avrà bisogno che si apra».
+    - *Il Testamento di Galdor*: la figlia del re morì a sei anni nella carestia; fu Galdor a ordinare che il messaggio «non arrivasse».
+  - Quarta ondata (dodici libri, capitoli lunghi):
+    - *Le Cronache di Aurelia*: la città in cerchi, quattro porte (del Sole a oriente, del Fango a occidente), i quartieri (Templi, Studenti, Fabbri, Speziali, Concerie), le campane a undici rintocchi; il primo muro posato da un Architetto scese per ultimo. Alaric era figlio di un fabbro di serrature.
+    - *Il Quaderno di Nerea*: trovato in una membrana del Ventre (forse sognato da Silas, forse vero). Nerea scese con la casa nella Valle delle Campane, aspettò Silas alla fontana senz'acqua, pianse fino al sale. I suoi occhi, come quelli di Silas, sono **grigio-verdi, come il mare d'inverno**.
+    - *L'Erbario delle Paludi di Morva*: scritto da Isaura per le sue allieve traghettatrici; la bambina aveva sei anni e i capelli rossi; l'«erba del sonno» cresce dove un morto si addormenta davvero, e qualcuno l'ha trovata accanto a Isaura e alla bambina.
+    - *Il Trattato sul Ritorno*: di «uno che ha guardato»; trentasette discese osservate; le ipotesi più vicine alla verità aspettano la vittoria e 40 boss, la conclusione (le lettere hanno la calligrafia del Ritornante) 50 boss.
+    - *Il Libro del Drago di Zaffiro*: il Drago riportava a riva i pescatori morti; la corazza di scaglie la indossava Edda Vael; «non è alimentato dai rimpianti: li tiene».
+    - *La Storia dell'Accademia della Luce Calma*: «Qui si impara a chiedere»; sette aule, quella del Normale in fondo al terzo piano; l'ultimo capitolo, di Valerius, dopo la vittoria e 40 boss.
+    - *Il Diario della Maestra delle Stelle*: 1.145 stelle nelle notti limpide; Nerea aspettava Silas sulle scale contando i gradini; la Maestra sapeva che le luci cadute erano isole e diede a Silas la sua matita: «adesso conti tu».
+    - *I Viaggi di Bertolo*: la figlia si chiamava **Rosella**; il Mercante gli disse che le persone che ami «non sono merce, sono debiti»; Bertolo lasciò la Tasca Dorata nel Labirinto.
+    - *Il Libro delle Sette Cittadelle*: una cittadella per Architetto; solo quelle del Fuoco (una casa con la porta aperta a Ignis) e del Normale (su Calaris) restarono aperte; i due Architetti si volevano bene e bevevano il tè al bergamotto insieme. Ardel solo dopo la vittoria; il settimo, senza nome, dopo la vittoria e 40 boss.
+    - *Le Cronache dei Paladini Corrotti*: del cavaliere **Severo**, che non bruciò Silas, ricominciò a dire la preghiera dei malati e si sedette accanto all'armatura di Maud.
+    - *Il Libro dei Nomi del Ventre*: della bibliotecaria di Port'Alba **Adelina**, che salvò migliaia di nomi e perse il suo.
+    - *Il Libro dei Sette Sigilli*: i sigilli della Prima Pietra (quello del Normale è una linea orizzontale, «come una persona sdraiata», e non si spezzò). Dopo la vittoria e 60 boss il Ritornante vi lascia un graffio, un ottavo segno.
+  - Quinta ondata (diciotto libri):
+    - *La Cronaca della Carestia del Sud*: del notaio di **Fontegrano**, la valle più grande; le tre leggi di Galdor (nessuno abbia fame, nessuno paghi l'acqua dei fiumi, nessuno sia giudicato senza essere ascoltato); il re che portava sacchi in piazza; il contrabbandiere con la brigantina.
+    - *Gli Appunti di Laboratorio di Ottavia Lune*: il maestro le lasciò una moneta della Pietra con la loro prima lezione; qualcuno le lasciò sulla porta una boccetta di estratto di Normale con il sigillo bianco («forse ti serve»), che non aprì mai.
+    - *Le Memorie del Corriere di Valeriana*: il corriere **Pio** ebbe la lettera non finita di Alaric; arrivò al campo di lavanda tre giorni dopo la partenza di Ilse (Berta: «la lavanda è fiorita») e non riuscì mai a consegnarla. La lettera è ancora «in viaggio», di corriere in corriere.
+    - *Il Libro dei Goblin*: i Goblin si chiamano con il nome di ciò che hanno in mano; il Re dei Goblin, per un istante, disse «ero il re del grano»; il piccolo Goblin tiene in tasca un pezzo di formaggio.
+    - *Il Diario di Arlo l'Orologiaio*: l'orologio grande della vetrina, sul quale i campanari regolavano le undici; fermo alle undici e un quarto, poi alle undici e sedici, dopo che Fenn lo caricò. Fenn fu trovato di pietra sotto l'orologio.
+    - *I Canti delle Novizie*: il canzoniere di Agnese; la canzone di Berenice; l'ultima canzone, per la Badessa, cominciata da lei («Possono cantare, adesso»). Nei Chiostri, la notte, si canta in due voci.
+    - *Le Cronache del Campo*: il Campo all'inizio era il Fuoco alto come un uomo e il Ritornante; l'ordine degli arrivi; le sere; la pagina aperta «Stasera...» con la matita di Silas.
+    - *Il Libro di Ivo, il Messaggero*: Ivo, figlio di un pastore delle colline di Aurelia; l'Architetto «dalle mani calde» gli disse «se non arrivi in tempo, non è colpa tua»; arrivò in tempo. Sotto la sua ultima pagina Corvo scrisse: «Il ritardo è stato mio».
+    - *Il Libro della Prima Era*: i sette viandanti che separarono le note; il Normale tiene i nodi della trama; l'ultimo viandante chiese «avete chiesto agli uomini se lo vogliono?». Il filo grigio della stoffa è il più consumato.
+    - *Le Lettere di Marta*: la moglie del cartografo di corte (il Viandante). Mattia vide passare l'Architetto («era il papà di qualcuno»). Marta era al mercato quando il cielo si strappò; il Viandante la cerca ancora.
+    - *La Brace*: frammenti incisi intorno al Fuoco; i nomi delle nove vite sul tavolo dove lo Speziale posa le ciotole; dopo la vittoria e 40 boss il nome Ardel, la casa con la porta aperta, il fratello del tè. L'ultimo, sulla pentola dello Speziale: «Quando avrà finito, non dovrà più tornare».
+    - *Il Ricettario del Cuoco della Gabbiana*: il cuoco **Tullio** e la figlia **Nella**; la Zuppa del Drago Gentile; lo Speziale la cucinò al Campo.
+    - *Il Taccuino del Lapicida*: il lapicida si chiamava **Oddo**; i segni del muro sotto Calaris raffreddavano la pietra; voleva incidere un segno caldo accanto al sigillo del Normale e non arrivò in tempo.
+    - *Il Diario di Hrodna*: scritto da lei, che scriveva male; **Ulf** è il Berserker del Teschio di Sangue; davanti al Demone Maggiore ballò la danza della festa e il fuoco si piegò, per un istante.
+    - *Il Quaderno della Musica di Ilio*: gli accordi; l'accordo grande in un temporale; la nota sola sulla sedia; l'accordo con una pausa invece di un buco.
+    - *Le Lettere del Mercante al Mendicante*: «fratello»; il Mercante versò nel Fuoco il sapore delle mele del Ritornante e il Fuoco si alzò di un palmo; vuole restituire i ricordi del Ritornante uno per sera.
+    - *Il Quaderno di Tessa Bambina*: centoquarantadue gradini della torre dei mulini; il passo di trentotto centimetri; il piatto per il nonno, che la Cartografa porta ancora nella borsa. Chi le insegnò a temperare il carboncino era un amico di Orvin che zoppicava.
+    - *Le Pagine del Piano Ventinove*: Orvin al bivacco; sentì per quarantuno notti il passo del Ritornante (settantaquattro centimetri, il sinistro più corto) e decise di non scendere al trenta: «il piano che manca è suo».
 
 Il Campo cambia con la storia: più personaggi trovano pace, più il Fuoco è caldo; chi sceglie la Corruzione lo trova un poco più freddo al ritorno.
 
@@ -266,16 +343,21 @@ Ogni scheda dice chi è, cosa vuole, cosa nasconde, e le **tappe** del suo arco:
 - **Cosa vuole:** riposare, e sapere se sua figlia **Ilse** è sopravvissuta.
 - **Cosa nasconde:** la porta non conduce più a nulla perché il Vuoto è già dentro tutto il Labirinto. Lui lo sa da secoli, e continua a custodirla perché è l'unica cosa che ricorda di saper fare.
 - **Il Cavaliere Oscuro:** il boss con quel nome è l'ombra che il giuramento proietta nel Labirinto, un'armatura vuota che combatte per abitudine. Liberare Alaric non toglie il boss: lo rende un guscio senza nessuno dentro.
-- **Tappe:** ✓ la porta · ✓ il cavaliere stanco (la lavanda) · ✓ l'ultimo sigillo · il campo di lavanda sulle Guglie · la lettera di Ilse · il giorno in cui la Luce divenne crudele · la confessione della porta vuota · al Campo, come Luce: i ricordi di Aurelia · la pace (o il peso del giuramento, se il giocatore ha preso il suo posto).
+- **Tappe:** ✓ la porta · ✓ il cavaliere stanco (la lavanda) · ✓ l'ultimo sigillo · ✓ il campo di lavanda sulle Guglie (la vanga di Ilse) · ✓ la lettera di Ilse («Per mio padre, alla porta»: la lavanda era fiorita) · ✓ il giorno della Luce crudele (gli Architetti, impauriti, gli ordinarono di custodire senza chiedere) · ✓ l'armatura di Ser Maud sulla strada («Arrivo, fratello. Aspettami.») · ✓ dietro il muro: una stanza vuota con le impronte di un solo paio di stivali · ✓ il Cavaliere senza nessuno (l'armatura che fa la ronda da sola, dieci passi e giro) · ✓ la lavanda alla porta · al Campo, come Luce: i ricordi di Aurelia.
+- **Nota:** i capitoli dopo l'ultimo sigillo valgono sia se Alaric è stato liberato (una luce calma accompagna il giocatore) sia se il giocatore ha preso il suo posto (il sigillo sulla schiena prude).
 - **Legami:** Ser Maud (la vita prestata del Paladino) era sua sorella d'ordine.
 - **Dettagli già nel gioco:** Ilse coltivava un campo intero di lavanda a Valeriana.
+- **Al Campo, come Luce (v6):** non parla; i suoi argomenti passano nel calore, come immagini. Da ragazzo soffiava nel mantice della bottega del padre, ad Aurelia. Ilse, a cinque anni, gli portò una piantina di lavanda e gli promise un campo «con le file dritte come le tue spade». Nel giorno del giuramento sentì la paura degli Architetti, e non chiese mai perché avessero paura. Conosceva per nome tutti i Paladini dell'Ordine, e li perse alla Luce. Al Campo, a volte, fa ancora la ronda (dieci passi e giro) e se ne vergogna. Non è mai riuscito a finire la lettera a Ilse. Dopo la vittoria mostra la stanza vuota dietro la porta; dopo la vittoria e 40 boss smette di fare la guardia.
+- **Al Campo, terza ondata:** mostra Hob, il boia a cui strinse la mano; Severo, il suo allievo, seduto accanto a Maud; il giuramento dei Custodi, che non conosceva: aspetta che qualcuno bussi sulla sua luce (`alaric_bussato`). La vanga di Ilse nel campo delle Guglie: qualcuno ha tenuto le file dritte, e non si sa se Ilse sia sopravvissuta. Dopo la vittoria e 50 boss apre da solo l'arco della porta e si mette di lato.
 
 ### Silas, il Cercatore
 - **Chi è:** un astronomo di Valeriana, allievo dell'Astronoma delle Guglie. È sceso per ritrovare la sorella **Nerea**, inghiottita dal Labirinto con la loro casa. Scrive tutto perché il Labirinto gli mangia i ricordi: ha già dimenticato il colore degli occhi di lei.
 - **Cosa vuole:** arrivare al fondo e capire. Poi, quando ha visto lo specchio, tornare indietro senza sentirsi un vigliacco.
 - **Cosa nasconde:** scende da molto più dei suoi «settantacinque giorni»: il tempo del Labirinto lo ha trattenuto per secoli. Ha visto il Ritornante morire molte volte e lo ha disegnato ogni volta. Il Fuoco non lo ha mai scelto, e Silas gliene vuole un po'.
-- **Tappe:** ✓ il fuoco azzurro · ✓ il diario strappato · ✓ la soglia e lo specchio · ✓ al Campo: il fuoco azzurro, il diario, Nerea, le stelle, la Maestra, i ritratti, il Fuoco che non lo ha scelto, i settantacinque giorni, la statua nei Chiostri, lo specchio, la notte dell'abbandono, l'ultima pagina, dopo il Dio · in discesa: la statua di Nerea · l'Osservatorio · la pagina nella membrana.
+- **Tappe:** ✓ il fuoco azzurro · ✓ il diario strappato · ✓ la soglia e lo specchio · ✓ in discesa: la ragazza che ascolta (la statua di Nerea) · ✓ l'Osservatorio (quattrocentododici borchie mancanti, la matita della Maestra) · ✓ la pagina antica nella membrana · ✓ la Maestra («il mio allievo peggiore») · ✓ un piano più in basso (il ritratto finito) · ✓ la cosa d'inchiostro, fatta delle sue parole di paura · ✓ il diario chiuso (portarlo in fondo, o ricominciare dal giorno uno) · ✓ al Campo: il fuoco azzurro, il diario, Nerea, le stelle, la Maestra, i ritratti, il Fuoco che non lo ha scelto, i settantacinque giorni, la statua nei Chiostri, lo specchio, la notte dell'abbandono, l'ultima pagina, dopo il Dio · in discesa: la statua di Nerea · l'Osservatorio · la pagina nella membrana.
 - **Dettagli già nel gioco:** il suo fuoco azzurro nasce da una scheggia di vetro di stella dell'Osservatorio e non scalda. La notte della Discordia contò quattrocentododici stelle cadute. Il Ritornante, visto da lui, ha sempre la spalla sinistra un po' più bassa. Se il giocatore lo ha abbandonato, Silas non chiude più del tutto la mano sinistra. Sospetta che Nerea sia la statua di sale al secondo piano dei Chiostri, vicino alla fontana senz'acqua. La matita gli è stata data dalla Maestra (l'Astronoma), che gli bacchettava le dita perché guardava le stelle invece di contarle.
+- **Dettagli della v6 (seconda ondata del Campo):** l'ultima annotazione del *Diario dell'Osservatorio* è sua: salì sulla guglia all'alba e la Maestra non volle scendere. Ha smesso di contare a duecento le volte che ha visto morire il Ritornante. Il Mercante si è rifiutato di vendergli il colore degli occhi di Nerea: «nessuno l'ha mai venduto, nemmeno tu». Delle quattrocentododici «stelle» che contò, solo cinque erano stelle: le altre erano isole di Aetheria con le luci accese. Ha portato un fiore di carta alla statua di sale e le ha letto il diario (flag `silas_nerea_trovata` se il giocatore gli dice che era lei).
+- **Terza ondata del Campo:** non riesce ad aprire il quaderno di Nerea; se il giocatore gli dice il colore degli occhi lo scrive nel diario (`silas_occhi_nerea`). La Maestra gli diede la matita sulla guglia. Severo non lo bruciò. Conta i ritorni invece delle morti. Ha rimesso nella fontana la moneta verde di Nerea. Dopo la vittoria e 40 boss: «il riposo non è smettere di ricordare, è smettere di avere paura di dimenticare».
 
 ### La Cartografa (Tessa)
 - **Chi è:** **Tessa**, nipote di **Orvin il Cartografo**, che mappò i piani da 1 a 29 e non tornò dal trentesimo. Il suo nome il giocatore lo scopre solo al Campo.
@@ -283,6 +365,8 @@ Ogni scheda dice chi è, cosa vuole, cosa nasconde, e le **tappe** del suo arco:
 - **Cosa nasconde:** la croce rossa sulla mappa («qui ti aspetto») non l'ha disegnata lei: era già sulla mappa di Orvin, con la sua calligrafia.
 - **Tappe:** ✓ perduta, senza provviste · ✓ ritrovata · ✓ la Prima Pietra · ✓ al Campo: le pergamene, il nome, il nonno, come si disegna un posto che cambia, il Viandante, le Guglie, la Prima Pietra, la croce rossa, la copia venduta, il Ventre, il piano che manca, la mappa intera · in discesa: la croce rossa · Orvin.
 - **Dettagli già nel gioco:** misura tutto in passi (il suo è di sessantadue centimetri). Nella sua famiglia il nome si usa solo da bambini, poi si diventa il proprio lavoro; prima di Orvin la Cartografa era la madre di lui. Orvin scese l'ultima volta quando Tessa aveva nove anni («faccio il piano che manca e torno per cena»). Il Labirinto ha una «grammatica»: i chiostri hanno sempre undici archi, gli ingranaggi delle Miniere girano sempre verso le scale. Sotto la Prima Pietra la mappa non torna: c'è più spazio del dovuto. Ha venduto al Mercante il ricordo di chi le insegnò a temperare il carboncino. Messa intera, la mappa è una spirale con un punto vuoto al centro, più in basso del trenta.
+- **Dettagli della v6:** il Mercante le vendette la mappa del piano dodici, quella che Nim stringeva cadendo; se il giocatore le dice il nome, lo scrive accanto al piano (`cartografa_nim`). Chi le insegnò a temperare il carboncino aveva le dita sporche di nero e sapeva di tabacco. Orvin accorciava il passo per camminarle accanto e correggeva le misure la sera. Da bambina aveva paura delle scale. Nella Forgia le incudini guardano sempre verso la scala che sale. Messe insieme, le pergamene fanno una spirale con il centro vuoto.
+- **Terza ondata del Campo:** ha sovrapposto Aurelia ai Chiostri (il primo muro è sotto la Prima Pietra). Il passo del Ritornante è di settantaquattro centimetri, il sinistro un poco più corto. Ha scritto il nome di Edda Vael sulla mappa del Ventre. Lo spazio in più sotto la Prima Pietra è grande come una persona sdraiata: lo segna con una linea orizzontale. Sogna la croce rossa come Orvin, ma è lei ad aspettare. Lascerà un piano vuoto, per Tessa bambina.
 
 ### Lo Speziale (Ambrogio)
 - **Chi è:** **Ambrogio**, speziale di Aurelia, vecchio già prima di scendere. Lo chiamano tutti «lo Speziale»; dice il suo nome solo a chi lo ha liberato più volte.
@@ -290,6 +374,8 @@ Ogni scheda dice chi è, cosa vuole, cosa nasconde, e le **tappe** del suo arco:
 - **Cosa nasconde:** nel Crepuscolo Lungo vendette a Sereth gli estratti con cui l'Architetto studiava il Vuoto, senza chiedere a cosa servissero. Ha sempre sospettato di aver aiutato la fine del mondo.
 - **Tappe:** ✓ incatenato dalla magia del sangue · ✓ al Campo: hai mangiato?, la bottega, le catene, il nome, le ricette, Borek, Valerius, il Fuoco, il cliente senza nome, cosa comprava, il conto, la pozione che non cura.
 - **Dettagli già nel gioco:** la bottega era dietro l'Accademia di Aurelia, con un mortaio d'ottone sopra la porta e un gatto che dormiva sulla bilancia. Le catene di sangue si sciolgono solo con il sangue di un altro offerto senza obbligo. Le pozioni dei forzieri seguono la sua ricetta (due gocce di salvia in più). Segna l'altezza della fiamma del Fuoco su un sasso a ogni ritorno: le tacche scendono. Il cliente era Sereth: comprava solo estratti di Normale (cento once nell'ultimo anno), firmava con un sigillo di cera bianca senza disegno, e la sera prima della Discordia disse che servivano «a far riposare chi è stanco». La «pozione del conto» si riempie di una goccia per ogni persona che cura.
+- **Dettagli della v6:** il gatto della bottega si chiamava **Lardo** (non era grasso); a volte nei Chiostri si sente un gatto. Nella ricetta per le bruciature ha scritto talpa invece di tasso. L'estratto di Normale si fa lasciando una cosa comune in acqua di pozzo quaranta giorni: una goccia ogni quaranta giorni. Quando butta nel Fuoco la sabbia di Kaelen, una volta ha sentito crepitare il nome di Borek. Dopo la vittoria e 40 boss confessa di aver pensato, per un momento, che il cliente avesse ragione.
+- **Terza ondata del Campo:** sa che Lardo dorme ancora sulla bilancia. Conosceva Malphas e gli vendeva salvia e arnica. Ha un barattolo vuoto con l'etichetta «erba del sonno». Dice ancora la preghiera dei malati su ogni rimedio. Ha distillato la sabbia di Kaelen: una goccia con la frase «Era colpa mia, ragazzo. Non tua». Ricetta per un fuoco stanco: persone intorno ogni sera, storie ad alta voce, nessuna fretta.
 
 ### Borek, il Maestro d'Armi
 - **Chi è:** un nano dei Monti di Durn, maestro d'armi e forgiatore. Era il caposquadra di una squadra di minatori-soldati; è l'unico uscito dalla galleria crollata.
@@ -298,6 +384,8 @@ Ogni scheda dice chi è, cosa vuole, cosa nasconde, e le **tappe** del suo arco:
 - **Tappe:** ✓ prigioniero dietro la grata · ✓ al Campo: l'acciaio, la birra, la grata, i Monti, la squadra, la galleria, il maestro, le voci delle Miniere, il vecchio, l'armaiola, il Caposquadra, perché forgia · in discesa: Kaelen vivo.
 - **Dettagli già nel gioco:** l'acciaio buono «canta», quello del Labirinto è «pieno di rimpianto». Le armature che aggiustava da prigioniero hanno un punto debole sotto l'ascella sinistra. La squadra era di undici; sette risalirono con lui, quattro restarono con il Caposquadra, che si chiamava **Hadrek** e gli insegnò a leggere la roccia. La galleria crollò al terzo giorno di risalita. Tiene il martello di Kaelen, col manico consumato da due mani. Sa delle voci su un fabbro dalle mani di pietra e non vuole crederci.
 - **Voce:** «ragazzo» per chiunque, anche per Alaric.
+- **Dettagli della v6:** i nomi della squadra: con lui **Ulma** (cantava), **Brokk** (non parlava), i gemelli **Tor** e **Tir**, **Dagna** (la più giovane), **Fennir** (il cuoco), **Sigrun** (rideva quando aveva paura); con Hadrek **Orm**, **Gilda**, **Bodvar** e la vecchia **Ragna**. Lasciava il punto debole sotto l'ascella sinistra apposta. A Durn si lascia un boccale pieno per un anno a chi non torna; Borek ne lascia uno per Kaelen da quando sa che è vivo. Il manico del martello di Kaelen ha due impronte, una dentro l'altra.
+- **Terza ondata del Campo:** la regola strappata diceva di portare su a forza il caposquadra che non vuole risalire. Ulma cantava la canzone della risalita quando la galleria crollò. Ha ritrovato il suo rivetto morbido nell'armatura di Severo e non la fonde. Chiede al Ritornante una tacca a croce accanto al Caposquadra (`borek_tacca`). Forgia con Kaelen la spada per un ragazzo, il primo acciaio senza rimpianto del Campo. Dopo la vittoria beve il boccale di Hadrek.
 
 ### Elara, l'Armaiola
 - **Chi è:** armaiola delle Terre Alte di Ignis. Ha l'armatura in parte fusa addosso: è entrata nella Forgia del Caos a cercare il fratello **Corin**, apprendista del Maestro di Forgia.
@@ -305,6 +393,8 @@ Ogni scheda dice chi è, cosa vuole, cosa nasconde, e le **tappe** del suo arco:
 - **Cosa nasconde:** Corin è diventato uno degli **Apprendisti di Scoria**. Lei lo ha già incontrato in combattimento, e non lo ha colpito.
 - **Tappe:** ✓ legata al pilastro · ✓ al Campo: cosa ripara, le Terre Alte, l'armatura addosso, Corin, quello che si è girato, cosa si può riparare · in discesa: il crogiolo, Corin.
 - **Dettagli già nel gioco:** a Ignis gli alberi d'ossidiana suonavano col vento, ogni casa aveva una forgia sempre accesa, e spegnerla voleva dire un lutto. Il ferro della Forgia le è colato addosso mentre si chinava. Corin ha una cicatrice sul mento; quando lei lo ha chiamato per nome si è girato, poi l'ha colpita.
+- **Dettagli della v6:** sulla lista della fucina grande, accanto al nome di Corin, la data manca: dentro la scoria c'è ancora un pezzo di lui. La cicatrice sul mento se la fece a sette anni cadendo dalla scala della forgia di casa; il padre spense la forgia per consolarlo e i vicini pensarono a un lutto. Il padre faceva chiodi e cardini («le spade le fa chi ha paura, i cardini chi ha una casa») e spense la forgia quando Corin entrò nella riforgiatura; Elara la riaccese partendo. Tiene le Vesti di Brace di una certa **Lisbet**.
+- **Terza ondata del Campo:** ha letto il diario di Corin: si era girato perché era ancora lui. Ha appeso le Vesti di Lisbet al Fuoco. Da bambina giocava davanti alla casa del Fuoco a Ignis. Sa che sul braccio di Corin c'è un punto di pelle viva. Dopo la vittoria e 40 boss scende a liberarlo un pezzo alla volta, raccontandogli la casa (il cavallo del vicino si chiamava Rapa).
 
 ### Valerius, l'Incantatore
 - **Chi è:** mago di Aetheria, elegante e vanitoso, autore del **Grimorio di Valerius**. Fu rinchiuso nella gabbia di cristallo per aver scritto che il silenzio della Badessa è una gabbia.
@@ -312,31 +402,41 @@ Ogni scheda dice chi è, cosa vuole, cosa nasconde, e le **tappe** del suo arco:
 - **Cosa nasconde:** fu allievo dell'Accademia quando Sereth insegnava, e conosce il suo nome. Ha paura che dirlo lo cancelli.
 - **Tappe:** ✓ nella gabbia di cristallo · ✓ al Campo: i monili, le isole del cielo, la gabbia, il grimorio, l'Accademia, il maestro senza nome · il nome (ultimo gradino: Valerius è uno dei modi in cui il giocatore può sentirlo).
 - **Dettagli già nel gioco:** è nato sull'isola più bassa di Aetheria, quella dei pescatori di nuvole. La gabbia era di silenzio. Ha notato che il Fuoco si abbassa di un capello quando lancia un incantesimo al Campo (l'Etere «si presta»). Sereth insegnava l'elemento Normale nell'aula in fondo al terzo piano dell'Accademia, quella con la lavagna d'ardesia; nell'ultima lezione scrisse «Ciò che è fragile ha diritto al riposo» e sotto il suo nome, che Valerius lesse.
+- **Dettagli della v6:** il padre era il miglior pescatore di nuvole dell'isola più bassa; Valerius partì a dodici anni, e quando piove nel Labirinto assaggia la pioggia. Scrisse la frase sulla gabbia in rosso su un muro dei Chiostri; una novizia, **Agnese**, si mise a cantare sotto il velo (è lei la novizia del *Velo del Silenzio*), e lui la sentì per anni dalla gabbia. Prestò le sue scarpe vecchie a Teodor, che non le mise mai. Non lancia più incantesimi al Campo, per educazione verso il Fuoco.
+- **Terza ondata del Campo:** ringrazia l'Etere, come gli insegnava Ruperto. Imparò dalla gabbia tutte le canzoni di Agnese (stonava l'ultima strofa). L'Arcimago lo bocciò due volte e gli chiese di scendere con lui; Valerius disse di no. Nell'aula del Normale il nome sotto la frase è cancellato. Il graffio sulla Prima Pietra è tiepido: la pietra lo ha accettato.
 
 ### Il Viandante Cieco
 - **Chi è:** il cartografo di corte di Re Galdor. Sotto dettatura di Sereth disegnò le piante delle volte sotto Calaris, cioè la forma del Labirinto prima che esistesse («ho disegnato questo labirinto prima che esistesse»). Scese con i suoi **sette figli**, che reggevano le lanterne: sono le sette ombre che lo seguono. Diede gli occhi al Mercante Senza Volto in cambio di vedere il sogno del Dio; nelle orbite porta due monete d'oro. Ora vede solo al buio. Porta la **Lanterna Spenta**, che contiene l'ultima luce di Aetheria, raccolta da un cristallo mentre cadeva.
 - **Cosa vuole:** contare. Monete, passi, giorni: finché conta, esiste.
 - **Cosa nasconde:** ha visto in sogno il Ritornante seduto sul trono del Dio (finale *Il Nuovo Dio*) e ha paura di lui.
 - **Tappe:** ✓ gli incontri in discesa · ✓ al Campo, lontano dal fuoco · la lanterna · cosa ha visto · la moneta con l'occhio.
+- **Dettagli della v6:** le piante gliele dettava una voce gentile e stanca, dietro una tenda, che a volte chiedeva «è troppo?». Il figlio più piccolo si chiamava **Mattia**, aveva otto anni e reggeva la lanterna di latta; gli risponde «quasi» da mille anni. Una volta, cinquecento anni fa, smise di contare per un sonno e non c'era niente. Teme il sogno del trono; al giocatore che promette di non sedersi chiede di ricordare chi contava i suoi passi.
+- **Terza ondata del Campo:** lavorava accanto al lapicida del muro sbagliato. Mattia adesso si siede accanto a chi arriva. La voce dietro la tenda gli offriva il tè al bergamotto, ricordava i nomi dei figli e lo mandò a casa il giorno prima della Discordia. Ha visto il Mercante e il Mendicante incrociarsi: una moneta, pesata, che pesava il giusto. Le monete negli occhi hanno il volto di Galdor giovane e il grano: valevano un pane. Dopo la vittoria e 40 boss conta all'indietro, verso lo zero.
 
 ### Il Mercante Senza Volto
 - **Chi è:** un Architetto Minore, tesoriere del cielo. Rimase nel Labirinto a proteggere i tesori; il volto gli è svanito, sostituito dal riflesso dell'oro. Gestisce le stanze del Mercante in tutti i piani nello stesso momento.
 - **Cosa vuole:** storie. L'oro lo accetta con disprezzo; ciò che compra davvero sono i ricordi.
 - **Cosa nasconde:** tiene da parte i ricordi che compra. Ha anche quelli del Ritornante, delle discese che ha dimenticato.
-- **Tappe:** frasi nelle stanze del Mercante · un baratto di ricordi · il registro · cosa ha comprato da te · cosa ti restituisce.
+- **Tappe:** ✓ il baratto (il sapore del pane) · ✓ il registro (il Ritornante gli ha venduto il nome della prima persona che ha amato, per un'ora di vita al piano diciotto) · ✓ i due che non si parlano (lui e il Mendicante, tesorieri dello stesso tesoro: uno lo tiene, l'altro lo dà via) · ✓ il tesoro del cielo (migliaia di ricordi di Aethelgard in vasetti di vetro) · ✓ il riflesso (sotto l'oro, un uomo stanco con gli occhi chiari) · ✓ il vasetto degli occhi del Viandante (pagati: un sogno) · ✓ i tuoi ricordi, in una cassa a parte · ✓ il prezzo pagato: li restituisce, perché il Fuoco ha già pagato il conto · frasi nelle stanze del Mercante.
 - **Legami:** il **Mendicante Ombra** è un altro Architetto Minore rimasto; i due non si parlano.
 
 ### Linnea, la Fata della Fontana
 - **Chi è:** una ninfa dei boschi della costa del Mare Interno. Quando la foresta diventò pietra si gettò nell'ultima sorgente pura; l'acqua divenne Memoria, e lei la fontana. È la **Fontana Fatata** che compare nei piani.
 - **Cosa vuole:** che qualcuno ricordi il bosco.
 - **Cosa nasconde:** ogni volta che il Ritornante beve, lei vede un pezzo delle sue discese dimenticate. Sa più di lui su di lui.
-- **Tappe:** la fontana · il bosco · cosa ha visto bevendo · al Campo, una goccia in un'ampolla · il bosco ricordato.
+- **Tappe:** ✓ la fontana che parla · ✓ il bosco nell'acqua · ✓ quello che ha visto (una discesa dimenticata) · ✓ l'albero di pietra (il più vecchio, gli parlava d'estate) · ✓ la sorgente vera, nel Ventre · ✓ una goccia in un'ampolla (al Campo: *L'Ampolla di Linnea*) · ✓ la fontana asciutta · ✓ il bosco ricordato (muschio e una felce) · ✓ al Campo: il calore, il nome del bosco, il pomeriggio della pietra, cosa sa di te, perché si consuma, il muschio.
+- **Dettagli già nel gioco:** il bosco non aveva nome; gli uomini della costa lo chiamavano il Bosco Vecchio. Diventò pietra in un pomeriggio di fine estate, dalle radici alle foglie; gli uccelli sono rimasti nella pietra con le ali mezze aperte. Linnea ricorda che una volta il Ritornante ha scritto qualcosa con un sasso sul muro accanto alla fontana, e poi è andato a morire: lo tiene lei, finché non sarà il momento. Tenere i ricordi la consuma come il ritorno consuma il Fuoco: «siamo parenti, noi e lui».
+- **Dettagli della v6:** nel Bosco Vecchio un pettirosso è rimasto di pietra con il becco aperto verso la sorgente. Gli uomini della costa prendevano solo la legna caduta; un ragazzo che tagliò un ramo vivo si perse tre giorni. La Memoria ha un sapore: per il Ritornante sa di fumo e di una lettera bruciata. Dopo la vittoria Linnea gli dice il nome del Fuoco, Ardel, che il Fuoco le ha detto una notte («la sua cosa più preziosa, e la più stanca»).
+- **Terza ondata del Campo:** la maestra delle favole veniva alla sua sorgente; il pettirosso ha il becco bagnato. Adelina beveva da lei per ricordare il suo nome. Nelle discese del Ritornante ha visto qualcuno scrivere una lettera su un'isola alta e bruciarla senza mandarla (solo dopo la vittoria e 40 boss). Ardel le ha detto che un giorno il Ritornante non dovrà più tornare: avrà finito.
 
 ### Kaelen il Muto
 - **Chi è:** il miglior forgiatore dei Monti di Durn. Cercò di forgiare una spada capace di tagliare il Caos; la spada esplose e gli trasformò le mani in granito. Dalla bocca gli esce sabbia.
 - **Cosa vuole:** finire la spada.
 - **Cosa nasconde:** sa che Borek è vivo, e non lo cerca perché si vergogna.
-- **Tappe:** la forgia nelle Miniere · i segni sul metallo · il materiale giusto · Borek · la spada finita (che non taglia il Caos: lo ferma per un istante).
+- **Tappe:** ✓ la forgia nel basalto · ✓ i segni sul metallo (incide parole squadrate a scalpello) · ✓ l'acciaio che canta · ✓ il martello di Borek («VIVO») · ✓ la spada esplosa (le schegge e la sagoma bruciata nel basalto) · ✓ il pezzo che manca (una goccia della Prima Pietra) · ✓ il messaggio per il Campo («Ragazzo. Fuoco. Buono. Scusa.») · ✓ la spada finita, che ferma il Caos per un istante · ✓ al Campo (dopo il messaggio): parlare a segni, il ragazzo, la spada, la sabbia, i Monti, dopo la spada.
+- **Dettagli già nel gioco:** il granito gli arriva ai gomiti; le mani non sentono niente tranne il Fuoco del Campo. La sabbia che gli esce dalla bocca sono «parole non dette»: lo Speziale la spazza ogni mattina e la butta nel Fuoco.
+- **Dettagli della v6:** lo Speziale gli fa da interprete per i segni nella cenere. Le sue mani sentono il Fuoco come acqua calda. Voleva tagliare il Caos per separarlo, come un nodo; il Caos non era annodato, era stanco. Con il flag `kaelen_borek` e 30 boss dice la sua prima parola da secoli, «Ragazzo», e Borek gli si siede accanto. Se le mani tornassero forgerebbe una spada semplice per un ragazzo che comincia.
+- **Terza ondata del Campo:** conosceva Hadrek da giovane; sotto l'impugnatura del suo piccone incise «risali». Il granito si ritira di un dito da quando forgia con Borek (seicento anni, a quel ritmo). Con 35 boss dice la seconda parola, «Grazie», al Ritornante. Ha capito che il Caos non si taglia: si abbraccia, come fa il Fuoco. Lascia Borek battere da solo.
 
 ### Altri volti
 - **Ilse**, figlia di Alaric, coltivatrice di lavanda a Valeriana. Morta nella Discordia; ha lasciato una lettera al padre.
@@ -363,6 +463,19 @@ Ogni classe è un caduto che il Fuoco ha salvato dal guscio. La Maestria della c
 | 🗡️ **Assassino** | **Corvo** | Sicario alla corte di Galdor. Uccise il messaggero degli Architetti che avrebbe potuto fermare l'esperimento. Il suo ricordo è una colpa precisa, con un nome e un volto. |
 | 💀 **Negromante** | **Isaura di Morva** | Parlava ai morti delle paludi quando i morti ancora se ne andavano. Dopo la Discordia i morti smisero di andarsene, e lei smise di dormire. Il suo ricordo è il confine fra un uomo e un'ombra. |
 | 🌈 **Elementalista** | **Ilio** | Un bambino di Aetheria nato la notte della Discordia, l'unico che possa tenere insieme tutti gli elementi. È la vita più vicina all'Equilibrio, e la più vicina alla verità di Sereth. |
+
+I ricordi sono in `data/vite.json` (sei per classe, uno per livello di Maestria) e si leggono nel Codice, *Vite prestate*. Il primo torna alla prima discesa con la classe. I ricordi che toccano il quarto gradino (il Vuoto come riposo) aspettano anche la vittoria e 40 boss: il quinto e il sesto di Teodor, il sesto di Isaura, gli ultimi tre di Ilio.
+
+**Dettagli già nel gioco:**
+- **Bran**: la sua compagna di turno era **Mila**, l'ultima arrivata in caserma, che aveva paura dei cavalli. Bran le disse di andare con l'ultimo carro; lei arrivò sulle colline, visse, e tenne appeso sulla porta uno scudo da guardia. Gerd russava.
+- **Nim**: le guardie di Valeriana la chiamavano *il gatto grigio*. Rubò la mappa di Orvin e gliela riportò; per ripagarlo scese con lui al piano otto e lo tirò fuori da una frana. Morì cadendo fra due guglie con la mappa del piano dodici in mano: quella mappa è arrivata a Tessa, portata dal Mercante Senza Volto. Tessa non sa da dove venga.
+- **Teodor**: figlio di un mugnaio, all'Accademia per una borsa di studio, spesso l'unico studente del corso sul Normale. Non fece la sua domanda («chi decide quando una cosa fragile ha bisogno di riposare?»); la gridò dal tetto la notte della Discordia, e la sua voce è rimasta nei Chiostri. Lesse il nome del maestro scritto sotto la frase dell'ultima lezione, e lo ha dimenticato.
+- **Maud**: Alaric le mise la spada sulla spalla e le parlava di Ilse e della lavanda. Scese dopo la Discordia con un fazzoletto nel guanto («arrivo, fratello. Aspettami») e morì a poche file dalla porta, senza chiamarlo.
+- **Hrodna**: danzatrice delle feste d'estate di Ignis, figlia di un fabbro. La notte della Discordia ballava a una festa di nozze quando il fuoco diventò rabbia ed entrò in lei. Morì danzando nella Forgia del Caos contro il Demone Maggiore.
+- **Ottavia**: scrisse il *Trattato sulla Corruzione Elementale* (le malattie degli elementi). Odiava la Pietra Filosofale del suo maestro. La notte della Discordia versò la sua formula dei sette elementi nel cristallo; nel guscio trovò l'errore: non aveva contato il Vuoto.
+- **Corvo**: per ordine di Galdor uccise il **messaggero** che gli Architetti fedeli mandarono a corte tre giorni prima della Discordia, e bruciò il messaggio. Il messaggero si chiamava **Ivo**.
+- **Isaura**: accompagnava i morti verso l'Essenza su una barca piatta; il suo maestro è il Negromante Supremo. Nel Labirinto ritrovò la bambina morta di febbre che non era riuscita ad accompagnare e si addormentò con lei nei Chiostri: è l'unica ombra del Labirinto che dorme davvero.
+- **Ilio**: sentiva una musica quando gli elementi si incontravano (Fuoco e Acqua una nota bassa e calda, Vento e Terra una nota lunga, Luce e Tenebra un silenzio pieno). Scese fino alla Soglia e si sedette sulla sedia di Sereth, rivolta verso il buio; non ne conosce il nome.
 
 ---
 
@@ -396,6 +509,12 @@ La Badessa del Silenzio (Chiostri), il Caposquadra Sepolto (Miniere), l'Astronom
 | **Il Tristo Mietitore** | La morte che nel Labirinto non può più compiere il suo lavoro. Aspetta il Ritornante perché è l'unico che muore davvero, e ogni volta torna. Ha già scritto il suo nome. |
 | **DIO ANTICO** | Sereth, o la parte di lui che vuole riposare. Vedi la Parte II. |
 
+### Le discese dimenticate, seconda ondata
+Otto fili nuovi in `data/lettere.json`: il gatto dei Chiostri (il Ritornante trovò Lardo sulla bilancia della bottega dello Speziale), il piccolo Goblin che lo morse e poi lo difese, la partita a carte con il Mercante (che gli restituì il ricordo del fuoco che non brucia, «non ha prezzo»), Ivetta sul ponte delle Campane (le disse che la rete aveva preso vivo il neonato), l'acqua per il pettirosso dentro la memoria di Linnea, la Gabbiana (lesse ad alta voce i cinquantadue nomi del ruolo di bordo), il nome senza data di Corin (che si mise davanti al Ritornante), la notte con la Badessa (che difese il canto di Agnese).
+
+### Il Bestiario a livelli
+Ogni creatura ha tre voci (`data/bestiario.json`): *Cosa si vede* (la prima volta che la incontri), *Come si comporta* (dopo `habits` sconfitte, i boss dopo `boss_habits`) e *Chi era* (dopo `story` sconfitte, i boss dopo `boss_story`). La terza voce di un boss può accennare al gradino della Scala che si raggiunge battendolo più volte: quella del DIO ANTICO racconta del Rinnegato che voleva dare riposo, senza nominarlo.
+
 ### Le creature comuni
 Gli **Scheletri** sono Svuotati che cercano ancora un'uscita; i **Goblin** sono la gente di Galdor; gli **Orchi** i lavoratori delle cave fusi con la Terra; gli **Elementali** concentrazioni di rabbia con un oggetto di Aethelgard nel cuore (un pettine, una chiave, una fibbia); gli **Spiriti della Tempesta** i tessitori di Valeriana; i **Paladini Corrotti** guerrieri della fede che hanno scambiato la protezione per la persecuzione; la **Melma Acida** la linfa della Terra marcita; il **Mimic** un forziere che ha imparato a desiderare. Le creature dei biomi sono la gente di quella regione (vedi la Parte VI).
 
@@ -405,31 +524,45 @@ Gli **Scheletri** sono Svuotati che cercano ancora un'uscita; i **Goblin** sono 
 
 Le **reliquie** sono frammenti dei cristalli di Aetheria e di altri pezzi del mondo che hanno resistito alla Discordia. Ogni reliquia porta il desiderio di chi l'ha posseduta: per questo «fa» qualcosa. Le armi e le armature hanno una storia breve (`flavor`); le reliquie una più lunga (`lore`). Reliquie notevoli: l'**Artiglio Vampirico** (la mano di Malphas), lo **Scudo di Cristallo** (un frammento della cupola di Aurelia), la **Lente Prismatica** (le lenti con cui gli Architetti guardavano gli elementi), la **Corona del Re Folle** (la corona di Galdor, pesante di lacrime), la **Pietra Filosofale** (l'ultima opera dell'Alchimista Supremo, maestro di Ottavia Lune). La **Lama del Creatore** contiene un atomo di ogni elemento: è stata forgiata con un frammento della Prima Pietra.
 
+### L'Armeria
+Ogni arma, armatura, accessorio e reliquia ha una storia più lunga nel Codice, alla pagina *Armeria* (`data/armeria.json`): le armi, le armature e gli accessori si leggono quando li puoi trovare (subito, o dopo lo sblocco alla Forgia), le reliquie dopo averle trovate. Non conta nel completamento del Codice. Le storie non promettono effetti diversi da quelli dei dati. Fatti nuovi:
+- Il boia di Aurelia si chiamava **Hob**, e piangeva di nascosto prima di ogni esecuzione. L'Ascia del Boia la vietò Alaric da Primo Paladino; i Paladini Corrotti la ripresero.
+- **Port'Alba** era il porto più grande del Mare Interno, da cui partì la flotta che non tornò; i guardiani del suo faro portavano la *Cappa delle Maree*. I pescatori raccoglievano le scaglie cadute al Drago di Zaffiro e ne fecero la *Corazza di Scaglie di Drago*.
+- Sotto Aurelia dormiva un **colosso di Terra** messo dagli Architetti a reggere la città: si spezzò per tenerla più a lungo. L'*Egida del Titano* è il suo petto, il *Bracciale del Titano* un suo frammento.
+- **Malphas** era un medico di Aurelia nel Crepuscolo Lungo che prolungava le vite con l'Essenza dei morenti; i suoi allievi ridussero il suo artiglio ad anello.
+- **Bertolo**, mercante di Valeriana, scese con la *Tasca Dorata* per riavere la figlia. **Fenn**, un Cercatore, diede l'occhio sinistro a una strega delle paludi per vedere l'Essenza.
+- La *Pergamena d'Oro* è il contratto di Galdor; l'unica riga leggibile è «Il popolo non avrà più fame», e la firma dell'Architetto è grattata via. La *Bussola Perfetta* la fece un cartografo di corte per Galdor (il Viandante Cieco, senza che il testo lo dica).
+- La *Campanella degli Spiriti* fu un regalo del Mercante a Silas, «forse un anticipo». Il *Contratto Demoniaco* è l'unico contratto che il Mercante dice di non aver scritto.
+- Il *Teschio di Sangue* era di un Berserker di Ignis che danzò tre giorni nella Forgia; Hrodna diceva che ballava meglio di lei. Il *Velo del Silenzio* fu tessuto per l'unica novizia che non volle tacere: continuò a cantare sotto il velo.
+- L'Arcimago dell'Accademia scese fino al piano trenta: lo scettro tornò da solo, l'anello restò con il suo dito.
+
+### Le voci dei boss
+Ogni boss ha due o tre battute per l'inizio dello scontro, il cambio di fase e la morte (`data/voci_boss.json`), scelte con il generatore dei testi: non cambiano nessun tiro di dado. Sono in partita, quindi brevi, e restano al primo gradino della Scala: il DIO ANTICO parla di stanchezza e di riposo senza dire di chi. Il Cavaliere Oscuro, morendo, nomina Ilse e la lavanda.
+
 ---
 
 ## Parte XII · Le lettere insanguinate
 
 Le lettere incise sulle pareti sono tutte del Ritornante, scritte in discese che non ricorda (gradino 5). Fino a quel momento il giocatore le legge come messaggi di sconosciuti; i più attenti notano che sembrano sapere troppo di lui.
 
-Nella v6 le lettere si raccolgono in **fili**: ogni filo è una **discesa dimenticata**, raccontata in 8-10 lettere in ordine. Chi completa un filo vede nel Codice come è finita quella discesa. I fili:
+Nella v6 le lettere si raccolgono anche in **fili** (`data/lettere.json`): ogni filo è una **discesa dimenticata**, raccontata in 8 lettere in ordine, che si trovano incise sulle pietre dei falò e accanto ai forzieri. Chi completa un filo legge nel Codice (*Discese dimenticate*) come è finita quella discesa. I fili, con il gradino da cui si aprono:
 
-1. **La prima discesa**: il risveglio accanto al Fuoco, la paura, la prima morte.
-2. **La discesa con Silas**: quando scesero insieme per tre piani, e Silas lo vide morire.
-3. **La lavanda**: la discesa in cui trovò il campo di Ilse e non lo disse ad Alaric.
-4. **Il debito del Mercante**: la discesa in cui vendette un ricordo al Mercante, e quale.
-5. **La croce rossa**: la discesa in cui arrivò dove aspettava Orvin.
-6. **La Nemesi**: la discesa in cui un goblin senza nome lo uccise tre volte di fila.
-7. **Il patto del sangue**: la discesa passata agli altari, sempre più corrotta.
-8. **Il sale**: la discesa in cui si fermò ad ascoltare una voce cara nei Chiostri, e quasi rimase.
-9. **La galleria**: la discesa in cui incontrò la squadra di Borek, prima del crollo.
-10. **La gabbia di cristallo**: la discesa in cui lasciò Valerius nella gabbia, e perché.
-11. **Il fratello**: la discesa in cui vide Corin nella Forgia.
-12. **La fontana**: la discesa in cui bevve da Linnea fino a vedere troppo.
-13. **Il trono**: la discesa in cui si sedette sul trono del Dio, e si alzò.
-14. **La Soglia**: la discesa in cui il Custode gli disse il suo nome, e lui lo dimenticò morendo.
-15. **L'ultima lettera**: ciò che scrive dopo aver ricordato (è il finale *La Lettera Mai Scritta*).
+1. **La prima discesa** (piano 1): il risveglio, la Badessa, la prima caduta mentre il Fuoco lo chiamava indietro.
+2. **La discesa con Silas** (piano 4): tre piani insieme; morì tenendo la mano di Silas, che scriveva con l'altra. Per questo Silas lo ha visto morire.
+3. **La lavanda** (piano 11): trovò il campo di Ilse prima di tutti e non diede il fiore ad Alaric.
+4. **Il debito del Mercante** (piano 6): le fragole, il cielo d'estate, il nome del primo cane, il nome della prima persona amata.
+5. **La croce rossa** (piano 20): arrivò al bivacco di Orvin al piano 29 e finì la sua mappa.
+6. **La Nemesi** (piano 3): un goblin lo uccise tre volte e, sconfitto, gli disse grazie.
+7. **Il patto del sangue** (piano 5): di altare in altare, fino al trono; il Fuoco sente ogni goccia data agli altari.
+8. **Il sale** (piano 2): quasi diventò una statua; lo salvò una novizia con la bocca cucita.
+9. **La galleria** (piano 7): era uno dei sette che risalirono con Borek, dietro di lui, quando la galleria crollò. Borek non lo sa.
+10. **La gabbia di cristallo** (piano 9): lasciò Valerius nella gabbia per paura di quello che sapeva; Valerius lo chiamò con un nome.
+11. **Il fratello** (piano 21): aiutò Elara a cercare Corin; con la ninnananna di Ignis, Corin sbagliò il ritmo di un colpo.
+12. **La fontana** (piano 8): bevve da Linnea fino a vedere tutte le sue discese; l'unico a ringraziarla.
+13. **Il trono** (vittoria): si sedette sul trono del Dio e si alzò quando sentì il Fuoco abbassarsi. È il sogno che il Viandante ha visto.
+14. **La Soglia** (vittoria e 40 boss): il Custode gli disse il suo nome e una volta lo chiamò «maestro»; la sua stessa mano cancellò il nome dal muro.
 
-Le 35 lettere della v5 restano com'erano e si distribuiscono fra i fili 1, 6, 7, 8 e 14, o restano sciolte come frammenti fuori da ogni filo.
+Il quindicesimo filo è il finale *La Lettera Mai Scritta*. Le 35 lettere della v5 restano com'erano e si distribuiscono fra i fili 1, 6, 7, 8 e 14, o restano sciolte come frammenti fuori da ogni filo.
 
 ---
 
@@ -445,7 +578,7 @@ I finali rispondono a una domanda sola: **vale la pena continuare a scendere?**
 | **Il Custode** | Non si sa: il Ritornante prende il posto di Alaric alla porta. Qualcuno, un giorno, verrà a liberarlo. |
 | **La Lettera Mai Scritta** | La domanda cambia: il Ritornante ricorda di essere Sereth, e sceglie cosa fare del suo rimorso. |
 
-Nella v6 ogni finale ha varianti secondo le scelte fatte: chi è stato salvato o tradito, quanta Corruzione, quali vite prestate hanno trovato pace.
+Nella v6, dopo il testo di ogni finale, un **epilogo** dice cosa fa in quel finale la vita prestata della classe con cui ci sei arrivato (`data/epiloghi.json`, un epilogo per finale e per classe): Bran, Nim, Teodor, Maud, Hrodna, Ottavia, Corvo, Isaura e Ilio reagiscono ognuno a modo suo. Gli epiloghi letti restano nel Codice, alla pagina *Finali*. Fatti nuovi: nel *Sonno Spezzato* Corvo incide il nome di Ivo su una pietra nelle Valli del Sud; in *Aethelgard Rinasce* la guardia alla Porta del Sole ha il viso di Mila, e Alaric chiama Maud per nome nel campo di lavanda; nella *Lettera Mai Scritta* la domanda di Teodor è scritta fra le lettere, e sotto il Ritornante scrive la risposta.
 
 ---
 

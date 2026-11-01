@@ -31,6 +31,7 @@ class Sandbox(unittest.TestCase):
         self._saved = copy.deepcopy(PROFILE_MANAGER._data)
         PROFILE_MANAGER._data["story"] = {"flags": {}, "counters": {}, "seen_events": {}}
         PROFILE_MANAGER._data["codex"] = {"enemies": {}, "letters": [], "relics": [], "reactions": []}
+        PROFILE_MANAGER._data["class_xp"], PROFILE_MANAGER._data["class_lvl"] = {}, {}  # le Vite prestate dipendono dalla Maestria
         self._save = mock.patch.object(PROFILE_MANAGER, "save")
         self._save.start()
         random.seed(3)
@@ -102,12 +103,12 @@ class PagesTest(Sandbox):
         self.assertIn("Tasca Dorata", "\n".join(plain(codex.relics_page())))
 
     def test_completion_counts_every_section(self):
-        total = sum(t for _, _, t in codex.sections())
+        total = sum(t for name, _, t in codex.sections() if name not in codex.UNCOUNTED)
         codex.record_relic("tasca_dorata")
         codex.record_letter(0)
         codex.record_reaction("Fuoco+Acqua")
         codex.record_spell("raffica")
-        self.assertEqual([s[1] for s in codex.sections()], [0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1])
+        self.assertEqual([s[1] for s in codex.sections()], [0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, len(codex.armory_open()), 0])  # le ultime: Atlante, Discese dimenticate, Armeria, Vite prestate
         self.assertEqual(codex.completion(), 4 * 100 // total)
 
     def test_characters_page_follows_the_arc(self):
@@ -117,7 +118,7 @@ class PagesTest(Sandbox):
         PROFILE_MANAGER.set_flag("alaric_lavanda")
         text = "\n".join(plain(codex.characters_page()))
         chapters = GAME_DATA["story"]["characters"]["alaric"]["chapters"]
-        self.assertIn("Sir Alaric, il Primo Paladino  (1/3)", text)
+        self.assertIn(f"Sir Alaric, il Primo Paladino  (1/{len(chapters)})", text)
         self.assertIn(chapters[0]["text"], text)
         self.assertNotIn(chapters[1]["text"], text)
         self.assertIn("✦ Il fiore di lavanda", text)

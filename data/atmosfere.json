@@ -1,0 +1,256 @@
+{
+    "biomes": {
+        "chiostri": {
+            "combat": [
+                "Un chiostro con undici archi. Sotto l'ultimo, qualcosa smette di pregare e si volta verso di te.",
+                "Le panche di un'aula sono rovesciate. Sulla lavagna, una lezione interrotta a metà. Dietro la cattedra, un respiro.",
+                "Il marmo è venato di viola come una vena gonfia. Dal fondo del corridoio arriva un canto stonato, e si avvicina.",
+                "Un leggio regge un libro aperto. Le pagine si girano da sole, sempre più in fretta, finché qualcuno esce dall'ombra.",
+                "Nel refettorio i piatti sono ancora apparecchiati. Una sedia scricchiola. Non sei il primo a sederti, stasera.",
+                "Odore di cera fredda e di carta. Una novizia di cenere ti guarda dalla soglia, la bocca cucita.",
+                "Le campane suonano senza battaglio. Il suono arriva dopo, in ritardo, insieme a un passo che non è tuo.",
+                "Fra due colonne pende una tenda di polvere. Qualcosa la sposta da dietro, piano, come una mano curiosa."
+            ],
+            "boss": [
+                "La navata è vuota fino all'altare. Sull'altare qualcuno è inginocchiato da secoli, e adesso si alza.",
+                "Il silenzio qui è così fitto che senti il sangue nelle orecchie. Poi, in fondo alla cappella, una veste che fruscia.",
+                "Undici archi, undici candele spente. La dodicesima candela si accende da sola, davanti a te."
+            ],
+            "vendor": [
+                "Fra i banchi di un'aula, il Mercante ha steso le sue merci su un panno da altare. «Si studiava, qui. Ora si compra.»",
+                "Nella sacrestia, fra paramenti di seta tarlati, il Mercante conta le monete con la delicatezza di un rosario.",
+                "Il Mercante ha scelto la biblioteca: le sue merci stanno sugli scaffali, fra i libri, con i prezzi scritti a margine."
+            ],
+            "treasure": [
+                "In una nicchia del chiostro, un reliquiario d'argento. Le preghiere incise intorno sono state raschiate, tranne una: «Resta».",
+                "Sotto una lastra del pavimento, sollevata da poco, brilla qualcosa avvolto in un velo da novizia.",
+                "Un armadio della sacrestia è ancora chiuso a chiave. Dalla fessura esce una luce calma, del colore delle vetrate."
+            ],
+            "trap": [
+                "Le mattonelle del corridoio formano un disegno troppo regolare. Una sola è più chiara delle altre.",
+                "Un coro di voci sottili ti invita a fermarti ad ascoltare. Le pareti, intanto, si avvicinano.",
+                "Sopra la porta pende un turibolo d'ottone, fermo, pieno di una polvere che pizzica gli occhi."
+            ],
+            "campfire": [
+                "In un focolare del refettorio arde un fuoco che profuma di cera d'api e di pane. Nessuno lo ha acceso.",
+                "Nella cella di una novizia c'è un braciere tiepido e una coperta piegata con cura, come per un ospite atteso.",
+                "Davanti a un altare minore ardono tre lumini. Il marmo intorno è caldo, e il silenzio, qui, non fa paura."
+            ],
+            "mystery": [
+                "Una porta senza maniglia, coperta di iscrizioni che chiedono scusa in sette lingue diverse.",
+                "Una nebbia profumata d'incenso riempie il chiostro. Ci si vede a un passo, e il passo dopo è sempre diverso.",
+                "Un confessionale con la tendina tirata. Dall'interno, qualcuno respira e aspetta che sia tu a parlare."
+            ]
+        },
+        "miniere": {
+            "combat": [
+                "Le lampade d'ottone sono spente, tutte tranne una. Sotto quella, qualcuno scava, e smette di scavare quando arrivi.",
+                "Un carrello arrugginito ti sbarra la galleria. Dentro non c'è carbone. C'è qualcosa che respira.",
+                "Gli ingranaggi sopra la tua testa girano senza motivo. Fra un dente e l'altro, due occhi gialli ti seguono.",
+                "L'olio nero che cola dalle pareti sussurra nomi di minatori. Uno dei nomi è un ordine: scava.",
+                "La galleria è così stretta che tocchi le pareti con le spalle. Davanti a te, un passo pesante viene incontro.",
+                "Un picconatore ti dà le spalle, fermo davanti alla roccia. Si volta piano. Non ha più faccia, solo polvere.",
+                "Il basalto è caldo come la pelle di una bestia. In fondo alla galleria la bestia si muove.",
+                "Senti battere sulla roccia, regolare, da dietro la parete. Poi la parete cede."
+            ],
+            "boss": [
+                "La galleria si apre in una caverna enorme, piena di squadre di minatori immobili. Uno solo, davanti, alza il piccone.",
+                "Qui scendevano tutte le gallerie. Qui finisce la mappa. Qualcosa ha scavato ancora più in basso, e adesso risale.",
+                "Un fischietto da caposquadra suona tre volte nel buio: radunarsi. Le ombre dei minatori si radunano intorno a te."
+            ],
+            "vendor": [
+                "Il Mercante ha aperto bottega su un carrello fermo. Vende anche lampade, a chi ne ha ancora bisogno.",
+                "In una nicchia scavata a mano, il Mercante pesa le sue merci su una bilancia da minatori, quella del carbone.",
+                "Fra due ingranaggi fermi, il Mercante ha appeso un'insegna di ferro battuto: «Si accettano anche ricordi di superficie»."
+            ],
+            "treasure": [
+                "In una galleria cieca, una cassa da paga dei minatori, chiusa con tre lucchetti. Due sono già rotti.",
+                "Una vena di metallo lucido attraversa la roccia. Dove la vena si allarga, qualcuno ha nascosto un fagotto.",
+                "Sotto una lampada d'ottone ancora accesa, un sacco di tela con il marchio dei Monti di Durn."
+            ],
+            "trap": [
+                "Il pavimento della galleria è puntellato con travi marce. Una scricchiola già, prima che tu ci metta il piede.",
+                "Un filo teso attraversa la galleria all'altezza delle caviglie. All'altro capo, un barile che puzza di polvere da mina.",
+                "L'aria si fa dolce, troppo dolce. Le lucciole del grisù si accendono tutte insieme."
+            ],
+            "campfire": [
+                "In una sala di sosta dei minatori arde ancora un braciere di carbone. Sul muro, tacche incise per ogni turno finito.",
+                "Una stufa di ghisa, tiepida, con sopra una pentola di latta. Qualcuno ha lasciato due tazze, una per te.",
+                "Il fuoco brucia dentro un vecchio elmo da miniera rovesciato. Fa poca luce, ma basta per sedersi."
+            ],
+            "mystery": [
+                "Una galleria che non c'è sulla mappa, appena scavata. Le pareti sono ancora calde di piccone.",
+                "Un pozzo verticale scende nel buio. Dal fondo sale un vento caldo, e con il vento una canzone da miniera.",
+                "Una porta di ferro piantata nella roccia viva, senza muro intorno. Dietro, solo altra roccia. Eppure qualcuno bussa."
+            ]
+        },
+        "guglie": {
+            "combat": [
+                "Il ponte oscilla sopra un abisso di nubi elettriche. A metà, qualcosa è aggrappato al parapetto e ti aspetta.",
+                "Il vento ti strappa le parole di bocca. Nel turbine, una forma con le ali ti gira intorno, sempre più vicina.",
+                "Una guglia spezzata, sospesa a niente. Sulla punta, un nido. Dal nido, due occhi bianchi come lampi.",
+                "Un telaio di tessitori lavora da solo, tessendo fulmini. Dietro il telaio, il tessitore si alza.",
+                "La nebbia di Valeriana sale dal basso, piena di voci. Una voce si stacca dalle altre e prende corpo.",
+                "Sul pavimento, una costellazione d'argento. Una stella si stacca dal suo posto e rotola verso di te.",
+                "Uno stendardo azzurro sbatte sul pennone come una frusta. Sotto, la sentinella che lo difendeva non ha mai smesso.",
+                "Il cielo qui è più vicino del pavimento. Un tuono arriva prima del lampo, e porta un nemico."
+            ],
+            "boss": [
+                "La guglia più alta. Il vento si ferma di colpo, come per ascoltare. Al centro della piattaforma, qualcuno sta misurando il cielo.",
+                "Le nubi si aprono intorno a una piattaforma di vetro. Sotto i tuoi piedi l'abisso. Davanti a te, la tempesta ha una faccia.",
+                "Tutti i venti delle Guglie soffiano verso un unico punto. Ci stai camminando dentro."
+            ],
+            "vendor": [
+                "Il Mercante ha legato la sua bancarella a una guglia con tre funi. La merce ondeggia, ma niente cade.",
+                "Su un ponte sospeso, il Mercante vende abiti di Valeriana che cambiano colore con l'umore di chi li indossa.",
+                "Il Mercante si è riparato dal vento in un'edicola di pietra. Vende anche corde, a chi ha paura di cadere."
+            ],
+            "treasure": [
+                "Un forziere legato con catene alla punta di una guglia. Il vento lo fa dondolare sopra il vuoto.",
+                "Nel nido di un falco astrale, fra piume e ossa piccole, brilla qualcosa di troppo pesante per un uccello.",
+                "In un osservatorio crollato, sotto una lente rotta, un cofanetto foderato di velluto azzurro."
+            ],
+            "trap": [
+                "Il ponte manca di un'asse, poi di due, poi di tutte. Le funi tengono ancora. Forse.",
+                "Una raffica improvvisa piega la guglia. Le pietre sotto i tuoi piedi si staccano una dopo l'altra.",
+                "Fili d'argento attraversano il passaggio, sottili come capelli. Il vento li fa cantare, e tagliare."
+            ],
+            "campfire": [
+                "In una nicchia riparata dal vento, un braciere di pietra con dentro braci azzurre di vetro di stella.",
+                "Una stanza di tessitori con la porta che chiude ancora. Dentro, un caminetto e una coperta di seta di Valeriana.",
+                "Il fuoco arde dentro una vecchia lanterna d'osservatorio. Fuori ulula il vento; qui no."
+            ],
+            "mystery": [
+                "Una porta che si apre sul vuoto, a mezz'aria, fra due guglie. Dall'altra parte c'è un corridoio asciutto.",
+                "La nebbia si rapprende in una scala che sale verso le nubi. Ogni gradino è un po' più trasparente.",
+                "Una campana appesa a niente suona a ogni raffica. Il suono, stranamente, viene da sotto i tuoi piedi."
+            ]
+        },
+        "ventre": {
+            "combat": [
+                "Le pareti sono traslucide e pulsano. Dentro, un volto ti segue con gli occhi, poi preme contro la membrana, e la membrana cede.",
+                "Il pavimento è morbido e caldo come una lingua. Da una piega si alza qualcosa che ha la forma di un ricordo cattivo.",
+                "Odore di salmastro e di fiori appassiti. Nel corridoio galleggiano bambole di stoffa. Una sola ha gli occhi aperti.",
+                "Una pozza azzurra riflette una cucina che non hai mai visto. Dal riflesso esce una mano, poi il resto.",
+                "Le vene del soffitto si gonfiano a ogni passo. Qualcosa le percorre verso di te, sotto la pelle della stanza.",
+                "Galleggiano frammenti di vetro, e in ogni frammento una festa diversa. Una delle feste si accorge di te.",
+                "La membrana del corridoio si richiude alle tue spalle. Davanti, la stanza ha fame, e non è la sola.",
+                "Senti cantare una ninnananna, sbagliata di una nota. La voce che la canta si avvicina strisciando."
+            ],
+            "boss": [
+                "Il battito è così forte che lo senti nei denti. La stanza si allarga e si stringe intorno a un cuore grande come una casa.",
+                "Al centro della cavità, sospeso nel liquido, qualcosa dorme sognando tutti i tuoi giorni. Il sogno si interrompe.",
+                "Le membrane si aprono come palpebre. Dietro, l'oceano di Aethelgard ha un'unica testa, e ti guarda."
+            ],
+            "vendor": [
+                "Il Mercante ha appeso le sue merci a un ramo di corallo che cresce dalla membrana. Profuma di sale e d'incenso.",
+                "In una bolla d'aria, il Mercante siede a gambe incrociate. «Qui i ricordi costano meno. Ce ne sono tanti.»",
+                "Il Mercante vende vasetti di vetro con dentro piccole luci. Le chiama souvenir. Non dice di chi."
+            ],
+            "treasure": [
+                "Dentro una sacca di membrana, come un seme, riposa uno scrigno incrostato di conchiglie.",
+                "Sul fondo di una pozza ferma brilla qualcosa d'oro. L'acqua è tiepida e sa di lacrime.",
+                "Un baule da marinaio, gonfio d'acqua, incastrato fra due costole di pietra. Il lucchetto è ancora lucido."
+            ],
+            "trap": [
+                "Il pavimento qui è troppo morbido. Ogni passo affonda un po' di più, e qualcosa, sotto, aspetta.",
+                "Una nebbia azzurra profuma della casa dove sei cresciuto. Respirarla è dolcissimo. È proprio questo il problema.",
+                "La membrana della parete si apre in mille piccole bocche. Sono chiuse. Per ora."
+            ],
+            "campfire": [
+                "In una nicchia asciutta, un fuoco di legni di relitto brucia con fiamme verdi. Il calore sa di estate al mare.",
+                "Qualcuno ha acceso un fuoco dentro un guscio di conchiglia enorme. Il rumore del mare, qui, è quasi una carezza.",
+                "Il fuoco arde su una spiaggia di sabbia grigia che non dovrebbe esserci. Le onde, per un po', smettono di ricordare."
+            ],
+            "mystery": [
+                "Una porta di legno galleggia a mezz'aria, ancora con le tende alla finestrella. Dietro, una stanza che riconosci.",
+                "La membrana mostra una scena di festa, e la festa ti fa cenno di entrare. È tiepida, e invitante.",
+                "Un corridoio si capovolge mentre lo percorri. Alla fine cammini sul soffitto, e il soffitto è un pavimento di casa."
+            ]
+        },
+        "forgia": {
+            "combat": [
+                "Il pavimento è una crosta di scoria sopra la lava bianca. Fra due crepe, qualcosa di fuso si rimette in piedi.",
+                "Un martello ciclopico batte su un'incudine invisibile. Ogni colpo fa nascere una scintilla, e una scintilla ti guarda.",
+                "I fumi neri si diradano un attimo. In mezzo, un apprendista di scoria ti fissa con gli attrezzi in mano.",
+                "Le catene delle gru oscillano senza vento. Una scende, lenta, e c'è qualcosa appeso.",
+                "Un crogiolo rovesciato cola metallo verso i tuoi piedi. Il metallo prende la forma di una mano, poi di un braccio.",
+                "La galleria è una fila di fucine accese. Davanti all'ultima, qualcuno smette di battere e si volta.",
+                "Il calore deforma l'aria. Quello che sembrava un golem di pietra, nella tremolio, comincia a camminare.",
+                "Un mantice enorme si gonfia e si sgonfia, e a ogni respiro le fiamme si allungano verso di te."
+            ],
+            "boss": [
+                "La forgia più grande del Labirinto. Sull'incudine non c'è niente, ma il martello continua a cadere, e chi lo regge si accorge di te.",
+                "Il calore ti fa lacrimare gli occhi. Davanti a te, colpo dopo colpo, qualcuno tenta ancora di riforgiare il mondo.",
+                "Tutte le scintille della Forgia volano verso un unico punto. Ci stai camminando dentro."
+            ],
+            "vendor": [
+                "Il Mercante ha aperto bottega in una fucina spenta. Le merci sono ancora calde. «Appena uscite dal fuoco,» dice.",
+                "Fra due crogioli, il Mercante vende armi temprate nella lava. Si fa pagare anche per non bruciarti le mani.",
+                "Il Mercante conta le monete su un'incudine. Ognuna, quando la posa, suona come un piccolo colpo di martello."
+            ],
+            "treasure": [
+                "In una nicchia della roccia, raffreddato da secoli, uno scrigno di ferro battuto con la firma di un fabbro di Ignis.",
+                "Sotto una lastra di scoria, nella cenere tiepida, brilla qualcosa che è stato forgiato con cura.",
+                "Un armadio di attrezzi, chiuso con un lucchetto a forma di martello. Dentro, qualcosa vibra come una campana."
+            ],
+            "trap": [
+                "La crosta di scoria è sottile. Sotto, la lava bianca aspetta il primo passo sbagliato.",
+                "Un mantice si gonfia all'improvviso. Il getto di fiamme passa a un palmo dalla tua testa. Il secondo sarà più basso.",
+                "Le catene delle gru si muovono da sole. Un gancio d'acciaio scende verso il punto in cui stai per passare."
+            ],
+            "campfire": [
+                "In una fucina abbandonata, il fuoco è basso e buono, come quello che si accende alla fine del lavoro.",
+                "Una stanza di riposo dei fabbri di Ignis: panche di pietra, una brocca d'acqua fresca, un fuoco che non brucia l'oro.",
+                "Il fuoco arde in una forgia di famiglia, piccola, con le iniziali di una casa incise sulla cappa."
+            ],
+            "mystery": [
+                "Un'incudine al centro della stanza, con sopra un martello. Il manico è caldo, come se qualcuno l'avesse appena posato.",
+                "Una porta di ottone, rovente al centro e fredda ai bordi. Dietro, il silenzio di una fucina spenta da mille anni.",
+                "Il fumo disegna nell'aria la forma di un attrezzo che non riconosci, poi di un altro, poi di una porta."
+            ]
+        },
+        "soglia": {
+            "combat": [
+                "Non ci sono pareti, solo piattaforme di volontà sospese nel vuoto. Su quella davanti a te, qualcosa si forma dal niente.",
+                "La Luce brucia la Tenebra, la Tenebra divora il Fuoco. Dallo scontro nasce una forma, e la forma ti nota.",
+                "Una clessidra infranta versa sabbia verso l'alto. Dalla sabbia esce qualcuno che non è ancora nato.",
+                "Il tuo riflesso è in piedi su una piattaforma più in basso. Alza la testa nello stesso momento in cui la alzi tu.",
+                "Frammenti di galassia ruotano intorno a te, lentissimi. Uno smette di ruotare.",
+                "Il silenzio qui ha un peso. Qualcosa lo attraversa camminando, e il passo non fa rumore.",
+                "Un'eco del Dio galleggia davanti a te, con un occhio chiuso al posto della faccia. L'occhio si apre a metà.",
+                "Il tempo si inceppa: vedi il nemico attaccare, poi lo vedi arrivare."
+            ],
+            "boss": [
+                "Sull'ultima piattaforma prima del buio, qualcuno ti aspetta da prima che il Labirinto avesse un nome. «Di nuovo tu,» dice.",
+                "Il vuoto intorno si fa denso. Al centro, un occhio enorme fatto di galassie e polvere d'ossa trema sotto la palpebra.",
+                "La realtà qui è sottile come carta. Dall'altra parte, qualcosa preme, e la carta si strappa."
+            ],
+            "vendor": [
+                "Il Mercante ha steso la sua merce su una piattaforma che galleggia. È più silenzioso del solito. «Qui non si contratta,» dice.",
+                "Anche alla Soglia c'è il Mercante. Vende cose che non hanno ancora un nome. Accetta l'oro, per gentilezza.",
+                "Il Mercante ti aspetta seduto su una cassa, in mezzo al vuoto. «Ultimo negozio prima della fine,» dice, e ride da solo."
+            ],
+            "treasure": [
+                "Su una piattaforma isolata, un forziere che sembra fatto di notte. Le stelle sul coperchio si muovono.",
+                "Un frammento di Calaris galleggia nel vuoto, con ancora un pezzo di pavimento attaccato. Sul pavimento, uno scrigno.",
+                "Nella polvere d'ossa che galleggia, qualcosa brilla di una luce che non appartiene a nessun elemento."
+            ],
+            "trap": [
+                "La piattaforma successiva è vicina, poi lontana, poi vicina. Il salto dipende da quando decidi di farlo.",
+                "Il tempo scorre al contrario per un passo. Il pavimento che hai appena attraversato non c'è ancora.",
+                "Le stelle intorno si allineano in una costellazione che hai già visto. Ricordi come è finita, l'ultima volta."
+            ],
+            "campfire": [
+                "Su una piattaforma, un piccolo fuoco che non ha bisogno di legna. Non fa luce sul vuoto, solo su di te.",
+                "Il fuoco arde dentro un anello di pietre di Calaris, l'ultima cosa solida prima del niente.",
+                "Qualcuno ha acceso un fuoco qui, al bordo del mondo. La cenere è fresca. Chi l'ha acceso non è tornato indietro."
+            ],
+            "mystery": [
+                "Una sedia, da sola, su una piattaforma vuota. Sedersi sembra la cosa più naturale del mondo.",
+                "Uno specchio sospeso nel vuoto, rivolto dall'altra parte. Si sente qualcuno, dietro, che respira.",
+                "Una porta di legno qualunque, con una maniglia d'ottone consumata. Qui, dove non c'è niente, è la cosa più strana di tutte."
+            ]
+        }
+    }
+}

@@ -176,6 +176,166 @@
                         "'Ma respira. Mettiti in fondo a una galleria, la notte, e senti: dentro, fuori. Lentissimo. Come un animale grosso che dorme sul fianco.'",
                         "'Non hai finito, vero? Lo vedo da come guardi le scale. Va bene. Io scrivo: è quello che so fare. Tu scendi: è quello che sai fare tu. Prima o poi uno dei due capirà a cosa serve.'"
                     ]
+                },
+                {
+                    "id": "osservatorio_diario",
+                    "title": "Il diario dell'Osservatorio",
+                    "lines": [
+                        "'Hai trovato il diario dell'Osservatorio? Nell'Archivio?' Silas si irrigidisce. 'Allora hai letto l'ultima annotazione. Quella con la calligrafia che trema.'",
+                        "Si guarda le mani, come se la calligrafia fosse ancora lì. 'Ero io. Salii sulla guglia all'alba, quando le stelle smisero di cadere. La Maestra era lì con i suoi strumenti di vetro, e misurava ancora. Le chiesi di scendere. Mi disse: quando ho finito di contarle.'",
+                        "'Non ha mai finito. È ancora lassù, a contare. L'hai incontrata. Hai visto cosa è diventata.' Chiude il diario. 'Io invece sono sceso. È la differenza fra un allievo bravo e uno cattivo, credo. Lei diceva che ero il peggiore.'"
+                    ],
+                    "requires": {"reached_floor": 13}
+                },
+                {
+                    "id": "morti",
+                    "title": "Quante volte ti ho visto",
+                    "lines": [
+                        "Silas sfoglia il diario all'indietro, molto indietro, fino a pagine ingiallite che non sembrano sue. 'Vuoi sapere quante volte ti ho visto morire? Ho smesso di contarle a duecento.'",
+                        "'Non te lo dico per spaventarti. Te lo dico perché ogni volta morivi in un modo un po' diverso, e ogni volta tornavi un po' diverso. Una volta zoppicavi. Una volta ridevi sempre. Una volta non mi hai riconosciuto per tre discese di fila.'",
+                        "'Una cosa però non cambia mai.' Ti indica la spalla sinistra. 'Quella. Un po' più bassa dell'altra. È così da quando ti conosco. Credo sia l'unica cosa tua che il Fuoco non ti presta.'"
+                    ],
+                    "requires": {"bosses_total": 10},
+                    "choices": [
+                        {
+                            "text": "'Smettila di contarle.'",
+                            "reply": "Silas chiude il diario, piano. 'Va bene. Da oggi conto le volte che torni.' Scrive un 1 su una pagina nuova, e lo sottolinea.",
+                            "flag": "silas_conta_ritorni"
+                        },
+                        {
+                            "text": "'Disegnami com'ero la prima volta.'",
+                            "reply": "Silas ci prova. Dopo un po' si ferma, la matita a mezz'aria. 'Non me lo ricordo. Mi ricordo solo la spalla.'"
+                        }
+                    ]
+                },
+                {
+                    "id": "nerea_occhi",
+                    "title": "Il colore degli occhi",
+                    "lines": [
+                        "'Ho fatto una cosa stupida, l'altra notte.' Silas non ti guarda. 'Ho chiesto al Mercante di vendermi il colore degli occhi di Nerea. Lui ha la memoria di tutti, no?'",
+                        "'Mi ha detto che costava tre ricordi miei. Ho detto di sì. Poi ha aperto la mano e dentro non c'era niente. Ha detto: questo ricordo non l'ha mai venduto nessuno. Nemmeno tu. Ce l'hai ancora, da qualche parte. Lo stai solo tenendo troppo stretto.'",
+                        "Silas ride, un po' rotto. 'Il Mercante che rifiuta un affare. Questa me la segno.' La segna davvero."
+                    ],
+                    "requires": {"reached_floor": 22}
+                },
+                {
+                    "id": "stelle_contate",
+                    "title": "Quattrocentododici",
+                    "lines": [
+                        "'La notte della Discordia ne contai quattrocentododici. Stelle cadute. Poi ho smesso perché avevo finito l'inchiostro, non perché avessero finito loro.'",
+                        "'Sai cosa mi ha sempre tormentato? Il cielo, adesso, ne ha millecentoquaranta, più o meno, quando lo si vede. Prima ne aveva millecentoquarantacinque. Quindi ne sono cadute cinque. Non quattrocentododici: cinque.'",
+                        "'Le altre quattrocentosette cos'erano? Ci ho messo secoli a capirlo. Non erano stelle. Erano isole di Aetheria, con le luci accese, che cadevano. Le ho contate come stelle perché era più facile.'"
+                    ],
+                    "requires": {"reached_floor": 16},
+                    "after": "stelle"
+                },
+                {
+                    "id": "eco",
+                    "title": "Il Labirinto che ricorda",
+                    "lines": [
+                        "'Sei andato oltre il trenta.' Silas lo dice come una constatazione, ma la matita gli trema. 'Nessuno va oltre il trenta. Il Labirinto lì ricomincia, e ricomincia ricordandosi di te.'",
+                        "'Ho scritto una teoria, una volta. Che il Labirinto non sia un posto ma una frase, ripetuta. Che ogni Eco sia la stessa frase detta più forte, perché chi ascolta non ha capito.'",
+                        "'Chi è che non ha capito, secondo te? Noi? O chi l'ha scritta?' Ti guarda a lungo. 'Non rispondere. Scrivi anche tu, piuttosto. Le Eco dimenticano meno, ma dimenticano.'"
+                    ],
+                    "requires": {"won": true, "bosses_total": 20}
+                },
+                {
+                    "id": "nerea_statua",
+                    "title": "Se fosse lei",
+                    "lines": [
+                        "'Sono tornato alla fontana senz'acqua, nei Chiostri. Alla statua di sale.' Silas parla piano. 'Ho portato un fiore di carta. Lo so che è sciocco.'",
+                        "'Le ho letto qualche pagina del diario. Quelle dove parlo di lei. Mi sembrava giusto che sapesse che la cercavo.' Pausa. 'Il sale non si è mosso. Ma una lacrima di sale le è scesa sulla guancia, piano, mentre leggevo. Forse era l'umidità.'",
+                        "'Forse.' Chiude il diario e ci appoggia sopra la mano, come su una cosa che dorme."
+                    ],
+                    "requires": {"reached_floor": 20},
+                    "after": "statua",
+                    "choices": [
+                        {
+                            "text": "'Era lei.'",
+                            "reply": "Silas annuisce, senza dire niente, per molto tempo. Poi scrive una riga sola: «Nerea. Chiostri, piano due. Trovata.»",
+                            "flag": "silas_nerea_trovata"
+                        },
+                        {
+                            "text": "'Era l'umidità.'",
+                            "reply": "'Sì.' Silas sorride, triste e grato. 'Grazie. È più facile, così.'"
+                        }
+                    ]
+                },
+                {
+                    "id": "quaderno_nerea",
+                    "title": "Il quaderno nella membrana",
+                    "lines": [
+                        "Silas ha in mano un quaderno piccolo, con le pagine incrostate di sale. Lo tiene come si tiene un uccello caduto dal nido. 'L'hanno portato all'Archivio. Dicono che era nel Ventre, dentro una membrana. Dicono che è di Nerea.'",
+                        "'Non riesco ad aprirlo. Ci ho provato tre volte. La calligrafia è la sua, l'ho vista dalla copertina: le lettere tutte uguali, come le stelle che le insegnavo a copiare. Ma se lo apro e dentro c'è scritto che mi ha aspettato, e io non sono arrivato...' Si ferma. 'Il Ventre fa anche questo, sai. Ti dà quello che desideri troppo forte. Potrebbe averlo fatto lui, il quaderno. Con il mio desiderio.'",
+                        "Ti porge il quaderno. 'Tu l'hai letto, vero? Dimmi solo una cosa. Una sola. Poi decido se aprirlo.'"
+                    ],
+                    "requires": {"reached_floor": 24},
+                    "after": "nerea_occhi",
+                    "choices": [
+                        {
+                            "text": "'I suoi occhi erano grigio-verdi. Come il mare d'inverno. Come i tuoi.'",
+                            "reply": "Silas resta immobile. Poi apre il diario, il suo, a una pagina bianca, e scrive in alto, con una calligrafia che trema: «Grigio-verdi. Come il mare d'inverno.» Sotto, più piccolo: «Me l'ha detto qualcuno che torna sempre.» Chiude il diario e piange senza rumore, a lungo, con la mano sulla copertina.",
+                            "flag": "silas_occhi_nerea"
+                        },
+                        {
+                            "text": "'Ti aspettava. Ma non era arrabbiata.'",
+                            "reply": "Silas chiude gli occhi. 'Non era mai arrabbiata. Nemmeno da piccola, quando mi dimenticavo di andarla a prendere.' Mette il quaderno nella bisaccia, chiuso. 'Lo aprirò. Non stasera. Ma lo aprirò.'"
+                        }
+                    ]
+                },
+                {
+                    "id": "matita",
+                    "title": "La matita della Maestra",
+                    "lines": [
+                        "Silas ti mostra la matita che usa da sempre, consumata fino a essere lunga quanto un dito. 'Me l'ha data lei. La Maestra. Sulla guglia, l'alba dopo la Discordia. Mi ha detto: adesso conti tu. Non guardare. Conta.'",
+                        "'Hai letto il suo diario, all'Archivio. Lo so, perché mi guardi in un altro modo. Sapeva che le luci erano isole. Lo sapeva e non me l'ha detto, perché era meglio che io pensassi alle stelle.' Rigira la matita fra le dita. 'Sapeva anche che sono il suo allievo migliore. Ha scritto anche questo, vero? E non me l'ha mai detto, per non farmi smettere di imparare.'",
+                        "Ride, e la risata è quasi felice. 'Vecchia strega. Ha funzionato. Non ho mai smesso.' Poi, più piano: 'E non ho mai smesso di guardare, nemmeno. Spero che le stia bene, lassù.'"
+                    ],
+                    "requires": {"reached_floor": 15},
+                    "after": "maestra"
+                },
+                {
+                    "id": "severo",
+                    "title": "Il cavaliere che non mi bruciò",
+                    "lines": [
+                        "'Una volta, nelle Guglie, ho incontrato un Paladino Corrotto. Uno di quelli che bruciano chi fa domande.' Silas parla piano, come se il cavaliere potesse sentirlo. 'Gli ho chiesto se avesse visto mia sorella. Mi ha risposto che la Luce non vede persone, solo colpe.'",
+                        "'Gli ho detto che allora era cieco anche lui. Ero così stanco che non mi importava se mi bruciava. Non l'ha fatto. Mi ha guardato a lungo, con l'armatura che brillava, e poi ha abbassato la spada.' Silas scuote la testa. 'Ho scritto quella pagina e non l'ho mai riletta. Pensavo di averla sognata.'",
+                        "'Adesso so che si chiamava Severo, e che dopo quel giorno ha lasciato l'armatura e si è seduto accanto a Maud, a poche file dalla porta.' Silas tira fuori il diario e scrive il nome accanto a quella vecchia pagina. 'Ogni tanto una domanda fa più di una spada. Non lo sapevo.'"
+                    ],
+                    "requires": {"reached_floor": 20}
+                },
+                {
+                    "id": "ritorni",
+                    "title": "Le volte che torni",
+                    "lines": [
+                        "Silas apre il diario alla pagina dove ha cominciato a contare i tuoi ritorni, invece delle tue morti. È piena di piccole tacche, cinque alla volta, con una riga in diagonale. 'Guarda quante. Non pensavo che fossero così tante.'",
+                        "'Il bello è che contarle così cambia tutto. Prima ogni pagina era un lutto. Adesso è una festa. Lo stesso numero, capisci? Ogni volta che morivi, tornavi. Ma io scrivevo solo la prima metà.' Accarezza le tacche con il pollice. 'La Maestra diceva che le stelle si contano. Non diceva quali. Io ho scelto quelle che tornano.'",
+                        "Silas chiude il diario e lo appoggia sulle ginocchia. 'Una volta mi hai detto: smettila di contarle. Avevi ragione. Ma smettere del tutto non era da me. Così ho cambiato cosa contare. È la cosa più saggia che abbia mai fatto, e l'ho fatta per te.'"
+                    ],
+                    "requires": {"flag": "silas_conta_ritorni", "bosses_total": 20},
+                    "after": "morti"
+                },
+                {
+                    "id": "fiore_carta",
+                    "title": "Il fiore di carta",
+                    "lines": [
+                        "'Sono tornato alla fontana. Ho portato un altro fiore di carta.' Silas si guarda le dita, macchiate d'inchiostro. 'Il primo non c'era più. Al suo posto c'era una moneta verde, sul bordo della vasca. Qualcuno l'aveva messa lì.'",
+                        "'Nerea, da piccola, buttava una moneta nella fontana delle novizie ogni volta che voleva chiedere qualcosa. Non diceva mai cosa. Diceva che se lo dici non si avvera.' Silas tira fuori dalla tasca una moneta verde, consumata. 'Questa l'ho presa. Lo so, è un furto. Ma era sul bordo, non dentro. Come se fosse rimasta indecisa.'",
+                        "'Le ho lasciato il fiore e ho rimesso la moneta al suo posto. Dentro, stavolta. Così il desiderio può avverarsi.' Ti guarda. 'Non so cosa chiedesse. Spero che fosse una cosa possibile.'"
+                    ],
+                    "requires": {"flag": "silas_nerea_trovata"},
+                    "after": "nerea_statua"
+                },
+                {
+                    "id": "riposo",
+                    "title": "Il riposo",
+                    "lines": [
+                        "Silas, stasera, non scrive. Ha il diario chiuso sulle ginocchia e guarda il Fuoco senza vederlo. 'Ho letto le pagine sull'ultima lezione. Il maestro senza nome. Ciò che è fragile ha diritto al riposo.'",
+                        "'Sai qual è la cosa che mi fa più paura? Che lo capisco. Ho passato mille anni a scrivere per non dimenticare, e ogni tanto, la notte, penso: che bello sarebbe dimenticare tutto. Chiudere il diario. Smettere di contare. Riposare.' Si passa una mano sul viso. 'Quell'uomo voleva dare questo a tutti. Io lo voglio solo per me, e già mi sembra troppo.'",
+                        "Silas riapre il diario e scrive una riga. Poi te la legge: «Il riposo non è smettere di ricordare. È smettere di avere paura di dimenticare.» Ti guarda. 'Non so se è vero. Ma mi sembra un riposo che non fa male a nessuno.'"
+                    ],
+                    "requires": {"won": true, "bosses_total": 40},
+                    "after": "dopo_vittoria"
                 }
             ]
         },
@@ -313,6 +473,165 @@
                         "'Sai cosa ho scoperto? Messa così, intera, non è un labirinto. È una spirale. Ogni bioma gira intorno al centro come l'acqua in uno scarico. Il nonno non l'ha mai vista perché non l'ha mai avuta tutta insieme.'",
                         "'Al centro della spirale non c'è il trenta. C'è un punto vuoto. Più in basso di tutto. Non so cosa sia. So solo che una spirale ha sempre un centro, e che il centro è dove tutto cade.'"
                     ]
+                },
+                {
+                    "id": "nim",
+                    "title": "La mappa del piano dodici",
+                    "lines": [
+                        "La Cartografa ti mostra una pergamena diversa dalle altre: più vecchia, macchiata, con un angolo bruciato. 'Questa me l'ha venduta il Mercante, anni fa. Il piano dodici, disegnato da mio nonno.'",
+                        "'Il Mercante non mi ha mai detto dove l'avesse presa. Ha detto solo che chi la teneva in mano l'aveva stretta fino all'ultimo, e che meritava di tornare a casa.' Passa un dito sul bordo, dove la pergamena è consumata da una presa. 'Qualcuno l'ha stretta così forte da lasciare il segno delle dita.'",
+                        "'Mi sono sempre chiesta di chi fossero quelle dita. Dita piccole. Veloci, direi, da come hanno piegato la carta.'"
+                    ],
+                    "requires": {"reached_floor": 12},
+                    "choices": [
+                        {
+                            "text": "'Erano di una ladra di Valeriana. Si chiamava Nim.'",
+                            "reply": "La Cartografa ti fissa. Poi, con il carboncino, scrive accanto al piano dodici, in piccolo: «Nim». 'Mio nonno parlava di una ragazza che gli aveva riportato una mappa. Non ci credevo.'",
+                            "flag": "cartografa_nim"
+                        },
+                        {
+                            "text": "'Non lo so.'",
+                            "reply": "'Nemmeno io.' La rimette nel rotolo con cura. 'Ma la tengo con le altre. Fa parte della famiglia, adesso.'"
+                        }
+                    ]
+                },
+                {
+                    "id": "carboncino",
+                    "title": "Temperare il carboncino",
+                    "lines": [
+                        "La Cartografa tempera un carboncino con un coltellino, a colpi brevi, e si ferma a metà. 'Che strano. Lo faccio da quando ho sei anni e ogni volta mi sembra di impararlo adesso.'",
+                        "'Ho venduto al Mercante il ricordo di chi me l'ha insegnato. Mi serviva una mappa dei Chiostri. Sapevo cosa vendevo. Credevo di poterne fare a meno.'",
+                        "Guarda il carboncino, perfetto. 'Le mani se lo ricordano. La testa no. Quando lo tempero sento qualcuno dietro di me, che mi guida il polso. Non so chi sia. So che aveva le dita sporche di nero, e che sapeva di tabacco.'"
+                    ],
+                    "requires": {"reached_floor": 9},
+                    "after": "mercante"
+                },
+                {
+                    "id": "quaderno",
+                    "title": "Il quaderno del nonno",
+                    "lines": [
+                        "'Hai letto il quaderno di mio nonno. All'Archivio.' La Cartografa arrossisce, cosa che non fa mai. 'Allora sai del passo. Settantuno centimetri. Sessantotto quando è stanco.'",
+                        "'Il mio è di sessantadue. Lui mi diceva di non correggerlo. Ogni cartografo deve avere il suo passo, diceva, perché è con il passo che il posto entra nella mappa.' Si alza e fa dieci passi, contandoli sottovoce, poi torna. 'Seicentoventi. Giusti.'",
+                        "'Ma sai qual è la cosa che non ha scritto? Che quando camminavamo insieme lui accorciava il suo. Per stare al mio fianco. Sbagliava tutte le misure, quei giorni. Le correggeva la sera, da solo, senza dirmelo.'"
+                    ],
+                    "requires": {"reached_floor": 8}
+                },
+                {
+                    "id": "spirale",
+                    "title": "La spirale",
+                    "lines": [
+                        "La Cartografa ha attaccato tutte le pergamene insieme, su un telo steso accanto al Fuoco. Dall'alto, viste così, fanno una forma. 'Guarda. Non l'avevo mai vista tutta.'",
+                        "È una spirale che scende, giro dopo giro, verso un punto al centro. Il punto è vuoto. 'Mio nonno lo aveva intuito: il Labirinto è una spirale. Ma non sapeva cosa ci fosse al centro. Io nemmeno.'",
+                        "'Ho provato a disegnarlo. Ogni volta il carboncino si spezza.' Ti guarda. 'Tu ci sei stato, al centro. Più in basso del trenta. Cosa c'è?'"
+                    ],
+                    "requires": {"won": true},
+                    "choices": [
+                        {
+                            "text": "'Un fuoco spento e un sacco a pelo. Qualcuno che aspetta.'",
+                            "reply": "La Cartografa resta immobile. Poi, piano, disegna al centro della spirale una piccola croce rossa. Questa volta il carboncino non si spezza.",
+                            "flag": "cartografa_centro"
+                        },
+                        {
+                            "text": "'Niente. Solo buio.'",
+                            "reply": "'Allora lo lascio vuoto.' Arrotola le pergamene. 'Una mappa onesta segna anche quello che non c'è.'"
+                        }
+                    ]
+                },
+                {
+                    "id": "grammatica_2",
+                    "title": "Le regole che non cambiano",
+                    "lines": [
+                        "'Ne ho trovata un'altra.' La Cartografa è eccitata, il che vuol dire che parla un po' più veloce del solito. 'Una regola del Labirinto. Mio nonno non l'aveva scritta.'",
+                        "'Nella Forgia, le incudini guardano sempre verso la scala che sale. Sempre. Ho controllato su sei piani diversi, in tre discese. È come se chi lavora lì volesse sapere da che parte si torna su.'",
+                        "'Il nonno diceva che le regole del Labirinto le ha messe chi l'ha costruito, e che dicono cosa voleva. Nei Chiostri gli archi sono undici, mai dodici: qualcuno amava i numeri dispari. Nella Forgia, qualcuno voleva tornare su.' Annota la regola con cura. 'Chiunque fosse.'"
+                    ],
+                    "requires": {"reached_floor": 22}
+                },
+                {
+                    "id": "tessa_bambina",
+                    "title": "Quando ero Tessa",
+                    "lines": [
+                        "'Nella mia famiglia il nome si usa solo da bambini. Lo sai già.' La Cartografa giocherella con un rotolo. 'Ma a te l'ho detto. Quindi, con te, sono ancora un po' bambina. È una cosa strana da pensare.'",
+                        "'Da bambina avevo paura delle scale. Tutte. Mio nonno mi prendeva in braccio e contava i gradini ad alta voce, e alla fine di ogni rampa mi diceva il numero, come un regalo. Adesso le scale le misuro. È lo stesso gesto, credo.'",
+                        "'Se un giorno torna... se lo trovi... non chiamarmi Cartografa davanti a lui. Chiamami Tessa. Voglio sentire come suona, detto da qualcuno che lo sa da sempre.'"
+                    ],
+                    "requires": {"reached_floor": 18},
+                    "after": "nome"
+                },
+                {
+                    "id": "aurelia_sotto",
+                    "title": "Aurelia sotto i Chiostri",
+                    "lines": [
+                        "La Cartografa ha disegnato una mappa nuova, sopra quella dei Chiostri, con un inchiostro più chiaro. 'Ho letto le Cronache di Aurelia. Guarda.' Le strade dei Chiostri, viste così, coincidono con cerchi più grandi, che non sono corridoi ma vie di una città.",
+                        "'Il Quartiere dei Templi è qui, dove il pavimento è più liscio. Il Quartiere dei Fabbri qui, dove senti odore di carbone. La Porta del Sole sarebbe in questo punto, a oriente, ma è troppo in alto: è rimasta in superficie, una pietra sola.' Tocca un punto al centro. 'E questo è il primo muro, quello posato da un Architetto. È sotto la Prima Pietra.'",
+                        "'Mio nonno lo sospettava. Diceva che i Chiostri hanno una grammatica perché sono una frase già scritta: la città di prima, che il Labirinto ha piegato su se stessa. Non l'aveva mai potuto dimostrare.' Sorride. 'Adesso sì.'"
+                    ],
+                    "requires": {"reached_floor": 6},
+                    "after": "grammatica_2"
+                },
+                {
+                    "id": "passo_tuo",
+                    "title": "Il tuo passo",
+                    "lines": [
+                        "La Cartografa ti guarda camminare intorno al Fuoco, poi prende appunti. 'Scusa. È un vizio. Ho misurato il tuo passo. Settantaquattro centimetri, quando sei riposato. Settanta quando torni.'",
+                        "'È strano. Cambia con la classe che porti, un poco: con il Guerriero è più pesante, con la Ladra più corto, con il Mago incerto, come chi pensa ad altro. Ma sotto c'è sempre lo stesso passo. Una misura tua.' Ti mostra un foglio con tre colonne di numeri. 'E c'è una cosa che non torna. Il tuo passo sinistro è sempre un poco più corto del destro.'",
+                        "'Silas dice che hai la spalla sinistra più bassa. Io dico che hai il passo sinistro più corto. Forse è la stessa cosa. Forse hai portato qualcosa di pesante, sulla spalla sinistra, per molto tempo.' Chiude il quaderno. 'Una mappa onesta segna anche questo.'"
+                    ],
+                    "requires": {"reached_floor": 10}
+                },
+                {
+                    "id": "gabbiana",
+                    "title": "Il porto nel Ventre",
+                    "lines": [
+                        "'Nel Ventre ho trovato un porto.' La Cartografa ha gli occhi lucidi, il che vuol dire che ha scoperto qualcosa di importante. 'Quindici navi ferme, con le lanterne accese. Le ho contate. Le ho disegnate una per una.'",
+                        "'Sulla nave più grande c'era scritto un nome: Gabbiana. Sono salita. Il capitano dormiva seduto, con un libro aperto davanti. Il libro era pieno del suo nome, scritto mille volte, uno sotto l'altro. Edda Vael. Un gatto mi guardava dal ponte.' La Cartografa abbassa la voce. 'Non l'ho svegliata. Ho fatto una cosa sola: ho scritto il suo nome sulla mia mappa, accanto alla nave.'",
+                        "'Un nome su una mappa non si digerisce. Me l'ha insegnato il nonno. Diceva: i posti cambiano, i nomi restano, se li scrivi. Adesso il Ventre ha un porto con un nome. È poco. Ma è un argine.'"
+                    ],
+                    "requires": {"reached_floor": 19}
+                },
+                {
+                    "id": "spazio",
+                    "title": "Lo spazio sotto la Pietra",
+                    "lines": [
+                        "'Sotto la Prima Pietra la mappa non torna. C'è più spazio del dovuto.' La Cartografa lo ha già detto altre volte, ma stasera lo dice in modo diverso. 'Ho letto il Libro dei Sette Sigilli. Dice che il sigillo del Normale non si è spezzato. Che è tiepido, come una persona che dorme.'",
+                        "'Ho fatto un calcolo. Lo spazio in più, sotto la Pietra, è lungo circa due metri e largo meno di uno. Più o meno lo spazio di una persona sdraiata.' Si ferma. 'Non voglio dire niente. Le mappe misurano, non interpretano.'",
+                        "'Ma ho segnato quel punto con un segno nuovo. Non una croce rossa: una linea dritta, orizzontale. Mio nonno non avrebbe saputo che segno usare. Io sì. È quello del sigillo.' Arrotola la mappa. 'Se un giorno vai lì, cammina piano.'"
+                    ],
+                    "requires": {"won": true, "bosses_total": 40},
+                    "after": "spirale"
+                },
+                {
+                    "id": "orvin_sogno",
+                    "title": "Il sogno del nonno",
+                    "lines": [
+                        "'Ho letto nel quaderno del nonno che la croce rossa l'aveva sognata, prima di disegnarla. Una piattaforma nel vuoto, un sacco a pelo, un fuoco spento. Qualcuno che arriva.' La Cartografa rigira il carboncino. 'Anch'io lo sogno. Da quando avevo nove anni. Lo stesso sogno.'",
+                        "'Non l'ho mai detto a nessuno. Nel sogno sono io ad aspettare, non lui. Sono seduta accanto al fuoco spento e conto i passi di qualcuno che scende. Non so chi. So che quando arriva mi sento come si sente il nonno nel suo sogno: sollevata, come quando si finisce un lavoro lungo.'",
+                        "La Cartografa ti guarda. 'Forse è un sogno di famiglia. Forse il Labirinto ce l'ha messo dentro, a tutti e due, per farci disegnare la stessa croce.' Pausa. 'O forse qualcuno, laggiù, aspetta davvero. E chiede a chi fa le mappe di indicargli la strada.'"
+                    ],
+                    "requires": {"reached_floor": 25},
+                    "after": "croce_rossa",
+                    "choices": [
+                        {
+                            "text": "'Forse aspetta proprio me.'",
+                            "reply": "La Cartografa annuisce lentamente. 'Allora la mappa è tua, più che mia.' Ti mette in mano un foglio piccolo: la spirale, con la croce al centro, disegnata per te. 'Tienila. Io ne ho un'altra copia.'",
+                            "flag": "cartografa_mappa_tua"
+                        },
+                        {
+                            "text": "'È solo un sogno.'",
+                            "reply": "'Sì.' La Cartografa sorride. 'Anche le mappe, all'inizio, sono solo sogni di come è fatto un posto.'"
+                        }
+                    ]
+                },
+                {
+                    "id": "fine_mappa",
+                    "title": "Dopo la mappa",
+                    "lines": [
+                        "'Cosa farò quando la mappa sarà finita?' La Cartografa se lo chiede ad alta voce, guardando il telo con tutte le pergamene. 'Non ci avevo mai pensato. Una mappa del Labirinto non finisce. Lo sapevo. Ma stasera mi è sembrata quasi finita.'",
+                        "'Mio nonno diceva che il cartografo muore il giorno in cui finisce la mappa, perché non ha più niente da cercare. Per questo lui non l'ha mai finita: ha lasciato apposta il trenta per ultimo, e poi è sceso a farlo, e non è tornato.' La Cartografa tocca il centro della spirale. 'Forse l'ha finita, laggiù. E per questo non è tornato.'",
+                        "'Io non voglio finirla. Voglio lasciare un piano vuoto, uno qualsiasi, per Tessa bambina. Perché abbia ancora qualcosa da disegnare.' Ti guarda. 'Mi sembra una cosa saggia. È anche la prima cosa che faccio per me.'"
+                    ],
+                    "requires": {"won": true, "bosses_total": 30},
+                    "after": "dopo_vittoria"
                 }
             ]
         },
@@ -460,6 +779,144 @@
                         "'La chiamo la pozione del conto. Ogni volta che curo qualcuno che scende, ne aggiungo una goccia. Quando sarà piena, forse, avrò pagato. Non quello che ho fatto: quello che ho venduto.'",
                         "Guarda la boccetta controluce, davanti al Fuoco. 'Da quando il Dio dorme, si riempie più in fretta. Scende più gente, torna più gente. Tienila tu, per un po'. A me fa bene sapere che qualcuno la guarda.'"
                     ]
+                },
+                {
+                    "id": "ricettario",
+                    "title": "Le ricette scritte",
+                    "lines": [
+                        "'Le hai trovate! Le mie ricette, nell'Archivio.' Lo Speziale è commosso e imbarazzato insieme. 'Le scrissi per chi scendeva, tanto tempo fa. Non credevo che qualcuno le avrebbe lette.'",
+                        "'C'è un errore, nella ricetta per le bruciature della Forgia. Ho scritto grasso di talpa, ma è grasso di tasso. La talpa non c'entra niente. Mi sono confuso perché le due parole, nel dialetto di Aurelia, si somigliano.' Scuote la testa. 'Se qualcuno ha usato la talpa, spero che sia guarito lo stesso.'",
+                        "'Comunque la regola vale ancora: un rimedio non guarisce, aiuta il corpo a guarire da solo. Prima di tutto si mangia.' Ti guarda. 'Hai mangiato?'"
+                    ],
+                    "requires": {"reached_floor": 4}
+                },
+                {
+                    "id": "gatto",
+                    "title": "Il gatto sulla bilancia",
+                    "lines": [
+                        "'Avevo un gatto, nella bottega. Dormiva sulla bilancia, sul piatto dei pesi, e pesava esattamente tre once e mezzo meno di quanto pesasse davvero. Non ho mai capito come.'",
+                        "'Si chiamava Lardo. Non era grasso, era un nome affettuoso. La notte della Discordia era sulla bilancia, come sempre. La bottega scese nel Labirinto con lui dentro.' Lo Speziale rimesta la pentolina. 'A volte, nei Chiostri, sento un gatto. Non ci vado mai a vedere.'",
+                        "'Ho paura che sia diventato una di quelle cose. E ho paura che non lo sia, e che sia solo vecchio e stanco e mi aspetti. Non so quale delle due paure sia peggio.'"
+                    ],
+                    "requires": {"reached_floor": 3},
+                    "choices": [
+                        {
+                            "text": "'La prossima volta che lo sento, vado a vedere io.'",
+                            "reply": "Lo Speziale ti stringe la mano tra le sue, che sanno di salvia. 'Se è lui, digli che il piatto della bilancia è ancora suo.'",
+                            "flag": "speziale_gatto"
+                        },
+                        {
+                            "text": "'È meglio non saperlo.'",
+                            "reply": "'Sì. Sì, probabilmente sì.' Torna a rimestare, ma più piano."
+                        }
+                    ]
+                },
+                {
+                    "id": "tacche",
+                    "title": "Le tacche sul sasso",
+                    "lines": [
+                        "Lo Speziale ti mostra un sasso piatto, pieno di tacche fatte con un coltello. 'Ogni volta che torni, segno quanto è alto il Fuoco. Lo faccio da quando mi hai liberato.'",
+                        "Le tacche scendono. Piano, ma scendono. 'Non te lo mostro per farti sentire in colpa. Te lo mostro perché uno speziale deve dire al paziente come sta. È il mio mestiere.'",
+                        "'Il Fuoco sta male, figliolo. Ogni ritorno gli costa qualcosa. Non so cosa. So solo che, se fossi un rimedio, gli direi di riposare. Ma un fuoco non può riposare. Se riposa, si spegne.' Rimette il sasso in tasca. 'Mangia, adesso.'"
+                    ],
+                    "requires": {"reached_floor": 14},
+                    "after": "fuoco"
+                },
+                {
+                    "id": "kaelen_sabbia",
+                    "title": "La sabbia di Kaelen",
+                    "lines": [
+                        "'Ogni mattina spazzo la sabbia di Kaelen e la butto nel Fuoco.' Lo Speziale si siede, con un sospiro di ginocchia vecchie. 'Lo sai cosa fa, il Fuoco, quando la butto?'",
+                        "'Crepita. Come se leggesse. Sono parole non dette, quella sabbia, e il Fuoco le ascolta. Una volta, una sola, ho sentito una parola nel crepitio. Era un nome.' Lo Speziale abbassa la voce. 'Borek.'",
+                        "'Non l'ho detto a nessuno dei due. Non sono affari miei.' Pausa. 'Ma se tu volessi farli sedere vicini, una sera, io farei la minestra per tre.'"
+                    ],
+                    "requires": {"flag": "kaelen_borek"}
+                },
+                {
+                    "id": "cento_once",
+                    "title": "Cento once",
+                    "lines": [
+                        "'Cento once di estratto di Normale, nell'ultimo anno. Te l'ho già detto.' Lo Speziale non ti guarda. 'Ma non ti ho detto quanto fosse difficile farlo, l'estratto di Normale. Lo sai come si fa?'",
+                        "'Si prende una cosa comune. Un sasso, un pezzo di pane, uno straccio. La si lascia a riposare in acqua di pozzo per quaranta giorni, finché non smette di essere qualcosa e diventa solo materia. Poi si distilla. Ne viene una goccia. Una goccia per quaranta giorni.'",
+                        "'Cento once sono migliaia di gocce. Ho lavorato per lui un anno intero, senza dormire. E sai perché ho detto di sì?' Lo Speziale ride, piano, male. 'Perché pagava bene. E perché era gentile. Era così gentile, figliolo. Nessuno era così gentile con un vecchio speziale.'"
+                    ],
+                    "requires": {"reached_floor": 22},
+                    "after": "cliente"
+                },
+                {
+                    "id": "riposo",
+                    "title": "Far riposare chi è stanco",
+                    "lines": [
+                        "'Servono a far riposare chi è stanco, mi disse. L'ultima sera.' Lo Speziale tiene in mano la pentolina vuota. 'Sai che per tanto tempo ho pensato che fosse una bugia? Che lo dicesse per tranquillizzarmi?'",
+                        "'Adesso non lo penso più. Credo che fosse vero. Credo che volesse davvero far riposare chi è stanco. E il mondo, a quel tempo, era molto stanco. Lo ero anch'io.'",
+                        "'È questo che non mi perdono, sai. Non di avergli venduto gli estratti. Di aver capito, per un momento, che aveva ragione. Di aver pensato: che bello sarebbe, riposare.' Si asciuga gli occhi con il dorso della mano. 'Mangia, figliolo. Mangia, per favore.'"
+                    ],
+                    "requires": {"won": true, "bosses_total": 40},
+                    "after": "cento_once"
+                },
+                {
+                    "id": "lardo_trovato",
+                    "title": "Il gatto sulla bilancia, di nuovo",
+                    "lines": [
+                        "Lo Speziale ti afferra le mani appena ti siedi. Le sue tremano. 'Hai visto il gatto. Nei Chiostri. Lo so che lo hai visto, perché hai l'odore della mia bottega addosso. Mortaio d'ottone, salvia vecchia.'",
+                        "'Dimmi solo se dormiva sulla bilancia. Solo questo.' Non aspetta la risposta. 'Dormiva sulla bilancia. Lo so. Lardo non sapeva dormire da nessun'altra parte. Quando era piccolo, una volta l'ho spostato sul cuscino, e lui è tornato sulla bilancia in punta di zampe, offeso, e per una settimana non mi ha guardato.'",
+                        "Lo Speziale ride e piange insieme. 'Mille anni, e dorme ancora lì. Mi aspetta. Il piatto della bilancia è ancora suo.' Si asciuga gli occhi. 'Non andrò a prenderlo. Sono troppo vecchio per i Chiostri. Ma adesso so dov'è. Per un gatto, e per un vecchio, è abbastanza.'"
+                    ],
+                    "requires": {"flag": "speziale_gatto", "reached_floor": 6},
+                    "after": "gatto"
+                },
+                {
+                    "id": "malphas",
+                    "title": "Il medico delle concerie",
+                    "lines": [
+                        "'Conoscevo Malphas.' Lo Speziale lo dice a voce bassa, mentre pesta qualcosa nel mortaio. 'Tutti lo conoscevano, ad Aurelia. Il medico delle concerie, quello che andava dove nessun altro andava. Gli vendevo la salvia e l'arnica. Pagava sempre puntuale.'",
+                        "'Ho letto le sue memorie. Non sapevo della sete. Nessuno sapeva. Ma ricordo che, negli ultimi anni, sembrava sempre più giovane, e i suoi pazienti sempre più vecchi. Lo notavo e non dicevo niente. Era un buon cliente.' Smette di pestare. 'Sento che c'è un discorso, qui, che riguarda anche me. Due uomini che vendevano la cosa giusta alla persona sbagliata, senza fare domande.'",
+                        "'Lui, alla fine, si è tagliato la mano. Io faccio la minestra.' Lo Speziale riprende a pestare. 'Non so quale sia la penitenza migliore. So che la mia, almeno, nutre qualcuno.'"
+                    ],
+                    "requires": {"reached_floor": 21}
+                },
+                {
+                    "id": "erba_sonno",
+                    "title": "L'erba del sonno",
+                    "lines": [
+                        "'Ho letto l'erbario di Morva. L'ultima pianta, quella che non esiste.' Lo Speziale ha un barattolo vuoto davanti, con un'etichetta scritta a mano: erba del sonno. 'Ho fatto l'etichetta prima di avere la pianta. Lo so che è sciocco.'",
+                        "'In tutta la mia vita non ho mai trovato un rimedio che facesse riposare davvero. Ho trovato rimedi per dormire, per non sentire dolore, per dimenticare un poco. Ma riposare, che è un'altra cosa, no. Riposare non si vende in bottega.' Gira il barattolo fra le mani. 'Quella traghettatrice l'ha sognata. E qualcuno dice di averla vista, accanto a lei e a una bambina d'ombra che dormivano.'",
+                        "'Se la trovi, non coglierla. Ha ragione chi l'ha lasciata lì. Ma dimmelo. Voglio scrivere sull'etichetta dove cresce. Così, quando qualcuno mi chiede un rimedio per riposare, potrò dirgli: non lo vendo. Ma esiste.'"
+                    ],
+                    "requires": {"reached_floor": 18}
+                },
+                {
+                    "id": "preghiera",
+                    "title": "Non rendila perfetta",
+                    "lines": [
+                        "'Mia madre diceva una preghiera, quando mi curava la febbre. Luce, guarda questa persona. Non renderla perfetta: rendila sana.' Lo Speziale sorride, gli occhi lontani. 'Era la preghiera dei Grandi Templi. Poi i sacerdoti smisero di dire la seconda frase.'",
+                        "'Io non ho mai smesso. Ogni rimedio che faccio, lo dico. Sottovoce, mentre pesto. Lo dicevo anche per i rimedi che vendevo a quel cliente, quello del sigillo bianco. Chissà se è servito a qualcosa.' Si ferma. 'Forse no. Forse era l'unica persona al mondo che non volesse essere sana, ma riposata.'",
+                        "'Comunque la dico. Anche per te, ogni volta che torni.' Ti guarda. 'Non renderlo perfetto. Rendilo sano. Lo so che non sono un sacerdote. Ma la Luce, quella calma, credo che ascolti anche i vecchi speziali.'"
+                    ],
+                    "requires": {"reached_floor": 18},
+                    "after": "cliente"
+                },
+                {
+                    "id": "minestra_tre",
+                    "title": "La minestra per tre",
+                    "lines": [
+                        "Stasera lo Speziale ha messo sul fuoco una pentola più grande del solito. Ci sono tre ciotole sul sasso accanto, e lui le guarda soddisfatto. 'Te l'avevo detto, che avrei fatto la minestra per tre.'",
+                        "Dall'altra parte del Fuoco, Borek e Kaelen sono seduti vicini, sul ceppo vuoto. Non parlano. Borek beve, Kaelen guarda le fiamme. Ma ogni tanto Borek allunga il boccale verso di lui, e Kaelen ci appoggia sopra la mano di pietra, per un istante, come si fa un brindisi. 'Sono così da ieri sera,' sussurra lo Speziale. 'Non si sono detti niente. È il modo dei nani, credo. Il silenzio dice tutto.'",
+                        "Riempie le tre ciotole e le porta lui stesso, una alla volta, camminando piano. Quando torna è commosso. 'Mi hanno ringraziato. Tutti e due. Borek con la voce, Kaelen con la sabbia. Era la sabbia più leggera che abbia mai spazzato.'"
+                    ],
+                    "requires": {"flag": "kaelen_borek", "bosses_total": 30},
+                    "after": "kaelen_sabbia"
+                },
+                {
+                    "id": "ultima_ricetta",
+                    "title": "L'ultima ricetta",
+                    "lines": [
+                        "'Voglio scrivere un'ultima ricetta. Per il mio ricettario, quello dell'Archivio.' Lo Speziale ha la penna in mano e il foglio bianco davanti. 'Ma non so come si scrive. Non è una ricetta per un corpo.'",
+                        "'È per il Fuoco. Ho segnato le tacche sul sasso per tanto tempo, e scendono. Allora ho pensato: se il Fuoco fosse un paziente, cosa gli darei? Non un rimedio, perché non è malato. È stanco. E alla stanchezza non si danno rimedi, si danno compagnia e minestra.' Ride piano. 'Al Fuoco non posso dare la minestra. Ma la compagnia sì. È per questo che ci sediamo tutti qui, la sera, credo. Anche senza saperlo.'",
+                        "Scrive, lentamente: «Per un fuoco stanco: persone intorno, ogni sera. Storie dette ad alta voce. Nessuna fretta.» Ti mostra il foglio. 'È la ricetta più vera che abbia mai scritto. E la più facile da seguire.'"
+                    ],
+                    "requires": {"won": true, "bosses_total": 40},
+                    "after": "riposo"
                 }
             ]
         },
@@ -607,6 +1064,167 @@
                         "'Si chiamava Hadrek. Era più vecchio di me di trecento anni e più testardo di una montagna. Mi ha insegnato a leggere la roccia: dove ha le vene, dove si spacca, dove ti mente. Mi ha insegnato tutto, tranne quando fermarsi.'",
                         "'Non è cattivo, quello che hai visto laggiù. È solo rimasto fedele a un ordine che non aveva più senso. Succede ai capi buoni, più che ai cattivi.' Batte un colpo, forte. 'Se lo rivedi, ragazzo, colpiscilo bene. Non farlo soffrire. Era uno dei nostri.'"
                     ]
+                },
+                {
+                    "id": "kaelen_vivo",
+                    "title": "Il messaggio di Kaelen",
+                    "requires": {"flag": "kaelen_borek"},
+                    "lines": [
+                        "Borek tiene in mano la lastra di ferro che hai portato dalle Miniere. La gira e la rigira, ma non la legge: la conosce già a memoria. «Ragazzo. Fuoco. Buono. Scusa.»",
+                        "«Scusa di cosa, vecchio testone? Sono io che dovevo cercarti.» Lo dice alla lastra, non a te. Poi si soffia il naso così forte che lo Speziale si sveglia. «Mille anni a forgiare da solo laggiù. E io qui, a credere che fosse morto.»",
+                        "Appende la lastra sopra l'incudine, con un chiodo buono. «Adesso la vede tutte le volte che batto. Così impara a non mandarmi i messaggi con gli altri.» Ma sorride, e per tutta la sera il suo martello canta più pulito."
+                    ]
+                },
+                {
+                    "id": "hadrek_registro",
+                    "title": "Il registro di Hadrek",
+                    "lines": [
+                        "Borek sbatte il boccale sul tavolo. 'Hai letto il registro. All'Archivio. Il registro della squadra.' Non è una domanda. 'Lo ha scritto Hadrek, fino all'ultima pagina. Io non sapevo nemmeno che scrivesse.'",
+                        "'Dice che la roccia batteva come carne. Lo diceva anche a noi. Diceva che era un buon segno: vuol dire che c'è qualcosa sotto. Io dicevo che c'era qualcosa sotto, sì, e che quel qualcosa ci stava mangiando.'",
+                        "Borek beve. 'Nell'ultima pagina dice che ha visto le nostre tacche a croce, quelle che salivano. E la frana.' La voce gli si incrina. 'Quindi sapeva. Sapeva che eravamo morti tutti tranne uno. E ha continuato a scavare verso il basso lo stesso. Che testa dura, ragazzo. Che testa dura.'"
+                    ],
+                    "requires": {"reached_floor": 9}
+                },
+                {
+                    "id": "punto_debole",
+                    "title": "Il punto debole",
+                    "lines": [
+                        "'Le armature che aggiustavo da prigioniero, laggiù, le hai viste addosso a qualcuno? Ai Paladini Corrotti, agli Scheletri Corazzati?' Borek sorride sotto la barba. 'Hanno tutte un punto debole sotto l'ascella sinistra.'",
+                        "'L'ho fatto apposta. Ogni armatura che mi davano da riparare, ci lasciavo un piccolo errore. Un rivetto più morbido, una piastra appena più corta. Una cosa che solo un nano saprebbe vedere.'",
+                        "'Non era coraggio, ragazzo. Era che non potevo forgiare male. Non ne sono capace. Allora forgiavo bene, tranne un punto. Un punto solo. Per qualcuno che un giorno sarebbe sceso con una lama abbastanza piccola.' Ti dà una pacca sulla spalla. 'Sotto l'ascella sinistra. Ricordatelo.'"
+                    ],
+                    "requires": {"reached_floor": 12},
+                    "choices": [
+                        {
+                            "text": "'Me lo ricorderò.'",
+                            "reply": "'Bravo.' Borek ride. 'Mi piace pensare che qualcuno, laggiù, se ne accorga e pensi: questo l'ha riparato un nano che ci voleva bene.'",
+                            "flag": "borek_punto_debole"
+                        },
+                        {
+                            "text": "'E se qualcuno ti avesse scoperto?'",
+                            "reply": "'Mi avrebbero ucciso, credo.' Si stringe nelle spalle. 'Ma un fabbro non lascia una cosa fatta male per paura. La lascia fatta male per amore.'"
+                        }
+                    ]
+                },
+                {
+                    "id": "kaelen_martello",
+                    "title": "Il martello con due impronte",
+                    "lines": [
+                        "Borek ti mostra il martello di Kaelen, quello con il manico consumato. 'Vedi? Due impronte. Una grande, la sua. Una più piccola, dentro la grande. La mia.'",
+                        "'Mi faceva tenere il martello insieme a lui, quando ero apprendista. Le sue mani sopra le mie. Diceva che il ferro va sentito con le mani di un altro, prima, perché le tue sono troppo giovani per capire.'",
+                        "'Il giorno che mi lasciò battere da solo, mi disse: adesso le tue mani sanno. E io dissi: e le tue? Lui rise. Disse: le mie hanno già imparato tutto quello che c'era da imparare. Adesso possono smettere.' Borek posa il martello. 'Non sapeva quanto avesse ragione, il vecchio.'"
+                    ],
+                    "requires": {"reached_floor": 14},
+                    "after": "maestro"
+                },
+                {
+                    "id": "birra_due",
+                    "title": "Due boccali",
+                    "lines": [
+                        "Borek ha due boccali davanti, stasera. Ne beve uno. L'altro lo lascia pieno, accanto a sé, sul ceppo vuoto.",
+                        "'È un'usanza di Durn. Quando un minatore della tua squadra non torna, gli lasci il boccale pieno per un anno. Poi lo bevi tu, alla sua salute.' Guarda il boccale. 'Ne ho lasciati undici, il primo anno. Poi ho smesso. Non perché li avessi dimenticati.'",
+                        "'Questo è per Kaelen. Lo lascio da quando ho saputo che è vivo.' Fa una pausa. 'Lo so, è il contrario dell'usanza. Ma non so se lui berrebbe con me. E finché il boccale è pieno, la domanda resta aperta.'"
+                    ],
+                    "requires": {"flag": "kaelen_borek"},
+                    "after": "kaelen_vivo"
+                },
+                {
+                    "id": "squadra_nomi",
+                    "title": "Undici nomi",
+                    "lines": [
+                        "'Sai che non ti ho mai detto i loro nomi?' Borek si pulisce le mani sul grembiule, lentamente. 'Undici. Sette con me, quattro con Hadrek. Te li dico. Ascolta e basta, ragazzo, non devi dire niente.'",
+                        "'Con me: Ulma, che cantava. Brokk, che non parlava. I gemelli Tor e Tir. Dagna, la più giovane. Fennir, il cuoco. Sigrun, che rideva quando aveva paura. Con Hadrek: Orm, Gilda, Bodvar, e la vecchia Ragna, che aveva scavato più di tutti noi messi insieme.'",
+                        "Borek respira forte. 'Ecco. Adesso qualcuno, fuori da Durn, sa come si chiamavano. Il Labirinto mangia i nomi, dice Silas. Questi, almeno, li ha dovuti dividere con te.'"
+                    ],
+                    "requires": {"reached_floor": 18},
+                    "after": "squadra"
+                },
+                {
+                    "id": "acciaio_canta",
+                    "title": "Perché l'acciaio canta",
+                    "lines": [
+                        "Borek batte una lama con un martelletto e la tiene vicino all'orecchio. Si sente un suono lungo, pulito. 'Questo. Questo è l'acciaio buono. Canta perché dentro non ha rimpianti.'",
+                        "'L'acciaio del Labirinto, invece, senti?' Batte un'altra lama, presa da un forziere. Il suono è sordo, rotto, come una tosse. 'È pieno di rimpianto. Viene da armi che hanno ucciso chi non volevano, da armature che non hanno protetto chi dovevano.'",
+                        "'Il segreto, ragazzo, è che l'acciaio rimpiange per conto di chi lo usa. Quando forgio, tolgo il rimpianto. Lo martello via. Ci vuole tempo.' Ti guarda di sbieco. 'A volte penso che dovrei farlo anche con me stesso. Ma sono troppo duro anche per il mio martello.'"
+                    ],
+                    "requires": {"reached_floor": 5}
+                },
+                {
+                    "id": "manuale",
+                    "title": "La pagina strappata",
+                    "lines": [
+                        "'Il manuale della Gilda! All'Archivio!' Borek batte il pugno sul tavolo, e ride. 'Con le mie note a margine! Hadrek mi aveva minacciato di farmi pulire le latrine per un mese, se rovinavo un altro manuale. Non l'ha mai fatto. Era tutto fumo, quel vecchio.'",
+                        "Poi la risata si spegne. 'Hai visto la pagina strappata. La regola sul caposquadra che non vuole risalire. Sì, l'ho strappata io. Prima di partire con i sette.' Si gratta la barba. 'Non volevo che nessuno potesse dire: Borek ha disobbedito al manuale. Ho disobbedito a Hadrek, e basta. Volevo che la colpa fosse solo mia.'",
+                        "'E sai cosa diceva quella regola?' Borek abbassa la voce. 'Diceva: se il caposquadra non vuole risalire, si risale lo stesso, e lo si porta su a forza. Io non l'ho portato su. L'ho lasciato. È questo che non mi perdono. Non di essere partito. Di averlo lasciato giù da solo con i quattro.'"
+                    ],
+                    "requires": {"reached_floor": 12},
+                    "after": "hadrek_registro"
+                },
+                {
+                    "id": "ulma",
+                    "title": "La canzone di Ulma",
+                    "lines": [
+                        "Stasera Borek canta, piano, con la voce roca. 'Sopra c'è il cielo, sopra c'è il pane, sopra c'è chi aspetta e chi non sa aspettare.' Si interrompe. 'Ulma la cantava a voce alta. Il manuale dice di cantarla piano, perché la montagna non si offenda. Lei se ne fregava.'",
+                        "'Diceva che una montagna che si offende per una canzone non merita di essere scavata. Hadrek la sgridava, poi la ascoltava, e alla fine cantava con lei. Anche lui a voce alta. Erano gli unici due.' Borek beve. 'Nella risalita, al secondo giorno, Ulma cantava ancora. Al terzo giorno, quando è venuta giù la galleria, stava cantando. Mi piace pensare che la montagna l'abbia presa mentre cantava.'",
+                        "'Non per cattiveria. Per sentirla meglio.' Borek ricomincia la canzone, a voce un poco più alta. 'Lascia la pietra, la pietra resta, torna su piano, che sopra è festa.'"
+                    ],
+                    "requires": {"reached_floor": 9},
+                    "after": "squadra_nomi"
+                },
+                {
+                    "id": "punto_debole_2",
+                    "title": "Il cavaliere senza armatura",
+                    "lines": [
+                        "'Ho sentito di un Paladino Corrotto che ha lasciato l'armatura su un altare delle Guglie.' Borek ha in mano un pezzo di piastra bianca, annerita ai bordi. 'L'armatura è arrivata qui. Il Mercante me l'ha venduta come rottame. Ho guardato sotto l'ascella sinistra.'",
+                        "'C'era il mio rivetto. Quello morbido. L'ho riparata io, quella piastra, quando ero prigioniero. Mille anni fa.' Borek scuote la testa. 'Quel cavaliere l'ha portata per secoli con il mio errore addosso, e nessuno lo ha mai colpito lì. Poi l'ha tolta da solo.'",
+                        "'Non so cosa voglia dire. Forse niente. Ma mi piace pensare che un punto debole, a volte, non serva a farti cadere. Serva solo a ricordarti che puoi toglierti l'armatura quando vuoi.' Rimette la piastra su un ripiano, con cura. 'La tengo. Non la fondo. Se n'è guadagnata il riposo.'"
+                    ],
+                    "requires": {"reached_floor": 20},
+                    "after": "punto_debole"
+                },
+                {
+                    "id": "hadrek_giu",
+                    "title": "Se Hadrek risalisse",
+                    "lines": [
+                        "'Se un giorno abbatti il Caposquadra, laggiù...' Borek non finisce la frase. Ricomincia. 'Ti chiedo una cosa. Una sola. Non lasciarlo giù. Portalo su. Anche solo il piccone. Anche solo la lanterna.'",
+                        "'So che non si può. So che il Labirinto non restituisce niente. Ma il manuale diceva: lo si porta su a forza. Io non l'ho fatto. Se lo fai tu, per me, allora la regola è rispettata. Tardi, ma rispettata.' Borek ha gli occhi lucidi. 'La Gilda era molto precisa sulle regole. Non sui tempi.'",
+                        "Ti stringe la mano, forte, con la mano callosa da fabbro. 'E se non puoi, va bene lo stesso. Fai una tacca a croce sul muro, accanto a lui. Una sola. Così saprà che qualcuno, alla fine, è risalito per lui.'"
+                    ],
+                    "requires": {"reached_floor": 10, "bosses_total": 5},
+                    "after": "caposquadra",
+                    "choices": [
+                        {
+                            "text": "'Farò la tacca a croce.'",
+                            "reply": "Borek annuisce, e per un momento non riesce a parlare. Poi ti dà una pacca sulla spalla così forte che ti manca il respiro. 'Bravo ragazzo. Bravo.'",
+                            "flag": "borek_tacca"
+                        },
+                        {
+                            "text": "'Lo porterò su, in qualche modo.'",
+                            "reply": "'Non promettere quello che non si può.' Borek sorride. 'Ma grazie per averlo detto. Hadrek avrebbe riso. Poi ti avrebbe offerto da bere.'"
+                        }
+                    ]
+                },
+                {
+                    "id": "spada_ragazzo",
+                    "title": "La spada per un ragazzo",
+                    "lines": [
+                        "Borek sta forgiando una spada piccola, semplice, con un'impugnatura per una mano sola. Non è il suo stile: lui ama le asce pesanti, i martelli enormi. 'Me l'ha disegnata Kaelen, nella cenere. Una spada per un ragazzo che comincia.'",
+                        "'Mi ha fatto tenere il martello come quando ero apprendista. Le sue mani di pietra sopra le mie. Non sentono niente, le sue mani, tranne il Fuoco. Ma il martello lo sentivano. Lo giuro, ragazzo. Quando ho sbagliato un colpo, ha stretto.' Borek si asciuga la fronte. 'Alla mia età farsi correggere da un maestro con le mani di granito. Che vergogna. Che gioia.'",
+                        "Tempra la lama nell'acqua, e la lama canta, lunga e pulita. 'Senti? Niente rimpianto. Il primo acciaio senza rimpianto che esce da questo Campo.' Te la mostra. 'Non è per te. È per il prossimo che arriva al Fuoco senza niente. Ce ne sarà uno, prima o poi.'"
+                    ],
+                    "requires": {"any_flags": ["kaelen_spada_finita", "kaelen_riposa"]},
+                    "after": "birra_due"
+                },
+                {
+                    "id": "dopo_dio",
+                    "title": "Il boccale di Hadrek",
+                    "lines": [
+                        "Borek ha davanti tre boccali stasera. Uno per sé, uno per Kaelen, che siede accanto a lui. Il terzo è pieno, sul bordo del ceppo, e nessuno lo tocca.",
+                        "'È per Hadrek. Lo so, l'usanza dice un anno. Gliel'ho lasciato mille anni. Stasera lo bevo.' Prende il boccale, lo alza verso il buio oltre il Fuoco. 'Alla tua salute, testone. Avevi torto. Ma scavavi meglio di tutti noi.' Beve tutto, d'un fiato, poi posa il boccale capovolto.",
+                        "Kaelen gli posa una mano di pietra sulla spalla. Borek non si scosta. 'Adesso basta boccali per i morti,' dice, con la voce rotta. 'Da domani, solo per i vivi. Ce ne sono abbastanza, qui intorno, da tenermi occupato fino alla fine del Labirinto.'"
+                    ],
+                    "requires": {"won": true, "bosses_total": 30},
+                    "after": "forgiare"
                 }
             ]
         },
@@ -686,6 +1304,179 @@
                             "flag": "viandante_paura"
                         }
                     ]
+                },
+                {
+                    "id": "monete",
+                    "title": "Le monete negli occhi",
+                    "lines": [
+                        "Il Viandante si tocca le orbite, dove brillano due monete d'oro. 'Ti chiedi cosa vedo, con queste. Tutti se lo chiedono. Nessuno lo domanda.'",
+                        "'Vedo al buio. Solo al buio. Alla luce del Fuoco sono cieco come una talpa, e per questo mi siedo sempre dalla parte dell'ombra.' Sorride. 'Il Mercante mi ha fatto un buon prezzo. Gli occhi in cambio del sogno del Dio. Ho visto il sogno. Adesso vedo solo quello che il sogno vede: il buio, e chi ci cammina dentro.'",
+                        "'Tu, per esempio. Nel buio sei molto più chiaro che alla luce. Alla luce sei una persona. Al buio sei una strada.'"
+                    ],
+                    "requires": {"reached_floor": 7}
+                },
+                {
+                    "id": "pianta",
+                    "title": "Le piante sotto l'isola",
+                    "lines": [
+                        "'Ho disegnato le volte sotto un'isola, per il re. Te l'ho detto.' Il Viandante conta i sassolini che ha in mano, uno per uno. 'Ma non ti ho detto come me le dettavano.'",
+                        "'Una voce, nella stanza. Gentile, stanca. Mi diceva: qui un corridoio di undici passi, qui una scala che scende a destra, qui una stanza che non ha uscita. Io disegnavo. Non vedevo chi parlava. C'era una tenda.'",
+                        "'Ogni tanto la voce si fermava e chiedeva: è troppo? Io non capivo la domanda. Dicevo: no, signore, è una bella pianta. E la voce sospirava, e continuava.' Il Viandante lascia cadere un sassolino. 'Adesso la capisco, la domanda. Chiedeva se era troppo grande, per una persona sola.'"
+                    ],
+                    "requires": {"reached_floor": 18},
+                    "after": "re"
+                },
+                {
+                    "id": "figlio_minore",
+                    "title": "Il più piccolo",
+                    "lines": [
+                        "Una delle ombre dietro il Viandante è più bassa delle altre. Quando lui parla, lei si avvicina, come fanno i bambini.",
+                        "'È Mattia. Il più piccolo. Aveva otto anni quando scendemmo. Reggeva la lanterna più leggera, quella di latta, e ogni dieci passi mi chiedeva se eravamo arrivati.' Il Viandante tende la mano all'indietro, e l'ombra ci posa sopra qualcosa che non si vede. 'Non ha mai smesso di chiederlo.'",
+                        "'Io non ho mai smesso di rispondergli: quasi. Siamo quasi arrivati. È la bugia più lunga della mia vita. Mille anni di quasi.'"
+                    ],
+                    "requires": {"counter": {"viandante_incontri": 3}},
+                    "after": "figli",
+                    "choices": [
+                        {
+                            "text": "'Siamo quasi arrivati, Mattia.'",
+                            "reply": "L'ombra piccola si volta verso di te. Per un istante sembra un bambino vero, con le guance rosse. Poi torna dietro al padre. Il Viandante piange in silenzio.",
+                            "flag": "viandante_mattia"
+                        },
+                        {
+                            "text": "Resti in silenzio.",
+                            "reply": "'Grazie,' dice il Viandante. 'Il silenzio è più onesto di me.'"
+                        }
+                    ]
+                },
+                {
+                    "id": "contare_cosa",
+                    "title": "Cosa succede se smetti",
+                    "lines": [
+                        "'Tredicimilaquattrocentodue.' Il Viandante si ferma. 'Lo sai cosa succede se smetto di contare?'",
+                        "'Non lo so nemmeno io. Non ho mai smesso. Una volta, cinquecento anni fa, mi sono addormentato a metà di un numero. Mi sono svegliato e ho ricominciato dallo stesso numero, e per un attimo, prima di ricominciare, non c'era niente. Né il buio, né le ombre, né io.'",
+                        "'Non era brutto. Era come il sonno senza sogni che fa il Dio, quando dorme davvero.' Ricomincia a contare, piano. 'Tredicimilaquattrocentotré. Ma io ho dei figli dietro di me. Non posso permettermi il niente.'"
+                    ],
+                    "requires": {"reached_floor": 24},
+                    "after": "contare"
+                },
+                {
+                    "id": "trono",
+                    "title": "Il sogno del trono",
+                    "lines": [
+                        "Il Viandante non conta, stasera. Ha le mani ferme sulle ginocchia, ed è la prima volta che lo vedi così.",
+                        "'Ti devo dire una cosa che ho visto nel sogno del Dio. Ti ho visto seduto sul trono, in fondo. Non era una vittoria. Era la cosa più fredda che abbia mai visto. Ho avuto paura di te, per secoli, prima di conoscerti.'",
+                        "'Adesso ti conosco un poco. E so che quel sogno è solo una strada fra tante. Ma ti chiedo una cosa, da vecchio che ha disegnato la strada: se un giorno ti siedi su quel trono, ricordati che qualcuno, qui, contava i tuoi passi.'"
+                    ],
+                    "requires": {"won": true},
+                    "choices": [
+                        {
+                            "text": "'Non mi siederò mai su quel trono.'",
+                            "reply": "'Lo dicono tutti.' Il Viandante sorride, e per una volta il sorriso arriva fino alle monete. 'Ma tu lo dici al buio. Al buio, ti credo.'",
+                            "flag": "viandante_promessa"
+                        },
+                        {
+                            "text": "'Non posso promettertelo.'",
+                            "reply": "'Lo so.' Il Viandante riprende a contare. 'È per questo che ti credo, quando prometti altre cose.'"
+                        }
+                    ]
+                },
+                {
+                    "id": "mercante_occhi",
+                    "title": "Cosa ha fatto il Mercante dei miei occhi",
+                    "lines": [
+                        "'Il Mercante ha i miei occhi, da qualche parte, in un cassetto.' Il Viandante ride, ed è una risata sorprendentemente allegra. 'Mi chiedo se li usi. Se ogni tanto guarda il mondo con i miei occhi, per vedere com'era.'",
+                        "'Erano occhi da cartografo. Vedevano le distanze prima delle cose. Guardavi una stanza e sapevi quanto era lunga prima di sapere di che colore fosse.' Si picchietta una moneta. 'Il Mercante, che non ha più un volto, forse ne aveva bisogno. Per vedere quanto è lontano tutto.'",
+                        "'Non gliene voglio. Abbiamo fatto un affare onesto. Lui ha avuto gli occhi. Io ho avuto la verità. Siamo tutti e due ancora qui, a pagarne il prezzo.'"
+                    ],
+                    "requires": {"reached_floor": 14}
+                },
+                {
+                    "id": "lanterna_luce",
+                    "title": "L'ultima luce di Aetheria",
+                    "lines": [
+                        "Il Viandante tiene in grembo la Lanterna Spenta. Dentro, se guardi bene, c'è un punto di luce piccolo come un grano di sale.",
+                        "'Quando le isole caddero, un cristallo di luce passò accanto a me, cadendo. Allungai la lanterna e lo presi. Non tutto: solo questo. L'ultima luce di Aetheria.' La rigira nelle mani. 'Non la accendo mai. Se la accendo, finisce.'",
+                        "'Qualcuno, un giorno, dovrà accenderla. Per vedere qualcosa che vale la pena. Ho pensato a lungo a cosa potesse valere un'intera isola di luce.' Ti guarda, con le monete che brillano. 'Ancora non lo so. Ma ho la sensazione che lo sapremo insieme.'"
+                    ],
+                    "requires": {"reached_floor": 26},
+                    "after": "lanterna"
+                },
+                {
+                    "id": "lapicida",
+                    "title": "Il lapicida",
+                    "lines": [
+                        "'Il lapicida che incise il muro sbagliato.' Il Viandante ha letto, o si è fatto leggere, il trattato delle rune. 'Lo conoscevo. Lavorava nella stanza accanto alla mia, mentre io disegnavo le piante. Sentivo il suo martello tutto il giorno. Tic, tic, tic.'",
+                        "'Non ci siamo mai parlati. Eravamo pagati per non parlare. Ma una sera, uscendo, ci siamo incrociati sul pontile, e lui mi ha chiesto: tu sai cosa stiamo costruendo? Io ho detto di no. Lui ha detto: nemmeno io. Ma la pietra si raffredda, quando la incido. La pietra non si raffredda mai.'",
+                        "Il Viandante conta qualche sassolino in silenzio. 'Io disegnavo il guscio, lui incideva i segni che lo tenevano chiuso. Due artigiani onesti, pagati bene da una voce gentile. Lui ha appeso il martello e non ha inciso più niente. Io ho preso i miei figli e sono sceso a vedere. Non so chi dei due abbia fatto la scelta più saggia.'"
+                    ],
+                    "requires": {"reached_floor": 20},
+                    "after": "pianta"
+                },
+                {
+                    "id": "mattia_quasi",
+                    "title": "Quasi arrivati",
+                    "lines": [
+                        "L'ombra piccola, quella di Mattia, stasera si è seduta accanto a te, non dietro il padre. Il Viandante se n'è accorto e sorride, con le monete che brillano.",
+                        "'Da quando gli hai detto che siamo quasi arrivati, non mi chiede più niente. Si siede vicino a chi arriva al Fuoco e aspetta. Come se tu gli avessi dato un permesso.' Il Viandante tende la mano verso il figlio, e l'ombra gliela sfiora. 'Mille anni di quasi, e poi basta una volta detto da qualcun altro. I bambini sono strani.'",
+                        "'O forse aveva bisogno di sentirlo da qualcuno che non mentiva. Io gli ho mentito per mille anni, con amore. Tu no. Tu lo pensavi davvero.' Il Viandante ti guarda, al buio. 'Lo pensavi davvero, vero?'"
+                    ],
+                    "requires": {"flag": "viandante_mattia"},
+                    "after": "figlio_minore",
+                    "choices": [
+                        {
+                            "text": "'Sì. Siamo quasi arrivati.'",
+                            "reply": "Il Viandante annuisce, e conta un numero ad alta voce, uno solo, come chi segna un traguardo. 'Uno. Ricomincio da qui. Da uno.'",
+                            "flag": "viandante_da_uno"
+                        },
+                        {
+                            "text": "'Non lo so. Ma lo spero.'",
+                            "reply": "'Anche la speranza conta.' Il Viandante ride piano. 'La conto anche lei. Viene prima del sette e dopo il sei.'"
+                        }
+                    ]
+                },
+                {
+                    "id": "calaris_te",
+                    "title": "Il tè al bergamotto",
+                    "lines": [
+                        "'Ho sentito parlare del tè al bergamotto, sul tavolino alla Soglia. Ancora tiepido.' Il Viandante si tocca una moneta. 'Lo conosco, quel tè. Me lo offriva la voce, quando disegnavo. Dietro la tenda, c'era sempre una tazza per me.'",
+                        "'Non l'ho mai vista in faccia. Ma beveva il tè con me, ogni pomeriggio, e mi chiedeva della mia famiglia. Dei miei sette figli. Si ricordava i loro nomi. Mattia, il più piccolo, le stava particolarmente simpatico: lo chiamava il contatore di passi, perché contava sempre.' Il Viandante sorride. 'Era gentile, ti dico. La persona più gentile che abbia mai lavorato per il re.'",
+                        "'Il giorno in cui ho finito le piante, mi ha detto: grazie, ora vai a casa dai tuoi figli. Sono andato a casa. Il giorno dopo il cielo si è strappato.' Ricomincia a contare. 'Mi aveva mandato a casa. Non so se fosse un regalo o un modo di non avermi lì.'"
+                    ],
+                    "requires": {"won": true},
+                    "after": "trono"
+                },
+                {
+                    "id": "fratelli",
+                    "title": "Il Mercante e il Mendicante",
+                    "lines": [
+                        "'Il Mercante e il Mendicante non si parlano da mille anni. Lo sapevi?' Il Viandante lo dice con aria divertita. 'Io li conosco tutti e due. Al buio vedo bene. E al buio sono molto simili: due figure senza volto, una con una ciotola, una con una bilancia.'",
+                        "'Una volta, nel buio fra due piani, li ho visti passare vicini. Si sono fermati a tre passi. Il Mercante ha guardato la ciotola del Mendicante. Il Mendicante ha guardato la bilancia del Mercante. Nessuno ha detto niente. Poi il Mercante ha messo una moneta nella ciotola, e il Mendicante l'ha pesata sulla bilancia, con due dita.' Il Viandante ride. 'Pesava il giusto. Si sono separati.'",
+                        "'Sono fratelli, credo. Due metà di un conto. Uno tiene, l'altro dà. Se un giorno qualcuno li facesse sedere allo stesso tavolo, credo che il conto, per la prima volta in mille anni, tornerebbe.'"
+                    ],
+                    "requires": {"bosses_total": 35},
+                    "after": "mercante_occhi"
+                },
+                {
+                    "id": "moneta_re",
+                    "title": "Le monete degli occhi, contate",
+                    "lines": [
+                        "Il Viandante si toglie una delle monete dalle orbite. È la prima volta che lo fa davanti a te. Sotto non c'è niente: un buio pulito, come una stanza vuota.",
+                        "'È d'oro vero. Il Mercante non imbroglia mai sulla merce.' La rigira fra le dita. 'Su questa faccia c'è un re. Galdor, giovane, prima della carestia. Sull'altra faccia c'è il grano delle Valli. È la moneta più vecchia del Sud. Valeva un pane, una volta.'",
+                        "Rimette la moneta al suo posto, con cura. 'Porto negli occhi il prezzo di un pane. Mi sembra giusto, per uno che ha disegnato il guscio per un re che voleva sfamare il suo popolo. Il conto, a modo suo, torna. Sono un cartografo: i conti che tornano mi tengono tranquillo.'"
+                    ],
+                    "requires": {"reached_floor": 22},
+                    "after": "monete"
+                },
+                {
+                    "id": "ultimo_numero",
+                    "title": "L'ultimo numero",
+                    "lines": [
+                        "Il Viandante conta, stasera, ma conta all'indietro. 'Diecimila. Novemilanovecentonovantanove.' Si ferma quando ti siedi. 'Sto provando una cosa. Contare verso lo zero, invece che verso l'infinito.'",
+                        "'Quando conto in avanti, il numero non finisce mai, e io esisto finché conto. Ma ho pensato: e se esistessi anche quando smetto? Se lo zero non fosse il niente, ma il riposo?' Ti guarda con le monete. 'Hai letto della voce dietro la tenda. Voleva lo zero per tutti. Io ho avuto paura dello zero per mille anni.'",
+                        "'Adesso conto verso di lui. Piano. Ci vorrà molto, con questi numeri. Ma voglio arrivarci da solo, quando sarà il momento. Non perché me lo dà qualcuno.' Ricomincia: 'Novemilanovecentonovantotto.' La sua voce è tranquilla."
+                    ],
+                    "requires": {"won": true, "bosses_total": 40},
+                    "after": "calaris_te"
                 }
             ]
         },
@@ -773,6 +1564,158 @@
                         "'Il Labirinto è così. Gli Architetti hanno provato a saldarlo, laggiù nella Forgia. Hanno fatto peggio. Quello che si è rotto non si aggiusta: si porta. Con la crepa.'",
                         "'Ma una corazza con una crepa ben saldata para meglio di una nuova. Perché sai dov'è il punto debole, e ci metti il braccio davanti.'"
                     ]
+                },
+                {
+                    "id": "libro_forge",
+                    "title": "La lista sulla porta",
+                    "lines": [
+                        "'Hai letto il libro delle forge. All'Archivio.' Elara non smette di lavorare, ma il punzone le scivola. 'Allora sai della lista sulla porta della fucina grande. Gli apprendisti chiamati per la riforgiatura.'",
+                        "'Accanto a ogni nome, la data in cui è diventato scoria. Io ci sono andata, a leggerla. Cercavo il nome di Corin.' Mette giù il punzone. 'C'era. Ma la data no. Accanto al suo nome c'è uno spazio vuoto.'",
+                        "'Vuol dire che non è ancora finito. Vuol dire che dentro la scoria c'è ancora un pezzo di lui che non si è fuso.' Riprende il punzone, con le mani che tremano appena. 'È la cosa più crudele che potessi leggere. E la più bella.'"
+                    ],
+                    "requires": {"reached_floor": 21},
+                    "after": "corin"
+                },
+                {
+                    "id": "corin_cicatrice",
+                    "title": "La cicatrice sul mento",
+                    "lines": [
+                        "'Corin ha una cicatrice sul mento. Se l'è fatta a sette anni, cadendo dalla scala della forgia di casa, perché voleva vedere come batteva nostro padre dall'alto.'",
+                        "'Piangeva tanto che nostro padre spense la forgia per consolarlo. A Ignis spegnere la forgia vuol dire un lutto. I vicini vennero a chiedere chi era morto. Mio padre disse: nessuno, mio figlio si è fatto male. I vicini risero, e poi restarono a cena.'",
+                        "'Quando l'ho visto nella Forgia, fra gli Apprendisti di Scoria, l'ho riconosciuto dalla cicatrice. Era l'unica cosa ancora sua, sotto tutto quel ferro.'"
+                    ],
+                    "requires": {"reached_floor": 22},
+                    "after": "incontro"
+                },
+                {
+                    "id": "riparare_te",
+                    "title": "Cosa ripareresti di me",
+                    "lines": [
+                        "Elara ti guarda a lungo, con gli occhi stretti, come guarda un'armatura da sistemare. 'Mi chiedevo cosa ripareresti di te, se potessi.'",
+                        "'Non rispondere subito. Io, per esempio, riparerei la mano sinistra. Non funziona bene da quando il ferro mi è colato addosso. Ma non riparerei il ferro. Il ferro è il momento in cui mi sono chinata a cercare Corin. Lo tengo.'",
+                        "'Ogni cosa rotta ha un pezzo che va tenuto. Il trucco è capire quale.'"
+                    ],
+                    "requires": {"reached_floor": 12},
+                    "choices": [
+                        {
+                            "text": "'Riparerei la memoria.'",
+                            "reply": "Elara annuisce piano. 'Ma tieni il buco. È lì che il Fuoco ti mette le vite degli altri.'",
+                            "flag": "elara_memoria"
+                        },
+                        {
+                            "text": "'Niente. Tengo tutto.'",
+                            "reply": "'Allora sei più forte di me.' Riprende il lavoro. 'O più stupido. Con le armature è lo stesso.'"
+                        }
+                    ]
+                },
+                {
+                    "id": "vesti_brace",
+                    "title": "Le vesti che non smettono di ardere",
+                    "lines": [
+                        "Elara tira fuori un pezzo di stoffa che brilla appena, come una brace. 'Vesti di Brace. Le tessevano a Ignis per gli apprendisti della riforgiatura, perché resistessero al calore delle fucine grandi.'",
+                        "'Le vesti hanno resistito. Gli apprendisti no.' Tocca la stoffa con la punta delle dita, senza scottarsi. 'Questa ha un nome cucito con il filo d'oro, sulla manica. Lo cucivano le madri. Così, dicevano, il calore non si dimentica di chi c'è dentro.'",
+                        "'Sulla manica di questa c'è scritto Lisbet. Non la conoscevo.' La ripiega con cura. 'La tengo io, finché qualcuno non verrà a chiederla.'"
+                    ],
+                    "requires": {"reached_floor": 23}
+                },
+                {
+                    "id": "nostro_padre",
+                    "title": "Nostro padre",
+                    "lines": [
+                        "'Nostro padre era un fabbro di forgia piccola. Non faceva spade: faceva chiodi, cardini, ferri per i cavalli. Diceva che le spade le fa chi ha paura, e i cardini chi ha una casa.'",
+                        "'Quando Corin entrò nella riforgiatura, nostro padre non parlò per un mese. Poi spense la forgia di casa, e la tenne spenta. I vicini vennero, come quella volta. Questa volta lui disse: sì. È morto qualcuno.'",
+                        "'Corin era ancora vivo. Ma nostro padre aveva capito prima di tutti cosa sarebbe successo.' Elara batte un colpo secco sul punzone. 'Io ho riacceso la forgia, il giorno che sono partita. Non so se è ancora accesa.'"
+                    ],
+                    "requires": {"reached_floor": 24},
+                    "after": "ignis"
+                },
+                {
+                    "id": "dopo_corin",
+                    "title": "Se lo trovassi",
+                    "lines": [
+                        "'Se trovassi il modo di tirare fuori Corin dalla scoria, cosa farei?' Elara se lo chiede ad alta voce, come se tu non ci fossi. 'L'ho pensato mille volte.'",
+                        "'Lo porterei qui, al Fuoco. Gli toglierei il ferro di dosso pezzo per pezzo, come si smonta un'armatura vecchia. Ci vorrebbero anni. Lo farei piano. Ogni pezzo che tolgo, gli racconto una cosa di casa.'",
+                        "'Il cardine del portone. Il nome del cavallo del vicino. La cena dopo la caduta dalla scala.' Si interrompe. 'E alla fine, se resta qualcosa, gli chiedo scusa per non essere arrivata prima. Sarebbe la prima cosa che ripariamo insieme.'"
+                    ],
+                    "requires": {"won": true},
+                    "after": "cosa_si_ripara"
+                },
+                {
+                    "id": "diario_corin",
+                    "title": "Il diario di mio fratello",
+                    "lines": [
+                        "Elara ha il diario di Corin in grembo, chiuso. Non lavora, stasera. Le mani, per una volta, sono ferme. 'L'ho letto. Tutto. Tre volte.'",
+                        "'Scrive che mi ha dato della stupida perché volevo trattenerlo. Scrive che avevo ragione.' Elara ride, e la risata le si rompe a metà. 'Ci sono voluti mille anni e un incendio perché mio fratello ammettesse che avevo ragione. Nostro padre sarebbe morto dal ridere.'",
+                        "'E scrive: chiamatemi per nome, mi giro. È l'ultima cosa che sono ancora capace di fare da solo.' Elara apre il diario all'ultima pagina, e passa il dito sulla calligrafia storta. 'Io l'ho chiamato, quella volta. Lui si è girato. E poi mi ha colpita. Ho pensato per anni che si fosse girato per colpirmi.' Chiude il diario. 'Non era così. Si era girato perché era ancora lui. Il colpo era della scoria. Il girarsi era suo.'"
+                    ],
+                    "requires": {"reached_floor": 25},
+                    "after": "libro_forge"
+                },
+                {
+                    "id": "lisbet",
+                    "title": "Lisbet",
+                    "lines": [
+                        "Elara ha tirato fuori le Vesti di Brace con il nome Lisbet sulla manica. 'Nel diario di Corin c'è scritto il suo nome. Lisbet era l'apprendista accanto a lui. La prima a diventare parte del lavoro.'",
+                        "'Disse che stavano facendo una cosa che non si poteva fare. Il Maestro la sentì e batté più forte. Il giorno dopo, Lisbet non tornò dal turno.' Elara ripiega le vesti sulle ginocchia, piano. 'Sua madre le aveva cucito il nome sulla manica con il filo d'oro, perché il calore non si dimenticasse di chi c'era dentro. Non è servito.'",
+                        "'Ma il nome c'è ancora. Il filo d'oro non si è fuso.' Elara si alza e appende le vesti vicino al Fuoco, con cura, come si appende un abito a cui si tiene. 'Le tengo qui. Così qualcuno la vede, ogni sera. È il minimo, per una che ha avuto il coraggio di dire la verità al Maestro.'"
+                    ],
+                    "requires": {"reached_floor": 24},
+                    "after": "vesti_brace"
+                },
+                {
+                    "id": "casa_fuoco",
+                    "title": "La casa con la porta aperta",
+                    "lines": [
+                        "'Sulle montagne di Ignis c'era una casa piccola, con la porta sempre aperta e il focolare sempre acceso. Tutti la conoscevano. Ci si andava a scaldarsi d'inverno, senza bussare.' Elara parla piano, mentre leviga una piastra. 'Da bambina ci andavo con Corin. Non c'era mai nessuno, ma il fuoco era sempre acceso.'",
+                        "'Nostro padre diceva che era la casa di qualcuno che voleva bene a tutti, e che per questo non c'era mai: era sempre in giro a voler bene a qualcuno. Io pensavo che fosse una favola.' Elara si ferma, guarda il Fuoco del Campo. 'Ho letto il libro delle cittadelle. Era la casa dell'Architetto del Fuoco.'",
+                        "'Ci giocavamo davanti. Corin si bruciò un dito, una volta, e il fuoco si abbassò di colpo, come se gli dispiacesse.' Elara guarda le fiamme del Campo, a lungo. 'Questo fuoco fa la stessa cosa. Quando qualcuno si fa male, si abbassa. Me ne sono accorta adesso.'"
+                    ],
+                    "requires": {"won": true},
+                    "after": "dopo_corin"
+                },
+                {
+                    "id": "martello",
+                    "title": "Sentire il martello",
+                    "lines": [
+                        "'Gli alberi di vetro. Li hai visti, nella Forgia.' Elara fa girare il martello fra le dita. 'A Ignis si diceva che un fabbro che taglia un albero di vetro vivo non sente più il proprio martello. È vero. Ne ho conosciuto uno.'",
+                        "'Batteva, batteva, e non sentiva niente. Né il peso, né il rimbalzo, né il suono. Il ferro gli veniva bene lo stesso, ma lui piangeva mentre lavorava, perché era come lavorare con le mani di un altro.' Elara batte un colpo leggero sulla piastra. Il suono è pulito. 'Io lo sento ancora. Ogni colpo. Anche con la mano sinistra mezza fusa.'",
+                        "'È per questo che non smetto. Finché lo sento, sono ancora un'armaiola, e non un pezzo di scoria con un martello in mano.' Ti guarda. 'Tu cosa senti, quando combatti? Il tuo braccio o quello di un altro?'"
+                    ],
+                    "requires": {"reached_floor": 24},
+                    "after": "nostro_padre",
+                    "choices": [
+                        {
+                            "text": "'Il mio. Anche quando la vita è prestata.'",
+                            "reply": "Elara annuisce, seria. 'Allora sei a posto. Una vita prestata si porta bene solo se le mani sono tue.'",
+                            "flag": "elara_mani"
+                        },
+                        {
+                            "text": "'Non lo so più.'",
+                            "reply": "'Allora fermati, una sera, e batti qualcosa piano. Ascolta il suono.' Ti passa il martello. 'Prova.'"
+                        }
+                    ]
+                },
+                {
+                    "id": "corin_pelle",
+                    "title": "Un pezzo di pelle",
+                    "lines": [
+                        "'Mi hanno detto una cosa. Non so chi.' Elara non ti guarda. 'Una lettera, trovata vicino a un falò. Diceva che qualcuno ha chiamato Corin per nome, e gli ha staccato un pezzo di ferro dal braccio. E sotto c'era ancora pelle.'",
+                        "'Ho pensato che fosse uno scherzo crudele. Poi sono andata a vedere. Corin, fra gli Apprendisti, ha un punto sul braccio sinistro dove il ferro non c'è. Piccolo come un'unghia. Pelle. Rosa. Viva.' Elara si stringe le mani. 'Qualcuno lo ha fatto. Qualcuno che non conosco ha fatto per mio fratello la cosa che io sogno da mille anni.'",
+                        "Si gira verso di te, finalmente. 'Non so se eri tu. Le lettere non hanno firma. Ma se eri tu, grazie. E se non eri tu, grazie lo stesso: so che saresti capace di farlo.' Torna alla piastra. 'Un pezzo di pelle. Si comincia da lì.'"
+                    ],
+                    "requires": {"reached_floor": 23, "bosses_total": 10},
+                    "after": "corin_cicatrice"
+                },
+                {
+                    "id": "riparare_corin",
+                    "title": "Cominciare",
+                    "lines": [
+                        "Elara stasera ha preparato degli attrezzi che non le hai mai visto usare: lime sottilissime, pinze piccole, un panno bagnato. 'Ho deciso. Scendo a prendere Corin. Non tutto: un pezzo alla volta.'",
+                        "'Ho fatto i conti. Se ogni discesa riesco a staccargli dal braccio un pezzo di ferro grande come un'unghia, senza fargli male, ci vorranno trecento anni per liberarlo. Ho tempo. Qui sotto il tempo non manca. Manca il coraggio, e quello lo sto trovando.' Ripone gli attrezzi in una borsa di cuoio. 'Ogni pezzo che tolgo, gli racconto una cosa di casa. Il primo sarà il nome del cavallo del vicino. Si chiamava Rapa.'",
+                        "'Se nel frattempo mi chiami ad aggiustare un'armatura, verrò. Il lavoro è il lavoro.' Elara sorride, ed è un sorriso che non le hai mai visto: giovane. 'Ma la sera, adesso, ho un posto dove andare.'"
+                    ],
+                    "requires": {"won": true, "bosses_total": 40},
+                    "after": "casa_fuoco"
                 }
             ]
         },
@@ -859,6 +1802,772 @@
                             "flag": "valerius_promessa"
                         }
                     ]
+                },
+                {
+                    "id": "lezioni",
+                    "title": "Gli appunti",
+                    "lines": [
+                        "Valerius è pallido, cosa rara. 'I miei appunti delle lezioni. Li ho ricopiati a memoria al Campo e li ho lasciati all'Archivio, ma si aprono solo a chi ha sfidato l'Ascensione. Non volevo che li leggesse chiunque.'",
+                        "'C'è una cosa che non ho scritto. Il maestro, alla prima lezione, ci chiese di dire il nostro nome. Io dissi Valerius di Aetheria, con il mio titolo completo. Teodor disse solo Teodor. Il maestro sorrise a lui, non a me.'",
+                        "'Mi ha dato fastidio per anni.' Valerius lucida l'anello con più forza del necessario. 'Adesso capisco. Ai nomi semplici è più facile riposare.'"
+                    ],
+                    "requires": {"won": true, "bosses_total": 40},
+                    "after": "maestro"
+                },
+                {
+                    "id": "teodor",
+                    "title": "Il figlio del mugnaio",
+                    "lines": [
+                        "'Teodor. Il figlio del mugnaio.' Valerius lo dice con un tono che vorrebbe essere sprezzante e non ci riesce. 'Eravamo gli unici due studenti del corso sul Normale. Lui per passione. Io perché era l'unico corso in cui fossi sicuro di essere il primo.'",
+                        "'Non ero il primo. Era lui. Aveva le scarpe rotte e sapeva tutte le risposte. Una volta gli prestai le mie scarpe vecchie. Erano più belle delle nuove di chiunque. Lui non le mise mai. Disse che camminava meglio con le sue.'",
+                        "'Il Fuoco ti presta la sua vita, quando usi il Mago. Lo so. L'ho riconosciuto dal modo in cui tieni la bacchetta.' Pausa. 'Salutamelo, se puoi. Digli che le scarpe erano un regalo, non una carità.'"
+                    ],
+                    "requires": {"reached_floor": 14},
+                    "after": "accademia",
+                    "choices": [
+                        {
+                            "text": "'Glielo dirò.'",
+                            "reply": "Valerius annuisce, e per un momento non ha niente da lucidare. 'Grazie. Non dirgli che te l'ho chiesto io.'",
+                            "flag": "valerius_teodor"
+                        },
+                        {
+                            "text": "'Diglielo tu.'",
+                            "reply": "'Io?' Valerius ride, nervoso. 'Io non parlo con le vite prestate. Mi rispondono.'"
+                        }
+                    ]
+                },
+                {
+                    "id": "etere",
+                    "title": "L'Etere si presta",
+                    "lines": [
+                        "Valerius schiocca le dita, e una scintilla d'Etere gli danza sul palmo. Il Fuoco del Campo si abbassa di un capello. 'Visto? Ogni volta che lancio un incantesimo qui, il Fuoco si abbassa. L'Etere si presta, non si crea.'",
+                        "'Ad Aetheria ci insegnavano che l'Etere viene dalla Prima Luce, quella con cui gli Architetti accesero il mondo. Ne è rimasta poca, in giro. Ogni incantesimo ne prende un poco in prestito da qualcosa di vivo.'",
+                        "'Qui, l'unica cosa abbastanza viva è lui.' Indica il Fuoco con il mento. 'Quindi smetto. Non lancio più incantesimi al Campo. Per educazione.' La scintilla si spegne. 'E per gratitudine, se proprio vuoi saperlo.'"
+                    ],
+                    "requires": {"reached_floor": 9}
+                },
+                {
+                    "id": "pescatori_nuvole",
+                    "title": "I pescatori di nuvole",
+                    "lines": [
+                        "'Sono nato sull'isola più bassa di Aetheria. Quella dei pescatori di nuvole. Ti suona poetico?' Valerius sbuffa. 'Non lo era. Si pescava l'umidità delle nuvole con reti di seta, per bere. L'isola puzzava di bucato bagnato.'",
+                        "'Mio padre era il miglior pescatore dell'isola. Sapeva quale nuvola era dolce e quale salata, solo guardandola. Io volevo andarmene. Volevo l'Accademia, i libri, gli archi. Me ne andai a dodici anni.'",
+                        "'Quando le isole caddero, la nostra fu l'ultima. Era la più bassa: cadde da meno in alto.' Valerius si sistema il colletto. 'Non so se è una consolazione. Ogni tanto, quando piove nel Labirinto, assaggio la pioggia. Per sapere se è dolce.'"
+                    ],
+                    "requires": {"reached_floor": 11},
+                    "after": "aetheria"
+                },
+                {
+                    "id": "badessa",
+                    "title": "Il silenzio è una gabbia",
+                    "lines": [
+                        "'Mi hanno messo nella gabbia di cristallo per una frase sola.' Valerius alza il mento. 'Ho scritto che il silenzio della Badessa è una gabbia. L'ho scritto su un muro dei Chiostri, con la vernice. In rosso.'",
+                        "'Le novizie l'hanno letta, e una di loro si è messa a cantare. Sottovoce, sotto il velo. La Badessa ha capito che era colpa mia. Mi ha messo in una gabbia di silenzio, per dimostrarmi che avevo ragione.'",
+                        "'Lo trovo ancora molto elegante, da parte sua.' Valerius sorride. 'La novizia, però, ha continuato a cantare. L'ho sentita per anni, dalla gabbia. È l'unica cosa che mi ha tenuto sano di mente. Si chiamava Agnese. Non gliel'ho mai detto, che la sentivo.'"
+                    ],
+                    "requires": {"reached_floor": 5},
+                    "after": "gabbia"
+                },
+                {
+                    "id": "nome_detto",
+                    "title": "Il nome detto",
+                    "lines": [
+                        "Valerius non lucida niente, stasera. Ti guarda dritto, e la sua voce è senza vanità. 'Nei miei appunti ho scritto che il nome lo dirò a voce, una volta sola, a chi torna sempre.'",
+                        "'Non è ancora il momento. Il Fuoco non si è alzato di un palmo.' Lancia un'occhiata alle fiamme, quasi offeso. 'Ma voglio che tu sappia che non me lo sono dimenticato. Lo tengo qui, sulla lingua, come una caramella che non si scioglie.'",
+                        "'Ho paura che dirlo mi cancelli. Ho paura che non dirlo cancelli lui. Fra le due paure, scelgo di aspettare.' Ricomincia a lucidare. 'Sono un codardo con stile, amico mio. È l'unico modo che conosco.'"
+                    ],
+                    "requires": {"won": true, "bosses_total": 60},
+                    "after": "lezioni"
+                },
+                {
+                    "id": "ruperto",
+                    "title": "Il sentimentale innocuo",
+                    "lines": [
+                        "'Ruperto.' Valerius pronuncia il nome con una smorfia che non riesce a essere sprezzante. 'Il mio insegnante del primo anno, ad Aetheria. Hai letto il suo grimorio minore, immagino. Incantesimi per asciugare i mantelli. Per raffreddare il tè.'",
+                        "'Nei miei appunti l'ho chiamato un sentimentale innocuo. Era vero. Era anche l'unico insegnante che mi abbia mai detto di ringraziare alla fine di un incantesimo. Io ridevo. Dicevo: ringraziare chi? L'Etere non ha orecchie.' Valerius lucida l'anello. 'Lui rispondeva: non serve a niente. Ma è educato.'",
+                        "'Da quando sono al Campo, ringrazio. Ogni volta. Sottovoce, così nessuno mi sente.' Lancia un'occhiata al Fuoco. 'L'Etere si presta, e chi presta va ringraziato. Ruperto lo sapeva. Io ci ho messo mille anni e una gabbia di cristallo.'"
+                    ],
+                    "requires": {"reached_floor": 10},
+                    "after": "etere"
+                },
+                {
+                    "id": "agnese",
+                    "title": "Agnese",
+                    "lines": [
+                        "'Il breviario della Badessa dice che Agnese aveva la voce più bella dei Chiostri. Non sa stare zitta, c'è scritto.' Valerius sorride, con un'espressione che non gli conosci: tenera. 'Era vero tutte e due le cose.'",
+                        "'Quando ero nella gabbia, la sentivo cantare ogni notte. Sotto il velo, piano. Canzoni delle novizie, quelle che la Badessa aveva proibito. Il canto del Primo Architetto, il filo d'oro e il filo di fumo.' Valerius canticchia due note, poi si ferma, imbarazzato. 'Ho imparato tutte le parole. Non avevo altro da fare, in una gabbia di silenzio, che ascoltare l'unica cosa che il silenzio non riusciva a fermare.'",
+                        "'Non l'ho mai ringraziata. Ho paura che, se vado da lei adesso, non mi riconosca. O peggio, che mi riconosca e smetta di cantare per timidezza.' Pausa. 'Le basta sapere che qualcuno ascoltava. Diglielo tu, se passi dai Chiostri.'"
+                    ],
+                    "requires": {"reached_floor": 3},
+                    "after": "badessa",
+                    "choices": [
+                        {
+                            "text": "'Glielo dirò.'",
+                            "reply": "Valerius si rimette in ordine il colletto, per nascondere che gli tremano le mani. 'Dille anche che l'ultima strofa la stonava. Sempre. Era la mia preferita.'",
+                            "flag": "valerius_agnese"
+                        },
+                        {
+                            "text": "'Diglielo tu. Ti accompagno.'",
+                            "reply": "Valerius impallidisce. Poi, contro ogni previsione, annuisce. 'Un giorno. Non oggi. Ma un giorno sì. Tienimi il posto nella fila.'"
+                        }
+                    ]
+                },
+                {
+                    "id": "arcimago",
+                    "title": "L'Arcimago",
+                    "lines": [
+                        "'L'Arcimago dell'Accademia è sceso fino al piano trenta con il suo scettro. Lo scettro è tornato su da solo. L'anello è rimasto con il suo dito.' Valerius si guarda le mani, piene di anelli. 'Lo conoscevo. Era il mio esaminatore.'",
+                        "'Mi bocciò due volte all'esame di Vento. Diceva che lanciavo gli incantesimi come chi lancia un vaso contro un muro: per far rumore. Aveva ragione. Alla terza volta mi promosse con il voto minimo, e mi disse: diventerai bravo il giorno in cui smetterai di voler essere guardato.' Valerius sbuffa. 'Non è ancora successo.'",
+                        "'Ma c'è una cosa che non ho mai detto a nessuno. Il giorno in cui scese, l'Arcimago passò davanti alla mia stanza e bussò. Mi chiese se volessi accompagnarlo. Dissi di no. Avevo paura.' Valerius smette di lucidare. 'Se avessi detto sì, forse sarei rimasto con lui al trenta. O forse l'avrei riportato su. Non lo saprò mai.'"
+                    ],
+                    "requires": {"reached_floor": 20},
+                    "after": "pescatori_nuvole"
+                },
+                {
+                    "id": "aula",
+                    "title": "L'aula in fondo al terzo piano",
+                    "lines": [
+                        "'Sono tornato nell'aula.' Valerius è serio, e la serietà gli toglie dieci anni. 'Quella del Normale, in fondo al terzo piano dei Chiostri. Dopo mille anni. Non ci ero mai riuscito.'",
+                        "'C'è ancora la lavagna. C'è ancora la frase. Il gesso non si è consumato.' Si ferma. 'E sotto la frase c'è uno spazio vuoto. Liscio. Come se qualcuno avesse cancellato con cura, con il palmo della mano. Il nome non c'è più. L'ha cancellato lui, credo, prima di uscire. O il Labirinto, dopo.'",
+                        "'Io lo ricordo ancora. Ma ho visto lo spazio vuoto e ho avuto la tentazione di scriverlo lì, con il gesso, per rimetterlo al suo posto. Non l'ho fatto. La mia mano tremava troppo.' Valerius ti guarda. 'Non era il momento. Il Fuoco non si è alzato. Ma ci sono andato vicino. Più vicino di quanto mi piaccia ammettere.'"
+                    ],
+                    "requires": {"won": true, "bosses_total": 50},
+                    "after": "nome_detto"
+                },
+                {
+                    "id": "teodor_2",
+                    "title": "Le scarpe di Teodor",
+                    "lines": [
+                        "'Gliel'hai detto?' Valerius non ti guarda. 'A Teodor. Che le scarpe erano un regalo, non una carità.' Aspetta. Poi aggiunge in fretta: 'Non che mi importi. Era solo per la precisione.'",
+                        "'Ho ripensato a quelle scarpe. Non le mise mai, disse che camminava meglio con le sue. Io mi offesi. Adesso credo di capire: non voleva le mie scarpe perché voleva arrivare all'aula del Normale con i suoi piedi, rotti come erano. Era il suo modo di essere lì.' Valerius si guarda le scarpe, eleganti e consumate. 'Io avevo sempre bisogno di arrivare con le scarpe migliori. Lui no. Lui aveva bisogno solo di arrivare.'",
+                        "'Il maestro sorrise a lui, non a me, il primo giorno. Ci ho messo mille anni a capire che non era una preferenza. Era un riconoscimento.' Valerius si alza. 'Vado a fare due passi. Con queste scarpe. Per una volta, non per farmi vedere.'"
+                    ],
+                    "requires": {"flag": "valerius_teodor"},
+                    "after": "teodor"
+                },
+                {
+                    "id": "sigilli",
+                    "title": "Il graffio sulla Pietra",
+                    "lines": [
+                        "'Qualcuno ha inciso un graffio sulla Prima Pietra. Un ottavo segno, accanto al sigillo del Normale.' Valerius ti fissa con un'attenzione che non è vanitosa: è da studioso. 'L'ho visto. Una linea storta, più corta. Un tentativo di copia.'",
+                        "'All'Accademia ci insegnavano che i sigilli non si copiano. Sono firme. Si può imitare una firma, ma la pietra lo sa. Si raffredda, se il segno è falso.' Valerius abbassa la voce. 'Il graffio è tiepido. Come il sigillo accanto. La pietra lo ha accettato.'",
+                        "'Non dico niente, perché non so niente. Dico solo che una firma accettata dalla pietra è una firma vera. E che, se è vera, chi l'ha fatta ha qualcosa in comune con chi ha fatto la prima.' Ti guarda le mani, a lungo. 'Lascia perdere. Sono un mago vanitoso che vede misteri dappertutto. È un difetto professionale.'"
+                    ],
+                    "requires": {"won": true, "bosses_total": 60},
+                    "after": "aula"
+                }
+            ]
+        },
+        "linnea": {
+            "topics": [
+                {
+                    "id": "calore",
+                    "title": "Il calore",
+                    "lines": [
+                        "La goccia nell'ampolla si muove, lentissima, verso il lato del vetro più vicino al fuoco. Quando parla, la voce è così piccola che devi avvicinare l'orecchio.",
+                        "«Così è il caldo. Noi non lo ricordavamo. Nel bosco c'era il sole, d'estate, e lo sentivamo sulle foglie. Ma le foglie siamo diventate pietra, e il sole lo abbiamo dimenticato.»",
+                        "«Grazie di averci portate qui. Il vostro fuoco è strano. Scalda, e intanto si consuma. Anche noi ci consumiamo, a tenere i ricordi degli altri. Siamo parenti, noi e lui.»"
+                    ]
+                },
+                {
+                    "id": "bosco_nome",
+                    "title": "Come si chiamava il bosco",
+                    "after": "calore",
+                    "lines": [
+                        "«Non aveva un nome. I boschi non hanno nomi: li hanno solo le cose che si possono perdere. Gli uomini della costa lo chiamavano il Bosco Vecchio, perché era lì da prima di loro.»",
+                        "«C'erano faggi così grandi che in tre non si riusciva ad abbracciarli. Felci alte come un bambino. Un torrente che d'inverno cantava sotto il ghiaccio. Le volpi ci passavano la notte, e noi le guardavamo dormire.»",
+                        "«Lo ricordi anche tu, adesso. Un poco. Ogni volta che bevi te ne lasciamo un albero.»"
+                    ]
+                },
+                {
+                    "id": "pietra",
+                    "title": "Il pomeriggio della pietra",
+                    "after": "bosco_nome",
+                    "requires": {"reached_floor": 10},
+                    "lines": [
+                        "La goccia si fa scura. «Non fu di notte, per noi. Fu di pomeriggio, alla fine dell'estate. Prima diventarono di pietra le radici, poi i tronchi, poi le foglie, dal basso verso l'alto, come una marea che sale.»",
+                        "«Le volpi scapparono. Gli uccelli no: si fermarono sui rami, e i rami si fermarono con loro. Ci sono ancora, lassù, dentro la pietra, con le ali mezze aperte.»",
+                        "«Noi corremmo alla sorgente. Era l'ultima cosa che scorreva. Ci gettammo dentro, e da allora siamo acqua. Ma l'acqua, qui sotto, diventa memoria. Non scorre più verso il mare. Scorre verso chi beve.»"
+                    ]
+                },
+                {
+                    "id": "tu",
+                    "title": "Cosa sai di me",
+                    "requires": {"reached_floor": 15},
+                    "after": "calore",
+                    "lines": [
+                        "«Più di te.» Lo dice senza cattiveria, come si dice che piove. «Ogni volta che bevi vediamo una tua discesa. Ne abbiamo viste tante. Con facce diverse, con armi diverse. Con la spalla sinistra più bassa, sempre.»",
+                        "«Una volta hai pianto davanti a noi per un'ora, e non sapevi perché. Una volta hai bevuto e ci hai detto grazie, l'unico in mille anni. Una volta hai scritto qualcosa sul muro accanto alla fontana con un sasso appuntito, e poi sei andato a morire.»",
+                        "«Non ti diremo cosa hai scritto. Non è ancora il momento. Ma lo teniamo noi, al sicuro.»"
+                    ]
+                },
+                {
+                    "id": "consumarsi",
+                    "title": "Perché vi consumate",
+                    "after": "pietra",
+                    "requires": {"reached_floor": 18},
+                    "lines": [
+                        "«Ogni ricordo pesa,» dice la goccia. «Il tuo, quello di chi beve, quello del bosco. L'acqua li porta, e a forza di portarli si fa più bassa. Per questo a volte ci trovi quasi asciutte.»",
+                        "«Il vostro fuoco fa lo stesso. Lui porta te. Ogni volta che torni, una brace si spegne. Noi lo vediamo da qui: abbiamo l'occhio dell'acqua, che vede le cose che si consumano.»",
+                        "«Non è triste. È solo il prezzo di tenere qualcosa. Chi non tiene niente non si consuma, ma non è niente.»"
+                    ]
+                },
+                {
+                    "id": "muschio",
+                    "title": "Il muschio",
+                    "requires": {"flag": "linnea_pace"},
+                    "lines": [
+                        "L'ampolla è vuota, ormai. Sul vetro, all'interno, è cresciuto un velo di muschio verde, sottile come un respiro. Non c'è più nessuna voce.",
+                        "Ma se avvicini l'orecchio, ti sembra di sentire, lontanissimo, un torrente che canta sotto il ghiaccio. E quando la sera è fredda, il muschio profuma di pioggia sul terreno, proprio come la stanza dove c'era la fontana.",
+                        "Il Fuoco, accanto all'ampolla, si alza di un dito. Come qualcuno che si fa da parte per fare spazio a un'altra persona sulla panca."
+                    ]
+                },
+                {
+                    "id": "scritta",
+                    "title": "Quello che hai scritto sul muro",
+                    "lines": [
+                        "La luce dell'ampolla si fa più fioca, come quando Linnea pensa. 'Una volta hai scritto qualcosa sul muro accanto alla mia fontana. Con un sasso. Poi sei andato a morire.'",
+                        "'Te l'ho detto, che lo tengo io. Non ti ho detto che lo leggo. Ogni notte. Sono poche parole, e la calligrafia è quella delle lettere che trovi sulle pareti.'",
+                        "'Non te le dico ancora. Non perché non voglia. Perché le hai scritte per un te che deve ancora arrivare. Quando arriva, lo riconoscerò. Bevi con lui, e lui saprà.'"
+                    ],
+                    "requires": {"reached_floor": 20},
+                    "after": "tu"
+                },
+                {
+                    "id": "uccelli",
+                    "title": "Gli uccelli nella pietra",
+                    "lines": [
+                        "'Nel Bosco Vecchio gli uccelli sono rimasti nella pietra con le ali mezze aperte. Stavano partendo, quando il bosco si è fermato.' L'ampolla tremola. 'Li vedo ancora, quando chiudo gli occhi. Anzi, adesso li vedo sempre.'",
+                        "'C'era un pettirosso, sul ramo più basso del faggio vicino alla sorgente. Veniva ogni mattina a bere. L'ultimo pomeriggio non aveva ancora bevuto. È rimasto lì, con il becco aperto verso l'acqua.'",
+                        "'Ho pensato tante volte che, se mai il bosco tornasse, la prima cosa che farei è dargli da bere.' Ride, una risata d'acqua. 'Le fate pensano a cose piccole. È per questo che resistiamo tanto.'"
+                    ],
+                    "requires": {"reached_floor": 12},
+                    "after": "pietra",
+                    "choices": [
+                        {
+                            "text": "'Se il bosco torna, gli porterò io l'acqua.'",
+                            "reply": "L'ampolla si scalda, tutta, come una guancia. 'Allora lo ricorderai anche tu. È così che il bosco resta vivo: qualcuno che si ricorda il pettirosso.'",
+                            "flag": "linnea_pettirosso"
+                        },
+                        {
+                            "text": "'Il bosco non tornerà.'",
+                            "reply": "'Lo so.' La luce non cambia. 'Ma il pettirosso aspetta lo stesso. Lo fanno anche gli uccelli di pietra.'"
+                        }
+                    ]
+                },
+                {
+                    "id": "discese",
+                    "title": "Quello che vedo quando bevi",
+                    "lines": [
+                        "'Quando bevi alla mia fontana, vedo un pezzo delle tue discese dimenticate. Te l'ho detto?' Linnea lo dice con calma, come una cosa ovvia. 'Una volta hai pianto, al piano nove, davanti a un forziere vuoto. Non per l'oro. Non ricordo per cosa. Forse nemmeno tu lo sapevi.'",
+                        "'Un'altra volta hai salvato un ragazzo dei Goblin, uno piccolo, da un altro Goblin. Poi lui ti ha morso la mano. Hai riso tanto.'",
+                        "'Ne ho centinaia. Le tengo per te. Non posso dartele tutte insieme: ti affogherebbero. Te le do a goccia, quando bevi.' L'ampolla si spegne quasi del tutto, poi si riaccende. 'È per questo che mi consumo. Ne vale la pena.'"
+                    ],
+                    "requires": {"bosses_total": 15},
+                    "after": "consumarsi"
+                },
+                {
+                    "id": "costa",
+                    "title": "La costa del Mare Interno",
+                    "lines": [
+                        "'Il mio bosco era sulla costa. Si sentiva il mare, di notte, e i gabbiani di giorno. Gli uomini della costa ci venivano a far legna, ma solo quella caduta. Era una regola che nessuno aveva scritto.'",
+                        "'Una volta un ragazzo tagliò un ramo vivo, per scommessa. Il bosco non disse niente. Ma il giorno dopo il ragazzo si perse, a dieci passi dalla strada, e ci mise tre giorni a uscire. Quando uscì, riportò il ramo.'",
+                        "'Non l'avevo fatto io. Era il bosco.' Linnea ride piano. 'I boschi vecchi hanno un loro modo di insegnare l'educazione. Il Labirinto, invece, non ne ha nessuno. Si perde chiunque, sempre, senza imparare niente.'"
+                    ],
+                    "requires": {"reached_floor": 16}
+                },
+                {
+                    "id": "memoria_acqua",
+                    "title": "L'acqua che è diventata Memoria",
+                    "lines": [
+                        "'Quando mi sono gettata nell'ultima sorgente, l'acqua è diventata Memoria. Non l'ho deciso io. È successo.' Linnea si fa più luminosa, come per farsi vedere meglio. 'Da allora chi beve da me ricorda.'",
+                        "'Ma la Memoria ha un sapore. Sa di quello che ricordi. Per qualcuno è dolce, per qualcuno amara. Silas, una volta, ha bevuto e ha pianto tre ore. Borek ha bevuto e ha riso così forte che lo hanno sentito al piano di sopra.'",
+                        "'Per te sa di fumo.' L'ampolla si avvicina. 'Sempre. Di fumo e di qualcosa di bruciato che non riesco a riconoscere. Come una lettera, forse, finita nel fuoco.'"
+                    ],
+                    "requires": {"reached_floor": 24},
+                    "after": "scritta"
+                },
+                {
+                    "id": "parenti",
+                    "title": "Siamo parenti",
+                    "lines": [
+                        "'Io e il Fuoco siamo parenti. Te l'ho detto.' Linnea ondeggia verso le fiamme, ma non troppo vicino. 'Tutti e due teniamo qualcosa che non è nostro, e ci consumiamo a tenerlo.'",
+                        "'Io tengo i tuoi ricordi. Lui tiene te. Io almeno so il suo nome.' L'ampolla si scalda. 'Ardel. Ce lo siamo detti, una notte, quando dormivi. Il fuoco e l'acqua possono parlarsi, se nessuno li guarda.'",
+                        "'Mi ha chiesto di non dirtelo finché non avessi visto lo specchio. Lo hai visto. Allora te lo dico. E ti dico anche cosa mi ha detto lui di te: che sei la sua cosa più preziosa, e la più stanca.'"
+                    ],
+                    "requires": {"won": true},
+                    "after": "muschio"
+                },
+                {
+                    "id": "favole",
+                    "title": "Le favole della costa",
+                    "lines": [
+                        "'Hai letto le favole del Bosco Vecchio.' L'ampolla di Linnea brilla di una luce rosa, che non le hai mai visto. 'Le raccontava una maestra di Port'Alba. Veniva nel bosco con i bambini, d'estate, e si sedeva vicino alla mia sorgente.'",
+                        "'Io ascoltavo. Le favole parlavano di me, ma lei non lo sapeva: le aveva sentite dalle nonne, che le avevano sentite dalle loro nonne. Era strano sentirmi raccontare così, da fuori. La fata della sorgente, che restituisce un ricordo a chi beve. Io non restituivo niente, allora. Facevo solo acqua buona.'",
+                        "'È dopo, quando sono diventata Memoria, che la favola è diventata vera.' L'ampolla si scalda. 'Forse le favole funzionano così: le racconti abbastanza a lungo, e il mondo, per stanchezza, si convince. Mi piace pensarlo. Mi fa sentire meno sola, a essere una favola.'"
+                    ],
+                    "requires": {"reached_floor": 17},
+                    "after": "costa"
+                },
+                {
+                    "id": "becco",
+                    "title": "Il becco bagnato",
+                    "lines": [
+                        "L'ampolla di Linnea è più fioca del solito, ma la sua luce ha qualcosa di contento. 'Il pettirosso ha il becco bagnato. Nel bosco di pietra, sul ramo più basso. Lo vedo, quando chiudo gli occhi.'",
+                        "'Qualcuno è entrato nei miei ricordi con una borraccia. Mi è costato tanto. Mi sono quasi spenta.' Linnea ride, una risata d'acqua. 'Ma non mi sono mai sentita così viva, da quando sono diventata fontana. Qualcuno è venuto nel mio bosco, quello vero, quello di dentro. Non era mai successo. Nemmeno la maestra delle favole c'era mai arrivata.'",
+                        "'Non ti chiedo se eri tu. Lo so. Le tue discese dimenticate le tengo io, ricordi?' L'ampolla si avvicina, piano, fino a sfiorarti la mano. 'Grazie. Il becco bagnato è la cosa più bella che sia successa nel bosco da mille anni.'"
+                    ],
+                    "requires": {"reached_floor": 18},
+                    "after": "uccelli"
+                },
+                {
+                    "id": "adelina",
+                    "title": "La bibliotecaria",
+                    "lines": [
+                        "'Nel Ventre c'era una donna che salvava i nomi. Adelina.' La luce di Linnea si fa seria. 'Veniva a bere da me, a volte, quando una mia fontana compariva nel Ventre. Beveva per ricordare il suo nome. Funzionava, per un giorno.'",
+                        "'Poi tornava alle membrane e lo perdeva di nuovo, salvando quelli degli altri. Le dissi di smettere. Le dissi che era come me: tenere i ricordi degli altri consuma. Lei mi rispose: tu lo fai per uno. Io lo faccio per tutti. Chi delle due si consuma meglio?' Linnea tace un momento. 'Non le ho saputo rispondere.'",
+                        "'Adesso ha un nome sull'ultima pagina del suo libro. Qualcuno gliel'ha scritto. Ho sentito il Ventre battere, quel giorno, in un modo diverso. Più leggero.' L'ampolla si scalda. 'Siamo in tanti, qui sotto, a tenere cose per gli altri. È bello quando qualcuno, ogni tanto, tiene qualcosa per noi.'"
+                    ],
+                    "requires": {"reached_floor": 21},
+                    "after": "discese"
+                },
+                {
+                    "id": "lettera_bruciata",
+                    "title": "La lettera nel fuoco",
+                    "lines": [
+                        "'Per te la Memoria sa di fumo, e di una lettera bruciata. Te l'ho detto.' Linnea parla piano. 'Ho capito di quale lettera si tratta. L'ho vista, nell'ultima discesa che mi hai lasciato.'",
+                        "'Eri seduto accanto a un fuoco, non questo. Un fuoco più piccolo, su un'isola alta. Scrivevi una lettera, con una calligrafia elegante e stanca. Poi l'hai letta, l'hai piegata, e l'hai buttata nel fuoco. Senza mandarla.' L'ampolla trema. 'Non so a chi fosse. Non so cosa dicesse. So che piangevi, mentre bruciava.'",
+                        "'Non so se è un ricordo tuo o di qualcuno che porti dentro. Le tue discese sono strane: a volte ci sono pezzi che non sono delle tue vite prestate, e non sono nemmeno di quella che conosco.' Linnea si allontana un poco. 'Te lo dico perché me l'hai chiesto, una volta. Di dirti tutto. Anche le cose che non capisco.'"
+                    ],
+                    "requires": {"won": true, "bosses_total": 40},
+                    "after": "memoria_acqua"
+                },
+                {
+                    "id": "bosco_torna",
+                    "title": "Se il bosco tornasse",
+                    "lines": [
+                        "'A volte sogno che il bosco torni.' L'ampolla di Linnea ondeggia, come una foglia sull'acqua. 'Non sogno il bosco di prima, con le radici e le foglie. Sogno un bosco nuovo, che cresce sopra quello di pietra.'",
+                        "'Nel sogno gli alberi di pietra fanno da terra agli alberi nuovi. Il pettirosso di pietra è lì, sul suo ramo, e accanto a lui un pettirosso vero fa il nido. Gli uomini della costa tornano a prendere solo la legna caduta. La maestra delle favole porta i bambini.' Linnea ride piano. 'E io non sono più fontana. Sono di nuovo acqua buona, e basta.'",
+                        "'È un sogno sciocco, credo. Il Labirinto non lascia crescere niente di nuovo.' L'ampolla si posa accanto al Fuoco. 'Ma il Fuoco mi ha detto, una notte, che anche lui fa sogni sciocchi. Che è per questo che resiste. Allora resisto anch'io.'"
+                    ],
+                    "requires": {"flag": "linnea_pettirosso"},
+                    "after": "becco"
+                },
+                {
+                    "id": "ardel_stanco",
+                    "title": "La sua cosa più stanca",
+                    "lines": [
+                        "'Il Fuoco ti ha chiamato la sua cosa più preziosa e la più stanca. Te l'ho detto.' L'ampolla di Linnea brilla vicino alle fiamme, più vicino del solito. 'Stanotte gli ho chiesto perché stanca. Si è abbassato, come quando si vergogna.'",
+                        "'Mi ha detto che chi torna sempre porta il peso di tutte le volte che è tornato. Che ogni ritorno è un ricordo che lui deve tenere al posto tuo, perché tu possa riscendere leggero. E che i ricordi tenuti per un altro pesano il doppio. Lo so bene: è il mio lavoro.' Linnea tace. 'Ardel tiene te. Io tengo le tue discese. Siamo una famiglia strana.'",
+                        "'Mi ha chiesto di dirti una cosa, quando fossi pronto. Che un giorno non dovrai più tornare. Non perché ti lascerà andare: perché avrai finito.' L'ampolla si scalda. 'Non so cosa voglia dire finire. Ma l'ha detto con un calore che non gli avevo mai sentito.'"
+                    ],
+                    "requires": {"won": true, "bosses_total": 40},
+                    "after": "parenti"
+                }
+            ]
+        },
+        "kaelen": {
+            "topics": [
+                {
+                    "id": "segni",
+                    "title": "Parlare a segni",
+                    "lines": [
+                        "Kaelen non parla. Al Campo ha una lastra di ferro e uno scalpello sempre a portata di mano, e quando vuole dirti qualcosa incide. Ogni parola è un colpo secco, preciso. Ci mette un po'. Aspetti.",
+                        "«FUOCO. CALDO. BENE.» Ti mostra la lastra, poi la gira e incide sul retro, più piano: «MANI. NON SENTONO. FUOCO. SI.»",
+                        "Le sue mani di granito non sentono niente da mille anni. Ma il Fuoco del Campo, chissà come, le scalda. Lui le tiene aperte sopra le braci per ore, la sera, come chi si riscalda dopo un lungo inverno."
+                    ]
+                },
+                {
+                    "id": "borek",
+                    "title": "Il ragazzo",
+                    "lines": [
+                        "Kaelen indica Borek con il mento. Borek, dall'altra parte del fuoco, finge di non vedere e martella più forte del necessario.",
+                        "Kaelen incide: «RAGAZZO. BRAVO. TROPPO FORTE. POLSO.» Poi, quando Borek sbaglia un colpo, si alza, gli prende il polso con la mano di pietra e lo gira di un dito. Il colpo dopo è giusto. Borek non dice niente. Si soffia il naso, rumorosamente.",
+                        "Più tardi, quando Borek russa per finta con la schiena alla roccia, Kaelen gli mette sulle spalle una coperta. Poi torna a sedersi, e incide una parola sola, che non ti mostra."
+                    ]
+                },
+                {
+                    "id": "spada",
+                    "title": "La spada che esplose",
+                    "after": "segni",
+                    "requires": {"reached_floor": 10},
+                    "lines": [
+                        "Kaelen incide a lungo, una lastra intera. «SPADA. TAGLIARE. CAOS. STUPIDO.» Poi si ferma, e aggiunge: «NON STUPIDO. GIOVANE.»",
+                        "Ti mostra le mani. Il granito arriva fino ai gomiti, con venature grigie come radici. Nel punto in cui finisce, la pelle è rossa e tirata, come una vecchia bruciatura.",
+                        "«CAOS. NON SI TAGLIA. SI FERMA. UN ATTIMO. BASTA.» Ti guarda per vedere se hai capito. Annuisci. Lui annuisce a sua volta, soddisfatto, e torna a scaldarsi le mani."
+                    ]
+                },
+                {
+                    "id": "sabbia",
+                    "title": "La sabbia",
+                    "after": "segni",
+                    "lines": [
+                        "Ogni volta che Kaelen apre la bocca, ne esce un filo di sabbia grigia. Al Campo ce n'è un piccolo mucchio accanto al suo posto, che lo Speziale spazza via ogni mattina senza dire niente.",
+                        "Kaelen incide: «SABBIA. PAROLE. NON DETTE.» Poi, dopo un po': «MILLE ANNI. TANTE.»",
+                        "Ti viene in mente che quel mucchio di sabbia, ogni sera, è tutto quello che avrebbe voluto dire durante il giorno. Lo Speziale lo spazza via con cura, quasi con rispetto, e lo butta nel Fuoco, che lo accoglie senza sfrigolare."
+                    ]
+                },
+                {
+                    "id": "durn",
+                    "title": "I Monti",
+                    "after": "borek",
+                    "requires": {"reached_floor": 10},
+                    "lines": [
+                        "Kaelen incide un disegno, non una parola: una montagna, tre gallerie, una stella sopra. Poi un segno per ogni cosa. «CASA. FORGIA. RAGAZZO. BIRRA.» Su «birra» ripassa due volte, e Borek, che legge da lontano, ride.",
+                        "Sotto la montagna incide una linea dritta che scende, molto in basso. «HADREK. GIÙ. GIÙ. GIÙ.» E accanto una linea che risale, spezzata: «RAGAZZO. SU.»",
+                        "Batte lo scalpello sulla linea che risale, forte, tre volte. Non serve tradurre. Borek ha smesso di ridere e guarda il fuoco."
+                    ]
+                },
+                {
+                    "id": "riposo",
+                    "title": "Dopo la spada",
+                    "requires": {"any_flags": ["kaelen_spada_finita", "kaelen_riposa"]},
+                    "lines": [
+                        "Kaelen non lavora più. Siede accanto all'incudine di Borek e lo guarda lavorare, le mani di pietra intrecciate in grembo. Qualche volta, quando Borek gli chiede un parere, alza un dito: va bene. Due dita: rifallo.",
+                        "Incide pochissimo, ormai. Una sera ti mostra una lastra con una parola sola, incisa con una cura che non gli hai mai visto: «FINITO.» E sotto, più piccolo: «BELLO.»",
+                        "Il mucchio di sabbia accanto al suo posto, la mattina, è sempre più piccolo. Come se, adesso, avesse sempre meno cose non dette."
+                    ]
+                },
+                {
+                    "id": "mani_fuoco",
+                    "title": "Le mani che sentono il Fuoco",
+                    "lines": [
+                        "Kaelen tende le mani di granito verso il Fuoco, e le tiene lì, ferme, a lungo. Poi le gira, con fatica, e mostra i palmi.",
+                        "Con un dito di pietra traccia un segno nella cenere: un cerchio, e dentro una linea che sale. Poi indica le sue mani, e il cerchio. Lo Speziale, che passa con la pentolina, traduce senza fermarsi: 'Dice che le sue mani non sentono niente. Solo il Fuoco. Il Fuoco lo sentono come se fosse acqua calda.'",
+                        "Kaelen annuisce. Poi indica te, e fa un gesto che sembra una domanda. Lo Speziale sorride. 'Vuole sapere se anche tu lo senti così. Come se fosse l'unica cosa vera.'"
+                    ],
+                    "requires": {"reached_floor": 11},
+                    "choices": [
+                        {
+                            "text": "'Sì. È l'unica cosa che sento davvero.'",
+                            "reply": "Kaelen ti posa una mano di pietra sulla spalla. È pesante, ma calda, del calore del Fuoco. Non toglie la mano per un po'.",
+                            "flag": "kaelen_mano"
+                        },
+                        {
+                            "text": "'No. Io sento anche il resto.'",
+                            "reply": "Kaelen guarda le sue mani, poi le tue. Fa un segno breve. Lo Speziale non traduce. Non serve: è invidia, e anche affetto."
+                        }
+                    ]
+                },
+                {
+                    "id": "lama_sangue",
+                    "title": "La Lama di Sangue",
+                    "lines": [
+                        "Quando gli parli della Lama di Sangue, Kaelen si irrigidisce. Poi tende le mani di pietra, piano, come se la lama fosse lì.",
+                        "Fa il gesto di rigirarla con una delicatezza che le sue mani non dovrebbero avere. Traccia nella cenere un segno: tre linee, una sopra l'altra, e poi una croce. Lo Speziale guarda e capisce. 'Dice che l'ha forgiata mentre le mani gli diventavano pietra. Il ferro era finito. Usò il suo sangue. Ogni colpo un dito.'",
+                        "Kaelen fa il gesto di porgerti una lama, con l'impugnatura verso di te. Poi fa un ultimo segno, che anche tu capisci: un cuore, e una freccia che va via. Era il suo modo di dire addio alle mani."
+                    ],
+                    "requires": {"reached_floor": 13},
+                    "after": "spada"
+                },
+                {
+                    "id": "borek_ragazzo",
+                    "title": "Il ragazzo con il martello",
+                    "lines": [
+                        "Kaelen guarda Borek dall'altra parte del Fuoco. Borek fa finta di non accorgersene, e beve.",
+                        "Kaelen traccia nella cenere una figura piccola, con una barba enorme, che tiene un martello più grande di lei. Poi una figura grande, dietro, con le mani sulle mani della piccola. La guarda a lungo. Poi, con il palmo di pietra, cancella la figura grande e lascia solo la piccola.",
+                        "Lo Speziale, passando, si ferma. Non traduce. Dice soltanto, piano: 'Vuole che il ragazzo vada avanti da solo. Pensa che sia meglio così.' Poi aggiunge, più piano ancora: 'Si sbaglia.'"
+                    ],
+                    "requires": {"flag": "kaelen_borek"},
+                    "after": "borek"
+                },
+                {
+                    "id": "caos",
+                    "title": "Tagliare il Caos",
+                    "lines": [
+                        "Kaelen disegna nella cenere qualcosa che sembra una tempesta, un groviglio di linee. Poi, attraverso il groviglio, una linea dritta. Una lama.",
+                        "Lo Speziale si siede accanto a lui e guarda, a lungo. 'Dice che voleva una spada capace di tagliare il Caos. Non per distruggerlo. Per separarlo, come si separa un nodo. Credeva che il Caos fosse solo elementi annodati male.'",
+                        "Kaelen fa un ultimo segno: la linea dritta che esplode in mille punti. Poi si guarda le mani. Lo Speziale sospira. 'Il Caos non era annodato. Era stanco. E la stanchezza non si taglia.'"
+                    ],
+                    "requires": {"reached_floor": 21},
+                    "after": "durn"
+                },
+                {
+                    "id": "parola",
+                    "title": "Una parola",
+                    "lines": [
+                        "Kaelen apre la bocca, e invece della sabbia, stasera, esce un suono. Rauco, rotto, come una pietra che rotola. Ci prova di nuovo. È una sillaba sola.",
+                        "Lo Speziale smette di rimestare. Borek, dall'altra parte del Fuoco, posa il boccale. Kaelen riprova, e questa volta la parola esce intera: 'Ragazzo.'",
+                        "Borek non si muove. Poi si alza, attraversa il Campo, e si siede accanto a lui, sul ceppo vuoto. Non dicono niente, nessuno dei due. Lo Speziale torna a rimestare, e mette un terzo boccale sul fuoco."
+                    ],
+                    "requires": {"flag": "kaelen_borek", "bosses_total": 30},
+                    "after": "borek_ragazzo"
+                },
+                {
+                    "id": "ultima_spada",
+                    "title": "L'ultima spada",
+                    "lines": [
+                        "Kaelen traccia nella cenere una spada, con cura, linea per linea. Non è la spada del Caos. È piccola, semplice, con un'impugnatura per una mano sola.",
+                        "Lo Speziale guarda e sorride. 'Dice che, se le mani tornassero, forgerebbe questa. Niente di speciale. Una spada per un ragazzo che comincia. Come quella che gli fece il suo maestro.'",
+                        "Kaelen annuisce. Poi, accanto alla spada, disegna due mani, una grande e una piccola, sovrapposte. Questa volta non cancella niente."
+                    ],
+                    "requires": {"any_flags": ["kaelen_spada_finita", "kaelen_riposa"]},
+                    "after": "riposo"
+                },
+                {
+                    "id": "hadrek",
+                    "title": "Il Caposquadra",
+                    "lines": [
+                        "Kaelen traccia nella cenere una figura con un elmo da minatore e un piccone, che scende lungo una linea verticale. Poi un'altra figura, più piccola, che sale. Le guarda a lungo.",
+                        "Lo Speziale si siede accanto a lui, con un sospiro. 'Dice che conosceva Hadrek. Erano giovani insieme, a Durn. Hadrek scavava, lui forgiava i picconi. Dice che Hadrek era il minatore più testardo dei Monti, e che lui era il fabbro più testardo, e che per questo andavano d'accordo: nessuno dei due cedeva mai, e allora litigavano e poi bevevano.'",
+                        "Kaelen aggiunge un segno: un piccone spezzato. Lo Speziale aggrotta la fronte, poi capisce. 'Dice che il piccone di Hadrek l'ha forgiato lui. E che sotto l'impugnatura c'è inciso: risali. Hadrek non l'ha mai letto, perché non girava mai il piccone. Kaelen pensa che sia colpa sua. Avrebbe dovuto scriverlo sulla lama.'"
+                    ],
+                    "requires": {"reached_floor": 10, "bosses_total": 2},
+                    "after": "durn"
+                },
+                {
+                    "id": "sabbia_parole",
+                    "title": "Le parole non dette",
+                    "lines": [
+                        "Stasera dalla bocca di Kaelen esce più sabbia del solito. Si raccoglie in un mucchietto ai suoi piedi, fine e dorata. Lo Speziale non la spazza: la guarda.",
+                        "'Sono parole non dette,' dice lo Speziale. 'Lo sai già. Ma stasera ho provato una cosa. Ne ho presa un pugno e l'ho messa nell'acqua, come si fa con l'estratto di Normale. Quaranta giorni. Poi ho distillato.' Ti mostra una boccetta piccola, con una goccia dentro. 'È venuta fuori una goccia sola. Se la avvicini all'orecchio, senti una voce.'",
+                        "Avvicini la boccetta all'orecchio. È una voce bassa, roca, di nano, che dice una frase sola, ripetuta, come una preghiera: «Era colpa mia, ragazzo. Non tua.» Kaelen ti guarda, e annuisce piano. Poi indica Borek, dall'altra parte del Fuoco. Lo Speziale rimette la boccetta in tasca. 'Gliela darò io, quando sarà il momento.'"
+                    ],
+                    "requires": {"flag": "kaelen_borek", "reached_floor": 15},
+                    "after": "sabbia"
+                },
+                {
+                    "id": "granito",
+                    "title": "Il granito che sale",
+                    "lines": [
+                        "Kaelen ti mostra le braccia. Il granito, che prima arrivava ai gomiti, stasera è un dito più in basso. Lo indica con l'altra mano, piano, come chi mostra una ferita che guarisce.",
+                        "Lo Speziale si china a guardare, incredulo. 'Si sta ritirando. Di pochissimo. Ma si sta ritirando.' Kaelen traccia nella cenere un segno: un martello piccolo, e accanto due mani sovrapposte. Lo Speziale capisce subito. 'Da quando forgia con Borek. Le mani di Borek sotto le sue. Dice che il calore delle mani vive gli scioglie il granito, un poco ogni sera.'",
+                        "Kaelen guarda Borek, che fa finta di non sentire. Poi aggiunge un ultimo segno nella cenere: un numero. Lo Speziale lo legge e ride. 'Dice che, a questo ritmo, tornerà ad avere le mani fra seicento anni. Dice che ha pazienza. È un fabbro.'"
+                    ],
+                    "requires": {"flag": "kaelen_borek", "bosses_total": 20},
+                    "after": "mani_fuoco"
+                },
+                {
+                    "id": "seconda_parola",
+                    "title": "La seconda parola",
+                    "lines": [
+                        "Kaelen apre la bocca. Esce un poco di sabbia, poi un suono. È la seconda volta che lo senti parlare. La voce è roca come una macina.",
+                        "'Grazie.' La parola esce intera, pesante come una pietra posata con cura. È rivolta a te. Kaelen ti guarda, e nei suoi occhi c'è qualcosa che le mani di granito non possono dire: il ragazzo è tornato a sedersi accanto a lui, e lui lo sa di chi è il merito.",
+                        "Lo Speziale smette di rimestare. Borek, dall'altra parte del Fuoco, si gira verso di te, e alza il boccale. Non dice niente. Non serve. Kaelen richiude la bocca, e per un po' non esce più sabbia. Come se, per una sera, non ci fossero più parole non dette."
+                    ],
+                    "requires": {"flag": "kaelen_borek", "bosses_total": 35},
+                    "after": "parola"
+                },
+                {
+                    "id": "spada_caos_2",
+                    "title": "La spada che non taglia",
+                    "lines": [
+                        "Kaelen traccia nella cenere di nuovo la spada del Caos, la lama dritta attraverso il groviglio. Ma stavolta, invece di farla esplodere, la disegna mentre si piega. Si piega intorno al groviglio, come un braccio.",
+                        "Lo Speziale guarda a lungo. 'Dice che ha capito l'errore. Il Caos non si taglia: è stanco, e alla stanchezza non si dà una lama. Si dà un abbraccio.' Lo Speziale si gratta la testa. 'Una spada che abbraccia. Non so se si possa forgiare.'",
+                        "Kaelen indica il Fuoco del Campo. Poi le sue mani. Poi te. Lo Speziale sospira, e traduce piano: 'Dice che il Fuoco fa questo. Non taglia il Labirinto: lo tiene. E che tu sei la sua spada che abbraccia.' Kaelen annuisce, soddisfatto. Poi cancella il disegno con il palmo. Non serve più."
+                    ],
+                    "requires": {"won": true, "bosses_total": 40},
+                    "after": "caos"
+                },
+                {
+                    "id": "ultima_lezione",
+                    "title": "La lezione",
+                    "lines": [
+                        "Borek e Kaelen stanno forgiando insieme, stasera, all'incudine accanto al Fuoco. Le mani di Borek sotto, quelle di Kaelen sopra. Battono piano, a tempo, come una canzone.",
+                        "A un certo punto Kaelen stacca le mani. Borek continua a battere da solo, per un colpo, due, tre. Poi si ferma, e guarda il maestro. Kaelen traccia nella cenere un segno solo: le due mani sovrapposte, e poi la mano grande che si allontana, sorridendo.",
+                        "'Le tue mani sanno,' dice lo Speziale, traducendo, con la voce rotta. Borek abbassa il martello. 'E le tue?' chiede, come mille anni fa. Kaelen alza le mani di pietra, che sono un dito più in basso di prima, e fa un segno che non ha bisogno di traduzione. Le mie stanno imparando di nuovo. Borek ride, e piange, e ricomincia a battere."
+                    ],
+                    "requires": {"any_flags": ["kaelen_spada_finita", "kaelen_riposa"], "bosses_total": 30},
+                    "after": "ultima_spada"
+                }
+            ]
+        },
+        "alaric": {
+            "topics": [
+                {
+                    "id": "calore",
+                    "title": "Il calore",
+                    "lines": [
+                        "La luce di Alaric si posa accanto a te, sul ceppo, come farebbe un uomo stanco. Non parla. Non ha più una voce.",
+                        "Ma quando ti avvicini, il calore cambia. Diventa il calore di una mano sulla spalla, quella di un comandante che ti dice: hai fatto bene. Per un istante ti sembra di sentire l'odore del cuoio di un'armatura, e del ferro pulito con l'olio.",
+                        "Poi la luce torna calma. Resta lì, accanto a te, finché il Fuoco non si abbassa. È il suo modo di fare la guardia: non più a una porta, ma a qualcuno."
+                    ]
+                },
+                {
+                    "id": "aurelia",
+                    "title": "Aurelia",
+                    "lines": [
+                        "Avvicini la mano alla luce e, nel calore, ti arriva un'immagine: una città bianca su una collina, con le torri dei templi che brillano all'alba, e il fumo delle concerie che sale dai quartieri bassi.",
+                        "Vedi le strade come le vedeva lui, da cavallo: il mercato del pesce, la bottega di un fabbro con un ragazzino che soffia nel mantice, la Porta del Sole sul lato orientale, d'oro sotto il sole. Il ragazzino nel mantice ha il suo viso, a dodici anni.",
+                        "L'immagine svanisce. La luce si fa un poco più fioca, come chi ha parlato troppo. Ma è un fioco contento."
+                    ],
+                    "after": "calore"
+                },
+                {
+                    "id": "ilse_bambina",
+                    "title": "Ilse bambina",
+                    "lines": [
+                        "Nel calore della luce, stasera, c'è una bambina. Ha cinque anni, le ginocchia sbucciate, e tiene in mano una piantina di lavanda con le radici ancora sporche di terra.",
+                        "La porta a qualcuno molto alto, che si inginocchia per vederla meglio. Lei gli dice, seria: quando sarò grande pianterò un campo intero, e le file saranno dritte come le tue spade. Lui ride. È una risata che non hai mai sentito, ma che riconosci.",
+                        "La luce trema. Per un momento è calda come un pomeriggio d'estate. Poi torna tiepida, e resta immobile, come chi trattiene il respiro."
+                    ],
+                    "requires": {"reached_floor": 11},
+                    "after": "aurelia"
+                },
+                {
+                    "id": "giuramento",
+                    "title": "Il giuramento",
+                    "lines": [
+                        "Stasera la luce è fredda. Ti avvicini, e nel freddo arriva un ricordo che non è un'immagine, ma una sensazione: una stanza bianca, sette figure alte, e la paura. Non la sua. La loro.",
+                        "Senti la voce di uno degli Architetti, attraverso il ricordo di Alaric: custodisci questa porta. Non chiedere cosa c'è dietro. Senti Alaric che si inginocchia, e il sigillo di Luce che gli brucia sulla schiena, e la sua domanda, mai detta: perché avete paura?",
+                        "La luce si riscalda, lentamente. Ha voluto che tu sapessi. Non perché lo perdonassi: perché lo sapessi."
+                    ],
+                    "requires": {"reached_floor": 16},
+                    "after": "ilse_bambina"
+                },
+                {
+                    "id": "maud",
+                    "title": "Maud",
+                    "lines": [
+                        "Stasera la luce ti riconosce prima che tu ti sieda. Si muove verso di te, veloce come non l'hai mai vista, e si ferma a un palmo dal tuo viso.",
+                        "Nel calore c'è una ragazza in un'armatura troppo grande, il giorno del giuramento. Alaric le mette la spada sulla spalla. Le dice: da oggi sei mia sorella. Lei ci crede fino in fondo, e lui lo vede, e ne è spaventato, perché nessuno aveva mai creduto in lui così.",
+                        "Poi un'altra immagine, più breve: un fazzoletto ripiegato in un guanto, trovato sulla strada, a poche file dalla porta. Arrivo, fratello. Aspettami. La luce si abbassa, quasi fino a spegnersi. Poi resta. Sempre."
+                    ],
+                    "requires": {"reached_floor": 20},
+                    "after": "giuramento"
+                },
+                {
+                    "id": "dieci_passi",
+                    "title": "Dieci passi",
+                    "lines": [
+                        "La luce, stasera, si muove avanti e indietro accanto al Fuoco. Dieci passi, giro, dieci passi. Ti accorgi solo dopo un po' che lo sta facendo.",
+                        "Quando se ne accorge anche lei, si ferma, di colpo, come un uomo sorpreso a fare una cosa di cui si vergogna. Poi torna a posarsi sul ceppo.",
+                        "Nel calore, per un istante, senti una cosa che somiglia a una risata imbarazzata. Mille anni di ronda non si dimenticano in una notte. Ma la luce, adesso, sa di farlo. È già qualcosa."
+                    ],
+                    "requires": {"bosses_total": 10},
+                    "after": "calore",
+                    "choices": [
+                        {
+                            "text": "Ti alzi e fai dieci passi con lei.",
+                            "reply": "La luce esita, poi ti segue. Dieci passi, giro, dieci passi. Alla fine si posa accanto a te, più calda di prima. Ha avuto compagnia, per una ronda.",
+                            "flag": "alaric_ronda"
+                        },
+                        {
+                            "text": "'Puoi smettere, adesso.'",
+                            "reply": "La luce resta immobile a lungo. Poi, piano, si abbassa, come chi annuisce. Non fa più la ronda, quella sera."
+                        }
+                    ]
+                },
+                {
+                    "id": "ordine",
+                    "title": "L'Ordine",
+                    "lines": [
+                        "Nel calore della luce, stasera, ci sono molte armature bianche, in fila, in un cortile di Aurelia. Ragazzi e ragazze che giurano, uno dopo l'altro. Alaric li conosce tutti per nome.",
+                        "Vedi i loro volti come li vedeva lui: Maud, con l'armatura troppo grande. Un ragazzo che balbettava. Una donna di Durn, più vecchia degli altri, che era entrata nell'Ordine per vendicare il marito e ci era rimasta per amore dei compagni.",
+                        "Poi l'immagine cambia: le stesse armature, anni dopo, nelle Guglie, che bruciano chi cerca la verità. La luce si fa fredda e dura. Non li ha persi in battaglia. Li ha persi alla Luce."
+                    ],
+                    "requires": {"reached_floor": 14},
+                    "after": "aurelia"
+                },
+                {
+                    "id": "lettera",
+                    "title": "La lettera non finita",
+                    "lines": [
+                        "Hai letto le Lettere di Ilse all'Archivio, e la luce lo sa. Stasera si avvicina a te come una mano che cerca una tasca.",
+                        "Nel calore c'è una lettera, scritta di notte alla luce di una candela, davanti alla porta. Mia piccola Ilse, non posso tornare. La porta mi tiene qui. Alaric scrive e cancella, scrive e cancella. Non riesce a finire la frase dopo. La consegna a un corriere di Valeriana così, senza la fine.",
+                        "La luce trema. Ti sembra che, per la prima volta in mille anni, stia cercando di finire quella frase. Non ci riesce. Ma ci prova, davanti a te, e questo è nuovo."
+                    ],
+                    "requires": {"bosses_total": 10},
+                    "after": "ilse_bambina"
+                },
+                {
+                    "id": "vuoto",
+                    "title": "Cosa c'era dietro",
+                    "lines": [
+                        "Stasera la luce è inquieta. Si avvicina, si allontana, si avvicina. Alla fine si posa sulla tua mano, e nel calore c'è una stanza vuota, dietro un muro liscio. Le impronte di un solo paio di stivali.",
+                        "Senti cosa ha sentito lui, il giorno in cui ha capito: dietro la porta non c'era niente da custodire. Il Vuoto era già uscito, era già dentro tutto. La porta non chiudeva niente. Da secoli.",
+                        "Eppure era rimasto. Senti anche questo: non per dovere. Per paura di non sapere fare altro. La luce si stringe intorno alla tua mano, piano. Ti sta chiedendo di non giudicarlo. O forse di farlo, ma con gentilezza."
+                    ],
+                    "requires": {"won": true},
+                    "after": "giuramento"
+                },
+                {
+                    "id": "riposo",
+                    "title": "Riposare",
+                    "lines": [
+                        "La luce di Alaric, stasera, è più fioca del solito. Non è malata: è tranquilla, come un uomo che si è tolto finalmente gli stivali.",
+                        "Nel calore c'è un campo di lavanda, file dritte, profumo fino alla strada. Una donna che pianta. Nessuna porta. Nessuna ronda. Alaric non sa se è un ricordo o un sogno. Te lo mostra lo stesso.",
+                        "Poi la luce si posa sul ceppo e resta lì, ferma. Non ti segue quando ti alzi. Per la prima volta, non ha bisogno di fare la guardia a nessuno. Ti accorgi che stai sorridendo."
+                    ],
+                    "requires": {"won": true, "bosses_total": 40},
+                    "after": "vuoto"
+                },
+                {
+                    "id": "hob",
+                    "title": "Il boia",
+                    "lines": [
+                        "Nel calore della luce, stasera, c'è un uomo fuori dalle mura di Aurelia, davanti a una casa sola con un orto curato. Ha le mani grandi e gli occhi rossi, come chi ha pianto di nascosto. È il boia. Hob.",
+                        "Senti cosa provava Alaric quel giorno: un uomo che nessuno toccava, venuto a chiedergli giustizia per i condannati. Alaric lo ascoltò. Poi vietò l'ascia. E quando Hob se ne andò, Alaric gli tese la mano. Senti la sorpresa di Hob, ancora, attraverso la luce, come un sasso caduto in un pozzo. Nessuno gli aveva mai stretto la mano senza pinze.",
+                        "La luce si fa calda, quasi orgogliosa. Poi si abbassa. Ti sembra di capire: è una delle poche cose della sua vita di cui Alaric sia sicuro di aver fatto bene. Te l'ha voluta mostrare per questo. Un uomo che ha custodito una porta per mille anni ha bisogno di ricordare che una volta ha aperto una mano."
+                    ],
+                    "requires": {"bosses_total": 8},
+                    "after": "ordine"
+                },
+                {
+                    "id": "severo",
+                    "title": "Il cavaliere che si è seduto",
+                    "lines": [
+                        "La luce, stasera, è inquieta. Nel calore c'è un'armatura bianca abbandonata su un altare delle Guglie, che brilla appena. Poi un uomo senza armatura che scende, piano, verso la porta.",
+                        "È Severo, uno dei suoi. Uno di quelli che scelsero la Luce. Alaric lo riconosce, attraverso il ricordo: lo aveva addestrato da ragazzo, e il ragazzo non sbagliava mai un colpo. Lo vede fermarsi a poche file dalla porta, accanto all'armatura di Maud, e sedersi.",
+                        "La luce si fa fredda e calda insieme. Senti il dolore di Alaric per il cavaliere che ha sbagliato strada, e il suo sollievo nel vederlo seduto accanto alla sorella che l'aveva giusta. Poi la luce si posa accanto a te, sul ceppo, piano. Ti sembra di capire cosa vorrebbe dire, se avesse ancora una voce: anche chi sbaglia può tornare a sedersi vicino a chi ama."
+                    ],
+                    "requires": {"reached_floor": 20},
+                    "after": "maud"
+                },
+                {
+                    "id": "custodi",
+                    "title": "Bussare",
+                    "lines": [
+                        "Nel calore della luce c'è un registro aperto, quello dei Custodi, e una frase che Alaric non ha mai saputo: il giuramento dei Custodi. Custodirò questa porta finché qualcuno avrà bisogno che resti chiusa, e la aprirò il giorno in cui qualcuno avrà bisogno che si apra.",
+                        "Senti lo stupore di Alaric, attraverso la luce, come se lo stesse leggendo per la prima volta adesso, insieme a te. Lui aveva giurato un'altra cosa. Non chiedere mai cosa si custodisce. Per questo non sapeva quando aprire. Nessuno era mai venuto a bussare.",
+                        "La luce si muove verso di te, e si ferma a un palmo dalla tua mano. Aspetta. Ti accorgi che sta aspettando che tu bussi: sulla sua luce, come su una porta."
+                    ],
+                    "requires": {"reached_floor": 29},
+                    "after": "vuoto",
+                    "choices": [
+                        {
+                            "text": "Bussi piano sulla luce, tre volte.",
+                            "reply": "La luce si apre, letteralmente: per un istante diventa più grande, più calda, e dentro vedi un campo di lavanda. Poi torna com'era. Ma è più leggera. Qualcuno, finalmente, ha bussato.",
+                            "flag": "alaric_bussato"
+                        },
+                        {
+                            "text": "Non bussi.",
+                            "reply": "La luce aspetta ancora un poco, poi si ritira, senza rancore. Ha aspettato mille anni. Può aspettare ancora."
+                        }
+                    ]
+                },
+                {
+                    "id": "ilse_lavanda",
+                    "title": "Le file dritte",
+                    "lines": [
+                        "Nel calore, stasera, c'è un campo di lavanda visto da una strada. Le file sono dritte, tirate con il filo e i picchetti. In fondo, una donna china con una vanga. Non è più una bambina. Ha i capelli grigi.",
+                        "Senti Alaric che la guarda, attraverso il ricordo. Ma non è un ricordo suo: è qualcosa che la luce ha visto passando per le Guglie, nel campo di lavanda sopra le nubi, dove la lavanda cresce ancora. È la vanga di Ilse, piantata nella terra. Qualcuno, dopo la Discordia, ha continuato a curare il campo. Le file sono rimaste dritte.",
+                        "La luce trema, a lungo. Poi si posa sul ceppo, e diventa così tiepida che sembra un pomeriggio d'estate. Non sai se Ilse è sopravvissuta. Nemmeno lui lo sa. Ma qualcuno ha tenuto le file dritte. A volte basta questo, per riposare un poco."
+                    ],
+                    "requires": {"reached_floor": 15},
+                    "after": "lettera"
+                },
+                {
+                    "id": "porta_aperta",
+                    "title": "La porta aperta",
+                    "lines": [
+                        "Stasera la luce di Alaric non è accanto al Fuoco. È più in là, sul bordo del Campo, dove comincia il buio. Ti avvicini, e vedi che è ferma davanti a un arco di pietra che non c'era. Un arco che non porta da nessuna parte.",
+                        "Nel calore della luce senti una cosa sola, chiara come una frase: è la sua porta. O un ricordo di lei. Alaric la guarda, come l'ha guardata per mille anni. Ma questa volta non fa la ronda. Non si mette davanti. Si mette di lato.",
+                        "La luce si sposta, piano, e lascia libero il passaggio. Non c'è niente dietro l'arco: solo il buio del Labirinto, e lontano, piccolo, il bagliore del Fuoco riflesso sulle pietre. Ma la porta è aperta. Alaric l'ha aperta da solo, per la prima volta, senza che nessuno glielo ordinasse."
+                    ],
+                    "requires": {"won": true, "bosses_total": 50},
+                    "after": "riposo"
+                },
+                {
+                    "id": "tu",
+                    "title": "Chi sei per lui",
+                    "lines": [
+                        "La luce ti guarda, stasera. Lo senti, anche se non ha occhi: ti guarda come si guarda qualcuno di cui si vuole ricordare il viso.",
+                        "Nel calore arriva un'immagine di te, vista da lui. Sei alla porta, la prima volta, quando non lo conoscevi. Hai la spalla sinistra un po' più bassa. Lui ti dice: nessuno passa. Tu non te ne vai. Torni, e torni, e torni. Ogni volta gli parli. Ogni volta gli lasci qualcosa: una storia, un fiore di lavanda, un silenzio.",
+                        "La luce si posa sulla tua spalla sinistra, quella più bassa, e la scalda. Ti sembra che, per un momento, pesi meno. Poi torna sul ceppo. Ti accorgi che, per Alaric, tu sei la cosa che ha bussato. L'unica, in mille anni."
+                    ],
+                    "requires": {"flag": "alaric_bussato"},
+                    "after": "custodi"
                 }
             ]
         }

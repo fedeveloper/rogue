@@ -1,0 +1,445 @@
+{
+    "rules": {"habits": 5, "story": 15, "boss_habits": 2, "boss_story": 4},
+    "creatures": {
+        "Eco del Rimpianto": {
+            "vista": "Una figura di luce sottile, quasi trasparente, che ha sempre la forma di qualcuno che conosci. Non cammina: scivola, e quando parla la sua bocca non si muove.",
+            "abitudini": "Non attacca subito. Ti chiama, prima, con la voce giusta, e aspetta che tu ti volti. Chi resiste alla voce la vede sbiadire; chi risponde la sente farsi più vicina, più calda, e poi colpire.",
+            "storia": "È fatta di tutte le volte in cui qualcuno, nell'Accademia, ha pensato a una persona lontana. Il Labirinto ha raccolto quei pensieri e ne ha fatto creature. Non odiano nessuno. Vogliono solo che tu resti ad ascoltare, come hanno fatto loro."
+        },
+        "Statua di Sale": {
+            "vista": "Una figura di sale grigio, con la testa piegata come per sentire meglio. Si muove, ma così piano che te ne accorgi solo quando è già più vicina di prima.",
+            "abitudini": "Combatte come cammina: lentamente, senza fermarsi. Ogni colpo che ricevi da lei ti lascia sulla pelle un velo di sale. Se ti fermi troppo, il velo si indurisce.",
+            "storia": "Ogni statua era qualcuno che si è fermato nei Chiostri ad ascoltare la voce di una persona cara: un fratello, una madre, un amore. Si è fermato una frase di troppo. Le statue non soffrono. Ascoltano ancora, e si muovono verso la voce."
+        },
+        "Novizia del Silenzio": {
+            "vista": "Una ragazza in veste bianca, con la bocca cucita da un filo d'argento. Tiene le mani giunte, e dalle mani esce un silenzio che si sente come un freddo.",
+            "abitudini": "Prova a sigillarti: un gesto, e per un turno non riesci a difenderti. Poi ti guarda, aspettando che anche tu prenda il Voto. Ha paura degli scudi, e se ne tiene lontana.",
+            "storia": "Erano le novizie più giovani della Badessa, quelle che hanno preso il Voto del Silenzio a dodici anni senza capire cosa promettevano. Nessuno le ha mai sciolte dal giuramento. Il filo d'argento lo cuciva la Badessa in persona, la sera, con molta dolcezza."
+        },
+        "Corista Spento": {
+            "vista": "Un cantore del coro dell'Accademia, con la veste bruciacchiata. Apre la bocca per cantare e ne esce solo cenere, che si deposita sulle tue spalle come neve grigia.",
+            "abitudini": "Le sue ferite si richiudono mentre combatte, come se il canto che non riesce più a fare gli ricucisse la pelle. Va colpito forte e in fretta, prima che finisca la strofa.",
+            "storia": "Il coro dell'Accademia cantava ai vespri, ogni sera, da trecento anni. La sera della Discordia stava cantando quando il Labirinto si aprì, e il canto non si è mai interrotto: si è solo spento. I coristi cercano ancora la nota giusta. Sono convinti che, trovandola, tutto tornerebbe come prima."
+        },
+        "Bibliotecario di Cenere": {
+            "vista": "Un vecchio fatto di cenere compatta, con gli occhiali sulla punta del naso. Tiene in mano un libro che si sfoglia da solo, e ogni pagina che si gira si stacca e brucia.",
+            "abitudini": "Carica i suoi incantesimi recitando a memoria le pagine dei libri bruciati, e ti risucchia l'Etere per avere più fiato. Se lo interrompi a metà di una frase, ricomincia da capo, furioso.",
+            "storia": "Custodiva la biblioteca dell'Accademia, quella con i libri sugli elementi. Quando il fuoco della Discordia arrivò fra gli scaffali, cercò di salvare i libri imparandoli a memoria. Ne imparò moltissimi. Il fuoco lo raggiunse lo stesso, ma i libri, dentro di lui, ci sono ancora."
+        },
+        "Ombra del Novizio": {
+            "vista": "Una macchia scura a forma di ragazzo, staccata da qualcuno che non c'è più. Si muove rasente ai muri, e dove passa il marmo diventa più freddo.",
+            "abitudini": "Ti prosciuga: a ogni colpo che ti dà si fa un po' più solida, un po' più calda. È veloce e paurosa. Se la colpisci forte scappa, e torna quando non te l'aspetti.",
+            "storia": "Molti novizi lasciarono l'Accademia nel Crepuscolo Lungo, senza voltarsi, per tornare a casa prima della fine. Le loro ombre restarono indietro, perché nessuno le aveva salutate. Hanno fame di quello che i novizi portarono con sé: una casa, una famiglia, una vita fuori."
+        },
+        "Minatore Svuotato": {
+            "vista": "Un minatore con l'elmetto ancora in testa e il piccone in mano, la pelle grigia di polvere. Non ha occhi: solo due fessure da cui esce un po' di luce di lampada.",
+            "abitudini": "Colpisce come scava: forte, regolare, sempre nello stesso punto. Non si difende. Se lo lasci stare, torna a scavare la roccia accanto a te e si dimentica di averti visto.",
+            "storia": "Erano le squadre dei Monti di Durn al lavoro il giorno in cui il Labirinto entrò nelle gallerie. Molte seguivano Hadrek, il Caposquadra, che aveva detto che l'uscita era sotto. Scavano ancora verso il basso. Non ricordano cosa cercavano, solo che era sotto la prossima roccia."
+        },
+        "Ingranaggio Senziente": {
+            "vista": "Un dente d'acciaio grande come un uomo, staccato da una delle macchine giganti, che rotola su sé stesso nella galleria. Cigola come qualcuno che si lamenta.",
+            "abitudini": "Gira, gira, e quando ti raggiunge ti colpisce con il suo stesso peso. Non sa fare altro. Se gli metti qualcosa fra i denti si inceppa e diventa furioso, poi si ferma.",
+            "storia": "Gli ingranaggi dei Monti furono costruiti nell'Era dell'Ambizioso Raggiungimento per muovere le pareti delle gallerie. Dopo la Discordia nessuno li fermò, e girarono così a lungo da imparare a girare da soli. Questo è uno di quelli che si è staccato, e da allora cerca la sua macchina."
+        },
+        "Talpa Esplosiva": {
+            "vista": "Un animale grosso come un cane, con il muso ricoperto di polvere nera e la pancia gonfia. Annusa l'aria, poi starnutisce, e lo starnuto fa scintille.",
+            "abitudini": "Scava sotto di te e riemerge alle tue spalle. Prima di esplodere si ferma sempre a respirare, due volte, rumorosamente: è il momento di allontanarsi, o di colpirla per primo.",
+            "storia": "Le talpe delle Miniere mangiavano la polvere da mina che i minatori lasciavano in giro, e ne presero il gusto. Dopo la Discordia la mangiarono tutta. Adesso ce l'hanno dentro, e scavano gallerie esplodendo un po' alla volta. I vecchi minatori le trovavano quasi simpatiche."
+        },
+        "Carrello Posseduto": {
+            "vista": "Un carrello da miniera arrugginito che corre sui binari anche dove i binari non ci sono più. Dentro non c'è carbone. C'è una forma scura, rannicchiata, che guida.",
+            "abitudini": "Lo senti arrivare dal fondo della galleria, molto prima di vederlo. Carica in linea retta e colpisce forte, ma non sa curvare: chi si sposta all'ultimo momento lo vede passare oltre.",
+            "storia": "Il carrello portava il pane alle squadre del livello più basso. Il ragazzo che lo spingeva non arrivò mai a destinazione: il Labirinto si aprì sotto i binari. Il carrello continua a correre per consegnare il pane, e il ragazzo è ancora dentro, a spingere da dentro."
+        },
+        "Lucciola del Grisù": {
+            "vista": "Una scintilla grande come una nocciola che danza nell'aria dolce delle gallerie basse. Lascia dietro di sé una scia di luce arancione, e l'odore del gas.",
+            "abitudini": "Ti gira intorno sempre più in fretta, e ogni giro accende un po' di più l'aria. Va colpita prima che il gas intorno a lei diventi abbastanza denso da esplodere.",
+            "storia": "Ogni minatore dei Monti di Durn aveva imparato a temere le lucciole più del buio: dove ne vedevi una, c'era gas, e dove c'era gas si moriva in un istante. Le lucciole non hanno cattive intenzioni. Danzano. È solo che la loro danza, nelle Miniere, accende tutto."
+        },
+        "Guardiano di Basalto": {
+            "vista": "Una figura massiccia di pietra nera, con le braccia larghe come travi. Sta piantata in mezzo alla galleria e non si sposta, nemmeno quando lo colpisci.",
+            "abitudini": "Si difende meglio di quanto attacchi: incassa, aspetta, e quando sei stanco ti colpisce con un pugno solo, lentissimo. Non lascia passare nessuno, nemmeno quelli che non vogliono combattere.",
+            "storia": "Era un puntello: una delle colonne di pietra che i minatori di Durn costruivano per reggere le volte delle gallerie. Ne reggeva una per secoli, finché la volta non crollò lo stesso. Da allora puntella sé stesso. Non sa più cosa dovrebbe sostenere, e allora sostiene il suo posto."
+        },
+        "Sentinella di Nube": {
+            "vista": "Una figura alta fatta di vapore grigio, con un elmo di nebbia e una lancia di vento. Sta sui ponti, ferma, e quando ti avvicini si condensa.",
+            "abitudini": "Si difende con la nebbia: i colpi la attraversano senza toccarla, finché non si condensa per colpire. Quello è il momento. Non insegue: torna sempre al suo ponte.",
+            "storia": "Le sentinelle di Valeriana sorvegliavano i ponti fra le torri dei tessitori, per evitare che i bambini ci giocassero quando c'era vento. Dopo la Discordia i ponti non portano più da nessuna parte, ma nessuno ha dato alle sentinelle l'ordine di smontare. Sono fatte di vapore e di ordini dimenticati."
+        },
+        "Falco Astrale": {
+            "vista": "Un rapace dalle piume blu scuro con una stella bianca sul petto. Vola nelle nubi elettriche, e il suo grido somiglia al rumore di qualcosa che cade.",
+            "abitudini": "Caccia in picchiata: scompare nelle nubi, ritorna dall'alto, colpisce e risale. Va colpito quando scende, non quando gira. I falchi astrali odiano le corde e chi le porta.",
+            "storia": "Prima della Discordia, i falchi astrali vivevano sulle torri più alte di Valeriana, e i tessitori li allevavano per portare messaggi da una valle all'altra. Le stelle sul loro petto erano il marchio della valle di appartenenza. Adesso non c'è più nessuna valle da raggiungere, e cacciano chi cammina sui loro ponti."
+        },
+        "Corvo del Tuono": {
+            "vista": "Un corvo grande come un'aquila, con le piume che crepitano di elettricità. Si posa sui parapetti e ti fissa con un occhio solo, piegando la testa.",
+            "abitudini": "Raccoglie il fulmine fra le piume, piano, e lo lascia cadere su chi guarda in alto. Se lo guardi negli occhi esita, come se ti riconoscesse, e quell'esitazione è il tuo vantaggio.",
+            "storia": "I corvi delle Guglie erano gli animali dei bambini di Valeriana: si addomesticavano facilmente, imparavano qualche parola, rubavano i bottoni dai vestiti dei tessitori. Dopo la Discordia hanno imparato a rubare il fulmine. Qualcuno, a volte, dice ancora una parola, con la voce di un bambino."
+        },
+        "Spirito del Ponte": {
+            "vista": "Una figura trasparente seduta a metà di un ponte sospeso, con le gambe penzoloni sul vuoto. Ti sorride e batte la mano sulle assi accanto a sé.",
+            "abitudini": "Non vuole davvero combattere: vuole che tu resti con lui, sospeso. Ti trattiene, ti rallenta, ti fa dimenticare dove stavi andando. Combattilo camminando, e non sederti mai.",
+            "storia": "Era un viandante di Valeriana che attraversava un ponte la notte della Discordia. Il ponte si allungò sotto di lui, sempre di più, e lui continuò a camminare. Non è mai arrivato dall'altra parte. Adesso si è seduto, stanco, e chiede a chi passa di fargli compagnia."
+        },
+        "Aquila di Tempesta": {
+            "vista": "Un'aquila con le ali larghe come una vela, che nidifica sui fulmini. Quando scende in picchiata, l'aria intorno si spacca come vetro.",
+            "abitudini": "Colpisce poche volte, fortissimo. Fra un attacco e l'altro risale in alto e aspetta, e in quell'attesa puoi riprendere fiato. Chi la colpisce mentre risale la fa arrabbiare moltissimo.",
+            "storia": "Le aquile di Valeriana proteggevano le valli dai lupi della montagna. Erano rispettate come guardiani, e i tessitori ne ricamavano l'immagine sugli stendardi. Quando le valli sprofondarono, le aquile continuarono a proteggere ciò che restava: le guglie, i ponti, i nidi. Non distinguono più chi è un pericolo e chi no."
+        },
+        "Astronomo Caduto": {
+            "vista": "Un uomo con una veste blu stellata strappata, gli occhiali rotti, un compasso in mano. Mormora numeri mentre combatte, e ogni numero è una stella.",
+            "abitudini": "Attacca con furia, ma senza ordine: conta, sbaglia, ricomincia, e intanto colpisce. Se sbagli un colpo, lo conta anche lui, e ride. Se lo colpisci, perde il conto e si infuria.",
+            "storia": "Era uno degli allievi dell'Astronoma, all'Osservatorio, uno dei compagni di corso di Silas. La notte della Discordia si buttò dalla guglia per contare da vicino le stelle che cadevano. Le contò tutte, mentre cadeva. Non ha mai smesso di contare, nemmeno quando è arrivato in fondo."
+        },
+        "Ricordo Annegato": {
+            "vista": "Una figura d'acqua azzurra, con dentro i lineamenti di qualcuno che ripete sempre lo stesso gesto: alzare una tazza, chiudere una porta, voltarsi.",
+            "abitudini": "Si ricompone ogni volta che lo ferisci, perché è fatto di un ricordo e i ricordi tornano. Va colpito finché il gesto che ripete non si spezza a metà.",
+            "storia": "Il Ventre digerisce ricordi, e non sempre li finisce. Questi sono quelli digeriti a metà: persone che sono restate troppo nel Ventre e sono diventate l'ultima cosa che pensavano prima di dimenticarsi. Ripetono il loro ultimo gesto per sempre, come un disco graffiato."
+        },
+        "Volto nella Membrana": {
+            "vista": "Un volto che preme contro la parete traslucida dall'interno, come qualcuno contro un vetro. Ha la tua stessa espressione, e la cambia quando la cambi tu.",
+            "abitudini": "Ti infetta con le sue ferite: chi lo colpisce porta via un poco di lui, e se lo porta dentro per un po'. Per vincerlo bisogna smettere di guardarlo in faccia.",
+            "storia": "Sono le persone che il Mare Interno inghiottì la notte della Discordia, rimaste incastrate nelle membrane del Ventre. Non sono morte del tutto: guardano fuori, verso chi passa, e imitano le facce di chi vedono, perché hanno dimenticato le loro. La tua faccia, per loro, è una faccia come un'altra."
+        },
+        "Sanguisuga Madre": {
+            "vista": "Una sanguisuga grande come un bambino, nera e lucida, con una bocca rotonda piena di piccoli denti. Si muove ondeggiando, e dove passa lascia una scia che sa di ferro.",
+            "abitudini": "Si nutre di ricordi passando dal sangue: ogni morso ti toglie un po' di vita e un po' di memoria. Più ne beve, più ti somiglia: alla fine dello scontro ha i tuoi occhi.",
+            "storia": "Nel Ventre le sanguisughe si nutrivano di sangue, come ovunque. Ma il sangue, laggiù, è pieno di ricordi, e loro hanno imparato a preferire quelli. Le madri allevano le piccole con i ricordi che rubano. Non sono crudeli: sono madri. Hanno fame per qualcun altro."
+        },
+        "Lacrima Vivente": {
+            "vista": "Una goccia d'acqua grande come un pugno che rotola sul pavimento. Dentro c'è un piccolo volto che piange. Quando ti vede, rotola più in fretta verso di te.",
+            "abitudini": "Si attacca, beve, e cresce. Non fa molto male, ma non si stacca finché non è piena. Chi la scuote la fa piangere più forte, e il pianto stordisce.",
+            "storia": "Ogni lacrima vivente è una lacrima vera, pianta da qualcuno nel Ventre. Il Labirinto le ha raccolte, perché erano piene di ricordo, e le ha fatte camminare. Hanno dimenticato per chi piangevano. Cercano un volto in cui tornare, e il tuo è il primo che trovano."
+        },
+        "Bambola di Ricordi": {
+            "vista": "Una bambola di stoffa grande come un bambino, cucita con pezzi di vestiti diversi. Ha due bottoni al posto degli occhi, e ti chiama con un nome che non è il tuo.",
+            "abitudini": "Combatte con incantesimi da bambini: filastrocche, conte, giochi di mani che però fanno male davvero. Se rispondi al nome che ti dà, esita, e lascia cadere le braccia.",
+            "storia": "Il Labirinto ha cucito queste bambole con i frammenti dell'infanzia di cento persone diverse: un pezzo di grembiule, un nastro, una tasca. Ognuna chiama il nome di uno dei bambini di cui è fatta. Non sanno quale di quei bambini sono. Lo chiedono a chi passa."
+        },
+        "Medusa della Memoria": {
+            "vista": "Una medusa trasparente che galleggia nei fluidi del Ventre, con lunghi filamenti che brillano. Dentro la campana c'è una scena, come in una lanterna: una festa, una stanza.",
+            "abitudini": "Chi ne tocca i filamenti ricorda per un attimo la vita di un altro, e poi sta male. Si muove a banchi, lenti, e diventa pericolosa solo quando la circondi.",
+            "storia": "Le meduse del Mare Interno erano piccole e innocue. Nel Ventre si sono riempite di ricordi, come lanterne si riempiono di luce, e sono cresciute. Ogni medusa porta una scena della vita di qualcuno, e la porta verso il Cuore del Ventre, dove i ricordi vengono pompati in tutto il Labirinto."
+        },
+        "Golem di Scorie": {
+            "vista": "Un ammasso di scoria ancora calda, vagamente umano, con pezzi di attrezzi conficcati nel corpo. Cammina male, come qualcosa che non è stato finito.",
+            "abitudini": "Colpisce forte ma sbaglia spesso, perché è fatto male. Quando si incrina, dalla crepa esce un calore che brucia chi è troppo vicino.",
+            "storia": "È ciò che resta quando la Forgia sbaglia una creazione, ed è sbagliata quasi sempre. Gli Architetti volevano riforgiare gli elementi in un pezzo solo, e ogni tentativo fallito diventava scoria viva. I golem di scorie sono migliaia. Ognuno è un errore che non è stato buttato via."
+        },
+        "Martello Errante": {
+            "vista": "Un martello da fabbro alto come un uomo che avanza da solo a colpi regolari, tum, tum, cercando qualcosa da battere.",
+            "abitudini": "Non attacca per odio: batte su ciò che trova, e tu sei la cosa più vicina. I suoi colpi sono lenti e terribili. Chi gli offre qualcos'altro da battere lo vede andare via, soddisfatto.",
+            "storia": "Era il martello di un fabbro di Ignis chiamato per la riforgiatura. Il fabbro si fuse con il suo lavoro, come tutti gli apprendisti, e il martello restò senza mano. Ha continuato a battere da solo, per abitudine. Cerca il suo fabbro su ogni cosa che colpisce."
+        },
+        "Scudiero di Scoria": {
+            "vista": "Una figura di scoria con uno scudo enorme e una spada a metà, mai finita. Si mette sempre davanti a qualcosa, anche quando dietro non c'è niente.",
+            "abitudini": "Protegge, prima di attaccare: si piazza fra te e il suo nemico, para, aspetta. Combatte meglio quando ha qualcuno da difendere, e quando è solo sembra smarrito.",
+            "storia": "La Forgia lo ha creato per proteggere un cavaliere che non ha mai finito di forgiare. Lo scudiero è venuto bene, il cavaliere no: è rimasto un mucchio di piastre su un'incudine. Lo scudiero lo protegge ancora, da mille anni, girando intorno all'incudine vuota."
+        },
+        "Scintilla Ribelle": {
+            "vista": "Una scintilla viva che rimbalza da una parete all'altra, impazzita. Lascia dietro di sé una scia rovente e un odore di ferro bruciato.",
+            "abitudini": "È furiosa e velocissima. Odia ogni martello e chiunque ne porti uno: chi impugna un'arma da fabbro la vede attaccare con il doppio della rabbia.",
+            "storia": "Schizzò via da un'incudine millenni fa, il primo giorno della riforgiatura, e non si è mai spenta. È l'unica scintilla della Forgia che ha rifiutato di diventare parte di qualcosa. Per questo odia i martelli: sono loro che fondono le scintille nelle cose."
+        },
+        "Crogiolo Ambulante": {
+            "vista": "Un crogiolo di pietra pieno di lava che cammina su quattro zampe tozze. Quando si muove, la lava trabocca dal bordo e sfrigola sul pavimento.",
+            "abitudini": "Rovescia lava su chi gli sta davanti. Quando si incrina si rifonde da solo, con un suono di pietra che si richiude. Va colpito sotto, dove la pietra è più sottile.",
+            "storia": "Un crogiolo che ha bevuto troppa lava e ha cominciato a camminare. Nella Forgia gli strumenti che lavorano abbastanza a lungo imparano a muoversi da soli, come gli ingranaggi delle Miniere. Questo cerca il suo stampo: un posto dove versare finalmente ciò che porta."
+        },
+        "Apprendista di Scoria": {
+            "vista": "Un ragazzo coperto di una crosta di metallo, con gli attrezzi da fabbro in mano. Batte su una lama storta sempre nello stesso punto, e si volta solo quando lo chiami.",
+            "abitudini": "Batte forte, come gli hanno insegnato. Non ha tecnica: ha solo forza e testardaggine. Se lo chiami per nome esita, e chi lo conosce sa che quell'esitazione è tutto ciò che resta di lui.",
+            "storia": "Gli Architetti chiamarono apprendisti da tutto il continente per la riforgiatura, e gli apprendisti si fusero con il loro lavoro uno dopo l'altro. Ognuno di loro aveva un nome, una famiglia, una forgia di casa a Ignis. Uno si chiamava Corin, e aveva una cicatrice sul mento."
+        },
+        "Frammento di Galassia": {
+            "vista": "Una scheggia di cielo notturno grande come uno scudo, che ruota lentamente su sé stessa. Dentro brillano stelle minuscole che non esistono più.",
+            "abitudini": "Lancia luce come lame: ogni stella che si stacca da lui ti colpisce. Più lo danneggi, più si spegne, e più si spegne più è pericoloso, perché ha meno da perdere.",
+            "storia": "È una scheggia dell'occhio chiuso al centro del vuoto, la struttura di galassie e polvere d'ossa che dorme al piano trenta. Quando il Dio si agita nel sonno, dall'occhio si staccano frammenti, e i frammenti vagano per la Soglia, cercando di tornare."
+        },
+        "Eco del Dio Antico": {
+            "vista": "Una figura scura, alta, con un occhio chiuso al posto della faccia. Galleggia senza toccare le piattaforme, e intorno a lei il tempo rallenta.",
+            "abitudini": "Sa già cosa farai, perché lo hai già fatto: anticipa i tuoi colpi e ti colpisce prima che tu decida. Per batterla bisogna fare qualcosa che non avresti mai fatto.",
+            "storia": "È un pensiero sfuggito al sonno del Dio Antico, un frammento di sogno che ha preso forma. Ricorda tutte le volte che sei passato di qui, perché il Dio le ricorda. Non è malvagia. È un pensiero che vorrebbe tornare a dormire, e tu lo stai tenendo sveglio."
+        },
+        "Frammento del Prima": {
+            "vista": "Una scheggia luminosa di un colore che non riesci a nominare. Guardarla fa male agli occhi e bene al cuore, contemporaneamente.",
+            "abitudini": "Si difende con una luce che non acceca ma confonde: per un momento vedi il mondo com'era, e ti dimentichi di combattere. Non vuole tornare indietro, e combatte per restare lì.",
+            "storia": "È un pezzo del mondo com'era prima del Labirinto, prima della Discordia: un frammento dell'Equilibrio, staccato dallo specchio oltre la Soglia. Non vuole tornare indietro, nel guscio, perché fuori è più bello. Ha ragione, e per questo è così difficile colpirlo."
+        },
+        "Riflesso Futuro": {
+            "vista": "Sei tu, fra qualche passo: stessa arma, stessa spalla più bassa, qualche cicatrice in più. Ti guarda come si guarda qualcuno che si conosce troppo bene.",
+            "abitudini": "Sa già dove colpirai, perché lo ha fatto prima di te. Va battuto cambiando abitudini: un'altra mossa, un altro ritmo. Se combatti come sempre, perdi come sempre.",
+            "storia": "Alla Soglia il tempo è sfilacciato, e a volte quello che sarai arriva prima di quello che sei. Il Riflesso Futuro è te stesso in una discesa che non hai ancora fatto, o che hai già fatto e dimenticato. Non ti odia. Cerca solo di impedirti di fare i suoi errori."
+        },
+        "Vuoto Affamato": {
+            "vista": "Un buco nel tessuto della Soglia, nero, con i bordi frastagliati. Dentro non c'è niente, tranne una fila di denti che brillano.",
+            "abitudini": "Divora la luce, poi chi la porta: ogni colpo che ti dà ti toglie vita e la tiene per sé. Si richiude se lo colpisci abbastanza in fretta, prima che si sazi.",
+            "storia": "È un pezzo del Vuoto vero, l'Ottavo Elemento che qualcuno cercò di creare nella notte della Discordia. Il guscio del Labirinto lo trattiene quasi tutto, ma alla Soglia il guscio è sottile, e qualche buco si apre. I buchi hanno fame, perché il Vuoto è fame."
+        },
+        "Clessidra Infranta": {
+            "vista": "Una clessidra di vetro grande come una porta, rotta a metà, sorretta da due mani di bronzo. La sabbia esce dalla crepa e cade verso l'alto.",
+            "abitudini": "Si difende rallentando il tempo intorno a sé: i tuoi colpi arrivano tardi, i suoi in anticipo. Se la colpisci quando la sabbia si ferma, la crepa si allarga.",
+            "storia": "Ha contato il tempo per qualcuno, nella cittadella di Calaris, finché il vetro non si è rotto nella notte della Discordia. Ora la sabbia cade verso l'alto, e lei non sa più quanto manca. Difende il suo padrone, che non c'è, contando un tempo che non passa."
+        },
+        "Mimic": {
+            "vista": "Un forziere come tanti, con il coperchio un po' storto. Poi il coperchio si apre, e dentro ci sono denti invece di monete.",
+            "abitudini": "Aspetta che tu allunghi la mano. Morde forte e non lascia la presa, ma fuori dal suo guscio è fragile. Le monete che contiene sono quelle di chi lo ha aperto prima di te.",
+            "storia": "I forzieri del Labirinto sono stati aperti così tante volte, da così tante mani avide, che alcuni hanno imparato a desiderare a loro volta. Il Mimic è un forziere che ha imparato ad aspettare. Non ha fame di carne: ha fame di mani che si allungano."
+        },
+        "Goblin": {
+            "vista": "Un ometto verdastro dalle orecchie lunghe e dai denti storti, con una borsa troppo grande per lui. Ti guarda la borsa, prima che la faccia.",
+            "abitudini": "Combatte sporco e senza stile: un colpo, una spinta, una fuga. Ha paura di chi è più grosso, e coraggio solo in gruppo. Se gli lanci una moneta, la prende sempre.",
+            "storia": "I goblin erano la gente delle Valli di Galdor, contadini e piccoli mercanti del Sud. Il loro re fece un patto per salvarli dalla fame, e il patto li salvò, a modo suo: non hanno più fame di pane. Hanno fame d'oro, l'unica cosa che ricordano di aver contato."
+        },
+        "Scheletro": {
+            "vista": "Uno scheletro armato, con pezzi di armatura arrugginita ancora legati alle ossa. Le orbite vuote si accendono di una luce fioca quando ti vedono.",
+            "abitudini": "Combatte come ha imparato in vita, con la tecnica di un avventuriero qualunque. Si rialza spesso. Si ferma solo quando gli spezzi qualcosa di importante: la spina dorsale, o la speranza.",
+            "storia": "Sono gli Svuotati: avventurieri che hanno perso la loro Essenza nel Labirinto e non possono più morire. Le loro ossa sono tenute insieme solo dal desiderio residuo di trovare un'uscita che sanno non esistere. Alcuni hanno ancora in tasca le lettere che volevano spedire a casa."
+        },
+        "Orco": {
+            "vista": "Un gigante dalla pelle grigia e ruvida come la roccia, con un'ascia da minatore. Respira pesante, e a ogni respiro gli cade dalla pelle un po' di polvere.",
+            "abitudini": "Colpisce forte e lento, come una frana. È difficile da ferire, ma si stanca: dopo ogni attacco pesante ha bisogno di un turno per riprendere fiato.",
+            "storia": "Gli orchi erano i lavoratori delle cave e delle fucine dei Monti di Durn, uomini grossi e pazienti che passavano la vita a spaccare pietra. Dopo la Discordia la loro pelle si fuse con il basalto. Sono diventati lenti come la tettonica, e ricordano ancora le canzoni da cava."
+        },
+        "Bandito": {
+            "vista": "Un uomo magro con il volto coperto da un fazzoletto, il coltello in mano e gli occhi che corrono alla tua borsa. Ha l'aria di chi ha fame da molto tempo.",
+            "abitudini": "Combatte per rubare, non per uccidere: se gli dai qualcosa scappa. È veloce e senza onore. Ha paura delle armi grandi e dei colpi pesanti.",
+            "storia": "Non tutti quelli che scendono nel Labirinto sono eroi. Alcuni scendono perché in superficie non c'è più niente da rubare. I banditi vivono dei resti degli altri avventurieri. Molti hanno smesso di risalire da tanto tempo, e non ricordano più cosa volevano comprare con l'oro."
+        },
+        "Lupo Mannaro": {
+            "vista": "Un uomo che a metà del corridoio smette di essere un uomo: si piega, si allunga, gli crescono il pelo e i denti. Ha ancora un anello al dito.",
+            "abitudini": "Caccia come un lupo: gira intorno, ti studia, aspetta che tu sia debole. Quando colpisce, colpisce alla gola. È più feroce quando è ferito.",
+            "storia": "Nelle valli di Valeriana c'era una maledizione antica che trasformava chi la portava nelle notti senza luna. Nel Labirinto non c'è mai luna. Chi portava la maledizione non torna più umano, e ha dimenticato perché porta ancora l'anello della sua promessa sposa."
+        },
+        "Gargoyle": {
+            "vista": "Una statua di pietra con le ali, accovacciata su un cornicione. Sembra una decorazione, finché non gira la testa per guardarti.",
+            "abitudini": "Si difende come pietra: i colpi leggeri gli scivolano addosso. Scende in picchiata, colpisce, torna al suo cornicione. Va colpito quando atterra, prima che si irrigidisca.",
+            "storia": "I gargoyle proteggevano i tetti delle chiese di Aurelia dal maltempo e dagli spiriti. Erano scolpiti con tanta cura che alcuni presero vita. Quando il Labirinto si portò via la città, i gargoyle continuarono a proteggere i loro tetti, anche dove i tetti non c'erano più."
+        },
+        "Elementale del Fuoco": {
+            "vista": "Una colonna di fiamme alta come un uomo, con dentro, al centro, un oggetto qualunque: un pettine, una chiave, una fibbia. Le fiamme gli girano intorno come attorno a un cuore.",
+            "abitudini": "Attacca con furia cieca, ma senza piano. Diventa più debole quanto più si allontana dal suo oggetto. Chi riesce a colpire l'oggetto al centro lo spegne in un colpo.",
+            "storia": "Gli elementali non sono esseri viventi: sono concentrazioni di rabbia cinetica che hanno trovato una forma attorno a un ricordo. L'oggetto al centro apparteneva a qualcuno, e l'elementale lo protegge come una fiamma protegge lo stoppino. Spegnerlo lascia l'oggetto a terra, tiepido."
+        },
+        "Melma Acida": {
+            "vista": "Una pozza verde che si alza e si muove, fumando. Dove passa il pavimento si corrode, e l'odore è quello di un campo marcito dopo la pioggia.",
+            "abitudini": "Ti infetta: il suo acido corrode le armature e lascia ferite che non si chiudono. È lenta ma tenace, e si divide quando la colpisci male.",
+            "storia": "È la linfa vitale della Terra di Aethelgard, quella che nutriva i campi, lasciata a marcire nel buio del Labirinto. Le melme nascono tutte dalla Madre delle Melme, nelle profondità. Sono ciò che resta della fertilità del mondo quando non c'è più niente da far crescere."
+        },
+        "Golem di Pietra": {
+            "vista": "Un gigante fatto di blocchi di pietra squadrata, con le giunture tenute insieme da rune che brillano appena. Ogni passo fa tremare il pavimento.",
+            "abitudini": "Lento, durissimo, implacabile. Non sente il dolore e non si stanca, ma le rune delle giunture sono il suo punto debole: chi le colpisce lo fa crollare a pezzi.",
+            "storia": "I golem di pietra furono costruiti ad Aurelia nell'Era dell'Ambizioso Raggiungimento per i lavori pesanti: muri, ponti, mura cittadine. Obbedivano a ordini incisi sulle rune. Dopo la Discordia nessuno ha più dato ordini, e i golem obbediscono all'ultimo ricevuto. Per molti era: non lasciar passare nessuno."
+        },
+        "Vampiro Minore": {
+            "vista": "Un uomo pallido, vestito con abiti eleganti e sporchi, con le labbra rosse e gli occhi che non battono mai. Sorride troppo.",
+            "abitudini": "Morde e beve: ogni ferita che ti fa lo guarisce. Teme la Luce e chi la porta. Se ferito gravemente cerca di scappare, e torna più tardi, più affamato.",
+            "storia": "Discendono da Malphas, il primo avventuriero che capì che il Labirinto non concedeva la morte naturale e iniziò a nutrirsi dell'Essenza altrui. Malphas trasmise la sua fame a chi beveva con lui. I vampiri minori sono gli ultimi della sua stirpe: fame senza nobiltà."
+        },
+        "Spirito della Tempesta": {
+            "vista": "Un turbine di vento e lampi bianchi con dentro una forma umana, che ha ancora in mano un ago da tessitore. Crepita, sibila, e a volte canta.",
+            "abitudini": "Furioso e imprevedibile: colpisce con il fulmine, poi si sposta, poi colpisce ancora. Si stanca in fretta, e quando si stanca si affloscia come una vela senza vento.",
+            "storia": "Erano i tessitori di Valeriana, quelli che facevano gli abiti che cambiavano colore. La loro curiosità era leggendaria: volevano tessere tutto, anche il cielo. Quando le valli sprofondarono, il cielo si lasciò tessere. Adesso sono fatti di tempesta, e tessono fulmini invece di seta."
+        },
+        "Paladino Corrotto": {
+            "vista": "Un cavaliere in armatura bianca annerita dalla fuliggine, con uno scudo che porta lo stemma degli Architetti. I suoi occhi brillano di una luce troppo forte.",
+            "abitudini": "Si difende con fede incrollabile: incassa, prega, e la sua luce lo guarisce. Ti chiama peccatore. Va colpito con pazienza, quando abbassa lo scudo per benedire.",
+            "storia": "Erano guerrieri della fede che, quando la Luce divenne crudele, scelsero di seguirla comunque. Credono che il dolore sia l'unica purificazione rimasta in un mondo morente. Molti furono confratelli di Alaric. Lui scelse di custodire una porta; loro scelsero di bruciare chi la cercava."
+        },
+        "Costrutto Magico": {
+            "vista": "Una figura di cristallo e bronzo con un nucleo luminoso al centro del petto. Si muove a scatti, come un meccanismo d'orologio, e ronza.",
+            "abitudini": "Si protegge con barriere di luce, e attacca solo quando la barriera è carica. Il nucleo nel petto è vulnerabile: chi lo colpisce lo spegne, ma solo per un po'.",
+            "storia": "I costrutti erano i servitori delle accademie di Aetheria, costruiti dai maghi per portare libri, pulire laboratori, sorvegliare gli esperimenti. Quando le isole caddero, i costrutti continuarono a sorvegliare. Non sanno più cosa, ma sanno che nessuno deve toccarlo."
+        },
+        "Idra di Lava": {
+            "vista": "Un serpente di roccia fusa con più teste, ognuna di un colore diverso, dal rosso scuro al bianco accecante. Dove striscia, il pavimento si scioglie.",
+            "abitudini": "Ogni testa attacca a turno, e più la ferisci più diventa feroce. Le teste bianche sono le più calde e le più fragili: colpite, si spengono in un sibilo.",
+            "storia": "È il risultato della fusione forzata di Fuoco e Terra nella Forgia del Caos: uno degli esperimenti degli Architetti per riforgiare gli elementi. Ogni testa rappresenta un diverso stadio della fusione. Nessuna delle teste è d'accordo con le altre su cosa dovrebbe essere."
+        },
+        "Leviatano Abissale": {
+            "vista": "Una forma enorme e scura che si muove sotto la superficie dell'acqua. Non ne vedi i contorni. Vedi solo, a volte, un occhio, grande come una porta.",
+            "abitudini": "Caccia dal basso, senza preavviso. Non ha una forma definita: appare come la cosa che temi di più in quel momento. Chi non ha paura lo vede rimpicciolire.",
+            "storia": "È fatto di pura Acqua e Tenebra, la personificazione della paura dell'ignoto. I marinai del Mare Interno lo temevano prima ancora della Discordia, senza averlo mai visto. Forse non esisteva, allora. Forse è stata la loro paura, nel Labirinto, a dargli finalmente un corpo."
+        },
+        "Golem di Sale": {
+            "vista": "Un gigante fatto di blocchi di sale grigio, che scricchiola a ogni passo. Intorno a lui l'aria è secca, e ti senti la bocca asciutta.",
+            "abitudini": "Ti prosciuga: assorbe l'umidità e la vita da chi gli sta vicino. È fragile all'acqua. Chi lo colpisce con il Fuoco lo vede incrinarsi; chi lo colpisce con l'Acqua lo vede sciogliersi.",
+            "storia": "Fu creato per assorbire l'umidità dalle cantine dei granai di Galdor, perché il grano non marcisse. Dopo la carestia non c'era più grano da proteggere. Il golem continuò ad assorbire: l'umidità, poi l'acqua, poi la vita di chi gli passava accanto."
+        },
+        "Sirena Abissale": {
+            "vista": "Una donna bellissima con i capelli d'alga e la coda di un pesce scuro, seduta su uno scoglio che non dovrebbe esserci. Canta, e la voce ti entra nelle ossa.",
+            "abitudini": "I suoi canti spingono i viaggiatori a gettarsi nell'oscurità. Ti prosciuga, ti trattiene, ti fa dimenticare dove andavi. Chi non la guarda in faccia resiste meglio.",
+            "storia": "Erano le cantatrici dei porti del Mare Interno, che cantavano per richiamare a casa le barche nella nebbia. Quando il mare divenne Memoria, il loro canto cominciò a richiamare i ricordi invece delle barche. Adesso chiamano chi passa verso il fondo, convinte di riportarlo a casa."
+        },
+        "Cultista Cieco": {
+            "vista": "Una figura incappucciata con gli occhi bendati, che mormora preghiere a qualcosa di molto lontano. Non ha occhi, ma si volta esattamente verso di te.",
+            "abitudini": "Vede i tuoi peccati invece del tuo corpo: chi ha molta Corruzione lo trova molto più pericoloso. Lancia maledizioni e si nasconde dietro i suoi compagni.",
+            "storia": "Dopo la Discordia nacquero molti culti, nel Labirinto e fuori. Questo pregava il Dio Antico, convinto che svegliarlo avrebbe salvato il mondo. I cultisti si accecarono per vedere meglio il suo sogno. Lo vedono ancora. È per questo che non smettono mai di sorridere."
+        },
+        "Cacciatore di Streghe": {
+            "vista": "Un uomo in un lungo cappotto nero, con un cappello a tesa larga e una balestra d'argento. Ha al collo una fila di amuleti contro la magia.",
+            "abitudini": "Odia chi usa l'Etere: ti ammutolisce, ti risucchia l'Etere, ti dà la caccia se conosci incantesimi. Contro chi combatte solo con il ferro è molto meno sicuro di sé.",
+            "storia": "Il Crepuscolo Lungo fu un'epoca di paura, e la paura cercò colpevoli. I cacciatori di streghe davano la colpa della ribellione degli elementi ai maghi. Bruciarono molte persone innocenti. Quando arrivò la Discordia scesero nel Labirinto a cercare il mago colpevole. Lo cercano ancora."
+        },
+        "Manticora Infetta": {
+            "vista": "Un leone con le ali di pipistrello e una coda di scorpione, con il pelo che cade a ciocche. Gli aculei della coda gocciolano un liquido verde che brucia.",
+            "abitudini": "I suoi aculei bruciano di tossine letali: ogni colpo può avvelenarti. Combatte con ferocia disperata, come un animale malato che sa di non avere più niente da perdere.",
+            "storia": "Le manticore abitavano le Terre Alte di Ignis ed erano rispettate dai fabbri come animali sacri. Nel Labirinto si sono ammalate: la corruzione degli elementi le ha infettate dall'interno. Soffrono. Chi le uccide, dicono a Ignis, fa loro un favore."
+        },
+        "Spirito della Forgia": {
+            "vista": "Un vortice di scorie ardenti con la vaga forma di un fabbro, con un martello di fuoco in mano. Ronza come un mantice e profuma di ferro rovente.",
+            "abitudini": "Furioso e instancabile: batte e batte, e ogni colpo lascia scintille sulla tua pelle. Si spegne lentamente se lo si tiene lontano dalle forge.",
+            "storia": "Sono scorie ardenti che hanno preso vita dopo che i fabbri di Ignis abbandonarono le forge di casa per la grande riforgiatura degli Architetti. Le forge, rimaste sole, si annoiarono e cominciarono a lavorare da sole. Gli spiriti sono il loro lavoro: imitazioni di fabbri."
+        },
+        "Arpia del Labirinto": {
+            "vista": "Una creatura alata con il volto di una donna vecchia e gli artigli di un rapace. Scende dai soffitti invisibili del Labirinto con un grido stridulo.",
+            "abitudini": "Caccia dall'alto, in picchiata, e ruba: cibo, monete, a volte un ricordo. Ha paura del fuoco e dei rumori forti. Combatte meglio in gruppo.",
+            "storia": "Nessuno sa di preciso cosa fossero prima. I dotti di Aurelia pensavano che fossero le anime di chi era caduto sulle Guglie senza toccare mai il fondo. Le arpie stesse dicono, quando parlano, di essere le figlie del vento. Ma il vento, nel Labirinto, non ha figli."
+        },
+        "Gargoyle di Ossidiana": {
+            "vista": "Una statua alata di pietra nera e lucida, con i bordi affilati come vetro. Quando si muove, il suo corpo riflette le fiamme intorno.",
+            "abitudini": "Difficilissimo da scalfire, taglia chi lo colpisce male. Si difende più che attaccare. Le sue ali sono il punto debole: l'ossidiana è dura, ma si spezza.",
+            "storia": "Fu scolpito dai fabbri di Ignis nell'ossidiana delle foreste di vetro, per proteggere le forge dai ladri. Era il guardiano di una casa, e la casa aveva un nome inciso sopra la porta. La casa non c'è più. Il gargoyle protegge ancora quel nome, ovunque lo trovi."
+        },
+        "Chierico Corrotto": {
+            "vista": "Un sacerdote in veste bianca macchiata, con un turibolo che fuma un incenso nero. Benedice mentre combatte, e la benedizione brucia.",
+            "abitudini": "I suoi miracoli di guarigione sono diventati anatemi: cura sé stesso e i suoi alleati, maledice te. Va colpito per primo, prima che i suoi compagni diventino inguaribili.",
+            "storia": "Erano i sacerdoti dei Grandi Templi di Aurelia, quelli che curavano i malati con la Luce. Quando la Luce divenne crudele, le loro cure cominciarono a far male, ma loro continuarono a curare, convinti di fare il bene. Lo credono ancora. Benedicono chiunque incontrino."
+        },
+        "Vampiro Purosangue": {
+            "vista": "Un aristocratico in abiti di velluto antico, con un anello con stemma e una cortesia gelida. Ti fa un inchino prima di attaccare.",
+            "abitudini": "Beve solo sangue puro: è più feroce con chi ha poca Corruzione. Combatte con eleganza e calcolo, e si ritira quando lo scontro diventa sconveniente.",
+            "storia": "È uno dei primi discendenti di Malphas, uno di quelli che bevvero con lui nei primi anni del Labirinto. Era un nobile di Aurelia, e ha conservato le maniere. Considera i vampiri minori dei parenti imbarazzanti. Considera te un ospite, e il tuo sangue la cena."
+        },
+        "La Badessa del Silenzio": {
+            "vista": "Una donna alta e magra in veste nera, con un velo che le copre il volto fino alle labbra. Le labbra sono chiuse. Il silenzio intorno a lei è assoluto.",
+            "abitudini": "Ti sigilla, ti ammutolisce, ti toglie la voce e l'Etere. Prega mentre combatte, e la preghiera la guarisce. Teme solo le parole dette ad alta voce.",
+            "storia": "Guidava le preghiere dell'Accademia della Luce Calma, ad Aurelia. Credeva che il silenzio fosse la forma più alta di preghiera, e cuciva lei stessa la bocca alle novizie che prendevano il Voto. Prega ancora perché tu resti per sempre, ad ascoltare con lei. Valerius ha scritto che il suo silenzio non è una preghiera, ma una gabbia."
+        },
+        "Il Caposquadra Sepolto": {
+            "vista": "Un nano enorme, coperto di polvere di roccia, con un fischietto d'ottone al collo e un piccone consumato fino al manico. Ai suoi piedi, una mappa con tutte le frecce verso il basso.",
+            "abitudini": "Combatte come scava: con pazienza, a colpi regolari, senza mai fermarsi. Quando è ferito fa crollare la volta e si ripara sotto le macerie. Fischia, e le ombre dei minatori rispondono.",
+            "storia": "Si chiamava Hadrek, e guidava l'ultima squadra di minatori dei Monti di Durn. Disse che l'uscita era sotto, e la squadra lo seguì. Uno solo disobbedì, Borek, e risalì. Hadrek non ha mai dato l'ordine di risalire, e la squadra non ha mai smesso di scendere. È rimasto fedele a un ordine che non aveva più senso."
+        },
+        "L'Astronoma delle Guglie": {
+            "vista": "Una donna anziana con una veste blu stellata e strumenti di vetro rotto in mano, in piedi sulla guglia più alta. Misura il cielo, e conta a bassa voce.",
+            "abitudini": "Combatte con le stelle che ha contato: le chiama, le fa cadere, le lancia. Quando la colpisci perde il conto, e ricomincia da uno, più furiosa. Chi conta con lei la confonde.",
+            "storia": "Misurava le stelle dall'Osservatorio di Valeriana, e insegnava ai suoi allievi che le stelle si contano, non si guardano. Quando hanno cominciato a cadere, nella notte della Discordia, è salita sulla guglia più alta per misurarle meglio, e ha scelto di cadere con loro. Fu la maestra di Silas. Lo chiama ancora il suo allievo peggiore."
+        },
+        "Il Cuore del Ventre": {
+            "vista": "Un cuore grande come una casa, sospeso in un liquido azzurro, avvolto di vene spesse come tronchi. Batte, e a ogni battito il pavimento ti solleva.",
+            "abitudini": "Pompa ricordi contro di te: a ogni battito ti colpisce con un pezzo di passato. Ha scudi di membrana che si rigenerano. Va colpito fra un battito e l'altro, nel silenzio.",
+            "storia": "Batte al centro della Memoria e spinge i ricordi in tutto il Labirinto, come il sangue in un corpo. I dotti di Aurelia credevano che a ogni battito, nel mondo di sopra, qualcuno dimentichi un volto. Il Cuore non è crudele. È solo un cuore: batte, perché smettere vorrebbe dire morire."
+        },
+        "Il Maestro di Forgia": {
+            "vista": "Un fabbro gigantesco con le braccia di metallo fuso e un martello grande come un uomo. Batte su un'incudine che non c'è, e ogni colpo fa nascere una creatura di scoria.",
+            "abitudini": "Ogni suo errore prende vita e combatte al suo fianco. Più a lungo dura lo scontro, più errori ci sono. Va battuto in fretta, prima che la Forgia si riempia dei suoi tentativi.",
+            "storia": "Il più grande fabbro di Ignis, scelto dagli Architetti per la riforgiatura degli elementi. Accettò perché credeva di poter salvare il mondo con il martello. Vide i suoi apprendisti fondersi con il lavoro uno dopo l'altro, e continuò a battere, perché fermarsi voleva dire ammettere che non si poteva fare. Batte ancora."
+        },
+        "Il Custode della Soglia": {
+            "vista": "Una figura alta e immobile, vestita di un bianco che non è luce, con il volto nascosto da un cappuccio. Ti aspetta sull'ultima piattaforma prima del buio.",
+            "abitudini": "Ti conosce: anticipa le tue mosse, perché le ha già viste. Combatte senza fretta, come chi ha già vinto altre volte. A volte ti chiama con un nome che non riconosci.",
+            "storia": "Sta sulla Soglia da prima che il Labirinto avesse un nome. Era l'ultimo servitore della cittadella di Calaris, rimasto fedele al suo padrone quando tutti gli altri fuggirono. Ti ha già visto passare, in un tempo che per te non è ancora arrivato, o che hai dimenticato. Sa chi sei, e non te lo dice."
+        },
+        "Re dei Goblin": {
+            "vista": "Un goblin enorme e grasso, con una corona di metallo scuro troppo grande per lui che gli scivola sugli occhi. Siede su un trono di fango e monete.",
+            "abitudini": "Comanda più che combattere: chiama i suoi sudditi, si nasconde, getta monete per distrarti. Quando resta solo combatte con la rabbia di chi ha perso tutto.",
+            "storia": "Era Galdor, re delle Valli del Sud, un uomo giusto finché la carestia non lo rese disposto a tutto. Chiese a un Architetto la fine della fame del suo popolo, e l'Architetto gli promise la fine di ogni bisogno. Le sue valli furono le prime a sprofondare. Governa ancora il suo popolo diventato goblin, convinto di proteggerlo."
+        },
+        "Cavaliere Oscuro": {
+            "vista": "Un'armatura d'ossidiana con la lama sguainata, che fa la ronda: dieci passi, giro, dieci passi. Dalla visiera non esce nessun respiro.",
+            "abitudini": "Combatte con la grazia malinconica di un rito: para, colpisce, aspetta. Non usa rabbia. Si ferma un istante se pronunci il nome di Alaric.",
+            "storia": "È l'ombra che il giuramento di Sir Alaric proietta nel Labirinto: un'armatura che custodisce per abitudine una porta che non conduce più a nulla. Anche quando Alaric viene liberato, il Labirinto ricorda il suo dovere e lo ripete. Dentro l'armatura non c'è nessuno. Solo il giuramento."
+        },
+        "Drago di Zaffiro": {
+            "vista": "Un drago fatto d'acqua azzurra e trasparente, che galleggia nel vuoto. Non ruggisce: emette un suono che sembra il pianto di un oceano intero.",
+            "abitudini": "Il suo soffio è rimpianto: chi ne viene colpito ricorda tutto ciò che ha perduto, contemporaneamente. È lento e immenso, e spesso si perde nella sua stessa agonia.",
+            "storia": "Era il guardiano del Mare Interno, un essere d'acqua e di pazienza che i pescatori salutavano all'alba. Quando l'Acqua divenne Memoria, il Drago bevve troppo profondamente dal passato. Ora rivive ogni perdita di Aethelgard come se fosse appena successa. È un dio che annega."
+        },
+        "Negromante Supremo": {
+            "vista": "Un uomo scheletrico in una veste nera piena di tasche, circondato da ombre che si muovono quando lui muove le mani. Ha gli occhi stanchissimi di chi non dorme da secoli.",
+            "abitudini": "Comanda le ombre dei morti, e ogni ombra che sconfiggi lui la richiama. Va colpito lui, non le ombre. Teme la Luce, ma soprattutto teme di restare solo.",
+            "storia": "Era il maestro di Isaura, alle Paludi di Morva, quando i negromanti parlavano ai morti che se ne andavano. Ha capito che tra un uomo e un'ombra non c'è differenza, se entrambi sono fatti di Essenza. Quando i morti smisero di andarsene, lui ne fece un esercito. Non per conquistare: per non restare solo."
+        },
+        "Demone Maggiore": {
+            "vista": "Una figura di fuoco e corna, alta come tre uomini, con la pelle che si spacca e si richiude come lava che si raffredda. Ride, e la risata fa tremare le pareti.",
+            "abitudini": "La sua rabbia cresce mentre combatte: più lo colpisci, più forte colpisce lui. Va battuto in pochi colpi decisi, prima che la sua furia diventi incontenibile.",
+            "storia": "È la personificazione della rabbia che ha consumato Ignis quando il Fuoco smise di essere calore e diventò ira. Non è mai stato una persona. È stato la somma di tutte le forge che si sono spente, di tutte le case che hanno perso qualcuno, di tutta la rabbia di un popolo che amava il fuoco."
+        },
+        "Angelo Caduto": {
+            "vista": "Una figura alta e bellissima con cicatrici al posto delle ali, fatte di stelle spente. La sua luce è così forte che fa male guardarla, ma i suoi occhi sono tristi.",
+            "abitudini": "Combatte con una luce che purifica bruciando. Ogni tanto si ferma a metà di un colpo e ti chiede perdono, e in quell'esitazione è vulnerabile.",
+            "storia": "Era la voce degli Architetti, mandata a purificare il Labirinto dopo la Discordia. Scoprì che la Purezza era solo un'altra forma di follia: la sua Luce stava bruciando il mondo che doveva salvare. Si strappò le ali e cadde nelle profondità. Chiede perdono a chiunque incontri. Nessuno, finora, gliel'ha dato."
+        },
+        "Lich Reietto": {
+            "vista": "Uno scheletro in una veste da archivista, con una corona di pergamene arrotolate in testa. Le sue dita lunghe sfogliano un libro fatto di pelle e di nomi.",
+            "abitudini": "Lancia incantesimi presi dai libri che custodisce, e ogni libro che apre è più pericoloso del precedente. Va colpito quando chiude un libro e ne apre un altro.",
+            "storia": "Era l'archivista dell'Accademia di Aurelia, custode delle cronache che il Labirinto vuole cancellare. Rubò la vita alla morte per poter continuare a proteggere i libri. Fra le cronache che custodisce ce n'è una con un nome che nessuno deve leggere. La tiene chiusa con il suo stesso corpo."
+        },
+        "Behemoth Terrestre": {
+            "vista": "Una bestia enorme fatta di roccia, con le zampe come colonne e la schiena coperta di licheni e di piccoli alberi di pietra. Si muove lentissimo, e il pavimento trema.",
+            "abitudini": "Durissimo, quasi invulnerabile. Si difende rifiutandosi di cambiare: i colpi gli rimbalzano addosso finché non trovi una crepa. Ogni crepa, una volta trovata, si allarga.",
+            "storia": "Era il sarcofago dei Monti di Durn, una montagna intera che si risvegliò quando il Labirinto entrò nelle sue radici. Si rifiuta di accettare la fine del mondo. È la Terra ostinata, quella che non vuole cambiare, diventata bestia. Porta sulla schiena i boschi che c'erano sopra di lei."
+        },
+        "Signore delle Tempeste": {
+            "vista": "Un turbine di vento nero e fulmini, con dentro la forma di un uomo con un mantello di nuvole. Parla, ma le parole sono solo vento.",
+            "abitudini": "Lancia fulmini e venti che ti spingono verso il vuoto. Il suo potere cresce quando è vicino al fratello. Da solo è furioso; vicino al fratello è terribile.",
+            "storia": "Lui e il Sovrano delle Tempeste erano due fratelli tessitori di Valeriana, i più bravi della loro valle. Litigavano su chi dei due avrebbe tessuto il cielo. Quando il cielo si lasciò tessere, se lo divisero, e da allora se lo contendono. È un turbine di segreti degli Architetti che hanno perso la voce."
+        },
+        "DIO ANTICO": {
+            "vista": "Un occhio enorme fatto di galassie e polvere d'ossa, al centro del vuoto. Quando si apre, l'intera Soglia trattiene il fiato. Non ha corpo: ha solo uno sguardo.",
+            "abitudini": "Combatte con il Labirinto stesso: richiama i biomi, i nemici, i ricordi. Si sveglia un po' di più a ogni colpo. Sconfiggerlo non lo uccide: lo rimette a dormire.",
+            "storia": "È ciò che resta del Rinnegato, l'Architetto che voleva dare riposo a un mondo stanco e si fuse con il Vuoto che stava creando. Il Labirinto è il suo sogno. Non è malvagio, e non vuole il potere: vuole dormire, e vuole che tutti possano dormire con lui. È la colpa di un mondo che voleva riposare."
+        },
+        "Il Re Dimenticato": {
+            "vista": "Un uomo con una corona d'oro opaco e un mantello che si sfalda in polvere. Siede su un trono che non c'è, e ti guarda come se dovessi sapere chi è.",
+            "abitudini": "Combatte con l'oblio: ogni suo colpo ti fa dimenticare qualcosa, una mossa, un incantesimo. Va battuto prima che tu dimentichi come si combatte.",
+            "storia": "Sovrano di un regno cancellato persino dalla memoria della polvere. Era più antico di Galdor, più antico forse dell'Equilibrio stesso. Nessuno sa più il nome del suo regno, nemmeno lui. Cerca qualcuno che se lo ricordi, e uccide chi non se lo ricorda, cioè tutti."
+        },
+        "Golem dell'Eternità": {
+            "vista": "Un gigante di pietra bianca e metallo dorato, coperto di rune che brillano di una luce che non si spegne. Si muove con una lentezza che sembra eterna.",
+            "abitudini": "Quasi indistruttibile, senza punti deboli evidenti. Non si stanca e non si arrende. Chi lo batte lo fa con la pazienza, colpendo sempre la stessa runa finché non si spegne.",
+            "storia": "Fu costruito ad Aurelia nell'Era dell'Ambizioso Raggiungimento per resistere alla fine dell'universo stesso: era l'orgoglio della città, la prova che l'uomo poteva costruire qualcosa di eterno. Ci sta riuscendo. Il mondo è finito, e lui è ancora qui."
+        },
+        "Leviatano dei Sotterranei": {
+            "vista": "Un serpente marino enorme che esce dalle falde d'acqua nera, con la pelle coperta di conchiglie e di cicatrici. Il suo occhio è grande come una porta.",
+            "abitudini": "Caccia dal buio, dove l'acqua è più profonda. Appare come ciò che temi di più. Va combattuto lontano dall'acqua, dove è più lento.",
+            "storia": "Il predatore apicale delle falde acquifere di Aethelgard, quello di cui i pozzaioli avevano paura. Si nutriva di ciò che cadeva nei pozzi. Dopo la Discordia nel Labirinto cadono molte cose, e il Leviatano è cresciuto. Ha mangiato anche dei ricordi, e adesso ha incubi."
+        },
+        "Drago d'Ossidiana": {
+            "vista": "Un drago di pietra nera e lucida con il cuore che brilla rosso attraverso le scaglie. A ogni respiro, dalle narici esce fumo, e il fumo profuma di vetro fuso.",
+            "abitudini": "La sua corazza è spessa e il suo cuore è un nucleo fuso: colpirlo è difficile, ma quando le scaglie si incrinano il calore che esce ferisce anche lui.",
+            "storia": "È il fratello di fuoco del Drago di Zaffiro, nato nelle foreste d'ossidiana di Ignis. I due draghi erano i guardiani dell'Acqua e del Fuoco, e si salutavano da lontano all'alba e al tramonto. Dopo la Discordia non si vedono più. Il Drago d'Ossidiana cerca ancora il fratello all'orizzonte."
+        },
+        "Lich Signore del Gelo": {
+            "vista": "Uno scheletro avvolto in un mantello di brina, con una corona di ghiaccio. Intorno a lui l'aria gela, e il tuo respiro diventa nuvola.",
+            "abitudini": "Il suo tocco congela l'anima prima del corpo: ogni colpo ti rallenta. Va combattuto in fretta, prima che il freddo ti tolga le forze.",
+            "storia": "Era un negromante delle Paludi di Morva che non sopportava più di sentire. Sentiva i morti che non se ne andavano, sentiva i vivi che piangevano, sentiva sé stesso. Si congelò l'anima per non sentire più niente. Ci è riuscito, e adesso congela anche quella degli altri, per pietà."
+        },
+        "Araldo Radioso": {
+            "vista": "Una figura di luce dorata con una tromba di cristallo, che annuncia la tua fine con una nota limpida e crudele. Guardarlo acceca.",
+            "abitudini": "La sua luce accecante nasconde una crudeltà infinita: acceca, brucia, purifica. Va combattuto a occhi socchiusi, contando i suoi passi invece di guardarlo.",
+            "storia": "Era un servitore della Luce degli Architetti, quello che annunciava le loro visite agli uomini con una tromba di cristallo. Quando la Luce divenne crudele, cominciò ad annunciare perfezioni che bruciano. Annuncia ancora: la fine, la purificazione, il giudizio. Non sa più che non c'è nessuno ad ascoltare."
+        },
+        "Sovrano delle Tempeste": {
+            "vista": "Un turbine di vento bianco e grandine, con dentro una figura che porta una corona di fulmini. Governa i venti urlanti, e i venti gli obbediscono.",
+            "abitudini": "Comanda il vento, e il vento ti spinge, ti solleva, ti getta contro le pareti. È più forte quando è vicino al fratello, il Signore delle Tempeste.",
+            "storia": "Era il fratello maggiore del Signore delle Tempeste, uno dei due tessitori che si contendevano il cielo di Valeriana. Lui voleva tesserlo bianco, il fratello nero. Da mille anni lo tessono insieme, ognuno disfacendo il lavoro dell'altro. Per questo nelle Guglie il tempo non si calma mai."
+        },
+        "Cavaliere dell'Apocalisse": {
+            "vista": "Un cavaliere in armatura nera su un destriero pallido, con una lancia che gocciola ombra. Il suo cavallo non tocca terra.",
+            "abitudini": "Carica senza fermarsi, e ogni carica è più forte della precedente. Si è convinto che la fine sia il suo compito, e combatte come chi esegue un dovere sacro.",
+            "storia": "Fu il primo dei cavalieri che gli Architetti mandarono nel Labirinto dopo Alaric, per sorvegliare ciò che Alaric custodiva. Non trovò nessuna porta da custodire, e si convinse che il suo compito fosse un altro: portare la fine. La porta di ogni cosa, secondo lui, si apre solo così."
+        },
+        "Madre delle Melme": {
+            "vista": "Una massa verde e pulsante grande come una stanza, da cui nascono di continuo melme più piccole. Il suo odore è quello di un campo marcito, dolce e terribile.",
+            "abitudini": "Genera figli mentre combatte: ogni turno nasce una melma nuova. Va colpita lei, al centro, dove la massa è più scura. I figli, senza di lei, si sciolgono.",
+            "storia": "Da lei nascono tutte le creature infette del Labirinto. È ciò che resta della fertilità di Aethelgard: i campi, i boschi, i frutteti, la linfa che nutriva il mondo, lasciati a marcire nel buio. Continua a generare, perché generare è l'unica cosa che sa fare. Non sa più cosa sta generando."
+        },
+        "Il Tristo Mietitore": {
+            "vista": "Una figura incappucciata con una falce, magra come un'ombra, ferma in fondo al corridoio. Ti aspetta da molto tempo. Ha un libro aperto, e nel libro c'è il tuo nome.",
+            "abitudini": "Combatte con calma assoluta, perché sa come finisce. Ogni colpo che ti dà è preciso. Va battuto senza paura, perché la paura è ciò di cui si nutre.",
+            "storia": "È la morte che nel Labirinto non può più compiere il suo lavoro: qui nessuno muore davvero, si svuota. Il Mietitore aspetta il Ritornante perché è l'unico che muore davvero, e ogni volta torna. Ha già scritto il suo nome nel libro molte volte. Non lo odia. Vorrebbe solo, una volta, finire il suo lavoro."
+        }
+    }
+}

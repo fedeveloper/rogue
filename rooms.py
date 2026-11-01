@@ -19,6 +19,7 @@ from epitaph import note
 from entities import Rune
 import modes
 import texts
+import threads
 from combat import CombatSession, reaction_key
 from combat.rewards import audacity_bonus, audacity_reward, audacity_text, gain_audacity, rune_drop, scroll_drop
 
@@ -40,7 +41,7 @@ MYSTERY_NAMES = {"hoard": "Tesoro", "relic": "Reliquia", "hard": "Mostro", "easy
 def mystery_room(player: Player, floor: int, active_pacts: List[str]):
     delay_print(f"\n{Colors.MAGENTA}--- LA STANZA DEL MISTERO ---{Colors.RESET}")
     display_msg(f"❤️  HP: {Colors.GREEN}{player.hp}/{player.max_hp}{Colors.RESET} | 💰 Oro: {Colors.YELLOW}{player.gold}{Colors.RESET}\n")
-    delay_print(f"{texts.pick(GAME_DATA['lore']['mystery'])}", 0.03)
+    delay_print(f"{texts.room('mystery', floor)}", 0.03)
     time.sleep(1)
 
     outcomes = GAME_DATA["meta"]["rooms"]["mystery"]["outcomes"]
@@ -93,7 +94,7 @@ def mystery_room(player: Player, floor: int, active_pacts: List[str]):
         wait_enter("Premi INVIO per proseguire...")
 
 def vendor_room(player: Player, floor: int):
-    delay_print(f"\n{texts.pick(GAME_DATA['lore']['vendor'])}")
+    delay_print(f"\n{texts.room('vendor', floor)}")
     items_for_sale =[generate_weapon(floor + 1), generate_armor(floor + 1), generate_accessory(floor), generate_potion(floor), generate_potion(floor)]
     items_for_sale += [generate_rune(floor) for _ in range(rune_rules.rules()["vendor_stock"])]
     if magic.available(): items_for_sale += [generate_scroll(floor) for _ in range(magic.rules()["vendor_stock"])]
@@ -228,7 +229,8 @@ def read_oblivion(player: Player, tome):
 
 
 def campfire_room(player: Player, floor: int):
-    delay_print(f"\n{Colors.YELLOW}{texts.pick(GAME_DATA['lore']['campfire'])}{Colors.RESET}")
+    delay_print(f"\n{Colors.YELLOW}{texts.room('campfire', floor)}{Colors.RESET}")
+    threads.maybe_show()
     while True:
         clear_screen()
         prompt = f"\n{Colors.YELLOW}[ 🔥 FALÒ E FORGIA ] | Tuo Oro: {player.gold} | HP: {player.hp}/{player.max_hp}{Colors.RESET}\n"
@@ -357,7 +359,8 @@ def chest_risks(floor: int) -> dict:
 
 
 def treasure_room(player: Player, floor: int):
-    delay_print(f"\n{Colors.YELLOW}{texts.pick(GAME_DATA['lore']['treasure'])}{Colors.RESET}")
+    delay_print(f"\n{Colors.YELLOW}{texts.room('treasure', floor)}{Colors.RESET}")
+    threads.maybe_show()
     rules, risks = GAME_DATA["meta"]["rooms"]["treasure"], chest_risks(floor)
     roll = random.random() * 100
     kind = "mimic" if roll < risks["mimic"] else "locked" if roll < risks["mimic"] + risks["locked"] else "open"
@@ -431,7 +434,7 @@ def trap_damage(player: Player, floor: int, active_pacts: List[str], base: int) 
 def trap_room(player: Player, floor: int, active_pacts: List[str]) -> bool:
     """La trappola custodisce un bottino: chi la affronta lo ottiene sempre, e se fallisce la prova paga in HP.
     Restituisce True se il giocatore l'ha affrontata."""
-    delay_print(f"\n{texts.pick(GAME_DATA['lore']['trap'])}")
+    delay_print(f"\n{texts.room('trap', floor)}")
     delay_print(f"{Colors.RED}È UNA TRAPPOLA!{Colors.RESET} {Colors.YELLOW}Oltre il meccanismo, qualcosa brilla.{Colors.RESET}", 0.05)
     rules, chances = GAME_DATA["meta"]["rooms"]["trap"], trap_chances(player)
     lo, hi = (trap_damage(player, floor, active_pacts, base) for base in (15, 30))

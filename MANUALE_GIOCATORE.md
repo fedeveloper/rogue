@@ -81,11 +81,11 @@ Gli epitaffi delle ultime 50 discese restano nel **Cimitero**, una pagina del Co
 
 ### 🏁 I finali
 
-Sconfitto il Dio Antico, scegli come finisce la tua storia fra i finali che ti sei guadagnato. Il primo è sempre disponibile; gli altri dipendono da quello che hai fatto in questa discesa e in quelle passate: i personaggi che hai liberato, le verità che hai ascoltato, le lettere che hai raccolto, la tua Corruzione. Ogni finale nuovo dà un premio in Essenza e finisce nel Codice. Nel Codice i finali che non hai ancora visto mostrano un indizio.
+Sconfitto il Dio Antico, scegli come finisce la tua storia fra i finali che ti sei guadagnato. Il primo è sempre disponibile; gli altri dipendono da quello che hai fatto in questa discesa e in quelle passate: i personaggi che hai liberato, le verità che hai ascoltato, le lettere che hai raccolto, la tua Corruzione. Ogni finale nuovo dà un premio in Essenza e finisce nel Codice. Dopo il finale leggi anche cosa fa, in quella fine, la vita prestata della classe con cui sei arrivato: ogni classe ha il suo epilogo per ogni finale, e quelli letti restano nel Codice. Nel Codice i finali che non hai ancora visto mostrano un indizio.
 
 ### I biomi
 
-Il Labirinto cambia mentre scendi: ogni cinque piani entri in un **bioma** diverso, con la sua atmosfera. I nomi vengono dalle cronache di Aethelgard: *I Chiostri del Rimpianto*, *Le Miniere della Testardaggine*, *Le Guglie del Vento Urlante*, *Il Ventre della Memoria*, *La Forgia del Caos*, *La Soglia del Dio Antico*.
+Il Labirinto cambia mentre scendi: ogni cinque piani entri in un **bioma** diverso, con la sua atmosfera. Ogni stanza ti accoglie con le parole del suo bioma (un refettorio apparecchiato nei Chiostri, una lampada d'ottone nelle Miniere, un ponte sospeso sulle Guglie), e ogni bioma ha i suoi eventi, che non incontri altrove. I nomi vengono dalle cronache di Aethelgard: *I Chiostri del Rimpianto*, *Le Miniere della Testardaggine*, *Le Guglie del Vento Urlante*, *Il Ventre della Memoria*, *La Forgia del Caos*, *La Soglia del Dio Antico*.
 
 **📿 I Chiostri del Rimpianto (piani 1–5).** Le rovine di un'accademia della Luce Calma.
 - **Più eventi, meno trappole.** E più creature di Luce e di Tenebra.
@@ -153,7 +153,7 @@ Negli eventi le scelte contano, e non solo in quella stanza:
 - **Oggetti chiave.** Chiavi, mappe e lanterne trovate in un evento aprono scelte segrete in un altro, a volte molti piani più in basso.
 - **Il Labirinto ricorda.** Alcune scelte lasciano un segno che resta fra una run e l'altra: chi hai aiutato, chi hai derubato, quante volte hai accettato un patto. Le volte successive i personaggi possono riconoscerti.
 - **Conseguenze differite.** Certe scelte tornano qualche piano dopo: una delle porte mostrerà "✦ qualcosa ti stava aspettando".
-- **Personaggi ricorrenti.** *Sir Alaric*, il Primo Paladino, e *Silas*, il Cercatore, hanno una storia in tre capitoli che prosegue da una run all'altra: al massimo un capitolo per run, sempre più in profondità. Le tue scelte cambiano ciò che ti diranno e il loro destino. Un indizio: una lettera sulle pareti parla di un cavaliere stanco e di un fiore di lavanda. E chi libera Alaric non incontrerà più il Cavaliere Oscuro.
+- **Personaggi ricorrenti.** *Sir Alaric*, il Primo Paladino, e *Silas*, il Cercatore, hanno una storia in dieci capitoli che prosegue da una run all'altra: al massimo un capitolo per run, sempre più in profondità. Con le discese ne incontrerai altri tre, ognuno con otto capitoli: *Linnea*, una fontana che parla al plurale; *Kaelen il Muto*, un fabbro dalle mani di pietra in fondo alle Miniere; e *il Mercante Senza Volto*, che fuori dalla sua bottega vuole comprare ricordi invece che oro. Alcuni capitoli compaiono solo in un bioma preciso. Le tue scelte cambiano ciò che ti diranno e il loro destino. Un indizio: una lettera sulle pareti parla di un cavaliere stanco e di un fiore di lavanda. E chi libera Alaric non incontrerà più il Cavaliere Oscuro.
 - **Combattimenti negli eventi.** Le ricompense legate a uno scontro arrivano solo se lo vinci; se fuggi, l'evento finisce lì.
 
 ---
@@ -267,7 +267,7 @@ Goblin, Scheletri e Banditi, i primi nemici che incontri, combattono senza uno s
 
 ### Le fasi dei boss
 
-Ogni boss, arrivato a una soglia di HP (di solito il 50%), **cambia fase**: lo annuncia con un nome e una frase, e mostra cosa è cambiato. Il turno in cui si trasforma non attacca. Il DIO ANTICO ha tre fasi.
+Ogni boss, arrivato a una soglia di HP (di solito il 50%), **cambia fase**: lo annuncia con un nome e una frase, e mostra cosa è cambiato. Il turno in cui si trasforma non attacca. Il DIO ANTICO ha tre fasi. I boss parlano: una battuta quando li incontri, una quando cambiano fase e una quando cadono. Sono solo parole: non cambiano niente nello scontro.
 
 Una fase può:
 
@@ -650,7 +650,7 @@ Tra una discesa e l'altra spendi l'**Essenza Astrale**:
 | Lo Specialista | Porta un attributo a 10 punti. | 400 Essenza |
 | L'Asceta | Vinci una discesa senza lanciare un solo incantesimo. | Tratto: Sordo all'Arcano |
 
-- **📚 Archivio di Aethelgard** — sei tomi da sbloccare scendendo nel labirinto. Ognuno si legge a capitoli e dà un bonus permanente a tutti gli eroi:
+- **📚 Archivio di Aethelgard** — i tomi si sbloccano scendendo nel labirinto e si leggono a capitoli. I primi sei danno un bonus permanente a tutti gli eroi; gli altri raccontano soltanto: chi era Ottavia Lune, cosa annotava Orvin, cosa cantavano le novizie. Alcuni capitoli restano illeggibili (???) finché non scendi più a fondo o non sai abbastanza:
 
 | Tomo | Come si sblocca | Bonus |
 |---|---|---|
@@ -660,8 +660,72 @@ Tra una discesa e l'altra spendi l'**Essenza Astrale**:
 | Il Grimorio di Valerius | Scopri 10 incantesimi | +2 Etere massimo |
 | Le Cronache dell'Ascesa | Vinci al grado 5 di Ascensione | +5% Danni contro i Boss e +5% Oro trovato |
 | Il Canto delle Eco | Raggiungi l'Eco II della Modalità Infinita | +3 Difesa fissa globale e +5% Probabilità di Fuga |
+| Trattato sulla Corruzione Elementale | Raggiungi il Piano 6 | — |
+| Il Quaderno di Orvin il Cartografo | Raggiungi il Piano 8 | — |
+| Canti della Caduta | Raggiungi il Piano 3 | — |
+| Le Ricette di Mastro Ambrogio | Raggiungi il Piano 4 | — |
+| Il Registro della Squadra di Durn | Raggiungi il Piano 9 | — |
+| Le Valli della Seta | Raggiungi il Piano 11 | — |
+| Il Diario dell'Osservatorio | Raggiungi il Piano 13 | — |
+| Le Cronache del Mare Interno | Raggiungi il Piano 16 | — |
+| Il Libro delle Forge di Ignis | Raggiungi il Piano 21 | — |
+| Lettere di Ilse | Sconfiggi 10 Boss | — |
+| Le Leggi di Galdor | Sconfiggi 15 Boss | — |
+| L'Ordine dei Paladini | Sconfiggi 20 Boss | — |
+| I Taccuini di Calaris | Vinci una Run Standard | — |
+| Il Libro del Fuoco che Resta | Vinci una Run Standard | — |
+| Le Lezioni del Settimo Architetto | Vinci al grado 1 di Ascensione | — |
+| Il Breviario della Badessa | Raggiungi il Piano 2 | — |
+| Il Taccuino di Fenn il Cercatore | Raggiungi il Piano 10 | — |
+| Il Manuale del Minatore di Durn | Raggiungi il Piano 7 | — |
+| Le Leggende delle Sentinelle di Nube | Raggiungi il Piano 12 | — |
+| Il Giornale di Bordo della Flotta di Port'Alba | Raggiungi il Piano 17 | — |
+| Le Memorie di Malphas | Raggiungi il Piano 19 | — |
+| Il Libro di Hob | Sconfiggi 8 Boss | — |
+| Il Canzoniere di Ignis | Raggiungi il Piano 22 | — |
+| Le Lettere di Mila | Sconfiggi 12 Boss | — |
+| Il Diario di Corin, Apprendista | Raggiungi il Piano 23 | — |
+| Le Preghiere dei Grandi Templi | Raggiungi il Piano 15 | — |
+| Le Favole del Bosco Vecchio | Raggiungi il Piano 16 | — |
+| Il Trattato sulle Rune dei Lapicidi | Raggiungi il Piano 11 | — |
+| Il Grimorio Minore di Aetheria | Scopri 5 incantesimi | — |
+| Il Registro del Mercante | Sconfiggi 25 Boss | — |
+| Il Libro del Mendicante Ombra | Sconfiggi 35 Boss | — |
+| Il Quaderno delle Eco | Raggiungi l'Eco III della Modalità Infinita | — |
+| Il Registro dei Custodi | Raggiungi il Piano 28 | — |
+| Il Testamento di Galdor | Vinci al grado 3 di Ascensione | — |
+| Le Cronache di Aurelia | Raggiungi il Piano 1 | — |
+| Il Quaderno di Nerea | Raggiungi il Piano 20 | — |
+| L'Erbario delle Paludi di Morva | Raggiungi il Piano 14 | — |
+| Il Trattato sul Ritorno | Sconfiggi 6 Boss | — |
+| Il Libro del Drago di Zaffiro | Raggiungi il Piano 18 | — |
+| La Storia dell'Accademia della Luce Calma | Scopri 8 incantesimi | — |
+| Il Diario della Maestra delle Stelle | Raggiungi il Piano 15 | — |
+| I Viaggi di Bertolo, Mercante di Valeriana | Raggiungi il Piano 9 | — |
+| Il Libro delle Sette Cittadelle | Vinci una Run Standard | — |
+| Le Cronache dei Paladini Corrotti | Raggiungi il Piano 13 | — |
+| Il Libro dei Nomi del Ventre | Raggiungi il Piano 21 | — |
+| Il Libro dei Sette Sigilli | Sconfiggi 20 Boss | — |
+| La Cronaca della Carestia del Sud | Raggiungi il Piano 5 | — |
+| Gli Appunti di Laboratorio di Ottavia Lune | Raggiungi il Piano 11 | — |
+| Le Memorie del Corriere di Valeriana | Sconfiggi 10 Boss | — |
+| Il Libro dei Goblin | Raggiungi il Piano 4 | — |
+| Il Diario di Arlo l'Orologiaio | Raggiungi il Piano 14 | — |
+| I Canti delle Novizie | Raggiungi il Piano 2 | — |
+| Le Cronache del Campo | Sconfiggi 30 Boss | — |
+| Il Libro di Ivo, il Messaggero | Raggiungi il Piano 20 | — |
+| Il Libro della Prima Era | Raggiungi il Piano 8 | — |
+| Le Lettere di Marta | Raggiungi il Piano 18 | — |
+| La Brace | Vinci una Run Standard | — |
+| Il Ricettario del Cuoco della Gabbiana | Raggiungi il Piano 17 | — |
+| Il Taccuino del Lapicida | Vinci una Run Standard | — |
+| Il Diario di Hrodna | Raggiungi il Piano 22 | — |
+| Il Quaderno della Musica di Ilio | Scopri 12 incantesimi | — |
+| Le Lettere del Mercante al Mendicante | Sconfiggi 40 Boss | — |
+| Il Quaderno di Tessa Bambina | Raggiungi il Piano 6 | — |
+| Le Pagine del Piano Ventinove | Vinci una Run Standard | — |
 
-- **🔥 Il Fuoco del Campo** — chi incontri nel Labirinto può venire a scaldarsi qui. *Silas*, *la Cartografa*, *il Viandante Cieco* e, se lo hai liberato, *la luce di Alaric* compaiono quando le loro storie sono andate abbastanza avanti. Ti parlano in base a ciò che hai fatto e la prima volta ti lasciano un dono (✦). Siedono al fuoco anche gli artigiani che hai liberato (*lo Speziale*, *Borek*, *Elara*, *Valerius*). Con ognuno puoi **parlare per argomenti**: ogni argomento nuovo si apre con il tuo progresso (i piani raggiunti, i boss sconfitti, le scelte fatte negli eventi, la vittoria) ed è segnato ✦ finché non lo leggi. A volte ti chiedono una risposta: non cambia niente nel gioco, ma loro se la ricordano. È qui, lontano dalla discesa, che raccontano chi erano e cosa nascondono. Qui costruisci anche, con l'Essenza:
+- **🔥 Il Fuoco del Campo** — chi incontri nel Labirinto può venire a scaldarsi qui. *Silas*, *la Cartografa*, *il Viandante Cieco* e, se lo hai liberato, *la luce di Alaric* compaiono quando le loro storie sono andate abbastanza avanti. Ti parlano in base a ciò che hai fatto e la prima volta ti lasciano un dono (✦). Più avanti nelle loro storie, al fuoco arrivano anche *l'ampolla di Linnea* e *Kaelen*. La luce di Alaric non parla, ma anche con lei ci sono argomenti: i suoi ricordi passano nel calore. Siedono al fuoco anche gli artigiani che hai liberato (*lo Speziale*, *Borek*, *Elara*, *Valerius*). Con ognuno puoi **parlare per argomenti**: ogni argomento nuovo si apre con il tuo progresso (i piani raggiunti, i boss sconfitti, le scelte fatte negli eventi, la vittoria) ed è segnato ✦ finché non lo leggi. A volte ti chiedono una risposta: non cambia niente nel gioco, ma loro se la ricordano. È qui, lontano dalla discesa, che raccontano chi erano e cosa nascondono. Qui costruisci anche, con l'Essenza:
   - *il Tavolo della Cartografa* (aiutala nel Labirinto): sulla mappa vedi quali storie ti aspettano nelle stanze speciali e negli eventi che tornano;
   - *lo Scrittoio di Silas* (salvalo): a ogni partenza scegli un dono fra +20 HP Max, +3 ATK e +100 Oro;
   - *l'Altare della Purificazione*: la Corruzione cresce del 25% in meno;
@@ -675,10 +739,15 @@ Tra una discesa e l'altra spendi l'**Essenza Astrale**:
     - Lv.3 (✨1000): Ogni discesa inizia con 1 punto abilità in più da spendere, oltre a quello del primo livello.
 - **📖 Il Codice del Labirinto** — tutto ciò che hai scoperto, raccolto fra una run e l'altra, con la percentuale di completamento. Ciò che manca è segnato con ???.
   - *Reazioni elementali*: le combinazioni di elementi che hai scatenato almeno una volta.
-  - *Finali*: quelli che hai visto, e un indizio per gli altri.
+  - *Finali*: quelli che hai visto, con gli epiloghi delle vite prestate che hai letto, e un indizio per gli altri.
+  - *Armeria*: la storia di ogni arma, armatura e accessorio che puoi trovare (quelli della Forgia dopo averli sbloccati) e di ogni reliquia trovata. Si legge e basta: non conta nella percentuale del Codice.
   - *Bestiario*: nemici e boss incontrati e sconfitti; la loro storia si legge solo dopo averli battuti.
   - *Incantesimi*: gli incantesimi che hai lanciato almeno una volta, con elemento, costo ed effetto.
   - *Personaggi*: i capitoli vissuti con Alaric e Silas, e il segno lasciato dalle tue scelte.
+  - *Bestiario*: ogni creatura ha tre voci. *Cosa si vede* la leggi appena la incontri; *Come si comporta* e *Chi era* dopo averne sconfitte abbastanza (i boss dopo poche vittorie).
+  - *Discese dimenticate*: ai falò e accanto ai forzieri, a volte, trovi incise su una pietra delle lettere con una calligrafia che ti sembra di conoscere. Ogni gruppo di otto racconta una discesa che hai dimenticato; quando lo completi, leggi qui come è finita. Sono solo racconto: non danno né tolgono niente.
+  - *Vite prestate*: chi erano gli eroi le cui vite il Fuoco ti presta, una per classe. Il primo ricordo torna alla prima discesa con quella classe, gli altri a ogni livello di Maestria (alla fine della discesa leggi «Un ricordo torna»); i ricordi più vicini alla verità aspettano anche che tu sappia di più.
+  - *Atlante*: la storia di ogni bioma, cosa era prima del Labirinto e cosa nasconde, e quella delle Eco del Ciclo. Le pagine si aprono man mano che scendi.
   - *Eventi*: quali hai visto e quante volte.
   - *Lettere insanguinate*: i messaggi letti sulle pareti prima degli scontri.
   - *Reliquie*: quelle che hai trovato almeno una volta, con la loro lore.
