@@ -503,6 +503,489 @@
                     "requires": {"bosses_total": 60}
                 }
             ]
+        },
+        "breviario_badessa": {
+            "title": "Il Breviario della Badessa",
+            "unlock_condition": "Raggiungi il Piano 2",
+            "unlock": {"type": "max_floor", "value": 2},
+            "chapters": [
+                {
+                    "title": "La Regola delle Ore",
+                    "text": "Prima della Discordia, nei Chiostri dell'Accademia, il giorno era diviso in undici ore, una per arco. All'ora prima si cantava, all'ora seconda si studiava, all'ora terza si lavorava nell'orto. Le novizie arrivavano da tutta Aethelgard, figlie di mercanti e di pastori, e per un anno nessuna era più importante dell'altra. La Badessa scriveva le ore su questo breviario, con un inchiostro verde che faceva lei stessa con le foglie di salvia. Nella prima pagina c'è scritto: «Una regola non serve a chiudere, ma a sapere dove si è». È la sua calligrafia di allora, rotonda e sicura."
+                },
+                {
+                    "title": "Le Novizie",
+                    "text": "Il breviario contiene anche i nomi delle novizie, anno per anno, con una nota accanto a ciascuno. «Berenice: canta stonata, ma con gioia.» «Clelia: ruba le pere dell'orto, e le divide.» «Agnese: non sa stare zitta. Ha la voce più bella dei Chiostri.» Accanto all'ultimo anno, quello della Discordia, la Badessa ha scritto i nomi con una calligrafia più stretta, e accanto a nessuno c'è una nota. Solo, in fondo alla pagina: «Le proteggerò». La parola proteggerò è stata ripassata molte volte, finché l'inchiostro ha bucato la carta."
+                },
+                {
+                    "title": "Il Voto",
+                    "text": "Dopo la Discordia la calligrafia cambia. Diventa piccola, dura, inclinata. «Le voci attirano le cose che camminano nei corridoi. Ho visto Berenice cantare, e una cosa l'ha sentita. Da oggi nei Chiostri non si parla. Non si canta. Non si piange ad alta voce.» Più sotto: «Il silenzio le terrà al sicuro. Se nessuno parla, nessuno viene trovato.» Più sotto ancora, molto più tardi: «Agnese canta. Sotto il velo, di notte. Le ho dato un velo più spesso. Canta ancora. Non so se punirla o ringraziarla.»",
+                    "requires": {"reached_floor": 3}
+                },
+                {
+                    "title": "L'Ultima Ora",
+                    "text": "L'ultima pagina del breviario non ha ore. Ha una frase sola, scritta in verde, con la calligrafia rotonda di prima, come se la Badessa l'avesse ritrovata per un momento. «Ho fatto del silenzio una preghiera perché non sapevo fare altro. Se qualcuno legge queste righe, vada a dire alle mie novizie che possono cantare. Io non ci riesco. Ogni volta che apro la bocca, mi ricordo di Berenice.» Sotto, una macchia rotonda, sbiadita. Potrebbe essere acqua. Potrebbe essere una lacrima di mille anni fa, che il breviario ha tenuto da parte.",
+                    "requires": {"bosses_total": 3}
+                }
+            ]
+        },
+        "taccuino_fenn": {
+            "title": "Il Taccuino di Fenn il Cercatore",
+            "unlock_condition": "Raggiungi il Piano 10",
+            "unlock": {"type": "max_floor", "value": 10},
+            "chapters": [
+                {
+                    "title": "Perché Cerco",
+                    "text": "Mi chiamo Fenn e faccio il Cercatore, come Silas. Ci conosciamo appena: ci siamo incrociati due volte, a due piani di distanza, e ci siamo salutati con la mano senza parlare. I Cercatori non parlano molto fra loro. Ognuno cerca una cosa sola, e ha paura che l'altro la trovi prima. Io cerco mio fratello Arlo, sceso nel Labirinto il giorno dopo la Discordia per salvare la bottega di nostro padre. Era una bottega di orologi. Arlo diceva che, se avesse ritrovato l'orologio grande della vetrina, il tempo sarebbe tornato a posto. Era un bambino. Anch'io lo ero."
+                },
+                {
+                    "title": "Lo Scambio",
+                    "text": "Al piano nove ho incontrato una strega delle paludi, una vecchia con le mani verdi che vendeva cose strane da un carretto. Le ho chiesto se sapeva dove fosse Arlo. Mi ha detto che non vedeva persone, solo Essenza, e che per trovare un'Essenza bisogna vederla. Mi ha offerto lo scambio: il mio occhio sinistro per la capacità di vedere l'Essenza. Ho detto di sì senza pensarci. Fa meno male di quanto pensassi. Adesso vedo la vita come un filo di luce dentro le persone, e la morte come un filo che si spezza. Non vedo più i colori. Il mondo è grigio, con fili d'oro."
+                },
+                {
+                    "title": "Il Filo di Arlo",
+                    "text": "Al piano quattordici ho visto un filo che conoscevo. Non so spiegare come: tutti i fili sembrano uguali, ma quello aveva un nodo, a metà, come una cosa annodata male da un bambino. Era Arlo. L'ho seguito per tre stanze. Il filo portava a un orologio grande, appeso al soffitto di una galleria, fermo sulle undici e un quarto. Arlo non c'era. C'era solo il filo, che entrava nell'orologio e non usciva. Ho capito che si era fermato lì, insieme all'ora. Ho caricato l'orologio con la chiave che avevo al collo da vent'anni. Le lancette si sono mosse di un minuto, poi si sono fermate.",
+                    "requires": {"reached_floor": 14}
+                },
+                {
+                    "title": "Il Cielo",
+                    "text": "Ultima pagina, scritta con una mano che non vede bene. «Non ho più l'altro occhio. Il Labirinto se l'è preso al piano diciotto, insieme al resto. Sto per fermarmi anch'io, credo, come Arlo. Non ho paura. Ho visto il suo filo, e il mio, e sono uguali: due fili con un nodo nello stesso punto, perché il nodo gliel'avevo fatto io, da piccolo, legandogli le scarpe. Se qualcuno trova questo taccuino, una sola cosa: descrivetemi il cielo. Il cielo vero, quello di sopra. Non me lo ricordo più. Ditemelo anche se sono morto. Lo sentirò.»",
+                    "requires": {"reached_floor": 18}
+                }
+            ]
+        },
+        "manuale_minatore": {
+            "title": "Il Manuale del Minatore di Durn",
+            "unlock_condition": "Raggiungi il Piano 7",
+            "unlock": {"type": "max_floor", "value": 7},
+            "chapters": [
+                {
+                    "title": "Le Prime Regole",
+                    "text": "Regole per chi scende nei Monti di Durn, scritte dalla Gilda dei Minatori e date a ogni apprendista il primo giorno. Prima regola: la montagna parla, e chi non ascolta muore. Seconda regola: non si scava mai da soli, perché la montagna è gelosa e si prende chi è solo. Terza regola: si porta sempre una lanterna in più, una corda in più, un pane in più, e un amico in più se si può. Quarta regola: la roccia che suona vuota non è vuota. Quinta regola: quando un minatore anziano dice di fermarsi, ci si ferma, anche se c'è oro davanti. L'oro aspetta. I morti no."
+                },
+                {
+                    "title": "Leggere la Roccia",
+                    "text": "La roccia buona è fredda e asciutta, e quando la batti col manico del piccone risponde con una nota bassa. La roccia cattiva è tiepida, e risponde con un suono sordo, come un tamburo bagnato. La roccia che batte, invece, non dovrebbe esistere: se senti battere la roccia, risali subito e avvisa la Gilda. Una nota scritta a matita accanto a questa regola, con una calligrafia grossa: «Hadrek dice che la roccia che batte è un buon segno. Hadrek è un testone.» Sotto, un'altra calligrafia, più piccola: «Borek, se rovini un altro manuale ti faccio pulire le latrine per un mese»."
+                },
+                {
+                    "title": "La Canzone della Risalita",
+                    "text": "Ogni squadra di Durn aveva la sua canzone per risalire, da cantare quando si tornava in superficie dopo un turno lungo. Il manuale ne riporta una, la più antica, che tutte le squadre conoscevano: «Sopra c'è il cielo, sopra c'è il pane, / sopra c'è chi aspetta e chi non sa aspettare. / Lascia la pietra, la pietra resta, / torna su piano, che sopra è festa.» Il manuale dice che si cantava a voce bassa, perché la montagna non si offendesse. Ulma, nella squadra di Borek, la cantava a voce alta. Nessuno l'ha mai rimproverata.",
+                    "requires": {"reached_floor": 9}
+                },
+                {
+                    "title": "La Regola che Manca",
+                    "text": "In fondo al manuale c'è una pagina strappata. Si vede il bordo della carta, frastagliato, e sulla pagina dopo le lettere che hanno trapassato l'inchiostro: «...ndo il caposquadra non vuole risalire...». Qualcuno ha strappato la regola che diceva cosa fare. Accanto al bordo, a matita, la calligrafia grossa di prima: «L'ho strappata io. Così nessuno potrà dire che ho disobbedito al manuale. Ho disobbedito a Hadrek, e basta. Questo lo porto io.» È l'unica pagina del manuale firmata. La firma è una B, grande e storta.",
+                    "requires": {"reached_floor": 12}
+                }
+            ]
+        },
+        "sentinelle_nube": {
+            "title": "Le Leggende delle Sentinelle di Nube",
+            "unlock_condition": "Raggiungi il Piano 12",
+            "unlock": {"type": "max_floor", "value": 12},
+            "chapters": [
+                {
+                    "title": "Chi Erano",
+                    "text": "Le Sentinelle di Nube vegliavano sui ponti fra le torri di Valeriana. Erano scelte fra i bambini che non avevano paura dell'altezza, e addestrate per dieci anni a camminare sul vento come gli altri camminano sulla strada. Portavano un giaco di tela d'aria e due pugnali che fischiavano. Il loro motto era una sola parola, «Sopra», e la dicevano quando si incontravano su un ponte, invece di salutarsi. Non c'erano mai state più di quaranta Sentinelle: una per valle. Quando una moriva, la sua valle sceglieva un bambino nuovo."
+                },
+                {
+                    "title": "La Prova del Ponte",
+                    "text": "Per diventare Sentinella si attraversava il ponte più lungo di Valeriana, quello fra la Valle delle Campane e la Valle dei Mulini, bendati, in una giornata di vento forte. Chi arrivava dall'altra parte riceveva il giaco. Chi cadeva veniva preso da una rete tesa sotto il ponte, e poteva riprovare l'anno dopo. Nessuno ricorda una Sentinella caduta durante la prova. La rete, dicono, era intrecciata con i capelli delle madri dei candidati, e per questo non si era mai rotta."
+                },
+                {
+                    "title": "La Notte della Caduta",
+                    "text": "La notte della Discordia le torri di Valeriana cominciarono ad allungarsi verso il basso, e i ponti a spezzarsi uno dopo l'altro. Le Sentinelle restarono sui ponti. Prendevano la gente dalle torri che crollavano e la portavano, sulle spalle, sulle torri che reggevano ancora. Lavorarono tutta la notte. All'alba le torri avevano smesso di cadere, perché erano diventate guglie, e le Sentinelle erano trentanove. Una, la più giovane, si chiamava Ivetta e aveva undici anni. Era caduta portando un neonato. Il neonato fu trovato vivo, nella rete sotto il ponte delle Campane.",
+                    "requires": {"reached_floor": 13}
+                },
+                {
+                    "title": "Quelle che Restano",
+                    "text": "Nelle Guglie del Vento Urlante ci sono ancora creature che camminano sui ponti di vento, e attaccano chi passa. Le chiamano Sentinelle di Nube, come allora. Il libro dice, con una calligrafia diversa, aggiunta molto dopo: «Non sono mostri. Sono le Sentinelle. Restano sui ponti perché nessuno le ha mai sciolte dal giuramento. Attaccano chi passa perché non riconoscono più chi va salvato e chi no. Se ne incontrate una, prima di combattere, dite: Sopra. Alcune si fermano. Non tutte. Ma alcune si fermano, e vi guardano, e per un istante si ricordano.»",
+                    "requires": {"reached_floor": 15}
+                }
+            ]
+        },
+        "giornale_bordo": {
+            "title": "Il Giornale di Bordo della Flotta di Port'Alba",
+            "unlock_condition": "Raggiungi il Piano 17",
+            "unlock": {"type": "max_floor", "value": 17},
+            "chapters": [
+                {
+                    "title": "La Partenza",
+                    "text": "Giornale di bordo della Gabbiana, nave ammiraglia della flotta di Port'Alba, capitano Edda Vael. Giorno primo. Partiti all'alba con quindici navi per la pesca di primavera, come ogni anno. Il Drago di Zaffiro si è alzato dal centro del mare e ci ha salutati, come ogni anno. Il mare è calmo. I ragazzi cantano. A bordo ci sono quaranta uomini e dodici donne, tre cani e un gatto che nessuno ha portato e che nessuno riesce a cacciare. Il cuoco dice che porta fortuna. Il nostromo dice che porta pulci. Hanno ragione tutti e due."
+                },
+                {
+                    "title": "Il Mare Fermo",
+                    "text": "Giorno quarto. Il mare si è fermato stanotte. Non c'è vento, non c'è corrente, non c'è onda: l'acqua è diventata vetro, e sotto il vetro vediamo cose che non ci sono. Ognuno vede la sua. Il nostromo vede sua madre. Il cuoco vede una tavola apparecchiata. Io vedo me stessa bambina, sul molo di Port'Alba, che saluta una nave. Ho ordinato di non guardare l'acqua. Nessuno obbedisce. Il gatto non guarda: dorme sul ponte, tranquillo. Siamo fermi in mezzo al mare. Le altre navi sono ferme intorno a noi, come in un quadro.",
+                    "requires": {"reached_floor": 18}
+                },
+                {
+                    "title": "Il Ventre",
+                    "text": "Giorno nono, credo. Il mare ha cominciato a scendere. Non a ritirarsi: a scendere, come se sotto di lui si fosse aperto un buco. Le navi scendono con lui, piano, e le pareti del mare intorno a noi diventano molli, rosse, battono. I ragazzi non cantano più. Il Drago di Zaffiro è passato accanto alla Gabbiana stanotte, enorme, e piangeva. Ha guardato la nave a lungo. Poi ha messo la testa sott'acqua, come un cane che si vergogna. Ho capito che non poteva fare niente. Ho capito che stava cercando di dircelo.",
+                    "requires": {"reached_floor": 20}
+                },
+                {
+                    "title": "L'Ultima Pagina del Capitano",
+                    "text": "Non so che giorno è. La flotta è ferma in un porto che non è Port'Alba, dentro il Ventre. Le altre navi sono ancora intorno a noi. La gente a bordo dorme quasi sempre, e quando si sveglia non ricorda il proprio nome. Io lo ricordo perché lo scrivo qui, ogni mattina: Edda Vael, capitano della Gabbiana. Lo scrivo e lo leggo ad alta voce. Il gatto mi guarda. Se qualcuno arriva a Port'Alba, quella vera, dica alle famiglie che la flotta non è affondata. Si è fermata ad aspettare. Aspettiamo ancora. Teniamo le lanterne accese.",
+                    "requires": {"reached_floor": 24}
+                }
+            ]
+        },
+        "memorie_malphas": {
+            "title": "Le Memorie di Malphas",
+            "unlock_condition": "Raggiungi il Piano 19",
+            "unlock": {"type": "max_floor", "value": 19},
+            "chapters": [
+                {
+                    "title": "Il Medico",
+                    "text": "Mi chiamo Malphas, medico di Aurelia, e scrivo queste memorie perché qualcuno capisca, non perché mi perdoni. Ho studiato medicina all'Accademia quando la Luce era ancora calma, e per quarant'anni ho curato i poveri del quartiere delle concerie, dove nessun altro medico voleva andare. Ero un buon medico. Lo dico senza vanità: guarivo più di quanto perdessi. Ma nel Crepuscolo Lungo i malati cominciarono a non guarire. Le febbri duravano mesi, le ferite non si chiudevano. La Luce, quando la usavamo, li rendeva lisci e senza volto. Non sapevo più cosa fare."
+                },
+                {
+                    "title": "La Scoperta",
+                    "text": "Una notte, al capezzale di un vecchio conciatore che moriva, gli tenni la mano mentre se ne andava. Sentii qualcosa passare dalla sua mano alla mia: calore, forza, un filo di Essenza che, invece di tornare al mondo, entrò in me. Il giorno dopo guarii una bambina con la febbre solo toccandola. Le passai l'Essenza del conciatore. Capii cosa avevo scoperto: si poteva prendere la vita di chi muore e darla a chi deve vivere. Mi sembrò un miracolo. Lo era, all'inizio. Il conciatore moriva comunque. Perché sprecare quello che lasciava?"
+                },
+                {
+                    "title": "La Sete",
+                    "text": "Il problema dei miracoli è che ci si abitua. Cominciai a prendere l'Essenza dei morenti per tutti i miei pazienti, poi per i pazienti degli altri medici, poi per i ricchi che pagavano. Poi, una sera, per me. Ero stanco. Avevo sessantotto anni. Mi sentii giovane per una settimana. Poi stanco di nuovo. Poi ne presi ancora. Non uccisi mai nessuno, lo giuro su quello che resta della mia anima. Ma cominciai a sperare che morissero, i miei pazienti più vecchi. Questo è il peggio. Non quello che feci. Quello che sperai.",
+                    "requires": {"reached_floor": 21}
+                },
+                {
+                    "title": "La Mano",
+                    "text": "Quando arrivò la Discordia avevo centonovant'anni, e la mano destra non era più una mano: era un artiglio, curva a forza di stringere mani di morenti. Scesi nel Labirinto perché lì si moriva di più. Lo so, è orribile. Lo scrivo lo stesso. Nei Chiostri, un giorno, una novizia morente mi chiese di tenerle la mano. La tenni. Sentii la sua Essenza venire verso di me, e per la prima volta in un secolo la lasciai andare. Fu la cosa più difficile della mia vita. Poi mi tagliai la mano destra, e la lasciai lì. Chi la trova, la usi meglio di me.",
+                    "requires": {"reached_floor": 23}
+                }
+            ]
+        },
+        "libro_hob": {
+            "title": "Il Libro di Hob",
+            "unlock_condition": "Sconfiggi 8 Boss",
+            "unlock": {"type": "total_bosses", "value": 8},
+            "chapters": [
+                {
+                    "title": "Il Mestiere",
+                    "text": "Mi chiamo Hob e sono stato il boia di Aurelia per ventitré anni. Mio padre era boia, e suo padre prima di lui. Il mestiere si passava di padre in figlio perché nessun altro lo voleva. Abitavamo fuori dalle mura, in una casa che nessuno visitava, e al mercato ci servivano per ultimi, con le pinze, per non toccarci. Mia madre diceva che eravamo necessari come le fogne: tutti contenti che esistano, nessuno che ci voglia vicino. Non era amara. Era pratica. Mi insegnò a cucinare, a leggere, e a piangere di nascosto, prima di ogni esecuzione, perché nessuno lo vedesse."
+                },
+                {
+                    "title": "La Spada",
+                    "text": "La spada del boia di Aurelia è larga e senza punta. Non serve a duellare: serve a un colpo solo, dall'alto. Mio padre mi diceva che la gentilezza di un boia è la precisione. Un colpo, uno solo, e il condannato non sente niente. Due colpi sono una crudeltà. Tre sono un delitto. In ventitré anni non ho mai dato il secondo colpo. Ne vado fiero, se si può andare fieri di una cosa del genere. Ogni volta, dopo, pulivo la spada con un panno di lino e la riponevo nella sua cassa, e la sera bevevo un bicchiere di vino solo, alla salute del morto."
+                },
+                {
+                    "title": "L'Ascia",
+                    "text": "Nel Crepuscolo Lungo i Paladini più severi cominciarono a giustiziare gli eretici, quelli che dubitavano dell'Equilibrio. Non usavano la spada del boia. Usavano un'ascia, lenta e imprecisa, e la usavano loro, non me. Alcuni condannati ricevevano tre colpi, quattro. Andai dal Primo Paladino, Alaric, e gli dissi che quella non era giustizia. Lui mi ascoltò, a lungo, senza interrompermi. Poi vietò l'ascia. Fu l'unica volta in vita mia che un uomo importante mi strinse la mano. Lo fece senza pinze. Non l'ho mai dimenticato.",
+                    "requires": {"bosses_total": 10}
+                },
+                {
+                    "title": "Il Condannato",
+                    "text": "L'ultimo uomo che giustiziai, tre giorni prima della Discordia, era uno studente dell'Accademia. Aveva scritto sui muri del quartiere delle concerie, con il carbone, una frase sola: «La Luce è malata». I Grandi Templi lo accusarono di bestemmia. Non disse niente in sua difesa. Prima del colpo mi chiese soltanto se qualcuno avesse cancellato la scritta. Gli dissi che no, c'era ancora. Sorrise, come se gli bastasse. Fu un colpo solo. La sera bevvi il vino alla sua salute, e non riuscii a finirlo. Tre giorni dopo il cielo si strappò. Aveva ragione lui.",
+                    "requires": {"bosses_total": 15}
+                }
+            ]
+        },
+        "canzoniere_ignis": {
+            "title": "Il Canzoniere di Ignis",
+            "unlock_condition": "Raggiungi il Piano 22",
+            "unlock": {"type": "max_floor", "value": 22},
+            "chapters": [
+                {
+                    "title": "Le Feste del Fuoco",
+                    "text": "A Ignis il fuoco era una festa prima che un mestiere. In ogni valle, d'estate, si accendeva un falò alto come una casa, e intorno si danzava per tre notti. Il canzoniere raccoglie le canzoni di quelle notti, scritte da un vecchio suonatore di tamburo di nome Gorm che le aveva sentite tutte. «Il fuoco non brucia chi danza, / il fuoco guarda chi balla, / e chi balla meglio di tutti / si porta a casa una scintilla.» Le ragazze che ballavano meglio ricevevano davvero una scintilla, in una lanterna di vetro, da tenere accesa fino alla festa dopo."
+                },
+                {
+                    "title": "La Danzatrice",
+                    "text": "Una canzone intera è dedicata a una ragazza della valle di Gorm: «Hrodna ha i capelli di fiamma, / Hrodna ha i piedi di vento, / quando Hrodna balla il falò / si piega a guardarla contento.» Gorm annota a margine che la ragazza aveva vinto la scintilla cinque estati di fila, e che la sesta l'aveva rifiutata, perché voleva che la vincesse un'altra. Nessuno l'aveva mai fatto. Le altre ragazze, quell'anno, ballarono tutte peggio apposta, per restituirgliela. La scintilla finì a una bambina di sei anni, che pianse di gioia per tre giorni.",
+                    "requires": {"reached_floor": 22}
+                },
+                {
+                    "title": "La Canzone Cambiata",
+                    "text": "Dopo la Discordia le canzoni cambiano. La calligrafia di Gorm trema. «Il fuoco non guarda chi balla, / il fuoco morde chi resta, / e chi balla meglio di tutti / non torna a casa dalla festa.» Gorm scrive che la notte della Discordia il falò delle nozze di sua nipote si alzò rosso e furioso, ed entrò nei ballerini. Hrodna danzò tutta la notte e non riuscì a fermarsi. La mattina dopo, le case intorno erano bruciate, e lei sedeva in mezzo alla cenere, con i piedi pieni di vesciche, e non piangeva.",
+                    "requires": {"reached_floor": 23}
+                },
+                {
+                    "title": "L'Ultima Canzone",
+                    "text": "L'ultima canzone del canzoniere non ha musica, e Gorm scrive che non ha mai potuto suonarla. «Se un giorno il fuoco torna caldo, / se un giorno il fuoco torna casa, / accendetemi un falò piccolo / e ballate piano, che mi riposa.» Sotto, una nota: «Per Hrodna, se torna. Le ho tenuto la scintilla della sesta estate. La bambina me l'ha restituita, da grande. Ha detto che era giusto così.» Fra le pagine del canzoniere c'è una lanterna di vetro piccola, vuota, con il vetro annerito. Qualcuno l'ha tenuta accesa a lungo.",
+                    "requires": {"reached_floor": 25}
+                }
+            ]
+        },
+        "lettere_mila": {
+            "title": "Le Lettere di Mila",
+            "unlock_condition": "Sconfiggi 12 Boss",
+            "unlock": {"type": "total_bosses", "value": 12},
+            "chapters": [
+                {
+                    "title": "Dalle Colline",
+                    "text": "Lettere scritte da Mila, guardia di Aurelia, dopo la Discordia, dal campo dei profughi sulle colline. Non hanno destinatario. Le lasciava sotto un sasso, accanto all'unica pietra della Porta del Sole che fosse rimasta in superficie. «Bran, siamo arrivati. Il carro, la donna, i due bambini, il vecchio. Il mulo è morto il giorno dopo, ma noi no. Ho dormito sotto il carro tre notti e ogni notte ho sognato il cardine della porta. Faceva lo stesso rumore. Domani comincio a costruire una casa. Ti terrò un posto. Lo so che è stupido.»"
+                },
+                {
+                    "title": "La Casa",
+                    "text": "«Bran, la casa è finita. È piccola, due stanze e una stalla, ma la porta è di legno buono e i cardini non cigolano, perché li ho oliati come mi avevi insegnato tu. Sulla porta ho appeso uno scudo da guardia. Non è il mio: l'ho trovato fra le macerie, ammaccato. Ma l'ho tenuto alto, come dicevi. La gente del campo ride. Dicono che una guardia senza città non ha niente da guardare. Hanno ragione. Ma io guardo la mia porta. È tutto quello che mi resta da proteggere, e lo proteggo bene.»"
+                },
+                {
+                    "title": "I Cavalli",
+                    "text": "«Bran, ho comprato un cavallo. Lo so: io, che avevo paura dei cavalli. È una giumenta vecchia, mezza cieca, che nessuno voleva. La prima settimana non riuscivo ad avvicinarmi. La seconda le ho portato una mela. La terza mi ha lasciato toccare il muso. Adesso la chiamo Gerd, perché russa. Ti saresti fatto delle risate. Rido anch'io, a volte, e poi piango, perché non ci sei a ridere con me. Mi hai insegnato a tenere lo scudo alto. Io ti avevo insegnato a ridere delle cose che fanno paura. Spero che tu te lo sia ricordato, alla fine.»",
+                    "requires": {"bosses_total": 18}
+                },
+                {
+                    "title": "L'Ultima Lettera",
+                    "text": "«Bran, sono vecchia. Ho settantanove anni e le mani mi tremano. Ho avuto una vita lunga, più di quanto ti spettasse, e ogni giorno di questa vita è stato un carro che hai fatto passare. Non te l'ho mai detto, perché non c'eri. Te lo dico adesso. Grazie. Domani lascio questa lettera sotto il sasso, come sempre. Poi credo che resterò a letto per un po'. Lo scudo resta sulla porta. Mia nipote ha promesso di non toglierlo mai. Se un giorno qualcuno ti trova, laggiù, digli di dirti questo: Mila ha tenuto la porta anche lei.»",
+                    "requires": {"bosses_total": 25}
+                }
+            ]
+        },
+        "diario_corin": {
+            "title": "Il Diario di Corin, Apprendista",
+            "unlock_condition": "Raggiungi il Piano 23",
+            "unlock": {"type": "max_floor", "value": 23},
+            "chapters": [
+                {
+                    "title": "La Chiamata",
+                    "text": "Diario di Corin, figlio del fabbro di cardini della valle di Brasa, apprendista. Oggi gli Architetti hanno chiamato gli apprendisti di Ignis per la riforgiatura. Dicono che il mondo si è spezzato e che solo le nostre forge sono abbastanza calde per rifarlo. Mio padre non vuole che vada. Dice che le spade le fa chi ha paura e i cardini chi ha una casa, e che un mondo non si rifà a martellate. Io voglio andare. È la cosa più importante che sia mai successa a Ignis. Elara dice che sono uno stupido. Poi mi abbraccia così forte che mi fa male."
+                },
+                {
+                    "title": "La Fucina Grande",
+                    "text": "La fucina grande è più calda di qualsiasi cosa abbia mai sentito. Le Vesti di Brace ci proteggono, ma il calore entra lo stesso, dalla bocca, dagli occhi. Il Maestro di Forgia ci dà ordini senza guardarci: guarda solo il metallo. Battiamo elementi, non ferro. Il fuoco è facile. L'acqua sfugge. La terra pesa. Il vento non si lascia prendere. Lisbet, l'apprendista accanto a me, dice che stiamo facendo una cosa che non si può fare. Il Maestro l'ha sentita. Non ha detto niente. Ha solo battuto più forte.",
+                    "requires": {"reached_floor": 23}
+                },
+                {
+                    "title": "La Lista",
+                    "text": "Oggi Lisbet non è tornata dal turno. Il Maestro ha scritto la data accanto al suo nome, sulla lista appesa alla porta. Ho chiesto cosa volesse dire. Mi ha detto che Lisbet è diventata parte del lavoro. Ho guardato nel crogiolo. C'era una forma, dentro il metallo, che aveva le sue mani. Non ho dormito. Ho pensato a mio padre e alla forgia di casa. Ho pensato di andarmene. Ma il Maestro dice che se ce ne andiamo il lavoro resta a metà, e il mondo con lui. Non so se credergli. So che ho paura.",
+                    "requires": {"reached_floor": 24}
+                },
+                {
+                    "title": "Il Nome",
+                    "text": "L'ultima pagina è scritta in fretta, storta, con una mano che non è più del tutto una mano. «Il ferro mi sta salendo sulle braccia. Non fa male, ed è questo che fa paura. Se Elara viene a cercarmi, e verrà, perché è testarda: ditele di chiamarmi per nome. Quando qualcuno mi chiama per nome, mi giro. È l'ultima cosa che sono ancora capace di fare da solo. Ditele anche che le chiedo scusa per averle detto che era una stupida a volermi trattenere. Aveva ragione. La cicatrice sul mento mi prude. Vuol dire che sono ancora io.»",
+                    "requires": {"reached_floor": 25}
+                }
+            ]
+        },
+        "preghiere_templi": {
+            "title": "Le Preghiere dei Grandi Templi",
+            "unlock_condition": "Raggiungi il Piano 15",
+            "unlock": {"type": "max_floor", "value": 15},
+            "chapters": [
+                {
+                    "title": "La Preghiera dell'Alba",
+                    "text": "Nei Grandi Templi della Luce, ad Aurelia, si pregava all'alba, a mezzogiorno e al tramonto. La preghiera dell'alba era la più antica, e la più semplice: «Luce che torni, grazie di tornare. Luce che scaldi, grazie di scaldare. Luce che mostri, mostraci piano, che non siamo pronti a vedere tutto.» Il sommo sacerdote la diceva con il Bastone dell'Alba alzato verso la finestra a oriente, e la gente nel tempio rispondeva in coro, un poco in ritardo, come sempre succede ai cori. I bambini la imparavano prima di imparare a leggere. Molti la ricordano ancora, nel Labirinto, senza sapere da dove venga."
+                },
+                {
+                    "title": "La Preghiera dei Malati",
+                    "text": "Una preghiera per i malati, che i sacerdoti dicevano posando la mano sulla fronte di chi soffriva: «Luce, guarda questa persona. Non renderla perfetta: rendila sana. Lascia le sue cicatrici, i suoi nei, le sue rughe, che sono la sua storia. Togli solo il dolore.» Una nota a margine, aggiunta nel Crepuscolo Lungo da una mano diversa: «Abbiamo smesso di dire la seconda frase. Il sommo sacerdote dice che la Luce non ha bisogno di istruzioni. Da allora i malati guariscono lisci, e le madri non li riconoscono.» La nota è firmata con un'iniziale sola, una O."
+                },
+                {
+                    "title": "La Preghiera Cambiata",
+                    "text": "Dopo la Discordia la preghiera dell'alba cambia, nella calligrafia stretta di un sacerdote che non si firma: «Luce che bruci, brucia ciò che è impuro. Luce che vedi, vedi ogni colpa. Luce che giudichi, giudicaci tutti.» Sotto, a matita, qualcuno ha scritto con rabbia: «Non è la stessa Luce. Non può essere la stessa.» E ancora sotto, con la stessa calligrafia stretta di prima, come una risposta: «È la stessa. È solo stanca di essere gentile con un mondo che non la merita.» I Paladini Corrotti la recitano ancora, nelle Guglie, mentre combattono.",
+                    "requires": {"reached_floor": 16}
+                },
+                {
+                    "title": "La Preghiera Ritrovata",
+                    "text": "L'ultima pagina è stata aggiunta da chi ha raccolto il libro e lo ha portato all'Archivio: una novizia dei Chiostri, a giudicare dalla calligrafia rotonda. «Ho trovato questo libro sull'altare di un tempio crollato, nelle Guglie. Era aperto alla preghiera dei malati. Qualcuno, prima di me, aveva ripassato a penna la seconda frase, quella che i sacerdoti avevano smesso di dire, tante volte da bucare la carta. Non rendila perfetta: rendila sana. Ho deciso di dirla io, ogni mattina. Non so se la Luce mi ascolta. Ma la dico.»",
+                    "requires": {"reached_floor": 18}
+                }
+            ]
+        },
+        "favole_bosco": {
+            "title": "Le Favole del Bosco Vecchio",
+            "unlock_condition": "Raggiungi il Piano 16",
+            "unlock": {"type": "max_floor", "value": 16},
+            "chapters": [
+                {
+                    "title": "Il Faggio che Non Voleva Crescere",
+                    "text": "Le favole che gli uomini della costa raccontavano ai bambini, raccolte da una maestra di Port'Alba. La prima: c'era una volta, nel Bosco Vecchio, un faggio che non voleva crescere. Gli altri alberi diventavano alti e vedevano il mare; lui restava piccolo, all'ombra, e si guardava le radici. Un giorno arrivò la tempesta e spezzò tutti gli alberi alti. Il faggio piccolo restò in piedi. Il giorno dopo cominciò a crescere, perché adesso qualcuno doveva vedere il mare per tutti. La maestra annota: «I bambini chiedono sempre se è triste o felice. Io rispondo: tutte e due. Come le cose vere.»"
+                },
+                {
+                    "title": "La Fata della Sorgente",
+                    "text": "La seconda favola parla di una fata che viveva nella sorgente più pura del Bosco Vecchio. Chi beveva da lei si ricordava di una cosa bella che aveva dimenticato: la voce della nonna, il primo giorno di primavera, un gioco di bambini. La fata non chiedeva niente in cambio. Chiedeva solo che chi beveva raccontasse a qualcuno quello che si era ricordato, perché i ricordi detti ad alta voce, diceva, mettono radici. I bambini della costa, dopo la favola, andavano a bere a tutte le fontane del paese, e poi correvano a raccontare cose inventate. La maestra non li correggeva."
+                },
+                {
+                    "title": "Il Pettirosso",
+                    "text": "La terza favola è più breve, e la maestra scrive di averla sentita da una bambina, non da un adulto. Un pettirosso viveva sul ramo più basso di un faggio, vicino alla sorgente della fata, e ogni mattina scendeva a bere. Una mattina il bosco si addormentò, e il pettirosso restò sul ramo, con il becco aperto, senza poter scendere. La fata lo vide e gli promise: quando il bosco si sveglia, ti porto io l'acqua. La bambina diceva che la fata aspetta ancora. La maestra le chiese come lo sapesse. La bambina rispose: l'ho sognato. Era la notte dopo la Discordia.",
+                    "requires": {"reached_floor": 17}
+                },
+                {
+                    "title": "La Favola Senza Fine",
+                    "text": "L'ultima favola non ha una fine, perché la maestra scrive di non averla mai trovata. Inizia così: c'era una volta un viandante che si svegliava sempre accanto allo stesso fuoco, senza ricordare il suo nome, e scendeva ogni volta nel bosco di pietra per cercare qualcosa. Ogni volta beveva alla sorgente della fata, e ogni volta la fata gli restituiva un ricordo, uno solo, piccolo. La maestra scrive: «La gente della costa dice che la favola finisce quando il viandante si ricorda tutto. Nessuno sa cosa succede dopo. Forse nessuno l'ha ancora vissuta.»",
+                    "requires": {"reached_floor": 20}
+                }
+            ]
+        },
+        "trattato_rune": {
+            "title": "Il Trattato sulle Rune dei Lapicidi",
+            "unlock_condition": "Raggiungi il Piano 11",
+            "unlock": {"type": "max_floor", "value": 11},
+            "chapters": [
+                {
+                    "title": "Cos'è una Runa",
+                    "text": "Trattato della Gilda dei Lapicidi di Durn, per gli apprendisti. Una runa non è un disegno: è una parola che la pietra ha deciso di tenere. Il lapicida non la inventa, la ascolta. Si prende un pezzo di quarzo della vena che canta, lo si tiene all'orecchio per una notte intera, e al mattino si incide il segno che la pietra ha suggerito. Se il segno è giusto, la runa si scalda. Se è sbagliato, la pietra si spacca. Un buon lapicida spacca cento pietre prima di incidere la prima runa. Un grande lapicida ne spacca mille, e non se ne lamenta."
+                },
+                {
+                    "title": "Gli Incastoni",
+                    "text": "Le rune hanno bisogno di una casa. Un'arma o un'armatura possono ospitarle solo se hanno un incastone, una piccola cavità scavata nel metallo con lo stesso rispetto con cui si scava una culla. Il trattato insiste: l'incastone si fa prima di sapere quale runa ci andrà, perché la runa sceglie l'incastone e non il contrario. Un fabbro di Ignis, secoli fa, scavò due incastoni in una corazza dopo aver sognato due rune che nessuno aveva mai visto. Le rune furono scoperte solo dopo la sua morte. La corazza le aspettava già. Si scaldò quando le avvicinarono."
+                },
+                {
+                    "title": "Le Parole Runiche",
+                    "text": "Certe rune, messe vicine sullo stesso oggetto, si parlano. Il trattato le chiama parole runiche: due o tre rune che insieme dicono una cosa che nessuna di loro saprebbe dire da sola. Il lapicida non può forzarle: se le metti vicine e non vogliono parlarsi, restano mute. Se vogliono, l'oggetto si scalda tutto, e il suo nome cambia, perché un oggetto che porta una parola diventa un'altra cosa. Il trattato elenca le parole conosciute ai tempi della Gilda. L'elenco si interrompe a metà di una pagina, con una nota: «Le altre le scoprirà chi verrà dopo».",
+                    "requires": {"reached_floor": 13}
+                },
+                {
+                    "title": "Il Muro Sbagliato",
+                    "text": "Il trattato si chiude con la storia del miglior lapicida della Gilda, un uomo che non sbagliava mai un colpo. Nel Crepuscolo Lungo un committente senza nome lo chiamò a incidere rune su un muro immenso, sotto un'isola lontana. Gli diede i segni già disegnati. Il lapicida li incise tutti, uno per uno, per due anni. Non erano rune che conoscesse. La pietra, mentre le incideva, non si scaldava: si raffreddava. Quando finì, il committente lo pagò e lo ringraziò con una gentilezza stanca. Il lapicida tornò a Durn, appese il martello al muro, e non incise mai più niente.",
+                    "requires": {"reached_floor": 20}
+                }
+            ]
+        },
+        "grimorio_minore": {
+            "title": "Il Grimorio Minore di Aetheria",
+            "unlock_condition": "Scopri 5 incantesimi",
+            "unlock": {"type": "spells_seen", "value": 5},
+            "chapters": [
+                {
+                    "title": "Per gli Studenti del Primo Anno",
+                    "text": "Questo grimorio si dava agli studenti di Aetheria al primo anno, prima del Grimorio Maggiore. Contiene incantesimi piccoli: accendere una candela, asciugare un mantello, far crescere un germoglio, raffreddare una tazza di tè troppo calda. Nella prefazione l'autore, un vecchio insegnante di nome Ruperto, scrive: «Nessuno diventa mago lanciando fulmini. Si diventa maghi asciugando un mantello senza bruciarlo. La magia è una forma di gentilezza verso le cose: si chiede, non si ordina. Chi ordina ottiene. Chi chiede impara.» Valerius, nei suoi appunti, definisce Ruperto «un sentimentale innocuo»."
+                },
+                {
+                    "title": "L'Etere",
+                    "text": "Un capitolo spiega cos'è l'Etere agli studenti. «L'Etere è la luce che resta. Quando gli Architetti accesero il mondo, una parte della Prima Luce non si posò su niente: restò sospesa, come la polvere in un raggio di sole. Ogni incantesimo ne prende un poco in prestito. Per questo un mago si stanca: non perché la magia costi a lui, ma perché deve restituire ciò che ha preso, e lo restituisce con la sua stanchezza.» Ruperto aggiunge: «Ringraziate sempre, quando finite un incantesimo. Non serve a niente. Ma è educato.»"
+                },
+                {
+                    "title": "Le Reazioni",
+                    "text": "Il capitolo sulle reazioni elementali è il più letto, a giudicare dalle pagine consumate. «Quando due elementi si toccano su qualcosa, a volte succede una cosa più grande della somma. Il fuoco e l'acqua fanno vapore che acceca. Il vento e il fuoco fanno un incendio che corre. La luce e la tenebra fanno un silenzio pieno. Non sono incidenti: sono ricordi. Gli elementi, una volta, erano una cosa sola. Quando si toccano si ricordano, per un istante, di essere stati insieme.» Sotto, con una calligrafia infantile: «Ilio dice che si sente la musica».",
+                    "requires": {"reached_floor": 10}
+                },
+                {
+                    "title": "La Pagina Bianca",
+                    "text": "L'ultima pagina del grimorio è bianca, e Ruperto spiega perché nella penultima. «Ogni studente scriverà qui il suo primo incantesimo inventato. Non deve essere potente. Deve essere suo.» Sulla copia arrivata all'Archivio la pagina è piena di incantesimi scritti da mani diverse, uno sotto l'altro, nei secoli: «per far smettere di piovere sul bucato», «per ritrovare un bottone», «per far sorridere mia sorella». L'ultimo è scritto con un inchiostro più fresco, da qualcuno che non si firma: «per ricordare un nome che ho dimenticato». Non c'è scritto come si lancia.",
+                    "requires": {"bosses_total": 20}
+                }
+            ]
+        },
+        "registro_mercante": {
+            "title": "Il Registro del Mercante",
+            "unlock_condition": "Sconfiggi 25 Boss",
+            "unlock": {"type": "total_bosses", "value": 25},
+            "chapters": [
+                {
+                    "title": "I Prezzi",
+                    "text": "Un registro rilegato in cuoio dorato, trovato su un banco abbandonato in una stanza del Mercante. Le prime pagine sono una lista di prezzi, scritta con una calligrafia perfetta. «Una pozione: trenta oro. Una spada: centoventi oro. Il ricordo di chi ti ha insegnato a temperare il carboncino: una mappa dei Chiostri. Gli occhi di un cartografo: la visione di un sogno. Il colore degli occhi di una sorella: non in vendita, non posseduto.» Accanto a quest'ultima riga c'è una piccola macchia, come se la penna si fosse fermata a lungo sulla carta."
+                },
+                {
+                    "title": "I Ricordi Comprati",
+                    "text": "Una sezione del registro elenca i ricordi che il Mercante ha comprato, e dove li tiene. Sono migliaia, in ordine. Molti sono di persone che il giocatore conosce. Uno, a metà, è scritto con un inchiostro diverso, più scuro: «Discese del Ritornante. Comprati uno per uno, a ogni morte, senza che lui lo sapesse. Pagati con il ritorno: ogni volta che torna, ho preso un ricordo, e lui ha avuto un'altra discesa. Prezzo onesto.» Sotto: «Conservati a parte. Non in vendita. Da restituire, quando sarà il momento. Il Mercante paga sempre i suoi debiti».",
+                    "requires": {"bosses_total": 25}
+                },
+                {
+                    "title": "Il Tesoriere",
+                    "text": "Una pagina, più vecchia delle altre, racconta chi era il Mercante prima di non avere un volto. «Tesoriere del cielo, Architetto Minore. Custodivo i tesori degli Architetti nelle volte di Aetheria: non oro, ma le cose preziose del mondo. Il primo raggio di sole. La prima pioggia. La prima parola di un bambino. Quando il mondo si spezzò, gli altri se ne andarono. Io rimasi, perché i tesori non si lasciano incustoditi. Il volto mi è svanito a forza di guardare l'oro. Adesso, quando mi guardo in uno specchio, vedo solo un riflesso. È un buon affare. Non ho più niente da perdere, nemmeno la faccia.»",
+                    "requires": {"bosses_total": 30}
+                },
+                {
+                    "title": "Il Debito",
+                    "text": "L'ultima pagina è un conto aperto, l'unico del registro che non sia chiuso. Da una parte, la colonna del dare: «Un fuoco che non si spegne. Un posto dove tornare. Mille anni di discese.» Dall'altra parte, quella dell'avere: vuota. In fondo, una nota con la calligrafia perfetta del Mercante, ma più piccola, quasi timida: «Qualcuno sta pagando per tutti. Non so chi. Non so con cosa. So che il conto non torna, e che non tornerà finché non lo salda chi lo ha aperto. Io sono un tesoriere. Non posso saldare il debito di un altro. Posso solo tenerlo scritto.»",
+                    "requires": {"won": true, "bosses_total": 35}
+                }
+            ]
+        },
+        "libro_mendicante": {
+            "title": "Il Libro del Mendicante Ombra",
+            "unlock_condition": "Sconfiggi 35 Boss",
+            "unlock": {"type": "total_bosses", "value": 35},
+            "chapters": [
+                {
+                    "title": "Chi Chiede",
+                    "text": "Il Mendicante Ombra chiede l'elemosina nei corridoi del Labirinto, con una ciotola di legno e un mantello che sembra fatto di fumo. Questo libretto, scritto con una calligrafia sottile, è suo. «Sono un Architetto Minore, come il Mercante. Lui custodiva i tesori, io custodivo i poveri. Ogni elemosina che il mondo dava, la davano a me, e io la portavo a chi ne aveva bisogno. Ero il canale. Non avevo niente, e non mi serviva niente: tutto passava attraverso di me. Quando il mondo si spezzò, il canale si ruppe. Adesso chiedo, e quello che ricevo resta a me. Non so a chi darlo.»"
+                },
+                {
+                    "title": "Il Fratello",
+                    "text": "«Il Mercante e io non ci parliamo da mille anni. Lui pensa che io sia uno sciocco, perché do via quello che ho. Io penso che lui sia triste, perché tiene tutto. Abbiamo ragione tutti e due. Una volta eravamo amici: lui pesava i tesori, io pesavo i bisogni, e la sera confrontavamo i conti. I conti tornavano sempre. Adesso lui ha i tesori e io ho i bisogni, e nessuno dei due ha più l'altra metà. Se un giorno qualcuno ci facesse sedere allo stesso tavolo, credo che non sapremmo cosa dirci. Ma i conti, forse, tornerebbero.»",
+                    "requires": {"bosses_total": 35}
+                },
+                {
+                    "title": "Quello che Ricevo",
+                    "text": "Il Mendicante elenca le elemosine ricevute, con cura. «Una moneta da un Goblin che piangeva. Mezzo pane da un minatore senza nome. Un fiore di carta da un astronomo. Una carezza da una bambina d'ombra, nei Chiostri, che non sapeva cos'altro dare. Un sorso d'acqua da una fontana che parlava. E molte volte, da chi torna sempre al fuoco, qualcosa che non so nominare: un sorriso, un po' di tempo, una domanda gentile.» Accanto a quest'ultima riga: «Questo, di tutto, è quello che vorrei dare via. Ma non so a chi, perché è già suo».",
+                    "requires": {"bosses_total": 40}
+                },
+                {
+                    "title": "L'Ultima Elemosina",
+                    "text": "«Ho capito a chi dare quello che ricevo. Al Fuoco. È l'unico, qui sotto, che dà senza chiedere niente. Ogni sera, quando nessuno guarda, verso nella brace una moneta, un pezzo di pane, un fiore di carta. Lui non se ne accorge, credo. O forse sì: la fiamma si alza di un capello, ogni volta, e poi torna giù. Non so se lo aiuto. So che il canale, per un momento, funziona di nuovo. Tutto passa attraverso di me, e va da qualche parte. Non chiedo altro. Sono un mendicante. Il mio mestiere è chiedere, e il mio piacere era dare.»",
+                    "requires": {"won": true, "bosses_total": 40}
+                }
+            ]
+        },
+        "quaderno_eco": {
+            "title": "Il Quaderno delle Eco",
+            "unlock_condition": "Raggiungi l'Eco III della Modalità Infinita",
+            "unlock": {"type": "best_echo", "value": 3},
+            "chapters": [
+                {
+                    "title": "Oltre il Trenta",
+                    "text": "Un quaderno scritto da qualcuno che è sceso oltre il piano trenta e ha continuato. La calligrafia ricorda quella delle lettere insanguinate, ma è più calma. «Oltre il trenta il Labirinto ricomincia. Gli stessi biomi, in un ordine diverso, più forti. Lo chiamano il Ciclo. Io lo chiamo il Labirinto che ricorda: ogni volta che lo attraversi, ti riconosce un po' di più, e i suoi abitanti diventano più bravi a fermarti. Non è cattiveria. È memoria. Chi viene ricordato viene anche aspettato.»"
+                },
+                {
+                    "title": "Le Creature che Imparano",
+                    "text": "«All'Eco seconda le creature mi riconoscono. Non tutte, ma le native di ogni bioma sì: mi guardano come si guarda qualcuno che è già passato, e combattono meglio, come se avessero studiato. La Badessa, all'Eco seconda, non mi ha detto di sedermi. Mi ha detto: sei tornato. Il Caposquadra non mi ha offerto un piccone. Mi ha detto: risali, stavolta. Ho capito che il Labirinto, quando ricomincia, non ricomincia da zero. Ricomincia da noi. Ricomincia da quello che gli abbiamo insegnato, discesa dopo discesa, senza volerlo.»",
+                    "requires": {"bosses_total": 30}
+                },
+                {
+                    "title": "Il Dio che Torna",
+                    "text": "«Ogni trenta piani il Dio Antico è di nuovo lì. Non è un altro: è lo stesso, più sveglio. All'Eco terza mi ha guardato a lungo prima di combattere, e ho sentito la sua stanchezza come se fosse la mia. Non è un nemico che si rialza. È qualcuno che non riesce a dormire. Ogni volta che lo abbatto, dorme un poco. Ogni volta che scendo ancora, lo sveglio. Non so più se scendo per sconfiggerlo o per tenergli compagnia.»",
+                    "requires": {"won": true, "bosses_total": 40}
+                },
+                {
+                    "title": "Il Centro della Spirale",
+                    "text": "«Ho capito la forma del Ciclo. È una spirale che scende, e ogni giro è più stretto. Al centro c'è un punto dove il Labirinto smette di ricordare, e lì, credo, c'è il riposo che il Dio cerca. Non ci sono arrivato. Non so se ci si arriva. So che ogni Eco mi avvicina, e che ogni Eco costa. Lascio questo quaderno all'Archivio per chi verrà dopo: non scendete per vincere. Scendete per capire. Il Labirinto ricorda chi lo capisce, e lo lascia andare più facilmente.»",
+                    "requires": {"won": true, "bosses_total": 50}
+                }
+            ]
+        },
+        "registro_custodi": {
+            "title": "Il Registro dei Custodi",
+            "unlock_condition": "Raggiungi il Piano 28",
+            "unlock": {"type": "max_floor", "value": 28},
+            "chapters": [
+                {
+                    "title": "I Custodi di Aethelgard",
+                    "text": "I Custodi erano un ordine più antico dei Paladini: custodivano le porte di Aethelgard, quelle delle città e quelle dei templi, e si passavano l'armatura di padre in figlio. Questo registro elenca le porte custodite e i Custodi che le tennero, generazione per generazione. La Porta del Sole di Aurelia, la Porta dei Mulini di Valeriana, la Porta di Pietra di Durn, la Porta del Mare di Port'Alba. Accanto a ogni porta, una lista di nomi. Le liste si interrompono tutte nello stesso anno, il millesimo dopo l'Equilibrio. Nessuna porta ha avuto un Custode dopo la Discordia."
+                },
+                {
+                    "title": "La Porta Senza Nome",
+                    "text": "In fondo al registro c'è una porta che non ha nome, solo un segno: un arco vuoto. Accanto, un solo Custode: Alaric, Primo Paladino. Il registro nota che non era un Custode di nascita, ma che gli Architetti gli affidarono la porta personalmente, contro ogni regola dell'ordine. I Custodi protestarono. Gli Architetti risposero con una frase sola, trascritta nel registro: «Questa porta non si custodisce con l'armatura, ma con la fede. Solo lui ne ha abbastanza.» Qualcuno, a margine, ha aggiunto: «Allora non è una porta. È una prova.»",
+                    "requires": {"reached_floor": 28}
+                },
+                {
+                    "title": "Il Giuramento dei Custodi",
+                    "text": "Il giuramento dei Custodi, diverso da quello dei Paladini: «Custodirò questa porta finché qualcuno avrà bisogno che resti chiusa, e la aprirò il giorno in cui qualcuno avrà bisogno che si apra. Non decido io quale dei due giorni sia. Lo decide chi bussa.» Il registro nota che Alaric non fece questo giuramento. Fece quello dei Paladini: non chiedere mai cosa si custodisce. Per questo, scrive il registro, non saprà mai quando aprirla. Qualcuno dovrà dirglielo. Qualcuno dovrà bussare, e aspettare che lui risponda.",
+                    "requires": {"reached_floor": 29}
+                },
+                {
+                    "title": "L'Ultimo Nome",
+                    "text": "L'ultima pagina del registro è recente. Qualcuno ha aggiunto, sotto il nome di Alaric, un secondo nome, poi lo ha cancellato. Si leggono solo le ultime lettere. Accanto, scritto con la stessa mano: «Ho preso il suo posto. Non so per quanto. Il giuramento non conosce vittorie, ma conosce i cambi di turno. Se qualcuno legge questo, e viene alla porta, e mi trova lì: bussa. Poi dimmi il giuramento dei Custodi, quello vero. Io non l'ho mai saputo. Voglio sapere quando aprire.»",
+                    "requires": {"won": true}
+                }
+            ]
+        },
+        "testamento_galdor": {
+            "title": "Il Testamento di Galdor",
+            "unlock_condition": "Vinci al grado 3 di Ascensione",
+            "unlock": {"type": "ascension", "value": 3},
+            "chapters": [
+                {
+                    "title": "Le Volontà del Re",
+                    "text": "Testamento di Galdor, re delle Valli del Sud, scritto la notte prima del patto e mai aperto. «Se domani firmo, e il mio popolo cambia, sappiate che non l'ho fatto per l'oro. Ho visto tre inverni di bambini con la pancia gonfia. Ho seppellito mia figlia, che aveva sei anni, perché il grano marcì. L'Architetto che è venuto a corte mi ha promesso che nessuno avrà più fame. Mi ha guardato con occhi così stanchi che ho pensato: quest'uomo ha visto più dolore di me. Gli credo. Firmerò.»"
+                },
+                {
+                    "title": "Il Messaggio",
+                    "text": "«Stamattina è arrivato un messaggero con il sigillo degli altri Architetti. Dice che l'esperimento è pericoloso, che può lacerare il mondo. Ho letto la lettera tre volte. Poi ho pensato a mia figlia. Poi ho pensato a tutti i bambini che non sono ancora morti, e che moriranno quest'inverno se non firmo. Ho dato l'ordine. Il messaggio non è mai arrivato. Che gli Architetti fedeli mi perdonino, se possono: loro non hanno mai avuto fame. Il mio popolo sì. Io sì, per tre inverni, insieme a loro.»",
+                    "requires": {"bosses_total": 40}
+                },
+                {
+                    "title": "Il Re dei Goblin",
+                    "text": "Una pagina aggiunta molto dopo, con una calligrafia piccola, verde, quasi infantile. «Il popolo non ha fame. Il patto è mantenuto. Ma il popolo non è più il popolo: è piccolo, verde, avido, e mi chiama re senza sapere cosa sia un re. Mangiano sempre. Non sono mai sazi. L'Architetto ha mantenuto la promessa alla lettera: nessuno avrà più fame. Non ha detto che avremmo smesso di volere.» Sotto, una riga sola, ripetuta tre volte, sempre più storta: «Il patto è il patto».",
+                    "requires": {"won": true, "bosses_total": 40}
+                },
+                {
+                    "title": "L'Ultima Volontà",
+                    "text": "L'ultima pagina è scritta con la calligrafia del primo capitolo, quella del re giovane, come se Galdor l'avesse ritrovata per un momento. «Se qualcuno arriva fino a me, laggiù, e mi trova con la corona troppo grande e il sacco di monete false: non odiatemi. Ho scelto male, ma ho scelto per qualcuno. E all'Architetto, se lo incontrate, dite questo da parte mia: ti ho creduto perché eri stanco. Lo so che lo eri. Spero che tu abbia trovato il riposo che cercavi. Io no. Io ho solo smesso di avere fame.»",
+                    "requires": {"won": true, "bosses_total": 50}
+                }
+            ]
         }
     }
 }
