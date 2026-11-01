@@ -20,7 +20,8 @@ DATA = os.path.join(ROOT, "data")
 TARGET_MULT = 10
 # Le parole della v5, prima dell'espansione della lore (calcolate con questo stesso strumento)
 BASELINE = {"eventi": 5166, "stanze": 1900, "lettere": 544, "personaggi": 583, "finali": 340, "bestiario": 1147,
-            "fasi dei boss": 436, "biomi": 283, "libri": 346, "reliquie e oggetti": 999, "epitaffi e nemesi": 229}
+            "fasi dei boss": 436, "biomi": 283, "libri": 346, "reliquie e oggetti": 999, "epitaffi e nemesi": 229,
+            "dialoghi del Campo": 0}
 STOPWORDS = set("""il lo la i gli le un uno una di a da in con su per tra fra e o ma se che chi non ne ci si mi ti vi
 è sono era ha ho hai del della dei degli delle al alla ai agli alle dal dalla nel nella nei negli nelle sul sulla
 come più quando dove anche solo poi già ancora tutto tutti tua tuo tue tuoi sua suo sue suoi mia mio è ed d l un'
@@ -56,6 +57,16 @@ def event_texts(events: dict) -> list:
     return out
 
 
+def dialogue_texts(dialogues: dict) -> list:
+    """Le conversazioni del Campo: saluti, battute degli argomenti e risposte alle scelte."""
+    out = []
+    for c in dialogues["characters"].values():
+        out += [l["text"] for l in c.get("lines", [])]
+        for t in c["topics"]:
+            out += t["lines"] + [ch["reply"] for ch in t.get("choices", [])]
+    return out
+
+
 def blocks() -> dict:
     """I testi narrativi, per blocco."""
     story, enemies = load("story.json"), load("enemies.json")
@@ -72,6 +83,7 @@ def blocks() -> dict:
         "reliquie e oggetti": strings(load("relics.json"), {"lore"}) + strings(load("weapons.json"), {"flavor"})
                               + strings(load("armors.json"), {"flavor"}) + strings(load("accessories.json"), {"lore"}),
         "epitaffi e nemesi": strings(load("epitaph.json")) + strings(load("nemesis.json"), {"born", "returns", "defeated", "boss_grudge"}),
+        "dialoghi del Campo": dialogue_texts(load("dialogues.json")),
     }
 
 
@@ -105,7 +117,7 @@ def report() -> str:
     for name, items in by_block.items():
         n, b = sum(map(words, items)), BASELINE.get(name, 0)
         total, base = total + n, base + b
-        lines.append(f"{name:20} {n:8} {b:5} {n / b if b else 0:4.1f}")
+        lines.append(f"{name:20} {n:8} {b:5} " + (f"{n / b:4.1f}" if b else "nuovo"))
     lines.append(f"{'TOTALE':20} {total:8} {base:5} {total / base:4.1f}   obiettivo {base * TARGET_MULT} (×{TARGET_MULT})")
     dups = duplicates(by_block)
     lines.append(f"\nTesti identici: {len(dups)}")
