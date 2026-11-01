@@ -694,6 +694,18 @@ Tra una discesa e l'altra spendi l'**Essenza Astrale**:
 | Il Quaderno delle Eco | Raggiungi l'Eco III della Modalità Infinita | — |
 | Il Registro dei Custodi | Raggiungi il Piano 28 | — |
 | Il Testamento di Galdor | Vinci al grado 3 di Ascensione | — |
+| Le Cronache di Aurelia | Raggiungi il Piano 1 | — |
+| Il Quaderno di Nerea | Raggiungi il Piano 20 | — |
+| L'Erbario delle Paludi di Morva | Raggiungi il Piano 14 | — |
+| Il Trattato sul Ritorno | Sconfiggi 6 Boss | — |
+| Il Libro del Drago di Zaffiro | Raggiungi il Piano 18 | — |
+| La Storia dell'Accademia della Luce Calma | Scopri 8 incantesimi | — |
+| Il Diario della Maestra delle Stelle | Raggiungi il Piano 15 | — |
+| I Viaggi di Bertolo, Mercante di Valeriana | Raggiungi il Piano 9 | — |
+| Il Libro delle Sette Cittadelle | Vinci una Run Standard | — |
+| Le Cronache dei Paladini Corrotti | Raggiungi il Piano 13 | — |
+| Il Libro dei Nomi del Ventre | Raggiungi il Piano 21 | — |
+| Il Libro dei Sette Sigilli | Sconfiggi 20 Boss | — |
 
 - **🔥 Il Fuoco del Campo** — chi incontri nel Labirinto può venire a scaldarsi qui. *Silas*, *la Cartografa*, *il Viandante Cieco* e, se lo hai liberato, *la luce di Alaric* compaiono quando le loro storie sono andate abbastanza avanti. Ti parlano in base a ciò che hai fatto e la prima volta ti lasciano un dono (✦). Più avanti nelle loro storie, al fuoco arrivano anche *l'ampolla di Linnea* e *Kaelen*. La luce di Alaric non parla, ma anche con lei ci sono argomenti: i suoi ricordi passano nel calore. Siedono al fuoco anche gli artigiani che hai liberato (*lo Speziale*, *Borek*, *Elara*, *Valerius*). Con ognuno puoi **parlare per argomenti**: ogni argomento nuovo si apre con il tuo progresso (i piani raggiunti, i boss sconfitti, le scelte fatte negli eventi, la vittoria) ed è segnato ✦ finché non lo leggi. A volte ti chiedono una risposta: non cambia niente nel gioco, ma loro se la ricordano. È qui, lontano dalla discesa, che raccontano chi erano e cosa nascondono. Qui costruisci anche, con l'Essenza:
   - *il Tavolo della Cartografa* (aiutala nel Labirinto): sulla mappa vedi quali storie ti aspettano nelle stanze speciali e negli eventi che tornano;
