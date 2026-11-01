@@ -192,7 +192,7 @@
     "won": true,
     "floor": 31,
     "level": 14,
-    "essence": 48962,
+    "essence": 48277,
     "killer": "DIO ANTICO",
     "bosses": [
       "Cavaliere Oscuro",
@@ -222,11 +222,11 @@
       "Cavaliere dell'Apocalisse",
       "Il Custode della Soglia",
       "Cavaliere dell'Apocalisse",
-      "Il Tristo Mietitore",
-      "Drago d'Ossidiana",
+      "Cavaliere dell'Apocalisse",
+      "Cavaliere dell'Apocalisse",
       "DIO ANTICO"
     ],
-    "hits": 82,
+    "hits": 81,
     "zero": 0
   },
   {

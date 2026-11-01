@@ -37,6 +37,27 @@ class CanonTest(unittest.TestCase):
             self.assertIn(section, CANON)
 
 
+# Gli eventi scritti per la v6 (i capitoli degli archi dopo quelli della v5): in partita i testi sono brevi
+V5_CHAPTERS = {"alaric": 3, "silas": 3}
+
+
+def v6_events() -> list:
+    out = []
+    for cid, char in RAW_DATA["story"]["characters"].items():
+        out += [ch["event"] for ch in char["chapters"][V5_CHAPTERS.get(cid, 0):]]
+    return out
+
+
+class InRunLengthTest(unittest.TestCase):
+    def test_v6_events_follow_the_writing_guide(self):
+        """STORY.md, Parte I: scena di un evento al massimo 55 parole, esito di una scelta al massimo 30."""
+        for ev_id in v6_events():
+            for sc_id, scene in RAW_DATA["events"][ev_id]["scenes"].items():
+                with self.subTest(event=ev_id, scene=sc_id):
+                    self.assertLessEqual(len(scene["text"].split()), 55)
+                    for c in scene["choices"]: self.assertLessEqual(len(c.get("msg", "").split()), 30, c["text"])
+
+
 class TextsTest(unittest.TestCase):
     def test_no_two_narrative_texts_are_the_same(self):
         self.assertEqual(conta_testi.duplicates(conta_testi.blocks()), [], "un testo narrativo è ripetuto identico")

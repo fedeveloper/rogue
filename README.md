@@ -55,7 +55,7 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 - 🌟 **Talenti.** Ogni 5 livelli scegli uno dei 15 talenti fra 3 proposti a caso: danni, difesa, Etere, cure, fortuna.
 - 🎭 **10 tratti** e **20 gradi di Ascensione**: 3.780 combinazioni di partenza diverse.
 - 📅 **Sfida del Giorno.** Una discesa al giorno uguale per tutti: eroe, tratto, malus e dono assegnati, la stessa mappa a ogni piano. Conta il primo tentativo; punteggio, serie di giorni e record restano nel profilo.
-- 📖 **Eventi che ricordano.** 58 storie a scene con opzioni che esistono solo per la tua classe, il tuo tratto o le tue reliquie: `[Mago]`, `[Tocco di Mida]`, `[Chiave Arrugginita]`. Il Labirinto ricorda chi hai aiutato e chi hai derubato, e certe scelte tornano a bussare qualche piano dopo.
+- 📖 **Eventi che ricordano.** 96 storie a scene con opzioni che esistono solo per la tua classe, il tuo tratto o le tue reliquie: `[Mago]`, `[Tocco di Mida]`, `[Chiave Arrugginita]`. Il Labirinto ricorda chi hai aiutato e chi hai derubato, e certe scelte tornano a bussare qualche piano dopo.
 - 🗝️ **Personaggi che ritornano.** *Sir Alaric*, il Primo Paladino, e *Silas*, il Cercatore, hanno storie in tre capitoli che proseguono di run in run. Le tue scelte decidono come finiscono, e se liberi Alaric il Cavaliere Oscuro non tornerà più.
 - 🔷 **Rune e Incastoni.** 20 rune da incastonare al Falò in armi e armature: allungano i marchi, potenziano le reazioni, fanno sanguinare, rubano vita, riflettono i colpi. Restano sull'oggetto finché non le estrai, quindi ogni cambio d'arma è una scelta. Le combinazioni giuste formano 11 **parole runiche** da scoprire.
 - 👑 **Boss che cambiano.** A metà della vita ogni boss entra in una nuova fase con un nome, mosse nuove e regole proprie: il Re dei Goblin chiama le guardie, il Drago di Zaffiro si copre di Scaglie che solo una reazione elementale infrange, la Badessa ti sigilla la difesa. Il DIO ANTICO ha tre fasi, e nella seconda diventa l'elemento che ti ferisce di più. Ogni bioma ha il suo boss nativo, dalla Badessa dei Chiostri al Custode della Soglia.
@@ -464,7 +464,7 @@ Certe combinazioni sullo stesso oggetto formano una **parola runica**, con un ef
 <details>
 <summary>🎭 Gli eventi narrativi</summary>
 
-58 storie e 70 scene: *La Fontana Fatata*, *Il Mendicante Ombra*, *Altare del Sangue*, *La Forgia Abissale*, *La Bisca dei Goblin*, *Il Cavaliere Caduto*, *L'Idolo Corrotto*, *Lo Specchio della Verità*, *L'Oasi Sotterranea*, *Il Cadavere del Saggio*, *La Porta Sigillata*, *Lo Speziale Prigioniero*, *Il Maestro d'Armi Prigioniero*, *L'Armaiola Imprigionata*, *L'Incantatore Intrappolato*, *Il Viandante Cieco*, *Il Buio Vivente*, *La Cartografa Perduta*, *La Sala dei Cento Corridoi*, *Il Pozzo dei Desideri*, *Il Banchetto dei Morti*, *La Bilancia di Aethelgard*, *La Voce nel Buio*, *La Voce del Labirinto*, *Il Giardino Sepolto*, *Il Cavaliere alla Porta*, *Il Cavaliere Stanco*, *L'Ultimo Sigillo*, *Il Cercatore*, *Il Diario Strappato*, *La Soglia*, *La Prima Pietra*… e qualcuno che torna a cercarti più in basso.
+96 storie e 108 scene: *La Fontana Fatata*, *Il Mendicante Ombra*, *Altare del Sangue*, *La Forgia Abissale*, *La Bisca dei Goblin*, *Il Cavaliere Caduto*, *L'Idolo Corrotto*, *Lo Specchio della Verità*, *L'Oasi Sotterranea*, *Il Cadavere del Saggio*, *La Porta Sigillata*, *Lo Speziale Prigioniero*, *Il Maestro d'Armi Prigioniero*, *L'Armaiola Imprigionata*, *L'Incantatore Intrappolato*, *Il Viandante Cieco*, *Il Buio Vivente*, *La Cartografa Perduta*, *La Sala dei Cento Corridoi*, *Il Pozzo dei Desideri*, *Il Banchetto dei Morti*, *La Bilancia di Aethelgard*, *La Voce nel Buio*, *La Voce del Labirinto*, *Il Giardino Sepolto*, *Il Cavaliere alla Porta*, *Il Cavaliere Stanco*, *L'Ultimo Sigillo*, *Il Cercatore*, *Il Diario Strappato*, *La Soglia*, *La Prima Pietra*, *Il Campo di Lavanda*, *La Lettera di Ilse*, *Il Giorno della Luce Crudele*, *L'Armatura sulla Strada*, *Dietro il Muro*, *Il Cavaliere senza Nessuno*, *La Lavanda alla Porta*, *La Ragazza che Ascolta*, *L'Osservatorio*, *La Pagina nella Parete*, *La Maestra*, *Un Piano più in Basso*, *La Cosa d'Inchiostro*, *Il Diario Chiuso*, *La Fontana che Parla*, *Il Bosco nell'Acqua*, *Quello che Ha Visto*, *L'Albero di Pietra*, *La Sorgente Vera*, *Una Goccia in un'Ampolla*, *La Fontana Asciutta*, *Il Bosco Ricordato*, *La Forgia nel Basalto*, *I Segni sul Metallo*, *L'Acciaio che Canta*, *Il Martello di Borek*, *La Spada Esplosa*, *Il Pezzo che Manca*, *Un Messaggio per il Campo*, *La Spada Finita*, *Il Baratto*, *Il Registro*, *I Due che non si Parlano*, *Il Tesoro del Cielo*, *Il Riflesso*, *Il Vasetto degli Occhi*, *I Tuoi Ricordi*, *Il Prezzo Pagato*… e qualcuno che torna a cercarti più in basso.
 
 Ogni scelta mostra i suoi effetti reali, molte opzioni esistono solo per certe classi, tratti o reliquie, gli *oggetti chiave* di un evento aprono strade segrete in un altro e il Labirinto ricorda le tue decisioni da una run all'altra. Quattro eventi nascondono gli artigiani prigionieri.
 
@@ -487,7 +487,7 @@ Ogni scelta mostra i suoi effetti reali, molte opzioni esistono solo per certe c
 | Boss | 26 |
 | Fasi dei boss | 27 |
 | Rune / parole runiche | 20 / 11 |
-| Eventi narrativi | 58 |
+| Eventi narrativi | 96 |
 | Imprese | 21 |
 | Tomi dell'Archivio | 6 |
 | Potenziamenti permanenti | 14 |

@@ -36,6 +36,34 @@
                 {
                     "event": "alaric_sigillo",
                     "text": "Ti ha chiesto di spezzare il giuramento che lo lega alla porta. Qualunque cosa tu abbia scelto, il Labirinto la ricorda."
+                },
+                {
+                    "event": "alaric_campo_lavanda",
+                    "text": "Su una guglia delle Guglie hai trovato un campo di lavanda che il Labirinto non ha osato toccare. Le file erano dritte come le piantano i contadini di Valeriana, e in fondo c'era una vanga da bambina con un nome inciso sul manico: Ilse. La figlia di Alaric coltivava la lavanda proprio così, ha detto lui una volta. Qualcosa di lei è rimasto, sospeso sopra il vuoto."
+                },
+                {
+                    "event": "alaric_lettera_ilse",
+                    "text": "In una cappella hai trovato una lettera sigillata con la cera azzurra di Valeriana, indirizzata «a mio padre, alla porta». Ilse scriveva che aveva piantato la lavanda dove lui le aveva detto, e che se fosse tornato presto l'avrebbe trovata fiorita. È arrivata in fondo al Labirinto da sola, come arrivano le cose che qualcuno ha scritto con abbastanza cura."
+                },
+                {
+                    "event": "alaric_luce_crudele",
+                    "text": "In un tempio hai visto il giorno in cui la Luce divenne crudele: un cavaliere bianco inginocchiato e una voce senza voce che gli ordinava di custodire senza chiedere. Gli Architetti, quel giorno, avevano paura. Non hanno detto ad Alaric cosa c'era dietro la porta: gli hanno solo detto di non aprirla. Lui ha obbedito per mille anni."
+                },
+                {
+                    "event": "alaric_ser_maud",
+                    "text": "Sulla strada per la porta hai trovato l'armatura vuota di un paladino, con lo stemma dello stesso ordine di Alaric e un fazzoletto nel guanto: «Arrivo, fratello. Aspettami.» Era di Ser Maud, sorella d'ordine di Alaric. Non è mai arrivata. Si è seduta lì, a poche file dalla porta, e ha aspettato anche lei."
+                },
+                {
+                    "event": "alaric_porta_vuota",
+                    "text": "Dietro il muro che Alaric custodiva non c'era niente: una stanza piccola, vuota, con le impronte di un solo paio di stivali che andavano e venivano. Il Vuoto non era lì. Il Vuoto è dappertutto, nel Labirinto, e lui lo sapeva da secoli. Ha custodito la porta perché era l'unica cosa che ricordava di saper fare."
+                },
+                {
+                    "event": "alaric_armatura_vuota",
+                    "text": "Hai visto il Cavaliere Oscuro camminare da solo, senza nessuno dentro: dieci passi, giro, dieci passi, la ronda di Alaric fatta dal giuramento e non da un uomo. È l'ombra che il suo voto ha lasciato nel Labirinto. Anche liberato Alaric, il Labirinto ricorda il suo dovere e lo ripete, come ripete tutto."
+                },
+                {
+                    "event": "alaric_pace",
+                    "text": "Alla porta che non conduce a nulla è cresciuta la lavanda. È l'ultimo capitolo della storia di Alaric: chi custodiva ha smesso di custodire, o ha passato il compito a qualcun altro, e dove c'era solo polvere adesso c'è un fiore storto che profuma come il campo di Ilse. Il Labirinto non dimentica, ma qualche volta perdona."
                 }
             ],
             "notes": [
@@ -46,7 +74,11 @@
                     "flag": "alaric_liberato",
                     "text": "Lo hai liberato: il Cavaliere Oscuro non custodisce più nessuna porta, e non lo incontrerai più."
                 },
-                {"flag": "alaric_erede", "text": "Hai preso il suo posto. Un giorno, qualcuno verrà a liberare te."}
+                {"flag": "alaric_erede", "text": "Hai preso il suo posto. Un giorno, qualcuno verrà a liberare te."},
+                {"flag": "alaric_ilse", "text": "Hai trovato la vanga di Ilse in fondo al campo di lavanda."},
+                {"flag": "alaric_lettera_letta", "text": "Hai letto la lettera di Ilse: la lavanda era fiorita."},
+                {"flag": "alaric_stanza_vuota", "text": "Dietro il muro non c'era niente. Lui lo sapeva."},
+                {"flag": "alaric_pace", "text": "Alla porta è cresciuta la lavanda."}
             ]
         },
         "silas": {
@@ -66,6 +98,34 @@
                 {
                     "event": "silas_soglia",
                     "text": "Alla soglia ti ha raccontato cosa c'è oltre l'ultima porta: non un mostro, ma uno specchio."
+                },
+                {
+                    "event": "silas_statua",
+                    "text": "Nei Chiostri, vicino a una fontana senz'acqua, c'è una statua di sale che ascolta. Ha la linea del mento dei ritratti di Silas. Potrebbe essere Nerea, sua sorella, ferma lì da mille anni ad ascoltare una voce che la chiamava. Silas non ha mai avuto il coraggio di guardarla da vicino. L'hai fatto tu."
+                },
+                {
+                    "event": "silas_osservatorio",
+                    "text": "Hai camminato sul pavimento dell'Osservatorio di Valeriana, la mappa del cielo d'argento dove Silas imparò a contare le stelle. Mancano quattrocentododici borchie: le stelle cadute nella notte della Discordia, le stesse che Silas contò quella notte. In un angolo c'era una matita mordicchiata: quella della Maestra, forse."
+                },
+                {
+                    "event": "silas_membrana",
+                    "text": "Nel Ventre hai trovato una pagina del diario di Silas, così vecchia da avere l'inchiostro marrone, dentro una parete. Parlava di cose che Silas crede di aver vissuto pochi giorni fa. È la prova che scende da molto più tempo dei suoi «settantacinque giorni»: il Labirinto lo ha masticato per secoli, e lui non se n'è accorto."
+                },
+                {
+                    "event": "silas_astronoma",
+                    "text": "Sulle Guglie hai parlato con la Maestra di Silas, l'Astronoma, che misura ancora il cielo con strumenti di vetro rotto. Lo chiama il suo allievo peggiore, quello che guardava le stelle invece di contarle. Quando le hai parlato di lui, ha smesso di contare per un momento. È stata la cosa più vicina a un abbraccio che quella guglia abbia visto in mille anni."
+                },
+                {
+                    "event": "silas_davanti",
+                    "text": "Per una volta hai trovato Silas ad aspettarti, invece che un piano più in basso. Ti stava disegnando. Per la prima volta ha finito un tuo ritratto: tu, con la spalla sinistra un po' più bassa, e una faccia che finalmente è la tua di questa discesa. Lo tiene in prima pagina, adesso, accanto a quello di Nerea."
+                },
+                {
+                    "event": "silas_inchiostro",
+                    "text": "La creatura che aveva quasi ucciso Silas era fatta delle sue stesse parole: le lettere strette e storte che scrive quando ha paura. Il Labirinto prende quello che scrivi e ci fa dei mostri, se scrivi abbastanza a lungo. Silas lo sospettava. Adesso lo sai anche tu."
+                },
+                {
+                    "event": "silas_fine",
+                    "text": "Silas ha smesso di scendere. Ha chiuso il diario e ti ha chiesto di portarlo in fondo al posto suo, oppure lo hai convinto a ricominciare dal giorno uno. In ogni caso, per la prima volta in non si sa quanti secoli, Silas ha deciso qualcosa che non era scrivere. È la fine della sua storia nel Labirinto, o il principio di un'altra."
                 }
             ],
             "notes": [
@@ -76,6 +136,151 @@
                 {
                     "flag": "silas_compagno",
                     "text": "Ti ha dato l'ultima pagina del suo diario. La fine, adesso, la scrivi tu."
+                },
+                {"flag": "nerea_chiamata", "text": "Hai chiamato la statua per nome: Nerea. Si è incrinata."},
+                {"flag": "silas_ritratto_finito", "text": "Ha finito il tuo ritratto, per la prima volta."},
+                {"flag": "silas_diario_portato", "text": "Porti tu il suo diario verso il fondo."},
+                {"flag": "silas_ricomincia", "text": "Ha riaperto il diario alla pagina «Giorno uno»."}
+            ]
+        },
+        "linnea": {
+            "name": "Linnea",
+            "epithet": "la Fata della Fontana",
+            "counter": "linnea",
+            "hint": "Una fontana, in una stanza dove non dovrebbe esserci acqua, parla al plurale.",
+            "chapters": [
+                {
+                    "event": "linnea_fonte",
+                    "text": "Hai incontrato una fontana che parla al plurale. «Noi eravamo Linnea.» È una ninfa dei boschi della costa: quando la sua foresta diventò pietra si gettò nell'ultima sorgente pura, e l'acqua divenne Memoria. Adesso Linnea è la fontana che compare nei piani, e cura chi beve. In cambio, ricorda."
+                },
+                {
+                    "event": "linnea_bosco",
+                    "text": "Linnea ti ha mostrato il suo bosco nell'acqua: faggi enormi, felci, un torrente, sulla costa del Mare Interno prima della Discordia. Nessuno lo guarda più, dice. Vuole solo questo: che qualcuno ricordi com'era. È la cosa più semplice che il Labirinto ti abbia mai chiesto, e la più difficile da fare bene."
+                },
+                {
+                    "event": "linnea_visto",
+                    "text": "Linnea sa di te più di quanto ne sappia tu. Ogni volta che bevi, vede un pezzo delle tue discese dimenticate. Ti ha offerto di mostrartene una: un'altra faccia, un sasso, una frase incisa su un muro, e poi la caduta. Tu sei tornato molte volte. Lei se le ricorda tutte."
+                },
+                {
+                    "event": "linnea_albero",
+                    "text": "Hai trovato l'albero più vecchio del bosco di Linnea, diventato pietra nella notte della Discordia, con ogni foglia scolpita. Linnea gli parlava d'estate. Sotto la pietra fredda, se ti siedi abbastanza a lungo, senti ancora qualcosa che batte: lentissimo, come un cuore che non sa di essere fermo."
+                },
+                {
+                    "event": "linnea_sorgente",
+                    "text": "Nel Ventre hai trovato la sorgente vera di Linnea, quella in cui si gettò mille anni fa. Lì era ancora una sola: dopo, si è sparsa in tutte le fontane del Labirinto. Ha scelto l'acqua perché non voleva diventare pietra come il suo bosco. Voleva diventare qualcosa che scorre. Il Labirinto ne ha fatto memoria."
+                },
+                {
+                    "event": "linnea_ampolla",
+                    "text": "Linnea ti ha chiesto di portarne una goccia al Fuoco del Campo, in un'ampolla. Voleva sapere come si sta vicino a qualcosa che scalda. Per mille anni è stata acqua fredda in stanze di pietra. Al Campo, l'ampolla brilla come una stella piccola, e a volte la goccia dentro parla."
+                },
+                {
+                    "event": "linnea_sete",
+                    "text": "Hai trovato la fontana di Linnea quasi asciutta. Tenere i ricordi di tutti quelli che bevono la sta consumando, come il Fuoco si consuma per riportarti indietro. Nel Labirinto, chi custodisce paga. Le hai dato un tuo ricordo da portare al posto suo, o le hai promesso di ricordare il suo bosco."
+                },
+                {
+                    "event": "linnea_ricordato",
+                    "text": "Dove c'era la fontana di Linnea adesso c'è muschio, e una felce. Nessuna voce: Linnea ha smesso di essere acqua e ha ricominciato a essere bosco, almeno per una stanza. Forse perché qualcuno se l'è ricordato abbastanza bene. Il profumo della pioggia sul terreno è l'ultima cosa che dice."
+                }
+            ],
+            "notes": [
+                {"flag": "linnea_discesa_vista", "text": "Ti ha mostrato una delle tue discese dimenticate."},
+                {"flag": "linnea_ricordo_dato", "text": "Le hai dato un tuo ricordo da portare al posto suo."},
+                {"flag": "linnea_promessa", "text": "Le hai promesso di ricordare il suo bosco."},
+                {"flag": "linnea_pace", "text": "Dove c'era la fontana adesso c'è muschio."}
+            ]
+        },
+        "kaelen": {
+            "name": "Kaelen",
+            "epithet": "il Muto",
+            "counter": "kaelen",
+            "hint": "In fondo alle Miniere batte un martello, e chi lo impugna non parla.",
+            "chapters": [
+                {
+                    "event": "kaelen_forgia",
+                    "text": "In fondo alle Miniere c'è un fabbro con le mani di granito e la bocca piena di sabbia. Si chiama Kaelen, il miglior forgiatore dei Monti di Durn. Cercò di forgiare una spada capace di tagliare il Caos, e la spada esplose. Da allora lavora qui, una lama dopo l'altra, senza mai essere soddisfatto."
+                },
+                {
+                    "event": "kaelen_segni",
+                    "text": "Kaelen non parla, ma scrive: incide segni sul metallo con lo scalpello. Sono parole squadrate, lente, una lingua di fabbro. La prima cosa che ti ha detto è stata il nome di ciò che gli serve: un metallo che canta. L'acciaio buono dei Monti di Durn, quello che quando lo batti suona come una campana di festa."
+                },
+                {
+                    "event": "kaelen_materiale",
+                    "text": "Hai trovato un lingotto di vero acciaio di Durn, di quello che canta, sopravvissuto mille anni in una pila di rottami. È il materiale che Kaelen cercava. Quando l'ha battuto la prima volta ha chiuso gli occhi, come chi sente una voce che credeva perduta."
+                },
+                {
+                    "event": "kaelen_martello",
+                    "text": "Kaelen ha sentito su di te l'odore di un'altra forgia: quella di Borek, al Campo. Borek era il suo allievo, l'unico che non aveva paura del fuoco, e Kaelen lo credeva morto nella galleria crollata. Quando ha saputo che è vivo, dalla bocca gli è uscita tanta sabbia, e hai capito che stava piangendo."
+                },
+                {
+                    "event": "kaelen_frammenti",
+                    "text": "Hai trovato il punto dove la spada di Kaelen è esplosa: schegge di metallo conficcate nella roccia come stelle, e nel basalto la sagoma bruciata di un uomo con le braccia alzate. La spada doveva tagliare il Caos. Il Caos non si è lasciato tagliare. Ma le schegge vibrano ancora tutte insieme, come se volessero riunirsi."
+                },
+                {
+                    "event": "kaelen_pezzo",
+                    "text": "La spada di Kaelen è quasi intera di nuovo. Manca solo il centro, un pezzo a forma di goccia, e Kaelen sa cosa ci vuole: un frammento della Prima Pietra degli Architetti, quella sotto i Chiostri. È la stessa pietra di cui è fatta, si dice, la Lama del Creatore. Kaelen non vuole tagliare il Caos, adesso: vuole finire quello che ha cominciato."
+                },
+                {
+                    "event": "kaelen_messaggio",
+                    "text": "Kaelen ti ha affidato un messaggio inciso per Borek: «Ragazzo. Fuoco. Buono. Scusa.» Si vergognava di non averlo cercato in mille anni. Adesso il maestro e l'allievo sanno l'uno dell'altro. Al Campo, la sera, si sente un martello di più."
+                },
+                {
+                    "event": "kaelen_spada",
+                    "text": "Kaelen ha finito la sua spada. Non taglia il Caos: lo ferma per un istante, il tempo di un battito, e per un fabbro è abbastanza. Al centro della lama c'è una goccia di pietra chiara. Ha inciso un solo segno quando te l'ha mostrata: «Fatto». Mille anni di lavoro per una parola sola."
+                }
+            ],
+            "notes": [
+                {"flag": "kaelen_sa_di_borek", "text": "Sa che Borek, il suo allievo, è vivo."},
+                {"flag": "kaelen_borek", "text": "Ha mandato un messaggio a Borek: «Ragazzo. Fuoco. Buono. Scusa.»"},
+                {"flag": "kaelen_spada_finita", "text": "Hai impugnato la spada che ferma il Caos per un istante."},
+                {"flag": "kaelen_riposa", "text": "Ha appeso la spada sopra la forgia, e ha smesso di battere."}
+            ]
+        },
+        "mercante": {
+            "name": "Il Mercante Senza Volto",
+            "epithet": "il tesoriere del cielo",
+            "counter": "mercante",
+            "hint": "Qualcuno, fuori dalla sua bottega, vuole comprare un ricordo piccolo.",
+            "chapters": [
+                {
+                    "event": "mercante_baratto",
+                    "text": "Il Mercante Senza Volto, quello che sta in tutte le stanze del Mercante nello stesso momento, ti ha fermato fuori dalla sua bottega per comprare un ricordo piccolo. Non vuole oro: l'oro lo accetta con disprezzo. Compra il sapore del pane, il colore di un tramonto, il nome di un cane. Dice che li conserva perché voi li perdete troppo facilmente."
+                },
+                {
+                    "event": "mercante_registro",
+                    "text": "Hai letto il registro del Mercante: un libro enorme in cui ogni riga è un ricordo comprato, con data e prezzo. A metà pagina c'era la tua calligrafia. In una discesa che non ricordi gli hai venduto il nome della prima persona che hai amato, in cambio di un'ora di vita. Non ricordi il nome. Non ricordi l'ora. Il registro sì."
+                },
+                {
+                    "event": "mercante_mendicante",
+                    "text": "Il Mercante Senza Volto e il Mendicante Ombra erano due Architetti Minori, tesorieri dello stesso tesoro celeste. Dopo la Discordia sono rimasti tutti e due nel Labirinto: uno a custodire il tesoro, l'altro a darlo via a chi incontra. Non si parlano da mille anni. Non si perdonano di essere uguali."
+                },
+                {
+                    "event": "mercante_tesoro",
+                    "text": "Il tesoro che il Mercante custodisce non è oro: sono migliaia di piccole luci in vasetti di vetro, ognuna un ricordo di Aethelgard. Feste di paese, mattine d'inverno, voci. Le ha raccolte in mille anni, comprandole da chi scende. Non le restituisce perché quelli a cui appartenevano sono diventati il Labirinto stesso."
+                },
+                {
+                    "event": "mercante_volto",
+                    "text": "Nel riflesso di una pozza hai visto il volto del Mercante sotto l'oro: un uomo stanco, gentile, con gli occhi chiari. L'oro che bramava gli ha coperto la faccia a poco a poco, finché lui stesso ha dimenticato di averne una. Per un istante, nell'acqua, è tornato a essere qualcuno."
+                },
+                {
+                    "event": "mercante_occhi",
+                    "text": "Fra le merci del Mercante ci sono gli occhi del Viandante Cieco, in un vasetto chiuso con la cera. Il prezzo che il vecchio ha pagato per vedere il sogno del Dio. Il Mercante non li rivende: un baratto è un baratto. Ma se li guardi abbastanza a lungo, vedi anche tu il trono, e qualcuno che si siede."
+                },
+                {
+                    "event": "mercante_tuoi",
+                    "text": "Il Mercante tiene da parte i ricordi che gli hai venduto nelle discese dimenticate, in una cassa separata, con la tua calligrafia sulle etichette. Vendi sempre le cose piccole, dice: un sapore, un nome, una mattina. Sono le più care. Ti ha offerto di ricomprarne uno."
+                },
+                {
+                    "event": "mercante_restituzione",
+                    "text": "Alla fine il Mercante ti ha restituito tutti i ricordi che gli avevi venduto. Non per bontà: qualcuno aveva già pagato il conto per te. Una brace, ogni volta che torni. Il Mercante sa chi è il Fuoco del Campo, e che si consuma per riportarti indietro. È stato l'unico baratto della sua vita in cui ha perso, ed era contento."
+                }
+            ],
+            "notes": [
+                {"flag": "mercante_pane", "text": "Gli hai venduto il sapore del pane."},
+                {"flag": "mercante_registro_letto", "text": "Nel suo registro hai trovato la tua calligrafia."},
+                {"flag": "mercante_volto_visto", "text": "Hai visto il suo volto nel riflesso, e gliel'hai detto."},
+                {
+                    "flag": "ricordi_restituiti",
+                    "text": "Ti ha restituito i tuoi ricordi: il conto l'aveva già pagato il Fuoco."
                 }
             ]
         }
@@ -169,6 +374,30 @@
                 "lines": [
                     {
                         "text": "Accanto al fuoco c'è un'impronta nella cenere, con la forma di un cavaliere inginocchiato. Il sigillo sulla tua schiena prude. La porta ti aspetta."
+                    }
+                ]
+            },
+            {
+                "id": "linnea",
+                "name": "L'Ampolla di Linnea",
+                "requires": {"flag": "linnea_al_campo"},
+                "lines": [
+                    {
+                        "requires": {"flag": "linnea_pace"},
+                        "text": "L'ampolla accanto al fuoco è vuota. Sul vetro, all'interno, è cresciuto un velo di muschio verde."
+                    },
+                    {
+                        "text": "L'ampolla accanto al fuoco brilla come una stella piccola. A volte la goccia dentro parla, piano, al plurale."
+                    }
+                ]
+            },
+            {
+                "id": "kaelen",
+                "name": "Kaelen",
+                "requires": {"flag": "kaelen_borek"},
+                "lines": [
+                    {
+                        "text": "Kaelen siede accanto all'incudine di Borek, le mani di pietra sulle ginocchia. Non parla. Quando Borek sbaglia un colpo, gli corregge il polso senza dire niente, come faceva una volta."
                     }
                 ]
             }

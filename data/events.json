@@ -2081,5 +2081,1469 @@
                 ]
             }
         }
+    },
+    "alaric_campo_lavanda": {
+        "title": "Il Campo di Lavanda",
+        "requires": {
+            "counter": {"alaric": 3},
+            "counter_below": {"alaric": 4},
+            "not_run_flag": "alaric_visto",
+            "biome": "guglie"
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Su una guglia isolata, dove il vento non arriva, cresce un campo di lavanda. Le file sono dritte, curate. Qualcuno le ha piantate con pazienza, mille anni fa, e il Labirinto non ha osato toccarle.",
+                "choices": [
+                    {
+                        "text": "Raccogline un mazzo",
+                        "msg": "Il profumo ti resta sulle mani per tutta la discesa. Ti senti meno stanco.",
+                        "effects": [
+                            {"heal_pct": 40},
+                            {"flag": "alaric_mazzo"},
+                            {"counter": "alaric"},
+                            {"run_flag": "alaric_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Cammina fra le file fino in fondo",
+                        "msg": "In fondo al campo c'è una vanga piccola, da bambina, con un nome inciso sul manico: «Ilse».",
+                        "effects": [
+                            {"exp": 60},
+                            {"flag": "alaric_ilse"},
+                            {"counter": "alaric"},
+                            {"run_flag": "alaric_visto"}
+                        ]
+                    },
+                    {"text": "Lascialo com'è", "msg": "Certe cose si guardano e basta."}
+                ],
+                "extra": [
+                    {"requires": {"flag": "alaric_liberato"}, "text": "Una luce calma, tiepida, ti cammina accanto."},
+                    {
+                        "requires": {"flag": "alaric_erede"},
+                        "text": "Il sigillo sulla tua schiena prude, come davanti a una porta."
+                    }
+                ]
+            }
+        }
+    },
+    "alaric_lettera_ilse": {
+        "title": "La Lettera di Ilse",
+        "requires": {
+            "counter": {"alaric": 4},
+            "counter_below": {"alaric": 5},
+            "not_run_flag": "alaric_visto",
+            "min_floor": 8
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "In una cappella crollata, sotto un leggio, c'è una busta sigillata con la cera azzurra di Valeriana. Sul retro, in una calligrafia tonda da ragazza: «Per mio padre, alla porta».",
+                "choices": [
+                    {
+                        "text": "Aprila e leggila",
+                        "msg": "«Ho piantato la lavanda dove l'avevi detto tu. Se torni presto, sarà fiorita.» Non c'è altro.",
+                        "effects": [
+                            {"essence": 60},
+                            {"flag": "alaric_lettera_letta"},
+                            {"counter": "alaric"},
+                            {"run_flag": "alaric_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Portala con te senza aprirla",
+                        "msg": "La busta è leggera e pesa moltissimo.",
+                        "effects": [
+                            {"exp": 50},
+                            {"flag": "alaric_lettera_portata"},
+                            {"counter": "alaric"},
+                            {"run_flag": "alaric_visto"}
+                        ]
+                    },
+                    {"text": "Lasciala dov'è", "msg": "Non è tua. Forse qualcun altro deve trovarla."}
+                ],
+                "extra": [
+                    {"requires": {"flag": "alaric_liberato"}, "text": "Una luce calma, tiepida, ti cammina accanto."},
+                    {
+                        "requires": {"flag": "alaric_erede"},
+                        "text": "Il sigillo sulla tua schiena prude, come davanti a una porta."
+                    }
+                ]
+            }
+        }
+    },
+    "alaric_luce_crudele": {
+        "title": "Il Giorno della Luce Crudele",
+        "requires": {
+            "counter": {"alaric": 5},
+            "counter_below": {"alaric": 6},
+            "not_run_flag": "alaric_visto",
+            "min_floor": 14
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Le vetrate di un tempio si accendono tutte insieme. La luce non scalda: incide. Per un istante vedi un cavaliere bianco inginocchiato, e sopra di lui una voce che non è una voce: «Custodisci. Non chiedere.»",
+                "choices": [
+                    {
+                        "text": "Guarda fino in fondo",
+                        "msg": "La luce ti brucia gli occhi, poi si spegne. Hai capito che quel giorno gli Architetti avevano paura.",
+                        "effects": [
+                            {"exp": 80},
+                            {"flag": "alaric_ordine_visto"},
+                            {"counter": "alaric"},
+                            {"run_flag": "alaric_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Mettiti fra il cavaliere e la luce",
+                        "msg": "L'ombra che proietti copre il cavaliere. Nella visione, per la prima volta, lui alza la testa.",
+                        "effects": [
+                            {"def": 3},
+                            {"flag": "alaric_ombra_data"},
+                            {"counter": "alaric"},
+                            {"run_flag": "alaric_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Distogli lo sguardo",
+                        "msg": "Le vetrate tornano buie. Ti restano macchie bianche negli occhi per un po'."
+                    }
+                ],
+                "extra": [
+                    {"requires": {"flag": "alaric_liberato"}, "text": "Una luce calma, tiepida, ti cammina accanto."},
+                    {
+                        "requires": {"flag": "alaric_erede"},
+                        "text": "Il sigillo sulla tua schiena prude, come davanti a una porta."
+                    }
+                ]
+            }
+        }
+    },
+    "alaric_ser_maud": {
+        "title": "L'Armatura sulla Strada",
+        "requires": {
+            "counter": {"alaric": 6},
+            "counter_below": {"alaric": 7},
+            "not_run_flag": "alaric_visto",
+            "min_floor": 10
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Seduta contro un muro, un'armatura da paladino con lo scudo ancora al braccio. Lo stemma è lo stesso del cavaliere alla porta. Dentro non c'è nessuno, solo un fazzoletto ripiegato nel guanto: «Arrivo, fratello. Aspettami.»",
+                "choices": [
+                    {
+                        "text": "Prendi un frammento dello scudo",
+                        "msg": "Il metallo è tiepido, come se qualcuno lo avesse appena lasciato.",
+                        "effects": [
+                            {"def": 2},
+                            {"flag": "maud_scudo"},
+                            {"counter": "alaric"},
+                            {"run_flag": "alaric_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Seppellisci l'armatura sotto le pietre",
+                        "msg": "Ci metti a lungo. Quando hai finito, ti senti più leggero.",
+                        "effects": [
+                            {"corruption": -10},
+                            {"flag": "maud_sepolta"},
+                            {"counter": "alaric"},
+                            {"run_flag": "alaric_visto"}
+                        ]
+                    },
+                    {"text": "Prosegui", "msg": "L'armatura resta seduta ad aspettare."}
+                ],
+                "extra": [
+                    {"requires": {"flag": "alaric_liberato"}, "text": "Una luce calma, tiepida, ti cammina accanto."},
+                    {
+                        "requires": {"flag": "alaric_erede"},
+                        "text": "Il sigillo sulla tua schiena prude, come davanti a una porta."
+                    }
+                ]
+            }
+        }
+    },
+    "alaric_porta_vuota": {
+        "title": "Dietro il Muro",
+        "requires": {
+            "counter": {"alaric": 7},
+            "counter_below": {"alaric": 8},
+            "not_run_flag": "alaric_visto",
+            "min_floor": 16
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "L'arco di pietra è di nuovo davanti a te, ma adesso il muro liscio ha una crepa sottile. Dall'altra parte non c'è un mostro, non c'è il Vuoto. C'è una stanza piccola, vuota, con della polvere sul pavimento e nient'altro.",
+                "choices": [
+                    {
+                        "text": "Entra nella stanza",
+                        "msg": "Sulla polvere ci sono le impronte di un solo paio di stivali, che vanno e vengono dalla porta. Mille anni di ronde in una stanza vuota.",
+                        "effects": [
+                            {"exp": 90},
+                            {"flag": "alaric_stanza_vuota"},
+                            {"counter": "alaric"},
+                            {"run_flag": "alaric_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Chiudi la crepa con le mani",
+                        "msg": "La pietra si richiude sotto i palmi. Per qualcuno è meglio così.",
+                        "effects": [
+                            {"max_hp": 5},
+                            {"flag": "alaric_crepa_chiusa"},
+                            {"counter": "alaric"},
+                            {"run_flag": "alaric_visto"}
+                        ]
+                    },
+                    {"text": "Non guardare", "msg": "Te ne vai senza sapere. Alcune porte custodiscono chi le guarda."}
+                ],
+                "extra": [
+                    {"requires": {"flag": "alaric_liberato"}, "text": "Una luce calma, tiepida, ti cammina accanto."},
+                    {
+                        "requires": {"flag": "alaric_erede"},
+                        "text": "Il sigillo sulla tua schiena prude, come davanti a una porta."
+                    }
+                ]
+            }
+        }
+    },
+    "alaric_armatura_vuota": {
+        "title": "Il Cavaliere senza Nessuno",
+        "requires": {
+            "counter": {"alaric": 8},
+            "counter_below": {"alaric": 9},
+            "not_run_flag": "alaric_visto",
+            "min_floor": 18
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Un'armatura d'ossidiana cammina per il corridoio, la lama sguainata. È il Cavaliere Oscuro, ma dalla visiera non esce nessun respiro. Fa la ronda come la faceva lui: dieci passi, giro, dieci passi.",
+                "choices": [
+                    {
+                        "text": "Affrontala",
+                        "msg": "La sconfiggi, ma domani riprenderà la ronda. È fatta del giuramento, non di qualcuno.",
+                        "effects": [
+                            {"fight": "elite"},
+                            {"atk": 3},
+                            {"counter": "alaric"},
+                            {"run_flag": "alaric_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Pronuncia il nome di Alaric",
+                        "msg": "L'armatura si ferma a metà passo. Abbassa la lama. Poi riprende a camminare, più lenta.",
+                        "effects": [
+                            {"exp": 70},
+                            {"flag": "alaric_nome_detto"},
+                            {"counter": "alaric"},
+                            {"run_flag": "alaric_visto"}
+                        ]
+                    },
+                    {"text": "Aspetta che passi", "msg": "Dieci passi, giro, dieci passi. Passi quando è voltata."}
+                ],
+                "extra": [
+                    {"requires": {"flag": "alaric_liberato"}, "text": "Una luce calma, tiepida, ti cammina accanto."},
+                    {
+                        "requires": {"flag": "alaric_erede"},
+                        "text": "Il sigillo sulla tua schiena prude, come davanti a una porta."
+                    }
+                ]
+            }
+        }
+    },
+    "alaric_pace": {
+        "title": "La Lavanda alla Porta",
+        "requires": {
+            "counter": {"alaric": 9},
+            "counter_below": {"alaric": 10},
+            "not_run_flag": "alaric_visto",
+            "min_floor": 20
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Davanti all'arco di pietra è spuntato un ciuffo di lavanda, dove prima c'era solo polvere. È piccolo, storto, e profuma come il campo sulla guglia.",
+                "choices": [
+                    {
+                        "text": "Inginocchiati e annusala",
+                        "msg": "Per un istante senti una mano sulla spalla, pesante come un guanto d'arme. Poi più niente. Solo il profumo.",
+                        "effects": [
+                            {"essence": 100},
+                            {"flag": "alaric_pace"},
+                            {"counter": "alaric"},
+                            {"run_flag": "alaric_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Pianta accanto un seme del campo",
+                        "msg": "Il seme sparisce nella polvere. Tornerai, e ce ne saranno due.",
+                        "effects": [
+                            {"heal_pct": 50},
+                            {"flag": "alaric_seme"},
+                            {"counter": "alaric"},
+                            {"run_flag": "alaric_visto"}
+                        ]
+                    },
+                    {"text": "Lasciala crescere", "msg": "Non serve fare niente. Sta già facendo tutto da sola."}
+                ],
+                "extra": [
+                    {"requires": {"flag": "alaric_liberato"}, "text": "Una luce calma, tiepida, ti cammina accanto."},
+                    {
+                        "requires": {"flag": "alaric_erede"},
+                        "text": "Il sigillo sulla tua schiena prude, come davanti a una porta."
+                    }
+                ]
+            }
+        }
+    },
+    "silas_statua": {
+        "title": "La Ragazza che Ascolta",
+        "requires": {
+            "counter": {"silas": 3},
+            "counter_below": {"silas": 4},
+            "not_run_flag": "silas_visto",
+            "biome": "chiostri"
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Vicino a una fontana senz'acqua c'è una statua di sale: una ragazza con la testa piegata, come per sentire meglio. Ha la stessa linea del mento dei ritratti nel diario di Silas.",
+                "choices": [
+                    {
+                        "text": "Mettile in mano la pagina di Silas",
+                        "msg": "La statua non si muove. Ma il sale, dove la pagina la tocca, diventa per un attimo pelle.",
+                        "effects": [
+                            {"exp": 70},
+                            {"flag": "nerea_pagina"},
+                            {"counter": "silas"},
+                            {"run_flag": "silas_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Chiamala per nome: Nerea",
+                        "msg": "Una crepa sottile le attraversa la guancia, come una lacrima. Ascolta ancora. Adesso ascolta te.",
+                        "effects": [
+                            {"flag": "nerea_chiamata"},
+                            {"max_hp": 5},
+                            {"counter": "silas"},
+                            {"run_flag": "silas_visto"}
+                        ]
+                    },
+                    {"text": "Non disturbarla", "msg": "La lasci ascoltare la sua voce cara. Qualunque sia."}
+                ]
+            }
+        }
+    },
+    "silas_osservatorio": {
+        "title": "L'Osservatorio",
+        "requires": {
+            "counter": {"silas": 4},
+            "counter_below": {"silas": 5},
+            "not_run_flag": "silas_visto",
+            "biome": "guglie"
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Il pavimento dell'Osservatorio è una mappa del cielo: borchie d'argento al posto delle stelle. Molte sono saltate via. In un angolo, una matita consumata, come quella di Silas.",
+                "choices": [
+                    {
+                        "text": "Conta le borchie mancanti",
+                        "msg": "Quattrocentododici. Le stesse stelle che Silas ha visto cadere.",
+                        "effects": [
+                            {"exp": 80},
+                            {"flag": "osservatorio_contato"},
+                            {"counter": "silas"},
+                            {"run_flag": "silas_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Raccogli la matita",
+                        "msg": "Sul legno ci sono segni di denti. Qualcuno la mordeva mentre pensava.",
+                        "effects": [
+                            {"essence": 50},
+                            {"flag": "matita_maestra"},
+                            {"counter": "silas"},
+                            {"run_flag": "silas_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Cammina sul cielo a piedi nudi",
+                        "msg": "Senti dove sei. È strano: per un istante lo sai davvero."
+                    }
+                ]
+            }
+        }
+    },
+    "silas_membrana": {
+        "title": "La Pagina nella Parete",
+        "requires": {
+            "counter": {"silas": 5},
+            "counter_below": {"silas": 6},
+            "not_run_flag": "silas_visto",
+            "biome": "ventre"
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Dentro la membrana di una parete galleggia un foglio di carta. L'inchiostro è marrone di vecchiaia, ma la calligrafia è nervosa, inconfondibile. Parla di un fuoco azzurro e di un viandante che conta.",
+                "choices": [
+                    {
+                        "text": "Strappa il foglio dalla membrana",
+                        "msg": "La parete si ritrae con un sospiro. Il foglio è caldo, come la pelle di qualcuno.",
+                        "effects": [
+                            {"exp": 70},
+                            {"flag": "silas_pagina_antica"},
+                            {"counter": "silas"},
+                            {"run_flag": "silas_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Leggilo attraverso la membrana",
+                        "msg": "Ultima riga: «Se qualcuno trova questa pagina, sono sceso troppo presto.»",
+                        "effects": [
+                            {"heal_pct": 30},
+                            {"flag": "silas_pagina_letta"},
+                            {"counter": "silas"},
+                            {"run_flag": "silas_visto"}
+                        ]
+                    },
+                    {"text": "Lascialo dov'è", "msg": "La parete lo digerirà, piano. Come tutto il resto."}
+                ]
+            }
+        }
+    },
+    "silas_astronoma": {
+        "title": "La Maestra",
+        "requires": {
+            "counter": {"silas": 6},
+            "counter_below": {"silas": 7},
+            "not_run_flag": "silas_visto",
+            "biome": "guglie",
+            "min_floor": 13
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "In cima a una guglia, una figura misura il cielo con strumenti di vetro rotto. Conta a bassa voce. Quando ti sente, non si gira: «Il mio allievo peggiore. Guarda ancora le stelle invece di contarle?»",
+                "choices": [
+                    {
+                        "text": "Dille che Silas conta ancora",
+                        "msg": "La figura si ferma. «Bene,» dice. «Allora è diventato bravo.» Riprende a contare, più lentamente.",
+                        "effects": [
+                            {"heal_pct": 40},
+                            {"flag": "astronoma_sa"},
+                            {"counter": "silas"},
+                            {"run_flag": "silas_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Dille che Silas non ha trovato Nerea",
+                        "msg": "Il vetro le trema in mano. «Lo sapevo. Gliel'avevo detto di restare.»",
+                        "effects": [
+                            {"exp": 60},
+                            {"flag": "astronoma_rimprovero"},
+                            {"counter": "silas"},
+                            {"run_flag": "silas_visto"}
+                        ]
+                    },
+                    {"text": "Lasciala contare", "msg": "Conta, e tu scendi. Ognuno al suo lavoro."}
+                ]
+            }
+        }
+    },
+    "silas_davanti": {
+        "title": "Un Piano più in Basso",
+        "requires": {
+            "counter": {"silas": 7},
+            "counter_below": {"silas": 8},
+            "not_run_flag": "silas_visto",
+            "min_floor": 10
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Sul pavimento c'è una freccia tracciata col carboncino, poi un'altra. Seguendole, trovi Silas seduto su un gradino, il diario aperto. Ti aspettava. «Sei in ritardo. O io in anticipo. Siediti: ti sto disegnando.»",
+                "choices": [
+                    {
+                        "text": "Posa per lui",
+                        "msg": "Silas disegna veloce, poi ti mostra il foglio: sei tu, finito, con la spalla sinistra più bassa. «Questa volta l'ho finito.»",
+                        "effects": [
+                            {"exp": 70},
+                            {"flag": "silas_ritratto_finito"},
+                            {"counter": "silas"},
+                            {"run_flag": "silas_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Disegna tu lui",
+                        "msg": "Il tuo schizzo è pessimo. Silas lo guarda a lungo e lo infila nel diario. «Il primo ritratto che mi fanno.»",
+                        "effects": [
+                            {"heal_pct": 40},
+                            {"flag": "silas_ritratto_suo"},
+                            {"counter": "silas"},
+                            {"run_flag": "silas_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Proseguite in silenzio",
+                        "msg": "Silas ti segue per qualche fila, poi rallenta e resta indietro."
+                    }
+                ]
+            }
+        }
+    },
+    "silas_inchiostro": {
+        "title": "La Cosa d'Inchiostro",
+        "requires": {
+            "counter": {"silas": 8},
+            "counter_below": {"silas": 9},
+            "not_run_flag": "silas_visto",
+            "min_floor": 16
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "La creatura d'ombra e d'inchiostro che aveva schiacciato Silas contro la parete è qui, ferma, che aspetta. Ha la forma delle parole che lui scrive quando ha paura: lettere strette, storte, sovrapposte.",
+                "choices": [
+                    {
+                        "text": "Combattila",
+                        "msg": "Si scioglie in una pozza nera che, asciugandosi, forma una frase: «Non ho paura».",
+                        "effects": [{"fight": "hard"}, {"exp": 60}, {"counter": "silas"}, {"run_flag": "silas_visto"}]
+                    },
+                    {
+                        "text": "Cancellala con l'ultima pagina bianca",
+                        "msg": "Passi la pagina sulla creatura come una gomma. La creatura diventa grigia, poi niente.",
+                        "effects": [
+                            {"essence": 70},
+                            {"flag": "inchiostro_cancellato"},
+                            {"counter": "silas"},
+                            {"run_flag": "silas_visto"}
+                        ]
+                    },
+                    {"text": "Aggirala", "msg": "Non ti segue. Aspetta Silas, non te."}
+                ]
+            }
+        }
+    },
+    "silas_fine": {
+        "title": "Il Diario Chiuso",
+        "requires": {
+            "counter": {"silas": 9},
+            "counter_below": {"silas": 10},
+            "not_run_flag": "silas_visto",
+            "min_floor": 22
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Accanto a un fuoco azzurro quasi spento, Silas ha chiuso il diario e lo tiene sulle ginocchia con tutte e due le mani. «Ho deciso di smettere di scendere. Ma il diario deve arrivare in fondo. Lo porteresti tu?»",
+                "choices": [
+                    {
+                        "text": "Prendi il diario",
+                        "msg": "È pesante come un mattone. Silas sorride, per la prima volta senza ombre. «Scrivi solo la data. Il resto lo capiranno.»",
+                        "effects": [
+                            {"essence": 100},
+                            {"flag": "silas_diario_portato"},
+                            {"counter": "silas"},
+                            {"run_flag": "silas_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Convincilo a scendere ancora",
+                        "msg": "Silas ride. «Va bene. Un piano. Poi vedremo.» Riapre il diario e scrive: «Giorno uno».",
+                        "effects": [
+                            {"exp": 80},
+                            {"flag": "silas_ricomincia"},
+                            {"counter": "silas"},
+                            {"run_flag": "silas_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Lascialo al suo fuoco",
+                        "msg": "Lo lasci a guardare le fiamme. Non gli serve altro, stanotte."
+                    }
+                ]
+            }
+        }
+    },
+    "linnea_fonte": {
+        "title": "La Fontana che Parla",
+        "requires": {"counter_below": {"linnea": 1}, "not_run_flag": "linnea_vista", "min_floor": 3},
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Una fontana d'acqua chiarissima, in una stanza dove non dovrebbe esserci acqua. Quando ti chini, la superficie si increspa in una voce: «Noi ricordiamo. Bevi, e ricorderemo anche te.»",
+                "choices": [
+                    {
+                        "text": "Bevi",
+                        "msg": "L'acqua sa di muschio e di pioggia. Per un istante vedi alberi. Poi le ferite si chiudono.",
+                        "effects": [
+                            {"heal_pct": 40},
+                            {"flag": "linnea_bevuto"},
+                            {"counter": "linnea"},
+                            {"run_flag": "linnea_vista"}
+                        ]
+                    },
+                    {
+                        "text": "Chiedi chi sei tu, voce",
+                        "msg": "«Noi eravamo Linnea. Noi siamo la fonte. Noi saremo quello che ricordi.»",
+                        "effects": [{"exp": 40}, {"counter": "linnea"}, {"run_flag": "linnea_vista"}]
+                    },
+                    {"text": "Non bere", "msg": "L'acqua resta ferma. Anche la voce."}
+                ]
+            }
+        }
+    },
+    "linnea_bosco": {
+        "title": "Il Bosco nell'Acqua",
+        "requires": {
+            "counter": {"linnea": 1},
+            "counter_below": {"linnea": 2},
+            "not_run_flag": "linnea_vista",
+            "min_floor": 5
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "La fontana di Linnea è di nuovo qui. Sulla superficie, invece del tuo riflesso, c'è un bosco: faggi enormi, felci, un torrente. «Guarda. Era così. Nessuno lo guarda più.»",
+                "choices": [
+                    {
+                        "text": "Guarda a lungo",
+                        "msg": "Impari la forma di ogni albero. Quando alzi gli occhi, il Labirinto ti sembra più piccolo.",
+                        "effects": [
+                            {"exp": 60},
+                            {"flag": "linnea_bosco_visto"},
+                            {"counter": "linnea"},
+                            {"run_flag": "linnea_vista"}
+                        ]
+                    },
+                    {
+                        "text": "Tocca l'acqua",
+                        "msg": "Le dita ti tornano verdi di muschio. Profumano per ore.",
+                        "effects": [{"heal_pct": 30}, {"counter": "linnea"}, {"run_flag": "linnea_vista"}]
+                    },
+                    {"text": "Distogli lo sguardo", "msg": "«Anche tu,» mormora l'acqua, delusa."}
+                ]
+            }
+        }
+    },
+    "linnea_visto": {
+        "title": "Quello che Ha Visto",
+        "requires": {
+            "counter": {"linnea": 2},
+            "counter_below": {"linnea": 3},
+            "not_run_flag": "linnea_vista",
+            "min_floor": 8
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "«Ogni volta che bevi, vediamo un pezzo di te,» dice la fontana. «Vediamo discese che tu non ricordi. Vuoi che te ne mostriamo una?»",
+                "choices": [
+                    {
+                        "text": "Sì, mostramela",
+                        "msg": "Nell'acqua vedi te stesso, con un'altra faccia, che incide una frase su un muro con un sasso. Poi cadi.",
+                        "effects": [
+                            {"exp": 90},
+                            {"flag": "linnea_discesa_vista"},
+                            {"counter": "linnea"},
+                            {"run_flag": "linnea_vista"}
+                        ]
+                    },
+                    {
+                        "text": "No, tienila tu",
+                        "msg": "«Allora la terremo noi. Le terremo tutte, finché vorrai.»",
+                        "effects": [
+                            {"heal_pct": 40},
+                            {"flag": "linnea_custode"},
+                            {"counter": "linnea"},
+                            {"run_flag": "linnea_vista"}
+                        ]
+                    },
+                    {"text": "Vattene in fretta", "msg": "La superficie si chiude come una porta."}
+                ]
+            }
+        }
+    },
+    "linnea_albero": {
+        "title": "L'Albero di Pietra",
+        "requires": {
+            "counter": {"linnea": 3},
+            "counter_below": {"linnea": 4},
+            "not_run_flag": "linnea_vista",
+            "min_floor": 10
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "In mezzo a una galleria cresce un albero di pietra grigia, con ogni foglia scolpita alla perfezione. Alle sue radici c'è una piccola pozza. «Questo era il più vecchio,» dice l'acqua. «Gli parlavamo, d'estate.»",
+                "choices": [
+                    {
+                        "text": "Versa nella pozza un sorso della tua borraccia",
+                        "msg": "La pietra di una foglia diventa verde, per un respiro. Poi torna grigia, più liscia.",
+                        "effects": [
+                            {"essence": 50},
+                            {"flag": "linnea_albero_bagnato"},
+                            {"counter": "linnea"},
+                            {"run_flag": "linnea_vista"}
+                        ]
+                    },
+                    {
+                        "text": "Siediti contro il tronco",
+                        "msg": "È freddo. Ma sotto il freddo, lentissimo, senti qualcosa che batte.",
+                        "effects": [{"heal_pct": 40}, {"counter": "linnea"}, {"run_flag": "linnea_vista"}]
+                    },
+                    {"text": "Prosegui", "msg": "L'albero resta, come resta da mille anni."}
+                ]
+            }
+        }
+    },
+    "linnea_sorgente": {
+        "title": "La Sorgente Vera",
+        "requires": {
+            "counter": {"linnea": 4},
+            "counter_below": {"linnea": 5},
+            "not_run_flag": "linnea_vista",
+            "biome": "ventre"
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Nel Ventre, fra le membrane, c'è una sorgente che pulsa. L'acqua sale e scende come un respiro. Qui la voce è più forte, più vicina: «Questa è dove ci siamo gettate. Qui eravamo ancora una.»",
+                "choices": [
+                    {
+                        "text": "Immergi le mani",
+                        "msg": "Per un istante senti due mani piccole stringere le tue. Poi l'acqua torna solo acqua.",
+                        "effects": [
+                            {"max_hp": 5},
+                            {"flag": "linnea_mani"},
+                            {"counter": "linnea"},
+                            {"run_flag": "linnea_vista"}
+                        ]
+                    },
+                    {
+                        "text": "Chiedile perché si è gettata",
+                        "msg": "«Perché il bosco diventava pietra, e noi non volevamo diventare pietra. Volevamo diventare qualcosa che scorre.»",
+                        "effects": [{"exp": 70}, {"counter": "linnea"}, {"run_flag": "linnea_vista"}]
+                    },
+                    {"text": "Non disturbare la sorgente", "msg": "Il respiro dell'acqua continua, regolare."}
+                ]
+            }
+        }
+    },
+    "linnea_ampolla": {
+        "title": "Una Goccia in un'Ampolla",
+        "requires": {
+            "counter": {"linnea": 5},
+            "counter_below": {"linnea": 6},
+            "not_run_flag": "linnea_vista",
+            "min_floor": 12
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "La fontana è più bassa del solito, e la voce più debole. «Prendi una goccia di noi. Portala al tuo fuoco. Vogliamo vedere come si sta, vicino a qualcosa che scalda.»",
+                "choices": [
+                    {
+                        "text": "Riempi un'ampolla",
+                        "msg": "La goccia brilla nel vetro come una stella piccola. È leggerissima.",
+                        "effects": [
+                            {"flag": "linnea_al_campo"},
+                            {"essence": 50},
+                            {"counter": "linnea"},
+                            {"run_flag": "linnea_vista"}
+                        ]
+                    },
+                    {
+                        "text": "Dille che il fuoco potrebbe farle male",
+                        "msg": "«Tutto ci fa male. Il calore almeno è nuovo.»",
+                        "effects": [{"exp": 50}, {"counter": "linnea"}, {"run_flag": "linnea_vista"}]
+                    },
+                    {
+                        "text": "Non puoi portarla",
+                        "msg": "«Un'altra volta,» dice l'acqua. «Abbiamo tempo. È l'unica cosa che abbiamo.»"
+                    }
+                ]
+            }
+        }
+    },
+    "linnea_sete": {
+        "title": "La Fontana Asciutta",
+        "requires": {
+            "counter": {"linnea": 6},
+            "counter_below": {"linnea": 7},
+            "not_run_flag": "linnea_vista",
+            "min_floor": 18
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "La fontana di Linnea è quasi vuota. Sul fondo, poche dita d'acqua torbida. La voce è un filo: «Ci stiamo consumando. Ogni ricordo che teniamo pesa. Dacci un po' di sollievo.»",
+                "choices": [
+                    {
+                        "text": "Dalle un tuo ricordo da portare al posto suo",
+                        "msg": "Dimentichi il sapore di una cosa che amavi. L'acqua sale di un palmo, limpida.",
+                        "effects": [
+                            {"max_hp": -5},
+                            {"essence": 120},
+                            {"flag": "linnea_ricordo_dato"},
+                            {"counter": "linnea"},
+                            {"run_flag": "linnea_vista"}
+                        ]
+                    },
+                    {
+                        "text": "Promettile che ricorderai il bosco per lei",
+                        "msg": "«Allora ricordalo bene,» dice l'acqua, un po' più forte. «Ogni albero.»",
+                        "effects": [
+                            {"exp": 80},
+                            {"flag": "linnea_promessa"},
+                            {"counter": "linnea"},
+                            {"run_flag": "linnea_vista"}
+                        ]
+                    },
+                    {"text": "Non hai niente da dare", "msg": "La fontana tace. L'acqua torbida trema appena."}
+                ]
+            }
+        }
+    },
+    "linnea_ricordato": {
+        "title": "Il Bosco Ricordato",
+        "requires": {
+            "counter": {"linnea": 7},
+            "counter_below": {"linnea": 8},
+            "not_run_flag": "linnea_vista",
+            "min_floor": 22
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Al posto della fontana c'è un tappeto di muschio verde, morbido, che copre le pietre della stanza. Al centro cresce una felce. Nessuna voce. Solo un profumo di pioggia sul terreno.",
+                "choices": [
+                    {
+                        "text": "Inginocchiati nel muschio",
+                        "msg": "È umido e tiepido. Ti sembra di sentire, lontanissimo, un torrente.",
+                        "effects": [
+                            {"heal_pct": 60},
+                            {"flag": "linnea_pace"},
+                            {"counter": "linnea"},
+                            {"run_flag": "linnea_vista"}
+                        ]
+                    },
+                    {
+                        "text": "Prendi una spora di felce",
+                        "msg": "La tieni nel palmo. Non pesa niente, e ti accompagnerà per sempre.",
+                        "effects": [
+                            {"essence": 100},
+                            {"flag": "linnea_spora"},
+                            {"counter": "linnea"},
+                            {"run_flag": "linnea_vista"}
+                        ]
+                    },
+                    {"text": "Lascia la stanza com'è", "msg": "Esci in punta di piedi."}
+                ]
+            }
+        }
+    },
+    "kaelen_forgia": {
+        "title": "La Forgia nel Basalto",
+        "requires": {"counter_below": {"kaelen": 1}, "not_run_flag": "kaelen_visto", "biome": "miniere"},
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "In fondo a una galleria batte un martello. Un uomo enorme lavora a una forgia scavata nel basalto. Le sue mani sono di granito grigio. Ti guarda, apre la bocca: ne esce solo sabbia.",
+                "choices": [
+                    {
+                        "text": "Osservalo lavorare",
+                        "msg": "Batte una lama, la tempra, la scarta. Ne prende un'altra. Non è mai soddisfatto.",
+                        "effects": [{"exp": 50}, {"counter": "kaelen"}, {"run_flag": "kaelen_visto"}]
+                    },
+                    {
+                        "text": "Offrigli un pezzo di metallo",
+                        "msg": "Lo soppesa, lo annusa, lo butta via con un gesto secco. Non è quello che gli serve.",
+                        "effects": [
+                            {"heal_pct": 30},
+                            {"flag": "kaelen_incontrato"},
+                            {"counter": "kaelen"},
+                            {"run_flag": "kaelen_visto"}
+                        ]
+                    },
+                    {"text": "Lascialo al suo fuoco", "msg": "Il martello ti accompagna per un pezzo di galleria."}
+                ]
+            }
+        }
+    },
+    "kaelen_segni": {
+        "title": "I Segni sul Metallo",
+        "requires": {
+            "counter": {"kaelen": 1},
+            "counter_below": {"kaelen": 2},
+            "not_run_flag": "kaelen_visto",
+            "biome": "miniere",
+            "min_floor": 7
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Kaelen ti aspetta alla forgia. Su una lastra di ferro ha inciso una fila di segni a punta di scalpello. Te la mostra, impaziente, battendo il dito sul primo segno.",
+                "choices": [
+                    {
+                        "text": "Prova a leggerli",
+                        "msg": "Sono parole. Lente, squadrate. «MATERIALE. CANTA. DURN.» Kaelen annuisce: hai capito.",
+                        "effects": [
+                            {"exp": 70},
+                            {"flag": "kaelen_segni_letti"},
+                            {"counter": "kaelen"},
+                            {"run_flag": "kaelen_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Incidi una risposta accanto",
+                        "msg": "Graffi un segno storto. Kaelen lo guarda, e la sabbia che gli esce dalla bocca sembra una risata.",
+                        "effects": [{"heal_pct": 30}, {"counter": "kaelen"}, {"run_flag": "kaelen_visto"}]
+                    },
+                    {"text": "Scuoti la testa", "msg": "Kaelen ripone la lastra. Riproverà."}
+                ]
+            }
+        }
+    },
+    "kaelen_materiale": {
+        "title": "L'Acciaio che Canta",
+        "requires": {
+            "counter": {"kaelen": 2},
+            "counter_below": {"kaelen": 3},
+            "not_run_flag": "kaelen_visto",
+            "min_floor": 8
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Su una pila di rottami brilla un lingotto scuro. Quando lo urti con lo stivale suona lungo, pulito, come una campana. È acciaio di Durn, mille anni dopo. Qualcuno l'ha lasciato qui apposta.",
+                "choices": [
+                    {
+                        "text": "Portalo a Kaelen",
+                        "msg": "Kaelen lo prende con le mani di pietra come un neonato. Batte un colpo: il lingotto canta. Lui chiude gli occhi.",
+                        "effects": [
+                            {"essence": 60},
+                            {"flag": "kaelen_acciaio"},
+                            {"counter": "kaelen"},
+                            {"run_flag": "kaelen_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Tienilo per te",
+                        "msg": "Pesa. Canta a ogni passo. Ti sembra di camminare con una campana in tasca.",
+                        "effects": [{"atk": 2}, {"counter": "kaelen"}, {"run_flag": "kaelen_visto"}]
+                    },
+                    {"text": "Lascialo lì", "msg": "Il lingotto canta piano, da solo, mentre ti allontani."}
+                ]
+            }
+        }
+    },
+    "kaelen_martello": {
+        "title": "Il Martello di Borek",
+        "requires": {
+            "counter": {"kaelen": 3},
+            "counter_below": {"kaelen": 4},
+            "not_run_flag": "kaelen_visto",
+            "npc": "borek",
+            "min_floor": 8
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Kaelen guarda le tue mani, poi i tuoi stivali, come cercando qualcosa. Incide in fretta su una lastra: «ODORE. FORGIA. CAMPO. CHI?» Ha sentito su di te l'odore di un'altra forgia.",
+                "choices": [
+                    {
+                        "text": "Digli di Borek",
+                        "msg": "Kaelen lascia cadere lo scalpello. Dalla bocca gli esce sabbia, tanta, e capisci che sta piangendo.",
+                        "effects": [
+                            {"exp": 80},
+                            {"flag": "kaelen_sa_di_borek"},
+                            {"counter": "kaelen"},
+                            {"run_flag": "kaelen_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Digli che al Campo c'è un nano che forgia",
+                        "msg": "Kaelen incide un solo segno, e lo ripassa finché la lastra si buca: «VIVO».",
+                        "effects": [
+                            {"exp": 60},
+                            {"flag": "kaelen_sa_di_borek"},
+                            {"counter": "kaelen"},
+                            {"run_flag": "kaelen_visto"}
+                        ]
+                    },
+                    {"text": "Non dirgli niente", "msg": "Kaelen ti fissa a lungo. Poi torna al lavoro."}
+                ]
+            }
+        }
+    },
+    "kaelen_frammenti": {
+        "title": "La Spada Esplosa",
+        "requires": {
+            "counter": {"kaelen": 4},
+            "counter_below": {"kaelen": 5},
+            "not_run_flag": "kaelen_visto",
+            "min_floor": 10
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "In un crepaccio brillano schegge di metallo conficcate nella roccia, come stelle. Al centro, una forma bruciata nel basalto: la sagoma di un uomo con le braccia alzate. Qui la spada di Kaelen è esplosa.",
+                "choices": [
+                    {
+                        "text": "Raccogli le schegge",
+                        "msg": "Sono calde. Vibrano tutte insieme, come se volessero riunirsi.",
+                        "effects": [
+                            {"essence": 70},
+                            {"flag": "kaelen_schegge"},
+                            {"counter": "kaelen"},
+                            {"run_flag": "kaelen_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Metti la mano nella sagoma bruciata",
+                        "msg": "La roccia è liscia. Per un istante senti le tue mani pesanti, come di pietra.",
+                        "effects": [{"def": 2}, {"counter": "kaelen"}, {"run_flag": "kaelen_visto"}]
+                    },
+                    {"text": "Prosegui", "msg": "Le schegge restano nella roccia, a brillare per nessuno."}
+                ]
+            }
+        }
+    },
+    "kaelen_pezzo": {
+        "title": "Il Pezzo che Manca",
+        "requires": {
+            "counter": {"kaelen": 5},
+            "counter_below": {"kaelen": 6},
+            "not_run_flag": "kaelen_visto",
+            "min_floor": 14
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Kaelen ha rimesso insieme la lama con le schegge. Manca un solo pezzo, al centro: una forma a goccia. Incide: «PIETRA. PRIMA. PICCOLA.» Vuole un frammento della Prima Pietra degli Architetti.",
+                "choices": [
+                    {
+                        "text": "Promettigli di cercarlo",
+                        "msg": "Kaelen annuisce, una volta. Ti batte la mano di pietra sulla spalla. Fa male, ed è un onore.",
+                        "effects": [
+                            {"exp": 70},
+                            {"flag": "kaelen_promessa"},
+                            {"counter": "kaelen"},
+                            {"run_flag": "kaelen_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Dagli quello che hai",
+                        "msg": "Gli mostri tutto quello che porti. Scuote la testa. Ma tiene un sasso qualunque, per gentilezza.",
+                        "effects": [{"heal_pct": 40}, {"counter": "kaelen"}, {"run_flag": "kaelen_visto"}]
+                    },
+                    {"text": "È troppo", "msg": "Kaelen torna a fissare la lama incompleta."}
+                ]
+            }
+        }
+    },
+    "kaelen_messaggio": {
+        "title": "Un Messaggio per il Campo",
+        "requires": {
+            "counter": {"kaelen": 6},
+            "counter_below": {"kaelen": 7},
+            "not_run_flag": "kaelen_visto",
+            "npc": "borek",
+            "min_floor": 12
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Kaelen ti mette in mano una lastra di ferro incisa e la stringe nelle tue dita, così forte da farti male. I segni sono pochi: «RAGAZZO. FUOCO. BUONO. SCUSA.» È per Borek.",
+                "choices": [
+                    {
+                        "text": "Porta la lastra al Campo",
+                        "msg": "La lastra pesa nello zaino per tutta la discesa. Non te ne liberi neanche quando potresti.",
+                        "effects": [
+                            {"flag": "kaelen_borek"},
+                            {"essence": 80},
+                            {"counter": "kaelen"},
+                            {"run_flag": "kaelen_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Digli che dovrebbe venire lui",
+                        "msg": "Kaelen guarda in alto, verso un Campo che non vede. Poi annuisce, lentissimo.",
+                        "effects": [
+                            {"flag": "kaelen_borek"},
+                            {"exp": 60},
+                            {"counter": "kaelen"},
+                            {"run_flag": "kaelen_visto"}
+                        ]
+                    },
+                    {"text": "Rifiuta", "msg": "Kaelen riprende la lastra senza rancore. Aspetterà."}
+                ]
+            }
+        }
+    },
+    "kaelen_spada": {
+        "title": "La Spada Finita",
+        "requires": {
+            "counter": {"kaelen": 7},
+            "counter_below": {"kaelen": 8},
+            "not_run_flag": "kaelen_visto",
+            "min_floor": 16
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Kaelen ti aspetta con una spada sulle braccia aperte. È intera, scura, con una goccia di pietra chiara al centro della lama. Quando la muove, il mondo intorno si ferma per un battito. Poi riparte.",
+                "choices": [
+                    {
+                        "text": "Impugnala",
+                        "msg": "Pesa come una promessa. Non taglia il Caos: lo ferma, per un istante. Kaelen incide un solo segno: «FATTO».",
+                        "effects": [
+                            {"weapon": "epic", "level": 1},
+                            {"flag": "kaelen_spada_finita"},
+                            {"counter": "kaelen"},
+                            {"run_flag": "kaelen_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Lasciala a lui",
+                        "msg": "Kaelen la guarda a lungo, poi la appende sopra la forgia. Per la prima volta in mille anni smette di battere.",
+                        "effects": [
+                            {"essence": 120},
+                            {"flag": "kaelen_riposa"},
+                            {"counter": "kaelen"},
+                            {"run_flag": "kaelen_visto"}
+                        ]
+                    },
+                    {"text": "Non ancora", "msg": "Kaelen la avvolge in un panno. Ti aspetterà."}
+                ]
+            }
+        }
+    },
+    "mercante_baratto": {
+        "title": "Il Baratto",
+        "requires": {"counter_below": {"mercante": 1}, "not_run_flag": "mercante_visto", "min_floor": 4},
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Un uomo senza volto ti sbarra la strada con un inchino. Dove dovrebbe esserci la faccia c'è un riflesso d'oro che si muove. «Non voglio le tue monete. Vendimi un ricordo piccolo. Il sapore di qualcosa, per esempio.»",
+                "choices": [
+                    {
+                        "text": "Vendigli il sapore del pane",
+                        "msg": "Ti mette in mano un sacchetto pesante. Il pane, d'ora in poi, saprà di poco.",
+                        "effects": [
+                            {"gold": 80},
+                            {"flag": "mercante_pane"},
+                            {"counter": "mercante"},
+                            {"run_flag": "mercante_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Chiedigli cosa ne fa, dei ricordi",
+                        "msg": "«Li conservo. Qualcuno deve pur farlo, visto che voi li perdete così facilmente.»",
+                        "effects": [{"exp": 40}, {"counter": "mercante"}, {"run_flag": "mercante_visto"}]
+                    },
+                    {
+                        "text": "Rifiuta",
+                        "msg": "Il Mercante fa un altro inchino. «Ci rivedremo. Tutti cambiano idea, prima o poi.»"
+                    }
+                ]
+            }
+        }
+    },
+    "mercante_registro": {
+        "title": "Il Registro",
+        "requires": {
+            "counter": {"mercante": 1},
+            "counter_below": {"mercante": 2},
+            "not_run_flag": "mercante_visto",
+            "min_floor": 7
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Il Mercante ha lasciato aperto un registro enorme su un leggio. Ogni riga è un ricordo comprato, con la data e il prezzo. A metà pagina riconosci una calligrafia: è la tua. «Venduto: il nome della prima persona che ho amato».",
+                "choices": [
+                    {
+                        "text": "Leggi la riga fino in fondo",
+                        "msg": "Il prezzo: un'ora in più di vita, al piano diciotto. Non ricordi né il nome né l'ora.",
+                        "effects": [
+                            {"exp": 80},
+                            {"flag": "mercante_registro_letto"},
+                            {"counter": "mercante"},
+                            {"run_flag": "mercante_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Strappa la pagina",
+                        "msg": "La pagina non si strappa. Si stacca da sola e torna al suo posto, intera.",
+                        "effects": [{"heal_pct": 30}, {"counter": "mercante"}, {"run_flag": "mercante_visto"}]
+                    },
+                    {"text": "Chiudi il registro", "msg": "Lo chiudi piano, come una bara."}
+                ]
+            }
+        }
+    },
+    "mercante_mendicante": {
+        "title": "I Due che non si Parlano",
+        "requires": {
+            "counter": {"mercante": 2},
+            "counter_below": {"mercante": 3},
+            "not_run_flag": "mercante_visto",
+            "min_floor": 9
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "In una stanza, il Mercante Senza Volto e il Mendicante Ombra siedono ai due lati opposti, voltandosi le spalle. Tutti e due ti fanno cenno di avvicinarti. Nessuno dei due guarda l'altro.",
+                "choices": [
+                    {
+                        "text": "Siediti accanto al Mercante",
+                        "msg": "«Lui ha scelto la povertà, io il tesoro. Tutti e due abbiamo scelto di restare. Non ci perdoniamo di essere uguali.»",
+                        "effects": [{"gold": 60}, {"counter": "mercante"}, {"run_flag": "mercante_visto"}]
+                    },
+                    {
+                        "text": "Siediti accanto al Mendicante",
+                        "msg": "«Eravamo fratelli di lavoro, in cielo. Contavamo lo stesso tesoro. Lui l'ha tenuto. Io l'ho dato via.»",
+                        "effects": [
+                            {"essence": 50},
+                            {"flag": "mendicante_ascoltato"},
+                            {"counter": "mercante"},
+                            {"run_flag": "mercante_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Passa in mezzo senza fermarti",
+                        "msg": "I due ti seguono con lo sguardo, ognuno dal suo lato."
+                    }
+                ]
+            }
+        }
+    },
+    "mercante_tesoro": {
+        "title": "Il Tesoro del Cielo",
+        "requires": {
+            "counter": {"mercante": 3},
+            "counter_below": {"mercante": 4},
+            "not_run_flag": "mercante_visto",
+            "min_floor": 12
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Il Mercante ti porta in una stanza piena di casse. Le apre una per una: non c'è oro. Ci sono piccole luci in vasetti di vetro, migliaia, tutte diverse. «Questo è il tesoro che proteggo. Ogni luce è un ricordo di Aethelgard.»",
+                "choices": [
+                    {
+                        "text": "Prendi un vasetto in mano",
+                        "msg": "Dentro c'è una festa di paese, la musica, l'odore di frittelle. Lo rimetti giù a fatica.",
+                        "effects": [
+                            {"exp": 80},
+                            {"flag": "mercante_tesoro_visto"},
+                            {"counter": "mercante"},
+                            {"run_flag": "mercante_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Chiedigli perché non li restituisce",
+                        "msg": "«A chi? Quelli a cui appartenevano sono diventati il Labirinto. Restituirli ai muri?»",
+                        "effects": [{"heal_pct": 30}, {"counter": "mercante"}, {"run_flag": "mercante_visto"}]
+                    },
+                    {"text": "Esci in silenzio", "msg": "Il Mercante richiude le casse una per una, con cura."}
+                ]
+            }
+        }
+    },
+    "mercante_volto": {
+        "title": "Il Riflesso",
+        "requires": {
+            "counter": {"mercante": 4},
+            "counter_below": {"mercante": 5},
+            "not_run_flag": "mercante_visto",
+            "min_floor": 15
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Il Mercante si china su una pozza d'acqua ferma, e ti fa cenno di guardare. Nel riflesso, sotto l'oro che gli copre la testa, per un istante c'è un volto: un uomo stanco, gentile, con gli occhi chiari.",
+                "choices": [
+                    {
+                        "text": "Diglielo",
+                        "msg": "«Allora c'è ancora,» dice il Mercante, e la voce gli trema. «Non lo vedo da secoli. L'oro copre tutto.»",
+                        "effects": [
+                            {"essence": 70},
+                            {"flag": "mercante_volto_visto"},
+                            {"counter": "mercante"},
+                            {"run_flag": "mercante_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Taci, per non ferirlo",
+                        "msg": "Il Mercante si raddrizza. «Lo so che non c'è niente. Grazie per non avermelo detto.»",
+                        "effects": [{"exp": 60}, {"counter": "mercante"}, {"run_flag": "mercante_visto"}]
+                    },
+                    {"text": "Guarda altrove", "msg": "L'acqua si increspa e il riflesso sparisce."}
+                ]
+            }
+        }
+    },
+    "mercante_occhi": {
+        "title": "Il Vasetto degli Occhi",
+        "requires": {
+            "counter": {"mercante": 5, "viandante_incontri": 1},
+            "counter_below": {"mercante": 6},
+            "not_run_flag": "mercante_visto",
+            "min_floor": 17
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Fra le merci del Mercante c'è un vasetto chiuso con la cera. Dentro, due occhi grigi galleggiano in un liquido limpido e ti seguono quando ti muovi. L'etichetta dice: «Il cartografo del re. Pagati: un sogno».",
+                "choices": [
+                    {
+                        "text": "Chiedi di comprarli per il Viandante",
+                        "msg": "«Non sono in vendita. Lui ha avuto il suo sogno. Un baratto è un baratto.» Ma ti regala un sorso di vino.",
+                        "effects": [
+                            {"heal_pct": 40},
+                            {"flag": "occhi_chiesti"},
+                            {"counter": "mercante"},
+                            {"run_flag": "mercante_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Guardali negli occhi",
+                        "msg": "Per un istante vedi quello che hanno visto: un trono, e qualcuno che si siede. Poi più niente.",
+                        "effects": [
+                            {"exp": 80},
+                            {"flag": "occhi_guardati"},
+                            {"counter": "mercante"},
+                            {"run_flag": "mercante_visto"}
+                        ]
+                    },
+                    {"text": "Lascia stare", "msg": "Gli occhi ti seguono fino alla porta."}
+                ]
+            }
+        }
+    },
+    "mercante_tuoi": {
+        "title": "I Tuoi Ricordi",
+        "requires": {
+            "counter": {"mercante": 6},
+            "counter_below": {"mercante": 7},
+            "not_run_flag": "mercante_visto",
+            "min_floor": 20
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Il Mercante apre una cassa piccola, separata dalle altre. Dentro ci sono vasetti etichettati con la tua calligrafia. «Questi sono tuoi. Me li hai venduti in discese che non ricordi. Posso vendertene uno indietro. A buon prezzo.»",
+                "choices": [
+                    {
+                        "text": "Ricompra un ricordo",
+                        "requires": {"gold": 150},
+                        "msg": "Apri il vasetto: una mattina, una finestra, qualcuno che ride in un'altra stanza. Non sai chi. Ma sei sicuro che ti voleva bene.",
+                        "effects": [
+                            {"gold": -150},
+                            {"essence": 150},
+                            {"flag": "ricordo_ricomprato"},
+                            {"counter": "mercante"},
+                            {"run_flag": "mercante_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Chiedigli di quale discesa sono",
+                        "msg": "«Di molte. Tu vendi sempre le cose piccole. Sono le più care, lo sai?»",
+                        "effects": [
+                            {"exp": 70},
+                            {"flag": "mercante_tuoi_visti"},
+                            {"counter": "mercante"},
+                            {"run_flag": "mercante_visto"}
+                        ]
+                    },
+                    {"text": "Lascia la cassa chiusa", "msg": "«Sono qui,» dice il Mercante. «Saranno sempre qui.»"}
+                ]
+            }
+        }
+    },
+    "mercante_restituzione": {
+        "title": "Il Prezzo Pagato",
+        "requires": {
+            "counter": {"mercante": 7},
+            "counter_below": {"mercante": 8},
+            "not_run_flag": "mercante_visto",
+            "min_floor": 24
+        },
+        "weight": 3,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Il Mercante ti aspetta con la cassa dei tuoi ricordi in braccio. La posa ai tuoi piedi. «Prendili. Tutti. Qualcuno ha già pagato per te.» Indica in alto, verso un Campo che non vedi. «Una brace. Ogni volta che torni.»",
+                "choices": [
+                    {
+                        "text": "Apri la cassa",
+                        "msg": "I ricordi ti salgono addosso come una marea tiepida. Non li capisci tutti. Ma ci sono.",
+                        "effects": [
+                            {"essence": 150},
+                            {"flag": "ricordi_restituiti"},
+                            {"counter": "mercante"},
+                            {"run_flag": "mercante_visto"}
+                        ]
+                    },
+                    {
+                        "text": "Lasciagliela, come compenso",
+                        "msg": "Il Mercante resta immobile. Poi, per la prima volta, l'oro della sua faccia si incrina, e sotto c'è un sorriso.",
+                        "effects": [
+                            {"exp": 100},
+                            {"flag": "mercante_sorriso"},
+                            {"counter": "mercante"},
+                            {"run_flag": "mercante_visto"}
+                        ]
+                    },
+                    {"text": "Non ancora", "msg": "«Non c'è fretta,» dice. «Il conto è saldato. I ricordi aspettano.»"}
+                ]
+            }
+        }
     }
 }
