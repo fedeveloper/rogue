@@ -297,6 +297,19 @@ Il **Campo Base** è un cerchio di pietre intorno al Fuoco, in un punto del Labi
     - *Il Quaderno delle Eco*: il Labirinto che ricorda; il Dio che torna «non riesce a dormire».
     - *Il Registro dei Custodi*: l'ordine delle porte; Alaric giurò come Paladino, non come Custode, e per questo non sa quando aprire. Il giuramento dei Custodi: aprire «il giorno in cui qualcuno avrà bisogno che si apra».
     - *Il Testamento di Galdor*: la figlia del re morì a sei anni nella carestia; fu Galdor a ordinare che il messaggio «non arrivasse».
+  - Quarta ondata (dodici libri, capitoli lunghi):
+    - *Le Cronache di Aurelia*: la città in cerchi, quattro porte (del Sole a oriente, del Fango a occidente), i quartieri (Templi, Studenti, Fabbri, Speziali, Concerie), le campane a undici rintocchi; il primo muro posato da un Architetto scese per ultimo. Alaric era figlio di un fabbro di serrature.
+    - *Il Quaderno di Nerea*: trovato in una membrana del Ventre (forse sognato da Silas, forse vero). Nerea scese con la casa nella Valle delle Campane, aspettò Silas alla fontana senz'acqua, pianse fino al sale. I suoi occhi, come quelli di Silas, sono **grigio-verdi, come il mare d'inverno**.
+    - *L'Erbario delle Paludi di Morva*: scritto da Isaura per le sue allieve traghettatrici; la bambina aveva sei anni e i capelli rossi; l'«erba del sonno» cresce dove un morto si addormenta davvero, e qualcuno l'ha trovata accanto a Isaura e alla bambina.
+    - *Il Trattato sul Ritorno*: di «uno che ha guardato»; trentasette discese osservate; le ipotesi più vicine alla verità aspettano la vittoria e 40 boss, la conclusione (le lettere hanno la calligrafia del Ritornante) 50 boss.
+    - *Il Libro del Drago di Zaffiro*: il Drago riportava a riva i pescatori morti; la corazza di scaglie la indossava Edda Vael; «non è alimentato dai rimpianti: li tiene».
+    - *La Storia dell'Accademia della Luce Calma*: «Qui si impara a chiedere»; sette aule, quella del Normale in fondo al terzo piano; l'ultimo capitolo, di Valerius, dopo la vittoria e 40 boss.
+    - *Il Diario della Maestra delle Stelle*: 1.145 stelle nelle notti limpide; Nerea aspettava Silas sulle scale contando i gradini; la Maestra sapeva che le luci cadute erano isole e diede a Silas la sua matita: «adesso conti tu».
+    - *I Viaggi di Bertolo*: la figlia si chiamava **Rosella**; il Mercante gli disse che le persone che ami «non sono merce, sono debiti»; Bertolo lasciò la Tasca Dorata nel Labirinto.
+    - *Il Libro delle Sette Cittadelle*: una cittadella per Architetto; solo quelle del Fuoco (una casa con la porta aperta a Ignis) e del Normale (su Calaris) restarono aperte; i due Architetti si volevano bene e bevevano il tè al bergamotto insieme. Ardel solo dopo la vittoria; il settimo, senza nome, dopo la vittoria e 40 boss.
+    - *Le Cronache dei Paladini Corrotti*: del cavaliere **Severo**, che non bruciò Silas, ricominciò a dire la preghiera dei malati e si sedette accanto all'armatura di Maud.
+    - *Il Libro dei Nomi del Ventre*: della bibliotecaria di Port'Alba **Adelina**, che salvò migliaia di nomi e perse il suo.
+    - *Il Libro dei Sette Sigilli*: i sigilli della Prima Pietra (quello del Normale è una linea orizzontale, «come una persona sdraiata», e non si spezzò). Dopo la vittoria e 60 boss il Ritornante vi lascia un graffio, un ottavo segno.
 
 Il Campo cambia con la storia: più personaggi trovano pace, più il Fuoco è caldo; chi sceglie la Corruzione lo trova un poco più freddo al ritorno.
 

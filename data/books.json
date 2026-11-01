@@ -986,6 +986,314 @@
                     "requires": {"won": true, "bosses_total": 50}
                 }
             ]
+        },
+        "cronache_aurelia": {
+            "title": "Le Cronache di Aurelia",
+            "unlock_condition": "Raggiungi il Piano 1",
+            "unlock": {"type": "max_floor", "value": 1},
+            "chapters": [
+                {
+                    "title": "La Città Bianca",
+                    "text": "Aurelia fu fondata nel primo secolo dell'Equilibrio, su una collina di marmo bianco che gli Architetti scelsero perché era il punto più vicino al cielo e il più lontano dal mare. La leggenda dice che il primo muro lo posò uno degli Architetti con le sue mani, e che il muro è ancora lì, sotto l'Accademia, liscio come il primo giorno. La città crebbe in cerchi: al centro i Grandi Templi della Luce e l'Accademia della Luce Calma, intorno i palazzi dei mercanti e dei maestri, poi le botteghe, poi i quartieri bassi delle concerie, dove l'acqua del fiume diventava rossa e marrone e nessuno voleva abitare. Aveva quattro porte, una per ogni punto del cielo. La più bella era la Porta del Sole, a oriente, di bronzo, alta come dieci uomini, che all'alba sembrava d'oro. La più brutta era la Porta del Fango, a occidente, da cui uscivano i carri delle concerie. Gli abitanti di Aurelia dicevano che la città aveva due facce, come ogni persona onesta: una per il sole e una per il fango. Non se ne vergognavano. Lo dicevano con orgoglio."
+                },
+                {
+                    "title": "I Quartieri",
+                    "text": "Le cronache elencano i quartieri come si elencano i figli. Il Quartiere dei Templi, dove la gente parlava sottovoce anche al mercato. Il Quartiere degli Studenti, intorno all'Accademia, dove le taverne restavano aperte fino all'alba e le discussioni sugli elementi finivano spesso in risse. Il Quartiere dei Fabbri, che puzzava di carbone e risuonava di martelli, dove nacque Alaric, figlio di un fabbro che faceva serrature. Il Quartiere degli Speziali, dietro l'Accademia, dove ogni bottega aveva un'insegna diversa: un mortaio d'ottone, una bilancia, un serpente attorcigliato. Il Quartiere delle Concerie, dove lavorava il medico Malphas e dove i poveri morivano più in fretta e più in silenzio. Fuori dalle mura, la casa del boia, sola, con un orto curato e una finestra sempre accesa. Le cronache non dicono chi ci abitasse: dicono solo che il suo orto dava i pomodori migliori della città, e che nessuno li comprava. La sera, dicono, le campane dei Grandi Templi suonavano undici rintocchi, e tutta Aurelia si fermava per un momento ad ascoltare. Poi riprendeva."
+                },
+                {
+                    "title": "La Notte",
+                    "text": "Le cronache di Aurelia si interrompono nella notte della Grande Discordia, e l'ultima pagina è scritta da un cronista che guardava dalla torre dell'Accademia. «Il cielo si strappa a oriente. La Porta del Sole è aperta, e la gente corre verso le colline. Una guardia tiene i battenti con le spalle. Il Quartiere delle Concerie è già sprofondato: il fiume rosso scende nel buio come un'unghiata. I Grandi Templi bruciano di una luce bianca che non scalda. Sotto di me l'Accademia trema, e sul tetto un ragazzo grida qualcosa verso il cielo, una domanda, ma il vento se la porta via. Le campane suonano da sole, senza ordine, tutte insieme. Non sono undici rintocchi: sono mille. Il marmo della collina si apre. Vedo la città scendere, cerchio dopo cerchio, nel buio, come una scala a chiocciola. Il primo muro, quello posato dall'Architetto, resta in piedi fino all'ultimo. Poi scende anche lui.» Sotto, un'altra mano ha aggiunto: «Il cronista non è sopravvissuto. Le sue pagine sono state trovate nei Chiostri, legate con un nastro azzurro.»",
+                    "requires": {"reached_floor": 3}
+                },
+                {
+                    "title": "Quello che Resta",
+                    "text": "Un'appendice, scritta molto dopo da un archivista senza nome: «Di Aurelia restano tre cose. La prima è una pietra della Porta del Sole, rimasta in superficie, su una collina dove i profughi costruirono un villaggio. Ci si lasciano lettere, sotto. La seconda sono i Chiostri, che sono l'Accademia e i suoi monasteri, scesi nel Labirinto e diventati un luogo di nostalgia. La terza è la Prima Pietra, nel cortile più profondo dei Chiostri, su cui sono incisi i sette sigilli degli Architetti. Il resto è nel guscio, mattone su mattone, insieme a chi c'era dentro. Chi scende nei Chiostri cammina su Aurelia, e non lo sa. A volte, sotto i piedi, sente un pavimento più liscio degli altri. È una strada del Quartiere dei Templi, dove la gente parlava sottovoce. A volte sente un odore di carbone. È il Quartiere dei Fabbri. Se si ferma ad ascoltare, all'undicesima ora, sente le campane. Undici rintocchi. Poi niente. Aurelia si ferma ancora, per un momento, ad ascoltare se stessa.»",
+                    "requires": {"reached_floor": 6}
+                }
+            ]
+        },
+        "quaderno_nerea": {
+            "title": "Il Quaderno di Nerea",
+            "unlock_condition": "Raggiungi il Piano 20",
+            "unlock": {"type": "max_floor", "value": 20},
+            "chapters": [
+                {
+                    "title": "La Casa che Scende",
+                    "text": "Questo quaderno è stato trovato in una membrana del Ventre, dentro un ricordo che non era stato ancora digerito. La calligrafia è minuta, ordinata, con le lettere tutte uguali, come quelle di chi ha imparato a scrivere copiando le stelle. «Mi chiamo Nerea. Ho sedici anni. Mio fratello Silas è all'Osservatorio con la Maestra, a contare. Io sono a casa, nella Valle delle Campane. Stanotte il cielo si è strappato e la casa ha cominciato a scendere. Non a crollare: a scendere, piano, come un ascensore delle miniere di Durn. La mamma dorme. Non riesco a svegliarla. Il papà è uscito a vedere e non è tornato. Scrivo perché Silas dice sempre che quello che si scrive non si perde. Quando torna, voglio che sappia cosa è successo. La casa scende ancora. Dalla finestra vedo le altre case della valle che scendono con noi, con le luci accese. Sembra una festa. Ho paura. Non si dovrebbe avere paura alle feste. Silas, se leggi: sono andata giù con la casa. Non sono scappata. Volevo restare con la mamma.»"
+                },
+                {
+                    "title": "La Fontana",
+                    "text": "«Non so quanto tempo è passato. La casa si è fermata in un posto bianco, pieno di archi. Ne ho contati undici, come le stelle di una costellazione che Silas mi aveva insegnato. La mamma non si è mai svegliata. Una notte è diventata un'ombra e se n'è andata per i corridoi. Non ho potuto seguirla. Ho trovato una fontana senz'acqua, con il fondo pieno di monete verdi, e mi sono seduta lì. Qui almeno c'è un posto dove aspettare. Silas verrà. Lui viene sempre. Quando ero piccola e mi perdevo al mercato, era lui che mi trovava, perché contava i passi da casa e sapeva sempre quanto lontano potevo essere arrivata. Anche adesso conterà. Conterà i piani, le stanze, gli archi. Arriverà. Io resto qui, così non deve cercarmi in giro. Resto vicino alla fontana. Ogni giorno ci butto una moneta e chiedo la stessa cosa. Non scrivo cosa chiedo. Se lo scrivo, non si avvera.»",
+                    "requires": {"reached_floor": 20}
+                },
+                {
+                    "title": "Il Sale",
+                    "text": "«Ho cominciato a piangere e non riesco a smettere. Non è tristezza, non solo: è come se il pianto fosse diventato il mio modo di respirare. Le lacrime cadono sul marmo e lasciano il sale. Il sale mi sale sulle mani, sulle braccia. Non fa male. È fresco. Ho letto, una volta, in un libro di Silas, che nei Chiostri c'è una cosa che si chiama Nostalgia Letale: chi ricorda troppo forte diventa quello che ricorda. Io ricordo Silas. Ricordo come conta le stelle, con la matita dietro l'orecchio, e come si arrabbia quando la Maestra gli bacchetta le dita. Ricordo il colore dei suoi occhi, che sono uguali ai miei. Forse diventerò un ricordo di lui. Forse sarà lui a trovarmi, e non mi riconoscerà, perché sarò di sale. Allora gli scrivo qui come riconoscermi. Sarò seduta. Avrò la testa piegata, come chi ascolta. Starò ascoltando i suoi passi. Silas, quando arrivi, leggimi qualcosa. Qualunque cosa. Così saprò che sei tu.»",
+                    "requires": {"reached_floor": 22}
+                },
+                {
+                    "title": "L'Ultima Riga",
+                    "text": "L'ultima pagina del quaderno ha una riga sola, scritta con una mano già bianca, le lettere rigide come cristalli. «I miei occhi sono grigio-verdi, come il mare d'inverno. Come i suoi.» Sotto, una macchia di sale che ha seccato la carta. Accanto al quaderno, nella membrana, c'era un fiore di carta, molto vecchio, e una moneta verde. Chi ha portato il quaderno all'Archivio ha lasciato una nota, con una calligrafia che non è quella di Silas: «Non so come sia arrivato nel Ventre. Il Ventre digerisce i ricordi del mondo, e forse anche quelli che qualcuno desidera troppo forte. Forse Silas, una notte, ha sognato così intensamente di trovare un quaderno di sua sorella che il Labirinto ne ha fatto uno. O forse Nerea l'ha scritto davvero, e il Labirinto lo ha tenuto da parte per lui. Non importa. Il colore è quello. Qualcuno dovrebbe dirglielo.»",
+                    "requires": {"reached_floor": 24}
+                }
+            ]
+        },
+        "erbario_morva": {
+            "title": "L'Erbario delle Paludi di Morva",
+            "unlock_condition": "Raggiungi il Piano 14",
+            "unlock": {"type": "max_floor", "value": 14},
+            "chapters": [
+                {
+                    "title": "Le Paludi",
+                    "text": "Le Paludi di Morva erano a sud-ovest di Aurelia, fra le Valli di Galdor e la costa: una terra bassa di canne, acqua nera e ferma, nebbia al mattino e lucciole la sera. Chi ci viveva era povero e silenzioso, e parlava con i morti. Non per stregoneria: per abitudine. Nell'Equilibrio la morte era un ritorno all'Essenza, ma la strada verso l'Essenza, per chi moriva nelle paludi, passava sull'acqua, e serviva qualcuno che conoscesse la strada. Quelli che la conoscevano si chiamavano traghettatori, e portavano i morti su barche piatte verso una luce bassa all'orizzonte, dove l'acqua finiva e cominciava qualcos'altro. Si pagavano con una moneta di rame bucata, messa sotto la lingua del morto. Questo erbario è stato scritto da una traghettatrice, per le sue allieve. Elenca le piante delle paludi e il loro uso, ma soprattutto spiega come si accompagna qualcuno che ha paura. Le piante, dice la prima pagina, sono la parte facile. La paura è il lavoro vero."
+                },
+                {
+                    "title": "Le Piante",
+                    "text": "La canna di Morva si taglia alla luna nuova e si usa per fare il fondo delle barche: non marcisce mai, perché ha già visto troppa acqua per averne paura. Il giglio nero cresce solo dove è sepolto qualcuno, e il suo profumo calma i morti che si agitano; le allieve devono portarne sempre un mazzo in barca. La lenticchia d'acqua copre la superficie delle pozze e si sposta per mostrare la strada a chi sa guardarla. Il muschio delle radici si mette sugli occhi dei morti, perché non vedano il buio del viaggio prima di vedere la luce. La salvia di palude, amara, si mastica per restare svegli nelle notti lunghe. Il fiore della brina, che nasce solo d'inverno, si mette in mano ai bambini morti, perché abbiano qualcosa da stringere. L'autrice scrive: «Non sono rimedi. Sono gesti. Un morto non ha bisogno di medicine. Ha bisogno di qualcuno che faccia per lui una cosa gentile, senza fretta, l'ultima volta.» Accanto al fiore della brina c'è una macchia di inchiostro, come se la penna avesse esitato a lungo."
+                },
+                {
+                    "title": "La Bambina",
+                    "text": "Un capitolo dell'erbario è diverso dagli altri, scritto in fretta. «Oggi ho portato in barca una bambina morta di febbre. Ha sei anni, i capelli rossi, e stringe il fiore della brina come le ho insegnato. Non parte. Non può. Ho remato fino alla luce bassa e la luce non c'era. L'acqua continuava, nera, senza fine. Ho provato tre notti. La strada è chiusa. Non so perché. Il mio maestro dice che qualcosa, lontano, ha fermato l'Essenza. Dice che i morti non possono più andarsene, e che adesso resteranno con noi. Lo dice con una voce strana, quasi contenta, come chi non dovrà più salutare nessuno. Ho paura di lui, per la prima volta. Ho riportato la bambina a riva. È seduta sulla barca, adesso, e mi guarda. Le ho raccontato una storia. Si è calmata. Domani gliene racconto un'altra. Non so quante storie conosco. Spero abbastanza.» La firma, in fondo, è una I.",
+                    "requires": {"reached_floor": 16}
+                },
+                {
+                    "title": "L'Ultima Pianta",
+                    "text": "L'ultima pagina descrive una pianta che non esiste nelle paludi. «La chiamo erba del sonno. Non l'ho mai vista. L'ho sognata. Cresce dove un morto si addormenta davvero, invece di restare sveglio ad aspettare. È piccola, grigia, con un fiore bianco che si apre solo al buio. Se la trovate, vuol dire che qualcuno lì ha trovato la pace, e che la strada, almeno per lui, si è riaperta. Non so se crescerà mai. Ma la scrivo nell'erbario lo stesso, perché le mie allieve sappiano che esiste la possibilità.» Chi ha portato l'erbario all'Archivio ha lasciato una nota: «L'ho trovata. Una sola, in un angolo dei Chiostri, accanto a una donna e a una bambina d'ombra che dormivano. Il fiore era aperto. Non l'ho colta.»",
+                    "requires": {"reached_floor": 18}
+                }
+            ]
+        },
+        "trattato_ritorno": {
+            "title": "Il Trattato sul Ritorno",
+            "unlock_condition": "Sconfiggi 6 Boss",
+            "unlock": {"type": "total_bosses", "value": 6},
+            "chapters": [
+                {
+                    "title": "Il Fenomeno",
+                    "text": "Trattato di un dotto anonimo, che si firma soltanto «uno che ha guardato». «Nel Labirinto si muore. Chi muore diventa, col tempo, parte del guscio: un mattone, una parete, un passo di più in un corridoio. Lo hanno osservato i Cercatori, lo dicono le fate, lo sanno i minatori di Durn che hanno visto i compagni diventare pietra. Esiste però un'eccezione, una sola, che ho potuto osservare per molti anni da lontano. Una persona che muore e non diventa pietra. Torna. Si sveglia accanto a un fuoco che non brucia, in un luogo che i pochi che l'hanno visto chiamano il Campo, e riscende. Non ricorda il suo nome. Non ricorda le discese precedenti, se non per frammenti. Ma riscende, sempre. In questo trattato chiamo questa persona il Ritornante, come la chiamano i pochi che sanno. Non so chi sia. So che è sola nel suo genere, e che tutto il Labirinto, in qualche modo, si accorge di lei.»"
+                },
+                {
+                    "title": "Le Osservazioni",
+                    "text": "«Ho osservato il Ritornante scendere trentasette volte. Non è sempre lo stesso, all'apparenza: a volte combatte come un soldato, a volte come una ladra, a volte lancia incantesimi che non dovrebbe conoscere. Ho capito presto che non sono travestimenti. Il Fuoco gli presta le vite di altri, eroi caduti che ha salvato dal guscio prima che diventassero pietra. Il Ritornante le indossa come si indossa un mantello, e per qualche discesa diventa un po' chi le portava. Ho notato anche che il Ritornante cambia il Labirinto. Le creature lo riconoscono. Certi boss lo aspettano. Le fontane fatate gli mostrano cose. Il Mercante Senza Volto gli fa prezzi diversi. È come se il Labirinto fosse stato costruito intorno a lui, o lui intorno al Labirinto. Ho anche notato una cosa che non so spiegare: il Fuoco, ogni volta che lui torna, è un poco più basso. Il ritorno costa. Non al Ritornante. Al Fuoco.»",
+                    "requires": {"bosses_total": 6}
+                },
+                {
+                    "title": "Le Ipotesi",
+                    "text": "«Ho tre ipotesi, e nessuna mi convince. La prima: il Ritornante è un eroe scelto dal Fuoco per il suo coraggio, e il Fuoco lo riporta indietro perché finisca qualcosa che nessun altro può finire. È l'ipotesi più bella, e per questo la più sospetta. La seconda: il Ritornante è una punizione. Qualcuno, una volta, ha fatto qualcosa di terribile, e deve scendere e morire e scendere ancora finché non avrà capito. Il Labirinto lo riconosce perché ricorda cosa ha fatto. La terza, la più inquietante: il Ritornante è una parte del Labirinto stesso, un pezzo della sua coscienza che ha preso forma umana e che scende dentro di sé per guardarsi. In questo caso il Fuoco sarebbe qualcos'altro, qualcosa di esterno, che lo tiene in vita contro il Labirinto. Ho notato che il Ritornante ha la spalla sinistra un po' più bassa dell'altra, in tutte le vite che indossa. È l'unica cosa sua. Non so cosa voglia dire.»",
+                    "requires": {"won": true, "bosses_total": 40}
+                },
+                {
+                    "title": "La Conclusione",
+                    "text": "«Ho smesso di osservare. Non per stanchezza: per pudore. Mi sono accorto che guardare il Ritornante morire, una volta dopo l'altra, prendendo appunti, era una cosa crudele. Lui non lo sa, che lo guardo. Ma il Labirinto sì, e credo che mi abbia giudicato. Lascio queste pagine all'Archivio con una sola conclusione certa: chiunque sia, il Ritornante non scende per vincere. Ho visto che, quando vince, il Labirinto non finisce. Scende per un'altra ragione, che forse nemmeno lui conosce. Ho il sospetto che la risposta stia nelle lettere insanguinate che trova sulle pareti. Sono scritte con una calligrafia che, ho notato, assomiglia moltissimo alla sua. Chi legge questo trattato, se incontra il Ritornante, non gli dica niente. Lo deve scoprire da solo. È l'unica cosa che il Labirinto, credo, gli chiede davvero.»",
+                    "requires": {"won": true, "bosses_total": 50}
+                }
+            ]
+        },
+        "libro_drago": {
+            "title": "Il Libro del Drago di Zaffiro",
+            "unlock_condition": "Raggiungi il Piano 18",
+            "unlock": {"type": "max_floor", "value": 18},
+            "chapters": [
+                {
+                    "title": "Il Guardiano del Mare",
+                    "text": "Le storie che i pescatori del Mare Interno raccontavano sul Drago di Zaffiro, raccolte da un vecchio di Port'Alba che le aveva sentite da suo nonno. Il Drago abitava il centro del mare, nella fossa più profonda, dove l'acqua era blu come uno zaffiro e fredda come una notte d'inverno. Non era un mostro. Era un guardiano: gli Architetti lo avevano messo lì, dicevano, perché il mare avesse qualcuno a cui voler bene. Ogni alba si alzava dall'acqua, enorme come un'isola, con le scaglie che brillavano, e salutava i pescatori che uscivano con le barche. Non diceva niente. Inclinava la testa, piano, e poi tornava sotto. I pescatori lo salutavano con la mano, e chi non lo salutava aveva una giornata di pesca cattiva. Non perché il Drago si vendicasse: perché chi non saluta, dicevano, non ha il cuore giusto per il mare. Quando un pescatore moriva in mare, il Drago lo riportava a riva, adagiato sulla sua testa, e lo lasciava sulla spiaggia davanti al villaggio. Poi restava lì, a guardare, finché la famiglia non arrivava."
+                },
+                {
+                    "title": "Le Scaglie",
+                    "text": "Il Drago perdeva le scaglie, una ogni tanto, come gli alberi perdono le foglie. Cadevano sul fondo e la corrente le portava sulle spiagge. Erano blu, dure come il ferro e leggere come il legno. I pescatori le raccoglievano e le davano alla nave che sarebbe uscita per prima la primavera dopo, perché le cucisse sulla corazza del capitano. Era un'usanza antica. Una corazza di scaglie di drago, dicevano, non si fa: si eredita da tutta una flotta. Ogni scaglia aveva una storia, perché ogni scaglia era stata raccolta da qualcuno. C'era la scaglia trovata da un bambino il giorno della sua nascita. C'era quella trovata da una vedova il giorno dopo il funerale. C'era quella trovata da due innamorati che si erano sposati per questo. Quando la corazza fu finita, la indossò il capitano della Gabbiana, Edda Vael, l'ultima primavera prima della Discordia. Il Drago, quella mattina, la guardò a lungo, più a lungo del solito. I pescatori dissero che si era riconosciuto."
+                },
+                {
+                    "title": "Il Mare che si Ferma",
+                    "text": "«Quando il mare si fermò, il Drago fu il primo a capirlo. Si alzò dall'acqua di notte, cosa che non aveva mai fatto, e ruggì. Era la prima volta che i pescatori lo sentivano ruggire. Non era un ruggito di rabbia: era un grido. Poi il mare diventò vetro, e nel vetro il Drago vide tutte le vite che aveva guardato in mille anni, tutte insieme: i pescatori, le barche, i bambini sulla spiaggia, i morti riportati a riva. Le vide tutte e capì che le avrebbe perse. Pianse. Le sue lacrime erano salate come il mare, e caddero nel vetro, e il vetro le tenne. Il mare scese nel buio, e il Drago scese con lui, perché non sapeva fare altro che stare con il suo mare. Le storie dicono che passò accanto alla flotta, nella discesa, e che guardò la Gabbiana a lungo, e poi mise la testa sott'acqua, come un cane che si vergogna di non aver protetto la casa.»",
+                    "requires": {"reached_floor": 19}
+                },
+                {
+                    "title": "Il Custode delle Lacrime",
+                    "text": "Nel Ventre della Memoria il Drago di Zaffiro è diventato il Custode delle Lacrime: un cataclisma vivente, dicono le cronache dei Cercatori, alimentato da un miliardo di rimpianti. Il vecchio di Port'Alba, nell'ultima pagina, non è d'accordo. «Non è alimentato dai rimpianti. Li tiene. È diverso. Il Drago ha sempre tenuto le cose del mare: i pescatori morti, le scaglie cadute, le barche perse. Adesso tiene le lacrime di tutti quelli che hanno perso qualcosa nel mare che si è fermato. Le tiene perché nessun altro lo fa. Chi lo combatte crede di combattere un mostro. Combatte un custode stanco che non sa più a chi restituire quello che custodisce. Se qualcuno, un giorno, lo abbatte, non sia crudele. Lo saluti con la mano, come facevano i pescatori. Forse il Drago capirà che il suo turno è finito, e che può posarsi sull'acqua, e affondare piano, come un'alba al contrario.»",
+                    "requires": {"reached_floor": 20}
+                }
+            ]
+        },
+        "libro_accademia": {
+            "title": "La Storia dell'Accademia della Luce Calma",
+            "unlock_condition": "Scopri 8 incantesimi",
+            "unlock": {"type": "spells_seen", "value": 8},
+            "chapters": [
+                {
+                    "title": "La Fondazione",
+                    "text": "L'Accademia della Luce Calma fu fondata ad Aurelia nel secondo secolo dell'Equilibrio, quando gli Architetti decisero che gli uomini dovevano imparare a capire gli elementi invece di subirli. Non fu un'idea di tutti: alcuni Architetti pensavano che gli uomini non fossero pronti, e che la conoscenza degli elementi li avrebbe resi superbi. Prevalse l'idea opposta. L'Accademia ebbe undici archi nel chiostro principale, uno per ogni ora del giorno, e sette aule, una per ogni elemento, disposte su tre piani. Ogni aula aveva un maestro, e ogni maestro era, all'inizio, un Architetto. Insegnavano di persona, in tunica semplice, senza titoli. Gli studenti li chiamavano maestro e basta, e molti, per anni, non sapevano di stare parlando con chi aveva fissato le stelle nel cielo. La regola della fondazione, incisa sopra la porta, diceva: «Qui si impara a chiedere». Non a comandare, non a dominare: a chiedere. Gli elementi, diceva la regola, rispondono a chi chiede bene."
+                },
+                {
+                    "title": "Le Sette Aule",
+                    "text": "Le aule dell'Accademia erano diverse come gli elementi che vi si insegnavano. L'aula del Fuoco era piena di candele e di camini, e d'inverno era la più frequentata. L'aula dell'Acqua aveva una vasca al centro, dove gli studenti imparavano a sentire la corrente con le dita. L'aula della Terra era al piano terra, con il pavimento di terra battuta. L'aula del Vento era in cima alla torre, con le finestre sempre aperte, e gli appunti volavano via di continuo. L'aula della Luce era tutta bianca, e si entrava a occhi chiusi. L'aula della Tenebra era sotto, nei sotterranei, e si studiava al buio. L'aula del Normale era in fondo al terzo piano, piccola, con una lavagna d'ardesia e nessuna decorazione. Era la meno frequentata. Gli studenti dicevano che il Normale era l'elemento di chi non aveva talento per gli altri. Il maestro del Normale non rispondeva. Insegnava a chi veniva, a volte a due studenti soli, con la stessa cura con cui gli altri insegnavano a cento.",
+                    "requires": {"reached_floor": 6}
+                },
+                {
+                    "title": "Il Crepuscolo",
+                    "text": "Nel Crepuscolo Lungo l'Accademia cambiò. Gli Architetti smisero di insegnare, uno alla volta, e si ritirarono nelle loro cittadelle. Al loro posto vennero maestri umani, bravi ma spaventati. Le lezioni diventarono più severe, i corsi più brevi, gli esami più crudeli. L'Arcimago dell'Accademia, l'ultimo, cercò per anni di capire cosa stesse succedendo agli elementi. Scrisse lettere agli Architetti nelle cittadelle. Non gli risposero. Alla fine prese il suo scettro e scese verso il fondo della terra, dove pensava che fosse la causa, e non tornò. Restò un solo Architetto a insegnare, l'ultimo: il maestro del Normale, nell'aula in fondo al terzo piano. Continuò fino alla fine. I suoi studenti, negli ultimi anni, erano due. Un ragazzo con le scarpe rotte, figlio di un mugnaio. E un giovane di Aetheria, elegante e vanitoso, che si iscriveva al corso solo per essere sicuro di essere il primo. Non lo fu mai.",
+                    "requires": {"reached_floor": 12}
+                },
+                {
+                    "title": "L'Ultima Lezione",
+                    "text": "La storia dell'Accademia finisce con una pagina sola, scritta da Valerius, che l'ha aggiunta di suo pugno. «L'ultima lezione dell'Accademia della Luce Calma si tenne nell'aula in fondo al terzo piano, tre giorni prima della Discordia. Eravamo in due. Il maestro scrisse sulla lavagna una frase sola, e la frase la conoscete, perché è scritta ovunque nel Labirinto, sui muri, sui margini dei libri, nell'aria dei Chiostri. Poi chiese se avessimo domande. Teodor ne aveva una, e non la fece. Io non ne avevo, perché credevo di aver capito tutto. Non avevo capito niente. Il maestro aspettò, poi scrisse il suo nome sotto la frase e uscì. L'Accademia chiuse quella sera. Non per decreto: perché non c'era più nessuno a insegnare. Tre giorni dopo il cielo si strappò, e l'Accademia scese nel Labirinto con i suoi undici archi, e diventò i Chiostri. Se cercate l'aula del Normale, è ancora lì. La lavagna anche. La frase anche. Il nome no.»",
+                    "requires": {"won": true, "bosses_total": 40}
+                }
+            ]
+        },
+        "diario_maestra": {
+            "title": "Il Diario della Maestra delle Stelle",
+            "unlock_condition": "Raggiungi il Piano 15",
+            "unlock": {"type": "max_floor", "value": 15},
+            "chapters": [
+                {
+                    "title": "Contare",
+                    "text": "Diario dell'Astronoma di Valeriana, che i suoi allievi chiamavano la Maestra. «Le stelle non si guardano, si contano. Lo dico a ogni allievo il primo giorno, e nessuno mi crede. Guardarle è facile: le guardano tutti, gli innamorati, i pastori, i bambini che non riescono a dormire. Contarle è un'altra cosa. Bisogna conoscerle per nome, sapere dove dovrebbero essere, accorgersi quando una manca. Una stella che manca è un'informazione. Una stella che si guarda è solo una bella cosa. Il mondo è pieno di belle cose; ha bisogno di informazioni. Ogni notte io e i miei allievi saliamo sulla guglia più alta dell'Osservatorio, a piedi nudi sul pavimento di rame, e contiamo. Millecentoquarantacinque stelle di prima e seconda grandezza, nelle notti limpide. Le scriviamo sul registro, una per una, con il loro nome. Se il conto torna, il mondo è a posto. Se non torna, qualcosa sta cambiando, e noi siamo i primi a saperlo.»"
+                },
+                {
+                    "title": "Il Peggiore",
+                    "text": "«Ho un allievo che guarda le stelle invece di contarle. Si chiama Silas. Gli bacchetto le dita con la matita ogni volta che lo sorprendo, e lo sorprendo sempre. Non lo faccio per cattiveria: lo faccio perché ha un talento che non vuole usare. Conta più veloce di tutti gli altri, quando conta. Sa i nomi di tutte le stelle, anche quelle di quinta grandezza che nessuno conosce. Ma poi si ferma, con la matita dietro l'orecchio, e guarda. Guarda come se le stelle gli dicessero qualcosa. Gli ho chiesto cosa. Mi ha risposto: niente, Maestra. Sono solo belle. Gli ho detto che è il mio allievo peggiore. Non è vero. È il migliore. Ma un allievo migliore non deve saperlo, altrimenti smette di imparare. Ha una sorella più piccola, Nerea, che viene a prenderlo la sera e lo aspetta seduta sulle scale, contando i gradini. Lei, almeno, conta.»"
+                },
+                {
+                    "title": "Le Cinque",
+                    "text": "«Da tre notti il conto non torna. Millecentoquarantadue. Poi millecentoquarantuno. Mancano stelle, e non ne cadono: semplicemente non ci sono più, come se qualcuno le avesse spente. Ho scritto agli Architetti. Non rispondono da mesi. Ho scritto all'Accademia di Aurelia, all'aula del Vento. Mi hanno risposto che sono stanca e che conto male. Non conto male. Non ho mai contato male in quarantadue anni. Silas, stanotte, non ha guardato: ha contato con me, fino all'alba, senza fermarsi. Alla fine mi ha detto: Maestra, ne mancano cinque. E io ho detto: lo so. E lui ha detto: cosa vuol dire? E io non ho saputo rispondere. È la prima volta, in tutta la mia vita, che un allievo mi fa una domanda a cui non so rispondere. Mi ha spaventato più delle stelle. Domani salgo di nuovo. Se manca un'altra stella, salgo e non scendo finché non capisco.»",
+                    "requires": {"reached_floor": 13}
+                },
+                {
+                    "title": "La Guglia",
+                    "text": "«La notte della Discordia ho contato quattrocentododici luci cadere. Silas dice che erano stelle. Non erano stelle: erano isole, con le finestre accese. Gliel'ho detto. Non mi ha creduto. Era meglio così. All'alba le luci hanno smesso di cadere, e Silas è salito sulla guglia a cercarmi. Mi ha chiesto di scendere. Gli ho detto: quando ho finito di contarle. Non è vero. Non avevo più niente da contare: erano cadute tutte quelle che dovevano cadere. Volevo solo restare sulla guglia. Volevo essere la prima a vedere, se qualcosa fosse tornato al suo posto. È il mio lavoro, essere la prima. Silas è sceso piangendo. Gli ho bacchettato le dita un'ultima volta, piano, e gli ho dato la mia matita. Gli ho detto: adesso conti tu. Non guardare. Conta. Ma lo so che guarderà. Spero che guardi. Spero che, da qualche parte, ci sia ancora qualcosa di bello da guardare, e che lui lo trovi prima di me.» Il diario finisce qui.",
+                    "requires": {"reached_floor": 15}
+                }
+            ]
+        },
+        "viaggi_bertolo": {
+            "title": "I Viaggi di Bertolo, Mercante di Valeriana",
+            "unlock_condition": "Raggiungi il Piano 9",
+            "unlock": {"type": "max_floor", "value": 9},
+            "chapters": [
+                {
+                    "title": "Il Mercante",
+                    "text": "Mi chiamo Bertolo e sono stato il più ricco mercante di seta della Valle dei Mulini. Lo scrivo senza modestia perché è l'unica cosa di cui sono sicuro. Ho comprato seta da trentanove famiglie di tessitori e l'ho venduta in tutta Aethelgard, da Aurelia a Port'Alba, dalle Valli di Galdor ai Monti di Durn. Ho imparato che tutto ha un prezzo, e che chi conosce il prezzo delle cose comanda chi non lo conosce. Ho imparato a sorridere ai clienti ricchi e a non guardare quelli poveri. Ho avuto una moglie, che è morta presto, e una figlia, Rosella, che ho amato più della seta, il che per me è molto. Rosella aveva i capelli neri come la nebbia di notte e rideva di tutto, anche di me. Era l'unica persona al mondo che non avesse paura di me. Questi sono i miei viaggi. Li scrivo perché nell'ultimo ho perso tutto, e voglio che qualcuno sappia cosa avevo, prima."
+                },
+                {
+                    "title": "La Figlia",
+                    "text": "La notte della Discordia Rosella era nella Valle delle Campane, da un'amica. Io ero a casa, nella Valle dei Mulini, a contare il denaro della stagione. Quando le torri cominciarono ad allungarsi verso il basso, corsi verso la Valle delle Campane, attraversando ponti che si spezzavano dietro di me. Arrivai troppo tardi. La casa dell'amica era scesa nel buio, con tutte le altre case della valle, le luci ancora accese. Rosella era dentro. Una Sentinella di Nube mi trattenne sul bordo, perché non mi buttassi. Io la morsi. Lei non mi lasciò. Quella notte ho capito che c'era una cosa al mondo che non potevo comprare, e l'ho odiata, quella cosa. L'ho odiata così tanto che ho deciso di comprarla lo stesso. Ho venduto tutto. La seta, la casa, le terre. Ho messo l'oro in una tasca che ho cucito io stesso, con il filo d'oro. E sono sceso nella Fauce, per corromperla.",
+                    "requires": {"reached_floor": 9}
+                },
+                {
+                    "title": "La Fauce",
+                    "text": "Nel Labirinto ho offerto l'oro a tutto ciò che incontravo. Ai Goblin, che lo hanno preso e mi hanno inseguito per avere il resto. A un'ombra nei Chiostri, che non sapeva cosa fosse. A un minatore di pietra, che mi ha guardato senza capire. Poi ho trovato una stanza con un banco, e dietro il banco qualcuno senza volto, con un riflesso d'oro al posto della faccia. Mi ha detto: cosa vuoi comprare? Ho detto: mia figlia. Lui ha preso la tasca, ha pesato l'oro, me l'ha restituita. Ha detto: non è in vendita. Non perché non abbia un prezzo. Perché non è mia. Ho gridato. Gli ho detto che tutto ha un prezzo, che me l'aveva insegnato il mondo. Lui ha risposto: il mondo ti ha insegnato male. E poi una cosa che non ho dimenticato: le persone che ami non sono merce, Bertolo. Sono debiti. E i debiti non si comprano. Si pagano.",
+                    "requires": {"reached_floor": 11}
+                },
+                {
+                    "title": "La Tasca",
+                    "text": "Ultima pagina, scritta in un posto che non so più nominare. «Ho capito cosa voleva dire il Mercante. Ho passato la vita a comprare, e non ho mai pagato niente. Rosella rideva di me perché lo sapeva. Adesso pago. Scendo, senza oro, e aiuto chi trovo. Ho dato un pezzo di pane a un minatore. Ho portato in braccio una bambina d'ombra per tre stanze, finché non si è addormentata. Ho cantato a una statua di sale, accanto a una fontana, perché mi sembrava che ascoltasse. La tasca d'oro la lascio qui, su questo pavimento. È strana: si riempie da sola, come per scusarsi di non avermi aiutato. Chi la trova, la usi. Ma ricordi che l'oro non compra le cose che contano. Le cose che contano si pagano con il tempo, con le mani, con la pazienza. Rosella, se il Labirinto ti ha tenuta da qualche parte, sappi che tuo padre, alla fine, ha imparato. Tardi, ma ha imparato.»",
+                    "requires": {"reached_floor": 13}
+                }
+            ]
+        },
+        "sette_cittadelle": {
+            "title": "Il Libro delle Sette Cittadelle",
+            "unlock_condition": "Vinci una Run Standard",
+            "unlock": {"type": "won_normal", "value": 1},
+            "chapters": [
+                {
+                    "title": "Le Cittadelle",
+                    "text": "Ogni Architetto aveva una cittadella, un luogo dove ritirarsi quando non camminava fra gli uomini. Il libro le descrive come le descrivevano i pochi che le avevano viste. La cittadella dell'Acqua era una torre di vetro in mezzo al Mare Interno, e dentro si sentiva sempre la risacca. Quella della Terra era una caverna dei Monti di Durn così grande che dentro pioveva. Quella del Vento era un nido di corde fra le guglie più alte di Valeriana, e oscillava sempre. Quella della Luce era un tempio senza ombre, sopra Aurelia, dove non si poteva stare a lungo senza piangere. Quella della Tenebra era un pozzo nelle Paludi di Morva, con una scala che scendeva per mille gradini. Quella del Fuoco era una casa piccola, sulle montagne di Ignis, con un focolare sempre acceso e la porta sempre aperta. Quella del Normale era su Calaris, l'isola più alta di Aetheria: una cittadella semplice, di pietra grigia, con un tavolino e una sedia rivolta verso il cielo."
+                },
+                {
+                    "title": "Il Ritiro",
+                    "text": "Nel Crepuscolo Lungo gli Architetti si ritirarono nelle cittadelle, uno dopo l'altro. Il libro dice che lo fecero per paura: avevano visto gli elementi ammalarsi, e non sapevano come curarli, e preferirono chiudersi dentro invece di farsi vedere impotenti. Le porte delle cittadelle si chiusero. Le lettere degli uomini restarono senza risposta. Solo due cittadelle rimasero aperte. La casa del Fuoco, sulle montagne di Ignis, dove la porta non si chiuse mai e chiunque poteva entrare a scaldarsi. E la cittadella del Normale, su Calaris, dove l'Architetto continuava a scendere ogni giorno ad Aurelia per insegnare nell'aula in fondo al terzo piano. Il libro nota che erano due Architetti molto diversi. Uno voleva che la gente restasse, al caldo. L'altro voleva che la gente potesse andare, finalmente. Il libro nota anche che si volevano bene, e che la sera, a volte, l'Architetto del Fuoco saliva su Calaris a bere il tè al bergamotto con il fratello.",
+                    "requires": {"reached_floor": 25}
+                },
+                {
+                    "title": "La Notte delle Cittadelle",
+                    "text": "«La notte della Discordia le cittadelle si accesero tutte insieme, come lanterne. Gli Architetti uscirono, per la prima volta in un secolo, e videro cosa stava succedendo su Calaris. Il fratello del Normale aveva acceso il Vuoto. Cinque di loro provarono a richiuderlo e non ci riuscirono, e allora lo avvolsero, e fecero il guscio, e se ne andarono, perché non sopportavano di vedere cosa avevano dovuto fare. Il sesto non se ne andò. Era l'Architetto del Fuoco, quello della casa con la porta aperta. Guardò il guscio, e la gente che ci restava intrappolata dentro, e disse: qualcuno deve restare con loro. Scese dentro il guscio, in un punto che il guscio non vede, e si fece brace. Il suo nome era Ardel.» Il libro aggiunge, con una calligrafia più piccola: «La casa del Fuoco, sulle montagne di Ignis, ha ancora la porta aperta. Il focolare è spento. Ma chi entra, dicono, sente caldo lo stesso.»",
+                    "requires": {"won": true}
+                },
+                {
+                    "title": "Il Settimo",
+                    "text": "L'ultimo capitolo parla del settimo Architetto, quello del Normale, senza mai nominarlo. «Non era cattivo. È la cosa più difficile da capire, e la più importante. Era il più gentile di tutti, e il più stanco. Aveva visto che nell'Equilibrio nessuno muore davvero, che tutto torna, sempre, e aveva pensato che fosse una crudeltà. Voleva dare al mondo un riposo. Ci ha messo un secolo a trovare il modo. Quando l'ha trovato, non ha chiesto il permesso a nessuno, come gli altri Architetti non avevano chiesto il permesso a nessuno per fare un mondo dove tutto torna. Ha sbagliato. Il Vuoto non è il riposo: è la fermata. E una fermata, quando si allarga, ferma tutto, anche quello che voleva ancora camminare. Il Dio Antico, in fondo al Labirinto, è ciò che resta di lui. Dorme, e nel sonno sogna il Labirinto. Ogni tanto si sveglia, e ricorda cosa voleva, e lo vuole ancora. Chi lo combatte non combatte un mostro. Combatte un desiderio.»",
+                    "requires": {"won": true, "bosses_total": 40}
+                }
+            ]
+        },
+        "paladini_corrotti": {
+            "title": "Le Cronache dei Paladini Corrotti",
+            "unlock_condition": "Raggiungi il Piano 13",
+            "unlock": {"type": "max_floor", "value": 13},
+            "chapters": [
+                {
+                    "title": "La Divisione",
+                    "text": "Dopo la Discordia l'Ordine dei Paladini si divise. Il libro lo racconta dal punto di vista di chi scelse la Luce, ed è scritto da uno di loro, un cavaliere di nome Severo, con una calligrafia dritta e senza esitazioni. «Il Primo Paladino era sparito. Dicevano che gli Architetti gli avessero affidato una porta e che lui l'avesse giurata. Noi non avevamo porte. Avevamo la Luce, e la Luce, dopo la Discordia, era diventata più forte, più chiara, più giusta. Bruciava chi mentiva. Bruciava chi dubitava. Alcuni dei nostri dissero che era diventata crudele. Noi dicemmo che era diventata onesta. Un mondo spezzato, dicemmo, ha bisogno di qualcuno che non abbia dubbi. Ci dividemmo nel cortile di Aurelia, davanti alla Prima Pietra, mentre la città scendeva. Chi scelse il dubbio andò a cercare il Primo Paladino. Chi scelse la Luce rimase a combattere. Io rimasi. Lo scrivo senza rimpianti. O almeno, lo scrivevo così, la prima volta.»"
+                },
+                {
+                    "title": "Le Guglie",
+                    "text": "«Ci siamo stabiliti nelle Guglie, dove la Luce arriva più forte, perché le guglie sono vicine al cielo. Abbiamo costruito altari sui ponti di vento. Abbiamo combattuto ogni cosa che saliva dal basso: ombre, melme, Cercatori che facevano domande. I Cercatori erano i peggiori. Arrivavano con i loro taccuini e chiedevano perché la Luce bruciasse, e noi li bruciavamo, perché la domanda stessa era un dubbio. Un giorno è arrivato un astronomo con un fuoco azzurro e un diario. Mi ha chiesto se avessi visto sua sorella. Gli ho risposto che la Luce non vede persone, vede solo colpe. Lui mi ha guardato con una pietà che non dimenticherò. Mi ha detto: allora sei cieco anche tu. Poi è andato via, e io non l'ho bruciato. Non so perché. È la prima volta, in cento anni, che non brucio qualcuno che dubita. I miei fratelli non lo hanno saputo. La Luce sì, credo. Da quel giorno brucia un poco anche me.»",
+                    "requires": {"reached_floor": 14}
+                },
+                {
+                    "title": "La Preghiera",
+                    "text": "«Recitiamo la preghiera cambiata dell'alba ogni mattina: Luce che bruci, brucia ciò che è impuro. La recitiamo combattendo, per non sentire le grida. Ma da qualche tempo, quando la recito, la mia bocca dice un'altra cosa, piano, sotto la voce: non renderla perfetta, rendila sana. È una frase della vecchia preghiera dei malati, quella che i sacerdoti smisero di dire. Mia madre me la diceva quando avevo la febbre. Non so perché mi sia tornata in bocca dopo mille anni. Ho provato a smettere. Non ci riesco. Ogni mattina la dico, sotto la preghiera di guerra, e ogni mattina la mia armatura brilla un poco meno. I miei fratelli mi guardano. Non dicono niente. Credo che alcuni di loro la dicano anche loro, sotto la voce. Credo che la Luce, quella vera, quella calma, sia ancora da qualche parte sotto la Luce che brucia, come una voce sotto un'altra.»",
+                    "requires": {"reached_floor": 16}
+                },
+                {
+                    "title": "L'Ultimo Capitolo",
+                    "text": "L'ultima pagina è scritta con una calligrafia diversa, incerta, come di qualcuno che sta imparando di nuovo a scrivere. «Ho lasciato l'armatura su un altare delle Guglie. Brillava ancora, ma solo un poco. Sono sceso verso la porta del Primo Paladino, per chiedergli scusa a nome dell'Ordine, e per dirgli che aveva avuto ragione a dubitare. Non sono arrivato. Mi sono fermato a poche file dalla porta, accanto a un'armatura bianca, piccola, con un fazzoletto nel guanto. Ho letto il fazzoletto. Arrivo, fratello. Aspettami. Ho capito che qualcuno era arrivato prima di me, più pulito di me, e non ce l'aveva fatta. Mi sono seduto accanto a lei. Le farò compagnia. È tutto quello che resta da fare a un cavaliere che ha sbagliato strada: stare vicino a chi aveva quella giusta.» La firma è ancora Severo, ma la S è piccola, quasi timida.",
+                    "requires": {"reached_floor": 20}
+                }
+            ]
+        },
+        "nomi_ventre": {
+            "title": "Il Libro dei Nomi del Ventre",
+            "unlock_condition": "Raggiungi il Piano 21",
+            "unlock": {"type": "max_floor", "value": 21},
+            "chapters": [
+                {
+                    "title": "Cosa Digerisce il Ventre",
+                    "text": "Il Ventre della Memoria digerisce i nomi. È la cosa che i Cercatori ripetono più spesso, e la più vera. Questo libro è stato scritto da una bibliotecaria di Port'Alba, che scese nel Ventre con un compito preciso: salvare quanti più nomi poteva, prima che venissero digeriti. «Ogni giorno, nel Ventre, migliaia di nomi spariscono. Non solo quelli dei vivi che ci camminano: anche quelli dei morti di sopra, di tutto il mondo, di chiunque sia mai stato ricordato da qualcuno. Il Cuore del Ventre batte, e a ogni battito qualcuno, da qualche parte, dimentica un volto. Io li raccolgo. Mi siedo accanto alle membrane, ascolto, e quando sento un nome che sta per sparire lo scrivo. Non so a chi appartengano. Non importa. Un nome scritto non si digerisce. Questo libro è il mio argine. È piccolo. Ma ogni nome che c'è dentro è un nome che il mondo, da qualche parte, ricorderà ancora.»"
+                },
+                {
+                    "title": "I Nomi",
+                    "text": "Il libro è pieno di nomi, migliaia, in colonne fitte, con la calligrafia minuta della bibliotecaria. Ogni tanto, accanto a un nome, c'è una nota piccola. «Tobia, pescatore: amava le acciughe fritte.» «Lena, sei anni: aveva paura dei tuoni, ma le piacevano i lampi.» «Corrado, maestro di danza: zoppicava, ma ballava lo stesso.» «Assunta, vedova: ogni sera apparecchiava per due.» «Pim, cane: nessuno sa di chi fosse, ma tutti lo chiamavano.» «Bruno, fornaio: il pane più buono di Port'Alba, dicono, ma solo il martedì.» Le note sono brevissime, come se la bibliotecaria avesse avuto solo un istante per sentire ciascuno. Alcune pagine sono bagnate. Alcune hanno i bordi rosicchiati, come se il Ventre avesse provato a mangiarle. Non ci è riuscito. I nomi sono tutti lì. Leggendoli, ti accorgi che stai sorridendo a persone che non hai mai conosciuto, e che nessuno ricorda più. È strano. È anche giusto.",
+                    "requires": {"reached_floor": 21}
+                },
+                {
+                    "title": "Il Proprio Nome",
+                    "text": "«Ho cominciato a dimenticare il mio nome. È il prezzo di stare nel Ventre troppo a lungo: si salvano i nomi degli altri e si perde il proprio. Lo sapevo quando sono scesa. Non pensavo che facesse così male. Ogni mattina scrivo il mio nome sulla prima pagina del libro, per non perderlo. Oggi, per la prima volta, ho esitato prima di scriverlo. Ho dovuto leggere quello di ieri per ricordarlo. Domani forse dovrò leggere quello di oggi, e un giorno lo leggerò e non saprò di chi sia. Allora smetterò. Non di raccogliere: di scrivere il mio. Diventerò una bibliotecaria senza nome, che raccoglie i nomi degli altri. Mi sembra un destino accettabile. Ci sono destini peggiori, nel Labirinto. Quello del Cuore, per esempio, che digerisce tutto e non ricorda niente. Io almeno ricorderò tutti, tranne me. È una buona proporzione.»",
+                    "requires": {"reached_floor": 23}
+                },
+                {
+                    "title": "L'Ultima Pagina",
+                    "text": "Sulla prima pagina del libro ci sono decine di righe cancellate, una sotto l'altra, tutte con lo stesso nome scritto e poi barrato. Non si legge più. Sull'ultima pagina, invece, c'è un nome solo, scritto con cura, da una mano diversa, più grande. Chi ha portato il libro all'Archivio ha lasciato una nota: «Ho trovato la bibliotecaria seduta accanto a una membrana del Ventre, con il libro in grembo. Era diventata un Volto nella Membrana, come quelli che ti guardano dalle pareti. Non ricordava il suo nome. Ma il libro sì: sulla prima pagina, sotto tutte le cancellature, si leggeva ancora l'ultima lettera, una A. Ho chiesto al Ventre, ad alta voce, come si chiamava. Una membrana ha sussurrato: Adelina. L'ho scritto sull'ultima pagina, perché anche lei avesse un nome salvato. Il Cuore ha battuto. Nessuno, nel mondo di sopra, ha dimenticato niente, per una volta.»",
+                    "requires": {"reached_floor": 25}
+                }
+            ]
+        },
+        "libro_sigilli": {
+            "title": "Il Libro dei Sette Sigilli",
+            "unlock_condition": "Sconfiggi 20 Boss",
+            "unlock": {"type": "total_bosses", "value": 20},
+            "chapters": [
+                {
+                    "title": "La Prima Pietra",
+                    "text": "Nel cortile più profondo dei Chiostri c'è una pietra grigia, grande come un altare, con sette segni incisi sopra. È la Prima Pietra di Aurelia, quella su cui gli Architetti, all'inizio dell'Equilibrio, incisero i loro sigilli, uno per elemento, per fissare gli elementi in armonia. Il libro, scritto da un lapicida di Durn, descrive i sigilli uno per uno. «Il sigillo del Fuoco è una fiamma piccola dentro un cerchio: non una fiamma di guerra, una fiamma di casa. Quello dell'Acqua è un'onda che torna su se stessa. Quello della Terra è un quadrato con una crepa al centro, perché la terra, diceva l'Architetto, è forte proprio perché sa rompersi. Quello del Vento è una linea che non finisce. Quello della Luce è un occhio aperto. Quello della Tenebra è un occhio chiuso. Il settimo, quello del Normale, è un segno così semplice che molti lo scambiano per un graffio: una linea dritta, orizzontale, come l'orizzonte, o come una persona sdraiata.»"
+                },
+                {
+                    "title": "I Frammenti",
+                    "text": "Quando arrivò la Discordia, la Prima Pietra si spaccò. Non a metà: in sette punti, uno per ogni sigillo, e i frammenti caddero nel Labirinto. Il libro racconta la leggenda che circola fra i Cercatori: chi riunisse tutti e sette i frammenti potrebbe, in teoria, invertire la Discordia. «Molti ci hanno provato. Il lapicida che scrive ha conosciuto tre di loro. Uno è diventato una melma, nelle paludi, dopo aver trovato il frammento della Tenebra. Uno è diventato uno spirito della tempesta, nelle Guglie, dopo aver trovato quello del Vento. Una è diventata una statua di sale, vicino a una fontana, dopo aver trovato... no. Quella non era una Cercatrice. Mi sono sbagliato. Era solo una ragazza che aspettava.» Il lapicida aggiunge che i frammenti sono troppo pesanti per un cuore solo: ognuno porta un'eternità, e sette eternità insieme schiacciano chiunque. Solo uno, forse, potrebbe reggerle: qualcuno che non ha un cuore suo, perché ne porta in prestito molti.",
+                    "requires": {"bosses_total": 20}
+                },
+                {
+                    "title": "Il Sigillo Mancante",
+                    "text": "«I canti dicono che uno dei sette non volle mai essere trovato. Io so quale. Il frammento del Normale non è caduto nel Labirinto: è rimasto nella Pietra, nell'unico punto che non si è spaccato. L'ho visto con i miei occhi. La linea dritta, orizzontale, intatta, al centro di sei crepe. Ho provato a toccarla. Era tiepida, come una persona che dorme. Ho capito allora perché non volle essere trovato: perché non si era mai separato. L'Architetto del Normale aveva voluto il riposo per tutti, e il suo sigillo, l'unico, era rimasto fermo, a riposare, mentre tutti gli altri si spezzavano. Era riuscito, in un certo senso. Solo per sé. È la cosa più triste che abbia mai inciso nella memoria. L'ho incisa anche su una pietra, a Durn, perché nessuno se la dimentichi.» Il libro nota che la Cartografa, misurando sotto la Prima Pietra, ha trovato più spazio del dovuto. Forse è lo spazio di chi riposa.",
+                    "requires": {"won": true, "bosses_total": 40}
+                },
+                {
+                    "title": "Il Graffio",
+                    "text": "L'ultima pagina del libro è stata aggiunta da qualcuno che non è il lapicida, con una calligrafia che sembra quella delle lettere insanguinate. «Ho toccato anch'io il sigillo del Normale. La linea dritta. Era tiepida. Mi è sembrato di riconoscerla, come si riconosce la propria firma su una lettera che non ricordi di aver scritto. Non so perché. So che, quando ho tolto la mano, sulla pietra era rimasto un graffio nuovo, piccolo, accanto alla linea. Una seconda linea, più corta, più storta, come se qualcuno avesse provato a copiarla senza riuscirci. Forse l'ho fatto io. Forse c'era già. La Prima Pietra adesso ha otto segni. Uno non è un sigillo: è un tentativo. Lascio questa pagina per chi verrà dopo. Se trovate il graffio, non cancellatelo. Credo che sia l'unica cosa che io abbia mai inciso nel mondo, in tutte le mie vite prestate, che sia davvero mia.»",
+                    "requires": {"won": true, "bosses_total": 60}
+                }
+            ]
         }
     }
 }
