@@ -247,9 +247,11 @@ Ogni bioma è una regione ricordata dal Labirinto. Ha un boss nativo, una gente,
 - **Dettagli già nel gioco:** su un frammento di Calaris galleggiano un tavolino, una tazza di tè al bergamotto ancora tiepida e un trattato sul Normale con una nota a margine: «E se la fragilità fosse un diritto?». C'è una statua di marmo di un Architetto con il volto scalpellato via e le mani aperte in offerta. Una tavola apparecchiata per due ha il segnaposto «Tu»; l'altro è raschiato. Al piano 29 c'è l'ultimo bivacco di Orvin, con la mappa e la croce rossa («Piano trenta. Quasi.»). Le stelle della Soglia possono disporsi nella costellazione che c'era sopra il Campo la prima notte del Ritornante.
 
 ### ⏳ Le Eco (oltre il piano 30)
-Il Dio, svegliandosi, ricorda il suo sogno e lo ripete più forte: i biomi tornano in un ordine diverso, con pericoli più duri e un nome (Eco II, Eco III…). Nelle Eco i luoghi conoscono il Ritornante: le voci dei Chiostri cantano il suo nome, i minatori lo salutano. Ogni trenta piani il Dio Antico è di nuovo lì, un po' più sveglio. L'Atlante ha tre pagine sulle Eco (dal piano 31, 61 e 91); nell'ultima, sotto la canzone, si sente una voce che ricorda una frase che comincia con «Ciò che è fragile».
+Il Dio, svegliandosi, ricorda il suo sogno e lo ripete più forte: i biomi tornano in un ordine diverso, con pericoli più duri e un nome (Eco II, Eco III…). Nelle Eco i luoghi conoscono il Ritornante: le voci dei Chiostri cantano il suo nome, i minatori lo salutano. Ogni trenta piani il Dio Antico è di nuovo lì, un po' più sveglio. L'Atlante ha quattro pagine sulle Eco (dal piano 31, 45, 61 e 91: quella del 45 racconta le creature che ricordano); nell'ultima, sotto la canzone, si sente una voce che ricorda una frase che comincia con «Ciò che è fragile».
 
 ---
+
+**Atlante, seconda ondata (v6):** due pagine in più per bioma. Chiostri: *Le Undici Ore* (gli archi sono undici per le ore; i Chiostri sono fermi all'undicesima, l'ora del silenzio) e *La Fontana senz'Acqua* (le monete delle novizie, la statua di sale). Miniere: *La Canzone della Risalita* (i minatori di Hadrek la cantano scendendo) e *Le Tacche a Croce* (la riga finisce sotto la mano del Caposquadra). Guglie: *I Ponti di Vento* e *Le Quaranta Valli* (i colori segreti della seta rimasti nel vento). Ventre: *La Flotta che Aspetta* e *Le Membrane*. Forgia: *La Lista sulla Porta* (gli Apprendisti che si girano sono quelli senza data) e *Gli Alberi di Vetro*. Soglia: *La Sedia Rivolta al Buio* (piano 28) e *Lo Specchio della Verità* (dopo la vittoria).
 
 ## Parte VII · Il Campo
 
@@ -313,6 +315,7 @@ Ogni scheda dice chi è, cosa vuole, cosa nasconde, e le **tappe** del suo arco:
 - **Nota:** i capitoli dopo l'ultimo sigillo valgono sia se Alaric è stato liberato (una luce calma accompagna il giocatore) sia se il giocatore ha preso il suo posto (il sigillo sulla schiena prude).
 - **Legami:** Ser Maud (la vita prestata del Paladino) era sua sorella d'ordine.
 - **Dettagli già nel gioco:** Ilse coltivava un campo intero di lavanda a Valeriana.
+- **Al Campo, come Luce (v6):** non parla; i suoi argomenti passano nel calore, come immagini. Da ragazzo soffiava nel mantice della bottega del padre, ad Aurelia. Ilse, a cinque anni, gli portò una piantina di lavanda e gli promise un campo «con le file dritte come le tue spade». Nel giorno del giuramento sentì la paura degli Architetti, e non chiese mai perché avessero paura. Conosceva per nome tutti i Paladini dell'Ordine, e li perse alla Luce. Al Campo, a volte, fa ancora la ronda (dieci passi e giro) e se ne vergogna. Non è mai riuscito a finire la lettera a Ilse. Dopo la vittoria mostra la stanza vuota dietro la porta; dopo la vittoria e 40 boss smette di fare la guardia.
 
 ### Silas, il Cercatore
 - **Chi è:** un astronomo di Valeriana, allievo dell'Astronoma delle Guglie. È sceso per ritrovare la sorella **Nerea**, inghiottita dal Labirinto con la loro casa. Scrive tutto perché il Labirinto gli mangia i ricordi: ha già dimenticato il colore degli occhi di lei.
@@ -463,6 +466,9 @@ La Badessa del Silenzio (Chiostri), il Caposquadra Sepolto (Miniere), l'Astronom
 | **Madre delle Melme** | Ciò che resta della fertilità di Aethelgard lasciata marcire nel buio: da lei nascono tutte le creature infette. |
 | **Il Tristo Mietitore** | La morte che nel Labirinto non può più compiere il suo lavoro. Aspetta il Ritornante perché è l'unico che muore davvero, e ogni volta torna. Ha già scritto il suo nome. |
 | **DIO ANTICO** | Sereth, o la parte di lui che vuole riposare. Vedi la Parte II. |
+
+### Le discese dimenticate, seconda ondata
+Otto fili nuovi in `data/lettere.json`: il gatto dei Chiostri (il Ritornante trovò Lardo sulla bilancia della bottega dello Speziale), il piccolo Goblin che lo morse e poi lo difese, la partita a carte con il Mercante (che gli restituì il ricordo del fuoco che non brucia, «non ha prezzo»), Ivetta sul ponte delle Campane (le disse che la rete aveva preso vivo il neonato), l'acqua per il pettirosso dentro la memoria di Linnea, la Gabbiana (lesse ad alta voce i cinquantadue nomi del ruolo di bordo), il nome senza data di Corin (che si mise davanti al Ritornante), la notte con la Badessa (che difese il canto di Agnese).
 
 ### Il Bestiario a livelli
 Ogni creatura ha tre voci (`data/bestiario.json`): *Cosa si vede* (la prima volta che la incontri), *Come si comporta* (dopo `habits` sconfitte, i boss dopo `boss_habits`) e *Chi era* (dopo `story` sconfitte, i boss dopo `boss_story`). La terza voce di un boss può accennare al gradino della Scala che si raggiunge battendolo più volte: quella del DIO ANTICO racconta del Rinnegato che voleva dare riposo, senza nominarlo.

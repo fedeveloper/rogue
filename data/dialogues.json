@@ -1716,6 +1716,128 @@
                     "after": "riposo"
                 }
             ]
+        },
+        "alaric": {
+            "topics": [
+                {
+                    "id": "calore",
+                    "title": "Il calore",
+                    "lines": [
+                        "La luce di Alaric si posa accanto a te, sul ceppo, come farebbe un uomo stanco. Non parla. Non ha più una voce.",
+                        "Ma quando ti avvicini, il calore cambia. Diventa il calore di una mano sulla spalla, quella di un comandante che ti dice: hai fatto bene. Per un istante ti sembra di sentire l'odore del cuoio di un'armatura, e del ferro pulito con l'olio.",
+                        "Poi la luce torna calma. Resta lì, accanto a te, finché il Fuoco non si abbassa. È il suo modo di fare la guardia: non più a una porta, ma a qualcuno."
+                    ]
+                },
+                {
+                    "id": "aurelia",
+                    "title": "Aurelia",
+                    "lines": [
+                        "Avvicini la mano alla luce e, nel calore, ti arriva un'immagine: una città bianca su una collina, con le torri dei templi che brillano all'alba, e il fumo delle concerie che sale dai quartieri bassi.",
+                        "Vedi le strade come le vedeva lui, da cavallo: il mercato del pesce, la bottega di un fabbro con un ragazzino che soffia nel mantice, la Porta del Sole sul lato orientale, d'oro sotto il sole. Il ragazzino nel mantice ha il suo viso, a dodici anni.",
+                        "L'immagine svanisce. La luce si fa un poco più fioca, come chi ha parlato troppo. Ma è un fioco contento."
+                    ],
+                    "after": "calore"
+                },
+                {
+                    "id": "ilse_bambina",
+                    "title": "Ilse bambina",
+                    "lines": [
+                        "Nel calore della luce, stasera, c'è una bambina. Ha cinque anni, le ginocchia sbucciate, e tiene in mano una piantina di lavanda con le radici ancora sporche di terra.",
+                        "La porta a qualcuno molto alto, che si inginocchia per vederla meglio. Lei gli dice, seria: quando sarò grande pianterò un campo intero, e le file saranno dritte come le tue spade. Lui ride. È una risata che non hai mai sentito, ma che riconosci.",
+                        "La luce trema. Per un momento è calda come un pomeriggio d'estate. Poi torna tiepida, e resta immobile, come chi trattiene il respiro."
+                    ],
+                    "requires": {"reached_floor": 11},
+                    "after": "aurelia"
+                },
+                {
+                    "id": "giuramento",
+                    "title": "Il giuramento",
+                    "lines": [
+                        "Stasera la luce è fredda. Ti avvicini, e nel freddo arriva un ricordo che non è un'immagine, ma una sensazione: una stanza bianca, sette figure alte, e la paura. Non la sua. La loro.",
+                        "Senti la voce di uno degli Architetti, attraverso il ricordo di Alaric: custodisci questa porta. Non chiedere cosa c'è dietro. Senti Alaric che si inginocchia, e il sigillo di Luce che gli brucia sulla schiena, e la sua domanda, mai detta: perché avete paura?",
+                        "La luce si riscalda, lentamente. Ha voluto che tu sapessi. Non perché lo perdonassi: perché lo sapessi."
+                    ],
+                    "requires": {"reached_floor": 16},
+                    "after": "ilse_bambina"
+                },
+                {
+                    "id": "maud",
+                    "title": "Maud",
+                    "lines": [
+                        "Stasera la luce ti riconosce prima che tu ti sieda. Si muove verso di te, veloce come non l'hai mai vista, e si ferma a un palmo dal tuo viso.",
+                        "Nel calore c'è una ragazza in un'armatura troppo grande, il giorno del giuramento. Alaric le mette la spada sulla spalla. Le dice: da oggi sei mia sorella. Lei ci crede fino in fondo, e lui lo vede, e ne è spaventato, perché nessuno aveva mai creduto in lui così.",
+                        "Poi un'altra immagine, più breve: un fazzoletto ripiegato in un guanto, trovato sulla strada, a poche file dalla porta. Arrivo, fratello. Aspettami. La luce si abbassa, quasi fino a spegnersi. Poi resta. Sempre."
+                    ],
+                    "requires": {"reached_floor": 20},
+                    "after": "giuramento"
+                },
+                {
+                    "id": "dieci_passi",
+                    "title": "Dieci passi",
+                    "lines": [
+                        "La luce, stasera, si muove avanti e indietro accanto al Fuoco. Dieci passi, giro, dieci passi. Ti accorgi solo dopo un po' che lo sta facendo.",
+                        "Quando se ne accorge anche lei, si ferma, di colpo, come un uomo sorpreso a fare una cosa di cui si vergogna. Poi torna a posarsi sul ceppo.",
+                        "Nel calore, per un istante, senti una cosa che somiglia a una risata imbarazzata. Mille anni di ronda non si dimenticano in una notte. Ma la luce, adesso, sa di farlo. È già qualcosa."
+                    ],
+                    "requires": {"bosses_total": 10},
+                    "after": "calore",
+                    "choices": [
+                        {
+                            "text": "Ti alzi e fai dieci passi con lei.",
+                            "reply": "La luce esita, poi ti segue. Dieci passi, giro, dieci passi. Alla fine si posa accanto a te, più calda di prima. Ha avuto compagnia, per una ronda.",
+                            "flag": "alaric_ronda"
+                        },
+                        {
+                            "text": "'Puoi smettere, adesso.'",
+                            "reply": "La luce resta immobile a lungo. Poi, piano, si abbassa, come chi annuisce. Non fa più la ronda, quella sera."
+                        }
+                    ]
+                },
+                {
+                    "id": "ordine",
+                    "title": "L'Ordine",
+                    "lines": [
+                        "Nel calore della luce, stasera, ci sono molte armature bianche, in fila, in un cortile di Aurelia. Ragazzi e ragazze che giurano, uno dopo l'altro. Alaric li conosce tutti per nome.",
+                        "Vedi i loro volti come li vedeva lui: Maud, con l'armatura troppo grande. Un ragazzo che balbettava. Una donna di Durn, più vecchia degli altri, che era entrata nell'Ordine per vendicare il marito e ci era rimasta per amore dei compagni.",
+                        "Poi l'immagine cambia: le stesse armature, anni dopo, nelle Guglie, che bruciano chi cerca la verità. La luce si fa fredda e dura. Non li ha persi in battaglia. Li ha persi alla Luce."
+                    ],
+                    "requires": {"reached_floor": 14},
+                    "after": "aurelia"
+                },
+                {
+                    "id": "lettera",
+                    "title": "La lettera non finita",
+                    "lines": [
+                        "Hai letto le Lettere di Ilse all'Archivio, e la luce lo sa. Stasera si avvicina a te come una mano che cerca una tasca.",
+                        "Nel calore c'è una lettera, scritta di notte alla luce di una candela, davanti alla porta. Mia piccola Ilse, non posso tornare. La porta mi tiene qui. Alaric scrive e cancella, scrive e cancella. Non riesce a finire la frase dopo. La consegna a un corriere di Valeriana così, senza la fine.",
+                        "La luce trema. Ti sembra che, per la prima volta in mille anni, stia cercando di finire quella frase. Non ci riesce. Ma ci prova, davanti a te, e questo è nuovo."
+                    ],
+                    "requires": {"bosses_total": 10},
+                    "after": "ilse_bambina"
+                },
+                {
+                    "id": "vuoto",
+                    "title": "Cosa c'era dietro",
+                    "lines": [
+                        "Stasera la luce è inquieta. Si avvicina, si allontana, si avvicina. Alla fine si posa sulla tua mano, e nel calore c'è una stanza vuota, dietro un muro liscio. Le impronte di un solo paio di stivali.",
+                        "Senti cosa ha sentito lui, il giorno in cui ha capito: dietro la porta non c'era niente da custodire. Il Vuoto era già uscito, era già dentro tutto. La porta non chiudeva niente. Da secoli.",
+                        "Eppure era rimasto. Senti anche questo: non per dovere. Per paura di non sapere fare altro. La luce si stringe intorno alla tua mano, piano. Ti sta chiedendo di non giudicarlo. O forse di farlo, ma con gentilezza."
+                    ],
+                    "requires": {"won": true},
+                    "after": "giuramento"
+                },
+                {
+                    "id": "riposo",
+                    "title": "Riposare",
+                    "lines": [
+                        "La luce di Alaric, stasera, è più fioca del solito. Non è malata: è tranquilla, come un uomo che si è tolto finalmente gli stivali.",
+                        "Nel calore c'è un campo di lavanda, file dritte, profumo fino alla strada. Una donna che pianta. Nessuna porta. Nessuna ronda. Alaric non sa se è un ricordo o un sogno. Te lo mostra lo stesso.",
+                        "Poi la luce si posa sul ceppo e resta lì, ferma. Non ti segue quando ti alzi. Per la prima volta, non ha bisogno di fare la guardia a nessuno. Ti accorgi che stai sorridendo."
+                    ],
+                    "requires": {"won": true, "bosses_total": 40},
+                    "after": "vuoto"
+                }
+            ]
         }
     }
 }
