@@ -4,6 +4,10 @@ import importlib
 import os
 import sys
 import unittest
+from unittest import mock
+
+import events
+import texts
 
 from data_manager import RAW_DATA
 
@@ -37,15 +41,23 @@ class CanonTest(unittest.TestCase):
             self.assertIn(section, CANON)
 
 
-# Gli eventi scritti per la v6 (i capitoli degli archi dopo quelli della v5): in partita i testi sono brevi
-V5_CHAPTERS = {"alaric": 3, "silas": 3}
+# Gli eventi della v5: tutti gli altri sono stati scritti per la v6, e in partita i loro testi sono brevi
+V5_EVENTS = {"alaric_porta", "alaric_sigillo", "alaric_stanco", "altare_sangue", "banchetto_morti",
+              "biblioteca_cenere", "biblioteca_vuoto", "bilancia_aethelgard", "bisca_goblin", "borek_prigioniero",
+              "buio_vivente", "cadavere_saggio", "carrello_abbandonato", "cartografa_perduta", "cartografa_ritorno",
+              "cavaliere_caduto", "colata_oro", "coro_spento", "crogiolo_rune", "eco_del_tempo", "eco_madre",
+              "elara_prigioniera", "fabbro_cielo", "fontana_fatata", "forgia_abissale", "forgiatore_incatenato",
+              "galleria_gas", "giardino_appassito", "giardino_sepolto", "idolo_corrotto", "incudine_cosmica",
+              "ingranaggio_fermo", "lavabo_ricordi", "mendicante_ombra", "minatore_cieco", "nido_sanguisughe",
+              "nido_tempesta", "oasi_sotterranea", "occhio_chiuso", "osservatorio_vento", "ponte_sospeso",
+              "porta_ritorno", "porta_sigillata", "pozzo_desideri", "prima_pietra", "sala_corridoi", "silas_fuoco",
+              "silas_soglia", "silas_tracce", "specchio_verita", "speziale_prigioniero", "statua_sale",
+              "valerius_prigioniero", "viandante_cieco", "voce_cara", "voce_labirinto", "voce_nel_buio",
+              "volto_membrana"}
 
 
 def v6_events() -> list:
-    out = []
-    for cid, char in RAW_DATA["story"]["characters"].items():
-        out += [ch["event"] for ch in char["chapters"][V5_CHAPTERS.get(cid, 0):]]
-    return out
+    return sorted(set(RAW_DATA["events"]) - V5_EVENTS)
 
 
 class InRunLengthTest(unittest.TestCase):
@@ -56,6 +68,42 @@ class InRunLengthTest(unittest.TestCase):
                 with self.subTest(event=ev_id, scene=sc_id):
                     self.assertLessEqual(len(scene["text"].split()), 55)
                     for c in scene["choices"]: self.assertLessEqual(len(c.get("msg", "").split()), 30, c["text"])
+
+
+class BiomeTextsTest(unittest.TestCase):
+    def test_room_phrases_and_atlas_follow_the_writing_guide(self):
+        for biome, rooms in RAW_DATA["atmosfere"]["biomes"].items():
+            self.assertIn(biome, {b["id"] for b in RAW_DATA["biomes"]})
+            for kind, phrases in rooms.items():
+                with self.subTest(biome=biome, kind=kind):
+                    self.assertIn(kind, RAW_DATA["lore"], "lo stesso tipo di stanza delle frasi generiche")
+                    self.assertGreaterEqual(len(phrases), 3)
+                    for p in phrases: self.assertLessEqual(len(p.split()), 30)
+        for biome, pages in RAW_DATA["atlante"]["biomes"].items():
+            for page in pages:
+                with self.subTest(biome=biome, page=page["title"]):
+                    self.assertTrue(80 <= len(page["text"].split()) <= 200, "STORY.md, Parte I: una pagina dell'Atlante è di 80-200 parole")
+                    self.assertLessEqual(set(page.get("requires", {})), events.PROFILE_CONDITIONS)
+
+    def test_a_room_speaks_with_the_voice_of_its_biome(self):
+        own = RAW_DATA["atmosfere"]["biomes"]["chiostri"]["vendor"]
+        self.assertIn(texts.room("vendor", 2), own)
+        with mock.patch("texts.get_biome", return_value={"id": "nessuno"}):
+            self.assertIn(texts.room("vendor", 2), RAW_DATA["lore"]["vendor"], "senza frasi del bioma, quelle generiche")
+
+    def test_the_atlas_opens_page_by_page(self):
+        import codex
+        from data_manager import PROFILE_MANAGER
+        saved = PROFILE_MANAGER._data["max_floor"]
+        try:
+            PROFILE_MANAGER._data["max_floor"] = 0
+            self.assertEqual(codex.atlas_open("chiostri"), [])
+            PROFILE_MANAGER._data["max_floor"] = 3
+            opened = codex.atlas_open("chiostri")
+            self.assertTrue(0 < len(opened) < len(RAW_DATA["atlante"]["biomes"]["chiostri"]))
+            self.assertTrue(any(p["title"] in "\n".join(codex.atlas_page()) for p in opened))
+        finally:
+            PROFILE_MANAGER._data["max_floor"] = saved
 
 
 class TextsTest(unittest.TestCase):

@@ -3545,5 +3545,881 @@
                 ]
             }
         }
+    },
+    "chiostri_lavagna": {
+        "title": "La Lavagna Raschiata",
+        "requires": {"biome": "chiostri", "min_floor": 2},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "In un'aula vuota, sulla lavagna d'ardesia, una frase in gesso: «Ciò che è fragile ha diritto al riposo». Sotto c'era una firma. Qualcuno l'ha grattata via con una lama, fino a incidere la pietra.",
+                "choices": [
+                    {
+                        "text": "Passa le dita sui solchi",
+                        "msg": "I solchi sono profondi e storti. Chi li ha fatti piangeva, o aveva molta fretta.",
+                        "effects": [{"exp": 50}, {"flag": "lavagna_toccata"}]
+                    },
+                    {
+                        "text": "Copia la frase su un foglio",
+                        "msg": "La scrivi in fretta. Il gesso, sulla lavagna, comincia subito a sbiadire.",
+                        "effects": [{"essence": 40}]
+                    },
+                    {"text": "Esci dall'aula", "msg": "La porta si chiude da sola dietro di te."}
+                ]
+            }
+        }
+    },
+    "chiostri_refettorio": {
+        "title": "Il Refettorio Apparecchiato",
+        "requires": {"biome": "chiostri"},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Una tavola lunga, apparecchiata per quaranta. Il pane nei cestini è diventato pietra, il vino nelle brocche polvere rossa. A capotavola, una sedia più alta, vuota, con un velo nero ripiegato sullo schienale.",
+                "choices": [
+                    {
+                        "text": "Siediti al tuo posto",
+                        "msg": "C'è un piatto con il tuo nome inciso sul bordo. Mangi la polvere, e non sa di niente. Ti senti meglio lo stesso.",
+                        "effects": [{"heal_pct": 30}]
+                    },
+                    {
+                        "text": "Siediti a capotavola",
+                        "msg": "Il velo nero scivola sulle tue spalle. Per un istante quaranta teste si chinano verso di te.",
+                        "effects": [{"corruption": 5}, {"essence": 50}]
+                    },
+                    {
+                        "text": "Non toccare niente",
+                        "msg": "Esci camminando all'indietro, come si esce da una cappella."
+                    }
+                ]
+            }
+        }
+    },
+    "chiostri_campanile": {
+        "title": "Il Campanile senza Battaglio",
+        "requires": {"biome": "chiostri"},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "In cima a una scala a chiocciola pende una campana enorme senza battaglio. Quando ci passi sotto, suona lo stesso: un colpo solo, così basso che lo senti nelle ossa più che nelle orecchie.",
+                "choices": [
+                    {
+                        "text": "Battila con il pugno",
+                        "msg": "Il secondo colpo fa tremare il campanile. Sotto, nei chiostri, qualcosa ha smesso di cantare.",
+                        "effects": [{"exp": 60}]
+                    },
+                    {
+                        "text": "Mettiti sotto e ascolta",
+                        "msg": "Il suono ti attraversa e se ne va. Porta via un poco della tua stanchezza.",
+                        "effects": [{"heal_pct": 25}]
+                    },
+                    {"text": "Scendi in fretta", "msg": "La campana resta zitta finché non sei fuori."}
+                ]
+            }
+        }
+    },
+    "chiostri_confessionale": {
+        "title": "Il Confessionale",
+        "requires": {"biome": "chiostri", "min_floor": 2},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "La tendina del confessionale è tirata. Dall'altra parte qualcuno aspetta. Quando ti siedi, la voce che ti chiede di parlare è la tua, identica, solo un po' più stanca.",
+                "choices": [
+                    {
+                        "text": "Confessa qualcosa che hai fatto",
+                        "msg": "La tua voce ascolta senza interrompere. Poi dice: «Lo so. C'ero anch'io.»",
+                        "effects": [{"corruption": -10}]
+                    },
+                    {
+                        "text": "Chiedi alla voce chi è",
+                        "msg": "«Uno che è venuto prima di te. Con la tua faccia, più o meno.» La tendina non si apre.",
+                        "effects": [{"exp": 60}, {"flag": "confessionale_voce"}]
+                    },
+                    {"text": "Alzati senza parlare", "msg": "Dietro la tendina qualcuno sospira, deluso."}
+                ]
+            }
+        }
+    },
+    "chiostri_scriptorium": {
+        "title": "Lo Scriptorium",
+        "requires": {"biome": "chiostri", "min_floor": 3},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Un copista di cenere scrive su una pergamena infinita, che si srotola dal tavolo e scompare sotto la porta. Non alza la testa. La pergamena è un unico elenco di nomi, in ordine.",
+                "choices": [
+                    {
+                        "text": "Cerca il tuo nome",
+                        "msg": "Lo trovi, scritto molte volte, con calligrafie diverse. L'ultima volta è stato aggiunto da poco: l'inchiostro è fresco.",
+                        "effects": [{"exp": 70}]
+                    },
+                    {
+                        "text": "Porgigli una penna nuova",
+                        "msg": "Il copista la prende senza guardarti. La sua mano trema un po' meno.",
+                        "effects": [{"essence": 40}]
+                    },
+                    {"text": "Lascialo scrivere", "msg": "Il grattare della penna ti segue per due chiostri."}
+                ]
+            }
+        }
+    },
+    "chiostri_orto": {
+        "title": "L'Orto di Sale",
+        "requires": {"biome": "chiostri"},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Il chiostro centrale era un orto. Salvia, rosmarino, menta: tutto è ancora al suo posto, perfetto, diventato sale. Nel mezzo, un innaffiatoio di rame pieno d'acqua limpida.",
+                "choices": [
+                    {
+                        "text": "Innaffia una pianta di salvia",
+                        "msg": "Il sale si scioglie in una lacrima verde. Una foglia, una sola, torna vera. La metti in tasca.",
+                        "effects": [{"heal_pct": 35}]
+                    },
+                    {
+                        "text": "Bevi l'acqua dell'innaffiatoio",
+                        "msg": "Sa di metallo e di pioggia. Ti senti più sveglio di quanto dovresti.",
+                        "effects": [{"exp": 40}, {"max_hp": 3}]
+                    },
+                    {"text": "Non calpestare le aiuole", "msg": "Esci camminando sulle pietre del sentiero."}
+                ]
+            }
+        }
+    },
+    "chiostri_voti": {
+        "title": "Il Registro dei Voti",
+        "requires": {"biome": "chiostri", "min_floor": 3},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Su un leggio, un registro dei voti delle novizie. Ogni pagina una firma, ogni firma una promessa: povertà, obbedienza, silenzio. L'ultima pagina è firmata in rosso: «Restare».",
+                "choices": [
+                    {
+                        "text": "Leggi le firme",
+                        "msg": "Le ultime cento sono tutte uguali. La stessa mano ha firmato per tutte, con il nome di ciascuna.",
+                        "effects": [{"exp": 60}, {"flag": "voti_letti"}]
+                    },
+                    {
+                        "text": "Strappa l'ultima pagina",
+                        "msg": "Da qualche parte, nei chiostri, una novizia si ferma a metà di un canto e si guarda le mani.",
+                        "effects": [{"corruption": -5}, {"essence": 40}]
+                    },
+                    {"text": "Chiudi il registro", "msg": "La copertina è fredda come una lapide."}
+                ]
+            }
+        }
+    },
+    "chiostri_organo": {
+        "title": "L'Organo che Respira",
+        "requires": {"biome": "chiostri"},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Un organo enorme occupa tutta la parete di una cappella. Le canne si gonfiano e si sgonfiano piano, come polmoni. Non c'è nessuno alla tastiera, ma una nota bassa vibra sempre.",
+                "choices": [
+                    {
+                        "text": "Suona un accordo",
+                        "msg": "L'organo risponde con un accordo tuo, un po' più giusto. Ti trema il petto per un'ora.",
+                        "effects": [{"exp": 50}, {"atk": 1}]
+                    },
+                    {
+                        "text": "Siediti e ascolta il respiro",
+                        "msg": "Respiri insieme all'organo, lento, profondo. Le ferite fanno meno male.",
+                        "effects": [{"heal_pct": 30}]
+                    },
+                    {"text": "Esci prima che finisca il fiato", "msg": "La nota bassa ti segue, poi si spegne."}
+                ]
+            }
+        }
+    },
+    "chiostri_dormitorio": {
+        "title": "Il Dormitorio",
+        "requires": {"biome": "chiostri", "min_floor": 2},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "File di letti stretti, ognuno con una piccola statua di sale distesa sotto la coperta. Sui comodini, candele consumate e libri di preghiere aperti alla stessa pagina.",
+                "choices": [
+                    {
+                        "text": "Rimbocca una coperta",
+                        "msg": "Sotto le tue dita il sale si muove appena, come chi si gira nel sonno.",
+                        "effects": [{"corruption": -5}, {"heal_pct": 20}]
+                    },
+                    {
+                        "text": "Leggi la pagina aperta",
+                        "msg": "È una ninnananna di Aurelia. La conosci, anche se non sai da dove.",
+                        "effects": [{"exp": 60}, {"flag": "ninnananna"}]
+                    },
+                    {"text": "Cammina in punta di piedi", "msg": "Nessuno si sveglia. Nessuno, qui, si sveglia più."}
+                ]
+            }
+        }
+    },
+    "chiostri_meridiana": {
+        "title": "La Meridiana senza Sole",
+        "requires": {"biome": "chiostri", "min_floor": 4},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Nel chiostro più alto c'è una meridiana di bronzo. Non c'è sole, ma l'ombra dello gnomone si muove lo stesso, lentissima, verso un'ora che non è segnata.",
+                "choices": [
+                    {
+                        "text": "Segui l'ombra",
+                        "msg": "L'ombra ti porta a una crepa nel muro. Dentro, un sacchetto di monete d'oro dell'Accademia.",
+                        "effects": [{"gold": 70}]
+                    },
+                    {
+                        "text": "Fermala con la mano",
+                        "msg": "L'ombra si ferma sul tuo palmo, fredda. Per un istante tutto il chiostro trattiene il fiato.",
+                        "effects": [{"exp": 70}]
+                    },
+                    {"text": "Lasciala andare", "msg": "Qualunque ora stia cercando, non è la tua."}
+                ]
+            }
+        }
+    },
+    "chiostri_lezione": {
+        "title": "La Lezione Fantasma",
+        "requires": {"biome": "chiostri", "min_floor": 2},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "In un'aula piena di banchi vuoti, una voce sta ancora facendo lezione. Spiega come il Fuoco e l'Acqua si tenevano per mano, prima. Si interrompe quando entri. «Sei in ritardo. Siediti.»",
+                "choices": [
+                    {
+                        "text": "Siediti e ascolta",
+                        "msg": "La lezione è chiara, paziente. Quando finisce, capisci gli elementi un po' meglio.",
+                        "effects": [{"exp": 80}]
+                    },
+                    {
+                        "text": "Fai una domanda",
+                        "msg": "«Domande alla fine,» dice la voce. Ma la fine non arriva mai, e tu esci con la domanda in bocca.",
+                        "effects": [{"essence": 50}]
+                    },
+                    {"text": "Esci dall'aula", "msg": "La voce riprende da dove si era fermata."}
+                ]
+            }
+        }
+    },
+    "chiostri_novizia": {
+        "title": "La Novizia in Fuga",
+        "requires": {"biome": "chiostri", "min_floor": 3},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Una novizia corre verso di te tenendosi la veste con le mani. Ha la bocca cucita con un filo d'argento, ma gli occhi parlano. Indica dietro di sé, poi un armadio.",
+                "choices": [
+                    {
+                        "text": "Nascondila nell'armadio",
+                        "msg": "Passa una figura in nero, lenta. Non ti guarda. Quando se ne va, l'armadio è vuoto: solo un velo e una moneta.",
+                        "effects": [{"gold": 50}, {"corruption": -5}]
+                    },
+                    {
+                        "text": "Taglia il filo d'argento",
+                        "msg": "La novizia apre la bocca. Non dice niente. Sorride, per la prima volta in mille anni, e scappa.",
+                        "effects": [{"heal_pct": 30}, {"flag": "novizia_libera"}]
+                    },
+                    {"text": "Lasciala correre", "msg": "Se la Badessa la trova, non la troverà per colpa tua."}
+                ]
+            }
+        }
+    },
+    "miniere_lampade": {
+        "title": "L'Ultima Lampada",
+        "requires": {"biome": "miniere", "min_floor": 6},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Ogni venti passi una lampada d'ottone spenta, appesa a un gancio. Una sola, più avanti, è ancora accesa. Sotto c'è un minatore svuotato che la guarda, immobile, come si guarda un amico.",
+                "choices": [
+                    {
+                        "text": "Riaccendi le lampade spente con la sua fiamma",
+                        "msg": "Una dopo l'altra, la galleria si illumina. Il minatore si volta verso la luce e smette di scavare.",
+                        "effects": [{"exp": 60}, {"corruption": -5}]
+                    },
+                    {
+                        "text": "Prendi la lampada accesa",
+                        "msg": "Il minatore non reagisce. Ma quando ti allontani, lo senti ricominciare a scavare, al buio.",
+                        "effects": [{"gold": 50}]
+                    },
+                    {"text": "Passa oltre", "msg": "La lampada resta accesa per lui."}
+                ]
+            }
+        }
+    },
+    "miniere_canarino": {
+        "title": "Il Canarino d'Ottone",
+        "requires": {"biome": "miniere"},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Appesa a una trave, una gabbietta con un canarino d'ottone. Ogni tanto apre il becco e fischia, una nota sola, acuta. L'aria qui ha un'ombra dolce, di frutta troppo matura.",
+                "choices": [
+                    {
+                        "text": "Segui il canarino verso l'aria pulita",
+                        "msg": "Ti porta per una galleria laterale fino a una presa d'aria. Respiri come non respiravi da piani.",
+                        "effects": [{"heal_pct": 35}]
+                    },
+                    {
+                        "text": "Carica la molla del canarino",
+                        "msg": "Il canarino fischia più forte, per tutta la galleria. Da qualche parte un ingranaggio si ferma ad ascoltare.",
+                        "effects": [{"exp": 50}]
+                    },
+                    {"text": "Lascialo cantare", "msg": "La nota ti segue a lungo, sempre più piccola."}
+                ]
+            }
+        }
+    },
+    "miniere_turno": {
+        "title": "Fine Turno",
+        "requires": {"biome": "miniere", "min_floor": 7},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Una sala di sosta: dodici minatori svuotati seduti sulle panche, con le tazze di latta vuote in mano, come se aspettassero la birra. Sul muro, l'ultima tacca del turno è a metà.",
+                "choices": [
+                    {
+                        "text": "Completa la tacca sul muro",
+                        "msg": "Il turno è finito. I minatori posano le tazze tutti insieme, con un suono che sembra un sospiro.",
+                        "effects": [{"corruption": -10}, {"exp": 40}]
+                    },
+                    {
+                        "text": "Siediti con loro",
+                        "msg": "Nessuno ti guarda, ma c'è un posto libero, e la panca è tiepida. Riposi.",
+                        "effects": [{"heal_pct": 30}]
+                    },
+                    {"text": "Esci senza disturbare", "msg": "Il turno, per loro, continua."}
+                ]
+            }
+        }
+    },
+    "miniere_vena": {
+        "title": "La Vena che Canta",
+        "requires": {"biome": "miniere", "min_floor": 7},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Una vena di metallo scuro attraversa la roccia della galleria. Quando la sfiori con l'arma, suona: una nota lunga, pulita, come una campana di festa. Acciaio di Durn, ancora nella roccia.",
+                "choices": [
+                    {
+                        "text": "Picchia la vena con il pomo dell'arma",
+                        "msg": "La galleria intera risuona. Ti sembra di sentire, lontano, qualcuno che ride.",
+                        "effects": [{"atk": 2}]
+                    },
+                    {
+                        "text": "Stacca un pezzo di vena",
+                        "msg": "Ci metti un'ora e ti sanguinano le mani. Il pezzo canta a ogni passo.",
+                        "effects": [{"damage": 8}, {"gold": 90}]
+                    },
+                    {"text": "Lasciala nella roccia", "msg": "Certe cose stanno bene dove sono nate."}
+                ]
+            }
+        }
+    },
+    "miniere_pozzo": {
+        "title": "Il Pozzo di Ferro",
+        "requires": {"biome": "miniere"},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Un pozzo con il secchio ancora appeso alla carrucola. L'acqua sul fondo è scura e ferma. Sul bordo, inciso: «L'acqua che sa di ferro fa la birra buona».",
+                "choices": [
+                    {
+                        "text": "Tira su il secchio e bevi",
+                        "msg": "Sa di ferro, di pietra, di un posto dove si lavorava sodo. Ti senti più pesante, in senso buono.",
+                        "effects": [{"heal_pct": 30}, {"max_hp": 3}]
+                    },
+                    {
+                        "text": "Calati nel pozzo",
+                        "msg": "In fondo, in una nicchia asciutta, una borraccia di birra di Durn ancora sigillata.",
+                        "effects": [{"damage": 6}, {"potion": 1}]
+                    },
+                    {"text": "Lascia il secchio dov'è", "msg": "La carrucola cigola un po', dietro di te."}
+                ]
+            }
+        }
+    },
+    "miniere_bambini": {
+        "title": "Le Gallerie Basse",
+        "requires": {"biome": "miniere"},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Gallerie piccole, alte un metro, dove i grandi non entravano. Sulle pareti, segni di gessetto: case, soli, un drago, nomi storti. In una nicchia, una trottola di legno.",
+                "choices": [
+                    {
+                        "text": "Fai girare la trottola",
+                        "msg": "Gira a lungo, molto più a lungo di quanto dovrebbe. Quando cade, nella galleria c'è odore di pane.",
+                        "effects": [{"heal_pct": 30}, {"corruption": -5}]
+                    },
+                    {
+                        "text": "Aggiungi un disegno ai loro",
+                        "msg": "Disegni un sole. Quando ti volti, accanto al tuo è comparso un altro sole, più piccolo.",
+                        "effects": [{"exp": 60}]
+                    },
+                    {"text": "Esci a carponi", "msg": "La trottola resta nella sua nicchia."}
+                ]
+            }
+        }
+    },
+    "miniere_nomi": {
+        "title": "Undici Nomi",
+        "requires": {"biome": "miniere", "min_floor": 8},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Su una trave, undici nomi incisi a punta di coltello, uno sotto l'altro, alcuni nanici, alcuni umani. Sette sono stati cerchiati. Quattro barrati. In fondo, uno solo, ripassato più volte: «Borek».",
+                "choices": [
+                    {
+                        "text": "Copia i nomi su un foglio",
+                        "msg": "Li scrivi tutti e undici. Sono tanti, per una trave sola.",
+                        "effects": [{"exp": 60}, {"flag": "nomi_squadra"}]
+                    },
+                    {
+                        "text": "Tocca i nomi cerchiati",
+                        "msg": "Il legno è tiepido sotto i sette nomi, freddo sotto gli altri quattro.",
+                        "effects": [{"essence": 40}]
+                    },
+                    {"text": "Lasciali alla trave", "msg": "Le travi, qui, sono le uniche lapidi."}
+                ]
+            }
+        }
+    },
+    "miniere_mappa": {
+        "title": "La Mappa a Gessetto",
+        "requires": {"biome": "miniere", "min_floor": 6},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Sul muro di una galleria, una mappa disegnata col gessetto dai minatori: gallerie, pozzi, sale di sosta. Tutte le frecce puntano verso il basso. Una sola, piccola, cancellata e ridisegnata, punta in alto.",
+                "choices": [
+                    {
+                        "text": "Segui la freccia verso l'alto",
+                        "msg": "Porta a una galleria crollata. Fra le pietre, qualcosa che qualcuno ha lasciato per chi avrebbe seguito la freccia.",
+                        "effects": [{"gold": 60}, {"exp": 30}]
+                    },
+                    {
+                        "text": "Segui le frecce verso il basso",
+                        "msg": "Scendi per un pezzo, finché il caldo ti respinge. Qualcuno, laggiù, scava ancora.",
+                        "effects": [{"exp": 70}]
+                    },
+                    {"text": "Ricopia la mappa e prosegui", "msg": "La porterai alla Cartografa, forse."}
+                ]
+            }
+        }
+    },
+    "miniere_carro": {
+        "title": "Il Carro del Pane",
+        "requires": {"biome": "miniere", "min_floor": 8},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Un carro di legno con le ruote rotte, pieno di pagnotte diventate pietra. Le stavano portando alla squadra del livello più basso. Sulla sponda, inciso: «Per Hadrek e i suoi. Tornate presto».",
+                "choices": [
+                    {
+                        "text": "Porta una pagnotta giù nella galleria",
+                        "msg": "La lasci all'imbocco del livello più basso. Al ritorno non c'è più.",
+                        "effects": [{"corruption": -10}]
+                    },
+                    {
+                        "text": "Cerca qualcosa di commestibile",
+                        "msg": "In fondo al carro, una gavetta di latta chiusa. Dentro, carne secca ancora buona.",
+                        "effects": [{"heal_pct": 40}]
+                    },
+                    {"text": "Lascia il carro dov'è", "msg": "Il pane aspetterà la squadra ancora un po'."}
+                ]
+            }
+        }
+    },
+    "miniere_sciopero": {
+        "title": "I Cartelli",
+        "requires": {"biome": "miniere"},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Sulle pareti di una sala, cartelli di legno inchiodati, scritti a carbone: «Basta scavare», «I Monti non sono infiniti», «Gli ingranaggi non hanno famiglia». Risalgono all'Era dell'Ambizioso Raggiungimento.",
+                "choices": [
+                    {
+                        "text": "Leggi i cartelli uno per uno",
+                        "msg": "L'ultimo, più recente, è scritto con un'altra mano: «Avevano ragione».",
+                        "effects": [{"exp": 60}, {"flag": "cartelli_letti"}]
+                    },
+                    {
+                        "text": "Inchioda un cartello tuo",
+                        "msg": "Scrivi una frase col carbone. Il legno la beve, come se avesse sete.",
+                        "effects": [{"essence": 40}]
+                    },
+                    {"text": "Passa oltre", "msg": "Le loro parole restano sul muro, ostinate come loro."}
+                ]
+            }
+        }
+    },
+    "miniere_ingranaggio": {
+        "title": "L'Ingranaggio del Nonno",
+        "requires": {"biome": "miniere", "min_floor": 7},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Un ingranaggio enorme gira nel buio, lentissimo, senza muovere niente. Sul mozzo di ferro c'è una firma nanica, incisa con cura. La riconosci dal martello di Borek: è la stessa famiglia.",
+                "choices": [
+                    {
+                        "text": "Ungi il mozzo con l'olio della lampada",
+                        "msg": "L'ingranaggio gira più fluido, e per la prima volta fa un suono soddisfatto.",
+                        "effects": [{"exp": 50}, {"def": 1}]
+                    },
+                    {
+                        "text": "Fermalo con una sbarra",
+                        "msg": "Ci vuole tutta la tua forza. Quando si ferma, l'intera galleria trattiene il fiato.",
+                        "effects": [{"damage": 6}, {"essence": 70}]
+                    },
+                    {"text": "Lascialo girare", "msg": "Gira perché è stato fatto bene. Non serve altro motivo."}
+                ]
+            }
+        }
+    },
+    "miniere_allagata": {
+        "title": "La Cava Allagata",
+        "requires": {"biome": "miniere", "min_floor": 9},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Una cava intera allagata da un'acqua nera e immobile. Sulla superficie galleggiano elmetti da minatore, decine, con le lampade ancora accese sotto l'acqua.",
+                "choices": [
+                    {
+                        "text": "Raccogli un elmetto",
+                        "msg": "Dentro c'è un nome inciso e un fischietto. Lo soffi: dall'acqua sale una bolla, una sola.",
+                        "effects": [{"exp": 60}]
+                    },
+                    {
+                        "text": "Tuffati dove brilla di più",
+                        "msg": "L'acqua è gelida. Sul fondo, fra gli elmetti, una borsa di monete di Durn.",
+                        "effects": [{"damage": 10}, {"gold": 100}]
+                    },
+                    {
+                        "text": "Non toccare l'acqua",
+                        "msg": "Le lampade sotto la superficie continuano a illuminare il nulla."
+                    }
+                ]
+            }
+        }
+    },
+    "guglie_telaio": {
+        "title": "Il Telaio dei Fulmini",
+        "requires": {"biome": "guglie", "min_floor": 11},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "In una torre senza tetto, un telaio di tessitori lavora da solo. Al posto della seta, fili di luce azzurra che crepitano. La stoffa che ne esce è una tempesta piegata in quattro.",
+                "choices": [
+                    {
+                        "text": "Ferma il telaio",
+                        "msg": "I fili si spengono uno a uno. Nella stanza resta un odore di seta bruciata e di pioggia.",
+                        "effects": [{"exp": 70}, {"corruption": -5}]
+                    },
+                    {
+                        "text": "Prendi un lembo di stoffa",
+                        "msg": "Ti brucia le dita, poi si calma. Avvolto intorno al braccio, ti rende più svelto.",
+                        "effects": [{"damage": 8}, {"atk": 2}]
+                    },
+                    {"text": "Lascialo tessere", "msg": "La tempesta si allunga dietro di te, metro dopo metro."}
+                ]
+            }
+        }
+    },
+    "guglie_ponte": {
+        "title": "Il Ponte di Vento",
+        "requires": {"biome": "guglie", "min_floor": 11},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Fra due guglie non c'è un ponte: c'è un'iscrizione sul primo gradino, nella lingua di Aetheria. «Chi conosce la formula, cammini.» Oltre, sul vuoto, la piattaforma successiva.",
+                "choices": [
+                    {
+                        "text": "Pronuncia le parole a caso, con convinzione",
+                        "msg": "L'aria si fa solida sotto i tuoi piedi, per un passo, poi un altro. Arrivi dall'altra parte senza respirare.",
+                        "effects": [{"exp": 80}]
+                    },
+                    {
+                        "text": "Lancia una corda e attraversa appeso",
+                        "msg": "Ci metti a lungo e ti bruciano le mani. Ma arrivi, e dall'altra parte qualcuno aveva lasciato provviste.",
+                        "effects": [{"damage": 8}, {"potion": 1}]
+                    },
+                    {"text": "Cerca un'altra strada", "msg": "Trovi una scala. È lunga, ma è una scala."}
+                ]
+            }
+        }
+    },
+    "guglie_nido": {
+        "title": "Il Nido del Falco",
+        "requires": {"biome": "guglie", "min_floor": 12},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "In cima a una guglia spezzata, un nido di rami e ossa sottili. Dentro, tre uova che brillano come piccole stelle. Il falco astrale non c'è. Ancora.",
+                "choices": [
+                    {
+                        "text": "Prendi un uovo",
+                        "msg": "È caldo, e batte. Quando lo metti nello zaino, senti un grido lontano che si avvicina.",
+                        "effects": [{"essence": 60}, {"fight": "normal"}]
+                    },
+                    {
+                        "text": "Copri le uova con il mantello",
+                        "msg": "Il vento non le raggiunge più. Quando il falco torna, ti guarda, e se ne va.",
+                        "effects": [{"corruption": -5}, {"heal_pct": 25}]
+                    },
+                    {"text": "Scendi in fretta", "msg": "Le uova brillano dietro di te come un piccolo cielo."}
+                ]
+            }
+        }
+    },
+    "guglie_stendardi": {
+        "title": "Gli Stendardi Azzurri",
+        "requires": {"biome": "guglie"},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Sulle guglie sventolano stendardi azzurri di Valeriana, sfilacciati dal vento. Su ognuno è ricamato il nome di una valle. Uno solo è ancora intero, e ha il ricamo di un campo di fiori.",
+                "choices": [
+                    {
+                        "text": "Raccogli lo stendardo intero",
+                        "msg": "È leggero e caldo. Ti ripara dal vento meglio di qualunque mantello.",
+                        "effects": [{"def": 2}]
+                    },
+                    {
+                        "text": "Leggi i nomi delle valli",
+                        "msg": "Sono quaranta. Le ripeti a bassa voce, perché qualcuno le dica ancora.",
+                        "effects": [{"exp": 60}, {"flag": "valli_lette"}]
+                    },
+                    {"text": "Lasciali sventolare", "msg": "Il vento li strappa un po' di più, ogni giorno."}
+                ]
+            }
+        }
+    },
+    "guglie_valle": {
+        "title": "La Finestra sulla Valle",
+        "requires": {"biome": "guglie", "min_floor": 12},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Un arco di pietra si apre verso l'esterno, e per un istante la nebbia si dirada: sotto, lontanissima, una valle verde con dei tetti di ardesia. Poi la nebbia torna.",
+                "choices": [
+                    {
+                        "text": "Aspetta che si diradi ancora",
+                        "msg": "Aspetti a lungo. La seconda volta vedi un mulino, e una donna che stende i panni.",
+                        "effects": [{"heal_pct": 35}, {"corruption": -5}]
+                    },
+                    {
+                        "text": "Disegna quello che hai visto",
+                        "msg": "Il disegno è brutto, ma la valle c'è. La Cartografa ne sarà contenta.",
+                        "effects": [{"exp": 60}]
+                    },
+                    {"text": "Non guardare", "msg": "Certe finestre si aprono su posti dove non si può tornare."}
+                ]
+            }
+        }
+    },
+    "guglie_campana": {
+        "title": "La Campana della Nebbia",
+        "requires": {"biome": "guglie"},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Una campana di bronzo pende da un trespolo, con una corda lunghissima che scende nel vuoto. Nei giorni di nebbia la suonavano per guidare a casa i pastori.",
+                "choices": [
+                    {
+                        "text": "Suona la campana",
+                        "msg": "Il rintocco scende nelle nubi. Dopo un po', da molto in basso, risponde un fischio.",
+                        "effects": [{"exp": 60}]
+                    },
+                    {
+                        "text": "Tira su la corda",
+                        "msg": "In fondo alla corda c'è legato un fagotto: qualcuno aveva fatto salire le sue cose, e non è salito.",
+                        "effects": [{"gold": 80}]
+                    },
+                    {"text": "Lasciala in silenzio", "msg": "Nessun pastore, oggi, deve tornare."}
+                ]
+            }
+        }
+    },
+    "guglie_abiti": {
+        "title": "La Bottega dei Tessitori",
+        "requires": {"biome": "guglie", "min_floor": 11},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Su un manichino di vimini, un abito di seta di Valeriana. Quando ti avvicini cambia colore: grigio, poi azzurro, poi un rosso che non ti aspettavi. Ti sta dicendo come stai.",
+                "choices": [
+                    {
+                        "text": "Indossalo per un momento",
+                        "msg": "Diventa d'oro, per un istante. Poi bianco. Ti senti stranamente capito.",
+                        "effects": [{"heal_pct": 30}, {"exp": 30}]
+                    },
+                    {
+                        "text": "Strappa un nastro per ricordo",
+                        "msg": "Il nastro resta del colore che avevi quando l'hai preso. Non cambia più.",
+                        "effects": [{"essence": 50}]
+                    },
+                    {"text": "Non guardarlo troppo", "msg": "L'abito torna grigio appena ti volti."}
+                ]
+            }
+        }
+    },
+    "guglie_funambolo": {
+        "title": "Il Funambolo",
+        "requires": {"biome": "guglie", "min_floor": 13},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Sopra il vuoto, su una fune tesa fra due guglie, cammina una figura con un bilanciere. Avanti, indietro, avanti. Era una guida di Valeriana. Ti fa segno di salire.",
+                "choices": [
+                    {
+                        "text": "Sali sulla fune con lui",
+                        "msg": "Ti insegna a guardare un punto fisso. Arrivi in fondo tremando, e più sicuro di te.",
+                        "effects": [{"exp": 70}, {"atk": 1}]
+                    },
+                    {
+                        "text": "Lanciagli una corda di sicurezza",
+                        "msg": "La guida la prende, la lega alla cintura, e per la prima volta sorride.",
+                        "effects": [{"corruption": -5}, {"gold": 40}]
+                    },
+                    {"text": "Guarda da terra", "msg": "Avanti, indietro, avanti. Non cade mai. Non arriva mai."}
+                ]
+            }
+        }
+    },
+    "guglie_lente": {
+        "title": "La Grande Lente",
+        "requires": {"biome": "guglie", "min_floor": 13},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Fra le macerie dell'Osservatorio, una lente enorme, incrinata, montata su un treppiede di bronzo. Punta ancora verso l'alto, verso un cielo che non c'è.",
+                "choices": [
+                    {
+                        "text": "Guarda nella lente",
+                        "msg": "Vedi stelle. Non quelle del Labirinto: quelle di prima, ordinate, al loro posto. Poi la crepa le spezza in due.",
+                        "effects": [{"exp": 80}, {"flag": "lente_guardata"}]
+                    },
+                    {
+                        "text": "Gira la lente verso il basso",
+                        "msg": "Vedi il fondo del Labirinto, piccolissimo. E nel fondo, un occhio chiuso.",
+                        "effects": [{"essence": 60}]
+                    },
+                    {"text": "Lasciala puntata al cielo", "msg": "È l'unica cosa, qui, che guarda ancora in alto."}
+                ]
+            }
+        }
+    },
+    "guglie_spezzata": {
+        "title": "La Guglia Spezzata",
+        "requires": {"biome": "guglie", "min_floor": 14},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "La guglia si è spezzata a metà. La parte superiore galleggia staccata, a pochi passi, ruotando piano su se stessa. Dentro, una stanza con la porta aperta.",
+                "choices": [
+                    {
+                        "text": "Salta sulla parte che galleggia",
+                        "msg": "Atterri male, ma atterri. Nella stanza, un letto fatto e uno scrigno.",
+                        "effects": [{"damage": 10}, {"gold": 100}]
+                    },
+                    {
+                        "text": "Aspetta che la rotazione la avvicini",
+                        "msg": "Ci vuole un'ora. Quando arriva, ci sali con un passo solo, senza fretta.",
+                        "effects": [{"heal_pct": 20}, {"gold": 50}]
+                    },
+                    {
+                        "text": "Non rischiare",
+                        "msg": "La guglia continua a girare, con la sua porta aperta sul niente."
+                    }
+                ]
+            }
+        }
+    },
+    "guglie_nomi_vento": {
+        "title": "Il Vento dei Nomi",
+        "requires": {"biome": "guglie", "min_floor": 12},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Il vento qui non urla: chiama. Dice nomi, uno dopo l'altro, con voci diverse. Tessitori, guide, bambini. A un tratto dice il tuo, con un accento che non riconosci.",
+                "choices": [
+                    {
+                        "text": "Rispondi al tuo nome",
+                        "msg": "Il vento tace. Poi ti passa accanto, morbido, come una mano sui capelli.",
+                        "effects": [{"heal_pct": 30}]
+                    },
+                    {
+                        "text": "Chiedi al vento chi ti chiama",
+                        "msg": "«Tu,» risponde il vento, con la tua voce. «Da un'altra volta.»",
+                        "effects": [{"exp": 70}]
+                    },
+                    {"text": "Copriti le orecchie", "msg": "I nomi continuano, ma diventano solo vento."}
+                ]
+            }
+        }
+    },
+    "guglie_messaggero": {
+        "title": "Il Messaggero",
+        "requires": {"biome": "guglie", "min_floor": 13},
+        "weight": 2,
+        "start": "inizio",
+        "scenes": {
+            "inizio": {
+                "text": "Seduto su un gradino, un corriere di Valeriana con la divisa azzurra e la borsa a tracolla. Ha le gambe di nebbia. «Devo consegnare questa lettera da mille anni. Non trovo più la casa.»",
+                "choices": [
+                    {
+                        "text": "Prendi la lettera e promettigli di consegnarla",
+                        "msg": "Il corriere si alza leggero. «Grazie.» Sparisce prima di finire la parola. La lettera è indirizzata a una valle che non c'è più.",
+                        "effects": [{"corruption": -10}, {"exp": 40}]
+                    },
+                    {
+                        "text": "Chiedigli a chi era indirizzata",
+                        "msg": "«A una ragazza che piantava lavanda. Da suo padre.» Guarda la borsa. «Non ha fatto in tempo a scriverla tutta.»",
+                        "effects": [{"exp": 70}, {"flag": "lettera_alaric_sentita"}]
+                    },
+                    {
+                        "text": "Augurargli buona fortuna",
+                        "msg": "Il corriere riprende a cercare, gradino dopo gradino."
+                    }
+                ]
+            }
+        }
     }
 }

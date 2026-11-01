@@ -21,7 +21,7 @@ TARGET_MULT = 10
 # Le parole della v5, prima dell'espansione della lore (calcolate con questo stesso strumento)
 BASELINE = {"eventi": 5166, "stanze": 1900, "lettere": 544, "personaggi": 583, "finali": 340, "bestiario": 1147,
             "fasi dei boss": 436, "biomi": 283, "libri": 346, "reliquie e oggetti": 999, "epitaffi e nemesi": 229,
-            "dialoghi del Campo": 0}
+            "dialoghi del Campo": 0, "atlante": 0}
 STOPWORDS = set("""il lo la i gli le un uno una di a da in con su per tra fra e o ma se che chi non ne ci si mi ti vi
 è sono era ha ho hai del della dei degli delle al alla ai agli alle dal dalla nel nella nei negli nelle sul sulla
 come più quando dove anche solo poi già ancora tutto tutti tua tuo tue tuoi sua suo sue suoi mia mio è ed d l un'
@@ -72,7 +72,8 @@ def blocks() -> dict:
     story, enemies = load("story.json"), load("enemies.json")
     return {
         "eventi": event_texts(load("events.json")),
-        "stanze": [t for k, v in load("lore.json").items() if k != "letters" for t in v],
+        "stanze": [t for k, v in load("lore.json").items() if k != "letters" for t in v]
+                  + [t for rooms in load("atmosfere.json")["biomes"].values() for v in rooms.values() for t in v],
         "lettere": list(load("lore.json")["letters"]),
         "personaggi": strings(story["characters"], {"hint", "text"}) + strings(story["camp"]["characters"], {"text"}),
         "finali": strings(story["endings"], {"text", "choice"}),
@@ -84,6 +85,7 @@ def blocks() -> dict:
                               + strings(load("armors.json"), {"flavor"}) + strings(load("accessories.json"), {"lore"}),
         "epitaffi e nemesi": strings(load("epitaph.json")) + strings(load("nemesis.json"), {"born", "returns", "defeated", "boss_grudge"}),
         "dialoghi del Campo": dialogue_texts(load("dialogues.json")),
+        "atlante": [p["text"] for pages in load("atlante.json")["biomes"].values() for p in pages],
     }
 
 

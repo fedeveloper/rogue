@@ -87,6 +87,7 @@ def sections() -> List[Tuple[str, int, int]]:
         ("Fasi dei boss", sum(min(enemies.get(n, {}).get("phases", 0), len(ph)) for n, ph in GAME_DATA["phases"].items()), sum(len(ph) for ph in GAME_DATA["phases"].values())),
         ("Reazioni elementali", len(set(PROFILE_MANAGER.codex.get("reactions", [])) & set(GAME_DATA["elements"]["reactions"])), len(GAME_DATA["elements"]["reactions"])),
         ("Incantesimi", len(set(PROFILE_MANAGER.codex.get("spells", [])) & set(GAME_DATA["spells"]["spells"])), len(GAME_DATA["spells"]["spells"])),
+        ("Atlante", sum(len(atlas_open(b)) for b in GAME_DATA["atlante"]["biomes"]), sum(len(p) for p in GAME_DATA["atlante"]["biomes"].values())),
     ]
 
 
@@ -266,9 +267,32 @@ def endings_page() -> List[str]:
     return lines
 
 
+def atlas_open(biome_id: str) -> list:
+    """Le pagine dell'Atlante di un bioma che il profilo ha già aperto (`data/atlante.json`)."""
+    from events import check
+    return [p for p in GAME_DATA["atlante"]["biomes"][biome_id] if check(None, p.get("requires"), 0)]
+
+
+def atlas_page() -> List[str]:
+    """L'Atlante: la storia di ogni bioma, una pagina alla volta, man mano che si scende."""
+    names = {b["id"]: f"{b['icon']} {b['name']}" for b in GAME_DATA["biomes"]}
+    lines = []
+    for biome_id, pages in GAME_DATA["atlante"]["biomes"].items():
+        found = atlas_open(biome_id)
+        if not found:
+            lines += [f"{UNKNOWN} — {Colors.RED}Scendi fino a questo bioma.{Colors.RESET}", ""]
+            continue
+        lines.append(f"{Colors.MAGENTA}{Colors.BOLD}{names.get(biome_id, biome_id)}{Colors.RESET}  ({len(found)}/{len(pages)})")
+        for p in pages:
+            if p in found: lines += [f"  {Colors.CYAN}{p['title']}{Colors.RESET}", f"  {p['text']}", ""]
+            else: lines.append(f"  {UNKNOWN}")
+        lines.append("")
+    return lines
+
+
 PAGES = {"Bestiario": bestiary_page, "Personaggi": characters_page, "Eventi": events_page,
          "Lettere insanguinate": letters_page, "Reliquie": relics_page, "Finali": endings_page,
-         "Rune": runes_page, "Parole runiche": runewords_page, "Nemesi": nemeses_page, "Cimitero": cemetery_page, "Fasi dei boss": phases_page, "Reazioni elementali": reactions_page, "Incantesimi": spells_page}
+         "Rune": runes_page, "Parole runiche": runewords_page, "Nemesi": nemeses_page, "Cimitero": cemetery_page, "Fasi dei boss": phases_page, "Reazioni elementali": reactions_page, "Incantesimi": spells_page, "Atlante": atlas_page}
 
 
 def show_codex():
