@@ -63,7 +63,7 @@ class RecordingTest(Sandbox):
 
     def test_letters_found_on_the_walls_are_recorded(self):
         p = self.hero()
-        with quiet(), mock.patch("rooms.random.random", return_value=0.0), mock.patch("rooms.random.randrange", return_value=3), \
+        with quiet(), mock.patch("rooms.random.random", return_value=0.0), mock.patch("texts.index", return_value=3), \
              mock.patch.object(CombatSession, "_combat_loop"), patch_rooms("delay_print"):
             CombatSession(p, 1, Enemy(1, False, [])).start()
         self.assertEqual(PROFILE_MANAGER.codex["letters"], [3])

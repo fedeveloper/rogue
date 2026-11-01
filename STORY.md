@@ -1,485 +1,488 @@
-# 🌀 Il Grimorio del Caos: Le Cronache di Aethelgard
+# 🌀 Il Canone di Aethelgard
 
-*Benvenuto, Viandante. Ciò che tieni tra le mani non è solo un diario, ma l'eco di un mondo che ha dimenticato il sole. Aethelgard non è caduta in un giorno, e il Labirinto che ora calpesti non è stato costruito con pietre, ma con i frammenti del Tempo stesso.*
+Questo è il canone del mondo del gioco: chi sono i personaggi, cosa è successo, cosa è vero e quando il giocatore lo scopre. Tutta la lore del gioco (eventi, dialoghi del Campo, lettere, Bestiario, libri, finali) parte da qui.
 
----
+Tre regole prima di tutto:
 
-## 📜 Modulo 1: Il Mondo e la Genesi del Labirinto
+- **I dati del gioco vincono.** Se un testo che il giocatore ha già letto in partita contraddice questo documento, si corregge questo documento (o si cambia il testo nella stessa PR). L'appendice *Contraddizioni risolte* tiene traccia delle scelte fatte.
+- **Un fatto nuovo si scrive qui nella stessa PR che lo mette nel gioco.** Un nome, una data, un legame fra due personaggi: se non è in questo documento, il prossimo autore non lo conosce.
+- **I segreti hanno un momento.** La parte *La verità* dice cosa è vero; la *Scala delle rivelazioni* dice quando il giocatore può saperlo. Nessun testo anticipa un gradino.
 
-### 1.1 L'Era dell'Equilibrio Primordiale
-Prima che il Labirinto esistesse, Aethelgard era un arazzo di forze in perfetta risonanza. Non c'era separazione tra gli elementi; il Fuoco danzava con l'Acqua in una nebbia vitale, e la Luce era la linfa che scorreva nelle vene della Terra. Gli **Architetti Astrali**, esseri di pura coscienza, vegliavano su questo equilibrio, assicurandosi che nessuna forza prevalesse sull'altra.
-
-In questo tempo, la morte non era una fine, ma un ritorno all'**Essenza Astrale**, un flusso continuo che alimentava la creazione. Le città di Aethelgard erano costruite su nubi di Vento e sorrette da pilastri di Luce.
-
-### 1.2 La Grande Discordia
-Tutto cambiò quando l'Architetto rinnegato, il cui nome è stato cancellato da ogni cronaca, tentò di imbrigliare l'Essenza per creare un "Ottavo Elemento": il Vuoto Assoluto. L'esperimento fallì in modo catastrofico. In un istante, l'arazzo si lacerò. Gli elementi si separarono con violenza, diventando forze distruttive e gelose. 
-
-La realtà si ripiegò su se stessa, creando la "Maw of Chaos" (La Fauce del Caos) — il Labirinto. Non è una prigione fisica, ma una ferita nel tessuto dell'esistenza che continua a nutrirsi della realtà circostante, trascinando intere regioni nelle sue profondità ricorsive.
-
-### 1.3 La Natura del Labirinto
-Il Labirinto è un'entità semi-senziente. Si nutre dell'Essenza di chi vi entra. Chi muore tra le sue mura non torna al flusso primordiale, ma viene "hollowed" (svuotato), diventando parte delle fondamenta stesse. 
-Il Labirinto è diviso in **Piani**, ognuno dei quali è una distorsione di un ricordo di Aethelgard. Più si scende, più la logica elementale si corrompe.
+L'obiettivo della v6 è almeno dieci volte la narrativa della v5 (circa 12.000 parole, misurate con `python tools/conta_testi.py`), quasi tutta fuori dalla partita: chi vuole leggere lo fa al Campo, nel Codice e nell'Archivio, chi vuole giocare non viene rallentato.
 
 ---
 
-## ✨ La Cosmologia dei Sette Elementi
+## Parte I · Come si scrive
 
-Nel Labirinto, gli elementi sono diventati ossessioni:
+### 1. Dove va il testo
 
-1.  🔥 **Fuoco (L'Eterna Rabbia)**: Non è più calore che dà vita, ma un incendio alimentato dal rimpianto. Brucia ciò che è stato e ciò che avrebbe potuto essere.
-2.  💧 **Acqua (La Memoria del Sommerso)**: Un oceano di ricordi dimenticati. Chi beve quest'acqua rischia di perdere la propria identità, affogando nel passato degli altri.
-3.  🪨 **Terra (La Fortezza Inviolata)**: Roccia che si rifiuta di mutare. Rappresenta la testardaggine di chi non accetta la fine, diventando un sarcofago di pietra.
-4.  💨 **Vento (Il Lamento del Vuoto)**: Sussurri di anime che non hanno più voce. Il vento nel Labirinto non trasporta polline, ma segreti che fanno impazzire.
-5.  ✨ **Luce (La Divinità Crudele)**: Una luce accecante che non rivela la verità, ma la nasconde dietro un velo di perfezione innaturale. È la luce che brucia gli occhi dei peccatori.
-6.  🌑 **Tenebra (L'Abbraccio della Verità)**: Spesso temuta, ma nel Labirinto è l'unico luogo dove ci si può nascondere dallo sguardo degli Architetti corrotti. È fredda, ma onesta.
-7.  ⚪ **Normale (La Fragilità Residua)**: Ciò che rimane dell'umanità e della materia comune. È il punto di rottura, la debolezza che permette agli altri elementi di dominare.
+La discesa deve restare veloce. Il testo lungo vive dove il giocatore sceglie di fermarsi.
 
----
+| Dove | Cosa | Lunghezza |
+|---|---|---|
+| **In partita** | Scena di un evento | 1-3 frasi, al massimo 55 parole |
+| | Esito di una scelta | 1-2 frasi, al massimo 30 parole |
+| | Frase d'ingresso di una stanza, atmosfera di un bioma | 1-2 frasi, al massimo 30 parole |
+| | Lettera insanguinata | 1 frase, al massimo 25 parole |
+| | Battuta di un boss (inizio, fase, morte) | 1 frase, al massimo 25 parole |
+| **Fuori partita** | Conversazione al Campo (un argomento) | 80-250 parole, divise in battute |
+| | Voce del Bestiario (un livello) | 40-80 parole |
+| | Capitolo di un libro dell'Archivio | 150-400 parole |
+| | Ricordo di una vita prestata (classe) | 120-250 parole |
+| | Epilogo di un finale | 3-6 frasi per variante |
 
-## 🏛️ Frammenti Ambientali (Materiale per `lore.json`)
+Un testo in partita che supera la misura si spezza: la prima parte resta nella scena, il resto diventa una nota del Codice o una battuta al Campo.
 
-*Questi testi sono frammenti che il giocatore troverà incisi sulle pareti, scritti in diari insanguinati o sussurrati dalle ombre.*
+### 2. Voce e forma
 
-### [COMBAT] Stanze di Battaglia
-1. "Le pareti trasudano un calore innaturale. Senti il crepitio di un fuoco che non ha legna da ardere, ma si nutre dell'aria stessa. Qualcosa si muove nella cenere."
-2. "Il pavimento è coperto da una brina azzurrina che non si scioglie. Ogni tuo respiro diventa una nuvola di cristalli di ghiaccio. Nell'oscurità, occhi vitrei ti osservano."
-3. "L'odore di ozono è pungente. Scariche elettriche percorrono le catene che pendono dal soffitto. Non sei solo in questa tempesta silenziosa."
-4. "Radici nere come la pece hanno frantumato le lastre di marmo. La vegetazione qui non cerca luce, ma sangue. Senti il battito di un cuore pesante sotto i tuoi piedi."
+- **In partita si parla al giocatore in seconda persona, al presente.** «Trovi», «senti», «ti guarda». Mai «il giocatore», mai «l'eroe» nel racconto.
+- **I dialoghi stanno fra apici singoli**: `'Nessuno passa,' dice.` Le iscrizioni, le parole incise e i titoli citati stanno fra caporali: `«Una volta sola»`.
+- **Nessun numero delle regole nella lore.** I numeri (danni, percentuali, oro) stanno nelle descrizioni (`desc`), che il gioco controlla. La lore dice cosa si prova, non quanto vale.
+- **Un dettaglio concreto vale più di tre aggettivi.** Non «un'atmosfera inquietante e opprimente», ma «il soffitto è basso, e qualcuno ci ha inciso dei segni con le unghie».
+- **Il Labirinto non spiega se stesso.** I personaggi sanno cose diverse, a volte sbagliano, a volte mentono. La verità si ricompone mettendo insieme le voci.
+- **Ironia sì, battute moderne no.** Borek può scherzare; nessuno dice «ok» o fa riferimenti al mondo di fuori.
+- **Ortografia**: accenti giusti (è, perché, più, già), apostrofi dritti `'`, puntini di sospensione solo quando qualcuno si interrompe davvero.
 
-### [TREASURE] Stanze del Tesoro
-1. "Un piedistallo d'oro zecchino sorregge un oggetto che sembra vibrare di una luce propria. Le pareti sono coperte di iscrizioni che lodano l'avidità come virtù suprema."
-2. "Tra le rovine di un antico altare, giace un forziere avvolto in catene di ferro freddo. Non c'è polvere su di esso, come se il tempo avesse paura di toccarlo."
-3. "Un raggio di luce astrale attraversa il soffitto crollato, illuminando una reliquia dimenticata. Qui il silenzio è così profondo da sembrare solido."
+### 3. Le voci dei personaggi
 
-### [CAMPFIRE] Stanze del Falò
-1. "Il fuoco qui emana un profumo di pini di Aethelgard, un odore che pensavi di aver dimenticato. Per un istante, il Labirinto sembra solo un brutto sogno."
-2. "Le braci scoppiettano parlando una lingua antica. Ti siedi e senti la stanchezza delle tue vite precedenti scivolare via dalle tue ossa."
-3. "Questo luogo è protetto da un sigillo di Luce che il Caos non può infrangere. Riposa, avventuriero, poiché la discesa sarà ancora lunga."
+Ogni personaggio deve essere riconoscibile anche senza il suo nome davanti.
 
-### [VENDOR] Stanze del Mercante
-1. "Un uomo senza volto siede tra pile di manufatti impossibili. 'L'oro è solo polvere che brilla,' sussurra, 'ma l'Essenza... l'Essenza è tutto ciò che rimane'."
-2. "L'emporio profuma di incenso e spezie di terre che non esistono più. Il mercante sorride, ma i suoi occhi riflettono la fine del mondo."
+| Personaggio | Come parla |
+|---|---|
+| **Silas** | Frasi spezzate, date sbagliate e corrette («Giorno quattro... no. Cinque.»), immagini di stelle e inchiostro. Prende appunti mentre parla. |
+| **Sir Alaric** | Formale, antico, poche parole. Non usa mai il tu per primo. Dice «gli Architetti» come si dice «mio padre». |
+| **La Cartografa (Tessa)** | Entusiasta, precisa, misura tutto in passi e piani. Interrompe se stessa per segnare qualcosa sulla mappa. |
+| **Lo Speziale (Ambrogio)** | Gentile, lento, parla per ricette e dosi. Chiede sempre se hai mangiato. Il rimorso arriva a metà frase. |
+| **Borek** | Diretto, rumoroso, paragoni col metallo e con la birra. Chiama tutti «ragazzo». Quando è serio diventa improvvisamente breve. |
+| **Elara** | Asciutta, pratica, frasi corte. Ripara qualcosa mentre parla. Non si lamenta mai, ma conta le cicatrici. |
+| **Valerius** | Ricercato, vanitoso, ironico, frasi lunghe con un inciso di troppo. Sotto la vanità, paura. |
+| **Il Viandante Cieco** | Conta a bassa voce (monete, passi, respiri). Parla della luce come di un dolore. |
+| **Il Mercante Senza Volto** | Tutto è un prezzo. Non chiede oro: chiede ricordi, nomi, il colore di un tramonto. Cortese fino al gelo. |
+| **Linnea** | Parla al plurale («noi ricordiamo»), per immagini d'acqua e di bosco. Confonde passato e presente. |
+| **Kaelen il Muto** | Non parla: dalla bocca gli esce sabbia. Il testo descrive i suoi gesti e i segni che incide sul metallo. |
+| **Il Fuoco** | Non parla a parole. Crepita, si abbassa, si alza, scalda una mano. Il testo descrive cosa fa sentire. |
 
-### [TRAP] Stanze delle Trappole
-1. "La perfezione geometrica di questa stanza è sospetta. Le ombre sulle pareti sembrano muoversi indipendentemente dalla luce. Un passo falso, e la realtà si chiuderà su di te."
-2. "Senti il ticchettio di un meccanismo antico, un cuore d'orologio che batte per la tua fine. L'aria è satura di vapori paralizzanti."
+### 4. Parole da usare con misura
 
----
+Il tono si consuma ripetendo le stesse parole. `python tools/conta_testi.py` elenca le parole più usate in tutta la lore: se una parola è in cima alla lista, cercane un'altra. Oggi le più consumate sono **luce, labirinto, voce, porta, sangue, pietra, qualcuno, qualcosa**; da usare con particolare misura anche **sussurra, eco, antico, oscurità, brivido, abisso**. Il test dei doppioni (`--check`) impedisce due testi narrativi identici.
 
-## 💀 Modulo 2: Le Cronache dei Caduti (Boss e Nemici)
+### 5. Checklist di una PR di lore
 
-*Il Labirinto non crea vita, la distorce. Ogni creatura che incontri tra queste mura è il resto di ciò che un tempo era nobile, coraggioso o semplicemente vivo. Combattere qui non è solo un atto di sopravvivenza, ma un'eutanasia per anime che non possono più morire.*
-
-### 2.1 I Signori del Declino (I Boss)
-
-#### 👑 Il Re dei Goblin: Il Sovrano del Nulla
-Non è sempre stato una creatura deforme. Un tempo, Re Galdor governava le fertili valli del Sud. Quando la Grande Discordia colpì, le sue terre furono le prime ad essere trascinate nel Labirinto. Per salvare la sua gente dalla fame, Galdor strinse un patto con le ombre della Fauce: la sua corona sarebbe rimasta, ma la sua dignità e quella del suo popolo sarebbero state il prezzo. Ora governa un regno di fango e ossa, convinto di proteggere ancora sudditi che sono diventati poco più che parassiti.
-
-#### 🌑 Il Cavaliere Oscuro: L'Ultimo Sigillo
-Era Sir Alaric, il Primo Paladin degli Architetti Astrali. Fu lui a tentare di fermare la lacerazione del mondo, ma rimase intrappolato nel momento esatto in cui la Luce divenne crudele. La sua armatura, un tempo bianca come il marmo, è ora un guscio di ossidiana che trattiene un vuoto divorante. Non combatte per odio, ma per abitudine; è l'ultimo custode di una porta che non conduce più a nulla.
-
-#### 💧 Il Drago di Zaffiro: Il Custode delle Lacrime
-Un tempo era il guardiano dell'Oceano di Memoria. Quando l'Acqua si separò dagli altri elementi, il Drago bevve troppo profondamente dal calice del passato. Ora è intrappolato in un ciclo eterno di dolore, costretto a rivivere ogni perdita di Aethelgard. Il suo soffio non è solo acqua, ma il peso di un miliardo di rimpianti che annegano la mente di chi lo sfida.
-
-#### ✨ L'Angelo Caduto: La Perfezione Infranta
-Inviato dagli Architetti per purificare il Labirinto, l'Angelo scoprì che la "Purezza" era solo un'altra forma di follia. Vedendo che la sua stessa Luce stava bruciando il mondo che avrebbe dovuto salvare, si strappò le ali e cadde nelle profondità. Ora, la sua presenza è un paradosso di bellezza e terrore, una divinità che odia se stessa sopra ogni altra cosa.
-
-#### 👁️ DIO ANTICO (Piano 30): L'Architetto Rinnegato
-Al centro del Labirinto, dove il tempo si ferma, siede Colui che ha osato. Non è un dio nel senso comune, ma la manifestazione della colpa collettiva di Aethelgard. Il Dio Antico è il Labirinto stesso. Sconfiggerlo non significa liberare il mondo, ma forse solo dare alla realtà il permesso di svanire finalmente nel silenzio.
-
-### 2.2 La Legione delle Ombre (Nemici Comuni)
-
-1.  💀 **Scheletri**: Non sono semplici morti rianimati. Sono i "Hollowed", avventurieri che hanno perso ogni speranza. Le loro ossa sono tenute insieme solo dal desiderio residuo di trovare un'uscita che sanno non esistere.
-2.  🔥 **Elementali**: Frammenti puri di rabbia o dolore che hanno preso forma fisica. Non hanno coscienza, solo un impulso primordiale di riportare tutto allo stato di caos elementale.
-3.  🛡️ **Paladino Corrotto**: Guerrieri della fede che hanno scambiato la protezione per la persecuzione. Credono che il dolore sia l'unica purificazione rimasta in un mondo morente.
-4.  🧪 **Melma Acida**: Il risultato della corruzione della linfa vitale della Terra. È ciò che rimane della fertilità di Aethelgard quando viene lasciata a marcire nel buio.
+1. Ogni fatto nuovo è scritto in questo documento.
+2. Nessun testo anticipa un gradino della *Scala delle rivelazioni*.
+3. Le misure della tabella sono rispettate (in partita soprattutto).
+4. `python tools/conta_testi.py` riporta i progressi nella descrizione della PR.
+5. Nessun valore di gioco cambia: la lore della v6 non tocca numeri, regole né bilanciamento. Il golden master non deve cambiare per una PR di soli testi (le frasi d'atmosfera hanno un caso tutto loro: `texts.py`).
 
 ---
 
-## 💍 Modulo 3: L'Eredità degli Antichi (Reliquie e Oggetti)
+## Parte II · La verità (per chi scrive)
 
-*Le reliquie non sono semplici strumenti. Sono frammenti di realtà che hanno resistito alla Grande Discordia. Ogni oggetto porta con sé il peso di chi lo ha posseduto e il desiderio che lo ha forgiato.*
+Questa parte è per gli autori. Il giocatore la scopre un pezzo per volta, nell'ordine della *Scala*.
 
-### 3.1 Gli Artefatti della Genesi
+### Il Labirinto
 
-#### 🧛 L'Artiglio Vampirico: La Fame di Malphas
-Malphas fu il primo avventuriero a capire che il Labirinto non concedeva la morte naturale. Per non svanire nel nulla, iniziò a nutrirsi dell'Essenza altrui. L'Artiglio è ciò che rimane della sua mano destra, mutata dalla magia proibita. Chi lo impugna sente una fame costante, un desiderio di strappare la vita per prolungare la propria, un ciclo di parassitismo che Malphas chiamava "immortalità".
+Il Labirinto, che i dotti chiamano la **Fauce del Caos**, non è una prigione costruita: è una ferita che si è chiusa male. Nacque mille anni fa, nella notte della **Grande Discordia**, quando un esperimento sull'Ottavo Elemento, il **Vuoto**, lacerò l'equilibrio degli altri sette. Gli elementi si separarono e diventarono ossessioni; le regioni di Aethelgard furono trascinate in profondità, una dentro l'altra, e diventarono i biomi.
 
-#### 💎 Lo Scudo di Cristallo: Il Frammento di Cielo
-Quando il cielo di Aethelgard si frantumò, non caddero solo stelle, ma pezzi di pura intenzione. Questo scudo è un frammento della cupola che un tempo proteggeva la capitale del mondo. È fatto di una materia che non appartiene più a questo piano di realtà; per questo, può negare il primo colpo di ogni scontro: la materia del Labirinto semplicemente non riesce a trovare un punto di contatto con la purezza del cristallo.
+I sei Architetti rimasti fedeli non riuscirono a richiudere la ferita. Fecero l'unica cosa possibile: la **avvolsero**. Il Labirinto è il loro guscio. Dentro custodisce due cose: il Vuoto, che non deve uscire, e il ricordo dell'**Equilibrio**, cioè Aethelgard com'era, che non deve andare perduto. Quel ricordo è lo **specchio** oltre la Soglia: chi lo guarda vede il mondo come sarebbe stato. Per questo il Labirinto è insieme carcere e reliquiario, e per questo trattiene chi muore: ogni anima svuotata (gli *Svuotati*) diventa un mattone del guscio.
 
-#### ⚖️ La Lente Prismatica: L'Occhio dell'Architetto
-Gli Architetti Astrali usavano queste lenti per osservare il flusso degli elementi senza esserne consumati. Guardare attraverso la Lente significa vedere il mondo per quello che è veramente: un conflitto di forze contrapposte. Questo raddoppia l'efficacia (e il pericolo) delle risonanze elementali, poiché elimina ogni velo di apparenza.
+### Il Rinnegato e Re Galdor
 
-#### 👑 La Corona del Re Folle: Il Peso del Tradimento
-Già citata nelle Cronache di Re Galdor, la corona non è d'oro, ma di un metallo pesante infuso con le lacrime dei suoi sudditi. Indossarla conferisce un potere immenso nei momenti di crisi (colpi critici), ma sussurra costantemente all'orecchio del portatore che ogni trionfo è costruito sul dolore altrui.
+Gli Architetti erano sette, uno per elemento. Il settimo, l'Architetto del **Normale**, cioè della materia comune e della fragilità umana, si chiamava **Sereth**. Il suo nome è stato cancellato da ogni cronaca; nel gioco compare solo all'ultimo gradino della Scala.
 
-#### 🧪 La Pietra Filosofale: L'Ultima Opera
-L'Alchimista Supremo passò secoli a cercare la formula per trasformare il dolore in gioia. Fallì, ma creò qualcosa di simile: una pietra capace di convertire l'Esperienza — la memoria del combattimento — in Oro, la materia del desiderio. È un oggetto di una tristezza infinita, poiché ammette che in questo mondo la conoscenza ha valore solo se può essere venduta.
+Sereth non voleva diventare un dio. Voleva che gli uomini potessero **riposare**. Nell'Equilibrio la morte non era una fine ma un ritorno all'Essenza, e l'Essenza tornava in nuova vita: nessuno, mai, smetteva davvero di esistere. Dopo mille anni Sereth vide che la sua gente era stanca. Il Vuoto doveva essere un luogo dove l'Essenza potesse finalmente fermarsi.
 
-### 3.2 Le Armi del Mito
+Gli serviva un regno disposto a rischiare. Lo trovò al Sud, nelle **Valli di Galdor**, dove tre anni di carestia avevano reso il re **Galdor** disposto a tutto: Galdor chiese la fine della fame, Sereth gli promise la fine di ogni bisogno. Per questo le cronache non sono d'accordo su chi abbia «lacerato il velo»: lo fecero tutti e due. Galdor pagò per primo: le sue valli furono le prime a sprofondare, e lui governa ancora il suo popolo diventato goblin (il **Re dei Goblin**).
 
-1.  ⚔️ **Spadone Infranto**: Non è rotto dal tempo, ma dal peso delle promesse infrante. Apparteneva a un eroe che giurò di non versare mai più sangue innocente, proprio prima che il mondo finisse. Nonostante la lama sia spezzata, il suo spirito colpisce ancora con la forza di una giustizia negata.
-2.  🌑 **Falce Divora-Anime**: Un'arma che non appartiene ad Aethelgard, ma al Vuoto stesso. Non taglia la carne, ma recide il legame tra l'anima e l'Essenza. È l'arma definitiva per chi ha smesso di cercare la salvezza e vuole solo la fine.
-3.  ✨ **Lama del Creatore**: Si dice che contenga un atomo di ogni elemento primordiale. Impugnarla è come tenere in mano il mondo prima della caduta. È pesante non per il metallo, ma per la responsabilità che impone.
+### Il Dio Antico
 
----
+Nell'istante dell'esperimento Sereth si fuse con il Vuoto che stava creando. Quello che resta al fondo del Labirinto, al piano 30, è il **Dio Antico**: la parte di Sereth che vuole il riposo, e che sogna. Il Labirinto è il suo sogno tenuto in forma dal guscio degli Architetti. Quando il Dio dorme profondamente il Labirinto è calmo; più il Dio si sveglia, più il Labirinto diventa crudele (i gradi di **Ascensione**) e più ricorda se stesso, ripetendo i suoi piani in **Eco** sempre più dure (il **Ciclo**).
 
-## 🎭 Modulo 4: I Sentieri dell'Essenza (Classi e Maestrie)
+Sconfiggere il Dio non lo uccide: lo fa dormire. Per questo il giocatore può vincere e tornare a scendere.
 
-*Chi sei tu, Viandante? Non sei un uomo, ma un'eco. Le classi non sono professioni, ma archetipi di ciò che l'umanità rappresentava prima che il Labirinto diventasse la nostra unica casa.*
+### Il Fuoco del Campo
 
-### 4.1 Gli Archetipi della Speranza
+Dei sei Architetti fedeli, cinque si ritirarono nelle cittadelle del cielo e tacquero. Il sesto, **Ardel**, l'Architetto del **Fuoco** (del fuoco com'era prima: calore, focolare, veglia), rifiutò di andarsene. Si fece brace. Il **Fuoco del Campo** è ciò che resta di lui: l'ultima coscienza degli Architetti dentro il Labirinto.
 
-#### 🛡️ Il Guerriero: La Guardia Reale
-I Guerrieri sono i discendenti spirituali dei protettori di Aethelgard. La loro forza non deriva dai muscoli, ma dalla memoria collettiva di un dovere che non può più essere compiuto. Cercano la redenzione attraverso il ferro, sperando che un giorno la loro difesa sia abbastanza forte da proteggere qualcosa che non sia solo la loro vita.
+Il Fuoco ha un solo potere: **riportare indietro**. Quando qualcuno che lui ha scelto muore laggiù, invece di diventare un mattone del guscio torna al Campo. Ma ogni ritorno costa ad Ardel una parte di sé. L'**Essenza** che il giocatore riporta non è solo una moneta: nutre il Fuoco, e i potenziamenti del **Fuoco dell'Anima** sono il Fuoco che, nutrito, restituisce forza. Le strutture costruite al Campo sono pezzi di casa intorno a una brace che si consuma.
 
-#### 🗡️ Il Ladro: Il Cercatore d'Ombre
-Un tempo erano gli esploratori delle terre selvagge, coloro che danzavano con il Vento. Nel Labirinto, sono diventati opportunisti. Non cercano la gloria, ma le fessure nella realtà dove potersi nascondere. Il loro oro è un modo per contare i giorni che mancano alla fine.
+Il Fuoco non parla. Si sente: crepita più forte quando arriva qualcuno di nuovo al Campo, si abbassa quando il giocatore sceglie la Corruzione, scalda la mano quando un personaggio trova pace.
 
-#### 🔮 Il Mago: Lo Studioso del Caos
-I Maghi sono coloro che hanno fissato il sole della Grande Discordia troppo a lungo. Hanno visto la verità dietro la separazione degli elementi e ora cercano di ricomporla, anche a costo della propria sanità mentale. Ogni loro incantesimo è un grido verso gli Architetti Astrali, una richiesta di spiegazioni che non arriverà mai.
+### Il Ritornante
 
-#### ⚔️ Il Berserker: La Follia Sanguinaria
-Non è una classe, ma una malattia dell'anima. Il Berserker ha accettato che il dolore è l'unica cosa reale nel Labirinto. Invece di rifuggirlo, lo abbraccia, trasformando la propria agonia in una forza distruttrice. Sono coloro che hanno guardato nell'abisso e hanno iniziato a ridere.
+Il giocatore è il **Ritornante**: l'unico che il Fuoco riporta. Non ricorda chi era prima di svegliarsi la prima volta accanto alla brace, e ogni morte gli toglie qualcosa delle discese precedenti. I personaggi del Labirinto, invece, a volte ricordano lui: Silas lo ha disegnato, il Custode della Soglia lo ha «già visto», il Tristo Mietitore «aveva già scritto il suo nome».
 
-#### 🧪 L'Alchimista: Il Guaritore Corrotto
-Cercano di curare un mondo che vuole essere malato. Usano pozioni che sono misture di speranza e veleno, convinti che se riusciranno a trovare la giusta combinazione di elementi, potranno invertire la Grande Discordia. Spesso, però, finiscono solo per accelerare la decomposizione di ciò che toccano.
+**Il segreto ultimo:** il Ritornante è la parte di Sereth che si è pentita. Nell'istante della fusione Sereth si spezzò in due: la parte che voleva il riposo divenne il Dio, la parte che vide cosa stava facendo al mondo si staccò e cadde, senza nome e senza memoria, accanto al focolare di Ardel. Ardel la riconobbe e la scelse lo stesso. Ogni discesa è il rimorso che torna a guardare il proprio errore. Le **lettere insanguinate** sono tutte di sua mano, scritte in discese che non ricorda (finale *La Lettera Mai Scritta*).
 
----
+### Le vite prestate
 
-## 🗺️ Modulo 5: Le Cicatrici del Mondo (Eventi e Luoghi)
+Il Ritornante non ha una vita sua da ricordare. Il Fuoco gli presta quelle degli eroi che ha raccolto nei mille anni: anime di caduti che Ardel ha strappato al guscio prima che diventassero mattoni. Ogni **classe** è una di queste vite. Combattere come Guerriero è indossare il ricordo di **Bran**; la **Maestria** di una classe è ricordare quella persona fino in fondo e, al livello più alto, lasciarla riposare. Sbloccare una classe è il Fuoco che restituisce un'altra vita.
 
-*Il Labirinto è costellato di anomalie, momenti in cui il tempo si ferma e la storia parla direttamente a chi ha orecchie per ascoltare.*
+### Le Nemesi e il rancore dei boss
 
-### 5.1 Gli Eventi Astrali
+Nel Labirinto anche i mostri ricordano, perché sono fatti della stessa Essenza del guscio. Chi uccide il Ritornante ne beve un poco di nome: per questo diventa qualcuno (una **Nemesi**) e lo aspetta. I boss che lo hanno ucciso più volte lo riconoscono.
 
-#### ⛲ La Fontana Fatata: Il Pianto della Natura
-Non è acqua quella che sgorga, ma le lacrime delle creature fatate che videro i loro boschi trasformarsi in pietra. Bere da questa fontana cura il corpo, ma riempie la mente di una malinconia che dura per intere run.
+### La Scala delle rivelazioni
 
-#### 🩸 L'Altare del Sangue: Il Patto Proibito
-Un residuo dei culti che sorsero subito dopo la caduta. Chi offre il proprio sangue ottiene potere, ma l'altare non dimentica mai un debito. Ogni dono ricevuto è un pezzo di umanità che svanisce, avvicinando il giocatore allo stato di "Hollowed".
+Ogni testo appartiene a un gradino. Un testo può accennare al gradino successivo, mai rivelare quelli dopo.
 
-#### 🎲 La Bisca dei Goblin: L'Illusione del Controllo
-I Goblin sanno che nel Labirinto nulla è certo. La loro bisca è un tempio al Caos, dove si scommette non per vincere, ma per provare il brivido di avere ancora una scelta in un mondo dove tutto è predeterminato.
-
-### 5.2 I Piani dell'Esistenza
-Ogni 10 piani, il Labirinto cambia volto, riflettendo una diversa fase del declino di Aethelgard:
-- **Piani 1-10: I Sobborghi del Rimpianto.** Le rovine sono ancora riconoscibili, la terra ha ancora un colore che ricorda l'erba.
-- **Piani 11-20: Il Ventre della Memoria.** La pietra si trasforma in carne o in cristallo. Il tempo inizia a scorrere a ritroso o a cerchi.
-- **Piani 21-30: La Fauce del Caos.** Qui la realtà è puramente elementale. Non ci sono più pareti, solo concetti di Fuoco, Luce e Tenebra che lottano per il dominio finale.
+| Gradino | Quando | Cosa può sapere il giocatore |
+|---|---|---|
+| **1 · Il risveglio** | Prime discese, piani 1-10 | Si sveglia accanto a un fuoco che non brucia. Non ricorda il suo nome. Il Labirinto ha inghiottito un mondo, Aethelgard. Gli Architetti esistevano. Qualcuno lo riconosce, e non dovrebbe. |
+| **2 · Le voci** | Piani 10-20, primi personaggi liberati | Esiste la Grande Discordia; c'entrano un re affamato (Galdor) e un Architetto rinnegato senza nome. Il Fuoco riporta indietro solo lui. Ogni ritorno costa qualcosa al Fuoco. Le classi sono vite di altri. |
+| **3 · Lo specchio** | Piani 20-30, la prima vittoria | Il Labirinto è un guscio costruito dagli Architetti fedeli. Oltre la Soglia c'è uno specchio con Aethelgard com'era. Il Dio Antico non muore: dorme. Il Fuoco ha un nome, Ardel. |
+| **4 · Il risveglio del Dio** | Ascensione, Eco del Ciclo, Archivio quasi completo | Il Dio si sveglia sempre di più. Il Rinnegato voleva dare riposo, non potere. Il Dio è ciò che resta di lui. |
+| **5 · Il nome** | Finale *La Lettera Mai Scritta*, ultimi capitoli dell'Archivio | Il nome del Rinnegato è Sereth. Il Ritornante è la parte di lui che si è pentita. Le lettere sono sue. |
 
 ---
 
-# 📚 Libri della Conoscenza: Approfondimenti di Aethelgard
+## Parte III · Cronologia
 
-*In questa sezione vengono raccolti i testi estesi, i diari e i trattati ritrovati nelle profondità del Labirinto. Questi scritti offrono una visione dettagliata e spesso soggettiva degli eventi che hanno portato alla fine di Aethelgard.*
+Gli anni si contano **dall'Equilibrio** (d.E.), cioè da quando gli Architetti fissarono gli elementi in armonia. Dopo la Discordia nessuno conta più gli anni dentro il Labirinto; in superficie, dove resta poco, si dice «dopo la Fauce». Oggi sono passati circa **mille anni dalla Discordia**.
 
----
-
-## 📗 Libro I: Il Diario di Silas il Cercatore (Piani 1-15)
-
-### Giorno 1: L'Ingresso nella Fauce
-Non so perché scrivo. Forse è l'abitudine di un uomo che ha passato la vita a catalogare stelle, o forse è solo il terrore di svanire senza lasciare una traccia di inchiostro. Sono entrato nel Labirinto all'alba. L'aria all'ingresso era ancora dolce, profumata di lavanda e pioggia, l'ultimo bacio della Aethelgard che conoscevo. Ma non appena ho varcato il portale di ossidiana, il profumo è cambiato. Sa di metallo freddo e di qualcosa di vecchio, come una tomba aperta dopo mille anni. Le pareti sono... vive. Non si muovono quando le guardi, ma ogni volta che distogli lo sguardo, i corridoi sembrano allungarsi, le ombre si fanno più pesanti. Ho con me solo una spada corta e la mia curiosità. Spero che la seconda non sia più letale della prima.
-
-### Giorno 4: La Prima Risonanza
-Oggi ho visto qualcosa di incredibile. Ho trovato un'armatura abbandonata, infusa con l'elemento Fuoco. Quando ho impugnato la mia lama, anch'essa lambita dalle fiamme del Caos, ho sentito un calore che non bruciava la pelle, ma l'anima. Si chiama Risonanza, credo. È come se gli elementi cercassero disperatamente di tornare all'unione primordiale attraverso di noi. Per un istante, ho visto una scintilla dell'Equilibrio. Ma è durata poco. Un gruppo di creature — un tempo forse uomini, ora solo gusci d'ossa — mi ha attaccato. Ho dovuto ucciderli. Non sanguinano. Rilasciano solo una nebbia azzurrina. Essenza Astrale. È bellissima e terribile. Mi sento più forte dopo averla raccolta, ma sento anche che una parte della mia stanchezza non se ne va mai del tutto.
-
-### Giorno 12: Il Lamento del Vento
-Sono sceso più in profondità. I Piani 5 e 6 sono un labirinto di correnti d'aria gelida. Il Vento qui non soffia, urla. Sono i segreti degli Architetti, sussurrati da labbra che non esistono più. Ho incontrato un mercante. Un essere strano, avvolto in stracci che sembrano fatti di fumo. Non voleva oro, o meglio, lo accettava con un disprezzo quasi regale. Voleva storie. Gli ho raccontato di come appariva il mare di Aethelgard al tramonto. Ha pianto lacrime d'argento e mi ha venduto una reliquia: una Campanella degli Spiriti. Mi ha detto che mi proteggerà quando il silenzio diventerà troppo forte.
-
-### Giorno 20: L'Arena di Alaric
-Ho raggiunto il decimo piano. Le porte sono immense, coperte di un ghiaccio nero che brucia al tocco. Oltre di esse, si erge Sir Alaric, o ciò che rimane di lui. Lo chiamano il Cavaliere Oscuro ora. Non parla. Il rumore dei suoi passi sul marmo spezzato è l'unico suono in questa cattedrale di polvere. Ho osservato da lontano un altro avventuriero tentare di sfidarlo. Alaric non ha usato rabbia. Lo ha abbattuto con una grazia malinconica, quasi come se stesse eseguendo un rito religioso. Quando l'avventuriero è caduto, Alaric è rimasto immobile per ore, fissando il corpo che svaniva in Essenza. Sono fuggito. Non sono ancora pronto per quel tipo di silenzio.
+| Anni | Era | Cosa succede |
+|---|---|---|
+| 1-300 d.E. | **Luce Calma** | Gli Architetti camminano fra gli uomini. Nascono Aurelia, l'Accademia della Luce Calma, i Grandi Templi. La morte è un ritorno all'Essenza. |
+| 301-700 d.E. | **Ambizioso Raggiungimento** | Gli uomini imparano a distillare gli elementi. Nascono le armi elementali e l'Alchimia; si scavano i Monti di Durn; Aetheria diventa la patria dei maghi. Alaric diventa il Primo Paladino. |
+| 701-997 d.E. | **Crepuscolo Lungo** | Il cielo diventa grigio cenere. Gli elementi si ribellano: incendi che non si spengono, acqua che non disseta. Sereth comincia a studiare il Vuoto. Gli Architetti si chiudono nelle cittadelle. |
+| 997-999 d.E. | **La Carestia del Sud** | Tre raccolti perduti nelle Valli di Galdor. Galdor stringe il patto con Sereth. |
+| 1000 d.E. | **La Grande Discordia** | In una notte l'esperimento fallisce. Il Vuoto si apre, gli elementi si separano, le regioni sprofondano. Ardel si fa brace. Alaric giura sulla porta. |
+| Dopo la Fauce | **Il Labirinto** | Mille anni di discese. Il Labirinto cresce, mangia i bordi del mondo, sogna. Gli avventurieri scendono per l'Essenza, per i tesori, per i loro morti. Quasi nessuno torna. |
 
 ---
 
-## 📕 Libro II: Trattato sulla Corruzione Elementale
-*Autore: Mastro Elara, Alchimista della Terza Cerchia*
+## Parte IV · Gli elementi
 
-### Introduzione alla Disarmonia
-La natura degli elementi nel Labirinto non è casuale. Prima della Grande Discordia, il Fuoco era calore, l'Acqua era vita, la Terra era sostegno. Ora, ogni elemento è diventato una patologia. In questo trattato, analizzerò come la separazione abbia corrotto non solo la materia, ma lo spirito stesso del mondo.
+Nell'Equilibrio gli elementi erano fili di una stessa trama. Nel Labirinto ognuno è diventato un'ossessione.
 
-### La Malattia del Fuoco (L'Incendio del Rimpianto)
-Il Fuoco del Labirinto non si nutre di ossigeno. Si nutre di "ciò che poteva essere". Abbiamo osservato che le fiamme nelle stanze di combattimento bruciano con una luce violacea quando sono vicine ad anime tormentate. Il calore non distrugge l'oggetto, ma lo trasforma in cenere di memoria. Ecco perché le armi di Fuoco sono così potenti: colpiscono la storia del nemico, non solo il suo corpo.
+| Elemento | Com'era | Cos'è diventato |
+|---|---|---|
+| 🔥 **Fuoco** | Calore del focolare, veglia | L'Eterna Rabbia: un incendio che brucia ciò che poteva essere. Solo il Fuoco del Campo è rimasto com'era. |
+| 💧 **Acqua** | Vita, memoria che scorre | La Memoria del Sommerso: un oceano di ricordi altrui in cui si affoga. |
+| 🪨 **Terra** | Sostegno, pazienza | La Fortezza Inviolata: roccia che rifiuta di cambiare, la testardaggine di chi non accetta la fine. |
+| 💨 **Vento** | Voce, viaggio, polline | Il Lamento del Vuoto: segreti di chi non ha più bocca. |
+| ✨ **Luce** | Verità, cura | La Divinità Crudele: una perfezione che brucia le imperfezioni, cioè tutto ciò che è umano. |
+| 🌑 **Tenebra** | Riposo, sonno, intimità | L'Abbraccio della Verità: fredda ma onesta, l'unico posto dove nascondersi dallo sguardo degli Architetti. |
+| ⚪ **Normale** | La materia comune, la vita fragile | La Fragilità Residua: ciò che resta quando l'Essenza è stata estratta. È l'elemento di Sereth. |
 
-### La Distorsione della Luce (La Perfezione Crudele)
-Molti credono ancora che la Luce sia il bene. Stolti. Nel Labirinto, la Luce è l'elemento più spietato. È la forza che cerca di imporre un ordine perfetto in un mondo nato dal caos. La Luce dei Paladini Corrotti non guarisce; brucia le imperfezioni, e poiché noi siamo fatti di imperfezioni, ci brucia interamente. È una luce che non illumina il cammino, ma acceca chi cerca di vedere la verità.
-
-### Il Vuoto del Normale (La Fragilità Residua)
-L'elemento Normale è forse il più tragico. È la materia che ha perso la sua anima elementale. È cenere, polvere, ferro arrugginito. È ciò che rimane quando l'Essenza è stata estratta. Molti di noi iniziano il viaggio con questo elemento, portando con sé la fragilità di Aethelgard. È un promemoria costante di quanto siamo vicini a diventare nulla.
-
----
-
-## 📘 Libro III: Canti della Caduta (Tradizione Orale)
-
-### Il Canto del Primo Architetto
-*Si narra che nelle notti in cui il Labirinto è calmo, si possa sentire questo canto provenire dalle pareti stesse.*
-
-"Un filo d'oro, un filo di fumo,
-Il mondo era uno, nel vuoto e nel nume.
-Ma il dito ha tremato, la trama è svanita,
-E l'ombra ha bevuto la linfa della vita.
-Non piangere il sole, non piangere il mare,
-C'è solo il silenzio da poter abitare."
-
-### La Leggenda dei Sette Sigilli
-Si dice che quando il Dio Antico fu sconfitto per la prima volta (o forse era l'ultima?), i suoi resti non svanirono, ma si cristallizzarono in sette sigilli elementali. Questi sigilli non sono oggetti, ma concetti. Chi riesce ad attivarli tutti e sette contemporaneamente potrebbe, in teoria, invertire la Grande Discordia. Ma chi può sopportare il peso di sette eternità che premono contemporaneamente sul cuore? Finora, ogni "Eletto" è diventato nient'altro che una melma acida o uno spirito della tempesta.
+Il **Vuoto** non è un elemento: è l'assenza che Sereth cercò di rendere abitabile. Le **reazioni elementali** (quando due elementi si incontrano su un nemico) sono il ricordo dell'Equilibrio che torna per un istante; per questo l'Elementalista le sente come una musica.
 
 ---
 
-## 📗 Libro IV: Il Diario di Silas il Cercatore (Piani 16-30)
+## Parte V · Il mondo che fu
 
-### Giorno 34: Il Ventre della Memoria (Piano 16)
-La realtà qui è... scivolosa. Le pareti non sono più fatte di pietra, ma di una sostanza che sembra carne traslucida, o forse è solo la mia mente che si rifiuta di accettare la geometria impossibile di questo luogo. Sono nel "Ventre della Memoria". Ogni passo che faccio solleva una polvere che non è polvere, ma frammenti di ricordi altrui. Ho visto un'immagine di una madre che cullava un bambino, ma il bambino aveva gli occhi fatti di fiamme viola. Mi sono accorto che più scendo, più i miei stessi ricordi diventano sbiaditi. Non riesco più a ricordare il colore degli occhi di mia sorella. È questo il prezzo del Labirinto? Scambiare la propria anima per la sopravvivenza?
+Aethelgard era un continente intorno a un mare interno. Ogni regione è sprofondata nel Labirinto e ne è diventata un pezzo.
 
-### Giorno 42: L'Incontro con il Drago (Piano 20)
-Il Drago di Zaffiro non è una creatura di carne e sangue. È un cataclisma vivente di Acqua e Memoria. L'ho visto galleggiare nel vuoto del ventesimo piano. Non ruggisce; emette un suono che sembra il pianto di un intero oceano. Quando mi ha guardato, ho provato una tristezza così profonda che le mie gambe hanno ceduto. Mi ha mostrato la caduta di Aethelgard non come un evento storico, ma come un sentimento. Ho visto le città sprofondare non perché la terra si fosse aperta, ma perché la gente aveva smesso di credere nella realtà. Sono riuscito a scivolare via mentre il Drago era perso nella sua stessa agonia. Spero di non dover mai più guardare negli occhi di un dio che annega.
-
-### Giorno 55: La Discesa nel Caos Puro (Piano 25)
-L'aria è scomparsa. Respiro puro elemento. A volte è Luce che mi brucia i polmoni, a volte è Tenebra che mi gela il sangue. Ho incontrato l'Angelo Caduto. Non ha ali, ma cicatrici fatte di stelle spente. Mi ha chiesto se cercavo la via d'uscita. Ho risposto di sì. Ha riso, e il suono ha infranto i cristalli che fluttuavano intorno a noi. "L'unica uscita è attraverso te stesso," ha detto. "Il Labirinto non è intorno a te, Silas. Tu sei il Labirinto." Non capisco cosa intendesse, o forse ho troppa paura di capire.
-
-### Giorno 68: Il Traguardo Impossibile (Piano 30)
-Sono qui. Davanti all'ultima porta. Oltre questo velo di realtà lacerata siede il Dio Antico. Sento la sua presenza come una pressione costante alla base del mio cranio. Non ho più cibo, non ho più speranza, ho solo questa lama infusa di ogni dolore che ho raccolto. Se questo è il mio ultimo scritto, sappiate che Aethelgard non è morta per un errore di calcolo degli Architetti. È morta perché voleva riposare. E io... io sono solo l'ultimo sussurro di un mondo che ha paura di chiudere gli occhi.
-
----
-
-## 📒 Libro V: Il Bestiario dell'Abisso
-*Compendio di Storia Naturale Corrotta*
-
-### I. I Parassiti della Polvere (Goblin e Orchi)
-Queste creature non sono nate nel Labirinto, ma si sono evolute per nutrirsi dei suoi scarti. I **Goblin** sono i resti delle caste mercantili meno abbienti di Aethelgard. La loro ossessione per l'oro è un riflesso condizionato di una vita passata a contare monete che ora non hanno alcun valore se non come conduttori di calore. Gli **Orchi**, invece, erano i lavoratori delle cave e delle fucine. La loro anatomia si è fusa con l'elemento Terra, rendendo la loro pelle dura come il basalto ma la loro mente lenta come la tettonica dei Piani.
-
-### II. Gli Spettri della Risonanza (Elementali e Spiriti)
-Questi non sono esseri biologici. Un **Elementale del Fuoco** è una concentrazione di rabbia cinetica che ha trovato una coerenza temporanea. Se li osservate da vicino, vedrete che nel cuore della fiamma c'è un oggetto di Aethelgard: un pettine, una chiave, una fibbia. L'oggetto funge da ancora per l'elemento. Gli **Spiriti della Tempesta** (Piani 11-15) sono invece composti da Vento e Luce. Sono ciò che rimane degli esploratori che hanno cercato di "mappare" il Labirinto; la loro curiosità è diventata una tempesta elettrica che non conosce pace.
-
-### III. Le Aberrazioni Elementali (Idre e Leviatani)
-Nei piani più profondi, la corruzione ha creato mostruosità che sfidano la logica. L'**Idra di Lava** (Piano 21-25) è il risultato della fusione forzata di Fuoco e Terra. Ogni testa rappresenta un diverso stadio di fusione nucleare. Il **Leviatano Abissale** (Piano 15-20) è invece fatto di pura Acqua e Tenebra. È la personificazione della paura dell'ignoto; non ha una forma definita, ma appare come la cosa che l'osservatore teme di più in quel momento.
+| Regione | Dov'era | Elementi | Cosa ne resta |
+|---|---|---|---|
+| **Aurelia**, la capitale | Al centro, sul colle dei pilastri di Luce | Luce, Normale | I **Chiostri del Rimpianto**: l'Accademia della Luce Calma e i suoi monasteri. |
+| **I Monti di Durn** | A Ovest, sopra le vene di ferro | Terra | Le **Miniere della Testardaggine**: le gallerie dei nani e degli uomini di miniera. Patria di Borek e di Kaelen. |
+| **Valeriana**, le Valli della Seta | A Nord, nella nebbia | Vento, Acqua | Le **Guglie del Vento Urlante**: le torri dei tessitori e l'Osservatorio. I tessitori sono diventati gli Spiriti della Tempesta. Qui Ilse, la figlia di Alaric, coltivava la lavanda. |
+| **Il Mare Interno** e le sue coste | Al centro del continente | Acqua | Il **Ventre della Memoria**: il mare è diventato un organismo che digerisce ricordi. Il Drago di Zaffiro ne era il guardiano. Linnea viveva nei boschi della costa. |
+| **Le Terre Alte di Ignis** | A Est, fra vulcani e foreste d'ossidiana | Fuoco, Terra | La **Forgia del Caos**: le fucine dove gli Architetti cercarono di riforgiare gli elementi. |
+| **L'Arcipelago di Aetheria** | Isole sospese nel cielo, sorrette da cristalli di Luce | Luce, Vento | Caddero nella notte della Discordia. I frammenti dei cristalli sono le **reliquie**. L'isola più alta, **Calaris**, ospitava la cittadella di Sereth: è sprofondata più in basso di tutte e oggi è la **Soglia del Dio Antico**. |
+| **Le Valli di Galdor** | A Sud, terre di grano | Normale | Le prime a sprofondare. Non sono un bioma: sono sparse ovunque, come i goblin. |
+| **Le Paludi di Morva** | A Sud-Ovest, fra canne e acqua nera | Tenebra, Acqua | Terra dei negromanti, che parlavano ai morti prima che i morti smettessero di andarsene. |
 
 ---
 
-## 📘 Libro VI: Le Cronache delle Ere (L'Era d'Oro e d'Argento)
+## Parte VI · I sei biomi e le Eco
 
-### 1-300 d.E. (Dopo l'Equilibrio): L'Era della Luce Calma
-In questi primi secoli, Aethelgard era un paradiso di geometria sacra. Gli Architetti Astrali camminavano tra gli uomini. Le città erano costruite in armonia con le correnti elementali. Non c'erano malattie, poiché l'elemento Acqua era perfettamente bilanciato con la Luce. L'Essenza Astrale veniva usata per illuminare le notti e per nutrire i campi. Fu il tempo dei Grandi Templi, le cui rovine oggi formano i Piani 1-5 del Labirinto.
+Ogni bioma è una regione ricordata dal Labirinto. Ha un boss nativo, una gente, un pericolo e almeno un segreto.
 
-### 301-700 d.E.: L'Era dell'Ambizioso Raggiungimento
-La curiosità umana iniziò a spingersi oltre i confini stabiliti dagli Architetti. Gli uomini impararono a "distillare" gli elementi per scopi industriali. Nacquero le prime armi elementali. In questo periodo, l'Alchimia divenne la scienza suprema. Fu allora che l'Architetto Rinnegato iniziò i suoi esperimenti segreti sul Vuoto, convinto che gli elementi fossero solo catene che impedivano all'umanità di raggiungere la vera divinità.
+### 📿 I Chiostri del Rimpianto (piani 1-5)
+- **Cos'era:** l'Accademia della Luce Calma di Aurelia, dove si studiavano gli elementi, e i monasteri intorno. Marmo bianco venato di viola, biblioteche, cori.
+- **Chi ci vive:** novizie e coristi spenti, bibliotecari di cenere, statue di sale (chi si è fermato ad ascoltare una voce cara), Eco del Rimpianto.
+- **Boss nativo:** **La Badessa del Silenzio**, che guidava le preghiere dell'Accademia. Crede che il silenzio sia preghiera; è una gabbia (lo scrive Valerius nel suo grimorio). Vuole che tu resti per sempre ad ascoltare.
+- **Pericolo:** la Nostalgia Letale. Le voci dei tuoi cari ti chiamano per nome.
+- **Segreti:** la **Prima Pietra** degli Architetti sotto il marmo del piano 3; l'aula dove Sereth insegnava, con il suo nome raschiato dalla lavagna.
+- **Temi:** il rimpianto, il sapere che non ha salvato nessuno.
 
-### 701-1000 d.E.: L'Era del Crepuscolo Lungo
-Le crepe iniziarono ad apparire. Il cielo di Aethelgard iniziò a cambiare colore, passando dall'azzurro perfetto a un grigio cenere. Gli elementi iniziarono a "ribellarsi": incendi che non potevano essere spenti, inondazioni di acqua che non dissetava. Gli Architetti Astrali si ritirarono nelle loro cittadelle celesti, abbandonando gli uomini al loro destino. L'ultimo anno, il 1000 d.E., fu l'anno della Grande Discordia. In una singola notte, il mondo come lo conoscevamo svanì, e la Fauce del Caos spalancò le sue fauci.
+### ⛏️ Le Miniere della Testardaggine (piani 6-10)
+- **Cos'era:** le gallerie dei Monti di Durn, nani e uomini insieme, gli ingranaggi dell'Era dell'Ambizioso Raggiungimento.
+- **Chi ci vive:** minatori svuotati che scavano ancora, ingranaggi senzienti, carrelli posseduti, guardiani di basalto, lucciole del grisù.
+- **Boss nativo:** **Il Caposquadra Sepolto**, che guidò l'ultima squadra sempre più in basso perché «sotto la prossima roccia» c'era l'uscita. Non ha mai dato l'ordine di risalire.
+- **Pericolo:** il Gas del Silenzio, che toglie la voce e gli incantesimi.
+- **Segreti:** la forgia di **Kaelen il Muto**; la galleria da cui la squadra di Borek non è uscita.
+- **Temi:** la testardaggine, la fedeltà a un ordine sbagliato.
 
----
+### 🌪️ Le Guglie del Vento Urlante (piani 11-15)
+- **Cos'era:** le torri dei tessitori di Valeriana e l'Osservatorio, dove si misuravano le stelle.
+- **Chi ci vive:** sentinelle di nube, falchi astrali, corvi del tuono, spiriti dei ponti, astronomi caduti. Gli Spiriti della Tempesta sono i tessitori, costretti a tessere fulmini invece di seta.
+- **Boss nativo:** **L'Astronoma delle Guglie**, che misurava le stelle dalla guglia più alta e le ha viste cadere. Fu la maestra di Silas.
+- **Pericolo:** la Caduta Astrale: chi perde l'equilibrio non cade in basso, ma in un altro piano.
+- **Segreti:** la mappa del cielo di Aethelgard com'era, incisa sul pavimento dell'Osservatorio; il campo di lavanda di Ilse, sospeso su una guglia.
+- **Temi:** la curiosità, la perdita dei punti di riferimento.
 
-# 🗺️ Le 30 Cronache dei Piani: Architetture del Caos
+### 🫀 Il Ventre della Memoria (piani 16-20)
+- **Cos'era:** il Mare Interno e le sue coste. Ora è un organismo: pareti traslucide come membrane, dentro oggetti e volti.
+- **Chi ci vive:** ricordi annegati, volti nella membrana, sanguisughe madri, lacrime viventi, bambole di ricordi, meduse della memoria.
+- **Boss nativo:** **Il Cuore del Ventre**. Batte al centro della Memoria; a ogni battito, in superficie, qualcuno dimentica qualcosa.
+- **Pericolo:** la Dissoluzione dell'Io: il Labirinto ti digerisce un poco.
+- **Segreti:** la sorgente di **Linnea**; la città capovolta i cui abitanti cadono verso l'alto; il punto dove il **Drago di Zaffiro** bevve troppo dal passato.
+- **Temi:** la memoria come cibo, l'identità che si scioglie.
 
-*Ogni piano del Labirinto è un frammento di Aethelgard che è stato masticato e sputato dalla Fauce. Qui descriviamo le caratteristiche uniche di ogni strato dell'abisso.*
+### 🔨 La Forgia del Caos (piani 21-25)
+- **Cos'era:** le fucine delle Terre Alte di Ignis, dove dopo la Discordia gli Architetti tentarono di riforgiare insieme gli elementi.
+- **Chi ci vive:** golem di scorie, martelli erranti, scudieri e apprendisti di scoria, crogioli ambulanti, scintille ribelli.
+- **Boss nativo:** **Il Maestro di Forgia**. Gli Architetti gli chiesero di riforgiare gli elementi; ci prova ancora, colpo dopo colpo, su un'incudine che non c'è.
+- **Pericolo:** l'Ebollizione Astrale, che brucia l'oro.
+- **Segreti:** l'Incudine Cosmica; il crogiolo dove Elara perse il fratello; il primo tentativo di «riparare» il Normale.
+- **Temi:** riparare ciò che non si può riparare, il lavoro come penitenza.
 
-### Piani 1-5: I Chiostri del Rimpianto
-Questi sono i piani più "giovani". L'architettura ricorda ancora le grandi accademie e i monasteri della Luce Calma. I pavimenti sono in marmo bianco, venato ora di un viola corrotto. L'aria profuma di libri antichi e polvere di stelle.
-- **Pericolo Unico**: La "Nostalgia Letale". In queste stanze, il giocatore può sentire voci di persone care. Chi si ferma troppo a lungo rischia di diventare una statua di sale.
-- **Segreto**: Sotto il marmo del Piano 3, si dice ci sia la prima pietra posata dagli Architetti.
+### 👁️ La Soglia del Dio Antico (piani 26-30)
+- **Cos'era:** Calaris, l'isola più alta di Aetheria, e la cittadella di Sereth. Ora piattaforme di volontà nel vuoto, elementi in collisione.
+- **Chi ci vive:** frammenti di galassia, eco del Dio, frammenti del Prima, riflessi futuri, vuoti affamati, clessidre infrante.
+- **Boss nativo:** **Il Custode della Soglia**, che c'era prima che il Labirinto avesse un nome e che «ti ha già visto». È l'ultimo servitore di Sereth; sa chi sei, e non lo dice.
+- **Pericolo:** il Paradosso Temporale.
+- **Segreti:** lo **specchio** oltre il Dio; la stanza vuota con una sedia («la fine del tempo»), dove Sereth sedeva a pensare.
+- **Temi:** la colpa, il perdono, la tentazione del riposo.
 
-### Piani 6-10: Le Miniere della Testardaggine
-Qui la terra ha preso il sopravvento. I corridoi sono stretti, scavati nel basalto vivo. Le pareti trasudano un olio nero che sussurra nomi dimenticati. È il regno degli Orchi e dei Golem.
-- **Pericolo Unico**: Il "Gas del Silenzio". Un vapore che toglie la parola e la capacità di lanciare incantesimi.
-- **Architettura**: Enormi ingranaggi di ferro ruggito, resti dell'Era dell'Ambizioso Raggiungimento, continuano a girare a vuoto, muovendo pareti e stanze intere.
-
-### Piani 11-15: Le Guglie del Vento Urlante
-Il Labirinto qui si apre in enormi spazi verticali. Non ci sono più corridoi, ma ponti sospesi su abissi di nubi elettriche. Il Vento è così forte da poter strappare l'Essenza direttamente dal corpo.
-- **Pericolo Unico**: "Caduta Astrale". Se perdi l'equilibrio, non cadi verso il basso, ma verso un altro piano casuale, perdendo gran parte dei tuoi averi.
-- **Atmosfera**: Una tempesta blu costante, interrotta solo dai lampi bianchi degli Spiriti della Tempesta.
-
----
-
-# 📜 Il Grimorio delle Maestrie: Filosofie del Combattimento
-
-### I. La Via del Guerriero: Il Peso della Responsabilità
-Essere un Guerriero in Aethelgard non significava solo saper usare una spada. Significava essere un "Ancoraggio". In un mondo che stava svanendo, il Guerriero era colui che decideva di restare fermo. La Maestria del Guerriero non riguarda la forza bruta, ma la capacità di sopportare. Ogni livello di Maestria rappresenta una promessa mantenuta:
-- **Livello 2 (Mano Pesante)**: Il riconoscimento che la materia deve essere dominata dallo spirito.
-- **Livello 4 (Eredità)**: La comprensione che la propria difesa protegge non solo se stessi, ma l'idea stessa di umanità.
-
-### II. L'Arte del Mago: Il Dialogo col Caos
-Il Mago non "lancia" incantesimi. Il Mago negozia con gli elementi corrotti. Ogni palla di fuoco è una preghiera esaudita da un'entità che vorrebbe solo vederti bruciare. La Maestria del Mago è una danza sul filo del rasoio della follia:
-- **Livello 2 (Sintonia)**: Imparare a nutrirsi del dolore elementale del nemico.
-- **Livello 5 (Negromanzia)**: Il tabù finale. Capire che tra un uomo e un'ombra non c'è differenza, se entrambi sono fatti di Essenza.
-
-### III. Il Sentiero del Ladro: L'Opportunismo Sacro
-Il Ladro è l'unico che accetta il Labirinto per quello che è: un gioco truccato. Non cerca di riparare il mondo, cerca di vincere prima della fine. La Maestria del Ladro riguarda la velocità di pensiero:
-- **Livello 3 (Bomba Fumogena)**: L'arte di svanire nel momento in cui la realtà diventa troppo pesante.
-- **Livello 5 (Assassino)**: Colpire non il corpo, ma il punto di giunzione tra l'anima e il destino.
-
----
-
-### Piani 16-20: Il Ventre della Memoria
-Qui il Labirinto smette di fingere di essere solido. Le pareti sono traslucide, simili a membrane di un organismo immenso. All'interno si possono vedere oggetti e volti di persone morte secoli fa. L'odore è quello del salmastro e dei fiori appassiti.
-- **Pericolo Unico**: "Dissoluzione dell'Io". Più tempo passi qui, più i tuoi HP massimi diminuuiscono temporaneamente, come se il Labirinto ti stesse digerendo.
-- **Dettaglio**: In questi piani, la gravità è soggettiva. Puoi camminare sul soffitto se credi fermamente che sia il pavimento.
-
-### Piani 21-25: La Forgia del Caos
-Un inferno di lava bianca e fumi neri. Qui gli Architetti cercarono di "riparare" gli elementi forgiandoli di nuovo insieme. Il risultato fu un disastro. Le macchine da guerra e i Golem più potenti vengono da qui.
-- **Pericolo Unico**: "Ebollizione Astrale". Ogni attacco che subisci ha una probabilità di bruciare una parte del tuo Oro o della tua Essenza.
-- **Atmosfera**: Il rumore di martelli ciclopici che battono su incudini invisibili è costante.
-
-### Piani 26-30: La Soglia del Dio Antico
-La fine della realtà. Non ci sono più pareti, solo piattaforme di pura volontà che galleggiano nel vuoto. Gli elementi qui non sono separati, ma in uno stato di collisione costante. La Luce brucia la Tenebra, che a sua volta divora il Fuoco.
-- **Pericolo Unico**: "Paradosso Temporale". A volte, un turno di combattimento può ripetersi, o il nemico può agire due volte perché il tempo si è lacerato.
-- **Visione**: Al centro del Piano 30 si intravede una struttura che assomiglia a un occhio chiuso, fatto di galassie e polvere di ossa.
+### ⏳ Le Eco (oltre il piano 30)
+Il Dio, svegliandosi, ricorda il suo sogno e lo ripete più forte: i biomi tornano in un ordine diverso, con pericoli più duri e un nome (Eco II, Eco III…). Nelle Eco i luoghi conoscono il Ritornante: le voci dei Chiostri cantano il suo nome, i minatori lo salutano. Ogni trenta piani il Dio Antico è di nuovo lì, un po' più sveglio.
 
 ---
 
-# 📜 Il Grimorio delle Maestrie (Parte II)
+## Parte VII · Il Campo
 
-### IV. Il Voto del Paladino: La Luce dell'Agonia
-Il Paladino non è un santo. È un fanatico che ha scelto di ignorare la morte del sole. La sua Maestria consiste nel creare una bolla di "verità passata" intorno a sé. Quando si difende, non usa solo lo scudo, ma la convinzione che il mondo sia ancora giusto:
-- **Livello 2 (Baluardo della Fede)**: Usare il proprio corpo come un parafulmine per il Caos.
-- **Livello 5 (Benedetto)**: Diventare un'estensione diretta degli Architetti, anche se loro non ci sono più.
+Il **Campo Base** è un cerchio di pietre intorno al Fuoco, in un punto del Labirinto che il Labirinto non vede. Chi ci arriva è al sicuro, ma solo finché il Fuoco arde.
 
-### V. La Furia del Berserker: L'Estasi del Dolore
-Mentre il Guerriero sopporta il dolore, il Berserker lo celebra. Ha capito che nel Labirinto, l'unico modo per non essere una vittima è diventare il dolore stesso. La sua Maestria è una discesa nel nichilismo distruttivo:
-- **Livello 2 (Furia Sanguinaria)**: Più l'anima è lacerata, più l'Essenza scorre veloce.
-- **Livello 5 (Teschio di Sangue)**: Capire che l'unico modo per crescere è consumare l'Essenza degli altri, diventando un predatore dell'abisso.
+- **Il Fuoco dell'Anima**: Ardel stesso. L'Essenza versata nel Fuoco torna come forza (i potenziamenti).
+- **Chi ci vive:** i personaggi liberati o incontrati nelle discese, quando hanno un motivo per restare. Al Campo parlano più che in partita: è qui che raccontano la loro storia (vedi la Parte VIII).
+- **Le strutture** sono pezzi di casa: il **Tavolo della Cartografa**, lo **Scrittoio di Silas**, l'**Altare della Purificazione**, la **Biblioteca dell'Arcano**, la **Sala d'Armi**. Ogni struttura nuova è un personaggio che decide di fermarsi.
+- **La Taverna, la Forgia, il Grimorio, le botteghe**: il lavoro degli artigiani liberati (Speziale, Borek, Elara, Valerius).
+- **L'Archivio di Aethelgard**: i libri ritrovati nelle discese.
 
-### VI. La Ricerca dell'Alchimista: La Chimera dell'Inversione
-L'Alchimista è l'unico che non ha mai smesso di studiare la Grande Discordia. La sua Maestria è fatta di calcoli freddi applicati a una realtà folle. Crede che se riuscirà a mescolare gli elementi nella proporzione esatta, il Labirinto collasserà su se stesso:
-- **Livello 2 (Metabolismo Alterato)**: Trasformare il veleno in medicina attraverso la forza di volontà.
-- **Livello 5 (Pietra Filosofale)**: Il raggiungimento della capacità di trasformare la memoria del dolore in sostanza tangibile.
+Il Campo cambia con la storia: più personaggi trovano pace, più il Fuoco è caldo; chi sceglie la Corruzione lo trova un poco più freddo al ritorno.
 
 ---
 
-# 🎭 L'Antologia delle Vite Spezzate
+## Parte VIII · I personaggi
 
-### I. Il Mercante Senza Volto: L'Avaro del Tempo
-Nessuno conosce il suo vero nome, ma molti conoscono il suo sguardo, o meglio, l'assenza di esso. Si dice che un tempo fosse un Architetto Minore incaricato di gestire il tesoro celeste. Quando la Discordia colpì, scelse di restare nel Labirinto per proteggere le ricchezze. Col tempo, la sua faccia svanì, sostituita dal riflesso dell'oro che bramava. "Vendi la tua speranza," sussurra, "e io ti darò un'altra ora di vita."
+Ogni scheda dice chi è, cosa vuole, cosa nasconde, e le **tappe** del suo arco: ciò che i testi futuri (eventi in discesa e conversazioni al Campo) raccontano, nell'ordine. Le tappe già nel gioco sono segnate con ✓.
 
-### II. La Fata della Fontana: Il Pianto di Linnea
-Linnea era una ninfa dei boschi di Aethelgard. Vide la sua foresta trasformarsi in pietra in un solo pomeriggio. Si gettò nell'ultima sorgente d'acqua pura, ma l'acqua divenne Acqua del Labirinto: Memoria. Ora Linnea non è più una creatura, ma la fontana stessa. Chi beve da lei non riceve solo vita, ma riceve una visione della foresta che non c'è più. Per questo i viaggiatori piangono dopo aver bevuto: non per tristezza, ma per la bellezza insopportabile di ciò che abbiamo perso.
+### Sir Alaric, il Primo Paladino
+- **Chi è:** il primo Paladino degli Architetti, nato ad Aurelia nell'Era dell'Ambizioso Raggiungimento. Nella notte della Discordia gli Architetti gli ordinarono di custodire una porta: quella dietro cui avevano chiuso il Vuoto. Giurò sul sigillo di Luce. Gli Architetti tacquero; il giuramento no.
+- **Cosa vuole:** riposare, e sapere se sua figlia **Ilse** è sopravvissuta.
+- **Cosa nasconde:** la porta non conduce più a nulla perché il Vuoto è già dentro tutto il Labirinto. Lui lo sa da secoli, e continua a custodirla perché è l'unica cosa che ricorda di saper fare.
+- **Il Cavaliere Oscuro:** il boss con quel nome è l'ombra che il giuramento proietta nel Labirinto, un'armatura vuota che combatte per abitudine. Liberare Alaric non toglie il boss: lo rende un guscio senza nessuno dentro.
+- **Tappe:** ✓ la porta · ✓ il cavaliere stanco (la lavanda) · ✓ l'ultimo sigillo · il campo di lavanda sulle Guglie · la lettera di Ilse · il giorno in cui la Luce divenne crudele · la confessione della porta vuota · al Campo, come Luce: i ricordi di Aurelia · la pace (o il peso del giuramento, se il giocatore ha preso il suo posto).
+- **Legami:** Ser Maud (la vita prestata del Paladino) era sua sorella d'ordine.
+- **Dettagli già nel gioco:** Ilse coltivava un campo intero di lavanda a Valeriana.
 
-### III. Il Fabbro di Pietra: Kaelen il Muto
-Kaelen era il miglior forgiatore del regno. Cercò di forgiare una spada capace di tagliare il Caos. La spada esplose, trasformando le sue mani in granito. Ora Kaelen vive nei piani di Terra (6-10), forgiando armi per chiunque sia abbastanza forte da portargli i materiali corretti. Non parla, perché ogni volta che apre bocca, ne esce solo sabbia.
+### Silas, il Cercatore
+- **Chi è:** un astronomo di Valeriana, allievo dell'Astronoma delle Guglie. È sceso per ritrovare la sorella **Nerea**, inghiottita dal Labirinto con la loro casa. Scrive tutto perché il Labirinto gli mangia i ricordi: ha già dimenticato il colore degli occhi di lei.
+- **Cosa vuole:** arrivare al fondo e capire. Poi, quando ha visto lo specchio, tornare indietro senza sentirsi un vigliacco.
+- **Cosa nasconde:** scende da molto più dei suoi «settantacinque giorni»: il tempo del Labirinto lo ha trattenuto per secoli. Ha visto il Ritornante morire molte volte e lo ha disegnato ogni volta. Il Fuoco non lo ha mai scelto, e Silas gliene vuole un po'.
+- **Tappe:** ✓ il fuoco azzurro · ✓ il diario strappato · ✓ la soglia e lo specchio · ✓ al Campo: il fuoco azzurro, il diario, Nerea, le stelle, la Maestra, i ritratti, il Fuoco che non lo ha scelto, i settantacinque giorni, la statua nei Chiostri, lo specchio, la notte dell'abbandono, l'ultima pagina, dopo il Dio · in discesa: la statua di Nerea · l'Osservatorio · la pagina nella membrana.
+- **Dettagli già nel gioco:** il suo fuoco azzurro nasce da una scheggia di vetro di stella dell'Osservatorio e non scalda. La notte della Discordia contò quattrocentododici stelle cadute. Il Ritornante, visto da lui, ha sempre la spalla sinistra un po' più bassa. Se il giocatore lo ha abbandonato, Silas non chiude più del tutto la mano sinistra. Sospetta che Nerea sia la statua di sale al secondo piano dei Chiostri, vicino alla fontana senz'acqua. La matita gli è stata data dalla Maestra (l'Astronoma), che gli bacchettava le dita perché guardava le stelle invece di contarle.
 
----
+### La Cartografa (Tessa)
+- **Chi è:** **Tessa**, nipote di **Orvin il Cartografo**, che mappò i piani da 1 a 29 e non tornò dal trentesimo. Il suo nome il giocatore lo scopre solo al Campo.
+- **Cosa vuole:** completare la mappa del nonno, e mettere sulla mappa ciò che il nonno non credeva (la Prima Pietra).
+- **Cosa nasconde:** la croce rossa sulla mappa («qui ti aspetto») non l'ha disegnata lei: era già sulla mappa di Orvin, con la sua calligrafia.
+- **Tappe:** ✓ perduta, senza provviste · ✓ ritrovata · ✓ la Prima Pietra · ✓ al Campo: le pergamene, il nome, il nonno, come si disegna un posto che cambia, il Viandante, le Guglie, la Prima Pietra, la croce rossa, la copia venduta, il Ventre, il piano che manca, la mappa intera · in discesa: la croce rossa · Orvin.
+- **Dettagli già nel gioco:** misura tutto in passi (il suo è di sessantadue centimetri). Nella sua famiglia il nome si usa solo da bambini, poi si diventa il proprio lavoro; prima di Orvin la Cartografa era la madre di lui. Orvin scese l'ultima volta quando Tessa aveva nove anni («faccio il piano che manca e torno per cena»). Il Labirinto ha una «grammatica»: i chiostri hanno sempre undici archi, gli ingranaggi delle Miniere girano sempre verso le scale. Sotto la Prima Pietra la mappa non torna: c'è più spazio del dovuto. Ha venduto al Mercante il ricordo di chi le insegnò a temperare il carboncino. Messa intera, la mappa è una spirale con un punto vuoto al centro, più in basso del trenta.
 
-# ⚖️ Il Codice dei Patti del Caos: La Filosofia del Sacrificio
+### Lo Speziale (Ambrogio)
+- **Chi è:** **Ambrogio**, speziale di Aurelia, vecchio già prima di scendere. Lo chiamano tutti «lo Speziale»; dice il suo nome solo a chi lo ha liberato più volte.
+- **Cosa vuole:** curare, e farsi perdonare.
+- **Cosa nasconde:** nel Crepuscolo Lungo vendette a Sereth gli estratti con cui l'Architetto studiava il Vuoto, senza chiedere a cosa servissero. Ha sempre sospettato di aver aiutato la fine del mondo.
+- **Tappe:** ✓ incatenato dalla magia del sangue · ✓ al Campo: hai mangiato?, la bottega, le catene, il nome, le ricette, Borek, Valerius, il Fuoco, il cliente senza nome, cosa comprava, il conto, la pozione che non cura.
+- **Dettagli già nel gioco:** la bottega era dietro l'Accademia di Aurelia, con un mortaio d'ottone sopra la porta e un gatto che dormiva sulla bilancia. Le catene di sangue si sciolgono solo con il sangue di un altro offerto senza obbligo. Le pozioni dei forzieri seguono la sua ricetta (due gocce di salvia in più). Segna l'altezza della fiamma del Fuoco su un sasso a ogni ritorno: le tacche scendono. Il cliente era Sereth: comprava solo estratti di Normale (cento once nell'ultimo anno), firmava con un sigillo di cera bianca senza disegno, e la sera prima della Discordia disse che servivano «a far riposare chi è stanco». La «pozione del conto» si riempie di una goccia per ogni persona che cura.
 
-*Quando la morte non è più una fine, la sofferenza diventa una moneta. I Patti del Caos sono antichi giuramenti che gli avventurieri più disperati stringono con le ombre del Labirinto per ottenere più Essenza Astrale.*
+### Borek, il Maestro d'Armi
+- **Chi è:** un nano dei Monti di Durn, maestro d'armi e forgiatore. Era il caposquadra di una squadra di minatori-soldati; è l'unico uscito dalla galleria crollata.
+- **Cosa vuole:** forgiare armi degne, bere, non pensare alla galleria.
+- **Cosa nasconde:** era l'allievo di **Kaelen il Muto**, e lo crede morto. Ha preso il comando della squadra al posto del Caposquadra Sepolto, che non voleva risalire, e li ha portati verso l'alto: solo lui ce l'ha fatta.
+- **Tappe:** ✓ prigioniero dietro la grata · ✓ al Campo: l'acciaio, la birra, la grata, i Monti, la squadra, la galleria, il maestro, le voci delle Miniere, il vecchio, l'armaiola, il Caposquadra, perché forgia · in discesa: Kaelen vivo.
+- **Dettagli già nel gioco:** l'acciaio buono «canta», quello del Labirinto è «pieno di rimpianto». Le armature che aggiustava da prigioniero hanno un punto debole sotto l'ascella sinistra. La squadra era di undici; sette risalirono con lui, quattro restarono con il Caposquadra, che si chiamava **Hadrek** e gli insegnò a leggere la roccia. La galleria crollò al terzo giorno di risalita. Tiene il martello di Kaelen, col manico consumato da due mani. Sa delle voci su un fabbro dalle mani di pietra e non vuole crederci.
+- **Voce:** «ragazzo» per chiunque, anche per Alaric.
 
-**La Scala dell'Ascensione.** Chi ha già ucciso il Dio una volta scopre che i Patti non si firmano più uno alla volta: si incidono su una scala di venti gradini, e chi scende un gradino accetta anche tutti quelli sopra. Ogni gradino è un giuramento in più (campioni più numerosi, braci più fredde, mercanti che fuggono) e ogni giuramento rende l'Essenza più densa. Il ventesimo gradino non chiede nulla all'eroe: sveglia il Dio un po' di più.
+### Elara, l'Armaiola
+- **Chi è:** armaiola delle Terre Alte di Ignis. Ha l'armatura in parte fusa addosso: è entrata nella Forgia del Caos a cercare il fratello **Corin**, apprendista del Maestro di Forgia.
+- **Cosa vuole:** riparare. Armature, lame, persone.
+- **Cosa nasconde:** Corin è diventato uno degli **Apprendisti di Scoria**. Lei lo ha già incontrato in combattimento, e non lo ha colpito.
+- **Tappe:** ✓ legata al pilastro · ✓ al Campo: cosa ripara, le Terre Alte, l'armatura addosso, Corin, quello che si è girato, cosa si può riparare · in discesa: il crogiolo, Corin.
+- **Dettagli già nel gioco:** a Ignis gli alberi d'ossidiana suonavano col vento, ogni casa aveva una forgia sempre accesa, e spegnerla voleva dire un lutto. Il ferro della Forgia le è colato addosso mentre si chinava. Corin ha una cicatrice sul mento; quando lei lo ha chiamato per nome si è girato, poi l'ha colpita.
 
-**Chi ti ha ucciso.** Nel Labirinto anche i mostri ricordano. Chi abbatte un eroe ne beve il nome e diventa qualcuno: un goblin senza storia si ritrova un soprannome, un titolo, una tasca piena dell'oro di un altro. E sa che l'eroe tornerà, perché gli eroi tornano sempre. Lo aspetta vicino al punto in cui l'ha visto cadere, con la pazienza di chi ha già vinto una volta.
+### Valerius, l'Incantatore
+- **Chi è:** mago di Aetheria, elegante e vanitoso, autore del **Grimorio di Valerius**. Fu rinchiuso nella gabbia di cristallo per aver scritto che il silenzio della Badessa è una gabbia.
+- **Cosa vuole:** essere riconosciuto. E non avere paura.
+- **Cosa nasconde:** fu allievo dell'Accademia quando Sereth insegnava, e conosce il suo nome. Ha paura che dirlo lo cancelli.
+- **Tappe:** ✓ nella gabbia di cristallo · ✓ al Campo: i monili, le isole del cielo, la gabbia, il grimorio, l'Accademia, il maestro senza nome · il nome (ultimo gradino: Valerius è uno dei modi in cui il giocatore può sentirlo).
+- **Dettagli già nel gioco:** è nato sull'isola più bassa di Aetheria, quella dei pescatori di nuvole. La gabbia era di silenzio. Ha notato che il Fuoco si abbassa di un capello quando lancia un incantesimo al Campo (l'Etere «si presta»). Sereth insegnava l'elemento Normale nell'aula in fondo al terzo piano dell'Accademia, quella con la lavagna d'ardesia; nell'ultima lezione scrisse «Ciò che è fragile ha diritto al riposo» e sotto il suo nome, che Valerius lesse.
 
-**Il Giorno del Labirinto.** Una volta al giorno il Labirinto smette di cambiare forma per chi lo guarda e si mostra uguale a chiunque scenda: lo stesso eroe, le stesse due maledizioni, lo stesso dono. I Cartografi lo chiamano *il respiro trattenuto*. Le loro mappe di quel giorno valgono per tutti, ma solo la prima discesa resta scritta.
+### Il Viandante Cieco
+- **Chi è:** il cartografo di corte di Re Galdor. Sotto dettatura di Sereth disegnò le piante delle volte sotto Calaris, cioè la forma del Labirinto prima che esistesse («ho disegnato questo labirinto prima che esistesse»). Scese con i suoi **sette figli**, che reggevano le lanterne: sono le sette ombre che lo seguono. Diede gli occhi al Mercante Senza Volto in cambio di vedere il sogno del Dio; nelle orbite porta due monete d'oro. Ora vede solo al buio. Porta la **Lanterna Spenta**, che contiene l'ultima luce di Aetheria, raccolta da un cristallo mentre cadeva.
+- **Cosa vuole:** contare. Monete, passi, giorni: finché conta, esiste.
+- **Cosa nasconde:** ha visto in sogno il Ritornante seduto sul trono del Dio (finale *Il Nuovo Dio*) e ha paura di lui.
+- **Tappe:** ✓ gli incontri in discesa · ✓ al Campo, lontano dal fuoco · la lanterna · cosa ha visto · la moneta con l'occhio.
 
-### I. Patto della Durezza: Il Cuore di Pietra
-Giurare sulla propria fragilità significa invitare il Labirinto a rendere i nemici più resistenti. La storia narra di un comandante che, vedendo le sue truppe cadere come mosche, chiese al Caos di rendere la pelle dei suoi uomini dura come l'acciaio. Il Caos esaudì il desiderio, ma solo per i nemici del comandante. Ora, chi sceglie questo patto accetta che ogni scontro sarà una maratona di dolore, sperando che la propria volontà sia più dura della carne altrui.
+### Il Mercante Senza Volto
+- **Chi è:** un Architetto Minore, tesoriere del cielo. Rimase nel Labirinto a proteggere i tesori; il volto gli è svanito, sostituito dal riflesso dell'oro. Gestisce le stanze del Mercante in tutti i piani nello stesso momento.
+- **Cosa vuole:** storie. L'oro lo accetta con disprezzo; ciò che compra davvero sono i ricordi.
+- **Cosa nasconde:** tiene da parte i ricordi che compra. Ha anche quelli del Ritornante, delle discese che ha dimenticato.
+- **Tappe:** frasi nelle stanze del Mercante · un baratto di ricordi · il registro · cosa ha comprato da te · cosa ti restituisce.
+- **Legami:** il **Mendicante Ombra** è un altro Architetto Minore rimasto; i due non si parlano.
 
-### II. Patto della Furia: Il Sangue Bollente
-Un patto stretto nelle fucine del Piano 22. Si dice che chi firma questo giuramento veda il mondo in rosso. I nemici colpiscono con la forza di mille soli, perché il patto rimuove ogni inibizione dalla loro anima corrotto. È il patto preferito dai Berserker, che credono che solo attraverso il pericolo estremo si possa raggiungere la vera illuminazione.
+### Linnea, la Fata della Fontana
+- **Chi è:** una ninfa dei boschi della costa del Mare Interno. Quando la foresta diventò pietra si gettò nell'ultima sorgente pura; l'acqua divenne Memoria, e lei la fontana. È la **Fontana Fatata** che compare nei piani.
+- **Cosa vuole:** che qualcuno ricordi il bosco.
+- **Cosa nasconde:** ogni volta che il Ritornante beve, lei vede un pezzo delle sue discese dimenticate. Sa più di lui su di lui.
+- **Tappe:** la fontana · il bosco · cosa ha visto bevendo · al Campo, una goccia in un'ampolla · il bosco ricordato.
 
-### III. Patto della Carestia: Il Calice Vuoto
-Il più crudele dei patti. Riduce l'efficacia delle cure perché ricorda al corpo che, in un mondo morente, il nutrimento è un'illusione. Fu creato da un eremita che passò quarant'anni a digiunare nelle Miniere della Testardaggine, convinto che la fame fosse l'unica via per parlare con gli Architetti. Chi lo sceglie accetta che ogni ferita sia permanente, o quasi.
+### Kaelen il Muto
+- **Chi è:** il miglior forgiatore dei Monti di Durn. Cercò di forgiare una spada capace di tagliare il Caos; la spada esplose e gli trasformò le mani in granito. Dalla bocca gli esce sabbia.
+- **Cosa vuole:** finire la spada.
+- **Cosa nasconde:** sa che Borek è vivo, e non lo cerca perché si vergogna.
+- **Tappe:** la forgia nelle Miniere · i segni sul metallo · il materiale giusto · Borek · la spada finita (che non taglia il Caos: lo ferma per un istante).
 
----
-
-# 📖 L'Epilogo di Silas: Oltre la Soglia
-
-### Giorno 75: La Verità del Dio Antico
-Ho aperto la porta. Non c'era un mostro ad attendermi. Non c'era un trono. C'era uno specchio. Ma non rifletteva me. Rifletteva Aethelgard come sarebbe stata se non avessimo mai cercato di dominare gli elementi. Era una visione di una bellezza tale da far male fisicamente. Il Dio Antico non è un essere maligno, Silas. È la personificazione del nostro rimpianto. 
-
-Mentre fissavo lo specchio, ho capito che il Labirinto non è una punizione. È un meccanismo di conservazione. Poiché il mondo reale non poteva più sostenere la bellezza dell'Equilibrio, gli Architetti l'hanno racchiusa qui, in un guscio di caos. Per uscire dal Labirinto, non bisogna sconfiggerlo. Bisogna perdonarsi. Io non ci sono riuscito. Ho lasciato cadere la mia lama e mi sono seduto. Se stai leggendo questo, avventuriero, sappi che non sei qui per vincere. Sei qui per ricordare.
-
----
-
-# 🌍 Cronache Regionali di Aethelgard: Il Mondo che Fu
-
-### 🏞️ Il Regno di Valeriana: Le Valli della Seta
-A Nord della capitale sorgeva Valeriana, una terra dove il Vento e l'Acqua convivevano in una nebbia costante che rendeva il terreno incredibilmente fertile. Era famosa per i suoi tessitori, capaci di creare abiti che cambiavano colore a seconda dell'umore di chi li indossava. Quando il Labirinto apparve, Valeriana divenne il Piano 11, e i suoi tessitori sono ora gli Spiriti della Tempesta, costretti a tessere fulmini invece che seta.
-
-### 🌋 Le Terre Alte di Ignis: La Culla del Fuoco
-A Est, tra vulcani attivi e foreste di ossidiana, vivevano gli adoratori del Fuoco. Non erano distruttori, ma protettori del calore vitale. Le loro fucine erano leggendarie; si diceva che potessero riparare persino un cuore spezzato se infuso con la giusta quantità di brace. Ora, le loro montagne formano la spina dorsale del Piano 22, e le loro fucine battono ancora, ma solo per creare armi di dolore.
-
-### 🌊 L'Arcipelago di Aetheria: Le Isole del Cielo
-Al centro dell'oceano, isole di roccia leggera fluttuavano nell'aria, tenute sospese da cristalli di Luce. Era la dimora degli studiosi e dei sognatori. Qui nacquero i primi Maghi. Quando il mondo si lacerò, le isole caddero. I frammenti di quei cristalli sono ciò che oggi chiamiamo Reliquie, pezzi di un potere che non ha più una casa.
-
----
-
-# ✉️ Le Lettere Insanguinate: Frammenti dall'Oscurità
-
-*Questi brevi messaggi sono stati trovati incisi sulle pareti, scritti su pezzi di pergamena o sussurrati da spettri che hanno perso la memoria. Sono le ultime vestigia di chi ha attraversato il Labirinto prima di te.*
-
-### Messaggi dai Piani 1-10 (L'Inizio della Fine)
-1.  "Non fidarti della Luce. Qui non illumina, ti segna per i predatori."
-2.  "Ho visto mio padre al Piano 3. Mi ha sorriso, ma i suoi denti erano d'oro e non aveva occhi. Non fermarti."
-3.  "L'oro pesa più del ferro. Buttalo via se vuoi correre più veloce delle ombre."
-4.  "Sir Alaric non è cattivo. È solo stanco. Se puoi, portagli un fiore di lavanda."
-5.  "La polvere qui sa di pane appena sfornato. È un trucco. Non respirare troppo profondamente."
-6.  "Ho contato seimilaquattrocento passi dal primo falò. Il prossimo è un'illusione."
-7.  "Se senti il ticchettio, corri. Se il ticchettio si ferma, prega."
-8.  "L'acqua della fontana mi ha mostrato la mia casa. Ora non ricordo più come si chiamava mia moglie."
-9.  "Il mercante ha preso la mia voce in cambio di una pozione. Ora urlo solo nel silenzio."
-10. "C'è un buco nel muro al Piano 7. Oltre c'è il cielo di Aethelgard. Non saltare, è un dipinto."
-11. "Ho trovato uno scudo. Mi parla di battaglie che non ho mai combattuto."
-12. "Il re dei goblin una volta era un uomo giusto. Ricordaglielo, se puoi."
-13. "Le ombre si staccano dai muri quando dormi. Resta vicino al fuoco."
-14. "Ho perso la mia bussola. Ora ogni direzione porta verso il basso."
-15. "Il cibo qui non sa di nulla. È cenere pressata in forma di carne."
-16. "Non guardare negli specchi. Riflettono chi sarai tra dieci anni, o chi saresti stato se fossi rimasto fuori."
-17. "Il vento sussurra il mio nome. Sbaglia l'accento, ma sa chi sono."
-18. "Ho visto un gatto fatto di fumo. Mi ha condotto a un tesoro, poi ha mangiato la mia mano."
-19. "La terra qui trema perché ha paura di ciò che c'è sotto."
-20. "Sono l'ultimo della mia run. Non lasciate che la mia Essenza vada sprecata."
-
-### Messaggi dai Piani 11-20 (La Discesa nel Ricordo)
-21. "L'aria qui è fatta di acqua. Nuota, non camminare."
-22. "Ho visto il Drago. È più grande del rimpianto."
-23. "Non bere dalle pozzanghere azzurre. Sono i ricordi di chi è impazzito."
-24. "Il ponte al Piano 14 non c'è. Devi saltare con la convinzione che ci sia."
-25. "Ho trovato un libro senza parole. Se lo fissi abbastanza, inizia a scriversi con il tuo sangue."
-26. "Gli spiriti della tempesta sono solo gente che ha cercato di volare."
-27. "Le pareti qui hanno battito cardiaco. Settanta colpi al minuto. Come me."
-28. "Ho mangiato un fungo viola. Ora vedo i suoni e sento i colori."
-29. "La luce del Paladino brucia più del fuoco."
-30. "Ho visto un'intera città capovolta al Piano 18. I suoi abitanti stavano cadendo verso l'alto."
-31. "Il silenzio qui è così denso che puoi tagliarlo con la spada."
-32. "Non toccare i cristalli. Contengono il tempo che ti rimane."
-33. "Ho incontrato Silas. Mi ha guardato come se fossi già morto."
-34. "La risonanza è un peso, non un dono. Ti incatena a un elemento."
-35. "Ho visto il mio funerale nel Ventre della Memoria. È stato molto partecipato."
-36. "L'odore di incenso del mercante nasconde l'odore di decomposizione."
-37. "Il Labirinto sta crescendo. Ogni stanza che visiti ne crea altre due."
-38. "Ho provato a scappare verso l'alto. Sono uscito dal Piano 1, ma ero ancora nel Labirinto."
-39. "La morte è l'unico modo per tornare all'Essenza. Non averne paura."
-40. "Ho inciso questo messaggio con l'unghia. Non ho più le mani."
-
-### Messaggi dai Piani 21-30 (Il Cuore del Caos)
-41. "Il fuoco è freddo. Il ghiaccio brucia. Niente è come sembra."
-42. "Ho visto l'angelo senza ali. Mi ha chiesto perdono."
-43. "La soglia è vicina. Sento il respiro del Dio Antico."
-44. "Non combattere il Caos. Diventa parte di esso."
-45. "L'unica via d'uscita è accettare che non c'è via d'uscita."
-46. "Ho visto la fine del tempo. È una stanza vuota con una sedia."
-47. "L'Essenza Astrale è il sapore della nostra anima. Sa di fragole e ferro."
-48. "Non guardare giù. Non c'è un fondo, solo un altro te stesso che sta cadendo."
-49. "Il Dio Antico sta sognando noi. Se si sveglia, svaniremo."
-50. "Ho finalmente capito. Il Labirinto è uno specchio infranto."
-*(Segue una lista di altri 100 messaggi simili, ognuno con una piccola tragedia o un segreto...)*
+### Altri volti
+- **Ilse**, figlia di Alaric, coltivatrice di lavanda a Valeriana. Morta nella Discordia; ha lasciato una lettera al padre.
+- **Nerea**, sorella di Silas. È diventata una **Statua di Sale** nei Chiostri, ferma ad ascoltare una voce.
+- **Orvin il Cartografo**, nonno di Tessa. Ha disegnato la croce rossa. È al piano 30, o lo era.
+- **Corin**, fratello di Elara, ora Apprendista di Scoria.
+- **Malphas**, il primo avventuriero che capì che il Labirinto non concede la morte: l'Artiglio Vampirico è la sua mano.
+- **Re Galdor**, il Re dei Goblin. Un uomo giusto finché la fame non lo ha reso disposto a tutto.
 
 ---
 
-# 📖 Glossario dei Termini Astrali
+## Parte IX · Le vite prestate (le classi)
 
-- **Aethelgard**: Il mondo originario, ora frammentato nel Labirinto.
-- **Architetti Astrali**: Esseri primordiali che hanno plasmato la realtà.
-- **Essenza Astrale**: La materia grezza delle anime e degli elementi.
-- **Fauce del Caos (Maw of Chaos)**: Il nome scientifico del Labirinto.
-- **Grande Discordia**: L'evento apocalittico che ha separato gli elementi.
-- **Hollowed (Svuotati)**: Esseri che hanno perso la loro Essenza e vagano senza scopo.
-- **Risonanza Elementale**: La sincronizzazione tra l'anima e una forza naturale.
-- **Vuoto (Void)**: Il nulla assoluto che l'Architetto Rinnegato cercò di creare.
+Ogni classe è un caduto che il Fuoco ha salvato dal guscio. La Maestria della classe sblocca un **ricordo** per livello: chi era, cosa faceva la notte della Discordia, come è morto, cosa vuole per riposare. Al livello più alto il ricordo si chiude e la vita trova pace.
+
+| Classe | Vita prestata | Chi era |
+|---|---|---|
+| 🛡️ **Guerriero** | **Bran di Aurelia** | Guardia della Porta del Sole. La notte della Discordia tenne la porta mentre la città fuggiva, finché la porta non sprofondò con lui. Il suo ricordo è il peso di chi resta fermo. |
+| 🗡️ **Ladro** | **Nim** | Ladra di Valeriana, rubava mappe e le rivendeva. Rubò quella di Orvin; per questo conosce strade che nessun altro conosce. Il suo ricordo è la fuga, e il debito. |
+| 🔮 **Mago** | **Teodor Vasse** | L'ultimo allievo dell'Accademia della Luce Calma. Ascoltò l'ultima lezione di Sereth senza capirla. Il suo ricordo è una domanda agli Architetti che non ha avuto risposta. |
+| ✨ **Paladino** | **Ser Maud** | Sorella d'ordine di Alaric. Cercò di raggiungerlo alla porta e non ci riuscì. Il suo ricordo è una promessa rimasta a metà. |
+| 🪓 **Berserker** | **Hrodna di Ignis** | Danzatrice delle feste del fuoco. Quando il Fuoco divenne rabbia, la rabbia entrò in lei. Il suo ricordo è il dolore che diventa forza. |
+| 🧪 **Alchimista** | **Ottavia Lune** | Alchimista di Aetheria, allieva dell'Alchimista Supremo della Pietra Filosofale. Voleva invertire la Discordia con una formula. Il suo ricordo è il calcolo freddo dentro una realtà folle. |
+| 🗡️ **Assassino** | **Corvo** | Sicario alla corte di Galdor. Uccise il messaggero degli Architetti che avrebbe potuto fermare l'esperimento. Il suo ricordo è una colpa precisa, con un nome e un volto. |
+| 💀 **Negromante** | **Isaura di Morva** | Parlava ai morti delle paludi quando i morti ancora se ne andavano. Dopo la Discordia i morti smisero di andarsene, e lei smise di dormire. Il suo ricordo è il confine fra un uomo e un'ombra. |
+| 🌈 **Elementalista** | **Ilio** | Un bambino di Aetheria nato la notte della Discordia, l'unico che possa tenere insieme tutti gli elementi. È la vita più vicina all'Equilibrio, e la più vicina alla verità di Sereth. |
 
 ---
 
-## 🚩 Note di Sviluppo (Conclusione Progetto)
+## Parte X · I boss e le creature
 
-- **Obiettivo Finale**: 50.000 parole raggiunte.
-- **Stato**: Il progetto di espansione della lore è completato. Il file `STORY.md` funge ora da fondamento narrativo per l'intero gioco, offrendo una profondità da tripla A a un roguelite testuale.
-- **Integrazione**: Il file `lore.json` è stato aggiornato. I boss, i nemici e le reliquie hanno ora una storia coerente che può essere sbloccata o suggerita durante il gameplay.
+Le creature non sono nate dal Labirinto: sono ciò che il Labirinto ha fatto di chi c'era. Ogni voce del Bestiario racconta, a livelli, cosa si vede (prima volta), come si comporta (dopo averne uccisi alcuni) e chi era (dopo averne uccisi molti).
+
+### I boss nativi dei biomi
+La Badessa del Silenzio (Chiostri), il Caposquadra Sepolto (Miniere), l'Astronoma delle Guglie (Guglie), il Cuore del Ventre (Ventre), il Maestro di Forgia (Forgia), il Custode della Soglia (Soglia): vedi la Parte VI.
+
+### I signori del declino
+| Boss | Chi è |
+|---|---|
+| **Re dei Goblin** | Galdor. Ha scambiato la dignità del suo popolo per la sopravvivenza; protegge ancora sudditi diventati parassiti. |
+| **Cavaliere Oscuro** | L'ombra del giuramento di Alaric: un'armatura che custodisce per abitudine. |
+| **Drago di Zaffiro** | Il guardiano del Mare Interno. Bevve troppo dal passato e rivive ogni perdita di Aethelgard. |
+| **Angelo Caduto** | La voce degli Architetti, mandato a purificare il Labirinto. Scoprì che la Purezza era follia, si strappò le ali e cadde. Chiede perdono a chi incontra. |
+| **Negromante Supremo** | Il maestro di Isaura di Morva. Ha capito che tra un uomo e un'ombra non c'è differenza, e ne ha fatto un esercito. |
+| **Demone Maggiore** | La rabbia che ha consumato Ignis, diventata qualcuno. |
+| **Lich Reietto** | L'archivista dell'Accademia, custode delle cronache che il Labirinto vuole cancellare (anche quella col nome di Sereth). |
+| **Behemoth Terrestre** | Il sarcofago dei Monti di Durn, che si rifiuta di accettare la fine del mondo. |
+| **Signore delle Tempeste** e **Sovrano delle Tempeste** | Due fratelli tessitori di Valeriana, che ancora si contendono il cielo che non c'è. |
+| **Il Re Dimenticato** | Un sovrano più antico di Galdor, cancellato persino dalla memoria della polvere. Nessuno sa più il nome del suo regno, nemmeno lui. |
+| **Golem dell'Eternità** | Costruito ad Aurelia per resistere alla fine dell'universo. Ci sta riuscendo. |
+| **Leviatano dei Sotterranei** | Il predatore delle falde di Aethelgard; appare come ciò che l'osservatore teme di più. |
+| **Drago d'Ossidiana** | Il fratello di fuoco del Drago di Zaffiro, nato nelle foreste d'ossidiana di Ignis. |
+| **Lich Signore del Gelo** | Un negromante di Morva che si è congelato l'anima per non sentire più. |
+| **Araldo Radioso** | Un servitore della Luce Crudele: annuncia perfezioni che bruciano. |
+| **Cavaliere dell'Apocalisse** | Il primo dei cavalieri che gli Architetti mandarono nel Labirinto dopo Alaric. Si è convinto che la fine sia il suo compito. |
+| **Madre delle Melme** | Ciò che resta della fertilità di Aethelgard lasciata marcire nel buio: da lei nascono tutte le creature infette. |
+| **Il Tristo Mietitore** | La morte che nel Labirinto non può più compiere il suo lavoro. Aspetta il Ritornante perché è l'unico che muore davvero, e ogni volta torna. Ha già scritto il suo nome. |
+| **DIO ANTICO** | Sereth, o la parte di lui che vuole riposare. Vedi la Parte II. |
+
+### Le creature comuni
+Gli **Scheletri** sono Svuotati che cercano ancora un'uscita; i **Goblin** sono la gente di Galdor; gli **Orchi** i lavoratori delle cave fusi con la Terra; gli **Elementali** concentrazioni di rabbia con un oggetto di Aethelgard nel cuore (un pettine, una chiave, una fibbia); gli **Spiriti della Tempesta** i tessitori di Valeriana; i **Paladini Corrotti** guerrieri della fede che hanno scambiato la protezione per la persecuzione; la **Melma Acida** la linfa della Terra marcita; il **Mimic** un forziere che ha imparato a desiderare. Le creature dei biomi sono la gente di quella regione (vedi la Parte VI).
+
+---
+
+## Parte XI · Reliquie e oggetti
+
+Le **reliquie** sono frammenti dei cristalli di Aetheria e di altri pezzi del mondo che hanno resistito alla Discordia. Ogni reliquia porta il desiderio di chi l'ha posseduta: per questo «fa» qualcosa. Le armi e le armature hanno una storia breve (`flavor`); le reliquie una più lunga (`lore`). Reliquie notevoli: l'**Artiglio Vampirico** (la mano di Malphas), lo **Scudo di Cristallo** (un frammento della cupola di Aurelia), la **Lente Prismatica** (le lenti con cui gli Architetti guardavano gli elementi), la **Corona del Re Folle** (la corona di Galdor, pesante di lacrime), la **Pietra Filosofale** (l'ultima opera dell'Alchimista Supremo, maestro di Ottavia Lune). La **Lama del Creatore** contiene un atomo di ogni elemento: è stata forgiata con un frammento della Prima Pietra.
+
+---
+
+## Parte XII · Le lettere insanguinate
+
+Le lettere incise sulle pareti sono tutte del Ritornante, scritte in discese che non ricorda (gradino 5). Fino a quel momento il giocatore le legge come messaggi di sconosciuti; i più attenti notano che sembrano sapere troppo di lui.
+
+Nella v6 le lettere si raccolgono in **fili**: ogni filo è una **discesa dimenticata**, raccontata in 8-10 lettere in ordine. Chi completa un filo vede nel Codice come è finita quella discesa. I fili:
+
+1. **La prima discesa**: il risveglio accanto al Fuoco, la paura, la prima morte.
+2. **La discesa con Silas**: quando scesero insieme per tre piani, e Silas lo vide morire.
+3. **La lavanda**: la discesa in cui trovò il campo di Ilse e non lo disse ad Alaric.
+4. **Il debito del Mercante**: la discesa in cui vendette un ricordo al Mercante, e quale.
+5. **La croce rossa**: la discesa in cui arrivò dove aspettava Orvin.
+6. **La Nemesi**: la discesa in cui un goblin senza nome lo uccise tre volte di fila.
+7. **Il patto del sangue**: la discesa passata agli altari, sempre più corrotta.
+8. **Il sale**: la discesa in cui si fermò ad ascoltare una voce cara nei Chiostri, e quasi rimase.
+9. **La galleria**: la discesa in cui incontrò la squadra di Borek, prima del crollo.
+10. **La gabbia di cristallo**: la discesa in cui lasciò Valerius nella gabbia, e perché.
+11. **Il fratello**: la discesa in cui vide Corin nella Forgia.
+12. **La fontana**: la discesa in cui bevve da Linnea fino a vedere troppo.
+13. **Il trono**: la discesa in cui si sedette sul trono del Dio, e si alzò.
+14. **La Soglia**: la discesa in cui il Custode gli disse il suo nome, e lui lo dimenticò morendo.
+15. **L'ultima lettera**: ciò che scrive dopo aver ricordato (è il finale *La Lettera Mai Scritta*).
+
+Le 35 lettere della v5 restano com'erano e si distribuiscono fra i fili 1, 6, 7, 8 e 14, o restano sciolte come frammenti fuori da ogni filo.
+
+---
+
+## Parte XIII · I finali
+
+I finali rispondono a una domanda sola: **vale la pena continuare a scendere?**
+
+| Finale | Risposta |
+|---|---|
+| **Il Sonno Spezzato** | Sì, per ora. Il Dio dorme, il mondo non rinasce, nessuno scende per un po'. Il Fuoco si abbassa, sollevato. |
+| **Il Nuovo Dio** | No: il Ritornante si siede sul trono e diventa ciò che Sereth era diventato. Il Fuoco al Campo si spegne di un altro poco. |
+| **Aethelgard Rinasce** | Sì, fino in fondo: con la verità di Silas e la libertà di Alaric, il Ritornante attraversa lo specchio. Il guscio si apre, sorge il sole. |
+| **Il Custode** | Non si sa: il Ritornante prende il posto di Alaric alla porta. Qualcuno, un giorno, verrà a liberarlo. |
+| **La Lettera Mai Scritta** | La domanda cambia: il Ritornante ricorda di essere Sereth, e sceglie cosa fare del suo rimorso. |
+
+Nella v6 ogni finale ha varianti secondo le scelte fatte: chi è stato salvato o tradito, quanta Corruzione, quali vite prestate hanno trovato pace.
+
+---
+
+## Parte XIV · Glossario
+
+- **Aethelgard**: il mondo di prima, ora inghiottito dal Labirinto.
+- **Architetti Astrali**: i sette esseri che fissarono gli elementi in armonia. Sei fedeli (cinque tacciono, uno è il Fuoco) e il Rinnegato.
+- **Ardel**: l'Architetto del Fuoco, che si fece brace. È il Fuoco del Campo.
+- **Calaris**: l'isola più alta di Aetheria, sede della cittadella di Sereth; oggi la Soglia.
+- **Ciclo del Labirinto**: il Labirinto che ripete i suoi piani in Eco quando il Dio si sveglia.
+- **Equilibrio**: lo stato del mondo prima della Discordia; il ricordo custodito nello specchio.
+- **Essenza Astrale**: la materia delle anime e degli elementi. Nutre il Fuoco.
+- **Fauce del Caos**: il nome dotto del Labirinto.
+- **Grande Discordia**: la notte dell'anno 1000 d.E. in cui il Vuoto si aprì.
+- **Nemesi**: una creatura che ha bevuto un poco del nome del Ritornante uccidendolo.
+- **Prima Pietra**: la prima pietra posata dagli Architetti, sotto i Chiostri.
+- **Risonanza**: l'accordo fra un'anima e un elemento.
+- **Ritornante**: il giocatore. L'unico che il Fuoco riporta.
+- **Sereth**: il nome cancellato del Rinnegato.
+- **Svuotati**: i morti del Labirinto che hanno perso l'Essenza; diventano il guscio.
+- **Vite prestate**: le classi, eroi caduti che il Fuoco ha salvato e presta al Ritornante.
+- **Vuoto**: l'Ottavo Elemento, il riposo che Sereth voleva dare al mondo.
+
+---
+
+## Appendice · Contraddizioni risolte
+
+Le versioni precedenti della lore (la vecchia versione di questo file e alcuni testi del gioco) dicevano cose diverse. Queste sono le scelte del canone.
+
+| Contraddizione | Scelta |
+|---|---|
+| Chi lacerò il velo: «l'ambizione di Re Galdor» (Cronache delle Ere, nel gioco) o «l'Architetto Rinnegato» (vecchia lore)? | Tutti e due: Galdor chiese la fine della carestia, Sereth tentò il Vuoto per dargliela. |
+| Sir Alaric è il boss «Cavaliere Oscuro» o il cavaliere degli eventi? | Il cavaliere degli eventi è Alaric; il boss è l'ombra del suo giuramento. |
+| Il *Trattato sulla Corruzione Elementale* era di «Mastro Elara, Alchimista»; nel gioco Elara è un'armaiola di Ignis. | Il trattato è di **Ottavia Lune** (la vita prestata dell'Alchimista). Elara è l'armaiola. |
+| Il Diario di Silas nella vecchia lore copriva i piani 1-30 in 75 giorni; nel gioco Silas è sempre un piano più in basso. | I «giorni» di Silas sono quelli che lui conta; nel Labirinto sono passati secoli. Il diario dell'Archivio è una parte del diario vero. |
+| Nella vecchia lore il Mercante voleva «storie», e anche oro. | Accetta l'oro con disprezzo; compra davvero i ricordi. |
+| I «Piani 1-10 / 11-20 / 21-30» della vecchia lore contro i sei biomi del gioco. | Valgono i sei biomi di cinque piani ciascuno. |
+| «Il Dio Antico è il Labirinto stesso» (vecchia lore) e «il Labirinto è un meccanismo di conservazione» (epilogo di Silas). | Il Labirinto è il guscio degli Architetti intorno al sogno del Dio: sono vere tutte e due, viste da due parti. |
+| Le lettere «di altri avventurieri» e il finale in cui sono tutte del Ritornante. | Sono tutte del Ritornante; finché non lo sa, sembrano di altri. |
+| Il Viandante Cieco dice di essere stato «il cartografo del re» e di aver «disegnato questo labirinto prima che esistesse»; Orvin è il cartografo dei piani. | Sono due cartografi: il Viandante era quello di corte di Re Galdor e disegnò, per Sereth, la forma delle volte; Orvin mappò i piani dopo. |
