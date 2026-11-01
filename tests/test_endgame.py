@@ -204,7 +204,8 @@ class CampTest(Sandbox):
         self.assertIn("Non ti devo niente", camp.current_line(silas))
         PROFILE_MANAGER.set_flag("silas_compagno")
         self.assertIn("ultima pagina", camp.current_line(silas))
-        with quiet(), mock.patch("camp.wait_enter"), mock.patch("camp.clear_screen"), mock.patch("camp.delay_print"):
+        with quiet(), mock.patch("camp.wait_enter"), mock.patch("camp.clear_screen"), mock.patch("camp.delay_print"), \
+             mock.patch("camp.interactive_menu", return_value=-1):  # dopo il saluto si torna subito al fuoco
             camp.talk(silas)
             camp.talk(silas)
         self.assertEqual(PROFILE_MANAGER.essence, 1000 + silas["gift"]["essence"])

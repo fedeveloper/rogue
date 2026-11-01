@@ -107,9 +107,14 @@ CONDITIONS: Dict[str, tuple] = {
     "not_npc": (lambda p, v, f: not PROFILE_MANAGER.get_npc_unlocked(v), None),
     "attribute": (lambda p, v, f: all(p.attributes.get(a, 0) >= n for a, n in v.items()), lambda v: ", ".join(_attribute_tag(a, n) for a, n in v.items())),
     "spells": (lambda p, v, f: bool(p.spells) == v, lambda v: "Incantesimi"),
+    # Il progresso del profilo fra le discese (li usano soprattutto i dialoghi del Campo, data/dialogues.json)
+    "reached_floor": (lambda p, v, f: PROFILE_MANAGER.max_floor >= v, None),
+    "bosses_total": (lambda p, v, f: PROFILE_MANAGER.stats.get("total_bosses", 0) >= v, None),
+    "won": (lambda p, v, f: PROFILE_MANAGER.won_normal == v, None),
 }
 # Condizioni che dipendono solo da piano e profilo: valutabili anche senza un eroe (es. nella scelta delle porte)
-PROFILE_CONDITIONS = {"flags", "any_flags", "letters_complete", "biome", "min_floor", "max_floor", "flag", "not_flag", "counter", "counter_below", "npc", "not_npc"}
+PROFILE_CONDITIONS = {"flags", "any_flags", "letters_complete", "biome", "min_floor", "max_floor", "flag", "not_flag", "counter", "counter_below", "npc", "not_npc",
+                      "reached_floor", "bosses_total", "won"}
 
 
 def check(player: Optional[Player], requires: dict, floor: int) -> bool:

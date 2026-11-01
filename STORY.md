@@ -268,46 +268,53 @@ Ogni scheda dice chi è, cosa vuole, cosa nasconde, e le **tappe** del suo arco:
 - **Il Cavaliere Oscuro:** il boss con quel nome è l'ombra che il giuramento proietta nel Labirinto, un'armatura vuota che combatte per abitudine. Liberare Alaric non toglie il boss: lo rende un guscio senza nessuno dentro.
 - **Tappe:** ✓ la porta · ✓ il cavaliere stanco (la lavanda) · ✓ l'ultimo sigillo · il campo di lavanda sulle Guglie · la lettera di Ilse · il giorno in cui la Luce divenne crudele · la confessione della porta vuota · al Campo, come Luce: i ricordi di Aurelia · la pace (o il peso del giuramento, se il giocatore ha preso il suo posto).
 - **Legami:** Ser Maud (la vita prestata del Paladino) era sua sorella d'ordine.
+- **Dettagli già nel gioco:** Ilse coltivava un campo intero di lavanda a Valeriana.
 
 ### Silas, il Cercatore
 - **Chi è:** un astronomo di Valeriana, allievo dell'Astronoma delle Guglie. È sceso per ritrovare la sorella **Nerea**, inghiottita dal Labirinto con la loro casa. Scrive tutto perché il Labirinto gli mangia i ricordi: ha già dimenticato il colore degli occhi di lei.
 - **Cosa vuole:** arrivare al fondo e capire. Poi, quando ha visto lo specchio, tornare indietro senza sentirsi un vigliacco.
 - **Cosa nasconde:** scende da molto più dei suoi «settantacinque giorni»: il tempo del Labirinto lo ha trattenuto per secoli. Ha visto il Ritornante morire molte volte e lo ha disegnato ogni volta. Il Fuoco non lo ha mai scelto, e Silas gliene vuole un po'.
-- **Tappe:** ✓ il fuoco azzurro · ✓ il diario strappato · ✓ la soglia e lo specchio · al Campo, la zuppa e le prime pagine · la maestra (l'Astronoma) · Nerea · i ritratti del Ritornante · perché il Fuoco non lo ha scelto · l'ultima pagina, scritta insieme.
+- **Tappe:** ✓ il fuoco azzurro · ✓ il diario strappato · ✓ la soglia e lo specchio · ✓ al Campo: il fuoco azzurro, il diario, Nerea, le stelle, la Maestra, i ritratti, il Fuoco che non lo ha scelto, i settantacinque giorni, la statua nei Chiostri, lo specchio, la notte dell'abbandono, l'ultima pagina, dopo il Dio · in discesa: la statua di Nerea · l'Osservatorio · la pagina nella membrana.
+- **Dettagli già nel gioco:** il suo fuoco azzurro nasce da una scheggia di vetro di stella dell'Osservatorio e non scalda. La notte della Discordia contò quattrocentododici stelle cadute. Il Ritornante, visto da lui, ha sempre la spalla sinistra un po' più bassa. Se il giocatore lo ha abbandonato, Silas non chiude più del tutto la mano sinistra. Sospetta che Nerea sia la statua di sale al secondo piano dei Chiostri, vicino alla fontana senz'acqua. La matita gli è stata data dalla Maestra (l'Astronoma), che gli bacchettava le dita perché guardava le stelle invece di contarle.
 
 ### La Cartografa (Tessa)
 - **Chi è:** **Tessa**, nipote di **Orvin il Cartografo**, che mappò i piani da 1 a 29 e non tornò dal trentesimo. Il suo nome il giocatore lo scopre solo al Campo.
 - **Cosa vuole:** completare la mappa del nonno, e mettere sulla mappa ciò che il nonno non credeva (la Prima Pietra).
 - **Cosa nasconde:** la croce rossa sulla mappa («qui ti aspetto») non l'ha disegnata lei: era già sulla mappa di Orvin, con la sua calligrafia.
-- **Tappe:** ✓ perduta, senza provviste · ✓ ritrovata · ✓ la Prima Pietra · al Campo, il tavolo e le pergamene · Orvin · la croce rossa · il piano trenta · la mappa completa.
+- **Tappe:** ✓ perduta, senza provviste · ✓ ritrovata · ✓ la Prima Pietra · ✓ al Campo: le pergamene, il nome, il nonno, come si disegna un posto che cambia, il Viandante, le Guglie, la Prima Pietra, la croce rossa, la copia venduta, il Ventre, il piano che manca, la mappa intera · in discesa: la croce rossa · Orvin.
+- **Dettagli già nel gioco:** misura tutto in passi (il suo è di sessantadue centimetri). Nella sua famiglia il nome si usa solo da bambini, poi si diventa il proprio lavoro; prima di Orvin la Cartografa era la madre di lui. Orvin scese l'ultima volta quando Tessa aveva nove anni («faccio il piano che manca e torno per cena»). Il Labirinto ha una «grammatica»: i chiostri hanno sempre undici archi, gli ingranaggi delle Miniere girano sempre verso le scale. Sotto la Prima Pietra la mappa non torna: c'è più spazio del dovuto. Ha venduto al Mercante il ricordo di chi le insegnò a temperare il carboncino. Messa intera, la mappa è una spirale con un punto vuoto al centro, più in basso del trenta.
 
 ### Lo Speziale (Ambrogio)
 - **Chi è:** **Ambrogio**, speziale di Aurelia, vecchio già prima di scendere. Lo chiamano tutti «lo Speziale»; dice il suo nome solo a chi lo ha liberato più volte.
 - **Cosa vuole:** curare, e farsi perdonare.
 - **Cosa nasconde:** nel Crepuscolo Lungo vendette a Sereth gli estratti con cui l'Architetto studiava il Vuoto, senza chiedere a cosa servissero. Ha sempre sospettato di aver aiutato la fine del mondo.
-- **Tappe:** ✓ incatenato dalla magia del sangue · al Campo, la prima zuppa · le ricette di Aurelia · il cliente senza nome · la confessione · una pozione che non cura niente, se non lui.
+- **Tappe:** ✓ incatenato dalla magia del sangue · ✓ al Campo: hai mangiato?, la bottega, le catene, il nome, le ricette, Borek, Valerius, il Fuoco, il cliente senza nome, cosa comprava, il conto, la pozione che non cura.
+- **Dettagli già nel gioco:** la bottega era dietro l'Accademia di Aurelia, con un mortaio d'ottone sopra la porta e un gatto che dormiva sulla bilancia. Le catene di sangue si sciolgono solo con il sangue di un altro offerto senza obbligo. Le pozioni dei forzieri seguono la sua ricetta (due gocce di salvia in più). Segna l'altezza della fiamma del Fuoco su un sasso a ogni ritorno: le tacche scendono. Il cliente era Sereth: comprava solo estratti di Normale (cento once nell'ultimo anno), firmava con un sigillo di cera bianca senza disegno, e la sera prima della Discordia disse che servivano «a far riposare chi è stanco». La «pozione del conto» si riempie di una goccia per ogni persona che cura.
 
 ### Borek, il Maestro d'Armi
 - **Chi è:** un nano dei Monti di Durn, maestro d'armi e forgiatore. Era il caposquadra di una squadra di minatori-soldati; è l'unico uscito dalla galleria crollata.
 - **Cosa vuole:** forgiare armi degne, bere, non pensare alla galleria.
 - **Cosa nasconde:** era l'allievo di **Kaelen il Muto**, e lo crede morto. Ha preso il comando della squadra al posto del Caposquadra Sepolto, che non voleva risalire, e li ha portati verso l'alto: solo lui ce l'ha fatta.
-- **Tappe:** ✓ prigioniero dietro la grata · al Campo, l'acciaio buono e quello cattivo · la birra di Durn · la squadra · il maestro · Kaelen vivo · la galleria.
+- **Tappe:** ✓ prigioniero dietro la grata · ✓ al Campo: l'acciaio, la birra, la grata, i Monti, la squadra, la galleria, il maestro, le voci delle Miniere, il vecchio, l'armaiola, il Caposquadra, perché forgia · in discesa: Kaelen vivo.
+- **Dettagli già nel gioco:** l'acciaio buono «canta», quello del Labirinto è «pieno di rimpianto». Le armature che aggiustava da prigioniero hanno un punto debole sotto l'ascella sinistra. La squadra era di undici; sette risalirono con lui, quattro restarono con il Caposquadra, che si chiamava **Hadrek** e gli insegnò a leggere la roccia. La galleria crollò al terzo giorno di risalita. Tiene il martello di Kaelen, col manico consumato da due mani. Sa delle voci su un fabbro dalle mani di pietra e non vuole crederci.
 - **Voce:** «ragazzo» per chiunque, anche per Alaric.
 
 ### Elara, l'Armaiola
 - **Chi è:** armaiola delle Terre Alte di Ignis. Ha l'armatura in parte fusa addosso: è entrata nella Forgia del Caos a cercare il fratello **Corin**, apprendista del Maestro di Forgia.
 - **Cosa vuole:** riparare. Armature, lame, persone.
 - **Cosa nasconde:** Corin è diventato uno degli **Apprendisti di Scoria**. Lei lo ha già incontrato in combattimento, e non lo ha colpito.
-- **Tappe:** ✓ legata al pilastro · al Campo, il lavoro sulle armature · Ignis prima della caduta · Corin · il crogiolo · cosa si può riparare.
+- **Tappe:** ✓ legata al pilastro · ✓ al Campo: cosa ripara, le Terre Alte, l'armatura addosso, Corin, quello che si è girato, cosa si può riparare · in discesa: il crogiolo, Corin.
+- **Dettagli già nel gioco:** a Ignis gli alberi d'ossidiana suonavano col vento, ogni casa aveva una forgia sempre accesa, e spegnerla voleva dire un lutto. Il ferro della Forgia le è colato addosso mentre si chinava. Corin ha una cicatrice sul mento; quando lei lo ha chiamato per nome si è girato, poi l'ha colpita.
 
 ### Valerius, l'Incantatore
 - **Chi è:** mago di Aetheria, elegante e vanitoso, autore del **Grimorio di Valerius**. Fu rinchiuso nella gabbia di cristallo per aver scritto che il silenzio della Badessa è una gabbia.
 - **Cosa vuole:** essere riconosciuto. E non avere paura.
 - **Cosa nasconde:** fu allievo dell'Accademia quando Sereth insegnava, e conosce il suo nome. Ha paura che dirlo lo cancelli.
-- **Tappe:** ✓ nella gabbia di cristallo · al Campo, i monili e le lezioni di Etere · Aetheria che cade · l'Accademia · il maestro senza nome · il nome (ultimo gradino: Valerius è uno dei modi in cui il giocatore può sentirlo).
+- **Tappe:** ✓ nella gabbia di cristallo · ✓ al Campo: i monili, le isole del cielo, la gabbia, il grimorio, l'Accademia, il maestro senza nome · il nome (ultimo gradino: Valerius è uno dei modi in cui il giocatore può sentirlo).
+- **Dettagli già nel gioco:** è nato sull'isola più bassa di Aetheria, quella dei pescatori di nuvole. La gabbia era di silenzio. Ha notato che il Fuoco si abbassa di un capello quando lancia un incantesimo al Campo (l'Etere «si presta»). Sereth insegnava l'elemento Normale nell'aula in fondo al terzo piano dell'Accademia, quella con la lavagna d'ardesia; nell'ultima lezione scrisse «Ciò che è fragile ha diritto al riposo» e sotto il suo nome, che Valerius lesse.
 
 ### Il Viandante Cieco
-- **Chi è:** un pellegrino che ha dato gli occhi per vedere il sogno del Dio. Ora vede solo al buio. Porta la **Lanterna Spenta**, che contiene l'ultima luce di Aetheria.
+- **Chi è:** il cartografo di corte di Re Galdor. Sotto dettatura di Sereth disegnò le piante delle volte sotto Calaris, cioè la forma del Labirinto prima che esistesse («ho disegnato questo labirinto prima che esistesse»). Scese con i suoi **sette figli**, che reggevano le lanterne: sono le sette ombre che lo seguono. Diede gli occhi al Mercante Senza Volto in cambio di vedere il sogno del Dio; nelle orbite porta due monete d'oro. Ora vede solo al buio. Porta la **Lanterna Spenta**, che contiene l'ultima luce di Aetheria, raccolta da un cristallo mentre cadeva.
 - **Cosa vuole:** contare. Monete, passi, giorni: finché conta, esiste.
 - **Cosa nasconde:** ha visto in sogno il Ritornante seduto sul trono del Dio (finale *Il Nuovo Dio*) e ha paura di lui.
 - **Tappe:** ✓ gli incontri in discesa · ✓ al Campo, lontano dal fuoco · la lanterna · cosa ha visto · la moneta con l'occhio.
@@ -478,3 +485,4 @@ Le versioni precedenti della lore (la vecchia versione di questo file e alcuni t
 | I «Piani 1-10 / 11-20 / 21-30» della vecchia lore contro i sei biomi del gioco. | Valgono i sei biomi di cinque piani ciascuno. |
 | «Il Dio Antico è il Labirinto stesso» (vecchia lore) e «il Labirinto è un meccanismo di conservazione» (epilogo di Silas). | Il Labirinto è il guscio degli Architetti intorno al sogno del Dio: sono vere tutte e due, viste da due parti. |
 | Le lettere «di altri avventurieri» e il finale in cui sono tutte del Ritornante. | Sono tutte del Ritornante; finché non lo sa, sembrano di altri. |
+| Il Viandante Cieco dice di essere stato «il cartografo del re» e di aver «disegnato questo labirinto prima che esistesse»; Orvin è il cartografo dei piani. | Sono due cartografi: il Viandante era quello di corte di Re Galdor e disegnò, per Sereth, la forma delle volte; Orvin mappò i piani dopo. |

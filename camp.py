@@ -2,7 +2,10 @@
 
 I personaggi compaiono al campo quando la loro storia è andata abbastanza avanti (condizioni del profilo,
 come negli eventi); la prima frase le cui condizioni sono vere è quella che dicono, e il loro dono si riceve
-una volta sola. Le strutture costruite restano nel profilo come flag `camp_<id>`; quelle a più livelli
+una volta sola. Con chi ha dei dialoghi (`data/dialogues.json`) si parla per argomenti: ogni argomento si apre con
+il progresso del profilo (`requires`, e `after` per l'argomento che deve venire prima), resta segnato ✦ finché non
+lo si legge (flag `parlato_<personaggio>_<argomento>`) e può chiedere una risposta, che lascia solo un flag della
+storia. Gli artigiani liberati, che al Campo hanno la loro bottega, siedono al fuoco anche solo per parlare. Le strutture costruite restano nel profilo come flag `camp_<id>`; quelle a più livelli
 (vedi `camp_rules`) si costruiscono un livello alla volta.
 """
 from typing import Optional
@@ -17,12 +20,58 @@ def camp() -> dict:
     return GAME_DATA["story"]["camp"]
 
 
+def dialogues() -> dict:
+    return GAME_DATA["dialogues"]["characters"]
+
+
 def present_characters() -> list:
-    return [c for c in camp()["characters"] if check(None, c.get("requires"), 0)]
+    """Chi siede al fuoco: i personaggi del Campo, poi chi ha solo dei dialoghi (gli artigiani liberati)."""
+    camp_ids = {c["id"] for c in camp()["characters"]}
+    extra = [dict(d, id=cid) for cid, d in dialogues().items() if cid not in camp_ids]
+    return [c for c in camp()["characters"] + extra if check(None, c.get("requires"), 0)]
 
 
 def current_line(character: dict) -> str:
     return next(l["text"] for l in character["lines"] if check(None, l.get("requires"), 0))
+
+
+def topic_flag(character_id: str, topic_id: str) -> str:
+    return f"parlato_{character_id}_{topic_id}"
+
+
+def topics(character_id: str) -> list:
+    """Gli argomenti di cui il personaggio può parlare adesso, nell'ordine dei dati."""
+    out = []
+    for t in dialogues().get(character_id, {}).get("topics", []):
+        if t.get("after") and not PROFILE_MANAGER.get_flag(topic_flag(character_id, t["after"])): continue
+        if check(None, t.get("requires"), 0): out.append(t)
+    return out
+
+
+def unread(character_id: str) -> list:
+    return [t for t in topics(character_id) if not PROFILE_MANAGER.get_flag(topic_flag(character_id, t["id"]))]
+
+
+def news(character: dict) -> bool:
+    """C'è qualcosa di nuovo: un dono da ricevere o un argomento non ancora letto."""
+    return gift_pending(character) or bool(unread(character["id"]))
+
+
+def read_topic(character: dict, topic: dict):
+    clear_screen()
+    display_msg(f"{Colors.MAGENTA}{Colors.BOLD}--- {character['name']} · {topic['title']} ---{Colors.RESET}\n")
+    for line in topic["lines"]:
+        delay_print(line, 0.02)
+        display_msg("")
+    choices = topic.get("choices", [])
+    if choices:
+        idx = interactive_menu([c["text"] for c in choices], "")
+        choice = choices[max(0, idx)]
+        delay_print(f"\n{choice['reply']}", 0.02)
+        if choice.get("flag"): PROFILE_MANAGER.set_flag(choice["flag"])
+    PROFILE_MANAGER.set_flag(topic_flag(character["id"], topic["id"]))
+    PROFILE_MANAGER.save()
+    wait_enter("\nPremi INVIO per continuare...")
 
 
 def gift_pending(character: dict) -> bool:
@@ -40,7 +89,17 @@ def talk(character: dict):
         display_msg(f"\n{Colors.YELLOW}{gift['text']}{Colors.RESET}")
         display_msg(f"{Colors.CYAN}+{gift['essence']} Essenza.{Colors.RESET}")
         PROFILE_MANAGER.save()
-    wait_enter("\nPremi INVIO per tornare al fuoco...")
+    if not topics(character["id"]):
+        wait_enter("\nPremi INVIO per tornare al fuoco...")
+        return
+    wait_enter("\nPremi INVIO per sederti a parlare...")
+    while True:
+        available = topics(character["id"])
+        fresh = {t["id"] for t in unread(character["id"])}
+        options = [t["title"] + (f" {Colors.YELLOW}✦{Colors.RESET}" if t["id"] in fresh else "") for t in available] + ["Torna al fuoco"]
+        idx = interactive_menu(options, f"{Colors.MAGENTA}{Colors.BOLD}--- {character['name']} ---{Colors.RESET}\nDi cosa parlate?", cancellable=True)
+        if idx == -1 or idx >= len(available): break
+        read_topic(character, available[idx])
 
 
 def structure(structure_id: str) -> Optional[dict]:
@@ -89,7 +148,7 @@ def show_camp_fire():
     while True:
         clear_screen()
         people = present_characters()
-        options = [f"Parla con {c['name']}" + (f" {Colors.YELLOW}✦{Colors.RESET}" if gift_pending(c) else "") for c in people]
+        options = [f"Parla con {c['name']}" + (f" {Colors.YELLOW}✦{Colors.RESET}" if news(c) else "") for c in people]
         options += [_structure_label(s) for s in camp()["structures"]]
         intro = "Intorno al fuoco siede chi hai salvato, ascoltato o tradito nel Labirinto." if people else \
                 "Intorno al fuoco non c'è ancora nessuno. Chi incontrerai nel Labirinto potrebbe venire a scaldarsi qui."
