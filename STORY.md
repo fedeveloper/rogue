@@ -275,6 +275,26 @@ Il **Campo Base** è un cerchio di pietre intorno al Fuoco, in un punto del Labi
   - *I Taccuini di Calaris*: i taccuini di Sereth trovati alla Soglia, senza nome. Il terzo (il Vuoto come riposo) aspetta 40 boss, il quarto 50.
   - *Il Libro del Fuoco che Resta*: i sei Architetti fedeli, Ardel, il potere di riportare, il perché.
   - *Le Lezioni del Settimo Architetto*: gli appunti di Valerius, che lesse il nome del maestro e non lo scrive.
+  - Terza ondata (diciannove libri):
+    - *Il Breviario della Badessa*: le undici ore dei Chiostri, le novizie (Berenice canta stonata, Clelia ruba le pere, Agnese ha la voce più bella), il Voto nato dopo che una cosa sentì cantare Berenice.
+    - *Il Taccuino di Fenn il Cercatore*: Fenn cercava il fratello **Arlo**, figlio di un orologiaio; il filo di Arlo finisce in un orologio fermo alle undici e un quarto.
+    - *Il Manuale del Minatore di Durn*: le regole della Gilda, la canzone della risalita; Borek strappò la regola sul caposquadra che non vuole risalire, e firmò con una B.
+    - *Le Leggende delle Sentinelle di Nube*: quaranta Sentinelle, una per valle, motto «Sopra»; la notte della Discordia ne cadde una sola, **Ivetta**, undici anni. Dire «Sopra» a una Sentinella di Nube a volte la ferma.
+    - *Il Giornale di Bordo della Flotta di Port'Alba*: la **Gabbiana**, capitano **Edda Vael**; la flotta non affondò, scese nel Ventre e aspetta con le lanterne accese.
+    - *Le Memorie di Malphas*: il medico che prese l'Essenza dei morenti; si tagliò la mano dopo aver lasciato andare l'Essenza di una novizia.
+    - *Il Libro di Hob*: il boia che non diede mai un secondo colpo; Alaric gli strinse la mano senza pinze. L'ultimo condannato fu uno studente che aveva scritto «La Luce è malata».
+    - *Il Canzoniere di Ignis*: le canzoni del suonatore **Gorm**; Hrodna vinse la scintilla cinque estati e rifiutò la sesta.
+    - *Le Lettere di Mila*: lettere a Bran sotto un sasso; la casa con lo scudo, la giumenta Gerd, l'ultima lettera a settantanove anni.
+    - *Il Diario di Corin, Apprendista*: valle di **Brasa**; Lisbet fu la prima a diventare parte del lavoro; «chiamatemi per nome: mi giro».
+    - *Le Preghiere dei Grandi Templi*: la preghiera dei malati («non rendila perfetta: rendila sana»), che i sacerdoti smisero di dire.
+    - *Le Favole del Bosco Vecchio*: raccolte da una maestra di Port'Alba; l'ultima, senza fine, è quella del viandante che si sveglia accanto al fuoco.
+    - *Il Trattato sulle Rune dei Lapicidi*: una runa è una parola che la pietra tiene; il miglior lapicida incise per due anni segni non suoi sotto un'isola lontana, e la pietra si raffreddava.
+    - *Il Grimorio Minore di Aetheria*: del maestro **Ruperto** («la magia si chiede, non si ordina»); l'Etere è la luce che resta.
+    - *Il Registro del Mercante*: il Mercante era il tesoriere del cielo; ha comprato una per una le discese del Ritornante, «da restituire quando sarà il momento». Un conto aperto: «qualcuno sta pagando per tutti».
+    - *Il Libro del Mendicante Ombra*: il canale fra chi dà e chi ha bisogno; ogni sera versa nel Fuoco quello che riceve.
+    - *Il Quaderno delle Eco*: il Labirinto che ricorda; il Dio che torna «non riesce a dormire».
+    - *Il Registro dei Custodi*: l'ordine delle porte; Alaric giurò come Paladino, non come Custode, e per questo non sa quando aprire. Il giuramento dei Custodi: aprire «il giorno in cui qualcuno avrà bisogno che si apra».
+    - *Il Testamento di Galdor*: la figlia del re morì a sei anni nella carestia; fu Galdor a ordinare che il messaggio «non arrivasse».
 
 Il Campo cambia con la storia: più personaggi trovano pace, più il Fuoco è caldo; chi sceglie la Corruzione lo trova un poco più freddo al ritorno.
 

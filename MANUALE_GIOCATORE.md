@@ -675,6 +675,25 @@ Tra una discesa e l'altra spendi l'**Essenza Astrale**:
 | I Taccuini di Calaris | Vinci una Run Standard | — |
 | Il Libro del Fuoco che Resta | Vinci una Run Standard | — |
 | Le Lezioni del Settimo Architetto | Vinci al grado 1 di Ascensione | — |
+| Il Breviario della Badessa | Raggiungi il Piano 2 | — |
+| Il Taccuino di Fenn il Cercatore | Raggiungi il Piano 10 | — |
+| Il Manuale del Minatore di Durn | Raggiungi il Piano 7 | — |
+| Le Leggende delle Sentinelle di Nube | Raggiungi il Piano 12 | — |
+| Il Giornale di Bordo della Flotta di Port'Alba | Raggiungi il Piano 17 | — |
+| Le Memorie di Malphas | Raggiungi il Piano 19 | — |
+| Il Libro di Hob | Sconfiggi 8 Boss | — |
+| Il Canzoniere di Ignis | Raggiungi il Piano 22 | — |
+| Le Lettere di Mila | Sconfiggi 12 Boss | — |
+| Il Diario di Corin, Apprendista | Raggiungi il Piano 23 | — |
+| Le Preghiere dei Grandi Templi | Raggiungi il Piano 15 | — |
+| Le Favole del Bosco Vecchio | Raggiungi il Piano 16 | — |
+| Il Trattato sulle Rune dei Lapicidi | Raggiungi il Piano 11 | — |
+| Il Grimorio Minore di Aetheria | Scopri 5 incantesimi | — |
+| Il Registro del Mercante | Sconfiggi 25 Boss | — |
+| Il Libro del Mendicante Ombra | Sconfiggi 35 Boss | — |
+| Il Quaderno delle Eco | Raggiungi l'Eco III della Modalità Infinita | — |
+| Il Registro dei Custodi | Raggiungi il Piano 28 | — |
+| Il Testamento di Galdor | Vinci al grado 3 di Ascensione | — |
 
 - **🔥 Il Fuoco del Campo** — chi incontri nel Labirinto può venire a scaldarsi qui. *Silas*, *la Cartografa*, *il Viandante Cieco* e, se lo hai liberato, *la luce di Alaric* compaiono quando le loro storie sono andate abbastanza avanti. Ti parlano in base a ciò che hai fatto e la prima volta ti lasciano un dono (✦). Più avanti nelle loro storie, al fuoco arrivano anche *l'ampolla di Linnea* e *Kaelen*. Siedono al fuoco anche gli artigiani che hai liberato (*lo Speziale*, *Borek*, *Elara*, *Valerius*). Con ognuno puoi **parlare per argomenti**: ogni argomento nuovo si apre con il tuo progresso (i piani raggiunti, i boss sconfitti, le scelte fatte negli eventi, la vittoria) ed è segnato ✦ finché non lo leggi. A volte ti chiedono una risposta: non cambia niente nel gioco, ma loro se la ricordano. È qui, lontano dalla discesa, che raccontano chi erano e cosa nascondono. Qui costruisci anche, con l'Essenza:
   - *il Tavolo della Cartografa* (aiutala nel Labirinto): sulla mappa vedi quali storie ti aspettano nelle stanze speciali e negli eventi che tornano;
