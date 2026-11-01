@@ -650,7 +650,7 @@ Tra una discesa e l'altra spendi l'**Essenza Astrale**:
 | Lo Specialista | Porta un attributo a 10 punti. | 400 Essenza |
 | L'Asceta | Vinci una discesa senza lanciare un solo incantesimo. | Tratto: Sordo all'Arcano |
 
-- **📚 Archivio di Aethelgard** — sei tomi da sbloccare scendendo nel labirinto. Ognuno si legge a capitoli e dà un bonus permanente a tutti gli eroi:
+- **📚 Archivio di Aethelgard** — i tomi si sbloccano scendendo nel labirinto e si leggono a capitoli. I primi sei danno un bonus permanente a tutti gli eroi; gli altri raccontano soltanto: chi era Ottavia Lune, cosa annotava Orvin, cosa cantavano le novizie. Alcuni capitoli restano illeggibili (???) finché non scendi più a fondo o non sai abbastanza:
 
 | Tomo | Come si sblocca | Bonus |
 |---|---|---|
@@ -660,6 +660,21 @@ Tra una discesa e l'altra spendi l'**Essenza Astrale**:
 | Il Grimorio di Valerius | Scopri 10 incantesimi | +2 Etere massimo |
 | Le Cronache dell'Ascesa | Vinci al grado 5 di Ascensione | +5% Danni contro i Boss e +5% Oro trovato |
 | Il Canto delle Eco | Raggiungi l'Eco II della Modalità Infinita | +3 Difesa fissa globale e +5% Probabilità di Fuga |
+| Trattato sulla Corruzione Elementale | Raggiungi il Piano 6 | — |
+| Il Quaderno di Orvin il Cartografo | Raggiungi il Piano 8 | — |
+| Canti della Caduta | Raggiungi il Piano 3 | — |
+| Le Ricette di Mastro Ambrogio | Raggiungi il Piano 4 | — |
+| Il Registro della Squadra di Durn | Raggiungi il Piano 9 | — |
+| Le Valli della Seta | Raggiungi il Piano 11 | — |
+| Il Diario dell'Osservatorio | Raggiungi il Piano 13 | — |
+| Le Cronache del Mare Interno | Raggiungi il Piano 16 | — |
+| Il Libro delle Forge di Ignis | Raggiungi il Piano 21 | — |
+| Lettere di Ilse | Sconfiggi 10 Boss | — |
+| Le Leggi di Galdor | Sconfiggi 15 Boss | — |
+| L'Ordine dei Paladini | Sconfiggi 20 Boss | — |
+| I Taccuini di Calaris | Vinci una Run Standard | — |
+| Il Libro del Fuoco che Resta | Vinci una Run Standard | — |
+| Le Lezioni del Settimo Architetto | Vinci al grado 1 di Ascensione | — |
 
 - **🔥 Il Fuoco del Campo** — chi incontri nel Labirinto può venire a scaldarsi qui. *Silas*, *la Cartografa*, *il Viandante Cieco* e, se lo hai liberato, *la luce di Alaric* compaiono quando le loro storie sono andate abbastanza avanti. Ti parlano in base a ciò che hai fatto e la prima volta ti lasciano un dono (✦). Più avanti nelle loro storie, al fuoco arrivano anche *l'ampolla di Linnea* e *Kaelen*. Siedono al fuoco anche gli artigiani che hai liberato (*lo Speziale*, *Borek*, *Elara*, *Valerius*). Con ognuno puoi **parlare per argomenti**: ogni argomento nuovo si apre con il tuo progresso (i piani raggiunti, i boss sconfitti, le scelte fatte negli eventi, la vittoria) ed è segnato ✦ finché non lo leggi. A volte ti chiedono una risposta: non cambia niente nel gioco, ma loro se la ricordano. È qui, lontano dalla discesa, che raccontano chi erano e cosa nascondono. Qui costruisci anche, con l'Essenza:
   - *il Tavolo della Cartografa* (aiutala nel Labirinto): sulla mappa vedi quali storie ti aspettano nelle stanze speciali e negli eventi che tornano;
@@ -681,6 +696,7 @@ Tra una discesa e l'altra spendi l'**Essenza Astrale**:
   - *Personaggi*: i capitoli vissuti con Alaric e Silas, e il segno lasciato dalle tue scelte.
   - *Bestiario*: ogni creatura ha tre voci. *Cosa si vede* la leggi appena la incontri; *Come si comporta* e *Chi era* dopo averne sconfitte abbastanza (i boss dopo poche vittorie).
   - *Discese dimenticate*: ai falò e accanto ai forzieri, a volte, trovi incise su una pietra delle lettere con una calligrafia che ti sembra di conoscere. Ogni gruppo di otto racconta una discesa che hai dimenticato; quando lo completi, leggi qui come è finita. Sono solo racconto: non danno né tolgono niente.
+  - *Vite prestate*: chi erano gli eroi le cui vite il Fuoco ti presta, una per classe. Il primo ricordo torna alla prima discesa con quella classe, gli altri a ogni livello di Maestria (alla fine della discesa leggi «Un ricordo torna»); i ricordi più vicini alla verità aspettano anche che tu sappia di più.
   - *Atlante*: la storia di ogni bioma, cosa era prima del Labirinto e cosa nasconde, e quella delle Eco del Ciclo. Le pagine si aprono man mano che scendi.
   - *Eventi*: quali hai visto e quante volte.
   - *Lettere insanguinate*: i messaggi letti sulle pareti prima degli scontri.

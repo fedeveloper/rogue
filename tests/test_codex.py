@@ -31,6 +31,7 @@ class Sandbox(unittest.TestCase):
         self._saved = copy.deepcopy(PROFILE_MANAGER._data)
         PROFILE_MANAGER._data["story"] = {"flags": {}, "counters": {}, "seen_events": {}}
         PROFILE_MANAGER._data["codex"] = {"enemies": {}, "letters": [], "relics": [], "reactions": []}
+        PROFILE_MANAGER._data["class_xp"], PROFILE_MANAGER._data["class_lvl"] = {}, {}  # le Vite prestate dipendono dalla Maestria
         self._save = mock.patch.object(PROFILE_MANAGER, "save")
         self._save.start()
         random.seed(3)
@@ -107,7 +108,7 @@ class PagesTest(Sandbox):
         codex.record_letter(0)
         codex.record_reaction("Fuoco+Acqua")
         codex.record_spell("raffica")
-        self.assertEqual([s[1] for s in codex.sections()], [0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0])  # le ultime: Atlante, Discese dimenticate
+        self.assertEqual([s[1] for s in codex.sections()], [0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0])  # le ultime: Atlante, Discese dimenticate, Vite prestate
         self.assertEqual(codex.completion(), 4 * 100 // total)
 
     def test_characters_page_follows_the_arc(self):

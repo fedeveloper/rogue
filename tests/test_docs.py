@@ -66,7 +66,7 @@ class ManualFollowsTheDataTest(unittest.TestCase):
             with self.subTest(feat=f["name"]): self.assertIn(f"| {f['name']} | {f['desc']} |", self.manual)
         import archive
         for b in archive.BOOKS.values():
-            with self.subTest(book=b["title"]): self.assertIn(f"| {b['title']} | {b['unlock_condition']} | {b['bonus_desc']} |", self.manual)
+            with self.subTest(book=b["title"]): self.assertIn(f"| {b['title']} | {b['unlock_condition']} | {b.get('bonus_desc', '—')} |", self.manual)
 
     def test_the_talent_table_matches_the_data(self):
         t = GAME_DATA["talents"]

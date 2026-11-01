@@ -95,7 +95,8 @@ class ArchiveTest(Sandbox):
         for bid, b in archive.BOOKS.items():
             with self.subTest(book=bid):
                 self.assertTrue(b["chapters"])
-                for v in b["bonus"].values(): self.assertIn(str(v), b["bonus_desc"])
+                self.assertEqual("bonus" in b, "bonus_desc" in b, "un tomo ha bonus e descrizione insieme, o nessuno dei due")
+                for v in b.get("bonus", {}).values(): self.assertIn(str(v), b["bonus_desc"])
 
 
 class TraitTest(Sandbox):

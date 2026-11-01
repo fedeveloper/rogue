@@ -129,6 +129,380 @@
                     "text": "Se il Labirinto è una canzone, il Dio Antico è il silenzio fra due note. E il silenzio, prima o poi, finisce."
                 }
             ]
+        },
+        "trattato_corruzione": {
+            "title": "Trattato sulla Corruzione Elementale",
+            "unlock_condition": "Raggiungi il Piano 6",
+            "unlock": {"type": "max_floor", "value": 6},
+            "chapters": [
+                {
+                    "title": "Introduzione alla Disarmonia",
+                    "text": "Chi scrive è Ottavia Lune, alchimista di Aetheria, allieva del Maestro della Pietra. Scrivo nel Crepuscolo Lungo, mentre il cielo diventa grigio e i miei colleghi discutono se gli elementi si stiano ribellando. Non si ribellano. Si ammalano. Una ribellione ha uno scopo; una malattia ha solo una causa. Ho passato sei anni a osservare il Fuoco che non si spegne, l'Acqua che non disseta, la Luce che brucia gli occhi dei malati che dovrebbe curare. Ogni elemento ha la sua malattia, con i suoi sintomi. In queste pagine li descriverò uno per uno, con la freddezza che si deve a un paziente. Le malattie si curano. Ma prima bisogna avere il coraggio di guardarle."
+                },
+                {
+                    "title": "La Malattia del Fuoco",
+                    "text": "Il Fuoco malato non si nutre di legna né di aria. Si nutre di ciò che poteva essere. L'ho osservato nelle forge di Ignis: le fiamme si alzano più alte vicino alle persone che hanno un rimpianto, e bruciano con una luce violacea. Il calore non distrugge l'oggetto, lo trasforma in cenere di memoria. Ho messo nel fuoco una lettera d'amore mai spedita: è bruciata per tre giorni. Ho messo nel fuoco un pezzo di legno qualunque: si è spento subito. Il Fuoco, oggi, è affamato di rimpianto. Il sintomo più grave è che chi lo usa diventa più forte, perché le sue armi colpiscono non solo il corpo del nemico, ma la sua storia."
+                },
+                {
+                    "title": "La Distorsione della Luce",
+                    "text": "Molti credono ancora che la Luce sia il bene. È l'elemento più spietato, oggi. Cerca di imporre un ordine perfetto in un mondo fatto di imperfezioni, e poiché noi siamo fatti di imperfezioni, ci brucia. Ho visto un sacerdote dei Grandi Templi curare un bambino con la Luce: la febbre è scesa, ma la pelle del bambino è diventata liscia come porcellana, senza nei, senza cicatrici, senza le piccole irregolarità che lo rendevano lui. Sua madre non lo riconosceva. La Luce non illumina il cammino, oggi: acceca chi cerca di vedere la verità, perché la verità è imperfetta."
+                },
+                {
+                    "title": "Il Vuoto del Normale",
+                    "text": "L'elemento Normale è il più tragico, e il meno studiato. È la materia comune, la polvere, il ferro arrugginito, la fragilità di tutto ciò che vive. La sua malattia è la stanchezza. L'ho misurata, per quanto si possa misurare una cosa simile: nell'ultimo secolo le cose comuni si consumano più in fretta, le ferite si rimarginano più piano, i vecchi muoiono più volentieri. Come se il mondo fosse stanco di essere fatto di cose fragili. Credo che qui sia la causa di tutte le altre malattie. Ho chiesto di parlare con l'Architetto che insegna il Normale all'Accademia. Non mi ha mai ricevuta. Ma una sera, nella sua aula, ho visto la lavagna. C'era scritto: ciò che è fragile ha diritto al riposo. Ho avuto paura.",
+                    "requires": {"reached_floor": 20}
+                }
+            ]
+        },
+        "quaderno_orvin": {
+            "title": "Il Quaderno di Orvin il Cartografo",
+            "unlock_condition": "Raggiungi il Piano 8",
+            "unlock": {"type": "max_floor", "value": 8},
+            "chapters": [
+                {
+                    "title": "La Grammatica",
+                    "text": "Il Labirinto cambia ogni volta che lo guardi, dicono. È vero solo a metà. Le stanze cambiano, le porte cambiano, i nemici cambiano. Ma ci sono cose che non cambiano mai, e chi impara a riconoscerle impara a leggere il Labirinto come un libro scritto in una lingua sconosciuta, di cui si conosce la grammatica. Le scale stanno sempre in fondo. I falò stanno dove l'aria gira. I chiostri hanno undici archi, mai dodici. Il boss sta sempre dietro l'ultima fila, e l'aria davanti alla sua porta è sempre più fredda di qualche grado. Annoto qui le regole che ho trovato in quarant'anni di discese. Mia nipote Tessa, un giorno, ne troverà altre."
+                },
+                {
+                    "title": "Contare i Passi",
+                    "text": "Il primo strumento del cartografo non è la penna: sono i piedi. Il mio passo è di settantuno centimetri, quando sono riposato, sessantotto quando sono stanco. Lo so perché l'ho misurato mille volte sul pavimento di casa. Nel Labirinto i passi sono l'unica misura onesta: le distanze cambiano, ma un passo resta un passo. Conto tutto. Da un falò all'altro, da una porta alla scala. Quando i conti non tornano, vuol dire che il Labirinto si è mosso, e allora conto di nuovo. Tessa ha il passo più corto del mio, sessantadue centimetri. Le ho detto di non correggerlo: ogni cartografo deve avere il suo passo."
+                },
+                {
+                    "title": "La Croce Rossa",
+                    "text": "Ho disegnato una croce rossa in un punto della mappa dove non sono mai stato. Più in basso del ventinove. L'ho fatto perché sogno quel punto da anni, sempre uguale: una piattaforma nel vuoto, un sacco a pelo, un fuoco spento. Nel sogno c'è qualcuno che arriva, e io lo aspetto. Non so chi sia. So che quando arriva mi sento sollevato, come quando si finisce un lavoro lungo. Accanto alla croce ho scritto: qui ti aspetto. Forse un giorno ci arriverò davvero. Forse ci arriverà qualcun altro con questa mappa in mano. In ogni caso, qualcuno aspetterà qualcuno, e mi sembra giusto.",
+                    "requires": {"reached_floor": 15}
+                },
+                {
+                    "title": "Piano Trenta",
+                    "text": "Ultima pagina. Scendo domani per fare il piano che manca. Ho detto a Tessa che torno per cena. Non sono sicuro che sia vero, ma è il tipo di bugia che si dice ai bambini perché dormano tranquilli. Se non torno, sappia questo: la mappa non è mai finita. Ogni piano che si aggiunge ne apre un altro. Il trenta non è il fondo, è solo il punto in cui io smetto. Il Labirinto, messo tutto insieme, credo sia una spirale, ma non l'ho mai avuto tutto davanti agli occhi per esserne sicuro. Tessa, se lo scopri, segnalo. E tempera bene il carboncino, come ti ho insegnato.",
+                    "requires": {"reached_floor": 25}
+                }
+            ]
+        },
+        "canti_caduta": {
+            "title": "Canti della Caduta",
+            "unlock_condition": "Raggiungi il Piano 3",
+            "unlock": {"type": "max_floor", "value": 3},
+            "chapters": [
+                {
+                    "title": "Il Canto del Primo Architetto",
+                    "text": "Si narra che nelle notti in cui il Labirinto è calmo si possa sentire questo canto venire dalle pareti stesse. Le novizie dei Chiostri lo cantavano a bassa voce prima di dormire. «Un filo d'oro, un filo di fumo, / il mondo era uno, nel vuoto e nel nume. / Ma il dito ha tremato, la trama è svanita, / e l'ombra ha bevuto la linfa della vita. / Non piangere il sole, non piangere il mare, / c'è solo il silenzio da poter abitare.» Nessuno sa chi l'abbia scritto. Le novizie dicevano che il dito che ha tremato era quello di un Architetto. La Badessa le puniva quando lo cantavano: diceva che era una bestemmia. Non diceva perché."
+                },
+                {
+                    "title": "La Leggenda dei Sette Sigilli",
+                    "text": "Si dice che gli Architetti fossero sette, uno per elemento, e che ognuno avesse un sigillo, un segno inciso nella Prima Pietra. Quando il mondo si spezzò, i sigilli si spezzarono con lui, e i loro frammenti caddero nel Labirinto. Chi riuscisse a riunirli tutti e sette, raccontano i canti, potrebbe in teoria invertire la Discordia. Ma chi può sopportare il peso di sette eternità che premono insieme sul cuore? Finora ogni Eletto che ci ha provato è diventato una melma, uno spirito della tempesta, una statua di sale. I canti non dicono quale fosse il sigillo mancante. Dicono solo che uno dei sette non volle mai essere trovato."
+                },
+                {
+                    "title": "Il Canto del Fuoco che Resta",
+                    "text": "Questo canto lo cantavano i pochi avventurieri che tornavano. «Sei sono partiti, sei hanno taciuto, / uno è rimasto nel buio perduto. / Non ha più volto, non ha più mani, / è brace che aspetta i passi lontani. / Chi muore laggiù non torna mai, / tranne chi sceglie e tu lo sai.» Secondo i vecchi, parla di un fuoco che non brucia, in un posto che il Labirinto non vede, dove chi muore a volte si risveglia. Nessuno l'ha mai trovato. Ma tutti, nel Labirinto, a volte sentono un calore alle spalle, come quello di un focolare acceso in una stanza vicina.",
+                    "requires": {"reached_floor": 10}
+                },
+                {
+                    "title": "La Ninnananna di Aurelia",
+                    "text": "L'ultima pagina riporta una ninnananna che le madri di Aurelia cantavano ai bambini, e che si trova ancora, a volte, aperta sui libri di preghiera del dormitorio dei Chiostri. «Dormi, che il sole è andato a dormire, / dormi, che il vento non deve venire, / dormi, che l'acqua si è messa a sedere, / dormi, che il fuoco è rimasto a vedere. / E se ti svegli e la notte è più nera, / c'è sempre qualcuno che veglia e ti spera.» Chi la canta nel Labirinto, dicono, sente le pareti respirare più piano. Come un bambino molto grande che si addormenta."
+                }
+            ]
+        },
+        "ricette_ambrogio": {
+            "title": "Le Ricette di Mastro Ambrogio",
+            "unlock_condition": "Raggiungi il Piano 4",
+            "unlock": {"type": "max_floor", "value": 4},
+            "chapters": [
+                {
+                    "title": "Avvertenza",
+                    "text": "Queste ricette le ho scritte per chi scende. Non sono un alchimista, sono uno speziale: faccio rimedi, non miracoli. Un rimedio non guarisce, aiuta il corpo a guarire da solo. La prima regola, prima di qualunque pozione, è sempre la stessa: hai mangiato? hai dormito? hai pianto, di recente? Tre volte su quattro, nel Labirinto come ad Aurelia, il male viene da una di queste tre cose. Ho segnato le dosi con cura. Non raddoppiatele: una pozione raddoppiata non cura il doppio, avvelena la metà. E ricordate: due gocce di salvia in più, sempre. È la firma di famiglia, ma è anche la ragione per cui le mie pozioni funzionano."
+                },
+                {
+                    "title": "Ricette per i Primi Piani",
+                    "text": "Per le ferite da taglio dei Chiostri: polvere di marmo bianco mescolata a miele, sulla ferita, coperta con un panno pulito. Il marmo dell'Accademia ferma il sangue, non so perché, forse per abitudine. Per il silenzio delle novizie, quando ti chiude la gola: un sorso d'acqua calda con un pizzico di sale, e poi parlare ad alta voce di una cosa che ami, anche se ti sembra stupido. Per il Gas del Silenzio delle Miniere: masticare il muschio che cresce sulle travi più vecchie, quelle dei nani, e respirare dal naso. Per la nostalgia, quando una voce cara ti chiama: nessun rimedio. Solo camminare."
+                },
+                {
+                    "title": "Ricette per i Piani Profondi",
+                    "text": "Per la Dissoluzione dell'Io, nel Ventre: scrivere il proprio nome su un foglio e tenerlo in tasca, e ogni tanto rileggerlo. Non è una medicina, ma aiuta. Per le bruciature della Forgia: grasso di talpa esplosiva, se si trova, altrimenti burro e cenere fredda. Per la stanchezza della Soglia, quella che ti fa venire voglia di sederti e non alzarti più: niente. Non ho trovato niente. Ho provato tutte le erbe che conosco. Quella stanchezza non è del corpo. Credo che sia la stessa che sentiva il mondo prima della Discordia, quella che vendevo in vasetti a un cliente con le mani troppo pulite.",
+                    "requires": {"reached_floor": 16}
+                },
+                {
+                    "title": "La Pozione del Conto",
+                    "text": "L'ultima ricetta non cura niente. Si prende una boccetta piccola, la si riempie d'acqua pulita, e a ogni persona che si cura si aggiunge una goccia del rimedio che le si è dato. Quando la boccetta è piena, si è pagato il conto. Non quello che si deve agli altri, quello lo si paga in un altro modo: quello che si deve a sé stessi. La mia è a metà. Ci vorrà ancora molto tempo. Ma ogni goccia mi fa dormire un po' meglio. Se state leggendo queste ricette e vi sono servite, aggiungete una goccia alla mia boccetta, al Campo. Ve ne sarò grato più di quanto sappia dire.",
+                    "requires": {"reached_floor": 25}
+                }
+            ]
+        },
+        "registro_durn": {
+            "title": "Il Registro della Squadra di Durn",
+            "unlock_condition": "Raggiungi il Piano 9",
+            "unlock": {"type": "max_floor", "value": 9},
+            "chapters": [
+                {
+                    "title": "Il Primo Giorno",
+                    "text": "Registro della squadra di Hadrek, livello più basso dei Monti di Durn. Giorno uno. La montagna si è mossa stanotte. Le gallerie di sopra sono crollate, la via d'uscita è chiusa. La roccia sotto di noi è cambiata: è più morbida, più calda, e c'è un vento che sale dal basso. Hadrek dice che il vento viene da un'uscita, e che dobbiamo seguirlo. Undici in squadra, tutti vivi. Borek ha già cominciato a lamentarsi della birra, il che vuol dire che sta bene. Scendiamo domattina. Vettovaglie per sei giorni, se le razioniamo."
+                },
+                {
+                    "title": "Le Tacche",
+                    "text": "Giorno quattro. Abbiamo cominciato a fare una tacca sul muro per ogni giorno di scavo, così chi viene dopo sa da quanto siamo qui. La roccia è sempre più calda. Hadrek dice che è un buon segno: vuol dire che siamo vicini al fuoco della terra, e il fuoco della terra ha sempre un camino. Giorno sette. Abbiamo finito il pane. Hadrek ha diviso la sua razione fra i più giovani. È un buon capo. Nessuno di noi dubita di lui. Giorno nove. Borek dubita di lui. Lo ha detto ad alta voce, durante il pasto. Hadrek non si è arrabbiato. Ha detto solo: sotto la prossima roccia, ragazzo. Fidati."
+                },
+                {
+                    "title": "La Divisione",
+                    "text": "Giorno dieci. La roccia è calda come carne. Batte, se ci appoggi l'orecchio. Borek ha detto che risale. Ha detto che non c'è nessuna uscita sotto, che stiamo scavando nella pancia di qualcosa. Hadrek ha detto che è un ordine: si scende. Borek ha detto: allora disobbedisco. Sette sono andati con lui. Quattro sono rimasti con Hadrek. Io sono rimasto con Hadrek. Non so se perché ci credo o perché non voglio lasciarlo solo. Borek mi ha abbracciato prima di andare. Mi ha detto: se cambi idea, segui le nostre tacche verso l'alto. Le faremo diverse, a croce.",
+                    "requires": {"reached_floor": 10}
+                },
+                {
+                    "title": "Senza Data",
+                    "text": "Non so più che giorno è. Le tacche sono tante. La squadra di Borek è passata da qui tre giorni fa, o tre anni fa. Ho visto le tacche a croce che salgono, e poi la frana. Hadrek non si ferma. Scava, scava. Non mangia più, non dorme più, ma scava. Gli altri tre non parlano più. Io scrivo ancora, finché ho il carbone. Se qualcuno trova questo registro: Hadrek era un buon capo. Ha sbagliato una cosa sola, ma l'ha sbagliata fino in fondo. Ditelo a Borek, se è vivo. Ditegli che aveva ragione, e che Hadrek gli voleva bene come a un figlio.",
+                    "requires": {"reached_floor": 15}
+                }
+            ]
+        },
+        "valli_seta": {
+            "title": "Le Valli della Seta",
+            "unlock_condition": "Raggiungi il Piano 11",
+            "unlock": {"type": "max_floor", "value": 11},
+            "chapters": [
+                {
+                    "title": "Guida per il Viaggiatore",
+                    "text": "Chi viene a Valeriana deve sapere tre cose. La prima: la nebbia non è un problema, è un dono. Rende i campi fertili e le case calde, e nasconde i difetti delle persone, per cui qui si è più gentili. La seconda: non si cammina senza mappa, perché a dieci passi da casa ci si può perdere per sempre. Le mappe si comprano dai cartografi; quelle buone costano, quelle rubate costano la metà. La terza: non si guarda mai un tessitore negli occhi mentre lavora. Un abito che cambia colore con l'umore si sbaglia, se il tessitore si distrae. E un abito sbagliato è una disgrazia che dura una vita."
+                },
+                {
+                    "title": "I Tessitori",
+                    "text": "Le torri dei tessitori sono alte e sottili, unite da ponti di corda. Ogni torre è una famiglia, ogni famiglia ha un colore segreto che non insegna a nessuno. Gli abiti di Valeriana cambiano colore con l'umore di chi li indossa: grigio per la tristezza, azzurro per la calma, rosso per la rabbia, oro per la felicità, un bianco che nessuno sa spiegare per qualcosa che non ha nome. Le spose di Valeriana si sposano con un abito che diventa d'oro solo se sono davvero felici. Molte si sono sposate in grigio. Nessuna lo ha mai detto ad alta voce."
+                },
+                {
+                    "title": "Le Quaranta Valli",
+                    "text": "Valeriana sono quaranta valli, ognuna con il suo stendardo azzurro ricamato. La Valle dei Mulini, la Valle delle Campane, la Valle dei Pastori Lenti, la Valle del Campo di Lavanda, che è la più piccola e la più profumata, dove abita la figlia di un cavaliere che non torna mai a casa. Le valli si parlano con i falchi astrali, che portano messaggi da una torre all'altra. Ogni falco ha una stella bianca sul petto, il segno della sua valle. Quando un falco arriva con una stella sconosciuta, si fa festa: vuol dire che qualcuno, lontano, ha scritto a qualcuno che non conosce."
+                },
+                {
+                    "title": "Postilla, Dopo",
+                    "text": "Questa postilla è scritta da un'altra mano, molto dopo. Valeriana non c'è più. Le valli sono sprofondate nella notte della Discordia, le torri si sono allungate verso il basso finché sono diventate guglie sospese sul niente. I tessitori sono diventati spiriti della tempesta, e tessono fulmini. I falchi cacciano chi cammina sui ponti. Del Campo di Lavanda non si sa niente. Ma un corriere di Valeriana, con le gambe di nebbia, cerca ancora la casa a cui consegnare una lettera, e nelle giornate senza vento, sulle Guglie, si sente un profumo che non dovrebbe esserci.",
+                    "requires": {"reached_floor": 14}
+                }
+            ]
+        },
+        "diario_osservatorio": {
+            "title": "Il Diario dell'Osservatorio",
+            "unlock_condition": "Raggiungi il Piano 13",
+            "unlock": {"type": "max_floor", "value": 13},
+            "chapters": [
+                {
+                    "title": "Le Regole della Maestra",
+                    "text": "Prima regola dell'Osservatorio: le stelle non si guardano, si contano. Chi le guarda si innamora, chi le conta capisce. Seconda regola: si cammina sul pavimento a piedi nudi, per sentire dove si è. Il pavimento è la mappa del cielo, una borchia d'argento per ogni stella. Terza regola: non si dà mai un nome a una stella nuova prima di averla contata tre notti di fila. Quarta regola, che la Maestra ha aggiunto dopo l'arrivo di un certo allievo di nome Silas: non si disegnano facce nel registro delle stelle. Nemmeno piccole. Nemmeno a margine."
+                },
+                {
+                    "title": "Il Registro di una Notte Normale",
+                    "text": "Notte di fine primavera. Cielo limpido, nebbia bassa nelle valli. Contate millecentoquarantadue stelle di prima e seconda grandezza, tre meno della notte precedente, il che non è normale. La Maestra dice che le stelle non si spengono: si spostano. Ha chiesto a Silas di ricontarle. Silas ne ha contate millecentoquarantacinque, poi ha ammesso di averne contata una due volte perché era bella. La Maestra gli ha bacchettato le dita. Poi, quando credeva che nessuno la vedesse, è rimasta a guardare quella stella per un'ora intera, senza contarla."
+                },
+                {
+                    "title": "La Notte delle Stelle Cadute",
+                    "text": "Registro della notte della Discordia. Ore undici: il cielo si strappa a oriente. Ore undici e un quarto: cominciano a cadere le stelle. Contate le prime cento in dieci minuti. La Maestra ha ordinato a tutti di scendere nelle valli e cercare riparo. Ha detto che lei sale sulla guglia più alta, per misurarle meglio. Silas è sceso a cercare sua sorella. Io resto a scrivere, perché qualcuno deve. Ore una: contate quattrocento. Ore due: quattrocentododici. Le borchie saltano dal pavimento una per una, come chicchi di grandine al contrario. La Maestra non è scesa.",
+                    "requires": {"reached_floor": 15}
+                },
+                {
+                    "title": "L'Ultima Annotazione",
+                    "text": "Ultima annotazione, con una calligrafia che trema. Sono salito anch'io sulla guglia, all'alba, quando le stelle hanno smesso di cadere. La Maestra era lì, con i suoi strumenti di vetro, e misurava ancora. Le ho detto di scendere. Mi ha detto: non posso, devo finire di contare. Le ho detto che le stelle erano finite. Mi ha guardato come si guarda un allievo che non ha capito la lezione, e mi ha detto: le stelle non finiscono mai, si spostano. Poi ha detto: se vedi Silas, digli che è stato il mio allievo peggiore. E il più caro. Non ditegli la seconda parte. Si monterebbe la testa.",
+                    "requires": {"reached_floor": 15}
+                }
+            ]
+        },
+        "cronache_mare": {
+            "title": "Le Cronache del Mare Interno",
+            "unlock_condition": "Raggiungi il Piano 16",
+            "unlock": {"type": "max_floor", "value": 16},
+            "chapters": [
+                {
+                    "title": "I Porti",
+                    "text": "Il Mare Interno era il cuore di Aethelgard, un'acqua calma al centro del continente, circondata da porti di pescatori, boschi di faggi, isole basse coperte di gabbiani. I pescatori uscivano all'alba e tornavano al tramonto, e le cantatrici dei porti cantavano sui moli per richiamarli a casa nella nebbia. Ogni porto aveva la sua canzone. Chi la sentiva da lontano sapeva in quale porto stava tornando. Si diceva che il mare ricordasse tutto: ogni barca, ogni pescatore, ogni parola detta sui moli. I bambini gettavano nell'acqua dei sassolini con un desiderio inciso sopra, perché il mare se ne ricordasse."
+                },
+                {
+                    "title": "Il Guardiano",
+                    "text": "Ogni mattina, all'alba, il Drago di Zaffiro si alzava dal centro del mare e salutava i pescatori. Era fatto d'acqua e di pazienza, grande come un'isola, e non aveva mai fatto male a nessuno. I vecchi dicevano che era il guardiano della memoria del mare, e che dentro di lui c'erano tutti i desideri incisi sui sassolini dei bambini. Al tramonto, dall'altra parte del continente, si alzava il suo fratello di fuoco, il Drago d'Ossidiana, dalle foreste di Ignis. I due si salutavano da lontano. Nessuno sapeva cosa si dicessero. Le cantatrici dicevano che si raccontavano la giornata."
+                },
+                {
+                    "title": "La Notte del Mare",
+                    "text": "Quando arrivò la Discordia, il mare non si agitò: si fermò. L'acqua diventò immobile e trasparente come vetro, e nel vetro i pescatori videro tutte le loro vite, tutte insieme. Poi il mare cominciò a scendere, piano, verso il basso, portandosi dietro i porti, i boschi, le isole. Il Drago di Zaffiro cercò di trattenerlo. Bevve, bevve, per svuotarlo prima che sprofondasse. Bevve troppo. Dentro il mare c'erano mille anni di ricordi di Aethelgard, e il Drago li bevve tutti. Da quella notte li rivive, uno dopo l'altro, senza fine.",
+                    "requires": {"reached_floor": 18}
+                },
+                {
+                    "title": "Quello che Resta",
+                    "text": "Il Mare Interno è diventato il Ventre della Memoria. Le sue pareti sono membrane, i suoi abitanti sono ricordi digeriti a metà. Ma nei porti sommersi c'è ancora chi aspetta il ritorno della flotta, e fra le membrane si sente ogni tanto la canzone di una cantatrice, sbagliata di una nota. Il Drago di Zaffiro piange come piange un oceano. Il Drago d'Ossidiana, dall'altra parte del Labirinto, guarda ancora verso l'orizzonte, al tramonto, aspettando un saluto che non arriva. Chi li ha visti tutti e due dice che, se si incontrassero di nuovo, forse smetterebbero di soffrire. Nessuno sa come portarli l'uno dall'altro.",
+                    "requires": {"reached_floor": 20}
+                }
+            ]
+        },
+        "libro_forge": {
+            "title": "Il Libro delle Forge di Ignis",
+            "unlock_condition": "Raggiungi il Piano 21",
+            "unlock": {"type": "max_floor", "value": 21},
+            "chapters": [
+                {
+                    "title": "La Forgia di Casa",
+                    "text": "A Ignis ogni casa ha la sua forgia, e la forgia non si spegne mai. È la prima cosa che si costruisce quando si costruisce una casa, prima del tetto, prima delle mura: un focolare di pietra con una cappa, e le iniziali della famiglia incise sopra. I bambini imparano a camminare intorno alla forgia, e il primo regalo che ricevono è un martelletto di legno. Quando qualcuno muore, la forgia si spegne per un giorno e una notte, e poi la si riaccende con una brace presa dalla forgia di un vicino. Così ogni fuoco di Ignis è parente di tutti gli altri."
+                },
+                {
+                    "title": "Gli Alberi di Vetro",
+                    "text": "Intorno ai vulcani di Ignis crescono foreste d'ossidiana, alberi di vetro nero che suonano quando c'è vento. I fabbri raccolgono i rami caduti per fare le lame più affilate del continente, ma non tagliano mai un albero vivo: porta sfortuna, e soprattutto stona la foresta. Ogni bosco ha la sua musica, e i vecchi sanno riconoscere il bosco dalla musica, come i marinai riconoscono il porto dalla canzone. La ninnananna di Ignis è nata così: una madre, una notte, ha cantato ai suoi bambini la musica del bosco vicino, con le parole che le venivano in mente."
+                },
+                {
+                    "title": "La Riforgiatura",
+                    "text": "Dopo la Discordia vennero gli Architetti. Dissero che il mondo si era spezzato e che bisognava riforgiarlo, e che le forge di Ignis erano le uniche abbastanza calde per farlo. Non chiesero il permesso. Presero le forge, chiamarono apprendisti da tutto il continente, e misero a capo del lavoro il più grande fabbro di Ignis, il Maestro di Forgia. I fabbri di Ignis non dissero di no: dire di no agli Architetti era impensabile. Ma la notte, nelle case senza più forgia, le madri cantavano la ninnananna più piano, e i bambini chiedevano perché il fuoco di casa fosse diventato così arrabbiato.",
+                    "requires": {"reached_floor": 23}
+                },
+                {
+                    "title": "Tutti",
+                    "text": "Sulla porta della fucina grande c'è ancora la lista degli apprendisti chiamati per la riforgiatura. Accanto a ogni nome, la data in cui l'apprendista si è fuso con il suo lavoro ed è diventato scoria viva. Accanto all'ultima data c'è una parola sola: tutti. Il Maestro di Forgia batte ancora, su un'incudine che non c'è. Gli apprendisti battono con lui, nello stesso ritmo, da mille anni. Una armaiola di Ignis, che ha cercato suo fratello fra loro, ha scritto in margine a questo libro: si possono ancora chiamare per nome. Qualcuno si gira. Non li colpite per primi.",
+                    "requires": {"reached_floor": 25}
+                }
+            ]
+        },
+        "lettere_ilse": {
+            "title": "Lettere di Ilse",
+            "unlock_condition": "Sconfiggi 10 Boss",
+            "unlock": {"type": "bosses_total", "value": 10},
+            "chapters": [
+                {
+                    "title": "Prima Lettera",
+                    "text": "Caro papà, la lavanda è cresciuta! Ho fatto le file dritte come mi hai detto, con il filo e i picchetti, e la vecchia Berta dice che non ha mai visto un campo così ordinato in tutta la valle. Profuma fino alla strada, come dicevi tu. Quando torni, ti faccio vedere il punto in cui ho sotterrato la vanga piccola, quella che mi hai regalato per il compleanno, perché porta fortuna al campo. Mamma dice che sei un grande cavaliere e che hai un lavoro importante. Io dico che potresti fare il lavoro importante anche a casa, ogni tanto. Tua Ilse."
+                },
+                {
+                    "title": "Seconda Lettera",
+                    "text": "Caro papà, il cielo è diventato grigio e la gente dice che gli Architetti sono arrabbiati. Io non ci credo. Gli Architetti sono come te: hanno un lavoro importante e non hanno tempo di scrivere. Ho raccolto la lavanda e l'ho fatta seccare in mazzi, come faceva la mamma. Ne ho messo uno nella busta, così senti il profumo anche lì dove sei. Ti hanno dato una porta da custodire, mi ha scritto Maud. Dice che non puoi dire cosa c'è dietro. Va bene. Ma quando hai finito di custodirla, torna. Tua Ilse, che ti aspetta.",
+                    "requires": {"won": false}
+                },
+                {
+                    "title": "Terza Lettera",
+                    "text": "Caro papà, è successo qualcosa di brutto. La valle dei Mulini non c'è più, è sprofondata stanotte nella nebbia. Stiamo partendo tutti verso le colline. Io non voglio partire: se torni e non mi trovi? Ho piantato la lavanda in un punto nuovo, sulla torre più alta della valle, dove l'acqua non può arrivare. L'ho piantata dove mi avevi detto tu, quando ero piccola, quel giorno che mi hai portata lassù a vedere le stelle. Se torni presto, sarà fiorita. Non so più a che indirizzo scriverti. Lascio questa lettera nella cappella, sotto il leggio. Qualcuno te la porterà.",
+                    "requires": {"bosses_total": 15}
+                },
+                {
+                    "title": "La Lettera Non Finita",
+                    "text": "Questa non è di Ilse. È di Alaric, ed è rimasta nella borsa di un corriere di Valeriana per mille anni. «Mia piccola Ilse, non posso tornare. La porta mi tiene qui, e io non so più cosa ci sia dietro. Ma ogni sera, quando finisco la ronda, penso al campo di lavanda e alle file dritte, e mi sembra di sentire il profumo. Pianta la lavanda dove ti ho detto, sulla torre alta, dove l'acqua non può arrivare. Un giorno verrò a vederla. Te lo prometto sul mio» La lettera si interrompe qui. Il corriere non ha mai saputo su cosa avesse promesso.",
+                    "requires": {"bosses_total": 20}
+                }
+            ]
+        },
+        "leggi_galdor": {
+            "title": "Le Leggi di Galdor",
+            "unlock_condition": "Sconfiggi 15 Boss",
+            "unlock": {"type": "bosses_total", "value": 15},
+            "chapters": [
+                {
+                    "title": "Il Re Giusto",
+                    "text": "Galdor salì al trono delle Valli del Sud a ventidue anni, alla morte di suo padre. Le valli erano terre di grano, ricche e tranquille, abitate da contadini e piccoli mercanti. Il giovane re fece tre leggi, che tutti ricordano ancora. Prima legge: nessun granaio può essere chiuso in tempo di fame. Seconda legge: il re mangia per ultimo. Terza legge: chi ha un debito con il re può pagarlo in grano, in lavoro o in canzoni, a scelta del debitore. Per quarant'anni le Valli furono il posto più felice del Sud. I bambini del re mangiavano lo stesso pane dei bambini dei contadini."
+                },
+                {
+                    "title": "La Carestia",
+                    "text": "Nell'anno novecentonovantasette dopo l'Equilibrio il grano marcì nei campi prima di maturare. L'anno dopo, la siccità. L'anno dopo ancora, una pioggia che non smetteva. Tre raccolti perduti. Galdor aprì tutti i granai, come diceva la sua legge, e mangiò per ultimo, come diceva la sua legge. I granai si svuotarono. Il re dimagrì fino alle ossa. Nei villaggi i bambini avevano la pancia gonfia, e le madri smisero di cantare. Galdor scrisse agli Architetti, a tutti e sette. Sei non risposero. Uno sì."
+                },
+                {
+                    "title": "Il Patto",
+                    "text": "L'Architetto che rispose venne a corte di persona. Era alto, con le mani più pulite che il re avesse mai visto, e parlava con una gentilezza stanca. Disse al re che poteva porre fine alla fame. Anzi, a ogni bisogno. Che stava lavorando a qualcosa che avrebbe permesso alla gente di riposare, finalmente, senza più fame, senza più fatica. Gli serviva solo un regno disposto a essere il primo. Galdor chiese: e il prezzo? L'Architetto disse: nessuno, per il tuo popolo. Galdor capì che il prezzo era lui. Accettò lo stesso. Un messaggero degli altri Architetti arrivò tre giorni dopo. Non arrivò mai al re.",
+                    "requires": {"bosses_total": 20}
+                },
+                {
+                    "title": "Il Re dei Goblin",
+                    "text": "Le Valli di Galdor furono le prime a sprofondare. Il popolo non morì di fame: il patto, a modo suo, fu mantenuto. Ma la gente del Sud diventò piccola, verde, avida, con la pancia sempre piena e gli occhi sempre affamati di qualcos'altro. Galdor diventò il loro re in un regno di fango e monete, con una corona troppo grande che gli scivola sugli occhi. Dicono che governi ancora con le sue tre leggi. Che apra i granai a chiunque abbia fame. Che mangi per ultimo. Che accetti i debiti in canzoni. Nessuno dei suoi sudditi, ormai, sa più cantare.",
+                    "requires": {"bosses_total": 25}
+                }
+            ]
+        },
+        "ordine_paladini": {
+            "title": "L'Ordine dei Paladini",
+            "unlock_condition": "Sconfiggi 20 Boss",
+            "unlock": {"type": "bosses_total", "value": 20},
+            "chapters": [
+                {
+                    "title": "Il Giuramento",
+                    "text": "Chi entra nell'Ordine dei Paladini di Aurelia giura tre cose davanti alla Prima Pietra. Proteggere chi non può proteggersi. Obbedire agli Architetti. Non chiedere mai cosa si custodisce. Le prime due le capisce chiunque. La terza la capiscono in pochi: gli Architetti affidavano ai paladini cose che non potevano spiegare, e un paladino che chiede spiegazioni è un paladino che non si fida. I novizi ricevono un'armatura bianca e una spada, e il cavaliere che li consacra diventa il loro fratello d'ordine per la vita. Il Primo Paladino della sua epoca, Alaric, consacrò più di trecento novizi. Si ricordava il nome di ognuno."
+                },
+                {
+                    "title": "Il Primo Paladino",
+                    "text": "Alaric era nato ad Aurelia, figlio di un fabbro, e aveva preso l'armatura a sedici anni. A trenta era già Primo Paladino, l'uomo di cui gli Architetti si fidavano di più. Era famoso per due cose: non aveva mai perso un duello, e non aveva mai alzato la voce. Aveva una moglie che morì giovane e una figlia, Ilse, che coltivava lavanda in una valle di Valeriana. Ne parlava di rado, solo con i fratelli d'ordine più cari. Fra questi c'era Maud, l'ultima novizia che aveva consacrato, una ragazza che indossava l'armatura come se fosse troppo grande e combatteva come se fosse troppo piccola."
+                },
+                {
+                    "title": "La Porta",
+                    "text": "Il giorno in cui la Luce divenne crudele, gli Architetti convocarono Alaric da solo. Gli dissero che c'era una porta, in un luogo che non potevano nominare, e che dietro la porta c'era una cosa che non doveva uscire. Gli ordinarono di custodirla. Gli ordinarono di non chiedere. Gli ordinarono di non tornare finché la porta avesse avuto bisogno di un custode. Alaric giurò sul sigillo di Luce. Il sigillo gli si impresse sulla schiena come un marchio. Partì quella notte. Gli altri paladini non lo videro più. Gli Architetti, poco dopo, tacquero per sempre.",
+                    "requires": {"bosses_total": 25}
+                },
+                {
+                    "title": "Quelli che Seguirono",
+                    "text": "Dopo la Discordia l'Ordine si divise. Alcuni paladini scelsero di seguire la Luce anche quando divenne crudele, e diventarono i Paladini Corrotti, che bruciano chi cerca la verità. Altri scesero nel Labirinto a cercare Alaric e la sua porta. Il primo che gli Architetti mandarono dopo di lui non trovò nessuna porta, e si convinse che il suo compito fosse portare la fine: oggi lo chiamano il Cavaliere dell'Apocalisse. Maud partì da sola, con un fazzoletto nel guanto, e non arrivò mai. Alaric custodisce ancora. Ogni giorno, dicono, si ferma un istante a guardare verso la strada da cui lei sarebbe dovuta arrivare.",
+                    "requires": {"bosses_total": 30}
+                }
+            ]
+        },
+        "taccuini_calaris": {
+            "title": "I Taccuini di Calaris",
+            "unlock_condition": "Vinci una Run Standard",
+            "unlock": {"type": "won_normal", "value": 1},
+            "chapters": [
+                {
+                    "title": "Il Taccuino Bianco",
+                    "text": "Questi taccuini sono stati trovati sui frammenti di Calaris che galleggiano alla Soglia, fra un tavolino e una tazza di tè ancora tiepida. Sono scritti con una calligrafia elegante e stanca, e non sono firmati: dove dovrebbe esserci il nome, c'è un sigillo di cera bianca senza disegno. Il primo taccuino comincia così: «Ho insegnato per settecento anni l'elemento di cui sono fatte le persone. Nessuno ha mai voluto ascoltare. Forse perché nessuno vuole sapere di cosa è fatto. Io lo so. Siamo fatti di fragilità, e la fragilità si stanca.»"
+                },
+                {
+                    "title": "Il Taccuino della Stanchezza",
+                    "text": "«Nell'Equilibrio nessuno muore davvero. La morte è un ritorno all'Essenza, e l'Essenza torna in nuova vita. Lo chiamano un dono. Io lo chiamo un turno che non finisce mai. Ho parlato con i vecchi delle valli, con i malati dei templi, con le madri che seppelliscono i figli sapendo che torneranno, diversi, senza ricordarle. Sono stanchi. Tutti. Il mondo intero è stanco, e nessuno degli altri Architetti lo vede, perché noi non ci stanchiamo mai. Io sì. Sono l'Architetto del Normale. Io mi stanco come loro.»"
+                },
+                {
+                    "title": "Il Taccuino del Riposo",
+                    "text": "«Ho trovato un modo. Un luogo dove l'Essenza possa fermarsi, invece di tornare. Non una morte: un riposo. L'ho chiamato Vuoto, per mancanza di una parola migliore. Ho bisogno di molta fragilità pura per costruirlo: la compro da uno speziale gentile di Aurelia, che non fa domande. Ho bisogno di un luogo: la mia cittadella su Calaris. Ho bisogno di un primo regno disposto a riposare: un re del Sud mi ha scritto, il suo popolo muore di fame. Gli ho promesso la fine di ogni bisogno. È vero. Non gli ho detto che anche il bisogno di vivere è un bisogno.»",
+                    "requires": {"bosses_total": 40}
+                },
+                {
+                    "title": "L'Ultima Pagina",
+                    "text": "L'ultima pagina è scritta in fretta, con una mano che trema. «Gli altri hanno mandato un messaggero al re. Non è arrivato. Domani accendo il Vuoto. Ho paura. Non per me: per loro. E se mi sbagliassi? E se la stanchezza non fosse una malattia, ma solo la sera di una giornata lunga? Ho scritto sulla lavagna dell'Accademia: ciò che è fragile ha diritto al riposo. Ma ho dimenticato di scrivere: e ha diritto anche a svegliarsi. Se qualcuno legge questo, e sono ancora qualcosa, mi dica che cosa ho fatto.» Il taccuino finisce qui. Sotto, il sigillo bianco è stato premuto due volte.",
+                    "requires": {"bosses_total": 50}
+                }
+            ]
+        },
+        "libro_fuoco": {
+            "title": "Il Libro del Fuoco che Resta",
+            "unlock_condition": "Vinci una Run Standard",
+            "unlock": {"type": "won_normal", "value": 1},
+            "chapters": [
+                {
+                    "title": "I Sei",
+                    "text": "Gli Architetti erano sette, uno per elemento. Quando il settimo accese il Vuoto, gli altri sei provarono a richiudere la ferita. Non ci riuscirono. Fecero allora l'unica cosa possibile: la avvolsero in un guscio, perché il Vuoto non uscisse, e dentro il guscio misero il ricordo del mondo com'era, perché non andasse perduto. Il guscio è il Labirinto. Poi cinque di loro si ritirarono nelle cittadelle del cielo, e tacquero. Erano stanchi anche loro, forse, per la prima volta. Il sesto, l'Architetto del Fuoco, non si ritirò."
+                },
+                {
+                    "title": "Ardel",
+                    "text": "L'Architetto del Fuoco si chiamava Ardel. Non era il fuoco della rabbia, quello che brucia nelle forge del Caos: era il fuoco di prima, il calore del focolare, la veglia accanto ai malati, la luce in una finestra di sera. Quando vide i suoi fratelli ritirarsi, disse che qualcuno doveva restare dentro il guscio, con chi ci sarebbe rimasto intrappolato. Scese nel Labirinto, in un punto che il Labirinto non vede, e si fece brace. Il Fuoco del Campo è lui. Non parla più. Ma scalda.",
+                    "requires": {"reached_floor": 20}
+                },
+                {
+                    "title": "Il Potere di Riportare",
+                    "text": "Ardel ha un solo potere, dentro il guscio: riportare indietro. Quando qualcuno che lui ha scelto muore nel Labirinto, invece di diventare un mattone del guscio, torna al Campo. Ma ogni ritorno gli costa una parte di sé. Una brace che si spegne. Per questo ha scelto pochissimo, in mille anni: una sola persona, alla fine, che torna e torna. E ha raccolto le vite di altri caduti, sottraendole al guscio prima che diventassero pietra, per prestarle a chi torna. L'Essenza che chi torna riporta al Campo lo nutre. I potenziamenti che chi torna compra sono Ardel che, nutrito, restituisce forza.",
+                    "requires": {"reached_floor": 25}
+                },
+                {
+                    "title": "Perché",
+                    "text": "Nessuno sa perché Ardel abbia scelto proprio quella persona, fra tutte quelle che sono morte nel Labirinto. I canti dicono «tranne chi sceglie, e tu lo sai». Alcuni pensano che l'abbia scelta perché era quella che aveva più bisogno di tornare. Altri, che l'abbia scelta perché era l'unica che poteva fare qualcosa per il guscio. Il Mercante Senza Volto, che conosce tutti i prezzi, dice che Ardel ha scelto chi doveva perdonarsi qualcosa, perché solo chi deve perdonarsi continua a tornare. Ma il Mercante, si sa, pensa che tutto abbia un prezzo. Anche il perdono.",
+                    "requires": {"reached_floor": 20, "bosses_total": 40}
+                }
+            ]
+        },
+        "lezioni_settimo": {
+            "title": "Le Lezioni del Settimo Architetto",
+            "unlock_condition": "Vinci al grado 1 di Ascensione",
+            "unlock": {"type": "ascension", "value": 1},
+            "chapters": [
+                {
+                    "title": "Appunti di Valerius",
+                    "text": "Questi sono gli appunti che Valerius, studente di Aetheria, prese durante le lezioni sull'elemento Normale all'Accademia della Luce Calma, nel Crepuscolo Lungo. Li ha ricopiati a memoria al Campo, dopo la sua liberazione, con l'aria di chi non vuole farlo. «Lezione prima. Il maestro dice che il Normale è l'elemento più importante, perché gli altri sei sono fatti per abitare in lui. Il Fuoco scalda le cose comuni, l'Acqua le disseta, la Terra le regge. Senza il Normale gli elementi non avrebbero niente da toccare. Gli altri studenti ridono. Io scrivo. Il maestro mi guarda, e non ride.»"
+                },
+                {
+                    "title": "Lezione sulla Fragilità",
+                    "text": "«Lezione dodicesima. Il maestro dice che la fragilità non è un difetto: è il prezzo della vita. Una pietra non è fragile, ma non vive. Un fiore è fragile, e vive. Più una cosa è viva, più si può rompere. Dice che gli Architetti hanno sbagliato una cosa, all'inizio: hanno fatto un mondo dove niente finisce mai, dove tutto torna. Hanno pensato di fare un regalo. Dice che non hanno chiesto a nessuno se lo volessero. Gli ho chiesto: e lei, maestro, cosa avrebbe fatto? Mi ha detto: avrei chiesto. Poi è rimasto in silenzio a lungo.»"
+                },
+                {
+                    "title": "L'Ultima Lezione",
+                    "text": "«Lezione ultima. Il maestro è entrato in aula e non ha detto niente. Ha scritto sulla lavagna una sola frase: ciò che è fragile ha diritto al riposo. Poi ha chiesto se avessimo domande. C'era solo un altro studente oltre a me, Teodor, il figlio del mugnaio, che aveva l'aria di avere una domanda enorme. Non l'ha fatta. Io neanche. Il maestro ha aspettato. Poi ha scritto sotto la frase il suo nome, come si firma una lettera, ed è uscito. Io l'ho letto. Lo ricordo ancora. Ho paura che, se lo scrivo, sparisca anche lui da questa pagina, come è sparito da tutte le altre.»",
+                    "requires": {"bosses_total": 40}
+                },
+                {
+                    "title": "Postilla",
+                    "text": "Sotto gli appunti, con la calligrafia di Valerius ma più incerta, c'è una postilla. «Ho deciso. Il nome lo dirò a voce, una volta sola, a chi torna sempre. Se sparisce, ricompare. Se sparisco io, pazienza: ho vissuto abbastanza da annoiarmi. Ma non lo scrivo. I nomi scritti, nel Labirinto, li mangia la polvere. I nomi detti, a volte, restano nell'aria dei Chiostri per mille anni, come la domanda di Teodor. Quando tornerà il momento giusto, lo saprò. Il Fuoco si alzerà di un palmo, come fa quando arriva qualcuno.»",
+                    "requires": {"bosses_total": 60}
+                }
+            ]
         }
     }
 }

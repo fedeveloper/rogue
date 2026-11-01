@@ -212,7 +212,7 @@ Fra una discesa e l'altra spendi l'**Essenza Astrale**:
 - ⚒️ **La Forgia Dimensionale** — sblocca armi, armature, monili, consumabili e reliquie.
 - 🍺 **La Taverna** — le classi da conquistare e come ottenerle.
 - 📜 **Grimorio e Imprese** — le sfide completate e i progressi di Maestria.
-- 📚 **L'Archivio di Aethelgard** — {len(books)} tomi di storia da sbloccare, ognuno con un bonus permanente.
+- 📚 **L'Archivio di Aethelgard** — {len(books)} tomi di storia da sbloccare: {sum(1 for b in books.values() if "bonus" in b)} danno un bonus permanente, gli altri si leggono e basta.
 - 📖 **Il Codice del Labirinto** — bestiario, fasi dei boss, personaggi, eventi, lettere insanguinate e reliquie scoperti fra una run e l'altra, con la percentuale di completamento. Ciò che manca è un `???` da riempire.
 - 🧑‍🔧 **Gli artigiani** — salva lo *Speziale*, *Borek*, *Elara* e *Valerius* dagli eventi del labirinto: apriranno una bottega dove comprare consumabili, armi, armature e monili con cui iniziare la discesa successiva.
 
