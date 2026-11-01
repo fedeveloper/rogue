@@ -85,7 +85,7 @@ Sconfitto il Dio Antico, scegli come finisce la tua storia fra i finali che ti s
 
 ### I biomi
 
-Il Labirinto cambia mentre scendi: ogni cinque piani entri in un **bioma** diverso, con la sua atmosfera. I nomi vengono dalle cronache di Aethelgard: *I Chiostri del Rimpianto*, *Le Miniere della Testardaggine*, *Le Guglie del Vento Urlante*, *Il Ventre della Memoria*, *La Forgia del Caos*, *La Soglia del Dio Antico*.
+Il Labirinto cambia mentre scendi: ogni cinque piani entri in un **bioma** diverso, con la sua atmosfera. Ogni stanza ti accoglie con le parole del suo bioma (un refettorio apparecchiato nei Chiostri, una lampada d'ottone nelle Miniere, un ponte sospeso sulle Guglie), e ogni bioma ha i suoi eventi, che non incontri altrove. I nomi vengono dalle cronache di Aethelgard: *I Chiostri del Rimpianto*, *Le Miniere della Testardaggine*, *Le Guglie del Vento Urlante*, *Il Ventre della Memoria*, *La Forgia del Caos*, *La Soglia del Dio Antico*.
 
 **📿 I Chiostri del Rimpianto (piani 1–5).** Le rovine di un'accademia della Luce Calma.
 - **Più eventi, meno trappole.** E più creature di Luce e di Tenebra.
@@ -679,6 +679,7 @@ Tra una discesa e l'altra spendi l'**Essenza Astrale**:
   - *Bestiario*: nemici e boss incontrati e sconfitti; la loro storia si legge solo dopo averli battuti.
   - *Incantesimi*: gli incantesimi che hai lanciato almeno una volta, con elemento, costo ed effetto.
   - *Personaggi*: i capitoli vissuti con Alaric e Silas, e il segno lasciato dalle tue scelte.
+  - *Atlante*: la storia di ogni bioma, cosa era prima del Labirinto e cosa nasconde. Le pagine si aprono man mano che scendi.
   - *Eventi*: quali hai visto e quante volte.
   - *Lettere insanguinate*: i messaggi letti sulle pareti prima degli scontri.
   - *Reliquie*: quelle che hai trovato almeno una volta, con la loro lore.

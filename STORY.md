@@ -27,6 +27,7 @@ La discesa deve restare veloce. Il testo lungo vive dove il giocatore sceglie di
 | | Battuta di un boss (inizio, fase, morte) | 1 frase, al massimo 25 parole |
 | **Fuori partita** | Conversazione al Campo (un argomento) | 80-250 parole, divise in battute |
 | | Voce del Bestiario (un livello) | 40-80 parole |
+| | Pagina dell'Atlante (storia di un bioma) | 80-200 parole |
 | | Capitolo di un libro dell'Archivio | 150-400 parole |
 | | Ricordo di una vita prestata (classe) | 120-250 parole |
 | | Epilogo di un finale | 3-6 frasi per variante |
@@ -197,6 +198,7 @@ Ogni bioma è una regione ricordata dal Labirinto. Ha un boss nativo, una gente,
 - **Pericolo:** la Nostalgia Letale. Le voci dei tuoi cari ti chiamano per nome.
 - **Segreti:** la **Prima Pietra** degli Architetti sotto il marmo del piano 3; l'aula dove Sereth insegnava, con il suo nome raschiato dalla lavagna.
 - **Temi:** il rimpianto, il sapere che non ha salvato nessuno.
+- **Dettagli già nel gioco:** ogni chiostro ha undici archi. Nel refettorio la tavola è apparecchiata per quaranta, con la sedia della Badessa a capotavola. Il registro dei voti è firmato da una sola mano per tutte le ultime novizie; l'ultima pagina dice «Restare». Le novizie hanno la bocca cucita con un filo d'argento. Sulla lavagna dell'aula di Sereth la firma è stata raschiata con una lama fino a incidere l'ardesia. Un copista di cenere scrive un elenco infinito di nomi, e quello del Ritornante c'è molte volte.
 
 ### ⛏️ Le Miniere della Testardaggine (piani 6-10)
 - **Cos'era:** le gallerie dei Monti di Durn, nani e uomini insieme, gli ingranaggi dell'Era dell'Ambizioso Raggiungimento.
@@ -205,6 +207,7 @@ Ogni bioma è una regione ricordata dal Labirinto. Ha un boss nativo, una gente,
 - **Pericolo:** il Gas del Silenzio, che toglie la voce e gli incantesimi.
 - **Segreti:** la forgia di **Kaelen il Muto**; la galleria da cui la squadra di Borek non è uscita.
 - **Temi:** la testardaggine, la fedeltà a un ordine sbagliato.
+- **Dettagli già nel gioco:** lampade d'ottone ogni venti passi; canarini d'ottone a molla che fischiano quando arriva il Gas. Le gallerie basse erano dei bambini. Su una trave sono incisi gli undici nomi della squadra di Borek: sette cerchiati (risalirono con lui), quattro barrati. Il carro del pane per la squadra di Hadrek è fermo a metà strada («Tornate presto»). I cartelli dell'Ambizioso Raggiungimento dicono «Basta scavare». Uno degli ingranaggi giganti porta la firma del nonno di Borek.
 
 ### 🌪️ Le Guglie del Vento Urlante (piani 11-15)
 - **Cos'era:** le torri dei tessitori di Valeriana e l'Osservatorio, dove si misuravano le stelle.
@@ -213,6 +216,7 @@ Ogni bioma è una regione ricordata dal Labirinto. Ha un boss nativo, una gente,
 - **Pericolo:** la Caduta Astrale: chi perde l'equilibrio non cade in basso, ma in un altro piano.
 - **Segreti:** la mappa del cielo di Aethelgard com'era, incisa sul pavimento dell'Osservatorio; il campo di lavanda di Ilse, sospeso su una guglia.
 - **Temi:** la curiosità, la perdita dei punti di riferimento.
+- **Dettagli già nel gioco:** gli stendardi azzurri portano i nomi delle quaranta valli di Valeriana. Fra le guglie ci sono ponti di vento che si attraversano con una formula di Aetheria. Un corriere di Valeriana cerca da mille anni la casa a cui consegnare una lettera incompleta di un cavaliere alla figlia che piantava lavanda (Alaric a Ilse). Dalla grande lente dell'Osservatorio, girata verso il basso, si vede in fondo al Labirinto un occhio chiuso.
 
 ### 🫀 Il Ventre della Memoria (piani 16-20)
 - **Cos'era:** il Mare Interno e le sue coste. Ora è un organismo: pareti traslucide come membrane, dentro oggetti e volti.

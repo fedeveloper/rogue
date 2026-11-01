@@ -99,7 +99,7 @@ class CombatSession(PlayerActions, Spells, Reactions, Phases, EnemyActions):
 
     def start(self):
         if self.enemy.modifier == "normal":
-            delay_print(f"\n{texts.pick(GAME_DATA['lore']['boss' if self.enemy.is_boss else 'combat'])}")
+            delay_print(f"\n{texts.room('boss' if self.enemy.is_boss else 'combat', self.floor)}")
             if self.enemy.is_boss:
                 delay_print(f"{Colors.MAGENTA}{Colors.BOLD}--- {self.enemy.title.upper()} ---{Colors.RESET}")
                 if self.enemy.lore: delay_print(f"{Colors.YELLOW}\"{self.enemy.lore}\"{Colors.RESET}\n")

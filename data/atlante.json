@@ -1,0 +1,70 @@
+{
+    "biomes": {
+        "chiostri": [
+            {
+                "title": "L'Accademia della Luce Calma",
+                "requires": {"reached_floor": 1},
+                "text": "I Chiostri erano l'Accademia della Luce Calma di Aurelia, la capitale di Aethelgard, e i monasteri che le stavano intorno. Qui si studiavano gli elementi come si studia una lingua: uno alla volta, con pazienza, sotto undici archi per chiostro. Le novizie cantavano alle sei, gli studenti litigavano sulle formule nei corridoi, gli Architetti venivano qualche volta a fare lezione di persona. Quando il Labirinto si aprì, l'Accademia fu tra i primi luoghi a sprofondare, intera, con dentro chi studiava. Il marmo bianco è rimasto, ma una vena viola lo attraversa: è il colore del rimpianto, dicono quelli che ci passano. Ogni pietra ricorda una lezione che non è servita a salvare nessuno."
+            },
+            {
+                "title": "La Nostalgia Letale",
+                "requires": {"reached_floor": 3},
+                "text": "Il pericolo dei Chiostri non ha denti. Nei corridoi senti chiamare il tuo nome con la voce di qualcuno che ami, e la voce è sempre appena dietro l'angolo, sempre a due passi. Chi si ferma ad ascoltare troppo a lungo diventa una statua di sale, con la testa piegata come per sentire meglio. Le statue riempiono i chiostri: novizie, studenti, viandanti, una ragazza vicino a una fontana senz'acqua. Nessuna è stata uccisa. Tutte hanno scelto di restare, una frase alla volta. Le novizie superstiti dicono che la Badessa le chiama «le fedeli», perché sono le uniche che hanno smesso di fare domande."
+            },
+            {
+                "title": "La Prima Pietra",
+                "requires": {"reached_floor": 4},
+                "text": "Sotto il marmo del terzo piano, dice la tradizione delle novizie, c'è la prima pietra posata dagli Architetti quando fissarono gli elementi in armonia. Gli eruditi la consideravano una favola: gli Architetti, dicevano, non posavano pietre, le pensavano. Eppure qualcuno l'ha trovata, e la Cartografa l'ha segnata sulla sua mappa. È una pietra piccola, grigia, comune: il Normale, l'elemento delle cose qualunque, fu il primo a essere posato, e tutti gli altri ci furono costruiti sopra. Le misure intorno alla pietra non tornano. Sotto c'è più spazio di quanto dovrebbe esserci, come se l'Accademia avesse una cantina che nessuno ha mai contato."
+            },
+            {
+                "title": "L'Aula in Fondo al Terzo Piano",
+                "requires": {"reached_floor": 6},
+                "text": "Nell'Accademia c'era un'aula che gli studenti evitavano, in fondo al terzo piano, con una lavagna d'ardesia e finestre verso il nulla. Ci insegnava un maestro che parlava di un elemento che nessuno voleva studiare: il Normale, la materia delle cose comuni, della fragilità, della polvere. Gli studenti ridevano. Lui no. Oggi la lavagna è ancora lì, e sopra c'è ancora l'ultima frase che scrisse, ma il nome sotto la frase è stato raschiato via con una lama, con tanta rabbia da incidere l'ardesia. Chi ha raschiato quel nome non voleva che lo si dimenticasse: voleva che non si potesse più pronunciare."
+            }
+        ],
+        "miniere": [
+            {
+                "title": "I Monti di Durn",
+                "requires": {"reached_floor": 6},
+                "text": "Le Miniere erano le gallerie dei Monti di Durn, a Ovest di Aethelgard, sopra le vene di ferro più ricche del continente. Ci lavoravano insieme nani e uomini, nelle stesse squadre: gli uomini più veloci, i nani più testardi. C'erano lampade d'ottone ogni venti passi, sale di sosta con le stufe di ghisa, birra nera così densa che ci stava in piedi un cucchiaio. Nell'Era dell'Ambizioso Raggiungimento si costruirono qui gli ingranaggi giganti che muovevano le pareti e le stanze, e che girano ancora oggi, a vuoto, perché furono fatti bene. Quando il Labirinto si aprì, le squadre erano al lavoro. Molte stanno ancora lavorando."
+            },
+            {
+                "title": "Il Gas del Silenzio",
+                "requires": {"reached_floor": 7},
+                "text": "Nelle gallerie basse sale un vapore che non ha odore, se non un'ombra dolce, come di frutta troppo matura. I minatori lo chiamavano il Gas del Silenzio: toglie la voce, e con la voce la capacità di dare forma all'Etere. Chi lo respira a lungo non riesce più a pronunciare un incantesimo, poi un nome, poi nemmeno il proprio. I vecchi di Durn tenevano in gabbia un canarino d'ottone che fischiava quando il gas arrivava. Le gabbie ci sono ancora, appese alle travi. Alcuni canarini fischiano ancora. Nessuno li ascolta più."
+            },
+            {
+                "title": "La Squadra che Scendeva",
+                "requires": {"reached_floor": 8},
+                "text": "Il giorno in cui il Labirinto entrò nei Monti, la squadra di Hadrek, il Caposquadra, era al livello più basso. Hadrek era un buon capo, uno di quelli che dicono sempre che sotto la prossima roccia c'è qualcosa. Disse: l'uscita è sotto, scendiamo. Scesero per giorni, finché la roccia divenne calda come carne. Uno solo disobbedì, e risalì con sette compagni: la galleria crollò al terzo giorno di risalita, e uscì soltanto lui. Hadrek invece continuò a scendere, e scende ancora. Le sue tacche sui muri, una per ogni giorno di scavo, sono migliaia, e vanno tutte verso il basso."
+            },
+            {
+                "title": "La Forgia nel Basalto",
+                "requires": {"reached_floor": 10},
+                "text": "In fondo alle Miniere, oltre l'ultima lampada, c'è una forgia scavata nel basalto vivo. Ci lavorava il miglior forgiatore dei Monti, un uomo che voleva costruire una spada capace di tagliare il Caos. La sera prima della Discordia salì alla sua forgia, e la spada esplose: le schegge sono ancora conficcate nella roccia, e nel basalto è rimasta la sagoma bruciata di un uomo con le braccia alzate. I minatori raccontano che il fabbro non è morto. Che ha le mani di pietra e la bocca piena di sabbia, e che lavora ancora, una lama dopo l'altra, senza mai essere soddisfatto. Le voci dei minatori, di solito, mentono. Questa no."
+            }
+        ],
+        "guglie": [
+            {
+                "title": "Valeriana, le Valli della Seta",
+                "requires": {"reached_floor": 11},
+                "text": "Le Guglie erano Valeriana, a Nord di Aethelgard, una terra dove il Vento e l'Acqua vivevano insieme in una nebbia costante che rendeva le valli incredibilmente fertili. I suoi tessitori erano famosi in tutto il continente: facevano abiti che cambiavano colore con l'umore di chi li indossava, e stendardi azzurri che si vedevano da dieci valli. Le loro torri erano alte e sottili, unite da ponti di corda e di vento. Nella notte della Discordia le valli sprofondarono e le torri si allungarono verso il basso, nel Labirinto, finché diventarono guglie sospese sul niente. I tessitori ci sono ancora. Sono diventati gli Spiriti della Tempesta, e tessono fulmini invece di seta."
+            },
+            {
+                "title": "La Caduta Astrale",
+                "requires": {"reached_floor": 12},
+                "text": "Sulle Guglie non si cade verso il basso. Chi perde l'equilibrio su un ponte attraversa le nubi elettriche e precipita in un altro piano, lontano, perdendo per strada gran parte di ciò che portava. Le guide di Valeriana la chiamavano Caduta Astrale, perché chi cadeva vedeva le stelle passargli accanto, vicinissime. Alcuni sopravvissuti raccontano di aver visto, nella caduta, il cielo di Aethelgard com'era, intero, per un battito di ciglia. Per questo ci sono pazzi che si buttano apposta. Il vento, sulle Guglie, è così forte da strappare l'Essenza dal corpo: chi è caduto torna sempre un po' più leggero, e non solo nel portafoglio."
+            },
+            {
+                "title": "L'Osservatorio",
+                "requires": {"reached_floor": 13},
+                "text": "Sulla guglia più alta c'era l'Osservatorio di Valeriana, dove gli astronomi contavano le stelle. Il pavimento era una mappa del cielo: una borchia d'argento per ogni stella, un solco per ogni costellazione. Gli allievi ci camminavano sopra a piedi nudi per sentire dove si trovavano. La Maestra, l'Astronoma, insegnava che le stelle non si guardano: si contano. Chi le guarda si innamora, chi le conta capisce. Nella notte della Discordia caddero quattrocentododici stelle, e quattrocentododici borchie saltarono via dal pavimento. L'Astronoma salì a misurarle meglio e non scese più. È ancora lassù."
+            },
+            {
+                "title": "Il Campo di Lavanda",
+                "requires": {"reached_floor": 15},
+                "text": "Su una guglia isolata, dove il vento non arriva, c'è un campo di lavanda. Le file sono dritte e curate, come le piantano i contadini di Valeriana, e il Labirinto non ha osato toccarle. Le guide dicevano che ogni bioma ha un posto che il Labirinto non riesce a mangiare, un ricordo troppo amato per essere digerito, e che sulle Guglie è questo. Chi l'ha piantato era una ragazza di Valeriana che aspettava suo padre, un cavaliere partito per custodire una porta. In fondo al campo c'è una vanga piccola, da bambina. Il profumo, nelle giornate senza vento, arriva fino all'Osservatorio."
+            }
+        ]
+    }
+}
