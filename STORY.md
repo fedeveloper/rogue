@@ -310,6 +310,25 @@ Il **Campo Base** è un cerchio di pietre intorno al Fuoco, in un punto del Labi
     - *Le Cronache dei Paladini Corrotti*: del cavaliere **Severo**, che non bruciò Silas, ricominciò a dire la preghiera dei malati e si sedette accanto all'armatura di Maud.
     - *Il Libro dei Nomi del Ventre*: della bibliotecaria di Port'Alba **Adelina**, che salvò migliaia di nomi e perse il suo.
     - *Il Libro dei Sette Sigilli*: i sigilli della Prima Pietra (quello del Normale è una linea orizzontale, «come una persona sdraiata», e non si spezzò). Dopo la vittoria e 60 boss il Ritornante vi lascia un graffio, un ottavo segno.
+  - Quinta ondata (diciotto libri):
+    - *La Cronaca della Carestia del Sud*: del notaio di **Fontegrano**, la valle più grande; le tre leggi di Galdor (nessuno abbia fame, nessuno paghi l'acqua dei fiumi, nessuno sia giudicato senza essere ascoltato); il re che portava sacchi in piazza; il contrabbandiere con la brigantina.
+    - *Gli Appunti di Laboratorio di Ottavia Lune*: il maestro le lasciò una moneta della Pietra con la loro prima lezione; qualcuno le lasciò sulla porta una boccetta di estratto di Normale con il sigillo bianco («forse ti serve»), che non aprì mai.
+    - *Le Memorie del Corriere di Valeriana*: il corriere **Pio** ebbe la lettera non finita di Alaric; arrivò al campo di lavanda tre giorni dopo la partenza di Ilse (Berta: «la lavanda è fiorita») e non riuscì mai a consegnarla. La lettera è ancora «in viaggio», di corriere in corriere.
+    - *Il Libro dei Goblin*: i Goblin si chiamano con il nome di ciò che hanno in mano; il Re dei Goblin, per un istante, disse «ero il re del grano»; il piccolo Goblin tiene in tasca un pezzo di formaggio.
+    - *Il Diario di Arlo l'Orologiaio*: l'orologio grande della vetrina, sul quale i campanari regolavano le undici; fermo alle undici e un quarto, poi alle undici e sedici, dopo che Fenn lo caricò. Fenn fu trovato di pietra sotto l'orologio.
+    - *I Canti delle Novizie*: il canzoniere di Agnese; la canzone di Berenice; l'ultima canzone, per la Badessa, cominciata da lei («Possono cantare, adesso»). Nei Chiostri, la notte, si canta in due voci.
+    - *Le Cronache del Campo*: il Campo all'inizio era il Fuoco alto come un uomo e il Ritornante; l'ordine degli arrivi; le sere; la pagina aperta «Stasera...» con la matita di Silas.
+    - *Il Libro di Ivo, il Messaggero*: Ivo, figlio di un pastore delle colline di Aurelia; l'Architetto «dalle mani calde» gli disse «se non arrivi in tempo, non è colpa tua»; arrivò in tempo. Sotto la sua ultima pagina Corvo scrisse: «Il ritardo è stato mio».
+    - *Il Libro della Prima Era*: i sette viandanti che separarono le note; il Normale tiene i nodi della trama; l'ultimo viandante chiese «avete chiesto agli uomini se lo vogliono?». Il filo grigio della stoffa è il più consumato.
+    - *Le Lettere di Marta*: la moglie del cartografo di corte (il Viandante). Mattia vide passare l'Architetto («era il papà di qualcuno»). Marta era al mercato quando il cielo si strappò; il Viandante la cerca ancora.
+    - *La Brace*: frammenti incisi intorno al Fuoco; i nomi delle nove vite sul tavolo dove lo Speziale posa le ciotole; dopo la vittoria e 40 boss il nome Ardel, la casa con la porta aperta, il fratello del tè. L'ultimo, sulla pentola dello Speziale: «Quando avrà finito, non dovrà più tornare».
+    - *Il Ricettario del Cuoco della Gabbiana*: il cuoco **Tullio** e la figlia **Nella**; la Zuppa del Drago Gentile; lo Speziale la cucinò al Campo.
+    - *Il Taccuino del Lapicida*: il lapicida si chiamava **Oddo**; i segni del muro sotto Calaris raffreddavano la pietra; voleva incidere un segno caldo accanto al sigillo del Normale e non arrivò in tempo.
+    - *Il Diario di Hrodna*: scritto da lei, che scriveva male; **Ulf** è il Berserker del Teschio di Sangue; davanti al Demone Maggiore ballò la danza della festa e il fuoco si piegò, per un istante.
+    - *Il Quaderno della Musica di Ilio*: gli accordi; l'accordo grande in un temporale; la nota sola sulla sedia; l'accordo con una pausa invece di un buco.
+    - *Le Lettere del Mercante al Mendicante*: «fratello»; il Mercante versò nel Fuoco il sapore delle mele del Ritornante e il Fuoco si alzò di un palmo; vuole restituire i ricordi del Ritornante uno per sera.
+    - *Il Quaderno di Tessa Bambina*: centoquarantadue gradini della torre dei mulini; il passo di trentotto centimetri; il piatto per il nonno, che la Cartografa porta ancora nella borsa. Chi le insegnò a temperare il carboncino era un amico di Orvin che zoppicava.
+    - *Le Pagine del Piano Ventinove*: Orvin al bivacco; sentì per quarantuno notti il passo del Ritornante (settantaquattro centimetri, il sinistro più corto) e decise di non scendere al trenta: «il piano che manca è suo».
 
 Il Campo cambia con la storia: più personaggi trovano pace, più il Fuoco è caldo; chi sceglie la Corruzione lo trova un poco più freddo al ritorno.
 

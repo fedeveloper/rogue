@@ -706,6 +706,24 @@ Tra una discesa e l'altra spendi l'**Essenza Astrale**:
 | Le Cronache dei Paladini Corrotti | Raggiungi il Piano 13 | — |
 | Il Libro dei Nomi del Ventre | Raggiungi il Piano 21 | — |
 | Il Libro dei Sette Sigilli | Sconfiggi 20 Boss | — |
+| La Cronaca della Carestia del Sud | Raggiungi il Piano 5 | — |
+| Gli Appunti di Laboratorio di Ottavia Lune | Raggiungi il Piano 11 | — |
+| Le Memorie del Corriere di Valeriana | Sconfiggi 10 Boss | — |
+| Il Libro dei Goblin | Raggiungi il Piano 4 | — |
+| Il Diario di Arlo l'Orologiaio | Raggiungi il Piano 14 | — |
+| I Canti delle Novizie | Raggiungi il Piano 2 | — |
+| Le Cronache del Campo | Sconfiggi 30 Boss | — |
+| Il Libro di Ivo, il Messaggero | Raggiungi il Piano 20 | — |
+| Il Libro della Prima Era | Raggiungi il Piano 8 | — |
+| Le Lettere di Marta | Raggiungi il Piano 18 | — |
+| La Brace | Vinci una Run Standard | — |
+| Il Ricettario del Cuoco della Gabbiana | Raggiungi il Piano 17 | — |
+| Il Taccuino del Lapicida | Vinci una Run Standard | — |
+| Il Diario di Hrodna | Raggiungi il Piano 22 | — |
+| Il Quaderno della Musica di Ilio | Scopri 12 incantesimi | — |
+| Le Lettere del Mercante al Mendicante | Sconfiggi 40 Boss | — |
+| Il Quaderno di Tessa Bambina | Raggiungi il Piano 6 | — |
+| Le Pagine del Piano Ventinove | Vinci una Run Standard | — |
 
 - **🔥 Il Fuoco del Campo** — chi incontri nel Labirinto può venire a scaldarsi qui. *Silas*, *la Cartografa*, *il Viandante Cieco* e, se lo hai liberato, *la luce di Alaric* compaiono quando le loro storie sono andate abbastanza avanti. Ti parlano in base a ciò che hai fatto e la prima volta ti lasciano un dono (✦). Più avanti nelle loro storie, al fuoco arrivano anche *l'ampolla di Linnea* e *Kaelen*. La luce di Alaric non parla, ma anche con lei ci sono argomenti: i suoi ricordi passano nel calore. Siedono al fuoco anche gli artigiani che hai liberato (*lo Speziale*, *Borek*, *Elara*, *Valerius*). Con ognuno puoi **parlare per argomenti**: ogni argomento nuovo si apre con il tuo progresso (i piani raggiunti, i boss sconfitti, le scelte fatte negli eventi, la vittoria) ed è segnato ✦ finché non lo leggi. A volte ti chiedono una risposta: non cambia niente nel gioco, ma loro se la ricordano. È qui, lontano dalla discesa, che raccontano chi erano e cosa nascondono. Qui costruisci anche, con l'Essenza:
   - *il Tavolo della Cartografa* (aiutala nel Labirinto): sulla mappa vedi quali storie ti aspettano nelle stanze speciali e negli eventi che tornano;
