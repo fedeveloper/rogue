@@ -103,12 +103,12 @@ class PagesTest(Sandbox):
         self.assertIn("Tasca Dorata", "\n".join(plain(codex.relics_page())))
 
     def test_completion_counts_every_section(self):
-        total = sum(t for _, _, t in codex.sections())
+        total = sum(t for name, _, t in codex.sections() if name not in codex.UNCOUNTED)
         codex.record_relic("tasca_dorata")
         codex.record_letter(0)
         codex.record_reaction("Fuoco+Acqua")
         codex.record_spell("raffica")
-        self.assertEqual([s[1] for s in codex.sections()], [0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0])  # le ultime: Atlante, Discese dimenticate, Vite prestate
+        self.assertEqual([s[1] for s in codex.sections()], [0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, len(codex.armory_open()), 0])  # le ultime: Atlante, Discese dimenticate, Armeria, Vite prestate
         self.assertEqual(codex.completion(), 4 * 100 // total)
 
     def test_characters_page_follows_the_arc(self):

@@ -26,3 +26,10 @@ def room(kind: str, floor: int) -> str:
 def index(n: int) -> int:
     """Un indice a caso fra 0 e n-1 (per esempio la lettera insanguinata da leggere)."""
     return RNG.randrange(n)
+
+
+def boss_voice(name: str, moment: str) -> str:
+    """Una battuta del boss `name` all'inizio dello scontro (`intro`), al cambio di fase (`phase`) o alla morte (`death`),
+    da `data/voci_boss.json`; stringa vuota per chi non ha voce (per esempio una Nemesi)."""
+    lines = GAME_DATA["voci_boss"]["bosses"].get(name, {}).get(moment)
+    return pick(lines) if lines else ""
