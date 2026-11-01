@@ -107,6 +107,83 @@ class BiomeTextsTest(unittest.TestCase):
             PROFILE_MANAGER._data["max_floor"] = saved
 
 
+def gated_texts():
+    """(testo, condizioni) di ogni testo della v6 che si apre con il progresso del profilo."""
+    for pages in RAW_DATA["atlante"]["biomes"].values():
+        for p in pages: yield p["text"], p.get("requires", {})
+    for t in RAW_DATA["lettere"]["threads"]:
+        for x in t["letters"] + [t["epilogue"]]: yield x, t.get("requires", {})
+    for ev_id in v6_events():
+        ev = RAW_DATA["events"][ev_id]
+        for sc in ev["scenes"].values():
+            yield sc["text"], ev.get("requires", {})
+            for c in sc["choices"]: yield c.get("msg", ""), ev.get("requires", {})
+    for e in RAW_DATA["bestiario"]["creatures"].values():
+        yield e["vista"], {}
+
+
+class LadderTest(unittest.TestCase):
+    """La Scala delle rivelazioni (STORY.md): il nome del Rinnegato non compare ancora nel gioco, quello del Fuoco
+    solo dal terzo gradino (piano 20 o vittoria)."""
+
+    def test_late_names_wait_for_their_step(self):
+        for text, req in gated_texts():
+            with self.subTest(text=text[:50]):
+                self.assertNotIn("Sereth", text)
+                if "Ardel" in text:
+                    self.assertTrue(req.get("won") or req.get("reached_floor", 0) >= 20 or req.get("min_floor", 0) >= 20)
+
+
+class ThreadsAndBestiaryTest(unittest.TestCase):
+    def setUp(self):
+        import copy
+        from data_manager import PROFILE_MANAGER
+        self.pm, self._saved = PROFILE_MANAGER, copy.deepcopy(PROFILE_MANAGER._data)
+        self._save = mock.patch.object(PROFILE_MANAGER, "save"); self._save.start()
+        PROFILE_MANAGER.codex["threads"] = {}
+
+    def tearDown(self):
+        self._save.stop()
+        self.pm._data.clear(); self.pm._data.update(self._saved)
+
+    def test_letters_and_bestiary_follow_the_writing_guide(self):
+        ids = [t["id"] for t in RAW_DATA["lettere"]["threads"]]
+        self.assertEqual(len(ids), len(set(ids)))
+        for t in RAW_DATA["lettere"]["threads"]:
+            with self.subTest(thread=t["id"]):
+                self.assertGreaterEqual(len(t["letters"]), 8)
+                for x in t["letters"]: self.assertLessEqual(len(x.split()), 25, "una lettera è al massimo 25 parole")
+                self.assertTrue(60 <= len(t["epilogue"].split()) <= 200)
+                self.assertLessEqual(set(t.get("requires", {})), events.PROFILE_CONDITIONS)
+        self.assertEqual(set(RAW_DATA["bestiario"]["creatures"]), set(RAW_DATA["enemies"]) | set(RAW_DATA["bosses"]))
+        for name, e in RAW_DATA["bestiario"]["creatures"].items():
+            with self.subTest(creature=name):
+                self.assertEqual(set(e), {"vista", "abitudini", "storia"})
+                for v in e.values(): self.assertTrue(20 <= len(v.split()) <= 90, f"{len(v.split())} parole")
+
+    def test_a_thread_is_read_in_order_without_touching_the_game_dice(self):
+        import random
+        import threads
+        state = random.getstate()
+        first = RAW_DATA["lettere"]["threads"][0]
+        with mock.patch("threads.open_threads", return_value=[first]):
+            got = [threads.next_letter()[1] for _ in first["letters"]]
+        self.assertEqual(got, first["letters"])
+        self.assertTrue(threads.complete(first))
+        with mock.patch("texts.RNG.random", return_value=0.0), mock.patch("threads.delay_print"), mock.patch("threads.display_msg"):
+            threads.maybe_show()
+        self.assertEqual(random.getstate(), state, "le lettere usano il caso dei testi, non quello del gioco")
+
+    def test_the_bestiary_opens_tier_by_tier(self):
+        import codex
+        name = next(iter(RAW_DATA["enemies"]))
+        rules = RAW_DATA["bestiario"]["rules"]
+        tiers = lambda killed: [t for t in codex.bestiary_tiers(name, {"seen": 1, "killed": killed}, False) if codex.UNKNOWN not in t[1]]
+        self.assertEqual(len(tiers(0)), 1)
+        self.assertEqual(len(tiers(rules["habits"])), 2)
+        self.assertEqual(len(tiers(rules["story"])), 3)
+
+
 class TextsTest(unittest.TestCase):
     def test_no_two_narrative_texts_are_the_same(self):
         self.assertEqual(conta_testi.duplicates(conta_testi.blocks()), [], "un testo narrativo è ripetuto identico")

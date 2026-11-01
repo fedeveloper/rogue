@@ -679,6 +679,8 @@ Tra una discesa e l'altra spendi l'**Essenza Astrale**:
   - *Bestiario*: nemici e boss incontrati e sconfitti; la loro storia si legge solo dopo averli battuti.
   - *Incantesimi*: gli incantesimi che hai lanciato almeno una volta, con elemento, costo ed effetto.
   - *Personaggi*: i capitoli vissuti con Alaric e Silas, e il segno lasciato dalle tue scelte.
+  - *Bestiario*: ogni creatura ha tre voci. *Cosa si vede* la leggi appena la incontri; *Come si comporta* e *Chi era* dopo averne sconfitte abbastanza (i boss dopo poche vittorie).
+  - *Discese dimenticate*: ai falò e accanto ai forzieri, a volte, trovi incise su una pietra delle lettere con una calligrafia che ti sembra di conoscere. Ogni gruppo di otto racconta una discesa che hai dimenticato; quando lo completi, leggi qui come è finita. Sono solo racconto: non danno né tolgono niente.
   - *Atlante*: la storia di ogni bioma, cosa era prima del Labirinto e cosa nasconde, e quella delle Eco del Ciclo. Le pagine si aprono man mano che scendi.
   - *Eventi*: quali hai visto e quante volte.
   - *Lettere insanguinate*: i messaggi letti sulle pareti prima degli scontri.

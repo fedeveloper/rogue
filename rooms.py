@@ -19,6 +19,7 @@ from epitaph import note
 from entities import Rune
 import modes
 import texts
+import threads
 from combat import CombatSession, reaction_key
 from combat.rewards import audacity_bonus, audacity_reward, audacity_text, gain_audacity, rune_drop, scroll_drop
 
@@ -229,6 +230,7 @@ def read_oblivion(player: Player, tome):
 
 def campfire_room(player: Player, floor: int):
     delay_print(f"\n{Colors.YELLOW}{texts.room('campfire', floor)}{Colors.RESET}")
+    threads.maybe_show()
     while True:
         clear_screen()
         prompt = f"\n{Colors.YELLOW}[ 🔥 FALÒ E FORGIA ] | Tuo Oro: {player.gold} | HP: {player.hp}/{player.max_hp}{Colors.RESET}\n"
@@ -358,6 +360,7 @@ def chest_risks(floor: int) -> dict:
 
 def treasure_room(player: Player, floor: int):
     delay_print(f"\n{Colors.YELLOW}{texts.room('treasure', floor)}{Colors.RESET}")
+    threads.maybe_show()
     rules, risks = GAME_DATA["meta"]["rooms"]["treasure"], chest_risks(floor)
     roll = random.random() * 100
     kind = "mimic" if roll < risks["mimic"] else "locked" if roll < risks["mimic"] + risks["locked"] else "open"
