@@ -88,6 +88,8 @@ def sections() -> List[Tuple[str, int, int]]:
         ("Reazioni elementali", len(set(PROFILE_MANAGER.codex.get("reactions", [])) & set(GAME_DATA["elements"]["reactions"])), len(GAME_DATA["elements"]["reactions"])),
         ("Incantesimi", len(set(PROFILE_MANAGER.codex.get("spells", [])) & set(GAME_DATA["spells"]["spells"])), len(GAME_DATA["spells"]["spells"])),
         ("Atlante", sum(len(atlas_open(b)) for b in GAME_DATA["atlante"]["biomes"]), sum(len(p) for p in GAME_DATA["atlante"]["biomes"].values())),
+        ("Discese dimenticate", sum(min(PROFILE_MANAGER.codex.get("threads", {}).get(t["id"], 0), len(t["letters"])) for t in GAME_DATA["lettere"]["threads"]),
+         sum(len(t["letters"]) for t in GAME_DATA["lettere"]["threads"])),
     ]
 
 
@@ -117,8 +119,43 @@ def bestiary_page() -> List[str]:
             lines.append(f"{head} [{get_element_icon(data['element'])}]  incontri {rec['seen']} · sconfitti {rec['killed']}")
             if rec["killed"] and data.get("lore"): lines.append(f"    {Colors.CYAN}{data['lore']}{Colors.RESET}")
             elif not rec["killed"]: lines.append(f"    {Colors.RED}Sconfiggilo per conoscerne la storia.{Colors.RESET}")
+            lines += [f"    {label}: {text}" for label, text in bestiary_tiers(name, rec, title == "BOSS")]
             if rec["killed"] and (style := GAME_DATA["moves"]["profiles"].get(data.get("profile"))):
                 lines.append(f"    {Colors.MAGENTA}Stile: {style['name']}. {style['desc']}{Colors.RESET}")
+    return lines
+
+
+TIER_LABELS = (("vista", "Cosa si vede"), ("abitudini", "Come si comporta"), ("storia", "Chi era"))
+
+
+def bestiary_tiers(name: str, rec: dict, boss: bool) -> list:
+    """Le voci del Bestiario a livelli (`data/bestiario.json`): la prima la apri vedendo la creatura, le altre
+    sconfiggendone abbastanza (`rules`). Le voci ancora chiuse dicono quante sconfitte mancano."""
+    entry = GAME_DATA["bestiario"]["creatures"].get(name)
+    if not entry: return []
+    rules = GAME_DATA["bestiario"]["rules"]
+    need = {"vista": 0, "abitudini": rules["boss_habits" if boss else "habits"], "storia": rules["boss_story" if boss else "story"]}
+    out = []
+    for key, label in TIER_LABELS:
+        if key == "vista" or rec["killed"] >= need[key]: out.append((label, entry[key]))
+        else:
+            out.append((label, f"{UNKNOWN} (sconfiggilo {need[key]} volte)"))
+            break
+    return out
+
+
+def threads_page() -> List[str]:
+    """Le discese dimenticate: le lettere trovate di ogni filo e, a filo completo, come è finita."""
+    lines = []
+    for t in GAME_DATA["lettere"]["threads"]:
+        n = min(PROFILE_MANAGER.codex.get("threads", {}).get(t["id"], 0), len(t["letters"]))
+        if not n:
+            lines += [f"{UNKNOWN}", ""]
+            continue
+        lines.append(f"{Colors.MAGENTA}{Colors.BOLD}{t['title']}{Colors.RESET}  ({n}/{len(t['letters'])})")
+        lines += [f"  {i + 1}. \"{text}\"" for i, text in enumerate(t["letters"][:n])]
+        if n >= len(t["letters"]): lines.append(f"  {Colors.CYAN}{t['epilogue']}{Colors.RESET}")
+        lines.append("")
     return lines
 
 
@@ -293,7 +330,8 @@ def atlas_page() -> List[str]:
 
 PAGES = {"Bestiario": bestiary_page, "Personaggi": characters_page, "Eventi": events_page,
          "Lettere insanguinate": letters_page, "Reliquie": relics_page, "Finali": endings_page,
-         "Rune": runes_page, "Parole runiche": runewords_page, "Nemesi": nemeses_page, "Cimitero": cemetery_page, "Fasi dei boss": phases_page, "Reazioni elementali": reactions_page, "Incantesimi": spells_page, "Atlante": atlas_page}
+         "Rune": runes_page, "Parole runiche": runewords_page, "Nemesi": nemeses_page, "Cimitero": cemetery_page, "Fasi dei boss": phases_page, "Reazioni elementali": reactions_page, "Incantesimi": spells_page, "Atlante": atlas_page,
+         "Discese dimenticate": threads_page}
 
 
 def show_codex():

@@ -406,6 +406,9 @@ La Badessa del Silenzio (Chiostri), il Caposquadra Sepolto (Miniere), l'Astronom
 | **Il Tristo Mietitore** | La morte che nel Labirinto non può più compiere il suo lavoro. Aspetta il Ritornante perché è l'unico che muore davvero, e ogni volta torna. Ha già scritto il suo nome. |
 | **DIO ANTICO** | Sereth, o la parte di lui che vuole riposare. Vedi la Parte II. |
 
+### Il Bestiario a livelli
+Ogni creatura ha tre voci (`data/bestiario.json`): *Cosa si vede* (la prima volta che la incontri), *Come si comporta* (dopo `habits` sconfitte, i boss dopo `boss_habits`) e *Chi era* (dopo `story` sconfitte, i boss dopo `boss_story`). La terza voce di un boss può accennare al gradino della Scala che si raggiunge battendolo più volte: quella del DIO ANTICO racconta del Rinnegato che voleva dare riposo, senza nominarlo.
+
 ### Le creature comuni
 Gli **Scheletri** sono Svuotati che cercano ancora un'uscita; i **Goblin** sono la gente di Galdor; gli **Orchi** i lavoratori delle cave fusi con la Terra; gli **Elementali** concentrazioni di rabbia con un oggetto di Aethelgard nel cuore (un pettine, una chiave, una fibbia); gli **Spiriti della Tempesta** i tessitori di Valeriana; i **Paladini Corrotti** guerrieri della fede che hanno scambiato la protezione per la persecuzione; la **Melma Acida** la linfa della Terra marcita; il **Mimic** un forziere che ha imparato a desiderare. Le creature dei biomi sono la gente di quella regione (vedi la Parte VI).
 
@@ -421,25 +424,24 @@ Le **reliquie** sono frammenti dei cristalli di Aetheria e di altri pezzi del mo
 
 Le lettere incise sulle pareti sono tutte del Ritornante, scritte in discese che non ricorda (gradino 5). Fino a quel momento il giocatore le legge come messaggi di sconosciuti; i più attenti notano che sembrano sapere troppo di lui.
 
-Nella v6 le lettere si raccolgono in **fili**: ogni filo è una **discesa dimenticata**, raccontata in 8-10 lettere in ordine. Chi completa un filo vede nel Codice come è finita quella discesa. I fili:
+Nella v6 le lettere si raccolgono anche in **fili** (`data/lettere.json`): ogni filo è una **discesa dimenticata**, raccontata in 8 lettere in ordine, che si trovano incise sulle pietre dei falò e accanto ai forzieri. Chi completa un filo legge nel Codice (*Discese dimenticate*) come è finita quella discesa. I fili, con il gradino da cui si aprono:
 
-1. **La prima discesa**: il risveglio accanto al Fuoco, la paura, la prima morte.
-2. **La discesa con Silas**: quando scesero insieme per tre piani, e Silas lo vide morire.
-3. **La lavanda**: la discesa in cui trovò il campo di Ilse e non lo disse ad Alaric.
-4. **Il debito del Mercante**: la discesa in cui vendette un ricordo al Mercante, e quale.
-5. **La croce rossa**: la discesa in cui arrivò dove aspettava Orvin.
-6. **La Nemesi**: la discesa in cui un goblin senza nome lo uccise tre volte di fila.
-7. **Il patto del sangue**: la discesa passata agli altari, sempre più corrotta.
-8. **Il sale**: la discesa in cui si fermò ad ascoltare una voce cara nei Chiostri, e quasi rimase.
-9. **La galleria**: la discesa in cui incontrò la squadra di Borek, prima del crollo.
-10. **La gabbia di cristallo**: la discesa in cui lasciò Valerius nella gabbia, e perché.
-11. **Il fratello**: la discesa in cui vide Corin nella Forgia.
-12. **La fontana**: la discesa in cui bevve da Linnea fino a vedere troppo.
-13. **Il trono**: la discesa in cui si sedette sul trono del Dio, e si alzò.
-14. **La Soglia**: la discesa in cui il Custode gli disse il suo nome, e lui lo dimenticò morendo.
-15. **L'ultima lettera**: ciò che scrive dopo aver ricordato (è il finale *La Lettera Mai Scritta*).
+1. **La prima discesa** (piano 1): il risveglio, la Badessa, la prima caduta mentre il Fuoco lo chiamava indietro.
+2. **La discesa con Silas** (piano 4): tre piani insieme; morì tenendo la mano di Silas, che scriveva con l'altra. Per questo Silas lo ha visto morire.
+3. **La lavanda** (piano 11): trovò il campo di Ilse prima di tutti e non diede il fiore ad Alaric.
+4. **Il debito del Mercante** (piano 6): le fragole, il cielo d'estate, il nome del primo cane, il nome della prima persona amata.
+5. **La croce rossa** (piano 20): arrivò al bivacco di Orvin al piano 29 e finì la sua mappa.
+6. **La Nemesi** (piano 3): un goblin lo uccise tre volte e, sconfitto, gli disse grazie.
+7. **Il patto del sangue** (piano 5): di altare in altare, fino al trono; il Fuoco sente ogni goccia data agli altari.
+8. **Il sale** (piano 2): quasi diventò una statua; lo salvò una novizia con la bocca cucita.
+9. **La galleria** (piano 7): era uno dei sette che risalirono con Borek, dietro di lui, quando la galleria crollò. Borek non lo sa.
+10. **La gabbia di cristallo** (piano 9): lasciò Valerius nella gabbia per paura di quello che sapeva; Valerius lo chiamò con un nome.
+11. **Il fratello** (piano 21): aiutò Elara a cercare Corin; con la ninnananna di Ignis, Corin sbagliò il ritmo di un colpo.
+12. **La fontana** (piano 8): bevve da Linnea fino a vedere tutte le sue discese; l'unico a ringraziarla.
+13. **Il trono** (vittoria): si sedette sul trono del Dio e si alzò quando sentì il Fuoco abbassarsi. È il sogno che il Viandante ha visto.
+14. **La Soglia** (vittoria e 40 boss): il Custode gli disse il suo nome e una volta lo chiamò «maestro»; la sua stessa mano cancellò il nome dal muro.
 
-Le 35 lettere della v5 restano com'erano e si distribuiscono fra i fili 1, 6, 7, 8 e 14, o restano sciolte come frammenti fuori da ogni filo.
+Il quindicesimo filo è il finale *La Lettera Mai Scritta*. Le 35 lettere della v5 restano com'erano e si distribuiscono fra i fili 1, 6, 7, 8 e 14, o restano sciolte come frammenti fuori da ogni filo.
 
 ---
 
