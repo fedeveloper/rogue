@@ -117,7 +117,7 @@ class PagesTest(Sandbox):
         PROFILE_MANAGER.set_flag("alaric_lavanda")
         text = "\n".join(plain(codex.characters_page()))
         chapters = GAME_DATA["story"]["characters"]["alaric"]["chapters"]
-        self.assertIn("Sir Alaric, il Primo Paladino  (1/3)", text)
+        self.assertIn(f"Sir Alaric, il Primo Paladino  (1/{len(chapters)})", text)
         self.assertIn(chapters[0]["text"], text)
         self.assertNotIn(chapters[1]["text"], text)
         self.assertIn("✦ Il fiore di lavanda", text)

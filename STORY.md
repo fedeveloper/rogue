@@ -266,7 +266,8 @@ Ogni scheda dice chi è, cosa vuole, cosa nasconde, e le **tappe** del suo arco:
 - **Cosa vuole:** riposare, e sapere se sua figlia **Ilse** è sopravvissuta.
 - **Cosa nasconde:** la porta non conduce più a nulla perché il Vuoto è già dentro tutto il Labirinto. Lui lo sa da secoli, e continua a custodirla perché è l'unica cosa che ricorda di saper fare.
 - **Il Cavaliere Oscuro:** il boss con quel nome è l'ombra che il giuramento proietta nel Labirinto, un'armatura vuota che combatte per abitudine. Liberare Alaric non toglie il boss: lo rende un guscio senza nessuno dentro.
-- **Tappe:** ✓ la porta · ✓ il cavaliere stanco (la lavanda) · ✓ l'ultimo sigillo · il campo di lavanda sulle Guglie · la lettera di Ilse · il giorno in cui la Luce divenne crudele · la confessione della porta vuota · al Campo, come Luce: i ricordi di Aurelia · la pace (o il peso del giuramento, se il giocatore ha preso il suo posto).
+- **Tappe:** ✓ la porta · ✓ il cavaliere stanco (la lavanda) · ✓ l'ultimo sigillo · ✓ il campo di lavanda sulle Guglie (la vanga di Ilse) · ✓ la lettera di Ilse («Per mio padre, alla porta»: la lavanda era fiorita) · ✓ il giorno della Luce crudele (gli Architetti, impauriti, gli ordinarono di custodire senza chiedere) · ✓ l'armatura di Ser Maud sulla strada («Arrivo, fratello. Aspettami.») · ✓ dietro il muro: una stanza vuota con le impronte di un solo paio di stivali · ✓ il Cavaliere senza nessuno (l'armatura che fa la ronda da sola, dieci passi e giro) · ✓ la lavanda alla porta · al Campo, come Luce: i ricordi di Aurelia.
+- **Nota:** i capitoli dopo l'ultimo sigillo valgono sia se Alaric è stato liberato (una luce calma accompagna il giocatore) sia se il giocatore ha preso il suo posto (il sigillo sulla schiena prude).
 - **Legami:** Ser Maud (la vita prestata del Paladino) era sua sorella d'ordine.
 - **Dettagli già nel gioco:** Ilse coltivava un campo intero di lavanda a Valeriana.
 
@@ -274,7 +275,7 @@ Ogni scheda dice chi è, cosa vuole, cosa nasconde, e le **tappe** del suo arco:
 - **Chi è:** un astronomo di Valeriana, allievo dell'Astronoma delle Guglie. È sceso per ritrovare la sorella **Nerea**, inghiottita dal Labirinto con la loro casa. Scrive tutto perché il Labirinto gli mangia i ricordi: ha già dimenticato il colore degli occhi di lei.
 - **Cosa vuole:** arrivare al fondo e capire. Poi, quando ha visto lo specchio, tornare indietro senza sentirsi un vigliacco.
 - **Cosa nasconde:** scende da molto più dei suoi «settantacinque giorni»: il tempo del Labirinto lo ha trattenuto per secoli. Ha visto il Ritornante morire molte volte e lo ha disegnato ogni volta. Il Fuoco non lo ha mai scelto, e Silas gliene vuole un po'.
-- **Tappe:** ✓ il fuoco azzurro · ✓ il diario strappato · ✓ la soglia e lo specchio · ✓ al Campo: il fuoco azzurro, il diario, Nerea, le stelle, la Maestra, i ritratti, il Fuoco che non lo ha scelto, i settantacinque giorni, la statua nei Chiostri, lo specchio, la notte dell'abbandono, l'ultima pagina, dopo il Dio · in discesa: la statua di Nerea · l'Osservatorio · la pagina nella membrana.
+- **Tappe:** ✓ il fuoco azzurro · ✓ il diario strappato · ✓ la soglia e lo specchio · ✓ in discesa: la ragazza che ascolta (la statua di Nerea) · ✓ l'Osservatorio (quattrocentododici borchie mancanti, la matita della Maestra) · ✓ la pagina antica nella membrana · ✓ la Maestra («il mio allievo peggiore») · ✓ un piano più in basso (il ritratto finito) · ✓ la cosa d'inchiostro, fatta delle sue parole di paura · ✓ il diario chiuso (portarlo in fondo, o ricominciare dal giorno uno) · ✓ al Campo: il fuoco azzurro, il diario, Nerea, le stelle, la Maestra, i ritratti, il Fuoco che non lo ha scelto, i settantacinque giorni, la statua nei Chiostri, lo specchio, la notte dell'abbandono, l'ultima pagina, dopo il Dio · in discesa: la statua di Nerea · l'Osservatorio · la pagina nella membrana.
 - **Dettagli già nel gioco:** il suo fuoco azzurro nasce da una scheggia di vetro di stella dell'Osservatorio e non scalda. La notte della Discordia contò quattrocentododici stelle cadute. Il Ritornante, visto da lui, ha sempre la spalla sinistra un po' più bassa. Se il giocatore lo ha abbandonato, Silas non chiude più del tutto la mano sinistra. Sospetta che Nerea sia la statua di sale al secondo piano dei Chiostri, vicino alla fontana senz'acqua. La matita gli è stata data dalla Maestra (l'Astronoma), che gli bacchettava le dita perché guardava le stelle invece di contarle.
 
 ### La Cartografa (Tessa)
@@ -323,20 +324,22 @@ Ogni scheda dice chi è, cosa vuole, cosa nasconde, e le **tappe** del suo arco:
 - **Chi è:** un Architetto Minore, tesoriere del cielo. Rimase nel Labirinto a proteggere i tesori; il volto gli è svanito, sostituito dal riflesso dell'oro. Gestisce le stanze del Mercante in tutti i piani nello stesso momento.
 - **Cosa vuole:** storie. L'oro lo accetta con disprezzo; ciò che compra davvero sono i ricordi.
 - **Cosa nasconde:** tiene da parte i ricordi che compra. Ha anche quelli del Ritornante, delle discese che ha dimenticato.
-- **Tappe:** frasi nelle stanze del Mercante · un baratto di ricordi · il registro · cosa ha comprato da te · cosa ti restituisce.
+- **Tappe:** ✓ il baratto (il sapore del pane) · ✓ il registro (il Ritornante gli ha venduto il nome della prima persona che ha amato, per un'ora di vita al piano diciotto) · ✓ i due che non si parlano (lui e il Mendicante, tesorieri dello stesso tesoro: uno lo tiene, l'altro lo dà via) · ✓ il tesoro del cielo (migliaia di ricordi di Aethelgard in vasetti di vetro) · ✓ il riflesso (sotto l'oro, un uomo stanco con gli occhi chiari) · ✓ il vasetto degli occhi del Viandante (pagati: un sogno) · ✓ i tuoi ricordi, in una cassa a parte · ✓ il prezzo pagato: li restituisce, perché il Fuoco ha già pagato il conto · frasi nelle stanze del Mercante.
 - **Legami:** il **Mendicante Ombra** è un altro Architetto Minore rimasto; i due non si parlano.
 
 ### Linnea, la Fata della Fontana
 - **Chi è:** una ninfa dei boschi della costa del Mare Interno. Quando la foresta diventò pietra si gettò nell'ultima sorgente pura; l'acqua divenne Memoria, e lei la fontana. È la **Fontana Fatata** che compare nei piani.
 - **Cosa vuole:** che qualcuno ricordi il bosco.
 - **Cosa nasconde:** ogni volta che il Ritornante beve, lei vede un pezzo delle sue discese dimenticate. Sa più di lui su di lui.
-- **Tappe:** la fontana · il bosco · cosa ha visto bevendo · al Campo, una goccia in un'ampolla · il bosco ricordato.
+- **Tappe:** ✓ la fontana che parla · ✓ il bosco nell'acqua · ✓ quello che ha visto (una discesa dimenticata) · ✓ l'albero di pietra (il più vecchio, gli parlava d'estate) · ✓ la sorgente vera, nel Ventre · ✓ una goccia in un'ampolla (al Campo: *L'Ampolla di Linnea*) · ✓ la fontana asciutta · ✓ il bosco ricordato (muschio e una felce) · ✓ al Campo: il calore, il nome del bosco, il pomeriggio della pietra, cosa sa di te, perché si consuma, il muschio.
+- **Dettagli già nel gioco:** il bosco non aveva nome; gli uomini della costa lo chiamavano il Bosco Vecchio. Diventò pietra in un pomeriggio di fine estate, dalle radici alle foglie; gli uccelli sono rimasti nella pietra con le ali mezze aperte. Linnea ricorda che una volta il Ritornante ha scritto qualcosa con un sasso sul muro accanto alla fontana, e poi è andato a morire: lo tiene lei, finché non sarà il momento. Tenere i ricordi la consuma come il ritorno consuma il Fuoco: «siamo parenti, noi e lui».
 
 ### Kaelen il Muto
 - **Chi è:** il miglior forgiatore dei Monti di Durn. Cercò di forgiare una spada capace di tagliare il Caos; la spada esplose e gli trasformò le mani in granito. Dalla bocca gli esce sabbia.
 - **Cosa vuole:** finire la spada.
 - **Cosa nasconde:** sa che Borek è vivo, e non lo cerca perché si vergogna.
-- **Tappe:** la forgia nelle Miniere · i segni sul metallo · il materiale giusto · Borek · la spada finita (che non taglia il Caos: lo ferma per un istante).
+- **Tappe:** ✓ la forgia nel basalto · ✓ i segni sul metallo (incide parole squadrate a scalpello) · ✓ l'acciaio che canta · ✓ il martello di Borek («VIVO») · ✓ la spada esplosa (le schegge e la sagoma bruciata nel basalto) · ✓ il pezzo che manca (una goccia della Prima Pietra) · ✓ il messaggio per il Campo («Ragazzo. Fuoco. Buono. Scusa.») · ✓ la spada finita, che ferma il Caos per un istante · ✓ al Campo (dopo il messaggio): parlare a segni, il ragazzo, la spada, la sabbia, i Monti, dopo la spada.
+- **Dettagli già nel gioco:** il granito gli arriva ai gomiti; le mani non sentono niente tranne il Fuoco del Campo. La sabbia che gli esce dalla bocca sono «parole non dette»: lo Speziale la spazza ogni mattina e la butta nel Fuoco.
 
 ### Altri volti
 - **Ilse**, figlia di Alaric, coltivatrice di lavanda a Valeriana. Morta nella Discordia; ha lasciato una lettera al padre.

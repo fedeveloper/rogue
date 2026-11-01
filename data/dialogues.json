@@ -607,6 +607,16 @@
                         "'Si chiamava Hadrek. Era più vecchio di me di trecento anni e più testardo di una montagna. Mi ha insegnato a leggere la roccia: dove ha le vene, dove si spacca, dove ti mente. Mi ha insegnato tutto, tranne quando fermarsi.'",
                         "'Non è cattivo, quello che hai visto laggiù. È solo rimasto fedele a un ordine che non aveva più senso. Succede ai capi buoni, più che ai cattivi.' Batte un colpo, forte. 'Se lo rivedi, ragazzo, colpiscilo bene. Non farlo soffrire. Era uno dei nostri.'"
                     ]
+                },
+                {
+                    "id": "kaelen_vivo",
+                    "title": "Il messaggio di Kaelen",
+                    "requires": {"flag": "kaelen_borek"},
+                    "lines": [
+                        "Borek tiene in mano la lastra di ferro che hai portato dalle Miniere. La gira e la rigira, ma non la legge: la conosce già a memoria. «Ragazzo. Fuoco. Buono. Scusa.»",
+                        "«Scusa di cosa, vecchio testone? Sono io che dovevo cercarti.» Lo dice alla lastra, non a te. Poi si soffia il naso così forte che lo Speziale si sveglia. «Mille anni a forgiare da solo laggiù. E io qui, a credere che fosse morto.»",
+                        "Appende la lastra sopra l'incudine, con un chiodo buono. «Adesso la vede tutte le volte che batto. Così impara a non mandarmi i messaggi con gli altri.» Ma sorride, e per tutta la sera il suo martello canta più pulito."
+                    ]
                 }
             ]
         },
@@ -858,6 +868,136 @@
                             "reply": "'Lo so.' Valerius guarda il Fuoco. 'Quando sarà il momento, lo dirò a te. Tu, almeno, torni sempre. Se sparisci, ricompari.'",
                             "flag": "valerius_promessa"
                         }
+                    ]
+                }
+            ]
+        },
+        "linnea": {
+            "topics": [
+                {
+                    "id": "calore",
+                    "title": "Il calore",
+                    "lines": [
+                        "La goccia nell'ampolla si muove, lentissima, verso il lato del vetro più vicino al fuoco. Quando parla, la voce è così piccola che devi avvicinare l'orecchio.",
+                        "«Così è il caldo. Noi non lo ricordavamo. Nel bosco c'era il sole, d'estate, e lo sentivamo sulle foglie. Ma le foglie siamo diventate pietra, e il sole lo abbiamo dimenticato.»",
+                        "«Grazie di averci portate qui. Il vostro fuoco è strano. Scalda, e intanto si consuma. Anche noi ci consumiamo, a tenere i ricordi degli altri. Siamo parenti, noi e lui.»"
+                    ]
+                },
+                {
+                    "id": "bosco_nome",
+                    "title": "Come si chiamava il bosco",
+                    "after": "calore",
+                    "lines": [
+                        "«Non aveva un nome. I boschi non hanno nomi: li hanno solo le cose che si possono perdere. Gli uomini della costa lo chiamavano il Bosco Vecchio, perché era lì da prima di loro.»",
+                        "«C'erano faggi così grandi che in tre non si riusciva ad abbracciarli. Felci alte come un bambino. Un torrente che d'inverno cantava sotto il ghiaccio. Le volpi ci passavano la notte, e noi le guardavamo dormire.»",
+                        "«Lo ricordi anche tu, adesso. Un poco. Ogni volta che bevi te ne lasciamo un albero.»"
+                    ]
+                },
+                {
+                    "id": "pietra",
+                    "title": "Il pomeriggio della pietra",
+                    "after": "bosco_nome",
+                    "requires": {"reached_floor": 10},
+                    "lines": [
+                        "La goccia si fa scura. «Non fu di notte, per noi. Fu di pomeriggio, alla fine dell'estate. Prima diventarono di pietra le radici, poi i tronchi, poi le foglie, dal basso verso l'alto, come una marea che sale.»",
+                        "«Le volpi scapparono. Gli uccelli no: si fermarono sui rami, e i rami si fermarono con loro. Ci sono ancora, lassù, dentro la pietra, con le ali mezze aperte.»",
+                        "«Noi corremmo alla sorgente. Era l'ultima cosa che scorreva. Ci gettammo dentro, e da allora siamo acqua. Ma l'acqua, qui sotto, diventa memoria. Non scorre più verso il mare. Scorre verso chi beve.»"
+                    ]
+                },
+                {
+                    "id": "tu",
+                    "title": "Cosa sai di me",
+                    "requires": {"reached_floor": 15},
+                    "after": "calore",
+                    "lines": [
+                        "«Più di te.» Lo dice senza cattiveria, come si dice che piove. «Ogni volta che bevi vediamo una tua discesa. Ne abbiamo viste tante. Con facce diverse, con armi diverse. Con la spalla sinistra più bassa, sempre.»",
+                        "«Una volta hai pianto davanti a noi per un'ora, e non sapevi perché. Una volta hai bevuto e ci hai detto grazie, l'unico in mille anni. Una volta hai scritto qualcosa sul muro accanto alla fontana con un sasso appuntito, e poi sei andato a morire.»",
+                        "«Non ti diremo cosa hai scritto. Non è ancora il momento. Ma lo teniamo noi, al sicuro.»"
+                    ]
+                },
+                {
+                    "id": "consumarsi",
+                    "title": "Perché vi consumate",
+                    "after": "pietra",
+                    "requires": {"reached_floor": 18},
+                    "lines": [
+                        "«Ogni ricordo pesa,» dice la goccia. «Il tuo, quello di chi beve, quello del bosco. L'acqua li porta, e a forza di portarli si fa più bassa. Per questo a volte ci trovi quasi asciutte.»",
+                        "«Il vostro fuoco fa lo stesso. Lui porta te. Ogni volta che torni, una brace si spegne. Noi lo vediamo da qui: abbiamo l'occhio dell'acqua, che vede le cose che si consumano.»",
+                        "«Non è triste. È solo il prezzo di tenere qualcosa. Chi non tiene niente non si consuma, ma non è niente.»"
+                    ]
+                },
+                {
+                    "id": "muschio",
+                    "title": "Il muschio",
+                    "requires": {"flag": "linnea_pace"},
+                    "lines": [
+                        "L'ampolla è vuota, ormai. Sul vetro, all'interno, è cresciuto un velo di muschio verde, sottile come un respiro. Non c'è più nessuna voce.",
+                        "Ma se avvicini l'orecchio, ti sembra di sentire, lontanissimo, un torrente che canta sotto il ghiaccio. E quando la sera è fredda, il muschio profuma di pioggia sul terreno, proprio come la stanza dove c'era la fontana.",
+                        "Il Fuoco, accanto all'ampolla, si alza di un dito. Come qualcuno che si fa da parte per fare spazio a un'altra persona sulla panca."
+                    ]
+                }
+            ]
+        },
+        "kaelen": {
+            "topics": [
+                {
+                    "id": "segni",
+                    "title": "Parlare a segni",
+                    "lines": [
+                        "Kaelen non parla. Al Campo ha una lastra di ferro e uno scalpello sempre a portata di mano, e quando vuole dirti qualcosa incide. Ogni parola è un colpo secco, preciso. Ci mette un po'. Aspetti.",
+                        "«FUOCO. CALDO. BENE.» Ti mostra la lastra, poi la gira e incide sul retro, più piano: «MANI. NON SENTONO. FUOCO. SI.»",
+                        "Le sue mani di granito non sentono niente da mille anni. Ma il Fuoco del Campo, chissà come, le scalda. Lui le tiene aperte sopra le braci per ore, la sera, come chi si riscalda dopo un lungo inverno."
+                    ]
+                },
+                {
+                    "id": "borek",
+                    "title": "Il ragazzo",
+                    "lines": [
+                        "Kaelen indica Borek con il mento. Borek, dall'altra parte del fuoco, finge di non vedere e martella più forte del necessario.",
+                        "Kaelen incide: «RAGAZZO. BRAVO. TROPPO FORTE. POLSO.» Poi, quando Borek sbaglia un colpo, si alza, gli prende il polso con la mano di pietra e lo gira di un dito. Il colpo dopo è giusto. Borek non dice niente. Si soffia il naso, rumorosamente.",
+                        "Più tardi, quando Borek russa per finta con la schiena alla roccia, Kaelen gli mette sulle spalle una coperta. Poi torna a sedersi, e incide una parola sola, che non ti mostra."
+                    ]
+                },
+                {
+                    "id": "spada",
+                    "title": "La spada che esplose",
+                    "after": "segni",
+                    "requires": {"reached_floor": 10},
+                    "lines": [
+                        "Kaelen incide a lungo, una lastra intera. «SPADA. TAGLIARE. CAOS. STUPIDO.» Poi si ferma, e aggiunge: «NON STUPIDO. GIOVANE.»",
+                        "Ti mostra le mani. Il granito arriva fino ai gomiti, con venature grigie come radici. Nel punto in cui finisce, la pelle è rossa e tirata, come una vecchia bruciatura.",
+                        "«CAOS. NON SI TAGLIA. SI FERMA. UN ATTIMO. BASTA.» Ti guarda per vedere se hai capito. Annuisci. Lui annuisce a sua volta, soddisfatto, e torna a scaldarsi le mani."
+                    ]
+                },
+                {
+                    "id": "sabbia",
+                    "title": "La sabbia",
+                    "after": "segni",
+                    "lines": [
+                        "Ogni volta che Kaelen apre la bocca, ne esce un filo di sabbia grigia. Al Campo ce n'è un piccolo mucchio accanto al suo posto, che lo Speziale spazza via ogni mattina senza dire niente.",
+                        "Kaelen incide: «SABBIA. PAROLE. NON DETTE.» Poi, dopo un po': «MILLE ANNI. TANTE.»",
+                        "Ti viene in mente che quel mucchio di sabbia, ogni sera, è tutto quello che avrebbe voluto dire durante il giorno. Lo Speziale lo spazza via con cura, quasi con rispetto, e lo butta nel Fuoco, che lo accoglie senza sfrigolare."
+                    ]
+                },
+                {
+                    "id": "durn",
+                    "title": "I Monti",
+                    "after": "borek",
+                    "requires": {"reached_floor": 10},
+                    "lines": [
+                        "Kaelen incide un disegno, non una parola: una montagna, tre gallerie, una stella sopra. Poi un segno per ogni cosa. «CASA. FORGIA. RAGAZZO. BIRRA.» Su «birra» ripassa due volte, e Borek, che legge da lontano, ride.",
+                        "Sotto la montagna incide una linea dritta che scende, molto in basso. «HADREK. GIÙ. GIÙ. GIÙ.» E accanto una linea che risale, spezzata: «RAGAZZO. SU.»",
+                        "Batte lo scalpello sulla linea che risale, forte, tre volte. Non serve tradurre. Borek ha smesso di ridere e guarda il fuoco."
+                    ]
+                },
+                {
+                    "id": "riposo",
+                    "title": "Dopo la spada",
+                    "requires": {"any_flags": ["kaelen_spada_finita", "kaelen_riposa"]},
+                    "lines": [
+                        "Kaelen non lavora più. Siede accanto all'incudine di Borek e lo guarda lavorare, le mani di pietra intrecciate in grembo. Qualche volta, quando Borek gli chiede un parere, alza un dito: va bene. Due dita: rifallo.",
+                        "Incide pochissimo, ormai. Una sera ti mostra una lastra con una parola sola, incisa con una cura che non gli hai mai visto: «FINITO.» E sotto, più piccolo: «BELLO.»",
+                        "Il mucchio di sabbia accanto al suo posto, la mattina, è sempre più piccolo. Come se, adesso, avesse sempre meno cose non dette."
                     ]
                 }
             ]
