@@ -10,11 +10,11 @@ Questo repository è mantenuto in buona parte con assistenti IA. Queste regole v
 
 ## Branch
 
-- `main` è la versione stabile, sempre giocabile, e contiene la v6: lore, eventi a scene, personaggi ricorrenti, mappa e biomi (v2); Ascensione e Sfida del Giorno (v3); identità dei nemici, biomi popolati, il Ciclo del Labirinto e armi con carattere (v4); attributi, magia con l'Etere, talenti, l'Elementalista e il Campo a livelli (v5); la lore dieci volte più ampia, con dialoghi del Campo, Archivio, Atlante, vite prestate, Armeria ed epiloghi dei finali (v6).
+- `main` è la versione stabile, sempre giocabile, e contiene la v7: lore, eventi a scene, personaggi ricorrenti, mappa e biomi (v2); Ascensione e Sfida del Giorno (v3); identità dei nemici, biomi popolati, il Ciclo del Labirinto e armi con carattere (v4); attributi, magia con l'Etere, talenti, l'Elementalista e il Campo a livelli (v5); la lore dieci volte più ampia, con dialoghi del Campo, Archivio, Atlante, vite prestate, Armeria ed epiloghi dei finali (v6); la grafica a terminale, con ritratti dei boss, sagome dei nemici, paesaggi dei biomi, insegne delle stanze e barre (v7).
 - Lavora su un branch nato da `main` e apri la PR verso `main`. Le correzioni alla versione stabile vanno verso `main`.
-- I branch `v3`, `v4`, `v5` e `v6` sono la storia dello sviluppo e sono già tutti contenuti in `main`: non aprire PR verso di loro.
+- I branch `v3`, `v4`, `v5`, `v6` e `v7` sono la storia dello sviluppo e sono già tutti contenuti in `main`: non aprire PR verso di loro.
 - Per una versione nuova e corposa, che va provata prima di arrivare in `main`, si apre un branch dedicato nato da `main`, e si decide quando portarlo in `main` dopo le prove di gioco.
-- Il branch `v7` è in sviluppo: la v7 dà al gioco una grafica semplice (prima nel terminale: ritratti, barre, riquadri) **senza toccare valori, regole o bilanciamento**. Le PR della v7 vanno verso `v7`.
+- I disegni in caratteri stanno in `data/ritratti.json` e sono solo ASCII; `tests/test_grafica.py` ne controlla le misure.
 - Chi aggiunge lore segue la guida e la *Scala delle rivelazioni* di `STORY.md`; una PR di soli testi non cambia valori, regole o bilanciamento e non ha bisogno di simulazioni.
 
 ## Documenti
