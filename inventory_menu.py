@@ -1,5 +1,5 @@
 import random
-from ui import Colors, clear_screen, interactive_menu, display_msg, wait_enter
+from ui import ETHER_BAR, Colors, bar, clear_screen, interactive_menu, display_msg, wait_enter
 from data_manager import GAME_DATA, PROFILE_MANAGER, get_element_icon
 from entities import Rune, generate_random_element
 import runes as rune_rules
@@ -284,10 +284,10 @@ def show_player_stats(player, session=None):
     clear_screen()
     display_msg(f"\n{Colors.CYAN}{Colors.BOLD}--- STATISTICHE DELL'EROE ---{Colors.RESET}")
     display_msg(f"Classe: {Colors.YELLOW}{player.role}{Colors.RESET} | Tratto: {Colors.MAGENTA}{player.trait_name}{Colors.RESET}")
-    display_msg(f"❤️  HP: {Colors.GREEN}{player.hp}/{player.max_hp}{Colors.RESET} | 💰 Oro: {Colors.YELLOW}{player.gold}{Colors.RESET}")
-    display_msg(f"✨ EXP: {Colors.CYAN}{player.exp}/{player.max_exp}{Colors.RESET} (Livello {player.level})")
+    display_msg(f"❤️  HP: {Colors.GREEN}{player.hp}/{player.max_hp}{Colors.RESET} {bar(player.hp, player.max_hp, Colors.GREEN)} | 💰 Oro: {Colors.YELLOW}{player.gold}{Colors.RESET}")
+    display_msg(f"✨ EXP: {Colors.CYAN}{player.exp}/{player.max_exp}{Colors.RESET} {bar(player.exp, player.max_exp, Colors.CYAN)} (Livello {player.level})")
     if player.spells:
-        display_msg(f"🔮 Etere: {Colors.CYAN}{player.ether}/{player.max_ether()}{Colors.RESET} | Incantesimi: " + ", ".join(magic.spell(s)["name"] for s in player.spells)
+        display_msg(f"🔮 Etere: {Colors.CYAN}{player.ether}/{player.max_ether()}{Colors.RESET} {bar(player.ether, player.max_ether(), Colors.CYAN, ETHER_BAR)} | Incantesimi: " + ", ".join(magic.spell(s)["name"] for s in player.spells)
                     + (f" (potenza +{effects.total(player, 'spell_pct')}%)" if effects.total(player, "spell_pct") else ""))
     display_msg("")
     

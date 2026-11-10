@@ -4,7 +4,7 @@ import random
 import effects
 import nemesis
 import texts
-from ui import Colors, delay_print, display_msg, wait_enter
+from ui import Colors, delay_print, display_msg, panel, wait_enter
 from data_manager import GAME_DATA, get_biome, get_element_icon
 from codex import record_enemy_killed, record_enemy_seen, record_letter
 from constants import NECRO_HARVEST_PCT, BLOOD_LETTER_CHANCE, CURSE_HP_DRAIN_PCT, POISON_MIN, POISON_PCT
@@ -100,11 +100,14 @@ class CombatSession(PlayerActions, Spells, Reactions, Phases, EnemyActions):
     def start(self):
         if self.enemy.modifier == "normal":
             delay_print(f"\n{texts.room('boss' if self.enemy.is_boss else 'combat', self.floor)}")
+            art = texts.portrait(self.enemy.base_name)
             if self.enemy.is_boss:
-                delay_print(f"{Colors.MAGENTA}{Colors.BOLD}--- {self.enemy.title.upper()} ---{Colors.RESET}")
+                if art: display_msg("\n".join(panel(art, self.enemy.title.upper(), Colors.MAGENTA)))
+                else: delay_print(f"{Colors.MAGENTA}{Colors.BOLD}--- {self.enemy.title.upper()} ---{Colors.RESET}")
                 if self.enemy.lore: delay_print(f"{Colors.YELLOW}\"{self.enemy.lore}\"{Colors.RESET}\n")
                 if voice := texts.boss_voice(self.enemy.base_name, "intro"): delay_print(f"{Colors.MAGENTA}{voice}{Colors.RESET}\n")
             
+            elif art: display_msg("\n".join(f"   {Colors.RED}{line}{Colors.RESET}" for line in art))
             boss_tag = f"{Colors.MAGENTA} [BOSS]{Colors.RESET}" if self.enemy.is_boss else ""
             delay_print(f"{Colors.RED}!!! Incontri un {self.enemy.name.upper()}{boss_tag} [{get_element_icon(self.enemy.element)}] !!!{Colors.RESET}", 0.04)
         
