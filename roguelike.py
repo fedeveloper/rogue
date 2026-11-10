@@ -3,7 +3,7 @@ import shutil
 import sys
 import time
 import traceback
-from ui import ETHER_BAR, Colors, bar, clear_screen, delay_print, interactive_menu, display_msg, wait_enter
+from ui import ETHER_BAR, Colors, bar, clear_screen, delay_print, interactive_menu, display_msg, panel, wait_enter
 from data_manager import PROFILE_MANAGER, GAME_DATA, RAW_DATA, cycle_of, echo_name, get_biome, set_cycle_seed, update_game_data
 from entities import Player, generate_potion, get_random_relic
 from rooms import audacity_text, combat_room, gain_audacity, mystery_room, vendor_room, campfire_room, treasure_room, trap_room
@@ -613,7 +613,9 @@ def _descent(c_choice, t_choice, active_pacts, infinite_mode, grade, daily, resu
             biome_intro = f"{Colors.CYAN}{texts.pick(biome['intro'])}{Colors.RESET}\n" if biome else ""
             enter_cycle(player, floor)
             if biome and floor == biome["floors"][0]:
-                delay_print(f"\n{Colors.MAGENTA}{Colors.BOLD}{biome['icon']}  {biome['name'].upper()}{Colors.RESET}", 0.03)
+                view = texts.landscape(biome["id"])
+                if view: display_msg("\n" + "\n".join(panel(view, f"{biome['icon']}  {biome['name'].upper()}", Colors.MAGENTA)))
+                else: delay_print(f"\n{Colors.MAGENTA}{Colors.BOLD}{biome['icon']}  {biome['name'].upper()}{Colors.RESET}", 0.03)
                 delay_print(biome_intro, 0.03)
                 if biome.get("hazard"): display_msg(f"{Colors.RED}Pericolo: {biome['hazard']['name']}.{Colors.RESET} {biome['hazard']['desc']}")
                 wait_enter("\nPremi INVIO per entrare...")
