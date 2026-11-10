@@ -35,9 +35,19 @@ def boss_voice(name: str, moment: str) -> str:
     return pick(lines) if lines else ""
 
 
-def portrait(name: str) -> list:
-    """Le righe del ritratto in caratteri del boss `name` (`data/ritratti.json`), senza il margine comune a sinistra;
-    lista vuota per chi non ne ha uno."""
-    lines = GAME_DATA["ritratti"]["bosses"].get(name, [])
+def _trim(lines: list) -> list:
+    """Le righe di un disegno senza il margine comune a sinistra."""
     margin = min((len(l) - len(l.lstrip()) for l in lines if l.strip()), default=0)
     return [l[margin:] for l in lines]
+
+
+def portrait(name: str) -> list:
+    """Le righe del disegno in caratteri di `name` (`data/ritratti.json`): il ritratto di un boss, oppure la sagoma
+    della famiglia di un nemico comune; lista vuota per chi non ne ha uno."""
+    art = GAME_DATA["ritratti"]
+    return _trim(art["bosses"].get(name) or art["sagome"].get(art["enemies"].get(name), []))
+
+
+def landscape(biome_id: str) -> list:
+    """Le righe del paesaggio di un bioma (`data/ritratti.json`), mostrato quando ci si entra; lista vuota se manca."""
+    return _trim(GAME_DATA["ritratti"]["biomes"].get(biome_id, []))

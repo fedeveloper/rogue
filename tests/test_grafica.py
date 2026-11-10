@@ -53,6 +53,30 @@ class PortraitTest(unittest.TestCase):
                 self.assertTrue(all(ch.isascii() for line in art for ch in line), "solo caratteri che ogni terminale disegna larghi uno")
                 self.assertTrue(any(line and not line.startswith(" ") for line in art), "senza margine comune a sinistra")
 
+    def test_every_common_enemy_has_the_silhouette_of_its_family(self):
+        art = RAW_DATA["ritratti"]
+        self.assertEqual(set(art["enemies"]), set(RAW_DATA["enemies"]))
+        self.assertEqual(set(art["enemies"].values()), set(art["sagome"]), "ogni sagoma è usata e ogni nemico ne nomina una che esiste")
+        for name, lines in art["sagome"].items():
+            with self.subTest(sagoma=name):
+                self.assertTrue(3 <= len(lines) <= 6, "una sagoma è più piccola di un ritratto")
+                self.assertLessEqual(max(map(len, lines)), 22)
+                self.assertTrue(all(ch.isascii() for line in lines for ch in line))
+        name = next(iter(RAW_DATA["enemies"]))
+        self.assertEqual(texts.portrait(name), texts._trim(art["sagome"][art["enemies"][name]]))
+
+    def test_every_biome_has_a_landscape(self):
+        self.assertEqual(set(RAW_DATA["ritratti"]["biomes"]), {b["id"] for b in RAW_DATA["biomes"]})
+        for b in RAW_DATA["biomes"]:
+            with self.subTest(biome=b["id"]):
+                view = texts.landscape(b["id"])
+                self.assertTrue(3 <= len(view) <= 5)
+                self.assertLessEqual(max(map(len, view)), 44, "sta anche in un terminale stretto, cornice compresa")
+                self.assertTrue(all(ch.isascii() for line in view for ch in line))
+                rows = ui.panel(view, f"{b['icon']}  {b['name'].upper()}", ui.Colors.MAGENTA)
+                self.assertEqual(len({ui.visible_width(r) for r in rows}), 1)
+        self.assertEqual(texts.landscape("nessuno"), [])
+
     def test_who_has_no_portrait_gets_none_and_the_game_dice_are_untouched(self):
         state = random.getstate()
         self.assertEqual(texts.portrait("Goblin qualunque"), [])
