@@ -14,6 +14,7 @@ Questo repository è mantenuto in buona parte con assistenti IA. Queste regole v
 - Lavora su un branch nato da `main` e apri la PR verso `main`. Le correzioni alla versione stabile vanno verso `main`.
 - I branch `v3`, `v4`, `v5` e `v6` sono la storia dello sviluppo e sono già tutti contenuti in `main`: non aprire PR verso di loro.
 - Per una versione nuova e corposa, che va provata prima di arrivare in `main`, si apre un branch dedicato nato da `main`, e si decide quando portarlo in `main` dopo le prove di gioco.
+- Il branch `v7` è in sviluppo: la v7 dà al gioco una grafica semplice (prima nel terminale: ritratti, barre, riquadri) **senza toccare valori, regole o bilanciamento**. Le PR della v7 vanno verso `v7`.
 - Chi aggiunge lore segue la guida e la *Scala delle rivelazioni* di `STORY.md`; una PR di soli testi non cambia valori, regole o bilanciamento e non ha bisogno di simulazioni.
 
 ## Documenti

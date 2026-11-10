@@ -6,7 +6,7 @@ import attributes
 import effects
 import magic
 import nemesis
-from ui import Colors, clear_screen, interactive_menu, display_msg, wait_enter
+from ui import ETHER_BAR, Colors, bar, clear_screen, interactive_menu, display_msg, pad, visible_width, wait_enter
 from data_manager import GAME_DATA, PROFILE_MANAGER, MULTIPLIERS
 from constants import AMBUSH_DMG_PCT
 from entities import STATUS_NAMES
@@ -204,9 +204,11 @@ class PlayerActions:
             if self.sealed: self.def_txt = f"{Colors.RED}🔒 Difesa sigillata (non puoi difenderti in questo turno){Colors.RESET}"
             if self.intent is None: self.choose_intent()
 
-            prompt = (f"\n{Colors.BOLD}--- ⚔️ IN COMBATTIMENTO ⚔️ ---{Colors.RESET}\nTu: {Colors.GREEN}{self.player.hp}/{self.player.max_hp} HP{Colors.RESET}"
-                      + (f" {Colors.CYAN}✨ {self.player.ether}/{self.player.max_ether()} Etere{Colors.RESET}" if self.player.spells else "") + " | "
-                      f"{self.enemy.name}: {Colors.RED}{self.enemy.hp}/{self.enemy.max_hp} HP{Colors.RESET}{self.enemy_status_text()}\n"
+            names = max(visible_width("Tu"), visible_width(self.enemy.name))
+            prompt = (f"\n{Colors.BOLD}--- ⚔️ IN COMBATTIMENTO ⚔️ ---{Colors.RESET}\n"
+                      f"{pad('Tu', names)}  {bar(self.player.hp, self.player.max_hp, Colors.GREEN)} {Colors.GREEN}{self.player.hp}/{self.player.max_hp} HP{Colors.RESET}"
+                      + (f"  ✨ {bar(self.player.ether, self.player.max_ether(), Colors.CYAN, ETHER_BAR)} {Colors.CYAN}{self.player.ether}/{self.player.max_ether()} Etere{Colors.RESET}" if self.player.spells else "") + "\n"
+                      f"{pad(self.enemy.name, names)}  {bar(self.enemy.hp, self.enemy.max_hp, Colors.RED)} {Colors.RED}{self.enemy.hp}/{self.enemy.max_hp} HP{Colors.RESET}{self.enemy_status_text()}\n"
                       f"Intento del nemico: {self.intent_text()}")
             # Le azioni per nome: la voce degli incantesimi c'è solo per chi ne conosce
             actions = [("attack", "Attacca"), ("defend", self.def_txt)]
