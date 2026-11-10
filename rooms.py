@@ -38,9 +38,16 @@ MYSTERY_NAMES = {"hoard": "Tesoro", "relic": "Reliquia", "hard": "Mostro", "easy
                  "scroll": "Pergamena", "rune": "Runa", "empty": "Vuoto"}
 
 
+def show_emblem(kind: str, color: str = ""):
+    """Disegna l'insegna della stanza prima della sua frase d'ingresso."""
+    art = texts.emblem(kind)
+    if art: display_msg("\n" + "\n".join(f"   {color}{line}{Colors.RESET}" for line in art))
+
+
 def mystery_room(player: Player, floor: int, active_pacts: List[str]):
     delay_print(f"\n{Colors.MAGENTA}--- LA STANZA DEL MISTERO ---{Colors.RESET}")
     display_msg(f"❤️  HP: {Colors.GREEN}{player.hp}/{player.max_hp}{Colors.RESET} | 💰 Oro: {Colors.YELLOW}{player.gold}{Colors.RESET}\n")
+    show_emblem("mystery", Colors.MAGENTA)
     delay_print(f"{texts.room('mystery', floor)}", 0.03)
     time.sleep(1)
 
@@ -94,6 +101,7 @@ def mystery_room(player: Player, floor: int, active_pacts: List[str]):
         wait_enter("Premi INVIO per proseguire...")
 
 def vendor_room(player: Player, floor: int):
+    show_emblem("vendor", Colors.YELLOW)
     delay_print(f"\n{texts.room('vendor', floor)}")
     items_for_sale =[generate_weapon(floor + 1), generate_armor(floor + 1), generate_accessory(floor), generate_potion(floor), generate_potion(floor)]
     items_for_sale += [generate_rune(floor) for _ in range(rune_rules.rules()["vendor_stock"])]
@@ -229,6 +237,7 @@ def read_oblivion(player: Player, tome):
 
 
 def campfire_room(player: Player, floor: int):
+    show_emblem("campfire", Colors.YELLOW)
     delay_print(f"\n{Colors.YELLOW}{texts.room('campfire', floor)}{Colors.RESET}")
     threads.maybe_show()
     while True:
@@ -359,6 +368,7 @@ def chest_risks(floor: int) -> dict:
 
 
 def treasure_room(player: Player, floor: int):
+    show_emblem("treasure", Colors.YELLOW)
     delay_print(f"\n{Colors.YELLOW}{texts.room('treasure', floor)}{Colors.RESET}")
     threads.maybe_show()
     rules, risks = GAME_DATA["meta"]["rooms"]["treasure"], chest_risks(floor)
@@ -434,6 +444,7 @@ def trap_damage(player: Player, floor: int, active_pacts: List[str], base: int) 
 def trap_room(player: Player, floor: int, active_pacts: List[str]) -> bool:
     """La trappola custodisce un bottino: chi la affronta lo ottiene sempre, e se fallisce la prova paga in HP.
     Restituisce True se il giocatore l'ha affrontata."""
+    show_emblem("trap", Colors.RED)
     delay_print(f"\n{texts.room('trap', floor)}")
     delay_print(f"{Colors.RED}È UNA TRAPPOLA!{Colors.RESET} {Colors.YELLOW}Oltre il meccanismo, qualcosa brilla.{Colors.RESET}", 0.05)
     rules, chances = GAME_DATA["meta"]["rooms"]["trap"], trap_chances(player)
