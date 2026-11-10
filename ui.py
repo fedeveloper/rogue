@@ -7,6 +7,8 @@ import unicodedata
 
 if os.name == 'nt': os.system('')
 
+DIM = '\033[2m'
+
 class Colors:
     RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, RESET, BOLD = '\033[91m', '\033[92m', '\033[93m', '\033[94m', '\033[95m', '\033[96m', '\033[0m', '\033[1m'
 
@@ -80,6 +82,29 @@ def visible_width(text: str) -> int:
         emoji = i + 1 < len(plain) and plain[i + 1] == "\ufe0f"
         width += 2 if emoji or unicodedata.east_asian_width(ch) in ("W", "F") else 1
     return width
+
+BAR_WIDTH = 16   # caselle della barra degli HP
+ETHER_BAR = 8    # caselle della barra dell'Etere
+
+def bar(value: int, maximum: int, color: str = "", width: int = BAR_WIDTH) -> str:
+    """Una barra di `width` caselle piena in proporzione a value/maximum: chi ha anche un solo punto ne vede almeno una."""
+    value = max(0, min(value, maximum))
+    filled = 0 if maximum <= 0 or value <= 0 else max(1, value * width // maximum)
+    return f"{color}{'█' * filled}{Colors.RESET if color else ''}{DIM}{'░' * (width - filled)}{Colors.RESET}"
+
+def pad(text: str, width: int) -> str:
+    """`text` seguito dagli spazi che servono a occupare `width` colonne a terminale."""
+    return text + " " * max(0, width - visible_width(text))
+
+def panel(lines: list, title: str = "", color: str = "") -> list:
+    """Le righe di un riquadro con cornice attorno a `lines`, centrato sul contenuto più largo; `title` sta sul bordo in alto."""
+    inner = max([visible_width(l) for l in lines] + [visible_width(title) + 2]) + 2
+    head = f" {title} " if title else ""
+    left = (inner - visible_width(head)) // 2
+    reset = Colors.RESET if color else ""
+    top = f"{color}╔{'═' * left}{reset}{Colors.BOLD}{head}{Colors.RESET}{color}{'═' * (inner - left - visible_width(head))}╗{reset}"
+    body = [f"{color}║{reset} {pad(l, inner - 2)} {color}║{reset}" for l in lines]
+    return [top] + body + [f"{color}╚{'═' * inner}╝{reset}"]
 
 def screen_rows(text: str, columns: int) -> int:
     """Righe di terminale occupate da una riga di testo che può andare a capo."""

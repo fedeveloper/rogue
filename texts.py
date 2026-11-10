@@ -33,3 +33,11 @@ def boss_voice(name: str, moment: str) -> str:
     da `data/voci_boss.json`; stringa vuota per chi non ha voce (per esempio una Nemesi)."""
     lines = GAME_DATA["voci_boss"]["bosses"].get(name, {}).get(moment)
     return pick(lines) if lines else ""
+
+
+def portrait(name: str) -> list:
+    """Le righe del ritratto in caratteri del boss `name` (`data/ritratti.json`), senza il margine comune a sinistra;
+    lista vuota per chi non ne ha uno."""
+    lines = GAME_DATA["ritratti"]["bosses"].get(name, [])
+    margin = min((len(l) - len(l.lstrip()) for l in lines if l.strip()), default=0)
+    return [l[margin:] for l in lines]

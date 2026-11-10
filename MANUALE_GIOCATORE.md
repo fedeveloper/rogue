@@ -228,9 +228,12 @@ All'Etere iniziale si aggiungono 2 punti per ogni punto di **Arcano** (il Mago, 
 Prima di ogni tuo turno il nemico **annuncia la sua prossima mossa**, con i danni previsti:
 
 ```text
-Tu: 210/210 HP | Badessa del Silenzio: 120/180 HP [marchio 💧 Acqua]
+Tu                    ████████████████ 210/210 HP
+Badessa del Silenzio  ██████████░░░░░░ 120/180 HP [marchio 💧 Acqua]
 Intento del nemico: 💢 Colpo pesante (≈24 danni) — difenditi!
 ```
+
+Le barre mostrano a colpo d'occhio quanta vita resta a te e al nemico (e quanto Etere hai, se conosci incantesimi); accanto restano i numeri esatti. Le stesse barre compaiono sopra la mappa del piano.
 
 | Mossa | Cosa fa | Come rispondere |
 |---|---|---|
@@ -267,7 +270,7 @@ Goblin, Scheletri e Banditi, i primi nemici che incontri, combattono senza uno s
 
 ### Le fasi dei boss
 
-Ogni boss, arrivato a una soglia di HP (di solito il 50%), **cambia fase**: lo annuncia con un nome e una frase, e mostra cosa è cambiato. Il turno in cui si trasforma non attacca. Il DIO ANTICO ha tre fasi. I boss parlano: una battuta quando li incontri, una quando cambiano fase e una quando cadono. Sono solo parole: non cambiano niente nello scontro.
+Ogni boss, arrivato a una soglia di HP (di solito il 50%), **cambia fase**: lo annuncia con un nome e una frase, e mostra cosa è cambiato. Il turno in cui si trasforma non attacca. Il DIO ANTICO ha tre fasi. Quando incontri un boss, il suo ritratto compare in un riquadro con il suo titolo. I boss parlano: una battuta quando li incontri, una quando cambiano fase e una quando cadono. Sono solo parole: non cambiano niente nello scontro.
 
 Una fase può:
 
