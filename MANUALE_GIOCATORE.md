@@ -270,7 +270,7 @@ Goblin, Scheletri e Banditi, i primi nemici che incontri, combattono senza uno s
 
 ### Le fasi dei boss
 
-Ogni boss, arrivato a una soglia di HP (di solito il 50%), **cambia fase**: lo annuncia con un nome e una frase, e mostra cosa è cambiato. Il turno in cui si trasforma non attacca. Il DIO ANTICO ha tre fasi. Quando incontri un boss, il suo ritratto compare in un riquadro con il suo titolo. I nemici comuni hanno una sagoma più piccola, una per famiglia (umanoidi, bestie, golem, spiriti…), e ogni bioma ti accoglie con il suo paesaggio la prima volta che ci entri. I boss parlano: una battuta quando li incontri, una quando cambiano fase e una quando cadono. Sono solo parole: non cambiano niente nello scontro.
+Ogni boss, arrivato a una soglia di HP (di solito il 50%), **cambia fase**: lo annuncia con un nome e una frase, e mostra cosa è cambiato. Il turno in cui si trasforma non attacca. Il DIO ANTICO ha tre fasi. Quando incontri un boss, il suo ritratto compare in un riquadro con il suo titolo. I nemici comuni hanno una sagoma più piccola, una per famiglia (umanoidi, bestie, golem, spiriti…), e ogni bioma ti accoglie con il suo paesaggio la prima volta che ci entri. Anche falò, mercante, forziere, trappola e Stanza del Mistero hanno una piccola insegna, e nella schermata delle Statistiche HP, EXP ed Etere hanno la loro barra. I boss parlano: una battuta quando li incontri, una quando cambiano fase e una quando cadono. Sono solo parole: non cambiano niente nello scontro.
 
 Una fase può:
 

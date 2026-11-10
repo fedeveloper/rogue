@@ -51,3 +51,8 @@ def portrait(name: str) -> list:
 def landscape(biome_id: str) -> list:
     """Le righe del paesaggio di un bioma (`data/ritratti.json`), mostrato quando ci si entra; lista vuota se manca."""
     return _trim(GAME_DATA["ritratti"]["biomes"].get(biome_id, []))
+
+
+def emblem(kind: str) -> list:
+    """Le righe dell'insegna di una stanza (`campfire`, `vendor`, `treasure`, `trap`, `mystery`), da `data/ritratti.json`."""
+    return _trim(GAME_DATA["ritratti"]["stanze"].get(kind, []))

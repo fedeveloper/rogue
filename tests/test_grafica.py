@@ -77,6 +77,25 @@ class PortraitTest(unittest.TestCase):
                 self.assertEqual(len({ui.visible_width(r) for r in rows}), 1)
         self.assertEqual(texts.landscape("nessuno"), [])
 
+    def test_every_quiet_room_has_an_emblem(self):
+        self.assertEqual(set(RAW_DATA["ritratti"]["stanze"]), {"campfire", "vendor", "treasure", "trap", "mystery"})
+        for kind in RAW_DATA["ritratti"]["stanze"]:
+            with self.subTest(room=kind):
+                art = texts.emblem(kind)
+                self.assertTrue(3 <= len(art) <= 5)
+                self.assertLessEqual(max(map(len, art)), 22)
+                self.assertTrue(all(ch.isascii() for line in art for ch in line))
+        self.assertEqual(texts.emblem("combat"), [], "le stanze di scontro mostrano il nemico, non un'insegna")
+
+    def test_a_room_draws_its_emblem_before_its_phrase(self):
+        import io
+        from contextlib import redirect_stdout
+        import rooms
+        out = io.StringIO()
+        with redirect_stdout(out): rooms.show_emblem("campfire", ui.Colors.YELLOW)
+        shown = plain(out.getvalue())
+        for line in texts.emblem("campfire"): self.assertIn(line, shown)
+
     def test_who_has_no_portrait_gets_none_and_the_game_dice_are_untouched(self):
         state = random.getstate()
         self.assertEqual(texts.portrait("Goblin qualunque"), [])
