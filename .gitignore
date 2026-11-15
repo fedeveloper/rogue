@@ -7,3 +7,6 @@ run_save.json.tmp
 # Python
 __pycache__/
 *.pyc
+
+#cartella immagini generate
+generated-images
