@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="docs/banner.png" alt="Il Ritornante inginocchiato accanto al Fuoco del Campo, davanti al Labirinto che sprofonda; in cielo il Dio Antico dorme e sogna" width="100%">
+
 # 🌀 Il Labirinto degli Elementi e del Caos
 
 **Un roguelite da terminale in cui ogni discesa è diversa, ogni morte ti rende più forte e ogni elemento conta.**
