@@ -91,55 +91,248 @@ numbers = table(["Contenuto", "Quantità"], [
 events_list = ", ".join(f"*{e['title']}*" for e in events.values() if not e.get('scripted'))
 scenes = sum(len(e['scenes']) for e in events.values())
 
-README = f"""<div align="center">
+
+# --- la landing page: numeri, schermate vere disegnate con ui.py, biomi ---
+import re, sys
+sys.path[:0] = [ROOT, os.path.join(ROOT, "tools")]
+import conta_testi, ui
+plain = lambda text: re.sub(r"\x1b\[[0-9;]*m", "", text)
+pyproject = open(f"{ROOT}/pyproject.toml", encoding="utf-8").read()
+version = re.search(r'^version = "([^"]+)"', pyproject, re.M).group(1).replace("-", "--")
+biomes_data, story, portraits = d("biomes")["biomes"], d("story"), d("ritratti")
+floors, biomes = biomes_data[-1]["floors"][1], len(biomes_data)
+classes_n, traits_n, grades_n, combos = len(classes), len(meta["traits"]), len(grades), f"{start_combos:,}".replace(",", ".")
+lore_words = f"{sum(conta_testi.words(t) for items in conta_testi.blocks().values() for t in items) // 1000 * 1000:,}".replace(",", ".")
+topics_n = sum(len(c["topics"]) for c in d("dialogues")["characters"].values())
+books_n, events_n, endings_n = len(books), len(events), len(story["endings"])
+
+def trim(lines):
+    margin = min((len(l) - len(l.lstrip()) for l in lines if l.strip()), default=0)
+    return [l[margin:] for l in lines]
+
+first = biomes_data[0]
+boss_name = next(n for n, b in enemies["bosses"].items() if b.get("biome") == first["id"])
+boss = enemies["bosses"][boss_name]
+boss_screen = "\n".join(plain(l) for l in ui.panel(trim(portraits["bosses"][boss_name]), boss["title"].upper()))
+boss_screen += f'\n"{boss["lore"]}"'
+goblin = enemies["enemies"]["Goblin"]
+hero_hp, enemy_hp = 96, goblin["base_hp"]
+names = max(ui.visible_width("Tu"), ui.visible_width("Goblin"))
+combat_screen = "\n".join([
+    "   " + l for l in trim(portraits["sagome"][portraits["enemies"]["Goblin"]])] + [
+    "",
+    "--- ⚔️ IN COMBATTIMENTO ⚔️ ---",
+    plain(f"{ui.pad('Tu', names)}  {ui.bar(hero_hp, 120)} {hero_hp}/120 HP"),
+    plain(f"{ui.pad('Goblin', names)}  {ui.bar(enemy_hp // 2, enemy_hp)} {enemy_hp // 2}/{enemy_hp} HP"),
+    "Intento del nemico: 💢 Colpo pesante — difenditi!",
+    "",
+    "  > Attacca",
+    "    Difesa Aggressiva (Dimezza danni e Contrattacca)",
+    "    Apri Inventario (Usa oggetto = Costa Turno)",
+    "    Statistiche Eroe",
+    "    Tenta la Fuga"])
+second = biomes_data[1]
+biome_screen = "\n".join(plain(l) for l in ui.panel(trim(portraits["biomes"][second["id"]]), f"{second['icon']}  {second['name'].upper()}"))
+biome_screen += f"\nPericolo: {second['hazard']['name']}. {second['hazard']['desc']}"
+biomes_table = table(["", "Bioma", "Piani", "Il pericolo"],
+    [(b["icon"], f"**{b['name']}**", f"{b['floors'][0]}-{b['floors'][1]}", f"*{b['hazard']['name']}*") for b in biomes_data])
+
+README = f"""<a id="top"></a>
+
+<div align="center">
 
 <img src="docs/banner.png" alt="Il Ritornante inginocchiato accanto al Fuoco del Campo, davanti al Labirinto che sprofonda; in cielo il Dio Antico dorme e sogna" width="100%">
 
 # 🌀 Il Labirinto degli Elementi e del Caos
 
-**Un roguelite da terminale in cui ogni discesa è diversa, ogni morte ti rende più forte e ogni elemento conta.**
+### Scendi. Muori. Ricorda. Scendi ancora.
 
-![Python](https://img.shields.io/badge/Python-3.9%2B-blue?logo=python&logoColor=white)
-![Dipendenze](https://img.shields.io/badge/Dipendenze-nessuna-brightgreen)
+**Un gioco di ruolo roguelite da terminale, in italiano, gratuito e open source.**<br>
+Ogni discesa è diversa, ogni morte ti rende più forte e un mondo intero aspetta di essere ricordato.
+
+<br>
+
 [![Test](https://github.com/fedeveloper/rogue/actions/workflows/tests.yml/badge.svg)](https://github.com/fedeveloper/rogue/actions/workflows/tests.yml)
-![Piattaforme](https://img.shields.io/badge/Windows%20%7C%20macOS%20%7C%20Linux-grey)
-![Licenza](https://img.shields.io/badge/Licenza-Uso_Personale-green)
+[![Licenza MIT](https://img.shields.io/badge/Licenza-MIT-yellow.svg)](LICENSE)
+![Versione](https://img.shields.io/badge/versione-{version}-blueviolet)
+![Lingua](https://img.shields.io/badge/lingua-italiano-009246)
+![Gratis](https://img.shields.io/badge/prezzo-gratis-brightgreen)
+
+![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python&logoColor=white)
+![Libreria standard](https://img.shields.io/badge/solo-libreria_standard-3776AB?logo=python&logoColor=white)
+![Dipendenze](https://img.shields.io/badge/dipendenze-0-brightgreen)
+![Terminale](https://img.shields.io/badge/interfaccia-terminale-333333?logo=windowsterminal&logoColor=white)
+![Dati JSON](https://img.shields.io/badge/contenuti-JSON-000000?logo=json&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/CI-GitHub_Actions-2088FF?logo=githubactions&logoColor=white)
+
+![Windows](https://img.shields.io/badge/Windows-0078D6?logo=windows&logoColor=white)
+![macOS](https://img.shields.io/badge/macOS-000000?logo=apple&logoColor=white)
+![Linux](https://img.shields.io/badge/Linux-FCC624?logo=linux&logoColor=black)
+
+<br>
+
+**[⬇️ Installazione](#installazione)** · **[🎮 Come si gioca](#come-si-gioca)** · **[🌍 Il mondo](#il-mondo)** · **[✨ Caratteristiche](#caratteristiche)** · **[❓ Domande](#domande)** · **[📜 Licenza](#licenza)**
 
 </div>
 
 ---
 
-Sotto le rovine di Aethelgard si apre un labirinto che cambia forma a ogni passo. Scegli un eroe, un tratto e — se hai il coraggio — un grado di Ascensione. Poi scendi: **30 piani** di mostri, trappole, mercanti, falò ed eventi che ti costringono a scegliere. In fondo ti aspetta il **DIO ANTICO**.
+## 🌀 Che cos'è
 
-Morirai. Spesso. Ma l'**Essenza Astrale** che riporti indietro resta: con essa sblocchi nuovi eroi, armi leggendarie, reliquie e potenziamenti permanenti. Ogni discesa ti avvicina un po' di più al fondo.
+*Il Labirinto degli Elementi e del Caos* è un **gioco di ruolo a turni** che si gioca nella finestra del terminale, con la tastiera. Non serve una scheda grafica, non serve un account, non si compra niente: scarichi una cartella, scrivi un comando e sei dentro.
+
+Interpreti **il Ritornante**, qualcuno che si sveglia accanto a un fuoco che non brucia senza ricordare il proprio nome. Sotto di te si apre un Labirinto che ha inghiottito un intero mondo, Aethelgard: **{floors} piani**, **{biomes} biomi**, mostri, trappole, mercanti ed eventi che ti chiedono di scegliere. In fondo dorme il **DIO ANTICO**.
+
+È un **roguelite**: ogni discesa è generata da capo e, quando muori, ricominci dall'inizio. Ma non a mani vuote. L'**Essenza** che riporti al Campo sblocca nuovi eroi, armi, reliquie e potenziamenti, e chi hai incontrato laggiù viene a sedersi al tuo fuoco per raccontarti chi era. Ogni discesa ti porta un po' più a fondo, nel Labirinto e nella sua storia.
+
+<table>
+<tr>
+<td width="33%" valign="top">
+
+### 🎲 Mai uguale
+Mappa, nemici, bottino ed eventi cambiano a ogni discesa. {classes_n} eroi, {traits_n} tratti e {grades_n} gradi di Ascensione fanno **{combos} partenze diverse**.
+
+</td>
+<td width="33%" valign="top">
+
+### 💀 La morte insegna
+Morire fa parte del gioco. L'Essenza che riporti al Campo diventa **potenziamenti permanenti**, e chi ti ha ucciso torna a cercarti come **Nemesi**.
+
+</td>
+<td width="33%" valign="top">
+
+### 📖 Un mondo da leggere
+**Oltre {lore_words} parole** di storia: {topics_n} conversazioni al Campo, {books_n} libri da sbloccare, {events_n} eventi a scene e {endings_n} finali.
+
+</td>
+</tr>
+</table>
+
+## 👀 Uno sguardo
+
+Il gioco è fatto di testo, colori e disegni in caratteri. Questo è l'arrivo davanti al primo boss, così come appare nel terminale:
 
 ```text
-!!! Incontri un GOBLIN [⚪ Normale] !!!
-
---- ⚔️ IN COMBATTIMENTO ⚔️ ---
-Tu: 120/120 HP | Goblin: 11 HP
-  > Attacca
-    Difesa Aggressiva (Dimezza danni e Contrattacca)
-    Apri Inventario (Usa oggetto = Costa Turno)
-    Statistiche Eroe
-    Tenta la Fuga
+{boss_screen}
 ```
 
-## 🚀 Gioca in 30 secondi
+E questo è un turno di combattimento: il nemico **annuncia la sua prossima mossa**, e tu scegli se attaccare, difenderti, lanciare un incantesimo o fuggire.
 
-Serve solo **Python 3.9 o superiore**: nessuna libreria da installare.
+```text
+{combat_screen}
+```
+
+Ogni bioma ha il suo paesaggio, le sue regole e i suoi abitanti:
+
+```text
+{biome_screen}
+```
+
+<a id="installazione"></a>
+
+## ⬇️ Installazione
+
+Il gioco funziona su **Windows, macOS e Linux** e ha bisogno di una cosa sola: **Python 3.9 o più recente**. Non c'è niente altro da installare.
+
+### 1. Installa Python
+
+<details>
+<summary><b>🪟 Windows</b></summary>
+
+1. Vai su [python.org/downloads](https://www.python.org/downloads/) e scarica l'ultima versione (oppure installa *Python* dal **Microsoft Store**).
+2. Avvia l'installer e **spunta la casella «Add python.exe to PATH»** prima di premere *Install Now*.
+3. Per controllare: apri il menu Start, cerca **Terminale** (o *Prompt dei comandi*) e scrivi `py --version`. Deve comparire `Python 3.` seguito da un numero.
+
+</details>
+
+<details>
+<summary><b>🍎 macOS</b></summary>
+
+1. Vai su [python.org/downloads](https://www.python.org/downloads/) e scarica l'installer per macOS (oppure, se usi Homebrew, `brew install python`).
+2. Apri l'app **Terminale** (la trovi con Spotlight, ⌘ + Spazio) e scrivi `python3 --version` per controllare.
+
+</details>
+
+<details>
+<summary><b>🐧 Linux</b></summary>
+
+Quasi tutte le distribuzioni hanno già Python 3. Controlla con `python3 --version`; se manca, installalo dal gestore di pacchetti (per esempio `sudo apt install python3` su Debian e Ubuntu).
+
+</details>
+
+### 2. Scarica il gioco
+
+**Senza Git (più semplice):** premi il pulsante verde **Code** in alto in questa pagina e scegli **Download ZIP**, oppure [scarica lo ZIP direttamente](https://github.com/fedeveloper/rogue/archive/refs/heads/main.zip). Poi estrai la cartella dove preferisci.
+
+**Con Git:**
 
 ```bash
 git clone https://github.com/fedeveloper/rogue.git
-cd rogue
-python roguelike.py
 ```
 
-> **Windows:** se le emoji non si vedono bene, esegui prima `chcp 65001` o usa *Windows Terminal*.
+### 3. Avvia
 
-Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **Invio** per confermare, **Ctrl+C** per uscire. Il salvataggio (`profile.json`) si crea da solo al primo avvio.
+Apri il terminale **nella cartella del gioco** e lancia `roguelike.py`:
 
-## ✨ Perché giocarci
+| Sistema | Comando |
+|---|---|
+| 🪟 Windows | `py roguelike.py` |
+| 🍎 macOS | `python3 roguelike.py` |
+| 🐧 Linux | `python3 roguelike.py` |
+
+> 💡 **Come si apre il terminale nella cartella giusta.** Su Windows: apri la cartella in Esplora file, clicca col tasto destro su uno spazio vuoto e scegli *Apri nel Terminale*. Su macOS: trascina la cartella sull'icona di Terminale, oppure scrivi `cd ` e trascina la cartella nella finestra. Su Linux: tasto destro → *Apri in un terminale*.
+
+### Per giocare al meglio
+
+- **Una finestra ampia.** Allarga il terminale ad almeno **100 colonne e 30 righe**: la mappa del piano usa lo spazio in più per disegnare i collegamenti fra le stanze.
+- **Un terminale moderno.** Su Windows usa **Windows Terminal** (è già installato su Windows 11): colori ed emoji si vedono bene. Se nel vecchio *Prompt dei comandi* le emoji appaiono come quadratini, scrivi prima `chcp 65001`.
+- **Aggiornare.** Con Git: `git pull` nella cartella del gioco. Con lo ZIP: scarica la versione nuova e copiaci dentro il tuo `profile.json`, così i progressi restano.
+- **Disinstallare.** Basta cancellare la cartella: il gioco non scrive niente altrove.
+
+<a id="come-si-gioca"></a>
+
+## 🎮 Come si gioca
+
+### I comandi
+
+Si gioca **solo con la tastiera**:
+
+| Tasto | Cosa fa |
+|---|---|
+| ⬆️ ⬇️ | Scorri le voci dei menu |
+| **Invio** | Conferma la scelta, prosegui nel racconto |
+| **«Indietro»** | Non è un tasto ma l'ultima voce di molti menu: riporta alla schermata precedente |
+| **Ctrl + C** | Esci dal gioco in qualunque momento |
+
+### La prima discesa
+
+1. **Scegli un eroe.** All'inizio puoi essere **Guerriero**, **Ladro** o **Mago**; gli altri si sbloccano giocando. Per cominciare, il Guerriero è robusto e semplice da usare.
+2. **Scegli il percorso.** Ogni piano è una mappa di stanze collegate: combattimenti, mercanti, falò, forzieri, trappole ed eventi. Vedi tutto fin dall'arrivo: decidi tu quanto rischiare.
+3. **Combatti leggendo il nemico.** Prima di ogni tuo turno il nemico dice cosa sta per fare. Se prepara un colpo pesante, difenditi; se si chiude in guardia, è il momento di caricare.
+4. **Cresci.** A ogni livello metti un punto in un attributo; ogni cinque livelli scegli un talento. Equipaggia le armi che trovi e incastona le rune al falò.
+5. **Affronta il boss** in fondo al piano e scendi. Ogni cinque piani cambia il bioma, con nuove regole e nuovi nemici.
+6. **Quando cadi**, torni al **Campo Base** con l'Essenza raccolta: spendila nei potenziamenti, parla con chi siede al fuoco, leggi ciò che hai scoperto nel **Codice** e nell'**Archivio**. Poi riparti.
+
+> 💾 **Il salvataggio è automatico.** I progressi stanno in `profile.json`, che si crea da solo al primo avvio. A metà discesa puoi scegliere **Salva ed esci** e riprendere più tardi dallo stesso punto.
+
+Le regole complete, con strategie e consigli, sono nel [**📖 Manuale del Giocatore**](MANUALE_GIOCATORE.md).
+
+<a id="il-mondo"></a>
+
+## 🌍 Il mondo di Aethelgard
+
+Mille anni fa, in una notte sola, il cielo si strappò. Gli elementi che gli Architetti avevano tenuto insieme si separarono, le città sprofondarono e il mondo intero scese in un Labirinto che da allora non smette di cambiare forma. Tu sei l'unico che, morendo laggiù, torna indietro. Nessuno sa perché. Forse nemmeno il Fuoco che ti riporta.
+
+Il Labirinto è fatto di quello che c'era prima: l'Accademia di Aurelia è diventata un chiostro di silenzio, le miniere dei nani scavano ancora verso il basso, il Mare Interno è un ventre che digerisce i ricordi.
+
+{biomes_table}
+
+Chi incontri nel Labirinto ha una storia, e se lo salvi viene a raccontartela al Campo: un astronomo che cerca la sorella, una cartografa che finisce la mappa del nonno, un vecchio speziale che non si perdona, un paladino che custodisce da mille anni una porta che non porta più da nessuna parte. **Più scendi, più ricordi.** Il resto lo scopri giocando.
+
+<a id="caratteristiche"></a>
+
+## ✨ Caratteristiche
+
 
 - 🗺️ **Una mappa per ogni piano.** Quattro file di stanze collegate (combattimento, Élite, mercante, falò, forziere, trappola, evento o la *Stanza del Mistero*) e il boss in fondo, tutte visibili fin dall'arrivo: scegli il percorso, non solo la porta. Ogni stanza ha un prezzo e un premio: le trappole custodiscono un bottino, i forzieri profondi possono essere Mimic, e l'**Audacia** fa crescere il bottino del boss per ogni rischio corso nel piano. Nemici e boss crescono con la profondità, e quasi ogni nemico ha uno **stile** (Bruto, Predatore, Difensore, Succhiavita, Infetto, Mistico, Furia) che decide le mosse che preferisce.
 - 🌍 **Sei biomi, sei regole.** Ogni cinque piani il Labirinto cambia volto e legge: la *Nostalgia Letale* dei Chiostri, il *Gas del Silenzio* delle Miniere, la *Caduta Astrale* delle Guglie, la *Dissoluzione dell'Io* del Ventre, l'*Ebollizione Astrale* della Forgia e il *Paradosso Temporale* della Soglia. Ogni bioma ha sei nemici nativi, un boss tutto suo e le sue stanze speciali.
@@ -151,7 +344,7 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 - 🎭 **{len(meta['traits'])} tratti** e **{len(grades)} gradi di Ascensione**: {f'{start_combos:,}'.replace(',', '.')} combinazioni di partenza diverse.
 - 📅 **Sfida del Giorno.** Una discesa al giorno uguale per tutti: eroe, tratto, malus e dono assegnati, la stessa mappa a ogni piano. Conta il primo tentativo; punteggio, serie di giorni e record restano nel profilo.
 - 📖 **Eventi che ricordano.** {len(events)} storie a scene con opzioni che esistono solo per la tua classe, il tuo tratto o le tue reliquie: `[Mago]`, `[Tocco di Mida]`, `[Chiave Arrugginita]`. Il Labirinto ricorda chi hai aiutato e chi hai derubato, e certe scelte tornano a bussare qualche piano dopo.
-- 🗝️ **Personaggi che ritornano.** *Sir Alaric*, il Primo Paladino, e *Silas*, il Cercatore, hanno storie in tre capitoli che proseguono di run in run. Le tue scelte decidono come finiscono, e se liberi Alaric il Cavaliere Oscuro non tornerà più.
+- 🗝️ **Personaggi che ritornano.** *Sir Alaric*, il Primo Paladino, *Silas*, il Cercatore, la Fata della Fontana, il fabbro muto e il Mercante Senza Volto hanno storie in più capitoli che proseguono di run in run. Le tue scelte decidono come finiscono, e se liberi Alaric il Cavaliere Oscuro non tornerà più.
 - 🔷 **Rune e Incastoni.** {len(runes_data['runes'])} rune da incastonare al Falò in armi e armature: allungano i marchi, potenziano le reazioni, fanno sanguinare, rubano vita, riflettono i colpi. Restano sull'oggetto finché non le estrai, quindi ogni cambio d'arma è una scelta. Le combinazioni giuste formano {len(runes_data['words'])} **parole runiche** da scoprire.
 - 👑 **Boss che cambiano.** A metà della vita ogni boss entra in una nuova fase con un nome, mosse nuove e regole proprie: il Re dei Goblin chiama le guardie, il Drago di Zaffiro si copre di Scaglie che solo una reazione elementale infrange, la Badessa ti sigilla la difesa. Il DIO ANTICO ha tre fasi, e nella seconda diventa l'elemento che ti ferisce di più. Ogni bioma ha il suo boss nativo, dalla Badessa dei Chiostri al Custode della Soglia.
 - 😈 **La Nemesi.** Il nemico che ti uccide se ne ricorda: prende un nome, un rango e il tuo Oro, impara qualcosa da te e torna a cercarti vicino al piano della tua morte. Sconfiggilo e ti riprendi tutto, con un trofeo.
@@ -159,37 +352,43 @@ Si gioca **solo con la tastiera**: frecce ⬆️⬇️ per muoversi nei menu, **
 - 🩸 **Corruzione.** Le scelte oscure danno potere e opzioni proibite, ma il Labirinto comincia a nasconderti le cose: gli effetti delle scelte, le mosse dei nemici.
 - 🏁 **{len(d('story')['endings'])} finali.** Uccidere il Dio, prenderne il posto, risvegliare Aethelgard… e un finale segreto per chi legge davvero il Labirinto.
 - 🔥 **Un campo che ricorda.** Chi salvi nel Labirinto viene a scaldarsi al tuo fuoco, ti parla di ciò che hai fatto e ti aiuta a costruire.
+- 📚 **Una storia da leggere con calma.** In discesa il testo è breve; la storia vera si legge fuori: {topics_n} conversazioni al Campo, {books_n} libri nell'Archivio, l'*Atlante* dei biomi, le *Vite prestate* degli eroi, l'*Armeria* con la storia di ogni oggetto, le lettere delle discese dimenticate. Si sblocca un pezzo alla volta, man mano che scendi.
+- 🎨 **Grafica nel terminale.** Ogni boss ha il suo ritratto, ogni nemico la sagoma della sua famiglia, ogni bioma il suo paesaggio; HP ed Etere hanno le loro barre.
 - 🌟 **{len(relics)} reliquie** che piegano le regole: danni raddoppiati, scudi, vampirismo, oro moltiplicato.
 - 🏕️ **Meta-progressione profonda**: potenziamenti permanenti, una Forgia per sbloccare equipaggiamento, artigiani da liberare, un Archivio di lore con bonus, imprese da completare.
 - ♾️ **Modalità Infinita** dopo la prima vittoria: oltre il piano 30 inizia il **Ciclo del Labirinto**. I sei biomi tornano in un ordine nuovo a ogni ciclo, ogni ciclo è un'Eco più dura (Eco II, Eco III…) e alla fine di ognuno ti attende di nuovo il DIO ANTICO.
 
-## 🧬 Gli eroi
+## 🧭 Dentro il gioco
+
+Tutto quello che serve sapere prima di scendere: gli eroi, le modalità, le regole del combattimento e cosa succede al Campo fra una discesa e l'altra.
+
+### 🧬 Gli eroi
 
 {classes_table}
 
 Ogni classe ha un **albero di Maestria** a 5 livelli. Si sale giocando con quella classe. Il **Lv.4** dà un bonus permanente a *tutti* gli eroi; il **Lv.5** sblocca una classe, un tratto o una reliquia. Assassino e Negromante, per esempio, si conquistano portando al massimo Ladro e Mago.
 
-## 🎭 Tratti
+### 🎭 Tratti
 
 All'inizio di ogni discesa scegli un **tratto**, che cambia le regole per tutta la partita:
 
 {traits_table}
 
-## 🎮 Modalità
+### 🎮 Modalità
 
-### Ascensione
+#### Ascensione
 
 Dopo la prima vittoria, a ogni partenza scegli un **grado di Ascensione**: ogni grado aggiunge una regola a quelle dei gradi precedenti e moltiplica l'Essenza. Vincendo al grado più alto sblocchi il successivo, fino al {len(grades)}. I vecchi **Patti del Caos** sono diventati gradi.
 
 {grades_table}
 
-### 📅 Sfida del Giorno
+#### 📅 Sfida del Giorno
 
 Sempre disponibile dal menu principale. Ogni giorno la stessa discesa per chiunque: eroe e tratto assegnati (anche non ancora sbloccati), {daily['maluses']} malus presi dai gradi di Ascensione e un dono. Ogni piano nasce dallo stesso seme, quindi la sua mappa non dipende dalla strada fatta prima. Conta il primo tentativo, che vale Essenza ×{it(daily['first_attempt_essence_mult'])}: {daily['score']['per_floor']} punti per piano, {daily['score']['per_boss']} per boss, {daily['score']['victory']} per la vittoria e uno ogni {daily['score']['gold_div']} Oro.
 
 {boons_table}
 
-## ⚔️ Il combattimento
+### ⚔️ Il combattimento
 
 A ogni turno puoi **attaccare**, **difenderti** (ogni classe ha la sua tecnica: contrattacco, concentrazione, riparo magico, purificazione, fiala reattiva o furto di vita), usare un oggetto dallo zaino, consultare le statistiche o **tentare la fuga** (impossibile contro i boss). Le statistiche mostrano la tua **probabilità reale di colpire** contro il nemico che hai davanti.
 
@@ -206,7 +405,7 @@ A ogni turno puoi **attaccare**, **difenderti** (ogni classe ha la sua tecnica: 
 
 **Maledizioni.** Gli oggetti `[MALEDETTO]` hanno statistiche altissime ma drenano HP od Oro, o rallentano. Si purificano al Falò (100 Oro) o con l'*Acqua Santa*.
 
-## 🏕️ Il Campo Base
+### 🏕️ Il Campo Base
 
 Fra una discesa e l'altra spendi l'**Essenza Astrale**:
 
@@ -220,7 +419,7 @@ Fra una discesa e l'altra spendi l'**Essenza Astrale**:
 
 E in **Impostazioni** scegli la velocità del testo: lenta, normale, veloce o istantanea.
 
-## 💰 L'Essenza
+### 💰 L'Essenza
 
 | Come finisce la discesa | Essenza ottenuta |
 |---|---|
@@ -353,6 +552,11 @@ I **test di contratto** (`tests/test_contracts.py`, `tests/test_modes.py`) verif
 
 ## 📝 Roadmap
 
+Il gioco è cresciuto per versioni, ognuna provata su un branch dedicato prima di arrivare qui. Le ultime: la **v6** ha moltiplicato per dieci la storia, la **v7** ha portato la grafica nel terminale.
+
+<details>
+<summary>Tutto ciò che è già nel gioco</summary>
+
 - [x] Classi **Assassino** e **Negromante**
 - [x] Nemici e boss legati alla profondità
 - [x] Impostazioni (velocità del testo)
@@ -380,10 +584,97 @@ I **test di contratto** (`tests/test_contracts.py`, `tests/test_modes.py`) verif
 - [x] Contenuti: esiti del Mistero, tomi dell'Archivio, imprese e tratti legati alla magia
 - [x] L'Elementalista, la nona classe
 - [x] Il Campo cresce: strutture a più livelli, Biblioteca dell'Arcano e Sala d'Armi
+- [x] La storia a dieci volte: dialoghi del Campo, Archivio, Atlante, vite prestate, Armeria, epiloghi dei finali
+- [x] Grafica nel terminale: ritratti dei boss, sagome dei nemici, paesaggi dei biomi, insegne delle stanze, barre
+
+</details>
+
+<a id="domande"></a>
+
+## ❓ Domande frequenti
+
+<details>
+<summary><b>È gratis? Ci sono acquisti o pubblicità?</b></summary>
+
+È completamente gratuito e open source, sotto licenza MIT. Niente acquisti, niente pubblicità, niente account, niente connessione a internet: tutto gira sul tuo computer.
+
+</details>
+
+<details>
+<summary><b>Perché nel terminale e non in una finestra?</b></summary>
+
+Perché così funziona ovunque, senza installare niente oltre a Python, e lascia tutto lo spazio all'immaginazione e alla storia. La grafica c'è, ma è fatta di caratteri: ritratti, paesaggi, barre e colori.
+
+</details>
+
+<details>
+<summary><b>È difficile?</b></summary>
+
+All'inizio sì, ed è voluto: in un roguelite si muore spesso. Ma ogni morte lascia qualcosa, e dopo poche discese l'Essenza accumulata fa la differenza. Chi cerca una sfida vera ha venti gradi di Ascensione e il Ciclo del Labirinto oltre il piano 30.
+
+</details>
+
+<details>
+<summary><b>Dove sono i miei salvataggi? Posso spostarli?</b></summary>
+
+Tutti i progressi stanno in `profile.json`, nella cartella del gioco; una discesa interrotta con *Salva ed esci* sta in `run_save.json`. Per portare i progressi su un altro computer, o in una versione nuova, basta copiare questi file. Se `profile.json` si rovina, il gioco ne mette da parte una copia e riparte da un profilo nuovo.
+
+</details>
+
+<details>
+<summary><b>Le emoji appaiono come quadratini, o i colori sono strani.</b></summary>
+
+È il terminale, non il gioco. Su Windows usa **Windows Terminal**, oppure scrivi `chcp 65001` prima di avviare; su macOS e Linux il terminale predefinito va bene. Se il testo scorre troppo lento o troppo veloce, cambia la velocità nelle impostazioni del menu principale.
+
+</details>
+
+<details>
+<summary><b>Posso giocarci senza leggere tutta la storia?</b></summary>
+
+Sì. In discesa i testi sono brevi e le scelte chiare; la storia lunga sta al Campo, nel Codice e nell'Archivio, e la leggi solo se ti va.
+
+</details>
+
+<details>
+<summary><b>Posso modificare il gioco o aggiungere contenuti?</b></summary>
+
+Sì: la licenza MIT lo permette, e quasi tutto il gioco sta in file JSON leggibili nella cartella `data/`. La [Documentazione Tecnica](DOCUMENTAZIONE_TECNICA.md) spiega come aggiungere nemici, oggetti, eventi e testi.
+
+</details>
+
+## 🧩 Componenti
+
+Il gioco è costruito volutamente con pochissimo: **Python e la sua libreria standard, niente altro**.
+
+| Componente | Cosa fa nel gioco |
+|---|---|
+| ![Python](https://img.shields.io/badge/Python_3.9+-3776AB?logo=python&logoColor=white) | Il linguaggio di tutto il gioco |
+| ![Libreria standard](https://img.shields.io/badge/libreria_standard-3776AB?logo=python&logoColor=white) | Solo moduli inclusi in Python (`json`, `random`, `os`, `re`, `unicodedata`…): nessun pacchetto da installare |
+| ![ANSI](https://img.shields.io/badge/terminale-ANSI_e_Unicode-333333?logo=windowsterminal&logoColor=white) | Colori, menu a frecce, riquadri e disegni in caratteri |
+| ![JSON](https://img.shields.io/badge/dati-JSON-000000?logo=json&logoColor=white) | Tutti i contenuti, dalle armi alla storia, nella cartella `data/` |
+| ![unittest](https://img.shields.io/badge/test-unittest-3776AB?logo=python&logoColor=white) | Centinaia di test automatici sulle regole, i dati e i testi |
+| ![GitHub Actions](https://img.shields.io/badge/CI-GitHub_Actions-2088FF?logo=githubactions&logoColor=white) | I test girano su ogni modifica, con Python 3.9 e con l'ultima versione |
+| ![rsp](https://img.shields.io/badge/review-rsp-6f42c1) | Controlla ogni pull request: test saltati, dipendenze non dichiarate, controlli disattivati |
+
+<a id="licenza"></a>
+
+## 📜 Licenza
+
+[![Licenza MIT](https://img.shields.io/badge/Licenza-MIT-yellow.svg)](LICENSE)
+
+*Il Labirinto degli Elementi e del Caos* è distribuito sotto **licenza MIT**: puoi giocarci, studiarlo, modificarlo e ridistribuirlo, anche per scopi commerciali, a patto di mantenere l'avviso di copyright e il testo della licenza. Il testo completo è nel file [LICENSE](LICENSE).
+
+Il gioco usa solo la libreria standard di Python: non include librerie di terze parti, quindi non ci sono altre licenze da rispettare per giocarci o ridistribuirlo.
 
 ---
 
-<div align="center"><i>Sviluppato con ❤️ e Python. Buona discesa.</i></div>
+<div align="center">
+
+**[⬆️ Torna su](#top)** · **[⬇️ Scarica il gioco](https://github.com/fedeveloper/rogue/archive/refs/heads/main.zip)** · **[📖 Manuale](MANUALE_GIOCATORE.md)**
+
+<sub>Fatto con Python e nient'altro. Buona discesa, Ritornante.</sub>
+
+</div>
 """
 if __name__ == "__main__":
     with open(f"{ROOT}/README.md", "w", encoding="utf-8") as f: f.write(README)
