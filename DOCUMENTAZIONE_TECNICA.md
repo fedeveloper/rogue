@@ -343,7 +343,7 @@ Il profilo del giocatore non viene mai toccato (il caricamento lo riscrive solo 
 
 **Formato dei dati.** Tutti i file di `data/` hanno lo stesso formato, quello di `tools/formatta_dati.py`: indentazione di 4 spazi, caratteri non ASCII così come sono, e un oggetto o una lista su una riga sola se ci sta in `WIDTH` = 120 caratteri, altrimenti una voce per riga. Dopo una modifica ai dati si esegue `python tools/formatta_dati.py` (`--check` elenca i file fuori formato senza toccarli); `tests/test_data_format.py` fallisce se un file non è nel formato.
 
-**README.** `README.md` si genera con `python tools/genera_readme.py`: il testo è nello script, tabelle e numeri vengono da `data/`. `tests/test_docs.py` fallisce se il README non è aggiornato, quindi va rigenerato in ogni PR che cambia i dati.
+**README.** `README.md` si genera con `python tools/genera_readme.py`: il testo è nello script, tabelle e numeri vengono da `data/`. Le schermate di esempio della landing page sono disegnate con `ui.panel` e `ui.bar` sui disegni veri di `data/ritratti.json`, e le parole della storia si contano con `tools/conta_testi.py`: cambiando i disegni, la grafica o la lore, il README va rigenerato. `tests/test_docs.py` fallisce se il README non è aggiornato, quindi va rigenerato in ogni PR che cambia i dati.
 
 ### Nemesi
 

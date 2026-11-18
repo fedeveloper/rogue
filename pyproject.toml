@@ -6,4 +6,5 @@ version = "0.1.0"
 description = "Il Labirinto degli Elementi e del Caos, roguelite testuale"
 # Annotations such as tuple[int, str] in function signatures need Python 3.9.
 requires-python = ">=3.9"
+license = { text = "MIT" }
 dependencies = []
